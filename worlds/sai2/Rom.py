@@ -823,6 +823,8 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_byte(0x0824EC, world.fuwa_puka_shortcut)
     rom.write_byte(0x0824EE, world.fuwa_poka_shortcut)
 
+    rom.write_file("token_patch.bin", rom.get_token_binary())
+
     from Main import __version__
     rom.name = bytearray(f'SAI2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
@@ -836,7 +838,6 @@ class SAI2ProcedurePatch(APProcedurePatch, APTokenMixin):
     name: bytearray
     procedure = [
         ("apply_tokens", ["token_patch.bin"]),
-        ("apply_bsdiff4", ["mmx3_basepatch.bsdiff4"]),
     ]
 
     @classmethod
@@ -848,8 +849,6 @@ class SAI2ProcedurePatch(APProcedurePatch, APTokenMixin):
 
     def write_bytes(self, offset, value: typing.Iterable[int]):
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
-
-    patch.write_file("token_patch.bin", patch.get_token_binary())
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
     base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)
