@@ -849,7 +849,7 @@ class SAI2ProcedurePatch(APProcedurePatch, APTokenMixin):
     def write_bytes(self, offset, value: typing.Iterable[int]):
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
-
+    patch.write_file("token_patch.bin", patch.get_token_binary())
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
     base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)

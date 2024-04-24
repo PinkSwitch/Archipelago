@@ -36,6 +36,7 @@ SHOP_SCOUTS = [0xA7D7, 0xA82D, 0xA883]
 
 class SAI2SNIClient(SNIClient):
     game = "Super Adventure Island II"
+    patch_suffix = ".apsai2"
 
     async def validate_rom(self, ctx):
         from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
@@ -208,18 +209,3 @@ class SAI2SNIClient(SNIClient):
 
                 snes_buffered_write(ctx, WRAM_START + input_item_ids[item.item][0], bytes([new_item_count]))
         await snes_flush_writes(ctx)
-
-def get_shop_text(special_id, ctx, SRAM_START):
-    location = ctx.locations_info[shop_scouts[special_id]]
-    item = ctx.item_names[location.item]
-    player = ctx.player_names[location.player]
-    sai2_item = bytearray(0)
-    for char in item:
-        if char in hud_encoding_table:
-            sai2_item.extend (hud_encoding_table[char])
-        else:
-            sai2_item.extend ([0x8F, 0x2C])
-    if len(item) <= 16:
-        for _ in range(16 - len(item)):
-            sai2_item.extend([0x90, 0x28])
-    snes_buffered_write(ctx, SRAM_START + 0x7E4D, sai2_item)#write item name as ingame text
