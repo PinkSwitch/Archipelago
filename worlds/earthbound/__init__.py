@@ -5,6 +5,7 @@ import threading
 
 from typing import List, Set, TextIO
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
+from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
 import settings
 from .Items import get_item_names_per_category, item_table, common_items, uncommon_items, rare_items
@@ -69,6 +70,7 @@ class EarthBoundWorld(World):
 
         self.locked_locations= []
         self.location_cache= []
+        self.event_count = 0
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
@@ -76,7 +78,6 @@ class EarthBoundWorld(World):
 
     def create_regions(self) -> None:
         init_areas(self, get_locations(self))
-        place_static_items(self)
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())
@@ -99,10 +100,35 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
+        if self.options.psi_shuffle == 1:
+            self.event_count += 18
+        else:
+            self.event_count += 10
 
     def set_rules(self) -> None:
         set_location_rules(self)
         self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
+        place_static_items(self)
+
+        if self.options.psi_shuffle == 1:
+            self.multiworld.itempool.append(self.create_item('Onett Teleport'))
+            self.multiworld.itempool.append(self.create_item('Twoson Teleport'))
+            self.multiworld.itempool.append(self.create_item("Happy-Happy Village Teleport"))
+            self.multiworld.itempool.append(self.create_item("Threed Teleport"))
+            self.multiworld.itempool.append(self.create_item('Saturn Valley Teleport'))
+            self.multiworld.itempool.append(self.create_item('Dusty Dunes Teleport'))
+            self.multiworld.itempool.append(self.create_item('Fourside Teleport'))
+            self.multiworld.itempool.append(self.create_item('Winters Teleport'))
+            self.multiworld.itempool.append(self.create_item("Summers Teleport"))
+            self.multiworld.itempool.append(self.create_item('Scaraba Teleport'))
+            self.multiworld.itempool.append(self.create_item('Dalaam Teleport'))
+            self.multiworld.itempool.append(self.create_item('Deep Darkness Teleport'))
+            self.multiworld.itempool.append(self.create_item('Tenda Village Teleport'))
+            self.multiworld.itempool.append(self.create_item('Lost Underworld Teleport'))
+            self.multiworld.itempool.append(self.create_item('Progressive Poo PSI'))
+            self.multiworld.itempool.append(self.create_item('Progressive Poo PSI'))
+
+            self.multiworld.itempool.append(self.create_item('Magicant Teleport'))
 
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
@@ -117,6 +143,44 @@ class EarthBoundWorld(World):
         for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool)):
             item = self.set_classifications(self.roll_filler())
             pool.append(item)
+
+    def pre_fill(self) -> None:
+        if self.options.psi_shuffle == 0:
+            psi_locations = [
+                self.multiworld.get_location("Onett - Buzz Buzz", self.player),
+                self.multiworld.get_location("Onett - Mani Mani Statue", self.player),
+                self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player),
+                self.multiworld.get_location("Monkey Caves - Monkey Power", self.player),
+                self.multiworld.get_location("Summers - Magic Cake", self.player),
+                self.multiworld.get_location("Scaraba - Star Master", self.player),
+                self.multiworld.get_location("Tenda Village - Tenda Tea", self.player),
+                self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
+                self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
+                self.multiworld.get_location("Cave of the Present - Star Master", self.player),
+            ]
+            
+            psi_items = [
+                self.create_item("Onett Teleport"),
+                self.create_item("Twoson Teleport"),
+                self.create_item("Happy-Happy Village Teleport"),
+                self.create_item("Threed Teleport"),
+                self.create_item("Saturn Valley Teleport"),
+                self.create_item("Dusty Dunes Teleport"),
+                self.create_item("Fourside Teleport"),
+                self.create_item("Winters Teleport"),
+                self.create_item("Summers Teleport"),
+                self.create_item("Scaraba Teleport"),
+                self.create_item("Deep Darkness Teleport"),
+                self.create_item("Tenda Village Teleport"),
+                self.create_item("Lost Underworld Teleport"),
+                self.create_item("Dalaam Teleport"),
+                self.create_item("Magicant Teleport"),]
+
+            self.random.shuffle(psi_locations)
+            self.random.shuffle(psi_items)
+                
+
+            fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), psi_locations, psi_items, True, True)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
         pool: List[Item] = []

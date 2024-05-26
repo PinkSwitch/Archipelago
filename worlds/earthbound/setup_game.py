@@ -2,6 +2,7 @@ import struct, random
 
 
 def setup_gamevars(world):
+    can_proceed = True
     if world.options.psi_shuffle == 0:
         world.teleport_list = [
             "Onett Teleport",
@@ -44,7 +45,10 @@ def setup_gamevars(world):
                 chosen_location = world.random.choice(world.teleport_list)
             world.teleport_list.remove(chosen_location)
 
-        world.random.shuffle(world.teleport_list)
+        while can_proceed == False:
+            world.random.shuffle(world.teleport_list)
+            if world.teleport_list[6] == "Dalaam Teleport":
+                can_proceed = True
 
     if world.options.character_shuffle == 0:
         world.character_list = [
@@ -63,55 +67,43 @@ def setup_gamevars(world):
     else:
         world.start_location = 0
 
-def place_static_items(self):
-    self.get_location("Onett Police Station").place_locked_item(self.create_item("Onett Roadblocks Removed"))
-    self.get_location("Belch Defeated").place_locked_item(self.create_item("Threed Tunnels Clear"))
-    self.get_location("Dungeon Man Submarine").place_locked_item(self.create_item("Submarine to Deep Darkness"))
+def place_static_items(world):
+    world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))
+    world.get_location("Belch Defeated").place_locked_item(world.create_item("Threed Tunnels Clear"))
+    world.get_location("Dungeon Man Submarine").place_locked_item(world.create_item("Submarine to Deep Darkness"))
 
-    self.get_location("Giant Step Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Lilliput Steps Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Milky Well Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Rainy Circle Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Magnet Hill Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Pink Cloud Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Lumine Hall Sanctuary").place_locked_item(self.create_item("Melody"))
-    self.get_location("Fire Spring Sanctuary").place_locked_item(self.create_item("Melody"))
+    world.get_location("Giant Step Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Lilliput Steps Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Milky Well Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Rainy Circle Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Magnet Hill Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Pink Cloud Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Lumine Hall Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.get_location("Fire Spring Sanctuary").place_locked_item(world.create_item("Melody"))
+    world.event_count += 11
 
-    if self.options.psi_shuffle == 0:
-        print(self.teleport_list)
-        self.get_location("Onett - Buzz Buzz").place_locked_item(self.create_item(self.teleport_list[0]))
-        self.get_location("Onett - Mani Mani Statue").place_locked_item(self.create_item(self.teleport_list[1]))
-        self.get_location("Saturn Valley - Saturn Coffee").place_locked_item(self.create_item(self.teleport_list[2]))
-        self.get_location("Monkey Caves - Monkey Power").place_locked_item(self.create_item(self.teleport_list[3]))
-        self.get_location("Fourside - Department Store Blackout").place_locked_item(self.create_item(self.teleport_list[4]))
-        self.get_location("Summers - Magic Cake").place_locked_item(self.create_item(self.teleport_list[5]))
-        self.get_location("Dalaam - Trial of Mu").place_locked_item(self.create_item(self.teleport_list[6]))
-        self.get_location("Scaraba - Star Master").place_locked_item(self.create_item(self.teleport_list[7]))
-        self.get_location("Tenda Village - Tenda Tea").place_locked_item(self.create_item(self.teleport_list[8]))
-        self.get_location("Lost Underworld - Talking Rock").place_locked_item(self.create_item(self.teleport_list[9]))
-        self.get_location("Cave of the Present - Star Master").place_locked_item(self.create_item(self.teleport_list[10]))
-        if self.options.magicant_mode == 0:
-            self.get_location("Magicant - Ness's Nightmare").place_locked_item(self.create_item(self.teleport_list[11]))
+    if world.options.character_shuffle == 0:
+        world.get_location("Happy-Happy Village - Prisoner").place_locked_item(world.create_item(world.character_list[0]))
+        world.get_location("Threed - Zombie Prisoner").place_locked_item(world.create_item(world.character_list[1]))
+        world.get_location("Snow Wood - Bedroom").place_locked_item(world.create_item(world.character_list[2]))
+        world.get_location("Monotoli Building - Monotoli Character").place_locked_item(world.create_item(world.character_list[3]))
+        world.get_location("Dalaam - Throne Character").place_locked_item(world.create_item(world.character_list[4]))
+        world.get_location("Deep Darkness - Barf Character").place_locked_item(world.create_item(world.character_list[5]))
+        world.event_count += 6
 
-    if self.options.character_shuffle == 0:
-        self.get_location("Happy-Happy Village - Prisoner").place_locked_item(self.create_item(self.character_list[0]))
-        self.get_location("Threed - Zombie Prisoner").place_locked_item(self.create_item(self.character_list[1]))
-        self.get_location("Snow Wood - Bedroom").place_locked_item(self.create_item(self.character_list[2]))
-        self.get_location("Monotoli Building - Monotoli Character").place_locked_item(self.create_item(self.character_list[3]))
-        self.get_location("Dalaam - Throne Character").place_locked_item(self.create_item(self.character_list[4]))
-        self.get_location("Deep Darkness - Barf Character").place_locked_item(self.create_item(self.character_list[5]))
-
-    if self.options.giygas_required == 1:
-        self.get_location("Giygas").place_locked_item(self.create_item("Saved Earth"))#Normal final boss
-        if self.options.magicant_mode == 1:
-            self.get_location("Ness's Nightmare").place_locked_item(self.create_item("Power of the Earth"))#If required magicant
+    if world.options.giygas_required == 1:
+        world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))#Normal final boss
+        if world.options.magicant_mode == 1:
+            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))#If required magicant
         else:
-            self.get_location("Sanctuary Goal").place_locked_item(self.create_item("Power of the Earth"))#If not required, place this condition on sanctuary goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))#If not required, place this condition on sanctuary goal
+        world.event_count += 2
     else:
-        if self.options.magicant_mode == 1:
-            self.get_location("Ness's Nightmare").place_locked_item(self.create_item("Saved Earth"))#If Magicant required but not Giygas, place goal
+        if world.options.magicant_mode == 1:
+            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))#If Magicant required but not Giygas, place goal
         else:
-            self.get_location("Sanctuary Goal").place_locked_item(self.create_item("Saved Earth"))# If neither final boss, place goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))# If neither final boss, place goal
+        world.event_count += 1
 
         #Add magicant, add sanc stuff, add alt goals...
             

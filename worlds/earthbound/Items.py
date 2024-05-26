@@ -301,7 +301,7 @@ item_table: Dict[str, ItemData] = {
     "Lost Underworld Teleport": ItemData("PSI", 0xEB010B, ItemClassification.progression, 0),
     #"Nothing": ItemData("PSI", 0xEB010C, ItemClassification.filler, 0), #Shouldn't be in the item pool, only placed with local PSI
     "Progressive Poo PSI": ItemData("PSI", 0xEB010D, ItemClassification.useful, 0),
-    "Magicant Teleport": ItemData("PSI", 0xEB010E, ItemClassification.useful, 0),
+    "Magicant Teleport": ItemData("PSI", 0xEB010E, ItemClassification.progression, 0),
 
     "Paula": ItemData("Characters", 0xEB010F, ItemClassification.progression, 0),
     "Jeff": ItemData("Characters", 0xEB0110, ItemClassification.progression, 0),
