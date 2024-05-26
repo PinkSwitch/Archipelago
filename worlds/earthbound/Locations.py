@@ -267,8 +267,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Fire Spring", "Fire Spring Sanctuary", None),
     LocationData("Cave of the Past", "Giygas", None),
     LocationData("Menu", "Sanctuary Goal", None),
-    LocationData("Menu", "+1 Sanctuary", None),
-    LocationData("Menu", "+2 Sanctuaries", None)
+    #LocationData("Menu", "+1 Sanctuary", None),
+    #LocationData("Menu", "+2 Sanctuaries", None)
     #LocationData("Menu", "Magicant Clear", None)
     ]
 

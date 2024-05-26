@@ -54,7 +54,7 @@ class CharacterShuffle(Choice):
     """Character Locations: Characters will be shuffled amongst Character Locations. Extra locations will have Flying Man, a Teddy Bear, or a Super Plush Bear.
        Anywhere: Characters can be found anywhere in the multiworld, and character locations will have regular checks.
        See the Game Page for more information on Character Locations."""
-    display_name = "PSI Shuffle"
+    display_name = "Character Shuffle"
     option_psi_locations = 0
     option_anywhere = 1
     default = 0

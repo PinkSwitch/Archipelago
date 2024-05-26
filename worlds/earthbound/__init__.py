@@ -70,7 +70,7 @@ class EarthBoundWorld(World):
 
         self.locked_locations= []
         self.location_cache= []
-        self.event_count = 0
+        self.event_count = 13
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
@@ -100,38 +100,39 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
-        if self.options.psi_shuffle == 1:
-            self.event_count += 18
-        else:
-            self.event_count += 10
+        if self.options.character_shuffle == 0:
+            self.event_count += 6
 
     def set_rules(self) -> None:
         set_location_rules(self)
         self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
         place_static_items(self)
 
-        if self.options.psi_shuffle == 1:
-            self.multiworld.itempool.append(self.create_item('Onett Teleport'))
-            self.multiworld.itempool.append(self.create_item('Twoson Teleport'))
-            self.multiworld.itempool.append(self.create_item("Happy-Happy Village Teleport"))
-            self.multiworld.itempool.append(self.create_item("Threed Teleport"))
-            self.multiworld.itempool.append(self.create_item('Saturn Valley Teleport'))
-            self.multiworld.itempool.append(self.create_item('Dusty Dunes Teleport'))
-            self.multiworld.itempool.append(self.create_item('Fourside Teleport'))
-            self.multiworld.itempool.append(self.create_item('Winters Teleport'))
-            self.multiworld.itempool.append(self.create_item("Summers Teleport"))
-            self.multiworld.itempool.append(self.create_item('Scaraba Teleport'))
-            self.multiworld.itempool.append(self.create_item('Dalaam Teleport'))
-            self.multiworld.itempool.append(self.create_item('Deep Darkness Teleport'))
-            self.multiworld.itempool.append(self.create_item('Tenda Village Teleport'))
-            self.multiworld.itempool.append(self.create_item('Lost Underworld Teleport'))
-            self.multiworld.itempool.append(self.create_item('Progressive Poo PSI'))
-            self.multiworld.itempool.append(self.create_item('Progressive Poo PSI'))
-
-            self.multiworld.itempool.append(self.create_item('Magicant Teleport'))
 
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
+        if self.options.psi_shuffle == 0:
+            excluded_items.add("Onett Teleport")
+            excluded_items.add("Twoson Teleport")
+            excluded_items.add("Happy-Happy Village Teleport")
+            excluded_items.add("Threed Teleport")
+            excluded_items.add("Saturn Valley Teleport")
+            excluded_items.add("Dusty Dunes Teleport")
+            excluded_items.add("Fourside Teleport")
+            excluded_items.add("Winters Teleport")
+            excluded_items.add("Summers Teleport")
+            excluded_items.add("Scaraba Teleport")
+            excluded_items.add("Deep Darkness Teleport")
+            excluded_items.add("Tenda Village Teleport")
+            excluded_items.add("Lost Underworld Teleport")
+            excluded_items.add("Magicant Teleport")
+            excluded_items.add("Progressive Poo PSI")
+
+        if self.options.character_shuffle == 0:
+            excluded_items.add("Paula")
+            excluded_items.add("Jeff")
+            excluded_items.add("Poo")
+            excluded_items.add("Flying Man")
         return excluded_items
 
     def set_classifications(self, name: str) -> Item:
@@ -140,7 +141,7 @@ class EarthBoundWorld(World):
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
-        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool)):
+        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count): #Change to fix event count
             item = self.set_classifications(self.roll_filler())
             pool.append(item)
 
@@ -157,7 +158,10 @@ class EarthBoundWorld(World):
                 self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
                 self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
                 self.multiworld.get_location("Cave of the Present - Star Master", self.player),
+                self.multiworld.get_location("Dalaam - Trial of Mu", self.player),
+                self.multiworld.get_location("Magicant - Ness's Nightmare", self.player),
             ]
+            
             
             psi_items = [
                 self.create_item("Onett Teleport"),
@@ -176,10 +180,8 @@ class EarthBoundWorld(World):
                 self.create_item("Dalaam Teleport"),
                 self.create_item("Magicant Teleport"),]
 
-            self.random.shuffle(psi_locations)
             self.random.shuffle(psi_items)
-                
-
+            
             fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), psi_locations, psi_items, True, True)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:

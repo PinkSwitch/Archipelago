@@ -15,6 +15,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Happy-Happy Village - Prisoner Item", player), lambda state: state.has("Key to the Cabin", player))
     set_rule(world.multiworld.get_location("Happy-Happy Village - Prisoner", player), lambda state: state.has("Key to the Cabin", player))
     set_rule(world.multiworld.get_location("Threed - Boogey Tent Trashcan", player), lambda state: state.has("Jeff", player))
+    set_rule(world.multiworld.get_location("Threed - Zombie Prisoner", player), lambda state: state.has("Bad Key Machine", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: state.has("Pencil Eraser", player))
@@ -46,5 +47,6 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift 2", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Lost Underworld - Talking Rock", player), lambda state: state.has("Tendakraut", player))
     set_rule(world.multiworld.get_location("Giygas", player), lambda state: state.has("Paula", player))
+    set_rule(world.multiworld.get_location("Sanctuary Goal", player), lambda state: state.has("Melody", player, world.options.sanctuaries_required.value))
     
     
