@@ -70,7 +70,7 @@ class EarthBoundWorld(World):
 
         self.locked_locations= []
         self.location_cache= []
-        self.event_count = 13
+        self.event_count = 1
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
@@ -78,6 +78,7 @@ class EarthBoundWorld(World):
 
     def create_regions(self) -> None:
         init_areas(self, get_locations(self))
+        place_static_items(self)
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())
@@ -100,13 +101,10 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
-        if self.options.character_shuffle == 0:
-            self.event_count += 6
 
     def set_rules(self) -> None:
         set_location_rules(self)
         self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
-        place_static_items(self)
 
 
     def get_excluded_items(self) -> Set[str]:
@@ -127,6 +125,7 @@ class EarthBoundWorld(World):
             excluded_items.add("Lost Underworld Teleport")
             excluded_items.add("Magicant Teleport")
             excluded_items.add("Progressive Poo PSI")
+            excluded_items.add("Dalaam Teleport")
 
         if self.options.character_shuffle == 0:
             excluded_items.add("Paula")
@@ -180,7 +179,7 @@ class EarthBoundWorld(World):
                 self.create_item("Dalaam Teleport"),
                 self.create_item("Magicant Teleport"),]
 
-            self.random.shuffle(psi_items)
+            self.random.shuffle(psi_locations) #Fix dalaam, winters, and magicant
             
             fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), psi_locations, psi_items, True, True)
 

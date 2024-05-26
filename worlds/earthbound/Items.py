@@ -299,14 +299,13 @@ item_table: Dict[str, ItemData] = {
     "Deep Darkness Teleport": ItemData("PSI", 0xEB0109, ItemClassification.progression),
     "Tenda Village Teleport": ItemData("PSI", 0xEB010A, ItemClassification.progression),
     "Lost Underworld Teleport": ItemData("PSI", 0xEB010B, ItemClassification.progression),
-    #"Nothing": ItemData("PSI", 0xEB010C, ItemClassification.filler, 0), #Shouldn't be in the item pool, only placed with local PSI
-    "Progressive Poo PSI": ItemData("PSI", 0xEB010D, ItemClassification.useful),
-    "Magicant Teleport": ItemData("PSI", 0xEB010E, ItemClassification.progression),
+    "Progressive Poo PSI": ItemData("PSI", 0xEB010C, ItemClassification.useful, 2),
+    "Magicant Teleport": ItemData("PSI", 0xEB010D, ItemClassification.progression),
 
-    "Paula": ItemData("Characters", 0xEB010F, ItemClassification.progression),
-    "Jeff": ItemData("Characters", 0xEB0110, ItemClassification.progression),
-    "Poo": ItemData("Characters", 0xEB0111, ItemClassification.progression),
-    "Flying Man": ItemData("Characters", 0xEB0112, ItemClassification.useful),
+    "Paula": ItemData("Characters", 0xEB010E, ItemClassification.progression),
+    "Jeff": ItemData("Characters", 0xEB010F, ItemClassification.progression),
+    "Poo": ItemData("Characters", 0xEB0110, ItemClassification.progression),
+    "Flying Man": ItemData("Characters", 0xEB0111, ItemClassification.useful),
 
     'Onett Roadblocks Removed': ItemData('Events', None, ItemClassification.progression, 0),
     'Threed Tunnels Clear': ItemData('Events', None, ItemClassification.progression, 0),
