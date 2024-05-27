@@ -70,7 +70,7 @@ class EarthBoundWorld(World):
 
         self.locked_locations= []
         self.location_cache= []
-        self.event_count = 1
+        self.event_count = 0
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
@@ -101,6 +101,8 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
+        if self.options.psi_shuffle == 0:
+            self.event_count += 12
 
     def set_rules(self) -> None:
         set_location_rules(self)

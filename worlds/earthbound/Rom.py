@@ -78,10 +78,12 @@ class LocalRom(object):
         with open(file, "rb") as stream:
             self.buffer = bytearray(stream.read())
 
+    def apply_patch(self, patch: bytes):
+        self.file = bytearray(bsdiff4.patch(bytes(self.file), patch))
+
+
+
 def patch_rom(world, rom, player: int, multiworld):
-    #rom.write_bytes(0x7060, bytearray([world.options.cave_color.value + 1]))
-    #rom.write_bytes(0x7061, bytearray([world.options.hidden_items.value]))
-    #rom.write_bytes(0x7062, bytearray([world.options.death_link.value]))
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
@@ -104,7 +106,7 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".sfc"
     name: bytearray
     procedure = [
-        ("apply_tokens", ["token_patch.bin"]),
+        ("apply_tokens", ["token_patch.bin"])
     ]
 
     @classmethod

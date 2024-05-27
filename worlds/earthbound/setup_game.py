@@ -80,7 +80,6 @@ def place_static_items(world):
     world.get_location("Pink Cloud Sanctuary").place_locked_item(world.create_item("Melody"))
     world.get_location("Lumine Hall Sanctuary").place_locked_item(world.create_item("Melody"))
     world.get_location("Fire Spring Sanctuary").place_locked_item(world.create_item("Melody"))
-    world.event_count += 11
 
     if world.options.character_shuffle == 0:
         world.get_location("Happy-Happy Village - Prisoner").place_locked_item(world.create_item(world.character_list[0]))
@@ -89,7 +88,6 @@ def place_static_items(world):
         world.get_location("Monotoli Building - Monotoli Character").place_locked_item(world.create_item(world.character_list[3]))
         world.get_location("Dalaam - Throne Character").place_locked_item(world.create_item(world.character_list[4]))
         world.get_location("Deep Darkness - Barf Character").place_locked_item(world.create_item(world.character_list[5]))
-        world.event_count += 6
 
     if world.options.giygas_required == 1:
         world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))#Normal final boss

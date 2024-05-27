@@ -35,7 +35,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Upper Saturn Valley"),
         create_region(world, player, locations_per_region, "Milky Well"),
         create_region(world, player, locations_per_region, "Dusty Dunes Desert"),
-        create_region(world, player, locations_per_region, "Diamond Mine"),
+        create_region(world, player, locations_per_region, "Gold Mine"),
         create_region(world, player, locations_per_region, "Monkey Caves"),
         create_region(world, player, locations_per_region, "Fourside"),
         create_region(world, player, locations_per_region, "Magnet Hill"),
@@ -117,10 +117,10 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region('Upper Saturn Valley', player).add_exits(["Milky Well", "Saturn Valley"])
 
-    multiworld.get_region('Dusty Dunes Desert', player).add_exits(["Threed", "Monkey Caves", "Diamond Mine", "Fourside"],
+    multiworld.get_region('Dusty Dunes Desert', player).add_exits(["Threed", "Monkey Caves", "Gold Mine", "Fourside"],
         {"Threed": lambda state: state.has('Threed Tunnels Clear', player),
          "Monkey Caves": lambda state: state.has('King Banana', player),
-         "Diamond Mine": lambda state: state.has('Mining Permit', player)})
+         "Gold Mine": lambda state: state.has('Mining Permit', player)})
 
     multiworld.get_region('Fourside', player).add_exits(["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed"],
         {"Monotoli Building": lambda state: state.has('Yogurt Dispenser', player),
