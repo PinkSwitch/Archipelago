@@ -2,6 +2,7 @@ import hashlib
 import os
 import Utils
 import typing
+import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from BaseClasses import ItemClassification
 from settings import get_settings
@@ -106,7 +107,8 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".sfc"
     name: bytearray
     procedure = [
-        ("apply_tokens", ["token_patch.bin"])
+        ("apply_tokens", ["token_patch.bin"]),
+        ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"])
     ]
 
     @classmethod

@@ -2,6 +2,8 @@ import base64
 import os
 import typing
 import threading
+import pkgutil
+
 
 from typing import List, Set, TextIO
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
@@ -17,7 +19,7 @@ from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, USHASH
 
-class ESettings(settings.Group):
+class EBSettings(settings.Group):
     class RomFile(settings.SNESRomPath):
         """File name of the EarthBound US ROM"""
         description = "EarthBound ROM File"
@@ -55,7 +57,7 @@ class EarthBoundWorld(World):
     item_name_groups = get_item_names_per_category()
 
     web = EBWeb()
-    settings: typing.ClassVar[EBOptions]
+    settings: typing.ClassVar[EBSettings]
     #topology_present = True
 
     options_dataclass = EBOptions
@@ -201,6 +203,7 @@ class EarthBoundWorld(World):
             world = self.multiworld
             player = self.player
             patch = EBProcPatch()
+            patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
             patch_rom(self, patch, self.player, self.multiworld)
 
             self.rom_name = patch.name
