@@ -214,8 +214,8 @@ item_table: Dict[str, ItemData] = {
 
     "Hand-Aid": ItemData("Food", 0xEB00BC, ItemClassification.useful),
     "Trout Yogurt": ItemData("Food", 0xEB00BD, ItemClassification.filler),
-    "Banana": ItemData("Food", 0xEB00BE, ItemClassification.filler),
-    "Calorie Stick": ItemData("Food", 0xEB00BF, ItemClassification.filler),
+    "Banana": ItemData("Food", 0xEB00BE, ItemClassification.filler, 0),
+    "Calorie Stick": ItemData("Food", 0xEB00BF, ItemClassification.filler, 0),
     "Key to the Tower": ItemData("Key Items", 0xEB00C0, ItemClassification.progression),
     "Meteorite Piece": ItemData("Key Items", 0xEB00C1, ItemClassification.progression),
 
@@ -239,14 +239,14 @@ item_table: Dict[str, ItemData] = {
     "Eraser Eraser": ItemData("Key Items", 0xEB00D2, ItemClassification.progression),
     "Tendakraut": ItemData("Key Items", 0xEB00D3, ItemClassification.progression),
 
-    "T-rex's Bat": ItemData("Ness Weapons", 0xEB00D4, ItemClassification.useful, 0),
+    "T-Rex's Bat": ItemData("Ness Weapons", 0xEB00D4, ItemClassification.useful, 0),
     "Big League Bat": ItemData("Ness Weapons", 0xEB00D5, ItemClassification.useful, 0),
     "Ultimate Bat": ItemData("Ness Weapons", 0xEB00D6, ItemClassification.useful, 0),
     "Double Beam": ItemData("Jeff Weapons", 0xEB00D7, ItemClassification.useful, 0),
     #"Platinum Band": ItemData("Arm Equipment", 0xEB00D8, ItemClassification.useful, 0), Summers copy
     #"Diamond Band": ItemData("Arm Equipment", 0xEB00D9, ItemClassification.useful, 0), Summers Copy
     "Defense Ribbon": ItemData("Other Equipment", 0xEB00DA, ItemClassification.useful, 0),
-    "Talisman Ribbon": ItemData("Other Equipment", 0xEB00DB, ItemClassification.useful, 0),
+    "Talisman Ribbon": ItemData("Other Equipment", 0xEB00DB, ItemClassification.useful),
     "Saturn Ribbon": ItemData("Other Equipment", 0xEB00DC, ItemClassification.useful),
     "Coin of Silence": ItemData("Other Equipment", 0xEB00DD, ItemClassification.useful, 0),
     "Charm Coin": ItemData("Other Equipment", 0xEB00DE, ItemClassification.useful, 0),
@@ -281,7 +281,7 @@ item_table: Dict[str, ItemData] = {
     "Non-Stick Frypan": ItemData("Paula Weapons", 0xEB00F8, ItemClassification.useful, 0),
     "Mr. Saturn Coin": ItemData("Other Equipment", 0xEB00F9, ItemClassification.useful),
     "Meteornium": ItemData("Other Equipment", 0xEB00FA, ItemClassification.useful, 0),
-    "Popsicle": ItemData("Food", 0xEB00EB, ItemClassification.filler, 0),
+    "Popsicle": ItemData("Food", 0xEB00FB, ItemClassification.filler, 0),
     "Cup of Lifenoodles": ItemData("Food", 0xEB00FC, ItemClassification.useful, 0),
     "Carrot Key": ItemData("Key Items", 0xEB00FD, ItemClassification.progression),
 
@@ -360,7 +360,31 @@ common_items: List[str] = [
     "Molokheiya Soup",
     "Plain Roll",
     "Magic Tart",
-    "Popsicle"
+    "Popsicle",
+    "Cracked Bat",
+    "Tee Ball Bat",
+    "Sand Lot Bat",
+    "Minor League Bat",
+    "Fry Pan",
+    "Thick Fry Pan",
+    "Deluxe Fry Pan",
+    "Toy Air Gun",
+    "Zip Gun",
+    "Broken Gadget",
+    "Yo-yo",
+    "Slingshot",
+    "Travel Charm",
+    "Great Charm",
+    "Cheap Bracelet",
+    "Copper Bracelet",
+    "Silver Bracelet",
+    "Baseball Cap",
+    "Mr. Baseball Cap",
+    "Holmes Hat",
+    "Hard Hat",
+    "Ribbon",
+    "Red Ribbon",
+    "Coin of Defense",
 ]
 
 uncommon_items: List[str] = [
@@ -401,7 +425,25 @@ uncommon_items: List[str] = [
     "Beef Jerky",
     "Mammoth Burger",
     "Bottle of DXwater",
-    "Magic Pudding"
+    "Magic Pudding",
+    "Mr. Baseball Bat",
+    "T-Rex's Bat",
+    "Big League Bat",
+    "Chef's Fry Pan",
+    "Non-Stick Frypan",
+    "French Fry Pan",
+    "Hyper Beam",
+    "Crusher Beam",
+    "Trick Yo-yo",
+    "Bionic Slingshot",
+    "Crystal Charm",
+    "Gold Bracelet",
+    "Platinum Band",
+    "Diamond Band",
+    "Defense Ribbon",
+    "Lucky Coin",
+    "Bazooka"
+
 ]
 
 rare_items: List[str] = [
@@ -411,8 +453,6 @@ rare_items: List[str] = [
     "Sea Pendant",
     "Star Pendant",
     "Goddess Ribbon",
-    "Coin of Defense",
-    "Lucky Coin",
     "Talisman Coin",
     "Shiny Coin",
     "Large Pizza",
@@ -436,7 +476,14 @@ rare_items: List[str] = [
     "Piggy Jelly",
     "Spicy Jerky",
     "Luxury Jerky",
-    "Cup of Lifenoodles"
+    "Cup of Lifenoodles",
+    "Hall of Fame Bat",
+    "Ultimate Bat",
+    "Gutsy Bat",
+    "Casey Bat",
+    "Holy Fry Pan",
+    "Magic Fry Pan",
+    "Combat Yo-yo"
 ]
 
 def get_item_names_per_category() -> Dict[str, Set[str]]:

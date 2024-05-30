@@ -100,7 +100,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Snow Wood Boarding School", "Snow Wood - Many Present Room Present #5", 0xEB0055),
     LocationData("Snow Wood Boarding School", "Snow Wood - Many Present Room Present #6", 0xEB0056),
     LocationData("Snow Wood Boarding School", "Snow Wood - Many Present Room Present #7", 0xEB0057),
-    #LocationData("Snow Wood Boarding School", "Snow Wood - Many Present Room Present #7", 0xEB0058),
+    LocationData("Scaraba", "Scaraba - Snake Bag Salesman", 0xEB0058), #Commented out, location changed
     LocationData("Snow Wood Boarding School", "Snow Wood - Upper Right Locker", 0xEB0059),
     LocationData("Snow Wood Boarding School", "Snow Wood - Upper Left Locker", 0xEB005A),
     LocationData("Snow Wood Boarding School", "Snow Wood - Bottom Right Locker", 0xEB005B),

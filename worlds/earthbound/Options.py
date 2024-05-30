@@ -64,14 +64,14 @@ class CommonWeight(Range):
     display_name = "Common Filler Weight"
     range_start = 1
     range_end = 100
-    default = 60
+    default = 80
 
 class UncommonWeight(Range):
     """How many of the eight "Your Sanctuary" locations are required to be cleared."""
     display_name = "Uncommon Filler Weight"
     range_start = 1
     range_end = 100
-    default = 4
+    default = 30
 
 class RareWeight(Range):
     """How many of the eight "Your Sanctuary" locations are required to be cleared."""

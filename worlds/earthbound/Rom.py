@@ -4,6 +4,7 @@ import Utils
 import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
+from .local_data import item_id_table, location_dialogue, present_locations
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -85,6 +86,70 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, player: int, multiworld):
+    starting_area_coordinates = {
+                    0: [0x50, 0x04, 0xB5, 0x1F], #North Onett
+                    1: [0x52, 0x06, 0x4C, 0x1F], #Onett
+                    2: [0xEF, 0x22, 0x41, 0x1F], #Twoson
+                    3: [0x53, 0x06, 0x85, 0x1D], #Happy Happy
+                    4: [0x55, 0x24, 0x69, 0x1D], #Threed
+                    5: [0x60, 0x1D, 0x30, 0x01], #Saturn Valley
+                    6: [0xAB, 0x10, 0xF3, 0x09], #Fourside
+                    7: [0xE3, 0x09, 0xA3, 0x1D], #Winters
+                    8: [0xCB, 0x24, 0x7B, 0x1E], #Summers
+                    9: [0xD0, 0x1E, 0x31, 0x1D], #Dalaam
+                    10: [0xC7, 0x1F, 0x37, 0x19], #Scaraba
+                    11: [0xDD, 0x1B, 0xB7, 0x17], #Deep Darkness
+                    12: [0xD0, 0x25, 0x47, 0x18], #Tenda Village
+                    13: [0x9C, 0x00, 0x84, 0x17], #Lost Underworld
+                    14: [0x4B, 0x11, 0xAD, 0x18] #Magicant
+    }
+
+
+    if world.options.random_start_location != 0:
+        rom.write_bytes(0x0F96C2, bytearray([0x69, 0x00]))
+        rom.write_bytes(0x0F9618, bytearray([0x69, 0x00]))
+        rom.write_bytes(0x0F9629, bytearray([0x69, 0x00]))#Block Northern Onett
+        rom.write_bytes(0x00B66A, bytearray([0x05]))#Fix starting direction
+    
+    rom.write_bytes(0x01FE9B, bytearray(starting_area_coordinates[world.start_location][0:2]))
+    rom.write_bytes(0x01FE9E, bytearray(starting_area_coordinates[world.start_location][2:4]))#Start position
+
+    if world.options.alternate_sanctuary_goal:
+        rom.write_bytes(0x04FD72, bytearray(world.options.sanctuaries_required.value + 2))
+
+    if world.options.magicant_mode == 2:
+        rom.write_bytes(0x04FD71, bytearray(world.options.sanctuaries_required.value + 1))
+    elif world.options.magicant_mode == 1:
+        rom.write_bytes(0x2E9C29, bytearray([0x01, 0x95, 0xEE])) #Replace Sanctuary goal with Magicant if forced goal
+
+    rom.write_bytes(0x04FD70, bytearray(world.options.sanctuaries_required.value))
+    if world.options.giygas_required:
+        if world.options.magicant_mode == 1:
+            rom.write_bytes(0x2EA26A, bytearray([0xFF])) #Change Magicant to absorb FIX THIS!!!!!!!!!!!!!!!!!!
+    else:
+        if world.options.magicant_mode == 1:
+            rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #Change Magicant to win if required and goal
+        else:
+            rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5, 0xEE])) #If no final boss, write goal at sanc
+
+    for location in world.multiworld.get_locations(player):
+        name = location.item.name
+        if location.item not in item_id_table:
+            item_id = 0xA9
+        else:
+            item_id = item_id_table[name]
+
+        if location in location_dialogue:
+            rom.write_bytes(location_dialogue[name], bytearray(item_id[item_id_table]))
+
+        if location in present_locations:
+            if location.item.name == "Nothing": #I can change this to "In nothing_table" later
+                rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
+            elif name in item_id_table:
+                rom.write_bytes(present_locations[name], bytearray(item_id[item_id_table], 0x00))
+            elif name in psi_item_table:
+                rom.write_bytes(present_locations[name], bytearray(item_id[psi_item_table], 0x00, 0x01))
+        
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
@@ -143,3 +208,11 @@ def get_base_rom_path(file_name: str = "") -> str:
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
+
+
+#Write sanctuary count figure later
+#Fix NPC item names around Fourside, Moonside one broke
+#Remove hint man text
+#Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
+#For presents, maybe I can make an action script or something that pulls the present item id as a teleport/character
+#log tpt stuff when interacting with npcs...?
