@@ -174,16 +174,18 @@ class EarthBoundWorld(World):
                 self.create_item("Saturn Valley Teleport"),
                 self.create_item("Dusty Dunes Teleport"),
                 self.create_item("Fourside Teleport"),
-                self.create_item("Winters Teleport"),
                 self.create_item("Summers Teleport"),
                 self.create_item("Scaraba Teleport"),
                 self.create_item("Deep Darkness Teleport"),
                 self.create_item("Tenda Village Teleport"),
-                self.create_item("Lost Underworld Teleport"),
-                self.create_item("Dalaam Teleport"),
-                self.create_item("Magicant Teleport"),]
+                self.create_item("Lost Underworld Teleport")]
 
-            self.random.shuffle(psi_locations) #Fix dalaam, winters, and magicant
+            self.random.shuffle(psi_locations)
+            self.random.shuffle(psi_items)
+            psi_items.extend([
+                self.create_item("Dalaam Teleport"),
+                self.create_item("Magicant Teleport"),
+                self.create_item("Winters Teleport")])
             
             fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), psi_locations, psi_items, True, True)
 

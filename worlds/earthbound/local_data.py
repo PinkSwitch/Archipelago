@@ -1,8 +1,8 @@
 check_table = {
     0xEB0000: [0x9C11, 3],
-    0xEB0001: [0x491, 0],
-    0xEB0002: [0x491, 0],
-    0xEB0003: [0x491, 0],
+    0xEB0001: [0x9C6C, 4],
+    0xEB0002: [0x9C6B, 7],
+    0xEB0003: [0x9C11, 6],
     0xEB0004: [0x491, 0],
     0xEB0005: [0x491, 0],
     0xEB0006: [0x491, 0],
@@ -16,17 +16,19 @@ check_table = {
     0xEB000E: [0x491, 0],
 }
 
-location_dialogue = {
-    "Onett - Tracy Gift": [0x07616B]
+location_dialogue = { #Locations which just need to print the name of the item
+    "Onett - Tracy Gift": 0x07616B
 }
 
-npc_locations = {
-    "Onett - Tracy Gift": [0x07617B]
+npc_locations = { #Locations given to you by an NPC
+    "Onett - Tracy Gift": 0x07617B,
+    "Onett - Meteor Item": 0x086304
 
 }
 
-present_locations = {
-    "Onett - Tracy's Room Present": [0x0FE756]
+present_locations = {#Field presents
+    "Onett - Tracy's Room Present": 0x0FE756,
+    "Onett - Hilltop Present": 0x0FE701
 }
 
 item_id_table = {
@@ -275,4 +277,60 @@ item_id_table = {
     "Popsicle": 0xFB,
     "Cup of Lifenoodles": 0xFC,
     "Carrot Key": 0xFD
+}
+
+psi_item_table = {
+    "Onett Teleport": 0x01,
+    "Twoson Teleport": 0x02,
+    "Happy-Happy Village Teleport": 0x03,
+    "Threed Teleport": 0x04,
+    "Saturn Valley Teleport": 0x05,
+    "Dusty Dunes Teleport": 0x06,
+    "Fourside Teleport": 0x07,
+    "Winters Teleport": 0x08,
+    "Summers Teleport": 0x09,
+    "Scaraba Teleport": 0x0A,
+    "Dalaam Teleport": 0x0B,
+    "Deep Darkness Teleport": 0x0C,
+    "Tenda Village Teleport": 0x0D,
+    "Lost Underworld Teleport": 0x0E,
+    "Magicant Teleport": 0x0F,
+    "Progressive Poo PSI": 0x10
+}
+
+special_name_table = {
+    "Onett Teleport": [0x00, 0x10, 0x92, 0xEE],
+    "Twoson Teleport": [0x01, 0x40, 0x92, 0xEE],
+    "Happy-Happy Village Teleport": [0x02, 0x71, 0x92, 0xEE],
+    "Threed Teleport": [0x03, 0xAF, 0x92, 0xEE],
+    "Saturn Valley Teleport": [0x04, 0xE0, 0x92, 0xEE],
+    "Dusty Dunes Teleport": [0x05, 0x18, 0x93, 0xEE],
+    "Fourside Teleport": [0x06, 0x55, 0x93, 0xEE],
+    "Winters Teleport": [0x07, 0x88, 0x93, 0xEE],
+    "Summers Teleport": [0x08, 0xBA, 0x93, 0xEE],
+    "Scaraba Teleport": [0x09, 0xEC, 0x93, 0xEE],
+    "Dalaam Teleport": [0x0A, 0x1E, 0x94, 0xEE],
+    "Deep Darkness Teleport": [0x0B, 0x4F, 0x94, 0xEE],
+    "Tenda Village Teleport": [0x0C, 0x8B, 0x94, 0xEE],
+    "Lost Underworld Teleport": [0x0D, 0xC3, 0x94, 0xEE],
+    "Progressive Poo PSI": [0x0E, 0x54, 0x95, 0xEE],
+    "Paula": 0x0F,
+    "Jeff": 0x10,
+    "Poo": 0x11,
+    "Flying Man": 0x12,
+    "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE]
+}
+
+npc_redirects = {
+    "Onett - Meteor Item": 0x086308
+}
+
+
+psi_locations = {
+    "Onett - Mani Mani Statue": 0x2EA979,
+    "Onett - Buzz Buzz": 0x05F224
+}
+
+psi_item_text = {
+    "Onett - Mani Mani Statue": 0x2EA979,
 }

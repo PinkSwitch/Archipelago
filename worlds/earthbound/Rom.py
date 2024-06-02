@@ -4,7 +4,7 @@ import Utils
 import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
-from .local_data import item_id_table, location_dialogue, present_locations
+from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -109,7 +109,8 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0F96C2, bytearray([0x69, 0x00]))
         rom.write_bytes(0x0F9618, bytearray([0x69, 0x00]))
         rom.write_bytes(0x0F9629, bytearray([0x69, 0x00]))#Block Northern Onett
-        rom.write_bytes(0x00B66A, bytearray([0x05]))#Fix starting direction
+    else:
+        rom.write_bytes(0x00B66A, bytearray([0x06]))#Fix starting direction
     
     rom.write_bytes(0x01FE9B, bytearray(starting_area_coordinates[world.start_location][0:2]))
     rom.write_bytes(0x01FE9E, bytearray(starting_area_coordinates[world.start_location][2:4]))#Start position
@@ -133,28 +134,48 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5, 0xEE])) #If no final boss, write goal at sanc
 
     for location in world.multiworld.get_locations(player):
-        name = location.item.name
-        if location.item not in item_id_table:
-            item_id = 0xA9
+        name = location.name
+        item = location.item.name
+        if item not in item_id_table:
+            item_id = 0xAD
         else:
-            item_id = item_id_table[name]
+            item_id = item_id_table[item]
 
-        if location in location_dialogue:
-            rom.write_bytes(location_dialogue[name], bytearray(item_id[item_id_table]))
+        if name in location_dialogue:
+            if item in item_id_table or location.item.player != location.player:
+                rom.write_bytes(location_dialogue[name], bytearray([item_id]))
+            elif item in [psi_item_table, character_item_table]:
+                rom.write_bytes(location_dialogue[name] - 1, bytearray([0x16, special_name_table[item][0]]))
 
-        if location in present_locations:
-            if location.item.name == "Nothing": #I can change this to "In nothing_table" later
+        if name in present_locations:
+            if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
                 rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
-            elif name in item_id_table:
-                rom.write_bytes(present_locations[name], bytearray(item_id[item_id_table], 0x00))
-            elif name in psi_item_table:
-                rom.write_bytes(present_locations[name], bytearray(item_id[psi_item_table], 0x00, 0x01))
+            elif item in item_id_table or location.item.player != location.player:
+                rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
+            elif item in psi_item_table:
+                rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
+            elif item in char_item_table:
+                rom.write_bytes(present_locations[name], bytearray([character_item_table[item], 0x00, 0x03]))
+
+        elif name in npc_locations:
+            if item in item_id_table or location.item.player != location.player:
+                rom.write_bytes(npc_locations[name], bytearray([item_id]))
+            elif item in [psi_item_table, character_item_table]:
+                rom.write_bytes(npc_locations[name], bytearray([0x00]))
+                rom.write_bytes(npc_redirects[name], bytearray([special_name_table[item][1:4]]))
+
+        elif name in psi_locations:
+            if item in special_name_table:
+                rom.write_bytes(psi_locations[name], bytearray(special_name_table[item][1:4]))
+            else:
+                rom.write_bytes(psi_locations[name], bytearray(psi_item_text[item]))
+                rom.write_bytes(psi_plain_item[name], bytearray([item_id]))
         
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
-    rom.write_bytes(0x007040, rom.name)
+    rom.write_bytes(0x00FFC0, rom.name)
 
     player_name_length = 0
     for i, byte in enumerate(world.multiworld.player_name[player].encode("utf-8")):
@@ -172,8 +193,8 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".sfc"
     name: bytearray
     procedure = [
-        ("apply_tokens", ["token_patch.bin"]),
-        ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"])
+        ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"]),
+        ("apply_tokens", ["token_patch.bin"])
     ]
 
     @classmethod
@@ -214,5 +235,5 @@ def get_base_rom_path(file_name: str = "") -> str:
 #Fix NPC item names around Fourside, Moonside one broke
 #Remove hint man text
 #Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
-#For presents, maybe I can make an action script or something that pulls the present item id as a teleport/character
 #log tpt stuff when interacting with npcs...?
+#Think about getting items from NPCs. Maybe I can insert that GetItemNamecall to more scripts...

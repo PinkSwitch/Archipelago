@@ -22,7 +22,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Onett", "Onett - Library Bookshelf", 0xEB0007),
     LocationData("Onett", "Onett - Burger Shop Trashcan", 0xEB0008),
     LocationData("Onett", "Onett - Treehouse Guy", 0xEB0009),
-    LocationData("Twoson", "Onett - South Road Present", 0xEB000A), #Intended; Part of Onett but logically in Twoson
+    LocationData("Twoson", "Onett - South Road Present", 0xEB000A), #Intended; Part of Onett but logically in Twoson maybe change that
     LocationData("Onett", "Onett - Hotel Trashcan", 0xEB000B),
     LocationData("Onett", "Onett - Arcade Trashcan", 0xEB000C),
     LocationData("Onett", "Onett - Mayor Pirkle", 0xEB000D),
