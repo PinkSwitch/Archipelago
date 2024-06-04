@@ -161,15 +161,15 @@ def patch_rom(world, rom, player: int, multiworld):
             if item in item_id_table or location.item.player != location.player:
                 rom.write_bytes(npc_locations[name], bytearray([item_id]))
             elif item in [psi_item_table, character_item_table]:
-                rom.write_bytes(npc_locations[name], bytearray([0x00]))
-                rom.write_bytes(npc_redirects[name], bytearray([special_name_table[item][1:4]]))
+                rom.write_bytes(npc_locations[name] -3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][5]]))
+                rom.write_bytes(npc_locations[name] +2, bytearray([0xA5, 0xAA, 0xEE]))
 
         elif name in psi_locations:
             if item in special_name_table:
-                rom.write_bytes(psi_locations[name], bytearray(special_name_table[item][1:4]))
+                rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
             else:
-                rom.write_bytes(psi_locations[name], bytearray(psi_item_text[item]))
-                rom.write_bytes(psi_plain_item[name], bytearray([item_id]))
+                rom.write_bytes(psi_locations[name], bytearray(psi_locations[name][1:4]))
+                rom.write_bytes(psi_locations[name][5], bytearray([item_id]))
         
 
     from Main import __version__

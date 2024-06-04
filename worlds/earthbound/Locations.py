@@ -22,7 +22,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Onett", "Onett - Library Bookshelf", 0xEB0007),
     LocationData("Onett", "Onett - Burger Shop Trashcan", 0xEB0008),
     LocationData("Onett", "Onett - Treehouse Guy", 0xEB0009),
-    LocationData("Twoson", "Onett - South Road Present", 0xEB000A), #Intended; Part of Onett but logically in Twoson maybe change that
+    LocationData("Onett", "Onett - South Road Present", 0xEB000A),
     LocationData("Onett", "Onett - Hotel Trashcan", 0xEB000B),
     LocationData("Onett", "Onett - Arcade Trashcan", 0xEB000C),
     LocationData("Onett", "Onett - Mayor Pirkle", 0xEB000D),
@@ -141,7 +141,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Gold Mine", "Gold Mine - B1F Solo Present", 0xEB007E),
     LocationData("Gold Mine", "Gold Mine - West Crossroad Detour Present", 0xEB007F),
     LocationData("Gold Mine", "Gold Mine - B1F Junction Present", 0xEB0080),
-    LocationData("Gold Mine", "Diamond Mine - B1F Junction Mole Present", 0xEB0081),
+    LocationData("Gold Mine", "Gold Mine - B1F Junction Mole Present", 0xEB0081),
     LocationData("Monkey Caves", "Monkey Caves - West End Chest", 0xEB0082),
     LocationData("Monkey Caves", "Monkey Caves - West End Trashcan", 0xEB0083),
     LocationData("Monkey Caves", "Monkey Caves - East End Chest", 0xEB0084),
