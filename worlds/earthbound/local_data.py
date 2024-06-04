@@ -7,19 +7,20 @@ check_table = {
     0xEB0005: [0x9C82, 1],
     0xEB0006: [0x9C47, 6],
     0xEB0007: [0x9C13, 0],
-    0xEB0008: [0x491, 0],
+    0xEB0008: [0x9C6C, 0],
     0xEB0009: [0x491, 0],
-    0xEB000A: [0x491, 0],
-    0xEB000B: [0x491, 0],
-    0xEB000C: [0x491, 0],
+    0xEB000A: [0x9C6C, 1],
+    0xEB000B: [0x9C6C, 2],
+    0xEB000C: [0x9C6C, 3],
     0xEB000D: [0x491, 0],
     0xEB000E: [0x491, 0],
 }
 
 location_dialogue = { #Locations which just need to print the name of the item
-    "Onett - Tracy Gift": 0x07616B,
-    "Onett - Library Counter": 0x05EC0C,
-    "Onett - Treehouse Guy": 0x073F34
+    "Onett - Tracy Gift": [0x07616B],
+    "Onett - Library Counter": [0x05EC0C],
+    "Onett - Treehouse Guy": [0x073F34],
+    "Onett - Mayor Pirkle": [0x0661D6, 0x0FE741]
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -27,17 +28,22 @@ npc_locations = { #Locations given to you by an NPC
     "Onett - Meteor Item": 0x086304,
     "Onett - Library Counter": 0x07339C,
     "Onett - Library Bookshelf": 0x087E7B,
-    "Onett - Treehouse Guy": 0x073F78
+    "Onett - Treehouse Guy": 0x073F78,
+    "Onett - Mayor Pirkle": 0x072D61
 
 }
 
 present_locations = {#Field presents
     "Onett - Tracy's Room Present": 0x0FE756,
-    "Onett - Hilltop Present": 0x0FE701
+    "Onett - Hilltop Present": 0x0FE701,
+    "Onett - Burger Shop Trashcan": 0x0FE712,
+    "Onett - South Road Present": 0x0FE723,
+    "Onett - Hotel Trashcan": 0x0FE734,
+    "Onett - Arcade Trashcan": 0x0FE745
 }
 
 psi_locations = {
-    "Onett - Mani Mani Statue": [0x2EA979, 0x90, 0xA9, 0xEE, 0x2EA9B9],
+    "Onett - Mani Mani Statue": [0x2EA979, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
     "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949]
 }
 

@@ -6,9 +6,10 @@ if TYPE_CHECKING:
 
 def set_location_rules(world: "EarthBoundWorld") -> None:
     player = world.player
+    twoson_paula_room_present = world.get_location("Twoson - Paula's Room Present")
 
     set_rule(world.multiworld.get_location("Onett - Traveling Entertainer", player), lambda state: state.has("Key to the Shack", player))
-    set_rule(world.multiworld.get_location("Onett - South Road Present", player), lambda state: state.multiworld.get_location("Twoson - Paula's Room Present", player).can_reach(state))
+    set_rule(world.multiworld.get_location("Onett - South Road Present", player), lambda state: twoson_paula_room_present.can_reach(state))
     set_rule(world.multiworld.get_location("Twoson - Paula's Mother", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Twoson - Everdred Meeting", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Twoson - Insignificant Location", player), lambda state: state.has("Insignificant Item", player))
