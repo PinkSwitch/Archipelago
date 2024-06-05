@@ -12,15 +12,38 @@ check_table = {
     0xEB000A: [0x9C6C, 1],
     0xEB000B: [0x9C6C, 2],
     0xEB000C: [0x9C6C, 3],
-    0xEB000D: [0x491, 0],
-    0xEB000E: [0x491, 0],
+    0xEB000D: [0x9C11, 7],
+    0xEB000E: [0x9C11, 5],
+    0xEB000F: [0x9C6C, 6],
+    0xEB0010: [0x9C6C, 7],
+    0xEB0011: [0x9C6C, 5],
+
+    0xEB0012: [0x9C12, 0],
+    0xEB0013: [0x9C, 0],
+    0xEB0014: [0x9C6D, 1],
+    0xEB0015: [0x9C6D, 2],
+    0xEB0016: [0x9C6D, 0],
+    0xEB0017: [0x9C4C, 5],
+    0xEB0018: [0x9C12, 2],
+    0xEB0019: [0x9C12, 1],
+    0xEB001A: [0x9C12, 3],
+    0xEB001B: [0x9C12, 4],
+    0xEB001C: [0x9C85, 2],
 }
 
 location_dialogue = { #Locations which just need to print the name of the item
     "Onett - Tracy Gift": [0x07616B],
     "Onett - Library Counter": [0x05EC0C],
     "Onett - Treehouse Guy": [0x073F34],
-    "Onett - Mayor Pirkle": [0x0661D6, 0x0FE741]
+    "Onett - Mayor Pirkle": [0x0661D6, 0x0FE741],
+    "Onett - Traveling Entertainer": [0x07476C],
+    "Twoson - Bike Shop Rental": [0x080046],
+    "Twoson - Orange Kid Donation": [0x08134A],
+    "Twoson - Apple Kid Invention": [0x081F89],
+    "Twoson - Antique Shop": [0x093E5F],
+    "Twoson - Paula's Mother": [0x08061B],
+    "Twoson - Everdred Meeting": [0x095FA2],
+    "Twoson - Insignificant Location": [0x094EB1],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -29,7 +52,16 @@ npc_locations = { #Locations given to you by an NPC
     "Onett - Library Counter": 0x07339C,
     "Onett - Library Bookshelf": 0x087E7B,
     "Onett - Treehouse Guy": 0x073F78,
-    "Onett - Mayor Pirkle": 0x072D61
+    "Onett - Mayor Pirkle": 0x072D61,
+    "Onett - Traveling Entertainer": 0x07477C,
+    "Twoson - Bike Shop Rental": 0x0801A5,
+    "Twoson - Orange Kid Donation": 0x081362,
+    "Twoson - Apple Kid's Mouse": 0x0819DF,
+    "Twoson - Apple Kid Invention": 0x082015,
+    "Twoson - Antique Shop": 0x2EAEFD,
+    "Twoson - Paula's Mother": 0x08062F,
+    "Twoson - Everdred Meeting": 0x096052,
+    "Twoson - Insignificant Location": 0x094ED1,
 
 }
 
@@ -39,7 +71,13 @@ present_locations = {#Field presents
     "Onett - Burger Shop Trashcan": 0x0FE712,
     "Onett - South Road Present": 0x0FE723,
     "Onett - Hotel Trashcan": 0x0FE734,
-    "Onett - Arcade Trashcan": 0x0FE745
+    "Onett - Arcade Trashcan": 0x0FE745,
+    "Giant Step - First Cave Present": 0x0FE778,
+    "Giant Step - Floor 2 Cave Present": 0x0FE789,
+    "Giant Step - Floor 3 Present": 0x0FE767,
+    "Twoson - Paula's Room Present": 0x0FE7AB,
+    "Twoson - Apple Kid Trashcan": 0x0FE7BC,
+    "Twoson - South of Town Present": 0x0FE79A,
 }
 
 psi_locations = {
@@ -331,7 +369,7 @@ special_name_table = {
     "Lost Underworld Teleport": [0x0D, 0xC3, 0x94, 0xEE],
     "Progressive Poo PSI": [0x0E, 0x54, 0x95, 0xEE],
     "Paula": [0x0F, 0x30, 0xF8, 0xD5],
-    "Jeff": 0x10,
+    "Jeff": [0x10, 0x37, 0xF8, 0xD5],
     "Poo": [0x11, 0x3E, 0xF8, 0xD5],
     "Flying Man": 0x12,
     "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE]

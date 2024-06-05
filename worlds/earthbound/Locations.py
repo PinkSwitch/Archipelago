@@ -28,10 +28,10 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Onett", "Onett - Mayor Pirkle", 0xEB000D),
     LocationData("Onett", "Onett - Traveling Entertainer", 0xEB000E),
     LocationData("Giant Step", "Giant Step - First Cave Present", 0xEB000F),
-    LocationData("Giant Step", "Giant Step - Left Cave Present", 0xEB0010),
-    LocationData("Giant Step", "Giant Step - Floor 2 Present", 0xEB0011),
+    LocationData("Giant Step", "Giant Step - Floor 2 Cave Present", 0xEB0010),
+    LocationData("Giant Step", "Giant Step - Floor 3 Present", 0xEB0011),
     LocationData("Twoson", "Twoson - Bike Shop Rental", 0xEB0012),
-    #LocationData("Twoson", "Twoson - Hotel Guest Conversation #17", 0xEB0013), ?
+    LocationData("Twoson", "Twoson - Antique Shop", 0xEB0013),
     LocationData("Twoson", "Twoson - Paula's Room Present", 0xEB0014),
     LocationData("Twoson", "Twoson - Apple Kid Trashcan", 0xEB0015),
     LocationData("Twoson", "Twoson - South of Town Present", 0xEB0016),

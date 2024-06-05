@@ -138,6 +138,8 @@ def patch_rom(world, rom, player: int, multiworld):
         item = location.item.name
         if item not in item_id_table:
             item_id = 0xAD
+        elif item == "Lucky Sandwich":
+            item_id = world.random.randint(0xE2, 0xE7)
         else:
             item_id = item_id_table[item]
 
