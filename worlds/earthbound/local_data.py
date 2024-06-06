@@ -29,6 +29,19 @@ check_table = {
     0xEB001A: [0x9C12, 3],
     0xEB001B: [0x9C12, 4],
     0xEB001C: [0x9C85, 2],
+    0xEB001D: [0x9C6E, 0],
+    0xEB001E: [0x9C6D, 5],
+    0xEB001F: [0x9C6D, 7],
+    0xEB0020: [0x9C6E, 1],
+    0xEB0021: [0x9C6E, 2],
+    0xEB0022: [0x9C6E, 6],
+
+    0xEB0023: [0x9C83, 7],
+    0xEB0024: [0x9C6D, 4],
+    0xEB0025: [0x9C6D, 3],
+    0xEB0026: [0x9C, 5],
+    0xEB0027: [0x9C, 7],
+    0xEB0028: [0x9C, 1],
 }
 
 location_dialogue = { #Locations which just need to print the name of the item
@@ -44,24 +57,27 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Twoson - Paula's Mother": [0x08061B],
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
+    "Happy-Happy Village - Prisoner Item": [0x0F95FE],
 }
 
 npc_locations = { #Locations given to you by an NPC
-    "Onett - Tracy Gift": 0x07617B,
-    "Onett - Meteor Item": 0x086304,
-    "Onett - Library Counter": 0x07339C,
-    "Onett - Library Bookshelf": 0x087E7B,
-    "Onett - Treehouse Guy": 0x073F78,
-    "Onett - Mayor Pirkle": 0x072D61,
-    "Onett - Traveling Entertainer": 0x07477C,
-    "Twoson - Bike Shop Rental": 0x0801A5,
-    "Twoson - Orange Kid Donation": 0x081362,
-    "Twoson - Apple Kid's Mouse": 0x0819DF,
-    "Twoson - Apple Kid Invention": 0x082015,
-    "Twoson - Antique Shop": 0x2EAEFD,
-    "Twoson - Paula's Mother": 0x08062F,
-    "Twoson - Everdred Meeting": 0x096052,
-    "Twoson - Insignificant Location": 0x094ED1,
+    "Onett - Tracy Gift": [0x07617B],
+    "Onett - Meteor Item": [0x086304],
+    "Onett - Library Counter": [0x07339C],
+    "Onett - Library Bookshelf": [0x087E7B],
+    "Onett - Treehouse Guy": [0x073F78],
+    "Onett - Mayor Pirkle": [0x072D61],
+    "Onett - Traveling Entertainer": [0x07477C],
+    "Twoson - Bike Shop Rental": [0x0801A5],
+    "Twoson - Orange Kid Donation": [0x081362],
+    "Twoson - Apple Kid's Mouse": [0x0819DF],
+    "Twoson - Apple Kid Invention": [0x082015],
+    "Twoson - Antique Shop": [0x2EAEFD],
+    "Twoson - Paula's Mother": [0x08062F],
+    "Twoson - Everdred Meeting": [0x096052],
+    "Twoson - Insignificant Location": [0x094ED1],
+    "Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B7],
+    "Happy-Happy Village - Prisoner Item": [0x0F9664],
 
 }
 
@@ -78,11 +94,28 @@ present_locations = {#Field presents
     "Twoson - Paula's Room Present": 0x0FE7AB,
     "Twoson - Apple Kid Trashcan": 0x0FE7BC,
     "Twoson - South of Town Present": 0x0FE79A,
+    "Peaceful Rest Valley - Split Hill Present": 0x0FE822,
+    "Peaceful Rest Valley - Hill Nook Present": 0x0FE7EF,
+    "Peaceful Rest Valley - South of Bridge Present": 0x0FE811,
+    "Peaceful Rest Valley - Dead End Present": 0x0FE833,
+    "Peaceful Rest Valley - River Overlook Present": 0x0FE844,
+    "Peaceful Rest Valley - North Side Present": 0x0FE800,
+    "Happy-Happy Village - Right HQ Present": 0x0FE7DE,
+    "Happy-Happy Village - Left HQ Present": 0x0FE7CD,
 }
 
 psi_locations = {
     "Onett - Mani Mani Statue": [0x2EA979, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
     "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949]
+}
+
+character_locations = {
+    #0: Action pointer, call the actual item being given
+    #1: Sprite ID
+    #2: Secondary routine pointer, used for items and psi
+    #3: Inventory item give
+    #4: Standard item routine address
+    "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0x1E]
 }
 
 item_id_table = {
@@ -352,6 +385,13 @@ psi_item_table = {
     "Progressive Poo PSI": 0x10
 }
 
+character_item_table = {
+    "Paula": [0x01, 0x01], 
+    "Jeff": [0x02, 0x02],
+    "Poo": [0x03, 0x03],
+    "Flying Man": [0x0B, 0x27]
+}
+
 special_name_table = {
     "Onett Teleport": [0x00, 0x10, 0x92, 0xEE, 0x01],
     "Twoson Teleport": [0x01, 0x40, 0x92, 0xEE, 0x02],
@@ -371,6 +411,6 @@ special_name_table = {
     "Paula": [0x0F, 0x30, 0xF8, 0xD5],
     "Jeff": [0x10, 0x37, 0xF8, 0xD5],
     "Poo": [0x11, 0x3E, 0xF8, 0xD5],
-    "Flying Man": 0x12,
+    "Flying Man": [0x12, 0x45, 0xF8, 0xD5],
     "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE]
 }

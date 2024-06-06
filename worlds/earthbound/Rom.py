@@ -4,7 +4,7 @@ import Utils
 import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
-from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table
+from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -134,45 +134,65 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5, 0xEE])) #If no final boss, write goal at sanc
 
     for location in world.multiworld.get_locations(player):
-        name = location.name
-        item = location.item.name
-        if item not in item_id_table:
-            item_id = 0xAD
-        elif item == "Lucky Sandwich":
-            item_id = world.random.randint(0xE2, 0xE7)
-        else:
-            item_id = item_id_table[item]
-
-        if name in location_dialogue:
-            for i in range(len(location_dialogue[name])):
-                if item in item_id_table or location.item.player != location.player:
-                    rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
-                elif item in [psi_item_table, character_item_table]:
-                    rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
-
-        if name in present_locations:
-            if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
-                rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
-            elif item in item_id_table or location.item.player != location.player:
-                rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
-            elif item in psi_item_table:
-                rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
-            elif item in char_item_table:
-                rom.write_bytes(present_locations[name], bytearray([character_item_table[item], 0x00, 0x03]))
-
-        elif name in npc_locations:
-            if item in item_id_table or location.item.player != location.player:
-                rom.write_bytes(npc_locations[name], bytearray([item_id]))
-            elif item in [psi_item_table, character_item_table]:
-                rom.write_bytes(npc_locations[name] -3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][5]]))
-                rom.write_bytes(npc_locations[name] +2, bytearray([0xA5, 0xAA, 0xEE]))
-
-        elif name in psi_locations:
-            if item in special_name_table:
-                rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
+        if location.address:
+            name = location.name
+            item = location.item.name
+            if item not in item_id_table:
+                item_id = 0xAD
+            elif item == "Lucky Sandwich":
+                item_id = world.random.randint(0xE2, 0xE7)
             else:
-                rom.write_bytes(psi_locations[name], bytearray(psi_locations[name][1:4]))
-                rom.write_bytes(psi_locations[name][5], bytearray([item_id]))
+                item_id = item_id_table[item]
+
+            if name in location_dialogue:
+                for i in range(len(location_dialogue[name])):
+                    if item in item_id_table or location.item.player != location.player:
+                        rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
+                    elif item in [psi_item_table] or [character_item_table]:
+                        rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
+
+            if name in present_locations:
+                if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
+                    rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
+                elif item in item_id_table or location.item.player != location.player:
+                    rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
+                elif item in psi_item_table:
+                    rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
+                elif item in char_item_table:
+                    rom.write_bytes(present_locations[name], bytearray([character_item_table[item], 0x00, 0x03]))
+
+            elif name in npc_locations:
+                for i in range(len(npc_locations[name])):
+                    if item in item_id_table or location.item.player != location.player:
+                        rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
+                    elif item in [psi_item_table] or [character_item_table]:
+                        rom.write_bytes(npc_locations[name][i] -3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
+                        rom.write_bytes(npc_locations[name][i] +2, bytearray([0xA5, 0xAA, 0xEE]))
+
+            elif name in psi_locations:
+                if item in special_name_table:
+                    rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
+                else:
+                    rom.write_bytes(psi_locations[name], bytearray(psi_locations[name][1:4]))
+                    rom.write_bytes(psi_locations[name][5], bytearray([item_id]))
+
+            elif name in character_locations:
+                if item in character_item_table:
+                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
+                    rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
+                elif item in psi_item_table:
+                    rom.write_bytes(character_locations[name][0], bytearray([special_name_table[item][1:4]]))
+                    rom.write_bytes(character_locations[name][1], bytearray([0x62]))
+                    rom.write_bytes(character_locations[name][2], bytearray([0xE0, 0xF8, 0xD5]))
+                else:
+                    rom.write_bytes(character_locations[name][0], bytearray([character_locations[name][4:7]]))
+                    rom.write_bytes(character_locations[name][1], bytearray([0x97]))
+                    rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
+                    rom.write_bytes(character_locations[name][3], bytearray([item_id]))
+
+
+            else:
+                print(f"WARNING: "+name +" NOT PLACED")
         
 
     from Main import __version__
