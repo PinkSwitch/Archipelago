@@ -8,7 +8,7 @@ check_table = {
     0xEB0006: [0x9C47, 6],
     0xEB0007: [0x9C13, 0],
     0xEB0008: [0x9C6C, 0],
-    0xEB0009: [0x491, 0],
+    0xEB0009: [0x9C, 0],
     0xEB000A: [0x9C6C, 1],
     0xEB000B: [0x9C6C, 2],
     0xEB000C: [0x9C6C, 3],
@@ -17,9 +17,8 @@ check_table = {
     0xEB000F: [0x9C6C, 6],
     0xEB0010: [0x9C6C, 7],
     0xEB0011: [0x9C6C, 5],
-
     0xEB0012: [0x9C12, 0],
-    0xEB0013: [0x9C, 0],
+    0xEB0013: [0x9C5B, 5],
     0xEB0014: [0x9C6D, 1],
     0xEB0015: [0x9C6D, 2],
     0xEB0016: [0x9C6D, 0],
@@ -35,13 +34,67 @@ check_table = {
     0xEB0020: [0x9C6E, 1],
     0xEB0021: [0x9C6E, 2],
     0xEB0022: [0x9C6E, 6],
-
     0xEB0023: [0x9C83, 7],
     0xEB0024: [0x9C6D, 4],
     0xEB0025: [0x9C6D, 3],
-    0xEB0026: [0x9C, 5],
-    0xEB0027: [0x9C, 7],
-    0xEB0028: [0x9C, 1],
+    0xEB0026: [0x9C12, 5],
+    0xEB0027: [0x9C85, 4],
+    0xEB0028: [0x9C10, 3],
+    0xEB0029: [0x9C6E, 4],
+    0xEB002A: [0x9C6E, 5],
+    0xEB002B: [0x9C6E, 3],
+    0xEB002C: [0x9C12, 5],
+    0xEB002D: [0x9C6E, 6],
+    0xEB002E: [0x9C6F, 0],
+    0xEB002F: [0x9C6F, 1],
+    0xEB0030: [0x9C6E, 7],
+    0xEB0031: [0x9C66, 2],
+    0xEB0032: [0x9C84, 1],
+    0xEB0033: [0x9C6F, 2],
+    0xEB0034: [0x9C6F, 3],
+    0xEB0035: [0x9C73, 4],
+    0xEB0036: [0x9C73, 3],
+    0xEB0037: [0x9C73, 5],
+    0xEB0038: [0x9C73, 6],
+    0xEB0039: [0x9C73, 7],
+    0xEB003A: [0x9C74, 0],
+    0xEB003B: [0x9C74, 1],
+    0xEB003C: [0x9C84, 5],
+    0xEB003D: [0x9C1D, 2],
+    0xEB003E: [0x9C1D, 3],
+    0xEB003F: [0x9C1D, 4],
+    0xEB0040: [0x9C73, 2],
+    0xEB0041: [0x9C72, 5],
+    0xEB0042: [0x9C73, 1],
+    0xEB0043: [0x9C72, 4],
+    0xEB0044: [0x9C73, 0],
+    0xEB0045: [0x9C72, 7],
+    0xEB0046: [0x9C72, 6],
+    0xEB0047: [0x9C76, 2],
+    0xEB0048: [0x9C76, 7],
+    0xEB0049: [0x9C76, 1],
+    0xEB004A: [0x9C76, 4],
+    0xEB004B: [0x9C76, 5],
+    0xEB004C: [0x9C76, 6],
+    0xEB004D: [0x9C76, 3],
+    0xEB004E: [0x9C38, 0],
+    0xEB004F: [0x9C77, 0],
+    0xEB0050: [0x9C13, 1],
+
+    0xEB0051: [0x9C70, 0],
+    0xEB0052: [0x9C6F, 5],
+    0xEB0053: [0x9C6F, 7],
+    0xEB0054: [0x9C70, 2],
+    0xEB0055: [0x9C70, 1],
+    0xEB0056: [0x9C6F, 6],
+    0xEB0057: [0x9C6F, 4],
+    0xEB0059: [0x9C, 0],
+    0xEB005A: [0x9C, 0],
+    0xEB005B: [0x9C, 1],
+    0xEB005C: [0x9C, 1],
+    0xEB005D: [0x9C, 1],
+    0xEB005E: [0x9C, 1],
+
 }
 
 location_dialogue = { #Locations which just need to print the name of the item
@@ -57,7 +110,13 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Twoson - Paula's Mother": [0x08061B],
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
-    "Happy-Happy Village - Prisoner Item": [0x0F95FE],
+    "Happy-Happy Village - Prisoner Item": [0x2F95FE],
+    "Threed - Hospital Drawer": [0x08686C],
+    "Saturn Valley - Post Belch Gift #1": [0x07EAAA],
+    "Saturn Valley - Post Belch Gift #2": [0x07EACE],
+    "Saturn Valley - Post Belch Gift #3": [0x07EAF2],
+    "Dusty Dunes - Shining Spot": [0x060D8D],
+    "Dusty Dunes - Mine Reward": [0x06038A, 0x06123A],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -77,9 +136,17 @@ npc_locations = { #Locations given to you by an NPC
     "Twoson - Everdred Meeting": [0x096052],
     "Twoson - Insignificant Location": [0x094ED1],
     "Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B7],
-    "Happy-Happy Village - Prisoner Item": [0x0F9664],
+    "Happy-Happy Village - Prisoner Item": [0x2F9664, 0x2EAF40],
+    "Happy-Happy Village - Defeat Carpainter": [0x09826F],
+    "Threed - Hospital Drawer": [0x086883],
+    "Saturn Valley - Post Belch Gift #1": [0x07EAB2],
+    "Saturn Valley - Post Belch Gift #2": [0x07EAD6],
+    "Saturn Valley - Post Belch Gift #3": [0x07EAFA],
+    "Dusty Dunes - Shining Spot": [0x060DAD],
+    "Dusty Dunes - Mine Reward": [0x06058F],
 
 }
+
 
 present_locations = {#Field presents
     "Onett - Tracy's Room Present": 0x0FE756,
@@ -102,20 +169,61 @@ present_locations = {#Field presents
     "Peaceful Rest Valley - North Side Present": 0x0FE800,
     "Happy-Happy Village - Right HQ Present": 0x0FE7DE,
     "Happy-Happy Village - Left HQ Present": 0x0FE7CD,
+    "Lilliput Steps - Southwest Pool Present": 0x0FE866,
+    "Lilliput Steps - East Cliff Present": 0x0FE877,
+    "Lilliput Steps - North Stream Present": 0x0FE855,
+    "Threed - Boogey Tent Trashcan": 0x0FB038,
+    "Threed - Cemetary Trashcan": 0x0FE888,
+    "Threed - Downtown Trashcan": 0x0FE8AA,
+    "Threed - East Side Trashcan": 0x0FE8BB,
+    "Threed - Northeast Shack Trashcan": 0x0FE899,
+    "Threed Underground - Left Coffin": 0x0FE8CC,
+    "Threed Underground - Right Coffin": 0x0FE8DD,
+    "Grapefruit Falls - South Present": 0x0FEB0E,
+    "Grapefruit Falls - North Present": 0x0FEAFD,
+    "Grapefruit Falls - Saturn Cave Present": 0x0FEB1F,
+    "Saturn Valley - Ladder Present": 0x0FEB30,
+    "Saturn Valley - Trashcan #1": 0x0FEB41,
+    "Saturn Valley - Trashcan #2": 0x0FEB52,
+    "Saturn Valley - Trashcan #3": 0x0FEB63,
+    "Milky Well - Cavern Present": 0x0FEAEC,
+    "Belch's Factory - Top Right Room Trashcan": 0x0FEA97,
+    "Belch's Factory - Pit Room Trashcan #1": 0x0FEADB,
+    "Belch's Factory - Pit Room Trashcan #2": 0x0FEA86,
+    "Belch's Factory - Balcony Room Trashcan #1": 0x0FEACB,
+    "Belch's Factory - Balcony Room Trashcan #2": 0x0FEAB9,
+    "Belch's Factory - Balcony Room Trashcan #3": 0x0FEAA8,
+    "Dusty Dunes - Northwest Corner Present": 0x0FEC84,
+    "Dusty Dunes - South Side Present": 0x0FECD9,
+    "Dusty Dunes - Surrounding Rocks Present": 0x0FEC73,
+    "Dusty Dunes - Black Sesame Present": 0x0FECA6,
+    "Dusty Dunes - Oasis Present": 0x0FECB7,
+    "Dusty Dunes - Northeast Corner Present": 0x0FECC8,
+    "Dusty Dunes - North Central Present": 0x0FEC95,
+    "Dusty Dunes - East Peninsula Present": 0x0FECEA,
+    "Snow Wood - Many Present Room Present #1": 0x0FE932,
+    "Snow Wood - Many Present Room Present #2": 0x0FE8FF,
+    "Snow Wood - Many Present Room Present #3": 0x0FE921,
+    "Snow Wood - Many Present Room Present #4": 0x0FE954,
+    "Snow Wood - Many Present Room Present #5": 0x0FE943,
+    "Snow Wood - Many Present Room Present #6": 0x0FE910,
+    "Snow Wood - Many Present Room Present #7": 0x0FE8EE,
 }
 
 psi_locations = {
-    "Onett - Mani Mani Statue": [0x2EA979, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
-    "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949]
+    "Onett - Mani Mani Statue": [0x2EA976, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
+    "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949],
+    "Saturn Valley - Saturn Coffee": [0x2EAA04, 0xF1, 0xAF, 0xEE, 0x2EB030],
 }
 
-character_locations = {
     #0: Action pointer, call the actual item being given
     #1: Sprite ID
     #2: Secondary routine pointer, used for items and psi
     #3: Inventory item give
     #4: Standard item routine address
-    "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0x1E]
+character_locations = {
+    "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0xEE],
+    "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE]
 }
 
 item_id_table = {
@@ -386,9 +494,9 @@ psi_item_table = {
 }
 
 character_item_table = {
-    "Paula": [0x01, 0x01], 
-    "Jeff": [0x02, 0x02],
-    "Poo": [0x03, 0x03],
+    "Paula": [0x01, 0x02], 
+    "Jeff": [0x02, 0x03],
+    "Poo": [0x03, 0x04],
     "Flying Man": [0x0B, 0x27]
 }
 
