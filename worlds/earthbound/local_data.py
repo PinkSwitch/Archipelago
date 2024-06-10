@@ -105,7 +105,6 @@ check_table = {
     0xEB0067: [0x9C71, 2],
     0xEB0068: [0x9C70, 3],
     0xEB0069: [0x9C55, 1],
-
     0xEB006A: [0x9C72, 3],
     0xEB006B: [0x9C71, 5],
     0xEB006C: [0x9C72, 1],
@@ -115,7 +114,40 @@ check_table = {
     0xEB0070: [0x9C72, 0],
     0xEB0071: [0x9C72, 2],
     0xEB0072: [0x9C58, 2],
-    0xEB0073: [0x9C, 1],
+    0xEB0073: [0x9C83, 3],
+    0xEB0074: [0x9C78, 5],
+    0xEB0075: [0x9C78, 3],
+    0xEB0076: [0x9C77, 2],
+    0xEB0077: [0x9C78, 6],
+    0xEB0078: [0x9C78, 2],
+    0xEB0079: [0x9C77, 5],
+    0xEB007A: [0x9C78, 6],
+    0xEB007B: [0x9C77, 7],
+    0xEB007C: [0x9C77, 3],
+    0xEB007D: [0x9C77, 1],
+    0xEB007E: [0x9C78, 1],
+    0xEB007F: [0x9C78, 0],
+    0xEB0080: [0x9C78, 3],
+    0xEB0081: [0x9C77, 6],
+
+    0xEB0082: [0x9C74, 2],
+    0xEB0083: [0x9C74, 3],
+    0xEB0084: [0x9C74, 4],
+    0xEB0085: [0x9C74, 5],
+    0xEB0086: [0x9C41, 7],
+    0xEB0087: [0x9C74, 6],
+    0xEB0088: [0x9C74, 7],
+    0xEB0089: [0x9C, 6],
+    0xEB008A: [0x9C, 2],
+    0xEB00F1: [0x9C75, 1],
+    0xEB00F2: [0x9C75, 0],
+    0xEB00F3: [0x9C75, 2],
+    0xEB00F4: [0x9C75, 4],
+    0xEB00F5: [0x9C75, 3],
+    0xEB00F6: [0x9C75, 5],
+    0xEB00F7: [0x9C75, 6],
+    0xEB00F8: [0x9C76, 0],
+    0xEB00F9: [0x9C75, 7],
 
 }
 
@@ -144,6 +176,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Winters - Drugstore Saleswoman": [0x07A223],
     "Andonuts Lab - Mouse": [0x06C840],
     "Stonehenge - Tony Item": [0x2FFA0C],
+    "Monkey Caves - Bow Monkey Gift": [0x0625E7],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -177,6 +210,8 @@ npc_locations = { #Locations given to you by an NPC
     "Andonuts Lab - Mouse": [0x06C898],
     "Stonehenge - Kidnapped Mr. Saturn": [0x06C076],
     "Stonehenge - Tony Item": [0x2FFA78],
+    "Monkey Caves - Bow Monkey Gift": [0x062636],
+    "Monkey Caves - Talah Rama Gift": [0x060FEB],
 
 }
 
@@ -258,12 +293,42 @@ present_locations = {#Field presents
     "Stonehenge - Flashing Room Right Path Present": 0x0FE9FE,
     "Stonehenge - Flashing Room Center Present": 0x0FEA42,
     "Stonehenge - Flashing Room Upper Present": 0x0FEA64,
+    "Gold Mine - Mouse Crossroad Present #1": 0x0FEDC7,
+    "Gold Mine - Mouse Crossroad Present #2": 0x0FEDA5,
+    "Gold Mine - B1F Lonely Mole Present": 0x0FED1D,
+    "Gold Mine - South Hall Present": 0x0FEDD8,
+    "Gold Mine - South Corner Present": 0x0FED94,
+    "Gold Mine - South Mole Present #1": 0x0FED3F,
+    "Gold Mine - South Mole Present #2": 0x0FED0C,
+    "Gold Mine - North Crossroad Detour Present": 0x0FED61,
+    "Gold Mine - North Mole Present": 0x0FED2E,
+    "Gold Mine - West Mole Present": 0x0FECFB,
+    "Gold Mine - B1F Isolated Present": 0x0FED83,
+    "Gold Mine - West Crossroad Detour Present": 0x0FED83,
+    "Gold Mine - B1F Junction Present": 0x0FEDB6,
+    "Gold Mine - B1F Junction Mole Present": 0x0FED50,
+    "Monkey Caves - 1F Right Chest": 0x0FEBEB,
+    "Monkey Caves - 1F Left Chest": 0x0FEBDA,
+    "Monkey Caves - West 2F Left Chest": 0x0FEBFC,
+    "Monkey Caves - West 2F Right Chest #1": 0x0FEC1E,
+    "Monkey Caves - West 2F Right Chest #2": 0x0FEC0D,
+    "Monkey Caves - East 2F Left Chest": 0x0FEC2F,
+    "Monkey Caves - East 2F Right Chest": 0x0FEC40,
+    "Monkey Caves - East West 3F Right Chest #1": 0x0FEC62,
+    "Monkey Caves - East West 3F Right Chest #2": 0x0FEC51,
+    "Monkey Caves - West End Chest": 0x0FEB74,
+    "Monkey Caves - West End Trashcan": 0x0FEB85,
+    "Monkey Caves - East End Chest": 0x0FEB96,
+    "Monkey Caves - East End Trashcan": 0x0FEBA7,
+    "Monkey Caves - Talah Rama Chest #1": 0x0FEBB8,
+    "Monkey Caves - Talah Rama Chest #2": 0x0FEBC9,
 }
 
 psi_locations = {
     "Onett - Mani Mani Statue": [0x2EA976, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
     "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949],
     "Saturn Valley - Saturn Coffee": [0x2EAA04, 0xF1, 0xAF, 0xEE, 0x2EB030],
+    "Monkey Caves - Monkey Power": [0x2EB12E, 0x68, 0xB1, 0xEE, 0x2EB1B1],
 }
 
 character_locations = {
@@ -276,7 +341,7 @@ locker_locations = {
     "Snow Wood - Upper Right Locker": [0x2EB079, 0x2EB07F],
     "Snow Wood - Upper Left Locker": [0x2EB093, 0x2EB099],
     "Snow Wood - Bottom Right Locker": [0x2EB0AD, 0x2EB0B3],
-    "Snow Wood - Bottom Left Locker": [0x2EB0C7, 0x2EB0CD],
+    "Snow Wood - Bottom Left Locker": [0x2EB0C7, 0x2EB0CD]
 }
 
 item_id_table = {

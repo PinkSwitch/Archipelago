@@ -18,6 +18,7 @@ from .setup_game import setup_gamevars, place_static_items
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, USHASH
+from worlds.generic.Rules import add_item_rule
 
 class EBSettings(settings.Group):
     class RomFile(settings.SNESRomPath):
@@ -106,6 +107,9 @@ class EarthBoundWorld(World):
         if self.options.psi_shuffle == 0:
             self.event_count += 12
 
+        if self.options.character_shuffle == 0:
+            self.event_count += 6
+
     def set_rules(self) -> None:
         set_location_rules(self)
         self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
@@ -149,8 +153,11 @@ class EarthBoundWorld(World):
             pool.append(item)
 
     def pre_fill(self) -> None:
+        prefill_locations = []
+        prefill_items = []
+
         if self.options.psi_shuffle == 0:
-            psi_locations = [
+            prefill_locations.extend([
                 self.multiworld.get_location("Onett - Buzz Buzz", self.player),
                 self.multiworld.get_location("Onett - Mani Mani Statue", self.player),
                 self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player),
@@ -161,9 +168,10 @@ class EarthBoundWorld(World):
                 self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
                 self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
                 self.multiworld.get_location("Cave of the Present - Star Master", self.player),
-            ]
-            
-            psi_items = [
+                self.multiworld.get_location("Dalaam - Trial of Mu", self.player),
+                self.multiworld.get_location("Magicant - Ness's Nightmare", self.player),
+            ])
+            prefill_items.extend([
                 self.create_item("Onett Teleport"),
                 self.create_item("Twoson Teleport"),
                 self.create_item("Happy-Happy Village Teleport"),
@@ -175,22 +183,59 @@ class EarthBoundWorld(World):
                 self.create_item("Scaraba Teleport"),
                 self.create_item("Deep Darkness Teleport"),
                 self.create_item("Tenda Village Teleport"),
-                self.create_item("Lost Underworld Teleport")]
+                self.create_item("Lost Underworld Teleport")
 
-            self.random.shuffle(psi_locations)
-            psi_locations.insert(
-                0, self.multiworld.get_location("Dalaam - Trial of Mu", self.player)
-            )
-            psi_locations.insert(
-                0, self.multiworld.get_location("Magicant - Ness's Nightmare", self.player)
-            )
-            self.random.shuffle(psi_items)
-            psi_items.extend([
+            ])
+            self.random.shuffle(prefill_items)
+            del prefill_items[0:5]
+            prefill_items.extend([
                 self.create_item("Dalaam Teleport"),
                 self.create_item("Magicant Teleport"),
-                self.create_item("Winters Teleport")])
-            
-            fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), psi_locations, psi_items, True, True)
+                self.create_item("Winters Teleport"),
+                self.create_item("Progressive Poo PSI"),
+                self.create_item("Progressive Poo PSI")
+            ])
+            self.random.shuffle(prefill_items)
+            add_item_rule(self.multiworld.get_location("Onett - Buzz Buzz", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Onett - Mani Mani Statue", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Monkey Caves - Monkey Power", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Summers - Magic Cake", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Scaraba - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Tenda Village - Tenda Tea", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Lost Underworld - Talking Rock", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Fourside - Department Store Blackout", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Cave of the Present - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Dalaam Teleport"))
+            add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
+
+        if self.options.character_shuffle == 0:
+            prefill_items.extend([
+                self.create_item("Paula"),
+                self.create_item("Jeff"),
+                self.create_item("Poo"),
+                self.create_item("Flying Man"),
+                self.create_item("Teddy Bear"),
+                self.create_item("Super Plush Bear")
+            ])
+
+            prefill_locations.extend([
+                self.multiworld.get_location("Happy-Happy Village - Prisoner", self.player),
+                self.multiworld.get_location("Threed - Zombie Prisoner", self.player),
+                self.multiworld.get_location("Snow Wood - Bedroom", self.player),
+                self.multiworld.get_location("Monotoli Building - Monotoli Character", self.player),
+                self.multiworld.get_location("Dalaam - Throne Character", self.player),
+                self.multiworld.get_location("Deep Darkness - Barf Character", self.player),
+            ])
+            self.random.shuffle(prefill_locations)
+            add_item_rule(self.multiworld.get_location("Happy-Happy Village - Prisoner", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+            add_item_rule(self.multiworld.get_location("Threed - Zombie Prisoner", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+            add_item_rule(self.multiworld.get_location("Snow Wood - Bedroom", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+            add_item_rule(self.multiworld.get_location("Monotoli Building - Monotoli Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+            add_item_rule(self.multiworld.get_location("Dalaam - Throne Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+            add_item_rule(self.multiworld.get_location("Deep Darkness - Barf Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+
+        fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
         pool: List[Item] = []

@@ -9,8 +9,8 @@ class ItemData(NamedTuple):
 
 item_table: Dict[str, ItemData] = {
     "Franklin Badge": ItemData("Key Items", 0xEB0001, ItemClassification.progression),
-    "Teddy Bear": ItemData("Battle Items", 0xEB0002, ItemClassification.filler, 0),
-    "Super Plush Bear": ItemData("Battle Items", 0xEB0003, ItemClassification.useful, 0),
+    "Teddy Bear": ItemData("Characters", 0xEB0002, ItemClassification.filler, 0),
+    "Super Plush Bear": ItemData("Characters", 0xEB0003, ItemClassification.useful, 0),
 
     "Broken Machine": ItemData("Broken Items", 0xEB0004, ItemClassification.useful),
     "Broken Gadget": ItemData("Broken Items", 0xEB0005, ItemClassification.useful, 0),
