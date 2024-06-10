@@ -80,7 +80,6 @@ check_table = {
     0xEB004E: [0x9C38, 0],
     0xEB004F: [0x9C77, 0],
     0xEB0050: [0x9C13, 1],
-
     0xEB0051: [0x9C70, 0],
     0xEB0052: [0x9C6F, 5],
     0xEB0053: [0x9C6F, 7],
@@ -88,12 +87,35 @@ check_table = {
     0xEB0055: [0x9C70, 1],
     0xEB0056: [0x9C6F, 6],
     0xEB0057: [0x9C6F, 4],
-    0xEB0059: [0x9C, 0],
-    0xEB005A: [0x9C, 0],
-    0xEB005B: [0x9C, 1],
-    0xEB005C: [0x9C, 1],
-    0xEB005D: [0x9C, 1],
-    0xEB005E: [0x9C, 1],
+    0xEB0058: [0x9C85, 1],
+    0xEB0059: [0x9C12, 7],
+    0xEB005A: [0x9C14, 6],
+    0xEB005B: [0x9C0A, 6],
+    0xEB005C: [0x9C31, 5],
+    0xEB005D: [0x9C53, 4],
+    0xEB005E: [0x9C17, 7],
+    0xEB005F: [0x9C30, 2],
+    0xEB0060: [0x9C71, 0],
+    0xEB0061: [0x9C70, 6],
+    0xEB0062: [0x9C70, 4],
+    0xEB0063: [0x9C70, 7],
+    0xEB0064: [0x9C70, 5],
+    0xEB0065: [0x9C71, 3],
+    0xEB0066: [0x9C71, 1],
+    0xEB0067: [0x9C71, 2],
+    0xEB0068: [0x9C70, 3],
+    0xEB0069: [0x9C55, 1],
+
+    0xEB006A: [0x9C72, 3],
+    0xEB006B: [0x9C71, 5],
+    0xEB006C: [0x9C72, 1],
+    0xEB006D: [0x9C71, 6],
+    0xEB006E: [0x9C71, 7],
+    0xEB006F: [0x9C71, 4],
+    0xEB0070: [0x9C72, 0],
+    0xEB0071: [0x9C72, 2],
+    0xEB0072: [0x9C58, 2],
+    0xEB0073: [0x9C, 1],
 
 }
 
@@ -117,6 +139,11 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Saturn Valley - Post Belch Gift #3": [0x07EAF2],
     "Dusty Dunes - Shining Spot": [0x060D8D],
     "Dusty Dunes - Mine Reward": [0x06038A, 0x06123A],
+    "Snow Wood - Maxwell Item": [0x06AB89],
+    "Scaraba - Snake Bag Salesman": [0x2EA713],
+    "Winters - Drugstore Saleswoman": [0x07A223],
+    "Andonuts Lab - Mouse": [0x06C840],
+    "Stonehenge - Tony Item": [0x2FFA0C],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -144,6 +171,12 @@ npc_locations = { #Locations given to you by an NPC
     "Saturn Valley - Post Belch Gift #3": [0x07EAFA],
     "Dusty Dunes - Shining Spot": [0x060DAD],
     "Dusty Dunes - Mine Reward": [0x06058F],
+    "Snow Wood - Maxwell Item": [0x06AC73],
+    "Scaraba - Snake Bag Salesman": [0x0570AC],
+    "Winters - Drugstore Saleswoman": [0x06AEC7],
+    "Andonuts Lab - Mouse": [0x06C898],
+    "Stonehenge - Kidnapped Mr. Saturn": [0x06C076],
+    "Stonehenge - Tony Item": [0x2FFA78],
 
 }
 
@@ -208,6 +241,23 @@ present_locations = {#Field presents
     "Snow Wood - Many Present Room Present #5": 0x0FE943,
     "Snow Wood - Many Present Room Present #6": 0x0FE910,
     "Snow Wood - Many Present Room Present #7": 0x0FE8EE,
+    "Brick Road Maze - Top Path Present": 0x0FE9BA,
+    "Brick Road Maze - Guarded Present": 0x0FE998,
+    "Brick Road Maze - Out of the Way Present": 0x0FE976,
+    "Brick Road Maze - Alcove Present": 0x0FE9A9,
+    "Brick Road Maze - Near Exit Present": 0x0FE987,
+    "Rainy Circle - Isolated Present": 0x0FE9ED,
+    "Rainy Circle - East Cliff Present": 0x0FE9CB,
+    "Rainy Circle - Near Ropes Present": 0x0FE9DC,
+    "Andonuts Lab - Present": 0x0FE965,
+    "Stonehenge - Purple Maze Present": 0x0FEA75,
+    "Stonehenge - Dead End Present": 0x0FEA0F,
+    "Stonehenge - Near End of the Maze Present": 0x0FEA53,
+    "Stonehenge - Bridge Room East Balcony Present": 0x0FEA20,
+    "Stonehenge - Bridge Room Lower Present": 0x0FEA31,
+    "Stonehenge - Flashing Room Right Path Present": 0x0FE9FE,
+    "Stonehenge - Flashing Room Center Present": 0x0FEA42,
+    "Stonehenge - Flashing Room Upper Present": 0x0FEA64,
 }
 
 psi_locations = {
@@ -216,14 +266,17 @@ psi_locations = {
     "Saturn Valley - Saturn Coffee": [0x2EAA04, 0xF1, 0xAF, 0xEE, 0x2EB030],
 }
 
-    #0: Action pointer, call the actual item being given
-    #1: Sprite ID
-    #2: Secondary routine pointer, used for items and psi
-    #3: Inventory item give
-    #4: Standard item routine address
 character_locations = {
     "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0xEE],
-    "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE]
+    "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE],
+    "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0xEE]
+}
+
+locker_locations = {
+    "Snow Wood - Upper Right Locker": [0x2EB079, 0x2EB07F],
+    "Snow Wood - Upper Left Locker": [0x2EB093, 0x2EB099],
+    "Snow Wood - Bottom Right Locker": [0x2EB0AD, 0x2EB0B3],
+    "Snow Wood - Bottom Left Locker": [0x2EB0C7, 0x2EB0CD],
 }
 
 item_id_table = {
@@ -494,10 +547,10 @@ psi_item_table = {
 }
 
 character_item_table = {
-    "Paula": [0x01, 0x02], 
-    "Jeff": [0x02, 0x03],
-    "Poo": [0x03, 0x04],
-    "Flying Man": [0x0B, 0x27]
+    "Paula": [0x01, 0x02, 0x89, 0x01, 0x06], 
+    "Jeff": [0x02, 0x03, 0x8A, 0x01, 0x06],
+    "Poo": [0x03, 0x04, 0x8B, 0x01, 0x06],
+    "Flying Man": [0x0B, 0x27, 0x27, 0x00, 0x04]
 }
 
 special_name_table = {
@@ -522,3 +575,10 @@ special_name_table = {
     "Flying Man": [0x12, 0x45, 0xF8, 0xD5],
     "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE]
 }
+
+    #0: Action pointer, call the actual item being given
+    #1: Sprite ID
+    #2: Secondary routine pointer, used for items and psi
+    #3: Inventory item give
+    #4: Standard item routine address
+    #For characters

@@ -4,7 +4,7 @@ import Utils
 import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
-from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations
+from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -179,7 +179,10 @@ def patch_rom(world, rom, player: int, multiworld):
             elif name in character_locations:
                 if item in character_item_table:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
-                    rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
+                    if name == "Snow Wood - Bedroom":#Use lying down sprites for the bedroom check
+                        rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
+                    else:
+                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:4]))
                 elif item in psi_item_table:
                     rom.write_bytes(character_locations[name][0], bytearray([special_name_table[item][1:4]]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
@@ -190,7 +193,16 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
 
-
+            elif name in locker_locations:
+                if item in item_id_table or location.item.player != location.player:
+                    rom.write_bytes(locker_locations[name][0], bytearray([0x00]))
+                    rom.write_bytes(locker_locations[name][1], bytearray(item_id))
+                elif item in psi_item_table:
+                    rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
+                    rom.write_bytes(locker_locations[name][1], bytearray(psi_item_table[item]))
+                elif item in character_item_table:
+                    rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
+                    rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
         
@@ -256,8 +268,9 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 #Write sanctuary count figure later
 #Fix NPC item names around Fourside, Moonside one broke
-#Remove hint man text
+#Remove hint man text, give it an area i wrote this down
 #Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
 #log tpt stuff when interacting with npcs...?
 #Think about getting items from NPCs. Maybe I can insert that GetItemNamecall to more scripts...
 #NPC teleports have weird line beaks; garbage cans need line breaks
+#Saturn valley gave me magicant huh

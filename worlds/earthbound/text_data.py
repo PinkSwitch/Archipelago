@@ -1,0 +1,45 @@
+
+
+
+
+
+region_text = {
+    "Northern Onett": "Onett",
+    "Onett": "Onett",
+    "Giant Step": "Giant Step",
+    "Twoson": "Twoson",
+    "Peaceful Rest Valley": "Peaceful Rest Valley",
+    "Happy-Happy Village": "Happy-Happy Village",
+    "Lilliput Steps": "Lilliput Steps",
+    "Threed": "Threed",
+    "Belch's Factory": "Belch's factory",
+    "Saturn Valley": "Saturn Valley",
+    "Upper Saturn Valley": "Saturn Valley",
+    "Milky Well": "Milky Well",
+    "Dusty Dunes Desert": "the Dusty Dunes Desert",
+    "Gold Mine": "the gold mine",
+    "Monkey Caves": "the monkey caves",
+    "Fourside": "Fourside",
+    "Magnet Hill": "Fourside's sewers",
+    "Monotoli Building": "the Monotoli Building",
+    "Winters": "Winters",
+    "Snow Wood Boarding School": "the Snow Wood Boarding School",
+    "Southern Winters": "Winters",
+    "Rainy Circle": "Rainy Circle",
+    "Stonehenge Base": "Stonehenge",
+    "Summers": "Summers",
+    "Dalaam": "Dalaam",
+    "Pink Cloud": "Pink Cloud",
+    "Scaraba": "Scaraba",
+    "Pyramid": "the Pyramid",
+    "Southern Scaraba": "Scaraba",
+    "Dungeon Man": "Dungeon Man",
+    "Deep Darkness": "the Deep Darkness",
+    "Tenda Village": "Tenda Village",
+    "Lumine Hall": "Lumine Hall",
+    "Lost Underworld": "the Lost Underworld",
+    "Fire Spring": "Fire Spring",
+    "Magicant": "Magicant",
+    "Cave of the Present": "Cave of the Past",
+    "Cave of the Past": "Cave of the Past"
+}

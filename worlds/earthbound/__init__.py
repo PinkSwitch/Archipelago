@@ -161,10 +161,7 @@ class EarthBoundWorld(World):
                 self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
                 self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
                 self.multiworld.get_location("Cave of the Present - Star Master", self.player),
-                self.multiworld.get_location("Dalaam - Trial of Mu", self.player),
-                self.multiworld.get_location("Magicant - Ness's Nightmare", self.player),
             ]
-            
             
             psi_items = [
                 self.create_item("Onett Teleport"),
@@ -181,6 +178,12 @@ class EarthBoundWorld(World):
                 self.create_item("Lost Underworld Teleport")]
 
             self.random.shuffle(psi_locations)
+            psi_locations.insert(
+                0, self.multiworld.get_location("Dalaam - Trial of Mu", self.player)
+            )
+            psi_locations.insert(
+                0, self.multiworld.get_location("Magicant - Ness's Nightmare", self.player)
+            )
             self.random.shuffle(psi_items)
             psi_items.extend([
                 self.create_item("Dalaam Teleport"),
