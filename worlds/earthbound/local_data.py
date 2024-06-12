@@ -190,6 +190,20 @@ check_table = {
     0xEB00B2: [0x9C7B, 1],
     0xEB00B3: [0x9C33, 3],
     0xEB00B4: [0x9C7A, 7],
+    0xEB00B5: [0x9C83, 0],
+    0xEB00B6: [0x9C31, 7],
+    0xEB00B7: [0x9C7B, 6],
+    0xEB00B8: [0x9C7B, 2],
+    0xEB00B9: [0x9C7C, 5],
+    0xEB00BA: [0x9C7C, 0],
+    0xEB00BB: [0x9C7C, 1],
+    0xEB00BC: [0x9C7C, 2],
+    0xEB00BD: [0x9C7B, 3],
+    0xEB00BE: [0x9C7B, 7],
+    0xEB00BF: [0x9C7B, 5],
+    0xEB00C0: [0x9C7C, 4],
+    0xEB00C1: [0x9C7C, 3],
+    0xEB00C2: [0x9C7B, 3],
 
 }
 
@@ -264,6 +278,7 @@ npc_locations = { #Locations given to you by an NPC
     "Monotoli Building - Monotoli Gift": [0x06EB3C],
     "Summers - Museum Item": [0x08ABF2],
     "Pyramid - Pedestal Item": [0x0931DF],
+    "Scaraba - Key Holder": [0x0576C1],
 
 }
 
@@ -403,6 +418,18 @@ present_locations = {#Field presents
     "Pyramid - Hallway Sarcophagus #2": 0x0FEF0A,
     "Pyramid - Switch Room Sarcophagus": 0x0FEF1B,
     "Pyramid - Way Out Sarcophagus": 0x0FEEF9,
+    "Dungeon Man - 1F Dead End Present": 0x0FEF70,
+    "Dungeon Man - 1F Long Walk Present": 0x0FEF2C,
+    "Dungeon Man - 1F Disappointing Present": 0x0FEFE7,
+    "Dungeon Man - 1F Opinion Present": 0x0FEF92,
+    "Dungeon Man - 1F No Sign Present": 0x0FEFA3,
+    "Dungeon Man - 2F Unnecessary Billboard Present": 0x0FEFB4,
+    "Dungeon Man - 2F Dungeon Exploration Present": 0x0FEF4E,
+    "Dungeon Man - 2F South Ledge Present": 0x0FEF81,
+    "Dungeon Man - 2F North Alcove Present": 0x0FEF5F,
+    "Dungeon Man - 3F Present": 0x0FEFD6,
+    "Dungeon Man - 2F Hole Present": 0x0FEFC5,
+    "Dungeon Man - 1F Exit Ledge Present": 0x0FEF3D,
 }
 
 psi_locations = {
@@ -413,6 +440,7 @@ psi_locations = {
     "Fourside - Department Store Blackout": [0x2EB22F, 0x66, 0xB2, 0xEE, 0x2EB275],
     "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EB3A1],
     "Dalaam - Trial of Mu": [0x2EB3FA, 0x08, 0xB4, 0xEE, 0x2EB443],
+    "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
 }
 
 character_locations = {
