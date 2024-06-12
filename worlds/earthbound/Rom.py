@@ -148,7 +148,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 for i in range(len(location_dialogue[name])):
                     if item in item_id_table or location.item.player != location.player:
                         rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
-                    elif item in [psi_item_table] or [character_item_table]:
+                    elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
 
             if name in present_locations:
@@ -165,7 +165,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 for i in range(len(npc_locations[name])):
                     if item in item_id_table or location.item.player != location.player:
                         rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
-                    elif item in [psi_item_table] or [character_item_table]:
+                    elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(npc_locations[name][i] -3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
                         rom.write_bytes(npc_locations[name][i] +2, bytearray([0xA5, 0xAA, 0xEE]))
 
@@ -267,10 +267,7 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 
 #Write sanctuary count figure later
-#Fix NPC item names around Fourside, Moonside one broke
-#Remove hint man text, give it an area i wrote this down
+#Fix hint text, I have a special idea where I can give it info on a random region
 #Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
 #log tpt stuff when interacting with npcs...?
-#Think about getting items from NPCs. Maybe I can insert that GetItemNamecall to more scripts...
 #NPC teleports have weird line beaks; garbage cans need line breaks
-#Saturn valley gave me magicant huh

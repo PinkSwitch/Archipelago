@@ -148,6 +148,48 @@ check_table = {
     0xEB00F7: [0x9C75, 6],
     0xEB00F8: [0x9C76, 0],
     0xEB00F9: [0x9C75, 7],
+    0xEB008B: [0x9C19, 3],
+    0xEB008C: [0x9C83, 6],
+    0xEB008D: [0x9C63, 7],
+    0xEB008E: [0x9C79, 2],
+    0xEB008F: [0x9C79, 3],
+    0xEB0090: [0x9C79, 6],
+    0xEB0091: [0x9C79, 5],
+    0xEB0092: [0x9C79, 4],
+    0xEB0093: [0x9C19, 2],
+    0xEB0094: [0x9C7A, 2],
+    0xEB0095: [0x9C7A, 3],
+    0xEB0096: [0x9C7A, 1],
+    0xEB0097: [0x9C79, 7],
+    0xEB0098: [0x9C7A, 0],
+    0xEB0099: [0x9C78, 7],
+    0xEB009A: [0x9C79, 0],
+    0xEB009B: [0x9C79, 1],
+    0xEB009C: [0x9C19, 4],
+    0xEB009D: [0x9C64, 4],
+    0xEB009E: [0x9C5A, 7],
+    0xEB009F: [0x9C32, 6],
+    0xEB00A0: [0x9C0F, 4],
+    0xEB00A1: [0x9C7C, 6],
+    0xEB00A2: [0x9C7C, 7],
+    0xEB00A3: [0x9C7D, 0],
+    0xEB00A4: [0x9C2A, 0],
+    0xEB00A5: [0x9C7D, 3],
+    0xEB00A6: [0x9C7D, 4],
+    0xEB00A7: [0x9C7D, 2],
+    0xEB00A8: [0x9C7D, 1],
+    0xEB00A9: [0x9C57, 4],
+    0xEB00AA: [0x9C09, 7],
+    0xEB00AB: [0x9C7D, 6],
+    0xEB00AC: [0x9C7D, 5],
+    0xEB00AD: [0x9C7D, 7],
+    0xEB00AE: [0x9C7A, 6],
+    0xEB00AF: [0x9C7A, 4],
+    0xEB00B0: [0x9C7A, 5],
+    0xEB00B1: [0x9C7B, 0],
+    0xEB00B2: [0x9C7B, 1],
+    0xEB00B3: [0x9C33, 3],
+    0xEB00B4: [0x9C7A, 7],
 
 }
 
@@ -177,6 +219,9 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Andonuts Lab - Mouse": [0x06C840],
     "Stonehenge - Tony Item": [0x2FFA0C],
     "Monkey Caves - Bow Monkey Gift": [0x0625E7],
+    "Fourside - Venus Gift": [0x06D643],
+    "Fourside - Post-Moonside Delivery": [0x07AA04],
+    "Monotoli Building - Monotoli Gift": [0x06EAA9],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -212,6 +257,13 @@ npc_locations = { #Locations given to you by an NPC
     "Stonehenge - Tony Item": [0x2FFA78],
     "Monkey Caves - Bow Monkey Gift": [0x062636],
     "Monkey Caves - Talah Rama Gift": [0x060FEB],
+    "Fourside - Venus Gift": [0x2EB1CE],
+    "Fourside - Post-Moonside Delivery": [0x07AAC4, 0x07B598],
+    "Fourside - Bakery 2F Gift": [0x06DE56],
+    "Monotoli Building - Electra Gift": [0x2EB29A],
+    "Monotoli Building - Monotoli Gift": [0x06EB3C],
+    "Summers - Museum Item": [0x08ABF2],
+    "Pyramid - Pedestal Item": [0x0931DF],
 
 }
 
@@ -322,19 +374,53 @@ present_locations = {#Field presents
     "Monkey Caves - East End Trashcan": 0x0FEBA7,
     "Monkey Caves - Talah Rama Chest #1": 0x0FEBB8,
     "Monkey Caves - Talah Rama Chest #2": 0x0FEBC9,
+    "Moonside - Two Trees Present": 0x0FEE1C,
+    "Moonside - East Island Present": 0x0FEE2D,
+    "Moonside - Businessman Present": 0x0FEE60,
+    "Moonside - Monotoli Building Present": 0x0FEE4F,
+    "Moonside - Hospital Present": 0x0FEE3E,
+    "Magnet Hill - West Entrance Trashcan": 0x0FEEA4,
+    "Magnet Hill - First Room Free Door Trashcan": 0x0FEEB5,
+    "Magnet Hill - First Room Barrel Door Trashcan": 0x0FEE93,
+    "Magnet Hill - Second Room Dead End Trashcan": 0x0FEE71,
+    "Magnet Hill - Final Room Door Trashcan": 0x0FEE82,
+    "Fourside - Magnet Hill Chest": 0x0FEDE9,
+    "Monotoli Building - One Table Present": 0x0FEDFA,
+    "Monotoli Building - Two Table Present": 0x0FEE0B,
+    "Dalaam - Throne Room Chest #1": 0x0FEFF8,
+    "Dalaam - Throne Room Chest #2": 0x0FF009,
+    "Dalaam - Throne Room Chest #3": 0x0FF01A,
+    "Dalaam - Restaurant Chest #1": 0x0FF03C,
+    "Dalaam - Restaurant Chest #2": 0x0FF05E,
+    "Dalaam - Do Do Guy's House Chest": 0x0FF04D,
+    "Dalaam - Upper House Chest": 0x0FF02B,
+    "Pink Cloud - Three Holes Present": 0x0FF080,
+    "Pink Cloud - Left Hole Present": 0x0FF06F,
+    "Pink Cloud - Ground Floor Present": 0x0FF091,
+    "Pyramid - Anteroom Sarcophagus": 0x0FEEE8,
+    "Pyramid - Northwest Door Sarcophagus": 0x0FEEC6,
+    "Pyramid - Hallway Sarcophagus #1": 0x0FEED7,
+    "Pyramid - Hallway Sarcophagus #2": 0x0FEF0A,
+    "Pyramid - Switch Room Sarcophagus": 0x0FEF1B,
+    "Pyramid - Way Out Sarcophagus": 0x0FEEF9,
 }
 
 psi_locations = {
     "Onett - Mani Mani Statue": [0x2EA976, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
     "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EA949],
-    "Saturn Valley - Saturn Coffee": [0x2EAA04, 0xF1, 0xAF, 0xEE, 0x2EB030],
+    "Saturn Valley - Saturn Coffee": [0x2EAFE3, 0xF1, 0xAF, 0xEE, 0x2EB030],
     "Monkey Caves - Monkey Power": [0x2EB12E, 0x68, 0xB1, 0xEE, 0x2EB1B1],
+    "Fourside - Department Store Blackout": [0x2EB22F, 0x66, 0xB2, 0xEE, 0x2EB275],
+    "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EB3A1],
+    "Dalaam - Trial of Mu": [0x2EB3FA, 0x08, 0xB4, 0xEE, 0x2EB443],
 }
 
 character_locations = {
     "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0xEE],
     "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE],
-    "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0xEE]
+    "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0xEE],
+    "Monotoli Building - Monotoli Character": [0x2EB2B2, 0x0FC37F, 0x2EB2AD, 0x2EB2D2, 0xC2, 0xB1, 0xEE],
+    "Dalaam - Throne Character": [0x2EB4D1, 0x0FD20A, 0x2EB4CC, 0x2EB4F1, 0xE0, 0xB4, 0xEE]
 }
 
 locker_locations = {
