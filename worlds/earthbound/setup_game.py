@@ -7,6 +7,51 @@ def setup_gamevars(world):
     else:
         world.start_location = 0
 
+    world.hinted_regions = [
+        "Northern Onett",
+        "Onett",
+        "Giant Step",
+        "Twoson",
+        "Peaceful Rest Valley",
+        "Happy-Happy Village",
+        "Lilliput Steps",
+        "Threed",
+        "Grapefruit Falls",
+        "Belch's Factory",
+        "Saturn Valley",
+        "Upper Saturn Valley",
+        "Milky Well",
+        "Dusty Dunes Desert",
+        "Gold Mine",
+        "Monkey Caves",
+        "Fourside",
+        "Magnet Hill",
+        "Monotoli Building",
+        "Winters",
+        "Snow Wood Boarding School",
+        "Southern Winters",
+        "Rainy Circle",
+        "Stonehenge Base",
+        "Summers",
+        "Dalaam",
+        "Pink Cloud",
+        "Scaraba",
+        "Pyramid",
+        "Southern Scaraba",
+        "Dungeon Man",
+        "Deep Darkness",
+        "Tenda Village",
+        "Lumine Hall",
+        "Lost Underworld",
+        "Fire Spring",
+        "Magicant",
+        "Cave of the Present",
+        "Cave of the Past"
+    ]
+    world.random.shuffle(world.hinted_regions)
+    del world.hinted_regions[6:39]
+
+
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))
     world.get_location("Belch Defeated").place_locked_item(world.create_item("Threed Tunnels Clear"))

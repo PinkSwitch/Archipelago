@@ -5,6 +5,7 @@ import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations
+from .text_data import barf_text
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -192,7 +193,17 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(character_locations[name][1], bytearray([0x97]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
-
+                if name == "Deep Darkness - Barf Character":
+                    if name in character_item_table:
+                        rom.write_bytes(0xEEA0E2, bytearray(barf_text[item][0:3]))
+                        rom.write_bytes(0x2EA0E7, bytearray(barf_text[item][3:6]))
+                    elif name in psi_item_table:
+                        rom.write_bytes(0xEEA0E2, bytearray([0xC8, 0xF8, 0xD6]))
+                        rom.write_bytes(0x2EA0E7, bytearray([0x26, 0xFA, 0xD6]))
+                    else:
+                        rom.write_bytes(0xEEA0E2, bytearray([0x9A, 0xFA, 0xD6]))
+                        rom.write_bytes(0x2EA0E7, bytearray([0xE3, 0xF9, 0xD6]))
+            
             elif name in locker_locations:
                 if item in item_id_table or location.item.player != location.player:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x00]))

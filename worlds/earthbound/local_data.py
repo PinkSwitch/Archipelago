@@ -204,6 +204,23 @@ check_table = {
     0xEB00C0: [0x9C7C, 4],
     0xEB00C1: [0x9C7C, 3],
     0xEB00C2: [0x9C7B, 3],
+    0xEB00C3: [0x9C59, 1],
+    0xEB00C4: [0x9C7E, 4],
+    0xEB00C5: [0x9C7E, 3],
+    0xEB00C6: [0x9C7E, 2],
+    0xEB00C7: [0x9C7E, 5],
+    0xEB00C8: [0x9C7E, 0],
+    0xEB00C9: [0x9C7E, 1],
+    0xEB00CA: [0x9C3E, 7],
+    0xEB00CB: [0x9C3F, 1],
+    0xEB00CC: [0x9C3F, 0],
+    0xEB00CD: [0x9C3F, 2],
+    0xEB00CE: [0x9C3E, 6],
+    0xEB00CF: [0x9C84, 7],
+    0xEB00D0: [0x9C7F, 7],
+    0xEB00D1: [0x9C83, 1],
+    0xEB00D2: [0x9C1B, 2],
+    0xEB00D3: [0x9C13, 3],
 
 }
 
@@ -236,6 +253,13 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Fourside - Venus Gift": [0x06D643],
     "Fourside - Post-Moonside Delivery": [0x07AA04],
     "Monotoli Building - Monotoli Gift": [0x06EAA9],
+    "Deep Darkness - North Alcove Truffle": [0x2EB5A7],
+    "Deep Darkness - Near Land Truffle": [0x2EB5FF],
+    "Deep Darkness - Present Truffle": [0x2EB5D3],
+    "Deep Darkness - Village Truffle": [0x2EB62B],
+    "Deep Darkness - Entrance Truffle": [0x2EB57B],
+    "Tenda Village - Tenda Gift": [0x09DA6C, 0x09DA79],
+    "Tenda Village - Tenda Gift #2": [0x09D7FD],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -279,6 +303,14 @@ npc_locations = { #Locations given to you by an NPC
     "Summers - Museum Item": [0x08ABF2],
     "Pyramid - Pedestal Item": [0x0931DF],
     "Scaraba - Key Holder": [0x0576C1],
+    "Deep Darkness - Teleporting Monkey": [0x09E50F],
+    "Deep Darkness - North Alcove Truffle": [0x2EB5BE],
+    "Deep Darkness - Near Land Truffle": [0x2EB616],
+    "Deep Darkness - Present Truffle": [0x2EB5EA],
+    "Deep Darkness - Village Truffle": [0x2EB642],
+    "Deep Darkness - Entrance Truffle": [0x2EB592],
+    "Tenda Village - Tenda Gift": [0x09DAF0],
+    "Tenda Village - Tenda Gift #2": [0x09D814],
 
 }
 
@@ -430,6 +462,13 @@ present_locations = {#Field presents
     "Dungeon Man - 3F Present": 0x0FEFD6,
     "Dungeon Man - 2F Hole Present": 0x0FEFC5,
     "Dungeon Man - 1F Exit Ledge Present": 0x0FEF3D,
+    "Deep Darkness - Crest of Darkness Present": 0x0FF0E6,
+    "Deep Darkness - Helicopter Present": 0x0FF0D5,
+    "Deep Darkness - Yellow Bird Present": 0x0FF0C4,
+    "Deep Darkness - Swamp Present": 0x0FF0F7,
+    "Deep Darkness - Corner Present": 0x0FF0A2,
+    "Deep Darkness - Alcove Present": 0x0FF0B3,
+    "Tenda Village - Trashcan": 0x0FF1A2,
 }
 
 psi_locations = {
@@ -441,6 +480,8 @@ psi_locations = {
     "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EB3A1],
     "Dalaam - Trial of Mu": [0x2EB3FA, 0x08, 0xB4, 0xEE, 0x2EB443],
     "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
+    "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
+    "Tenda Village - Tenda Tea": [0x2EB6A9, 0xB7, 0xB6, 0xEE, 0x2EB6E7]
 }
 
 character_locations = {
@@ -448,7 +489,8 @@ character_locations = {
     "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE],
     "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0xEE],
     "Monotoli Building - Monotoli Character": [0x2EB2B2, 0x0FC37F, 0x2EB2AD, 0x2EB2D2, 0xC2, 0xB1, 0xEE],
-    "Dalaam - Throne Character": [0x2EB4D1, 0x0FD20A, 0x2EB4CC, 0x2EB4F1, 0xE0, 0xB4, 0xEE]
+    "Dalaam - Throne Character": [0x2EB4D1, 0x0FD20A, 0x2EB4CC, 0x2EB4F1, 0xE0, 0xB4, 0xEE],
+    "Deep Darkness - Barf Character": [0x2EB654, 0x0FE0C8, 0x2EB64F, 0x2EB673, 0x62, 0xB6, 0xEE]
 }
 
 locker_locations = {
@@ -745,14 +787,14 @@ special_name_table = {
     "Scaraba Teleport": [0x09, 0xEC, 0x93, 0xEE, 0x0A],
     "Dalaam Teleport": [0x0A, 0x1E, 0x94, 0xEE, 0x0B],
     "Deep Darkness Teleport": [0x0B, 0x4F, 0x94, 0xEE, 0x0C],
-    "Tenda Village Teleport": [0x0C, 0x8B, 0x94, 0xEE],
-    "Lost Underworld Teleport": [0x0D, 0xC3, 0x94, 0xEE],
-    "Progressive Poo PSI": [0x0E, 0x54, 0x95, 0xEE],
-    "Paula": [0x0F, 0x30, 0xF8, 0xD5],
-    "Jeff": [0x10, 0x37, 0xF8, 0xD5],
-    "Poo": [0x11, 0x3E, 0xF8, 0xD5],
-    "Flying Man": [0x12, 0x45, 0xF8, 0xD5],
-    "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE]
+    "Tenda Village Teleport": [0x0C, 0x8B, 0x94, 0xEE, 0x0D],
+    "Lost Underworld Teleport": [0x0D, 0xC3, 0x94, 0xEE, 0x0E],
+    "Progressive Poo PSI": [0x0E, 0x54, 0x95, 0xEE, 0x0F],
+    "Paula": [0x0F, 0x30, 0xF8, 0xD5, 0x10],
+    "Jeff": [0x10, 0x37, 0xF8, 0xD5, 0x11],
+    "Poo": [0x11, 0x3E, 0xF8, 0xD5, 0x12],
+    "Flying Man": [0x12, 0x45, 0xF8, 0xD5, 0x13],
+    "Magicant Teleport": [0x13, 0x01, 0x95, 0xEE, 0x14]
 }
 
     #0: Action pointer, call the actual item being given

@@ -1,8 +1,3 @@
-
-
-
-
-
 region_text = {
     "Northern Onett": "Onett",
     "Onett": "Onett",
@@ -42,4 +37,11 @@ region_text = {
     "Magicant": "Magicant",
     "Cave of the Present": "Cave of the Past",
     "Cave of the Past": "Cave of the Past"
+}
+
+barf_text = {
+    "Paula": [0x10, 0xF8, 0xD6, 0xED, 0xF8, 0xD6],
+    "Jeff": [0x10, 0xF8, 0xD6, 0xED, 0xF8, 0xD6],
+    "Poo": [0x10, 0xF8, 0xD6, 0xED, 0xF8, 0xD6],
+    "Flying Man": [0x10, 0xF8, 0xD6, 0xED, 0xF8, 0xD6]
 }
