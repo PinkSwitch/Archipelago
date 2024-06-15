@@ -219,8 +219,35 @@ check_table = {
     0xEB00CF: [0x9C84, 7],
     0xEB00D0: [0x9C7F, 7],
     0xEB00D1: [0x9C83, 1],
-    0xEB00D2: [0x9C1B, 2],
+    0xEB00D2: [0x9C82, 6],
     0xEB00D3: [0x9C13, 3],
+    0xEB00D4: [0x9C7F, 6],
+    0xEB00D5: [0x9C7F, 2],
+    0xEB00D6: [0x9C7F, 0],
+    0xEB00D7: [0x9C7F, 5],
+    0xEB00D8: [0x9C7E, 7],
+    0xEB00D9: [0x9C7F, 3],
+    0xEB00DA: [0x9C7E, 6],
+    0xEB00DB: [0x9C7F, 1],
+    0xEB00DC: [0x9C7F, 4],
+    0xEB00DD: [0x9C3C, 6],
+    0xEB00DE: [0x9C80, 1],
+    0xEB00DF: [0x9C80, 2],
+    0xEB00E0: [0x9C80, 3],
+    0xEB00E1: [0x9C80, 4],
+    0xEB00E2: [0x9C80, 0],
+    0xEB00E3: [0x9C81, 1],
+    0xEB00E4: [0x9C80, 7],
+    0xEB00E5: [0x9C81, 0],
+    0xEB00E6: [0x9C80, 6],
+    0xEB00E7: [0x9C80, 5],
+
+    0xEB00E8: [0x9C13, 4],
+    0xEB00E9: [0x9C81, 2],
+    0xEB00EA: [0x9C81, 3],
+    0xEB00EB: [0x9C81, 5],
+    0xEB00EC: [0x9C81, 6],
+    0xEB00ED: [0x9C, 5],
 
 }
 
@@ -260,6 +287,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Deep Darkness - Entrance Truffle": [0x2EB57B],
     "Tenda Village - Tenda Gift": [0x09DA6C, 0x09DA79],
     "Tenda Village - Tenda Gift #2": [0x09D7FD],
+    "Magicant - Ness's Gift": [0x077614],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -311,6 +339,7 @@ npc_locations = { #Locations given to you by an NPC
     "Deep Darkness - Entrance Truffle": [0x2EB592],
     "Tenda Village - Tenda Gift": [0x09DAF0],
     "Tenda Village - Tenda Gift #2": [0x09D814],
+    "Magicant - Ness's Gift": [0x077629],
 
 }
 
@@ -469,6 +498,29 @@ present_locations = {#Field presents
     "Deep Darkness - Corner Present": 0x0FF0A2,
     "Deep Darkness - Alcove Present": 0x0FF0B3,
     "Tenda Village - Trashcan": 0x0FF1A2,
+    "Lumine Hall - B1F Non-Talkative Rock Present": 0x0FF190,
+    "Lumine Hall - 1F North Path Present": 0x0FF14C,
+    "Lumine Hall - B1F Thankful Rock Corner Present": 0x0FF12A,
+    "Lumine Hall - B1F Thankful Rock Junction Present": 0x0FF17F,
+    "Lumine Hall - 1F Above Belly Button Present": 0x0FF119,
+    "Lumine Hall - B1F Belly Button Present": 0x0FF15D,
+    "Lumine Hall - 1F Near Exit Present": 0x0FF108,
+    "Lumine Hall - 1F Dead End Present": 0x0FF13B,
+    "Lumine Hall - B1F West Alcove Present": 0x0FF16E,
+    "Lost Underworld - East Present": 0x0FF1C3,
+    "Lost Underworld - Northeast Present": 0x0FF1D4,
+    "Lost Underworld - Northeast of Tenda Tribe Present": 0x0FF1E5,
+    "Lost Underworld - Southwest of Tenda Tribe Present": 0x0FF1F6,
+    "Lost Underworld - Evacuation Present": 0x0FF1B2,
+    "Fire Spring - 1st Cave Present": 0x0FF24B,
+    "Fire Spring - East Corner Present": 0x0FF229,
+    "Fire Spring - Volcano Present": 0x0FF23A,
+    "Fire Spring - Lone Cave Present": 0x0FF218,
+    "Fire Spring - Upper Volcano Present": 0x0FF207,
+    "Magicant - Present Near Ness": 0x0FF25C,
+    "Magicant - Lonely Present": 0x0FF27E,
+    "Magicant - North Present": 0x0FF28F,
+    "Magicant - Hills Present": 0x0FF2A0,
 }
 
 psi_locations = {
@@ -480,8 +532,9 @@ psi_locations = {
     "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EB3A1],
     "Dalaam - Trial of Mu": [0x2EB3FA, 0x08, 0xB4, 0xEE, 0x2EB443],
     "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
-    "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
-    "Tenda Village - Tenda Tea": [0x2EB6A9, 0xB7, 0xB6, 0xEE, 0x2EB6E7]
+    "Tenda Village - Tenda Tea": [0x2EB6A9, 0xB7, 0xB6, 0xEE, 0x2EB6E7],
+    "Lost Underworld - Talking Rock": [0x2EB72D, 0x3B, 0xB7, 0xEE, 0x2EB770],
+    "Magicant - Ness's Nightmare": [0x2EB7B6, 0xC9, 0xB7, 0xEE, 0x2EB814]
 }
 
 character_locations = {

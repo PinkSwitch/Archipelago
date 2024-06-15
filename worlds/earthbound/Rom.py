@@ -121,18 +121,14 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.magicant_mode == 2:
         rom.write_bytes(0x04FD71, bytearray(world.options.sanctuaries_required.value + 1))
+        rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #Alt goal magicant sets the credits
     elif world.options.magicant_mode == 1:
-        rom.write_bytes(0x2E9C29, bytearray([0x01, 0x95, 0xEE])) #Replace Sanctuary goal with Magicant if forced goal
-
-    rom.write_bytes(0x04FD70, bytearray(world.options.sanctuaries_required.value))
-    if world.options.giygas_required:
-        if world.options.magicant_mode == 1:
-            rom.write_bytes(0x2EA26A, bytearray([0xFF])) #Change Magicant to absorb FIX THIS!!!!!!!!!!!!!!!!!!
-    else:
-        if world.options.magicant_mode == 1:
-            rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #Change Magicant to win if required and goal
+        if world.options.giygas_required:
+            rom.write_bytes(0x2EA26A, bytearray([0x08, 0xD9, 0x9B, 0xEE])) #Give stat boost if magicant + giygas required
         else:
-            rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5, 0xEE])) #If no final boss, write goal at sanc
+            rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #If no giygas, set credits
+
+    #Todo: sanc alt goal, change sanc script
 
     for location in world.multiworld.get_locations(player):
         if location.address:
@@ -282,3 +278,4 @@ def get_base_rom_path(file_name: str = "") -> str:
 #Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
 #log tpt stuff when interacting with npcs...?
 #NPC teleports have weird line beaks; garbage cans need line breaks
+#Fix paula item text
