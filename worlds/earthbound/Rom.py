@@ -15,37 +15,7 @@ if TYPE_CHECKING:
     from . import EarthBoundWorld
 USHASH = "a864b2e5c141d2dec1c4cbed75a42a85"
 
-item_ids = {
-    0x696969: 0x01, #Money bag
-    0x69696A: 0x02, #Coin
-    0x69696B: 0x03, #Miracle
-    0x69696C: 0x04, #Diamond
-    0x69696D: 0x05, #Dynamite
-    0x69696E: 0x06, #Flare
-    0x69696F: 0x07, #Blue Key
-    0x696970: 0x08, #Red Key
-    0x696971: 0x09,
-    0x696972: 0x0A,
-    0x696973: 0x0B,
-    0x696974: 0x0C
 
-}
-
-location_table = {
-    0x198601: [0x16, 0x01]
-
-}
-
-hidden_table = {
-    0x6969FD: 0x0D,
-    0x6969FE: 0x1D,
-    0x6969FF: 0x55,
-    0x696A00: 0x66,
-    0x696A01: 0x8F,
-    0x696A02: 0xA2,
-    0x696A03: 0xC6,
-    0x696A04: 0xCA
-}
 
 class LocalRom(object):
 
@@ -156,7 +126,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 elif item in psi_item_table:
                     rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
                 elif item in character_item_table:
-                    rom.write_bytes(present_locations[name], bytearray([character_item_table[item], 0x00, 0x03]))
+                    rom.write_bytes(present_locations[name], bytearray([character_item_table[item][0], 0x00, 0x03]))
 
             elif name in npc_locations:
                 for i in range(len(npc_locations[name])):
@@ -279,3 +249,9 @@ def get_base_rom_path(file_name: str = "") -> str:
 #log tpt stuff when interacting with npcs...?
 #NPC teleports have weird line beaks; garbage cans need line breaks
 #Fix paula item text
+#Fix Dialogue names for the PSI checks
+#Fix the Psychic Well and character stuff to properly newline
+#fix paula in cabin?
+#scale enemies
+#fix the rest of the items
+#implement repel sandwich
