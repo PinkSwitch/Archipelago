@@ -5,7 +5,7 @@ import typing
 import bsdiff4
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations
-from .text_data import barf_text
+from .text_data import barf_text, eb_text_table
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -88,15 +88,22 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x04FD72, bytearray(world.options.sanctuaries_required.value + 2))
+    else:
+        rom.write_bytes(0x04FD72, bytearray([0xFF]))
+
+    if world.options.giygas_required == 0:
+        rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5]))
 
     if world.options.magicant_mode == 2:
         rom.write_bytes(0x04FD71, bytearray(world.options.sanctuaries_required.value + 1))
         rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #Alt goal magicant sets the credits
     elif world.options.magicant_mode == 1:
+        rom.write_bytes(0x2E9C29, bytearray([0x00, 0xA5]))
         if world.options.giygas_required:
             rom.write_bytes(0x2EA26A, bytearray([0x08, 0xD9, 0x9B, 0xEE])) #Give stat boost if magicant + giygas required
         else:
             rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #If no giygas, set credits
+
 
     #Todo: sanc alt goal, change sanc script
 
@@ -104,6 +111,17 @@ def patch_rom(world, rom, player: int, multiworld):
         if location.address:
             name = location.name
             item = location.item.name
+            item_name_loc = (((location.address - 0xEB0000) * 128) + 0x3F0000)
+            item_text = bytearray(0)
+            for char in location.item.name[:128]:
+                if char in eb_text_table:
+                    item_text.extend (eb_text_table[char])
+                else:
+                    item_text.extend ([0x6F])
+            item_text.extend ([0x00])
+            rom.write_bytes(item_name_loc, bytearray(item_text)) #If no giygas, set credits
+
+
             if item not in item_id_table:
                 item_id = 0xAD
             elif item == "Lucky Sandwich":
@@ -121,8 +139,10 @@ def patch_rom(world, rom, player: int, multiworld):
             if name in present_locations:
                 if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
                     rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
-                elif item in item_id_table or location.item.player != location.player:
+                elif item in item_id_table:
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
+                elif location.item.player != location.player:
+                    rom.write_bytes(present_locations[name], bytearray([item_id, 0x00, 0x00, (location.address - 0xEB0000)]))
                 elif item in psi_item_table:
                     rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
                 elif item in character_item_table:
@@ -151,7 +171,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:4]))
                 elif item in psi_item_table:
-                    rom.write_bytes(character_locations[name][0], bytearray([special_name_table[item][1:4]]))
+                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0xE0, 0xF8, 0xD5]))
                 else:
@@ -173,13 +193,13 @@ def patch_rom(world, rom, player: int, multiworld):
             elif name in locker_locations:
                 if item in item_id_table or location.item.player != location.player:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x00]))
-                    rom.write_bytes(locker_locations[name][1], bytearray(item_id))
+                    rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
                 elif item in psi_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
-                    rom.write_bytes(locker_locations[name][1], bytearray(psi_item_table[item]))
+                    rom.write_bytes(locker_locations[name][1], bytearray([psi_item_table[item]]))
                 elif item in character_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
-                    rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
+                    rom.write_bytes(locker_locations[name][1], bytearray([character_item_table[item]]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
         

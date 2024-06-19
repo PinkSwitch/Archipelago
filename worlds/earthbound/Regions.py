@@ -81,7 +81,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                         "Deep Darkness": lambda state: state.has("Deep Darkness Teleport", player),
                                                         "Tenda Village": lambda state: state.has("Tenda Village Teleport", player),
                                                         "Lost Underworld": lambda state: state.has("Lost Underworld Teleport", player),
-                                                        "Magicant": lambda state: state.has("Magicant Teleport", player)})
+                                                        "Magicant": lambda state: state.has_any({"Magicant Teleport", "Magicant Unlock"}, player)})
     multiworld.get_region("Northern Onett", player).add_exits(["Onett"])
 
     multiworld.get_region("Onett", player).add_exits(["Giant Step", "Twoson", "Northern Onett"],

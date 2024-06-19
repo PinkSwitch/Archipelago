@@ -258,10 +258,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Magicant", "Magicant - Lonely Present", 0xEB00EA),
     LocationData("Magicant", "Magicant - North Present", 0xEB00EB),
     LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC),
-    LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
     LocationData("Cave of the Present", "Cave of the Present - Star Master", 0xEB00EE),
     LocationData("Cave of the Present", "Cave of the Present - Broken Phase Distorter", 0xEB00EF),
-    LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),
 
     LocationData("Onett", "Onett Police Station", None),
     LocationData("Belch's Factory", "Belch Defeated", None),
@@ -274,11 +272,29 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Pink Cloud", "Pink Cloud Sanctuary", None),
     LocationData("Lumine Hall", "Lumine Hall Sanctuary", None),
     LocationData("Fire Spring", "Fire Spring Sanctuary", None),
-    LocationData("Cave of the Past", "Giygas", None),
     LocationData("Menu", "Sanctuary Goal", None),
     #LocationData("Menu", "+1 Sanctuary", None),
-    #LocationData("Menu", "+2 Sanctuaries", None)
     #LocationData("Menu", "Magicant Clear", None)
     ]
+
+    if not world or world.options.giygas_required:
+        location_table += [
+            LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),
+            LocationData("Cave of the Past", "Giygas", None),
+        ]
+
+    if not world or world.options.alternate_sanctuary_goal:
+        location_table += [
+            LocationData("Menu", "+2 Sanctuaries", None)
+        ]
+
+    if not world or world.options.magicant_mode != 0:
+        location_table += [
+            LocationData("Magicant", "Ness's Nightmare", None)
+        ]
+    else:
+        location_table += [
+            LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
+        ]
 
     return location_table

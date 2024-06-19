@@ -48,7 +48,8 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift #2", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Lost Underworld - Talking Rock", player), lambda state: state.has("Tendakraut", player))
-    set_rule(world.multiworld.get_location("Giygas", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Sanctuary Goal", player), lambda state: state.has("Melody", player, world.options.sanctuaries_required.value))
     
     
+    if world.options.giygas_required:
+        set_rule(world.multiworld.get_location("Giygas", player), lambda state: state.has("Paula", player))

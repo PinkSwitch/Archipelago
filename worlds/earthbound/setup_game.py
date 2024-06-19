@@ -70,13 +70,18 @@ def place_static_items(world):
         world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))#Normal final boss
         if world.options.magicant_mode == 1:
             world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))#If required magicant
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlocked"))
         else:
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))#If not required, place this condition on sanctuary goal
     else:
         if world.options.magicant_mode == 1:
             world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))#If Magicant required but not Giygas, place goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))# If neither final boss, place goal
+
+    if world.options.alternate_sanctuary_goal:
+        world.get_location("+2 Sanctuaries").place_locked_item(world.create_item("Alternate Goal"))
 
         #Add magicant, add sanc stuff, add alt goals...
             

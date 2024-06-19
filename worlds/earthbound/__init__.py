@@ -134,6 +134,8 @@ class EarthBoundWorld(World):
             excluded_items.add("Magicant Teleport")
             excluded_items.add("Progressive Poo PSI")
             excluded_items.add("Dalaam Teleport")
+        elif self.options.magicant_mode != 0:
+            excluded_items.add("Magicant Teleport")
 
         if self.options.character_shuffle == 0:
             excluded_items.add("Paula")
@@ -190,11 +192,13 @@ class EarthBoundWorld(World):
             del prefill_items[0:5]
             prefill_items.extend([
                 self.create_item("Dalaam Teleport"),
-                self.create_item("Magicant Teleport"),
                 self.create_item("Winters Teleport"),
                 self.create_item("Progressive Poo PSI"),
                 self.create_item("Progressive Poo PSI")
             ])
+
+            if seld.options.magicant_mode == 0:
+                prefill_items.append(self.create_item("Magicant Teleport"),)
             self.random.shuffle(prefill_items)
             add_item_rule(self.multiworld.get_location("Onett - Buzz Buzz", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Onett - Mani Mani Statue", self.player), lambda item: item.name in self.item_name_groups["PSI"])

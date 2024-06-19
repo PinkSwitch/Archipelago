@@ -60,21 +60,21 @@ class CharacterShuffle(Choice):
     default = 0
 
 class CommonWeight(Range):
-    """How many of the eight "Your Sanctuary" locations are required to be cleared."""
+    """Weight for placing a common filler item."""
     display_name = "Common Filler Weight"
     range_start = 1
     range_end = 100
     default = 80
 
 class UncommonWeight(Range):
-    """How many of the eight "Your Sanctuary" locations are required to be cleared."""
+    """Weight for placing an uncommon filler item."""
     display_name = "Uncommon Filler Weight"
     range_start = 1
     range_end = 100
     default = 30
 
 class RareWeight(Range):
-    """How many of the eight "Your Sanctuary" locations are required to be cleared."""
+    """Weight for placing a rare filler item."""
     display_name = "Rare Filler Weight"
     range_start = 0
     range_end = 100
@@ -95,7 +95,7 @@ class EBOptions(PerGameCommonOptions):
     rare_filler_weight: RareWeight
     #RepairJeffItems
     #PSI Checks
-    #Character Checks
     #EXP Multiplier
+    #Monkey caves...
     start_inventory_from_pool: StartInventoryPool
     #death_link: DeathLink
