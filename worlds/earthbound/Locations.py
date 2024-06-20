@@ -253,11 +253,6 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Fire Spring", "Fire Spring - Volcano Present", 0xEB00E5),
     LocationData("Fire Spring", "Fire Spring - Lone Cave Present", 0xEB00E6),
     LocationData("Fire Spring", "Fire Spring - Upper Volcano Present", 0xEB00E7),
-    LocationData("Magicant", "Magicant - Ness's Gift", 0xEB00E8),
-    LocationData("Magicant", "Magicant - Present Near Ness", 0xEB00E9),
-    LocationData("Magicant", "Magicant - Lonely Present", 0xEB00EA),
-    LocationData("Magicant", "Magicant - North Present", 0xEB00EB),
-    LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC),
     LocationData("Cave of the Present", "Cave of the Present - Star Master", 0xEB00EE),
     LocationData("Cave of the Present", "Cave of the Present - Broken Phase Distorter", 0xEB00EF),
 
@@ -296,5 +291,16 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
         ]
+
+    if not world or world.options.magicant_mode != 2:
+        location_table += [
+        LocationData("Magicant", "Magicant - Ness's Gift", 0xEB00E8),
+        LocationData("Magicant", "Magicant - Present Near Ness", 0xEB00E9),
+        LocationData("Magicant", "Magicant - Lonely Present", 0xEB00EA),
+        LocationData("Magicant", "Magicant - North Present", 0xEB00EB),
+        LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC)
+        ]
+    else:
+        LocationData("Menu", "+1 Sanctuary", None)
 
     return location_table

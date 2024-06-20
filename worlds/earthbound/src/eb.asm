@@ -19,7 +19,7 @@ UnsetScripts:
 dw $006B,$ED02,$000B,$005F
 
 CharUnlockPointers:
-dw $F830,$F837,$F83E,$F845
+dw $F830,$F837,$F83E,$F845,$F955
 
 ORG $03FE10
 db $1C,$02,$FE,$50,$9A,$9F,$99,$9E,$95,$94,$50,$A9,$9F,$A5,$A2,$50,$A0,$91,$A2,$A4,$A9,$51,$1F,$00,$00,$0B,$10,$78,$10,$78,$10,$78,$10,$3C,$1F,$03,$13,$02
@@ -144,6 +144,17 @@ JML LoadAPData
 ORG $C17DD4
 JML SpecialNameDirect
 
+ORG $C18AE4
+JML GetServerData
+
+ORG $C1336D
+JML GetPresentData
+
+ORG $C1322B
+JML LogActorNum
+
+ORG $C1338E
+JML LogCheckNum
 
 
 
@@ -1142,7 +1153,7 @@ db $00, $1d, $0e, $ff, $01, $08, $b6, $dc, $c7, $ff, $0a, $a7, $05, $C6, $50, $9
 db $9f, $a4, $50, $a4, $98, $95, $50, $1c, $05, $b6, $51, $59, $04, $5a, $00, $13
 db $02, $70, $89, $9f, $a5, $50, $94, $9f, $9e, $57, $a4, $50, $98, $91, $a6, $95
 db $50, $91, $9e, $a9, $50, $a2, $9f, $9f, $9d, $50, $96, $9f, $a2, $50, $99, $a4
-db $5c, $50, $a4, $98, $9f, $a5, $97, $98, $5e, $13, $02
+db $5c, $50, $a4, $98, $9f, $a5, $97, $98, $5e, $13, $02; Miner
 
 ORG $C6034A
 db $5A, $00, $5F, $00, $C6
@@ -3044,9 +3055,20 @@ PHA
 JML $C14FDB
 
 GetPlayerName:
+PHA
+LDA $FF40
+BEQ GetNormalItem
+PLA
+STZ $FF40
+LDA #$00AD
+BRA ForceAPItem
+GetNormalItem:
+PLA
+ForceAPItem:
 CMP #$00AD
 BNE SetPlayerNameFlag
 INC $F683
+INC $F689
 SetPlayerNameFlag:
 JSL GetItemName
 LDA #$0000
@@ -3070,7 +3092,14 @@ LDA $F683
 AND #$00FF
 BEQ DrawNormalName
 PLA
+LDA $F689
+AND #$00FF
+BEQ SkipPriorityName
+STZ $F689
+BRA DontSkipPrior
+SkipPriorityName:
 STZ $F683
+DontSkipPrior:
 LDA #$FF50
 STA $0E
 LDA #$007E
@@ -3400,11 +3429,70 @@ JML $C17E71
 NotSeven:
 CMP #$0016
 BEQ GetSpecialName
+CMP #$0017
+BEQ PullAPName
 JML $C17DDC
 GetSpecialName:
 JSR PrintSpecialName
 LDA #$0000
 JML $C17F0F
+PullAPName:
+INC $FF40
+JSR APCC
+LDA #$0000
+JML $C17E65
+
+
+APCC:
+rep #$31
+phd
+pha
+tdc
+adc #$ffee
+tcd
+pla
+; read ARGS_COUNT bytes of args into $97BA
+ldy #$0001
+jsr R_Read_Parameter_Bytes
+LDA $97BA
+AND #$00FF
+JSL MoveItemNames
+PLD
+RTS
+
+
+
+GetServerData:
+LDY #$7D94
+STY $1E
+PHA
+LDA $06
+STA $7EF68E
+PLA
+JML $C18754
+
+GetPresentData:
+LDA $06
+STA $7EF68C
+LDA [$06]
+STA $0A
+STY $0C
+JML $C13373
+
+LogActorNum:
+LDA $06
+STA $F68C
+LDA [$06]
+STA $0A
+JML $C1322F
+
+LogCheckNum:
+LDA $06
+STA $F68C
+LDA [$06]
+STA $0A
+JML $C13392
+
 
 PrintSpecialName:
   rep #$31
@@ -3731,8 +3819,8 @@ PLA
 INC
 INC
 STA $06
-LDA [$06]
-STA $0E
+JML FindMovData
+GotMovData:
 STZ $10
 JSR $045D
 BRA $3A
@@ -4188,7 +4276,7 @@ ORG $EEB286
 db $06, $8b, $00, $88, $c5, $c7, $00, $06, $ee, $03, $2e, $b2, $ee, $0a, $6b, $2c
 db $c8
 
-ORG $EEB2A1
+ORG $EEB297
 db $1d, $0e, $ff, $01, $08, $cf, $dc, $c7, $ff, $02
 
 ORG $C6E9D0
@@ -4591,8 +4679,115 @@ db $82, $95, $a0, $95, $9c, $a3, $50, $a9, $9f, $a5, $a2, $50, $95, $9e, $95, $9
 db $99, $95, $a3
 
 ORG $D57247
-db $82, $95, $a0, $95, $9c, $50, $83, $91, $9e, $94, $a7, $99, $93, $98, $50, $74
+db $82, $95, $a0, $95, $9c, $50, $83, $91, $9e, $94, $a7, $99, $93, $98, $50, $75
 db $88
+
+ORG $D5F955
+db $08, $54, $95, $ee, $ff, $18, $04, $02
+
+ORG $C862BE
+db $50, $91, $50, $1c, $05, $01
+
+ORG $00FFD7
+db $12
+
+ORG $FFEEEE
+db $A4
+
+;db "how come inserting some random ass data into the game makes bsdiff respect my tokens" PUT THIS BACK WHEN PATCHING
+
+ORG $EEBA50
+db $70, $58, $78, $95, $a9, $51, $10, $0f, $50, $84, $98, $95, $a2, $95, $50, $99
+db $a3, $50, $91, $50, $1c, $05, $01, $50, $9f, $9e, $50, $a4, $98, $95, $50, $a3
+db $98, $95, $9c, $96, $51, $59, $03, $0a, $6e, $7e, $c8
+
+ORG $C87E4C
+db $0a, $50, $ba, $ee
+
+ORG $EEBA80
+db $a4, $16, $55, $50, $1c, $05, $01, $5e, $0a, $bc, $19, $c8
+
+ORG $C819B8
+db $0a, $80, $ba, $ee
+
+ORG $EEBA8D
+db $50, $91, $50, $1c, $05, $01, $50, $9f, $15, $7a, $0a, $94, $31, $c9
+
+ORG $C9318F
+db $0a, $8d, $ba, $ee
+
+ORG $CF2095
+db $93, $20, $cf
+
+ORG $CF209A
+db $01
+
+
+ORG $D6FAA0
+MoveItemNames:
+PHB
+PHA
+PHX
+PHY
+XBA
+SEP #$10
+TAX
+LDA #$0000
+CheckDataNum:
+CPX #$00
+BEQ PullData
+DEX
+CLC
+ADC #$0080
+BRA CheckDataNum
+PullData:
+REP #$10
+CLC
+TAX
+LDA #$007F
+LDY #$FF80
+MVN $FF7E
+PLY
+PLX
+PLA
+PLB
+RTL
+
+FindMovData:
+LDA [$06]
+STA $0E
+JSL MoveItemNames
+JML GotMovData
+
+ORG $C57675
+db $0a, $9b, $ba, $ee
+
+ORG $EEBA9B
+db $50, $1c, $05, $01, $0a, $79, $76, $c5
+
+ORG $C6DD98
+db $50, $70, $78, $95, $a2, $95, $57, $a3, $50, $9d, $a9, $50, $9c, $a5, $93, $9b
+db $a9, $50, $1c, $05, $01, $5e, $10, $0f, $50, $79, $50, $98, $91, $a6, $95, $50
+db $9f, $9e, $9c, $a9, $50, $a5, $a3, $95, $94, $50, $99, $a4, $50, $9f, $9e, $93
+db $95, $50, $a3, $99, $9e, $93, $95, $50, $a4, $98, $95, $50, $9c, $91, $a3, $a4
+db $50, $a7, $91, $a3, $98, $99, $9e, $97, $5e, $03, $00, $0a, $2c, $de, $c6
+
+ORG $C6E9A7
+db $1c, $05, $01, $0a, $b9, $e9, $c6
+
+ORG $C8ABB4
+db $91, $50, $1c, $05, $01, $0a, $c8, $ab, $c8
+
+ORG $C6C05F
+db $1c, $05, $01, $0a, $66, $c0, $c6
+
+ORG $C60E49
+db $70, $87, $98, $91, $a4, $50, $91, $a2, $95, $50, $a9, $9f, $a5, $50, $94, $9f
+db $99, $9e, $97, $50, $99, $9e, $50, $9d, $a9, $50, $93, $91, $a6, $95, $6f, $03
+db $00, $70, $84, $91, $9b, $95, $50, $a4, $98, $99, $a3, $50, $1c, $05, $01, $50
+db $91, $9e, $94, $50, $9c, $95, $91, $a6, $95, $5e, $03, $0a, $dc, $0f, $c6
+
+
 
 ;If prayers skipped:
 ;C7BC96 = 02

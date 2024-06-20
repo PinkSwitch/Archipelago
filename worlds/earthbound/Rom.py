@@ -131,8 +131,10 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in location_dialogue:
                 for i in range(len(location_dialogue[name])):
-                    if item in item_id_table or location.item.player != location.player:
+                    if item in item_id_table:
                         rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
+                    elif location.item.player != location.player:
+                        rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x17, location.address - 0xEB0000]))
                     elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
 
@@ -196,10 +198,10 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
                 elif item in psi_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
-                    rom.write_bytes(locker_locations[name][1], bytearray([psi_item_table[item]]))
+                    rom.write_bytes(locker_locations[name][1], bytearray(psi_item_table[item]))
                 elif item in character_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
-                    rom.write_bytes(locker_locations[name][1], bytearray([character_item_table[item]]))
+                    rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
         

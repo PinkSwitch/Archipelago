@@ -255,17 +255,20 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Onett - Tracy Gift": [0x07616B],
     "Onett - Meteor Item": [0x0862C3],
     "Onett - Library Counter": [0x05EC0C],
+    "Onett - Library Bookshelf": [0x2EBA66],
     "Onett - Treehouse Guy": [0x073F34],
     "Onett - Mayor Pirkle": [0x0661D6, 0x0FE741],
     "Onett - Traveling Entertainer": [0x07476C],
     "Twoson - Bike Shop Rental": [0x080046],
     "Twoson - Orange Kid Donation": [0x08134A],
     "Twoson - Apple Kid Invention": [0x081F89],
+    "Twoson - Apple Kid's Mouse": [0x2EBA86],
     "Twoson - Antique Shop": [0x093E5F],
     "Twoson - Paula's Mother": [0x08061B],
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
     "Happy-Happy Village - Prisoner Item": [0x2F95FE],
+    "Happy-Happy Village - Defeat Carpainter": [0x098215],
     "Threed - Hospital Drawer": [0x08686C],
     "Saturn Valley - Post Belch Gift #1": [0x07EAAA],
     "Saturn Valley - Post Belch Gift #2": [0x07EACE],
@@ -277,10 +280,17 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Winters - Drugstore Saleswoman": [0x07A223],
     "Andonuts Lab - Mouse": [0x06C840],
     "Stonehenge - Tony Item": [0x2FFA0C],
+    "Stonehenge - Kidnapped Mr. Saturn": [0x06C061],
     "Monkey Caves - Bow Monkey Gift": [0x0625E7],
+    "Monkey Caves - Talah Rama Gift": [0x060E77],
     "Fourside - Venus Gift": [0x06D643],
     "Fourside - Post-Moonside Delivery": [0x07AA04],
+    "Fourside - Bakery 2F Gift": [0x2EBA9E],
     "Monotoli Building - Monotoli Gift": [0x06EAA9],
+    "Monotoli Building - Electra Gift": [0x06E9A9],
+    "Summers - Museum Item": [0x08ABB8],
+    "Pyramid - Pedestal Item": [0x2EBA92],
+    "Scaraba - Key Holder": [0x2EBA9E],
     "Deep Darkness - North Alcove Truffle": [0x2EB5A7],
     "Deep Darkness - Near Land Truffle": [0x2EB5FF],
     "Deep Darkness - Present Truffle": [0x2EB5D3],
@@ -292,6 +302,12 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Cave of the Present - Broken Phase Distorter": [0x2F58FC],
     "Onett - Buzz Buzz": [0x2EAA43],
     "Onett - Mani Mani Statue": [0x2EA99E],
+    "Deep Darkness - Barf Character": [0x2EB664],
+    "Dalaam - Throne Character": [0x2EB4E2],
+    "Monotoli Building - Monotoli Character": [0x2EB2C3],
+    "Snow Wood - Bedroom": [0x2EB10D],
+    "Threed - Zombie Prisoner": [0x2EAFB1],
+    "Happy-Happy Village - Prisoner": [0x2EBABA],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -545,10 +561,10 @@ psi_locations = {
 }
 
 character_locations = {
-    "Happy-Happy Village - Prisoner": [0x2EAF0F, 0x0FA68B, 0x2EAF09, 0x2EAF21, 0x2E, 0xAF, 0xEE],
+    "Happy-Happy Village - Prisoner": [0x2EBAA9, 0x0FA68B, 0x2EBAA4, 0x2EBAC9, 0x4B, 0xBA, 0xEE],
     "Threed - Zombie Prisoner": [0x2EAF7F, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE],
-    "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0xEE],
-    "Monotoli Building - Monotoli Character": [0x2EB2B2, 0x0FC37F, 0x2EB2AD, 0x2EB2D2, 0xC2, 0xB1, 0xEE],
+    "Snow Wood - Bedroom": [0x2EB0DA, 0x0FB0D6, 0x2EB0D5, 0x2EB11C, 0x0B, 0xB1, 0x1E],
+    "Monotoli Building - Monotoli Character": [0x2EB2B2, 0x0FC37F, 0x2EB2AD, 0x2EB2D2, 0xC1, 0xB2, 0xEE],
     "Dalaam - Throne Character": [0x2EB4D1, 0x0FD20A, 0x2EB4CC, 0x2EB4F1, 0xE0, 0xB4, 0xEE],
     "Deep Darkness - Barf Character": [0x2EB654, 0x0FE0C8, 0x2EB64F, 0x2EB673, 0x62, 0xB6, 0xEE]
 }
@@ -878,25 +894,6 @@ client_specials = {
     0x010F: 0x11,
     0x0110: 0x12,
     0x0111: 0x13
-}
-
-scout_location_map = {
-    0x8B8C: 0xEB0000,
-    0xE752: 0xEB0001,
-    0xE6FD: 0xEB0002,
-    0x62E9: 0xEB0003,
-    0x8C9C: 0xEB0004,
-    0x975E: 0xEB0005,
-    0x9010: 0xEB0006,
-    0xDFEC: 0xEB0007,
-    0xE70E: 0xEB0008,
-    0x91A8: 0xEB0009,
-    0xE71F: 0xEB000A,
-    0xE730: 0xEB000B,
-    0xE741: 0xEB000C,
-    0x8F44: 0xEB000D,
-    0x9340: 0xEB000D,
-    0x920E: 0xEB000E,
 }
 
     #0: Action pointer, call the actual item being given

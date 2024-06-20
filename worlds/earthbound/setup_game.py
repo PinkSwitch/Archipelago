@@ -2,8 +2,13 @@ import struct, random
 
 
 def setup_gamevars(world):
+    valid_starts = 14
+    if world.options.magicant_mode != 00:
+        valid_starts -= 1
+
+
     if world.options.random_start_location == 1:
-        world.start_location = world.random.randint(1, 14)
+        world.start_location = world.random.randint(1, valid_starts)
     else:
         world.start_location = 0
 
