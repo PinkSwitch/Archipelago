@@ -104,11 +104,14 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
-        if self.options.psi_shuffle == 0:
+        if self.options.shuffle_teleports == 0:
             self.event_count += 12
+            if self.options.magicant_mode != 0:
+                self.event_count -= 1
 
         if self.options.character_shuffle == 0:
             self.event_count += 6
+            
 
     def set_rules(self) -> None:
         set_location_rules(self)
@@ -117,7 +120,7 @@ class EarthBoundWorld(World):
 
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
-        if self.options.psi_shuffle == 0:
+        if self.options.shuffle_teleports == 0:
             excluded_items.add("Onett Teleport")
             excluded_items.add("Twoson Teleport")
             excluded_items.add("Happy-Happy Village Teleport")
@@ -158,7 +161,7 @@ class EarthBoundWorld(World):
         prefill_locations = []
         prefill_items = []
 
-        if self.options.psi_shuffle == 0:
+        if self.options.shuffle_teleports == 0:
             prefill_locations.extend([
                 self.multiworld.get_location("Onett - Buzz Buzz", self.player),
                 self.multiworld.get_location("Onett - Mani Mani Statue", self.player),
@@ -170,9 +173,12 @@ class EarthBoundWorld(World):
                 self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
                 self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
                 self.multiworld.get_location("Cave of the Present - Star Master", self.player),
-                self.multiworld.get_location("Dalaam - Trial of Mu", self.player),
-                self.multiworld.get_location("Magicant - Ness's Nightmare", self.player),
+                self.multiworld.get_location("Dalaam - Trial of Mu", self.player)
             ])
+
+            if self.options.magicant_mode == 0:
+                prefill_locations.append(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player))
+
             prefill_items.extend([
                 self.create_item("Onett Teleport"),
                 self.create_item("Twoson Teleport"),
@@ -197,8 +203,8 @@ class EarthBoundWorld(World):
                 self.create_item("Progressive Poo PSI")
             ])
 
-            if seld.options.magicant_mode == 0:
-                prefill_items.append(self.create_item("Magicant Teleport"),)
+            if self.options.magicant_mode == 0:
+                prefill_items.append(self.create_item("Magicant Teleport"))
             self.random.shuffle(prefill_items)
             add_item_rule(self.multiworld.get_location("Onett - Buzz Buzz", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Onett - Mani Mani Statue", self.player), lambda item: item.name in self.item_name_groups["PSI"])
@@ -211,7 +217,9 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Fourside - Department Store Blackout", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Cave of the Present - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Dalaam Teleport"))
-            add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
+            
+            if self.options.magicant_mode == 0:
+                add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
 
         if self.options.character_shuffle == 0:
             prefill_items.extend([

@@ -301,6 +301,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC)
         ]
     else:
-        LocationData("Menu", "+1 Sanctuary", None)
+        location_table += [
+            LocationData("Menu", "+1 Sanctuary", None)
+        ]
 
     return location_table

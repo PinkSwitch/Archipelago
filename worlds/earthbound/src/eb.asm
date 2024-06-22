@@ -156,6 +156,9 @@ JML LogActorNum
 ORG $C1338E
 JML LogCheckNum
 
+ORG $C2164A
+JML RepelEnemies
+
 
 
 ORG $C1FEBC
@@ -3438,10 +3441,9 @@ LDA #$0000
 JML $C17F0F
 PullAPName:
 INC $FF40
-JSR APCC
+JSR APCC;Move name data
 LDA #$0000
 JML $C17E65
-
 
 APCC:
 rep #$31
@@ -3453,9 +3455,10 @@ tcd
 pla
 ; read ARGS_COUNT bytes of args into $97BA
 ldy #$0001
-jsr R_Read_Parameter_Bytes
+jsl R_Peek_Parameter_Bytes
 LDA $97BA
 AND #$00FF
+XBA
 JSL MoveItemNames
 PLD
 RTS
@@ -3829,7 +3832,7 @@ ORG $C7D8A5
 db $0A, $40, $A7, $EE
 
 ORG $EEA740
-db $09, $03, $ee, $d8, $c7, $00, $52, $a7, $ee, $00, $cc, $a7, $ee, $00, $0a, $ad
+db $09, $03, $ee, $d8, $c7, $00, $F4, $BA, $ee, $00, $FE, $BA, $ee, $00, $0a, $ad
 db $d8, $c7, $70, $71, $50, $a7, $95, $9c, $9c, $50, $9f, $96, $50, $a0, $a3, $a9
 db $93, $98, $99, $93, $50, $95, $9e, $95, $a2, $97, $a9, $50, $a3, $a0, $a2, $a5
 db $9e, $97, $50, $a5, $a0, $50, $96, $a2, $9f, $9d, $50, $99, $9e, $a3, $99, $94
@@ -3839,7 +3842,7 @@ db $93, $ee, $ff, $89, $93, $ee, $ff, $bb, $93, $ee, $ff, $ed, $93, $ee, $ff, $1
 db $94, $ee, $ff, $50, $94, $ee, $ff, $8c, $94, $ee, $ff, $c4, $94, $ee, $ff, $02
 db $95, $ee, $ff, $55, $95, $ee, $ff, $55, $95, $ee, $ff, $02, $70, $71, $50, $a6
 db $9f, $99, $93, $95, $50, $a2, $91, $9e, $97, $50, $9f, $a5, $a4, $50, $96, $a2
-db $9f, $9d, $50, $a7, $99, $a4, $98, $99, $9e, $50, $a4, $98, $95, $50, $a0, $a2
+db $9f, $9d, $50, $a7, $99, $a4, $98, $99, $9e, $0A, $F5, $A7, $EE, $50, $a0, $a2
 db $95, $a3, $95, $9e, $a4, $51, $03, $00, $1b, $04, $09, $04, $30, $f8, $d5, $ff
 db $37, $f8, $d5, $ff, $3e, $f8, $d5, $ff, $45, $f8, $d5, $ff, $02
 
@@ -4679,8 +4682,7 @@ db $82, $95, $a0, $95, $9c, $a3, $50, $a9, $9f, $a5, $a2, $50, $95, $9e, $95, $9
 db $99, $95, $a3
 
 ORG $D57247
-db $82, $95, $a0, $95, $9c, $50, $83, $91, $9e, $94, $a7, $99, $93, $98, $50, $75
-db $88
+db $82, $95, $a0, $95, $9c, $50, $a3, $a5, $a0, $95, $a2, $a7, $99, $93, $98, $00
 
 ORG $D5F955
 db $08, $54, $95, $ee, $ff, $18, $04, $02
@@ -4758,6 +4760,86 @@ LDA [$06]
 STA $0E
 JSL MoveItemNames
 JML GotMovData
+; A far copy of $C19216
+
+
+  R_Peek_Parameter_Bytes:
+rep #$31
+phd
+tdc
+adc #$ffee
+tcd
+; First things first: get the text pointer
+lda $97b8
+sta $00
+asl     ; 2
+adc $00 ; 3
+asl     ; 6
+asl     ; 12
+adc $00 ; 13
+asl     ; 26
+adc $00 ; 27
+; We now have [0x97b8] * 27 in A.
+sta $00
+; Load the text pointer from the table at 0x7E96AA into 0xE.
+tax
+lda $96aa,x
+sta $0e
+lda $96ac,x
+sta $10
+; Load amount into X. Also store into 0x02 for later use
+sty $02
+tyx
+; The memcpy routine copies words. If we have an odd number of
+; bytes, it will round down. We add 1 so that it effectively rounds up.
+inx
+lda #$97ba
+; Copy it: X bytes from [0x0e] to (A).
+jsl $c08ed2
+; Zero out upper bytes of cc_argv
+ldy $02
+tya
+lsr ; Get lower order bit in carry, and branch if 0
+lda #$0000
+bcc .aligned
+; Align Y to next word
+sep #$20
+sta $97ba,y
+rep #$31
+bra .unaligned
+.loop:
+sta $97ba,y
+iny
+.unaligned:
+iny
+.aligned:
+cpy #$0016
+bmi .loop
+.end:
+pld
+rtl
+
+RepelEnemies:
+CMP #$04
+BEQ CheckEnemySuppression
+OtherFlag:
+AND $9C08,X
+REP #$20
+JML $C2164F
+CheckEnemySuppression:
+CPX #$0001
+BEQ CheckRepels
+BRA OtherFlag
+CheckRepels:
+AND $9C08,X
+BEQ OtherFlag
+REP #$20
+LDA $9E3C
+JML $C21652
+
+
+
+
 
 ORG $C57675
 db $0a, $9b, $ba, $ee
@@ -4786,6 +4868,26 @@ db $70, $87, $98, $91, $a4, $50, $91, $a2, $95, $50, $a9, $9f, $a5, $50, $94, $9
 db $99, $9e, $97, $50, $99, $9e, $50, $9d, $a9, $50, $93, $91, $a6, $95, $6f, $03
 db $00, $70, $84, $91, $9b, $95, $50, $a4, $98, $99, $a3, $50, $1c, $05, $01, $50
 db $91, $9e, $94, $50, $9c, $95, $91, $a6, $95, $5e, $03, $0a, $dc, $0f, $c6
+
+ORG $C9820F
+db $a4, $98, $95, $50, $1c, $05, $01, $5e, $0a, $26, $82, $c9
+
+ORG $EEAF08
+db $0a, $a3, $ba, $ee
+
+ORG $EEBAA3
+db $08, $4b, $ba, $ee, $ff, $08, $b8, $ba, $ee, $ff, $1b, $03, $4b, $ba, $ee, $ff
+db $0a, $1a, $af, $ee, $ff, $1c, $05, $01, $51, $03, $1d, $03, $ff, $1b, $02, $d5
+db $ba, $ee, $ff, $1d, $0e, $ff, $01, $08, $cf, $dc, $c7, $ff, $03, $1f, $81, $ff
+db $ff, $02, $00, $70, $89, $9f, $a5, $50, $98, $91, $a6, $95, $50, $a4, $9f, $9f
+db $50, $9d, $a5, $93, $98, $50, $9a, $a5, $9e, $9b, $5e, $13, $1f, $81, $01, $01
+db $02
+
+ORG $EEBAF4
+db $01, $0a, $52, $a7, $ee
+
+ORG $EEBAFE
+db $01, $0a, $cc, $a7, $ee
 
 
 

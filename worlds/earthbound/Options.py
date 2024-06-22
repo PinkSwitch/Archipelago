@@ -6,7 +6,7 @@ class GiygasRequired(DefaultOnToggle):
     """If enabled, your goal will be to defeat Giygas at the Cave of the Past.
        If disabled, your goal will either complete automatically upon completing
        enough Sanctuaries, or completing Magicant if it is required."""
-    display_name = "Starting Lives"
+    display_name = "Giygas Required"
 
 class SanctuariesRequired(Range):
     """How many of the eight "Your Sanctuary" locations are required to be cleared."""
@@ -42,20 +42,20 @@ class RandomStartLocation(Toggle):
     display_name = "Random Starting Location"
 
 class PSIShuffle(Choice):
-    """PSI Locations: Teleports and Starstorm will be shuffled amongst the PSI locations. A few redundant Teleports may not be available.
+    """Shuffled: Teleports and Starstorm will be shuffled amongst the PSI locations. A few redundant Teleports may not be available.
        Anywhere: Teleports and Starstorm will be placed anywhere in the multiworld, and PSI locations will have regular checks.
        See the Game Page for more information on PSI Locations."""
-    display_name = "PSI Shuffle"
-    option_psi_locations = 0
+    display_name = "Teleport Shuffle"
+    option_shuffled = 0
     option_anywhere = 1
     default = 0
 
 class CharacterShuffle(Choice):
-    """Character Locations: Characters will be shuffled amongst Character Locations. Extra locations will have Flying Man, a Teddy Bear, or a Super Plush Bear.
+    """Shuffled: Characters will be shuffled amongst Character Locations. Extra locations will have Flying Man, a Teddy Bear, or a Super Plush Bear.
        Anywhere: Characters can be found anywhere in the multiworld, and character locations will have regular checks.
        See the Game Page for more information on Character Locations."""
     display_name = "Character Shuffle"
-    option_psi_locations = 0
+    option_shuffled = 0
     option_anywhere = 1
     default = 0
 
@@ -88,7 +88,7 @@ class EBOptions(PerGameCommonOptions):
     random_start_location: RandomStartLocation
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
-    psi_shuffle: PSIShuffle# Better name?
+    shuffle_teleports: PSIShuffle# Better name?
     character_shuffle: CharacterShuffle
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight

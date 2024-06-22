@@ -798,7 +798,7 @@ item_id_table = {
     "Charm Coin": 0xDE,
     "Cup of Noodles": 0xDF,
     "Repel Sandwich": 0xE0,
-    "Repel Sandwich DX": 0xE1,
+    "Repel Superwich": 0xE1,
     "Lucky Sandwich": 0xE2,
     "Cup of Coffee": 0xE8,
     "Double Burger": 0xE9,

@@ -204,6 +204,17 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
+
+        
+        if world.options.skip_prayer_sequences:
+            rom.write_bytes(0x07BC96, bytearray([0x02])) 
+            rom.write_bytes(0x07BA2C, bytearray([0x02])) 
+            rom.write_bytes(0x07BAC7, bytearray([0x02])) 
+            rom.write_bytes(0x07BB38, bytearray([0x02])) 
+            rom.write_bytes(0x07BBF3, bytearray([0x02])) 
+            rom.write_bytes(0x07BC56, bytearray([0x02])) 
+            rom.write_bytes(0x07B9A1, bytearray([0x02])) 
+
         
 
     from Main import __version__

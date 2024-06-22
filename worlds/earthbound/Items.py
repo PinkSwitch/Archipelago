@@ -253,7 +253,7 @@ item_table: Dict[str, ItemData] = {
 
     "Cup of Noodles": ItemData("Food", 0xEB00DF, ItemClassification.filler, 0),
     "Repel Sandwich": ItemData("Food", 0xEB00E0, ItemClassification.useful, 0),
-    "Repel Sandwich DX": ItemData("Food", 0xEB00E1, ItemClassification.useful, 0),
+    "Repel Superwich": ItemData("Food", 0xEB00E1, ItemClassification.useful, 0),
     "Lucky Sandwich": ItemData("Food", 0xEB00E2, ItemClassification.useful, 0),
     #"Lucky Sandwich": ItemData("Food", 0xEB00E3, ItemClassification.useful, 0),
     #"Lucky Sandwich": ItemData("Food", 0xEB00E4, ItemClassification.useful, 0),
@@ -474,7 +474,7 @@ rare_items: List[str] = [
     "Bag of Dragonite",
     "Meteotite",
     "Charm Coin",
-    "Repel Sandwich DX",
+    "Repel Superwich",
     "Piggy Jelly",
     "Spicy Jerky",
     "Luxury Jerky",
