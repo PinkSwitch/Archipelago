@@ -202,6 +202,14 @@ def patch_rom(world, rom, player: int, multiworld):
                 elif item in character_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
                     rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
+
+            elif name == "Poo Starting Item":
+                if item in item_id_table:
+                    rom.write_bytes(0x15F63B, bytearray([item_id]))
+                else:
+                    rom.write_bytes(0x15F63B, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
+                if item in special_name_table: #Apply a special script if teleport or character
+                    rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
 

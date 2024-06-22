@@ -308,6 +308,8 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Snow Wood - Bedroom": [0x2EB10D],
     "Threed - Zombie Prisoner": [0x2EAFB1],
     "Happy-Happy Village - Prisoner": [0x2EBABA],
+    "Saturn Valley - Saturn Coffee": [0x2EB008],
+    "Monkey Caves - Monkey Power": [0x2EB1A1],
 }
 
 npc_locations = { #Locations given to you by an NPC

@@ -6,7 +6,6 @@ def setup_gamevars(world):
     if world.options.magicant_mode != 00:
         valid_starts -= 1
 
-
     if world.options.random_start_location == 1:
         world.start_location = world.random.randint(1, valid_starts)
     else:
@@ -53,9 +52,35 @@ def setup_gamevars(world):
         "Cave of the Present",
         "Cave of the Past"
     ]
+    
     world.random.shuffle(world.hinted_regions)
     del world.hinted_regions[6:39]
 
+
+    if world.options.random_start_location == 1:
+        valid_teleports = [
+            "Onett Teleport",
+            "Twoson Teleport",
+            "Happy-Happy Village Teleport",
+            "Threed Teleport",
+            "Saturn Valley Teleport",
+            "Dusty Dunes Teleport",
+            "Fourside Teleport",
+            "Winters Teleport",
+            "Summers Teleport",
+            "Dalaam Teleport",
+            "Scaraba Teleport",
+            "Deep Darkness Teleport",
+            "Tenda Village Teleport",
+            "Lost Underworld Teleport"
+        ]
+        if world.options.magicant_mode == 0:
+            valid_teleports.append("Magicant Teleport")
+
+        del valid_teleports[world.start_location - 1]
+
+        world.starting_teleport = world.random.choice(valid_teleports)
+        
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))
@@ -91,6 +116,9 @@ def place_static_items(world):
     if world.options.magicant_mode == 2:
         world.get_location("+1 Sanctuary").place_locked_item(world.create_item("Magicant Unlock"))
         world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Alternate Goal"))
+
+    if world.options.random_start_location:
+        world.multiworld.push_precollected(world.create_item(world.starting_teleport))
 
         #Add magicant, add sanc stuff, add alt goals...
             
