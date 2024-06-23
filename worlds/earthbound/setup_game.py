@@ -1,4 +1,5 @@
 import struct, random
+from .Items import common_items, uncommon_items, rare_items
 
 
 def setup_gamevars(world):
@@ -80,7 +81,13 @@ def setup_gamevars(world):
         del valid_teleports[world.start_location - 1]
 
         world.starting_teleport = world.random.choice(valid_teleports)
-        
+
+    filler_items = common_items + uncommon_items + rare_items
+
+    if world.options.magicant_mode == 2:
+        world.magicant_junk = []
+        for i in range(5):
+            world.magicant_junk.append(world.random.choice(filler_items))           
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))

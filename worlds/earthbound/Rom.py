@@ -214,16 +214,21 @@ def patch_rom(world, rom, player: int, multiworld):
                 print(f"WARNING: "+name +" NOT PLACED")
 
         
-        if world.options.skip_prayer_sequences:
-            rom.write_bytes(0x07BC96, bytearray([0x02])) 
-            rom.write_bytes(0x07BA2C, bytearray([0x02])) 
-            rom.write_bytes(0x07BAC7, bytearray([0x02])) 
-            rom.write_bytes(0x07BB38, bytearray([0x02])) 
-            rom.write_bytes(0x07BBF3, bytearray([0x02])) 
-            rom.write_bytes(0x07BC56, bytearray([0x02])) 
-            rom.write_bytes(0x07B9A1, bytearray([0x02])) 
+    if world.options.skip_prayer_sequences:
+        rom.write_bytes(0x07BC96, bytearray([0x02])) 
+        rom.write_bytes(0x07BA2C, bytearray([0x02])) 
+        rom.write_bytes(0x07BAC7, bytearray([0x02])) 
+        rom.write_bytes(0x07BB38, bytearray([0x02])) 
+        rom.write_bytes(0x07BBF3, bytearray([0x02])) 
+        rom.write_bytes(0x07BC56, bytearray([0x02])) 
+        rom.write_bytes(0x07B9A1, bytearray([0x02])) 
 
-        
+    if world.options.magicant_mode == 2:
+        rom.write_bytes(0x07BC96, bytearray([item_id_table[world.magicant_junk[0]]]))
+        rom.write_bytes(0x0FF25C, bytearray([item_id_table[world.magicant_junk[1]]]))
+        rom.write_bytes(0x0FF27E, bytearray([item_id_table[world.magicant_junk[2]]]))
+        rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
+        rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
