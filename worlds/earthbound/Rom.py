@@ -3,9 +3,11 @@ import os
 import Utils
 import typing
 import bsdiff4
+import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations
 from .text_data import barf_text, eb_text_table
+from .flavor_data import flavor_data
 from BaseClasses import ItemClassification
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -109,17 +111,27 @@ def patch_rom(world, rom, player: int, multiworld):
 
     for location in world.multiworld.get_locations(player):
         if location.address:
+            receiver_name = world.multiworld.get_player_name(location.item.player)
             name = location.name
             item = location.item.name
             item_name_loc = (((location.address - 0xEB0000) * 128) + 0x3F0000)
             item_text = bytearray(0)
+            player_text = bytearray(0)
             for char in location.item.name[:128]:
                 if char in eb_text_table:
                     item_text.extend (eb_text_table[char])
                 else:
                     item_text.extend ([0x6F])
             item_text.extend ([0x00])
-            rom.write_bytes(item_name_loc, bytearray(item_text)) #If no giygas, set credits
+            player_name_loc = (((location.address - 0xEB0000) * 48) + 0x3F8000)
+            for char in receiver_name[:48]:
+                if char in eb_text_table:
+                    player_text.extend (eb_text_table[char])
+                else:
+                    player_text.extend ([0x6F])
+            player_text.extend ([0x00])
+            rom.write_bytes(item_name_loc, bytearray(item_text))
+            rom.write_bytes(player_name_loc, bytearray(player_text))
 
 
             if item not in item_id_table:
@@ -215,10 +227,10 @@ def patch_rom(world, rom, player: int, multiworld):
 
         
     if world.options.skip_prayer_sequences:
-        rom.write_bytes(0x07BC96, bytearray([0x02])) 
-        rom.write_bytes(0x07BA2C, bytearray([0x02])) 
-        rom.write_bytes(0x07BAC7, bytearray([0x02])) 
-        rom.write_bytes(0x07BB38, bytearray([0x02])) 
+        rom.write_bytes(0x07BC96, bytearray([0x02]))
+        rom.write_bytes(0x07BA2C, bytearray([0x02]))
+        rom.write_bytes(0x07BAC7, bytearray([0x02]))
+        rom.write_bytes(0x07BB38, bytearray([0x02]))
         rom.write_bytes(0x07BBF3, bytearray([0x02])) 
         rom.write_bytes(0x07BC56, bytearray([0x02])) 
         rom.write_bytes(0x07B9A1, bytearray([0x02])) 
@@ -230,16 +242,24 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
         rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
 
+    
+    flavor_address = 0x3FAEE0
+    for i in range(4):
+        rom.write_bytes(flavor_address, bytearray(world.flavor_text[i]))
+        flavor_addr = flavor_address - 0x3F0000
+        flavor_addr = struct.pack("H", flavor_addr)
+        rom.write_bytes(world.flavor_pointer[i], flavor_addr)
+        flavor_address += len(world.flavor_text[i])
+
+    rom.write_bytes(0x202008, bytearray(flavor_data[world.available_flavors[0]]))
+    rom.write_bytes(0x202048, bytearray(flavor_data[world.available_flavors[1]]))
+    rom.write_bytes(0x202088, bytearray(flavor_data[world.available_flavors[2]]))
+    rom.write_bytes(0x2020C8, bytearray(flavor_data[world.available_flavors[3]]))
+
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
     rom.write_bytes(0x00FFC0, rom.name)
-
-    player_name_length = 0
-    for i, byte in enumerate(world.multiworld.player_name[player].encode("utf-8")):
-        rom.write_byte(0x7051 + i, byte)
-        player_name_length += 1
-    rom.write_byte(0x7050, player_name_length)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 

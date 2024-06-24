@@ -80,6 +80,10 @@ class RareWeight(Range):
     range_end = 100
     default = 5
 
+class RandomFlavors(Toggle):
+    """Randomizes the non-plain window color options."""
+    display_name = "Random Flavors"
+
 @dataclass
 class EBOptions(PerGameCommonOptions):
     giygas_required: GiygasRequired
@@ -92,6 +96,7 @@ class EBOptions(PerGameCommonOptions):
     character_shuffle: CharacterShuffle
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
+    random_flavors: RandomFlavors
     rare_filler_weight: RareWeight
     #RepairJeffItems
     #PSI Checks

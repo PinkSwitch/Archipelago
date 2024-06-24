@@ -268,8 +268,6 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Lumine Hall", "Lumine Hall Sanctuary", None),
     LocationData("Fire Spring", "Fire Spring Sanctuary", None),
     LocationData("Menu", "Sanctuary Goal", None),
-    #LocationData("Menu", "+1 Sanctuary", None),
-    #LocationData("Menu", "Magicant Clear", None)
     ]
 
     if not world or world.options.giygas_required:

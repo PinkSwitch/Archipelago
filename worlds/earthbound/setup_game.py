@@ -1,5 +1,6 @@
 import struct, random
 from .Items import common_items, uncommon_items, rare_items
+from .flavor_data import random_flavors
 
 
 def setup_gamevars(world):
@@ -87,7 +88,21 @@ def setup_gamevars(world):
     if world.options.magicant_mode == 2:
         world.magicant_junk = []
         for i in range(5):
-            world.magicant_junk.append(world.random.choice(filler_items))           
+            world.magicant_junk.append(world.random.choice(filler_items))
+
+    world.available_flavors = []
+    if world.options.random_flavors:
+        for i in range(4):
+            chosen_flavor = world.random.choice(random_flavors)
+            world.available_flavors.append(chosen_flavor)
+            random_flavors.remove(chosen_flavor)
+    else:
+        world.available_flavors = [
+            "Mint flavor",
+            "Strawberry flavor",
+            "Banana flavor",
+            "Peanut flavor"
+        ]
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))

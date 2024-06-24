@@ -15,6 +15,7 @@ from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions
 from .setup_game import setup_gamevars, place_static_items
+from .flavor_data import create_flavors
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, USHASH
@@ -104,6 +105,7 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         setup_gamevars(self)
+        create_flavors(self)
         if self.options.shuffle_teleports == 0:
             self.event_count += 12
             if self.options.magicant_mode != 0:
