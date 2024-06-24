@@ -1,6 +1,7 @@
 import struct, random
 from .Items import common_items, uncommon_items, rare_items
 from .flavor_data import random_flavors
+from .text_data import lumine_hall_text, eb_text_table
 
 
 def setup_gamevars(world):
@@ -103,6 +104,12 @@ def setup_gamevars(world):
             "Banana flavor",
             "Peanut flavor"
         ]
+
+    world.lumine_text = []
+    lumine_str = world.random.choice(lumine_hall_text)
+    for char in lumine_str[:213]:
+        world.lumine_text.extend (eb_text_table[char])
+    world.lumine_text.extend ([0x00])
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))

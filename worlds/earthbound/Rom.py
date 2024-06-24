@@ -88,6 +88,9 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x01FE9B, bytearray(starting_area_coordinates[world.start_location][0:2]))
     rom.write_bytes(0x01FE9E, bytearray(starting_area_coordinates[world.start_location][2:4]))#Start position
 
+    rom.write_bytes(0x01FE91, bytearray(starting_area_coordinates[world.start_location][0:2]))
+    rom.write_bytes(0x01FE8B, bytearray(starting_area_coordinates[world.start_location][2:4]))#Respawn position
+
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x04FD72, bytearray(world.options.sanctuaries_required.value + 2))
     else:
@@ -105,6 +108,8 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(0x2EA26A, bytearray([0x08, 0xD9, 0x9B, 0xEE])) #Give stat boost if magicant + giygas required
         else:
             rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #If no giygas, set credits
+
+    rom.write_bytes(0x04FD70, bytearray(world.options.sanctuaries_required.value))
 
 
     #Todo: sanc alt goal, change sanc script
@@ -255,6 +260,8 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x202048, bytearray(flavor_data[world.available_flavors[1]]))
     rom.write_bytes(0x202088, bytearray(flavor_data[world.available_flavors[2]]))
     rom.write_bytes(0x2020C8, bytearray(flavor_data[world.available_flavors[3]]))
+
+    rom.write_bytes(0x048037, bytearray(world.lumine_text))
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
