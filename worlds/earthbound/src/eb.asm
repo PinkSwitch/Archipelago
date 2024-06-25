@@ -56,6 +56,14 @@ ORG $D5F880
 SpecialNameTable:
 dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, $A952
 
+
+
+ORG $D7FC7C
+StartingTeleports:
+
+ORG $D7FC8D
+StartingChars:
+
 macro FUNCTION_PROLOGUE(locals)
   rep   #$31
   phd        ; PUSH current frame pointer
@@ -159,6 +167,9 @@ JML LogCheckNum
 ORG $C2164A
 JML RepelEnemies
 
+ORG $C1FEB2
+JML GetStartingData
+
 
 
 ORG $C1FEBC
@@ -251,12 +262,7 @@ NOP
 NOP
 NOP
 
-ORG $C1FEB2
-NOP
-NOP
-NOP
-
-ORG $C1FEB5
+ORG $C1FEB6
 NOP
 NOP
 NOP
@@ -603,9 +609,9 @@ ORG $CF942D
 db $00,$D6,$00,$61
 
 ORG $61000A
-db $70, $89, $95, $a3, $5c, $50, $79, $50, $91, $9d, $10, $10, $50, $52, $84, $98
-db $95, $50, $82, $9f, $93, $9b, $52, $10, $10, $50, $7a, $9f, $98, $9e, $a3, $9f
-db $9e, $5e, $03, $00, $70, $79, $50, $93, $91, $9e, $50, $a4, $a2, $91, $9e, $a3
+db $70, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $00, $00, $03, $00, $70, $79, $50, $93, $91, $9e, $50, $a4, $a2, $91, $9e, $a3
 db $a0, $9f, $a2, $a4, $50, $a9, $9f, $a5, $50, $91, $93, $a2, $9f, $a3, $a3, $50
 db $a4, $98, $95, $50, $a2, $99, $a6, $95, $a2, $5e, $03, $07, $d9, $03, $1b, $03
 db $bd, $00, $61, $00, $00, $70, $78, $9f, $a7, $95, $a6, $95, $a2, $5c, $10, $15
@@ -615,11 +621,11 @@ db $03, $00, $70, $73, $9f, $9d, $95, $50, $92, $91, $93, $9b, $50, $a7, $98, $9
 db $9e, $50, $a9, $9f, $a5, $50, $98, $91, $a6, $95, $50, $93, $9f, $9e, $a1, $a5
 db $95, $a2, $95, $94, $50, $a4, $98, $95, $50, $a0, $a9, $a2, $91, $9d, $99, $94
 db $5e, $13, $02, $00, $70, $71, $9e, $94, $50, $91, $a7, $91, $a9, $50, $a7, $95
-db $50, $97, $9f, $51, $10, $20, $18, $04, $1f, $21, $90, $02; Rock Johnson text
+db $50, $97, $9f, $51, $10, $20, $18, $04, $1f, $21, $90, $02; Rock text
 
-db $70, $89, $95, $a3, $5c, $50, $79, $50, $91, $9d, $50, $10, $15, $52, $84, $98
-db $95, $50, $7a, $9f, $98, $9e, $52, $10, $15, $50, $82, $9f, $93, $9b, $a3, $9f
-db $9e, $5e, $03, $00, $70, $79, $57, $9d, $50, $9e, $9f, $a4, $50, $a6, $95, $a2
+db $70, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $00, $00, $03, $00, $70, $79, $57, $9d, $50, $9e, $9f, $a4, $50, $a6, $95, $a2
 db $a9, $50, $a0, $a2, $9f, $a5, $94, $50, $9f, $96, $50, $9d, $a9, $50, $9e, $91
 db $9d, $95, $5e, $03, $00, $70, $87, $91, $9e, $a4, $50, $a4, $9f, $50, $93, $a2
 db $9f, $a3, $a3, $50, $a4, $98, $95, $50, $a2, $99, $a6, $95, $a2, $6f, $03, $19
@@ -629,7 +635,7 @@ db $70, $71, $9e, $94, $50, $98, $95, $a2, $95, $50, $a7, $95, $50, $97, $9f, $5
 db $10, $20, $18, $04, $1f, $21, $91, $02, $12, $70, $7f, $9b, $91, $a9, $5e, $10
 db $20, $50, $79, $57, $9c, $9c, $50, $92, $95, $50, $98, $95, $a2, $95, $5c, $10
 db $0a, $50, $99, $96, $50, $a9, $9f, $a5, $50, $93, $98, $91, $9e, $97, $95, $50
-db $a9, $9f, $a5, $a2, $50, $9d, $99, $9e, $94, $5e, $13, $02; John Rockson text
+db $a9, $9f, $a5, $a2, $50, $9d, $99, $9e, $94, $5e, $13, $02; John text
 
 db $16, $50, $5e, $03, $00, $08, $10, $f7, $d5, $00, $1b, $03, $32, $02, $fe, $00
 db $1f, $1e, $44, $04, $06, $04, $7D, $02, $02; Dalaam Character text
@@ -3032,7 +3038,7 @@ PHX
 LDX $F682
 LDA CharUnlockPointers,X
 PLX
-STZ $F682
+;STZ $F682
 STA $0E
 LDA #$00D5
 STA $10
@@ -4387,6 +4393,13 @@ db $0A, $00
 ORG $C4FEE0
 db $02, $00, $87, $04, $a9, $9e, $7d, $04, $20, $58
 
+ORG $C4FEF0
+StarstormBits:
+db $02, $04
+
+CharFlags:
+dw $03E1, $003E2, $0010, $0068
+
 ORG $CFD67D
 db $62, $00, $04, $0A, $00
 
@@ -4734,6 +4747,7 @@ PHY
 XBA
 SEP #$10
 TAX
+PHX
 LDA #$0000
 CheckDataNum:
 CPX #$00
@@ -4748,6 +4762,24 @@ CLC
 TAX
 LDA #$007F
 LDY #$FF80
+MVN $FF7E
+SEP #$10
+PLX
+LDA #$0000
+CheckNameIndex:
+CPX #$00
+BEQ PullPlayerName
+DEX
+CLC
+ADC #$0030
+BRA CheckNameIndex
+PullPlayerName:
+REP #$10
+CLC
+ADC #$8000
+TAX
+LDA #$002F
+LDY #$FF50
 MVN $FF7E
 PLY
 PLX
@@ -4831,15 +4863,79 @@ CPX #$0001
 BEQ CheckRepels
 BRA OtherFlag
 CheckRepels:
-AND $9C08,X
-BEQ OtherFlag
 REP #$20
+PHA
 LDA $9E3C
-JML $C21652
+BEQ RepelsEmpty
+PLA
+JML $C21654
+RepelsEmpty:
+PLA
+BRA OtherFlag
 
-
-
-
+GetStartingData:
+PHB
+LDA #$000B
+LDX #$FC70
+LDY #$99F3
+MVN $D77E
+PLB
+LDA #$0000
+LDX #$0000
+CheckTeleport:
+LDA StartingTeleports,X
+AND #$00FF
+BEQ EndStartTeleports
+CMP #$0010
+BNE NormalTeleport
+JMP GetStarstorm
+NormalTeleport:
+PHX
+ASL
+TAX
+LDA TeleportFlags,X
+JSL $C2165E
+PLX
+INX
+BRA CheckTeleport
+EndStartTeleports:
+LDA #$0000
+LDX #$0000
+CheckChars:
+LDA StartingChars,X
+AND #$00FF
+BEQ EndStartData
+PHX
+PHA
+DEC
+DEC
+ASL
+TAX
+LDA CharFlags,X
+JSL $C2165E
+PLA
+JSL $C228F8
+PLX
+INX
+BRA CheckChars
+EndStartData:
+JML $C1FEB6
+GetStarstorm:
+PHX
+LDA $FF41
+AND #$00FF
+CMP #$0002
+BNE .StarstormYeah
+DEC $FF41
+.StarstormYeah:
+TAX
+LDA StarstormBits,X
+AND #$00FF
+TSB $9839
+PLX
+INX
+INC $FF41
+JMP CheckTeleport
 
 ORG $C57675
 db $0a, $9b, $ba, $ee
@@ -4891,6 +4987,35 @@ db $01, $0a, $cc, $a7, $ee
 
 ORG $EEAE84
 db $01, $08, $3e, $f8, $d5, $01, $01
+
+ORG $61000B
+db $7e, $9f, $5c, $50, $79, $50, $91, $9d, $50, $9e, $9f, $a4, $10, $10, $50, $52
+db $84, $98, $95, $50, $82, $9f, $93, $9b, $52, $5e, $0a, $2c, $00, $61
+
+ORG $6100D7
+db $7e, $9f, $5c, $50, $79, $50, $91, $9d, $50, $9e, $9f, $a4, $10, $10, $50, $52
+db $84, $98, $95, $50, $7a, $9f, $98, $9e, $52, $5e, $0a, $f8, $00, $61
+
+ORG $C1F72F
+LDA #$00FF
+
+ORG $C1F74A
+LDA #$00FF
+
+ORG $C1F765
+LDA #$00FF
+
+ORG $C1F780
+LDA #$00FF
+
+ORG $C1F72A
+LDA #$AEE0
+
+ORG $C1FE8A
+LDA #$1FB8
+
+ORG $C1FE90
+LDA #$0450
 
 
 

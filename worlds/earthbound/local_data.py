@@ -789,7 +789,7 @@ item_id_table = {
     "Monkey's Love": 0xD1,
     "Eraser Eraser": 0xD2,
     "Tendakraut": 0xD3,
-    "T-rex's Bat": 0xD4,
+    "T-Rex's Bat": 0xD4,
     "Big League Bat": 0xD5,
     "Ultimate Bat": 0xD6,
     "Double Beam": 0xD7,
@@ -897,6 +897,27 @@ client_specials = {
     0x0110: 0x12,
     0x0111: 0x13
 }
+
+
+starting_psi_table = {
+    "Onett Teleport": 0x01,
+    "Twoson Teleport": 0x02,
+    "Threed Teleport": 0x03,
+    "Winters Teleport": 0x04,
+    "Saturn Valley Teleport": 0x05,
+    "Fourside Teleport": 0x06,
+    "Summers Teleport": 0x07,
+    "Dalaam Teleport": 0x08,
+    "Scaraba Teleport": 0x09,
+    "Deep Darkness Teleport": 0x0A,
+    "Tenda Village Teleport": 0x0B,
+    "Lost Underworld Teleport": 0x0C,
+    "Happy-Happy Village Teleport": 0x0D,
+    "Dusty Dunes Teleport": 0x0E,
+    "Magicant Teleport": 0x0F,
+    "Progressive Poo PSI": 0x10
+}
+
 
     #0: Action pointer, call the actual item being given
     #1: Sprite ID

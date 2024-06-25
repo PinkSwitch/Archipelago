@@ -83,7 +83,7 @@ lumine_hall_text = [
     "For you, the day Pokey graced your village was the most important day of your life. But for me, it was Tuesday.",
     "To shreds you say?",
     "Hey player, I'm in BK, can you get my item at Starman Super Drop Sword of Kings?  It's my go mode.",
-    "Why did you make me do this? You're fighting so you can watch everyone around you die! Think, <Player Name>! You'll outlast every fragile, insignificant being on this planet.",
+    "Why did you make me do this? You're fighting so you can watch everyone around you die! Think, Player Name! You'll outlast every fragile, insignificant being on this planet.",
     "Is this thing on?  Testing.  Oh hey, its me, Tony!  Is Jeff doing okay?  I worry about him a lot, and he's like, on my mind a lot.  Maybe stop by Winters sometime!  Pretty please?",
     "If you have your club card, please scan it now.",
     "Come on Reggie, give us MOTHER 3!",

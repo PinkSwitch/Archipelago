@@ -5,10 +5,10 @@ import typing
 import bsdiff4
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
-from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations
+from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table
 from .text_data import barf_text, eb_text_table
 from .flavor_data import flavor_data
-from BaseClasses import ItemClassification
+from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING
 #from .local_data import local_locations
@@ -262,6 +262,42 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x2020C8, bytearray(flavor_data[world.available_flavors[3]]))
 
     rom.write_bytes(0x048037, bytearray(world.lumine_text))
+    starting_item_address = 0
+    starting_psi = 0
+    starting_char = 0
+    starting_psi_types = []
+    starting_character_count = []
+    for item in world.multiworld.precollected_items[player]:
+        if item.name in item_id_table:
+            rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))
+            starting_item_address += 1
+        elif item.name in psi_item_table:
+            if item.name != "Progressive Poo PSI":
+                if item.name not in starting_psi_types:
+                    rom.write_bytes(0x17FC7C + starting_psi, bytearray([starting_psi_table[item.name]]))
+                    starting_psi_types.append(item.name)
+                    starting_psi += 1
+            else:
+                if starting_psi_types.count(item.name) < 2:
+                    rom.write_bytes(0x17FC7C + starting_psi, bytearray([starting_psi_table[item.name]]))
+                    starting_psi_types.append(item.name)
+                    starting_psi += 1
+        elif item.name in character_item_table:
+            if item.name not in starting_character_count:
+                rom.write_bytes(0x17FC8D + starting_char, bytearray([character_item_table[item.name][1]]))
+                starting_character_count.append(item.name)
+                starting_char += 1
+
+
+    spheres = world.multiworld.get_spheres()
+    visited_regions = []
+    base_state = CollectionState(multiworld)
+    for sphere in spheres:
+        for location in sphere:
+            if location.player == world.player:
+                if location.parent_region not in visited_regions:
+                    visited_regions.append(location.parent_region)
+        base_state.update_reachable_regions(world.player)
 
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]

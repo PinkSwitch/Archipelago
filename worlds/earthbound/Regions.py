@@ -165,6 +165,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
     location = EBLocation(player, location_data.name, location_data.code, region)
+    location.region = location_data.region
 
     return location
 

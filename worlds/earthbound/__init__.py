@@ -16,10 +16,12 @@ from .Regions import init_areas
 from .Options import EBOptions
 from .setup_game import setup_gamevars, place_static_items
 from .flavor_data import create_flavors
+from .local_data import item_id_table
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, USHASH
 from worlds.generic.Rules import add_item_rule
+from Options import OptionError
 
 class EBSettings(settings.Group):
     class RomFile(settings.SNESRomPath):
@@ -104,6 +106,13 @@ class EarthBoundWorld(World):
 
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
+        local_space_count = 0
+        for item_name, amount in self.options.start_inventory.items():
+            if item_name in item_id_table:
+                local_space_count += amount
+                if local_space_count > 12:
+                     player = self.multiworld.get_player_name(self.player)
+                     raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
         setup_gamevars(self)
         create_flavors(self)
         if self.options.shuffle_teleports == 0:
