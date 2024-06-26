@@ -92,7 +92,7 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x01FE8B, bytearray(starting_area_coordinates[world.start_location][2:4]))#Respawn position
 
     if world.options.alternate_sanctuary_goal:
-        rom.write_bytes(0x04FD72, bytearray(world.options.sanctuaries_required.value + 2))
+        rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))
     else:
         rom.write_bytes(0x04FD72, bytearray([0xFF]))
 
@@ -100,7 +100,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x2E9C29, bytearray([0x10, 0xA5]))
 
     if world.options.magicant_mode == 2:
-        rom.write_bytes(0x04FD71, bytearray(world.options.sanctuaries_required.value + 1))
+        rom.write_bytes(0x04FD71, bytearray([world.options.sanctuaries_required.value + 1]))
         rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #Alt goal magicant sets the credits
     elif world.options.magicant_mode == 1:
         rom.write_bytes(0x2E9C29, bytearray([0x00, 0xA5]))
@@ -109,7 +109,7 @@ def patch_rom(world, rom, player: int, multiworld):
         else:
             rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #If no giygas, set credits
 
-    rom.write_bytes(0x04FD70, bytearray(world.options.sanctuaries_required.value))
+    rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
 
     #Todo: sanc alt goal, change sanc script
