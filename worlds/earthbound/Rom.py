@@ -5,7 +5,8 @@ import typing
 import bsdiff4
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
-from .local_data import item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table
+from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
+                         special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks)
 from .text_data import barf_text, eb_text_table
 from .flavor_data import flavor_data
 from BaseClasses import ItemClassification, CollectionState
@@ -138,7 +139,6 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(item_name_loc, bytearray(item_text))
             rom.write_bytes(player_name_loc, bytearray(player_text))
 
-
             if item not in item_id_table:
                 item_id = 0xAD
             elif item == "Lucky Sandwich":
@@ -211,7 +211,7 @@ def patch_rom(world, rom, player: int, multiworld):
             
             elif name in locker_locations:
                 if item in item_id_table or location.item.player != location.player:
-                    rom.write_bytes(locker_locations[name][0], bytearray([0x00]))
+                    rom.write_bytes(locker_locations[name][0], bytearray([0xFF]))
                     rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
                 elif item in psi_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
@@ -229,6 +229,10 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
             else:
                 print(f"WARNING: "+name +" NOT PLACED")
+            
+            if name in item_space_checks:
+                if item not in item_id_table:
+                    rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
 
         
     if world.options.skip_prayer_sequences:
