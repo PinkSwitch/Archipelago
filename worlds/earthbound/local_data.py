@@ -310,6 +310,10 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Happy-Happy Village - Prisoner": [0x2EBABA],
     "Saturn Valley - Saturn Coffee": [0x2EB008],
     "Monkey Caves - Monkey Power": [0x2EB1A1],
+    #Deep dark monkey
+    #most psi checks
+    #locker
+    #desert 3?
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -978,7 +982,6 @@ item_space_checks = {
     "Lost Underworld - Talking Rock": [0x2EB769, 0x6D, 0xB7, 0xEE],
     "Magicant - Ness's Nightmare": [0x2EB80B, 0x0F, 0xB8, 0xEE],
     "Cave of the Present - Star Master": [0x2EB8E7, 0xEB, 0xB8, 0xEE],
-
     "Happy-Happy Village - Prisoner": [0x2EBAC2, 0xC6, 0xBA, 0xEE],
     #"Threed - Zombie Prisoner": [0x2EAFB9, 0x0FA977, 0x2EAF7A, 0x2EAFC5, 0xAF, 0xAF, 0xEE],
     "Snow Wood - Bedroom": [0x2EB115, 0x19, 0xB1, 0xEE],

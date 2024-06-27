@@ -39,7 +39,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Twoson", "Twoson - Apple Kid Invention", 0xEB0018),
     LocationData("Twoson", "Twoson - Apple Kid's Mouse", 0xEB0019),
     LocationData("Twoson", "Twoson - Paula's Mother", 0xEB001A),
-    LocationData("Twoson", "Twoson - Everdred Meeting", 0xEB001B),
+    LocationData("Everdred's House", "Twoson - Everdred Meeting", 0xEB001B),
     LocationData("Twoson", "Twoson - Insignificant Location", 0xEB001C),
     LocationData("Peaceful Rest Valley", "Peaceful Rest Valley - Split Hill Present", 0xEB001D),
     LocationData("Peaceful Rest Valley", "Peaceful Rest Valley - Hill Nook Present", 0xEB001E),
@@ -191,7 +191,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Dalaam", "Dalaam - Do Do Guy's House Chest", 0xEB00A7),
     LocationData("Dalaam", "Dalaam - Upper House Chest", 0xEB00A8),
     LocationData("Dalaam", "Dalaam - Throne Character", 0xEB00A9),
-    LocationData("Menu", "Poo Starting Item", 0xEB00AA),
+    LocationData("Ness's Mind", "Poo Starting Item", 0xEB00AA),
     LocationData("Pink Cloud", "Pink Cloud - Three Holes Present", 0xEB00AB),
     LocationData("Pink Cloud", "Pink Cloud - Left Hole Present", 0xEB00AC),
     LocationData("Pink Cloud", "Pink Cloud - Ground Floor Present", 0xEB00AD),
@@ -218,17 +218,17 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Dungeon Man", "Dungeon Man - 1F Exit Ledge Present", 0xEB00C2),
     LocationData("Deep Darkness", "Deep Darkness - Teleporting Monkey", 0xEB00C3),
     LocationData("Deep Darkness", "Deep Darkness - Crest of Darkness Present", 0xEB00C4),
-    LocationData("Deep Darkness", "Deep Darkness - Helicopter Present", 0xEB00C5),
-    LocationData("Deep Darkness", "Deep Darkness - Yellow Bird Present", 0xEB00C6),
-    LocationData("Deep Darkness", "Deep Darkness - Swamp Present", 0xEB00C7),
-    LocationData("Deep Darkness", "Deep Darkness - Corner Present", 0xEB00C8),
-    LocationData("Deep Darkness", "Deep Darkness - Alcove Present", 0xEB00C9),
-    LocationData("Deep Darkness", "Deep Darkness - North Alcove Truffle", 0xEB00CA),
-    LocationData("Deep Darkness", "Deep Darkness - Near Land Truffle", 0xEB00CB),
-    LocationData("Deep Darkness", "Deep Darkness - Present Truffle", 0xEB00CC),
-    LocationData("Deep Darkness", "Deep Darkness - Village Truffle", 0xEB00CD),
-    LocationData("Deep Darkness", "Deep Darkness - Entrance Truffle", 0xEB00CE),
-    LocationData("Deep Darkness", "Deep Darkness - Barf Character", 0xEB00CF),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Helicopter Present", 0xEB00C5),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Yellow Bird Present", 0xEB00C6),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Swamp Present", 0xEB00C7),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Corner Present", 0xEB00C8),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Alcove Present", 0xEB00C9),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - North Alcove Truffle", 0xEB00CA),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Near Land Truffle", 0xEB00CB),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Present Truffle", 0xEB00CC),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Village Truffle", 0xEB00CD),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Entrance Truffle", 0xEB00CE),
+    LocationData("Deep Darkness Darkness", "Deep Darkness - Barf Character", 0xEB00CF),
     LocationData("Tenda Village", "Tenda Village - Trashcan", 0xEB00D0),
     LocationData("Tenda Village", "Tenda Village - Tenda Tea", 0xEB00D1),
     LocationData("Tenda Village", "Tenda Village - Tenda Gift", 0xEB00D2),
@@ -267,18 +267,18 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
     LocationData("Pink Cloud", "Pink Cloud Sanctuary", None),
     LocationData("Lumine Hall", "Lumine Hall Sanctuary", None),
     LocationData("Fire Spring", "Fire Spring Sanctuary", None),
-    LocationData("Menu", "Sanctuary Goal", None),
+    LocationData("Ness's Mind", "Sanctuary Goal", None),
     ]
 
     if not world or world.options.giygas_required:
         location_table += [
             LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),
-            LocationData("Cave of the Past", "Giygas", None),
+            LocationData("Endgame", "Giygas", None),
         ]
 
     if not world or world.options.alternate_sanctuary_goal:
         location_table += [
-            LocationData("Menu", "+2 Sanctuaries", None)
+            LocationData("Ness's Mind", "+2 Sanctuaries", None)
         ]
 
     if not world or world.options.magicant_mode != 0:
@@ -300,7 +300,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         ]
     else:
         location_table += [
-            LocationData("Menu", "+1 Sanctuary", None)
+            LocationData("Ness's Mind", "+1 Sanctuary", None)
         ]
 
     return location_table

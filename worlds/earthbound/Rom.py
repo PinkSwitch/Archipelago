@@ -9,6 +9,7 @@ from .local_data import (item_id_table, location_dialogue, present_locations, ps
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks)
 from .text_data import barf_text, eb_text_table
 from .flavor_data import flavor_data
+from .enemy_data import combat_regions, scale_enemies
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING
@@ -292,17 +293,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_character_count.append(item.name)
                 starting_char += 1
 
-
-    spheres = world.multiworld.get_spheres()
-    visited_regions = []
-    base_state = CollectionState(multiworld)
-    for sphere in spheres:
-        for location in sphere:
-            if location.player == world.player:
-                if location.parent_region not in visited_regions:
-                    visited_regions.append(location.parent_region)
-        base_state.update_reachable_regions(world.player)
-
+    scale_enemies(world)
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))

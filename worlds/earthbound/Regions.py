@@ -25,6 +25,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Onett"),
         create_region(world, player, locations_per_region, "Giant Step"),
         create_region(world, player, locations_per_region, "Twoson"),
+        create_region(world, player, locations_per_region, "Everdred's House"),
         create_region(world, player, locations_per_region, "Peaceful Rest Valley"),
         create_region(world, player, locations_per_region, "Happy-Happy Village"),
         create_region(world, player, locations_per_region, "Lilliput Steps"),
@@ -53,13 +54,15 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Southern Scaraba"),
         create_region(world, player, locations_per_region, "Dungeon Man"),
         create_region(world, player, locations_per_region, "Deep Darkness"),
+        create_region(world, player, locations_per_region, "Deep Darkness Darkness"),
         create_region(world, player, locations_per_region, "Tenda Village"),
         create_region(world, player, locations_per_region, "Lumine Hall"),
         create_region(world, player, locations_per_region, "Lost Underworld"),
         create_region(world, player, locations_per_region, "Fire Spring"),
         create_region(world, player, locations_per_region, "Magicant"),
         create_region(world, player, locations_per_region, "Cave of the Present"),
-        create_region(world, player, locations_per_region, "Cave of the Past")
+        create_region(world, player, locations_per_region, "Cave of the Past"),
+        create_region(world, player, locations_per_region, "Endgame")
 
     ]
     multiworld.regions += regions
@@ -89,12 +92,13 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
             "Twoson": lambda state: state.has("Police Badge", player),
             "Northern Onett": lambda state: state.has("Police Badge", player)})
 
-    multiworld.get_region("Twoson", player).add_exits(["Onett", "Peaceful Rest Valley", "Threed"],
+    multiworld.get_region("Twoson", player).add_exits(["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House"],
         {"Onett": lambda state: True,
         "Peaceful Rest Valley": lambda state: state.has("Pencil Eraser", player),
-         "Threed": lambda state: state.has_any({"Threed Tunnels Clear", "Wad of Bills"}, player)})
+         "Threed": lambda state: state.has_any({"Threed Tunnels Clear", "Wad of Bills"}, player),
+         "Everdred's House": lambda state: state.has("Paula", player)})
 
-    multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village"],
+    multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village",],
         {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Franklin Badge"}, player)})#Change to franklin badge
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
@@ -150,9 +154,12 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Dungeon Man", player).add_exits(["Deep Darkness"],
         {"Deep Darkness": lambda state: state.has("Submarine to Deep Darkness", player)})
 
-    multiworld.get_region("Deep Darkness", player).add_exits(["Tenda Village"],
+    multiworld.get_region("Deep Darkness", player).add_exits(["Deep Darkness Darkness"],
         {"Tenda Village": lambda state: state.has("Hawk Eye", player)})
-    multiworld.get_region("Tenda Village", player).add_exits(["Lumine Hall","Deep Darkness"],
+
+    multiworld.get_region("Deep Darkness Darkness", player).add_exits(["Tenda Village", "Deep Darkness"])
+
+    multiworld.get_region("Tenda Village", player).add_exits(["Lumine Hall","Deep Darkness Darkness"],
         {"Lumine Hall": lambda state: state.has("Shyness Book", player),
         "Deep Darkness": lambda state: state.has_all({"Shyness Book", "Hawk Eye"}, player)})
 
@@ -162,6 +169,9 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Cave of the Present", player).add_exits(["Cave of the Past"],
         {"Cave of the Past": lambda state: state.has("Power of the Earth", player)})
+
+    multiworld.get_region("Cave of the Past", player).add_exits(["Endgame"],
+        {"Endgame": lambda state: state.has("Paula", player)})
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
     location = EBLocation(player, location_data.name, location_data.code, region)
