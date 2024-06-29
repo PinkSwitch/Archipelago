@@ -30,6 +30,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Happy-Happy Village"),
         create_region(world, player, locations_per_region, "Lilliput Steps"),
         create_region(world, player, locations_per_region, "Threed"),
+        create_region(world, player, locations_per_region, "Threed Underground"),
         create_region(world, player, locations_per_region, "Grapefruit Falls"),
         create_region(world, player, locations_per_region, "Belch's Factory"),
         create_region(world, player, locations_per_region, "Saturn Valley"),
@@ -39,6 +40,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Gold Mine"),
         create_region(world, player, locations_per_region, "Monkey Caves"),
         create_region(world, player, locations_per_region, "Fourside"),
+        create_region(world, player, locations_per_region, "Fourside Dept. Store"),
         create_region(world, player, locations_per_region, "Magnet Hill"),
         create_region(world, player, locations_per_region, "Monotoli Building"),
         create_region(world, player, locations_per_region, "Winters"),
@@ -47,6 +49,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Rainy Circle"),
         create_region(world, player, locations_per_region, "Stonehenge Base"),
         create_region(world, player, locations_per_region, "Summers"),
+        create_region(world, player, locations_per_region, "Summers Museum"),
         create_region(world, player, locations_per_region, "Dalaam"),
         create_region(world, player, locations_per_region, "Pink Cloud"),
         create_region(world, player, locations_per_region, "Scaraba"),
@@ -103,15 +106,18 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
     
-    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Summers", "Grapefruit Falls"],
+    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Summers", "Threed Underground"],
         {"Twoson": lambda state: state.has("Threed Tunnels Clear", player),
          "Dusty Dunes Desert": lambda state: state.has("Threed Tunnels Clear", player),
          "Summers": lambda state: state.has_all({"Jeff", "UFO Engine", "Bad Key Machine"}, player),
-         "Grapefruit Falls": lambda state: state.has("Zombie Paper", player)})
+         "Grapefruit Falls": lambda state: state.has("Threed Underground", player)})
+
+    multiworld.get_region("Threed Underground", player).add_exits(["Threed", "Grapefruit Falls"])
 
     multiworld.get_region("Grapefruit Falls", player).add_exits(["Belch's Factory", "Saturn Valley"],
         {"Belch's Factory": lambda state: state.has("Jar of Fly Honey", player)})
-
+        
+        
     multiworld.get_region("Belch's Factory", player).add_exits(["Upper Saturn Valley"],
         {"Upper Saturn Valley": lambda state: state.has("Threed Tunnels Clear", player)})
 
@@ -126,12 +132,14 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
          "Monkey Caves": lambda state: state.has("King Banana", player),
          "Gold Mine": lambda state: state.has("Mining Permit", player)})
 
-    multiworld.get_region("Fourside", player).add_exits(["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed"],
+    multiworld.get_region("Fourside", player).add_exits(["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed", "Fourside Dept. Store"],
         {"Monotoli Building": lambda state: state.has("Yogurt Dispenser", player),
          "Magnet Hill": lambda state: state.has("Signed Banana", player),
-         "Threed": lambda state: state.has("Diamond", player)})
+         "Threed": lambda state: state.has("Diamond", player),
+         "Fourside Dept. Store": lambda state: state.has("Jeff", player)})
 
-    multiworld.get_region("Summers", player).add_exits(["Scaraba"])
+    multiworld.get_region("Summers", player).add_exits(["Scaraba", "Summers Museum"],
+        {"Summers Museum": lambda state: state.has("Tiny Ruby", player)})
 
     multiworld.get_region("Winters", player).add_exits(["Snow Wood Boarding School", "Southern Winters"],
         {"Snow Wood Boarding School": lambda state: state.has("Letter For Tony", player),
