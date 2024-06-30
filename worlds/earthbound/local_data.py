@@ -257,7 +257,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Onett - Library Counter": [0x05EC0C],
     "Onett - Library Bookshelf": [0x2EBA66],
     "Onett - Treehouse Guy": [0x073F34],
-    "Onett - Mayor Pirkle": [0x0661D6, 0x072D49],
+    "Onett - Mayor Pirkle": [0x0661D6, 0x072D4B],
     "Onett - Traveling Entertainer": [0x07476C],
     "Twoson - Bike Shop Rental": [0x080046],
     "Twoson - Orange Kid Donation": [0x08134A],
@@ -274,7 +274,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Saturn Valley - Post Belch Gift #2": [0x07EACE],
     "Saturn Valley - Post Belch Gift #3": [0x07EAF2],
     "Dusty Dunes - Shining Spot": [0x060D8D],
-    "Dusty Dunes - Mine Reward": [0x06038A, 0x06123A],
+    "Dusty Dunes - Mine Reward": [0x06038A, 0x06123A, 0x06053F],
     "Snow Wood - Maxwell Item": [0x06AB89],
     "Scaraba - Snake Bag Salesman": [0x2EA713],
     "Winters - Drugstore Saleswoman": [0x07A223],
@@ -291,6 +291,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Summers - Museum Item": [0x08ABB8],
     "Pyramid - Pedestal Item": [0x2EBA92],
     "Scaraba - Key Holder": [0x2EBA9E],
+    "Deep Darkness - Teleporting Monkey": [0x2EBEE2],
     "Deep Darkness - North Alcove Truffle": [0x2EB5A7],
     "Deep Darkness - Near Land Truffle": [0x2EB5FF],
     "Deep Darkness - Present Truffle": [0x2EB5D3],
@@ -310,10 +311,8 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Happy-Happy Village - Prisoner": [0x2EBABA],
     "Saturn Valley - Saturn Coffee": [0x2EB008],
     "Monkey Caves - Monkey Power": [0x2EB1A1],
-    #Deep dark monkey
     #most psi checks
     #locker
-    #desert 3?
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -937,8 +936,8 @@ item_space_checks = {
     "Twoson - Antique Shop": [0x093EE3, 0xE7, 0x3E, 0xC9],
     "Twoson - Paula's Mother": [0x080628, 0x2C, 0x0C, 0xC8],
     "Twoson - Everdred Meeting": [0x09604B, 0x4F, 0x60, 0xC9],
-    #"Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B7],
-    #"Happy-Happy Village - Prisoner Item": [0x2F9664, 0x2EAF40],
+    "Happy-Happy Village - Donation Lady": [0x098A90, 0x94, 0x8A, 0xC9, 0x0893AF, 0xB3, 0x93, 0xC8],
+    "Happy-Happy Village - Prisoner Item": [0x2F965D, 0x61, 0x96, 0xEF, 0x2EAF3A, 0x3E, 0xAF, 0xEE],
     "Happy-Happy Village - Defeat Carpainter": [0x098268, 0x6C, 0x82, 0xC9],
     "Threed - Hospital Drawer": [0x08687C, 0x80, 0x68, 0xC8],
     #"Saturn Valley - Post Belch Gift #1": [0x07EA85, 0x89, 0xEA, 0xC7],
@@ -955,7 +954,7 @@ item_space_checks = {
     "Monkey Caves - Bow Monkey Gift": [0x0625F1, 0xF5, 0x25, 0xC6],
     "Monkey Caves - Talah Rama Gift": [0x060FE1, 0xE5, 0x0F, 0xC6],
     "Fourside - Venus Gift": [0x2EB1C7, 0xCB, 0xB1, 0xEE],
-    #"Fourside - Post-Moonside Delivery": [0x07AAC4, 0x07B598],
+    "Fourside - Post-Moonside Delivery": [0x07AABD, 0xC1, 0xAA, 0xC7, 0x07B57C, 0x80, 0xB5, 0xC7],
     "Monotoli Building - Electra Gift": [0x06E99C, 0xA0, 0xE9, 0xC6],
     "Monotoli Building - Monotoli Gift": [0x06EB35, 0x39, 0xEB, 0xC6],
     "Summers - Museum Item": [0x08ABEB, 0xEF, 0xAB, 0xC8],
@@ -970,7 +969,7 @@ item_space_checks = {
     "Tenda Village - Tenda Gift #2": [0x09D80D, 0x11, 0xD8, 0xC9],
     "Magicant - Ness's Gift": [0x077622, 0x26, 0x76, 0xC7],
     "Cave of the Present - Broken Phase Distorter": [0x2F5905, 0x09, 0x59, 0xEF],
-    #"Onett - Mani Mani Statue": [0x2EA9B9],
+    "Onett - Mani Mani Statue": [0x2EBEA6, 0xAA, 0xBE, 0xEE],
     "Onett - Buzz Buzz": [0x2EAA4C, 0x50, 0xAA, 0xEE],
     "Saturn Valley - Saturn Coffee": [0x2EB029, 0x2D, 0xB0, 0xEE],
     "Monkey Caves - Monkey Power": [0x2EB1AA, 0xAE, 0xB1, 0xEE],
@@ -990,7 +989,6 @@ item_space_checks = {
     "Deep Darkness - Barf Character": [0x2EB66C, 0x70, 0xB6, 0xEE]
 
 }
-
 
     #0: Action pointer, call the actual item being given
     #1: Sprite ID

@@ -1,4 +1,5 @@
 from BaseClasses import CollectionState
+from typing import Dict
 import struct
 
 class EarthBoundEnemy:
@@ -108,7 +109,7 @@ enemies = {
 "Trillionage Sprout": EarthBoundEnemy("Trillionage Sprout", 0x15b695, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
 "Musica": EarthBoundEnemy("Musica", 0x15b6f3, 292, 0, 3748, 341, 21, 69, 85, 35, False),
 "Desert Wolf": EarthBoundEnemy("Desert Wolf", 0x15b751, 247, 0, 3740, 114, 33, 57, 67, 30, False),
-"Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False),
+"Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False), #Real one
 "Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15b80d, 631, 0, 19659, 728, 16, 120, 158, 57, False),
 "Master Barf": EarthBoundEnemy("Master Barf", 0x15b86b, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
 "Kiss of Death": EarthBoundEnemy("Kiss of Death", 0x15b8c9, 333, 0, 10354, 528, 19, 91, 100, 46, False),
@@ -156,7 +157,7 @@ enemies = {
 "Mr. Molecule": EarthBoundEnemy("Mr. Molecule", 0x15c835, 280, 21, 8708, 659, 18, 118, 97, 56, False),
 "Worthless Protoplasm": EarthBoundEnemy("Worthless Protoplasm", 0x15c893, 38, 0, 17, 11, 27, 11, 21, 7, False),
 "Sentry Robot": EarthBoundEnemy("Sentry Robot", 0x15c8f1, 372, 0, 5034, 392, 17, 77, 105, 39, False),
-"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15c94f, 1746, 999, 0, 0, 51, 150, 274, 72, False),
+#"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15c94f, 1746, 999, 0, 0, 51, 150, 274, 72, False),
 "Psychic Psycho": EarthBoundEnemy("Psychic Psycho", 0x15c9ad, 591, 252, 30094, 682, 30, 124, 144, 58, False),
 "Major Psychic Psycho": EarthBoundEnemy("Major Psychic Psycho", 0x15ca0b, 618, 574, 39247, 862, 31, 145, 152, 65, False),
 "Mole Playing Rough": EarthBoundEnemy("Mole Playing Rough", 0x15ca69, 103, 0, 456, 36, 9, 22, 28, 14, False),
@@ -174,65 +175,56 @@ enemies = {
 "Hard Crocodile": EarthBoundEnemy("Hard Crocodile", 0x15ced1, 522, 0, 19484, 692, 23, 110, 128, 55, False),
 "No Good Fly": EarthBoundEnemy("No Good Fly", 0x15cf2f, 100, 0, 415, 26, 10, 23, 13, 15, False),
 "Mostly Bad Fly": EarthBoundEnemy("Mostly Bad Fly", 0x15cf8d, 141, 0, 1116, 84, 15, 32, 16, 19, False),
-"Spiteful Crow": EarthBoundEnemy("Spiteful Crow", 0x15cfeb, 24, 0, 3, 5, 77, 5, 3, 1, False),
-"my pet": EarthBoundEnemy("my pet", 0x15d049, 999, 0, 0, 0, 10, 4, 99, 5, False),
-"Pokey": EarthBoundEnemy("Pokey", 0x15d0a7, 999, 0, 0, 0, 5, 1, 99, 5, False),
-"Picky": EarthBoundEnemy("Picky", 0x15d105, 999, 0, 0, 0, 25, 3, 99, 5, False),
-"Tony": EarthBoundEnemy("Tony", 0x15d163, 999, 0, 0, 0, 12, 4, 99, 5, False),
-"Bubble Monkey": EarthBoundEnemy("Bubble Monkey", 0x15d1c1, 999, 0, 0, 0, 20, 7, 99, 5, False),
-"Dungeon Man": EarthBoundEnemy("Dungeon Man", 0x15d21f, 999, 0, 0, 0, 1, 255, 99, 5, False),
-"Flying Man": EarthBoundEnemy("Flying Man", 0x15d27d, 300, 0, 0, 0, 100, 95, 92, 99, False),
-"Teddy Bear": EarthBoundEnemy("Teddy Bear", 0x15d2db, 100, 0, 0, 0, 0, 7, 20, 5, False),
-"Super Plush Bear": EarthBoundEnemy("Super Plush Bear", 0x15d339, 400, 0, 0, 0, 0, 7, 50, 5, False),
-"Master Belch": EarthBoundEnemy("Master Belch", 0x15d397, 650, 0, 12509, 664, 16, 50, 88, 27, False),
-"Insane Cultist (2)": EarthBoundEnemy("Insane Cultist", 0x15d3f5, 94, 0, 353, 33, 8, 19, 25, 13, False),
-"Dept. Store Spook": EarthBoundEnemy("Dept. Store Spook", 0x15d453, 610, 290, 24291, 1648, 19, 82, 135, 42, False),
-"Ness's Nightmare": EarthBoundEnemy("Ness's Nightmare", 0x15d4b1, 1654, 882, 89004, 4442, 31, 172, 253, 71, False),
-"Mr. Carpainter": EarthBoundEnemy("Mr. Carpainter", 0x15d50f, 262, 70, 1412, 195, 8, 33, 45, 21, False),
-"Carbon Dog": EarthBoundEnemy("Carbon Dog", 0x15d56d, 1672, 0, 0, 0, 31, 159, 174, 70, False),
-"Chomposaur": EarthBoundEnemy("Chomposaur", 0x15d5cb, 1288, 320, 44378, 896, 17, 139, 183, 62, False),
-"Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15d629, 235, 102, 685, 150, 6, 19, 23, 13, False),
-"Gigantic Ant": EarthBoundEnemy("Gigantic Ant", 0x15d687, 308, 81, 3980, 304, 17, 54, 112, 30, False),
-"Shrooom!": EarthBoundEnemy("Shrooom!", 0x15d6e5, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
-"Plague Rat of Doom": EarthBoundEnemy("Plague Rat of Doom", 0x15d743, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
-"Mondo Mole": EarthBoundEnemy("Mondo Mole", 0x15d7a1, 498, 161, 5791, 400, 9, 37, 50, 23, False),
-"Guardian Digger": EarthBoundEnemy("Guardian Digger", 0x15d7ff, 386, 110, 17301, 1467, 17, 59, 129, 32, False),
-"Kraken": EarthBoundEnemy("Kraken", 0x15d85d, 1097, 176, 79267, 3049, 21, 105, 166, 54, False),
-"Bionic Kraken": EarthBoundEnemy("Bionic Kraken", 0x15d8bb, 900, 60, 50308, 960, 42, 155, 195, 70, False),
-"Starman": EarthBoundEnemy("Starman", 0x15d919, 545, 155, 23396, 720, 24, 103, 126, 55, False),
-"Starman Super": EarthBoundEnemy("Starman Super", 0x15d977, 568, 310, 30145, 735, 24, 112, 129, 56, False),
-"Ghost of Starman": EarthBoundEnemy("Ghost of Starman", 0x15d9d5, 750, 462, 48695, 807, 46, 152, 170, 68, False),
-"Starman Deluxe": EarthBoundEnemy("Starman Deluxe", 0x15da33, 1400, 418, 160524, 3827, 27, 143, 186, 65, False),
-"Final Starman": EarthBoundEnemy("Final Starman", 0x15da91, 840, 860, 61929, 915, 47, 178, 187, 71, False),
-"Urban Zombie": EarthBoundEnemy("Urban Zombie", 0x15daef, 171, 0, 700, 58, 10, 31, 24, 19, False),
-"Diamond Dog": EarthBoundEnemy("Diamond Dog", 0x15db4d, 3344, 154, 337738, 6968, 31, 167, 230, 70, False),
-"Trillionage Sprout": EarthBoundEnemy("Trillionage Sprout", 0x15dbab, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
-"Master Belch": EarthBoundEnemy("Master Belch", 0x15dc09, 650, 0, 12509, 664, 16, 50, 88, 27, False),
-"Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15dc67, 609, 76, 17567, 690, 14, 134, 146, 59, False),
-"Master Barf": EarthBoundEnemy("Master Barf", 0x15dcc5, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
-"Loaded Dice": EarthBoundEnemy("Loaded Dice", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
-"Tangoo": EarthBoundEnemy("Tangoo", 0x15dd81, 371, 5, 14718, 572, 19, 96, 99, 48, False),
-"Boogey Tent": EarthBoundEnemy("Boogey Tent", 0x15dddf, 579, 56, 5500, 407, 10, 43, 69, 25, False),
-"Squatter Demon": EarthBoundEnemy("Squatter Demon", 0x15de3d, 774, 60, 48311, 897, 45, 158, 192, 69, False),
-"Everdred": EarthBoundEnemy("Everdred", 0x15de9b, 182, 0, 986, 171, 6, 25, 35, 15, False),
-"Electro Specter": EarthBoundEnemy("Electro Specter", 0x15def9, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
-"Thunder and Storm": EarthBoundEnemy("Thunder and Storm", 0x15df57, 2065, 70, 129026, 4736, 21, 111, 178, 56, False),
-"Frankystein Mark II": EarthBoundEnemy("Frankystein Mark II", 0x15dfb5, 91, 0, 76, 31, 4, 15, 18, 7, False),
-"Evil Mani-Mani": EarthBoundEnemy("Evil Mani-Mani", 0x15e013, 860, 88, 28139, 1852, 15, 86, 145, 45, False),
-"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e071, 1746, 999, 0, 0, 51, 150, 274, 72, False),
-"Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15e0cf, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
-"Robo-pump": EarthBoundEnemy("Robo-pump", 0x15e12d, 431, 0, 4797, 349, 19, 70, 113, 36, False),
-"Foppy": EarthBoundEnemy("Foppy", 0x15e18b, 120, 10, 1311, 93, 1, 29, 9, 16, False),
-"Guardian General": EarthBoundEnemy("Guardian General", 0x15e1e9, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
+"Spiteful Crow": EarthBoundEnemy("Spiteful Crow", 0x15cfeb, 24, 0, 3, 5, 77, 5, 3, 3, False),
+#"Master Belch": EarthBoundEnemy("Master Belch", 0x15d397, 650, 0, 12509, 664, 16, 50, 88, 27, False), Unused
+#"Insane Cultist (2)": EarthBoundEnemy("Insane Cultist", 0x15d3f5, 94, 0, 353, 33, 8, 19, 25, 13, False),
+"Dept. Store Spook (2)": EarthBoundEnemy("Dept. Store Spook", 0x15d453, 610, 290, 24291, 1648, 19, 82, 135, 42, False),
+"Ness's Nightmare (2)": EarthBoundEnemy("Ness's Nightmare", 0x15d4b1, 1654, 882, 89004, 4442, 31, 172, 253, 71, False),
+"Mr. Carpainter (2)": EarthBoundEnemy("Mr. Carpainter", 0x15d50f, 262, 70, 1412, 195, 8, 33, 45, 21, False),
+"Carbon Dog (2)": EarthBoundEnemy("Carbon Dog", 0x15d56d, 1672, 0, 0, 0, 31, 159, 174, 70, False),
+"Chomposaur (2)": EarthBoundEnemy("Chomposaur", 0x15d5cb, 1288, 320, 44378, 896, 17, 139, 183, 62, False),
+"Titanic Ant (2)": EarthBoundEnemy("Titanic Ant", 0x15d629, 235, 102, 685, 150, 6, 19, 23, 13, False),
+"Gigantic Ant (2)": EarthBoundEnemy("Gigantic Ant", 0x15d687, 308, 81, 3980, 304, 17, 54, 112, 30, False),
+"Shrooom! (2)": EarthBoundEnemy("Shrooom!", 0x15d6e5, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
+"Plague Rat of Doom (2)": EarthBoundEnemy("Plague Rat of Doom", 0x15d743, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
+"Mondo Mole (2)": EarthBoundEnemy("Mondo Mole", 0x15d7a1, 498, 161, 5791, 400, 9, 37, 50, 23, False),
+"Guardian Digger (2)": EarthBoundEnemy("Guardian Digger", 0x15d7ff, 386, 110, 17301, 1467, 17, 59, 129, 32, False),
+"Kraken (2)": EarthBoundEnemy("Kraken", 0x15d85d, 1097, 176, 79267, 3049, 21, 105, 166, 54, False),
+#"Bionic Kraken (2)": EarthBoundEnemy("Bionic Kraken", 0x15d8bb, 900, 60, 50308, 960, 42, 155, 195, 70, False),
+"Starman (2)": EarthBoundEnemy("Starman", 0x15d919, 545, 155, 23396, 720, 24, 103, 126, 55, False),
+"Starman Super (2)": EarthBoundEnemy("Starman Super", 0x15d977, 568, 310, 30145, 735, 24, 112, 129, 56, False),
+"Ghost of Starman (2)": EarthBoundEnemy("Ghost of Starman", 0x15d9d5, 750, 462, 48695, 807, 46, 152, 170, 68, False),
+"Starman Deluxe (2)": EarthBoundEnemy("Starman Deluxe", 0x15da33, 1400, 418, 160524, 3827, 27, 143, 186, 65, False),
+"Final Starman (2)": EarthBoundEnemy("Final Starman", 0x15da91, 840, 860, 61929, 915, 47, 178, 187, 71, False),
+#"Urban Zombie": EarthBoundEnemy("Urban Zombie", 0x15daef, 171, 0, 700, 58, 10, 31, 24, 19, False),
+"Diamond Dog (2)": EarthBoundEnemy("Diamond Dog", 0x15db4d, 3344, 154, 337738, 6968, 31, 167, 230, 70, False),
+"Trillionage Sprout (2)": EarthBoundEnemy("Trillionage Sprout", 0x15dbab, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
+"Master Belch (2)": EarthBoundEnemy("Master Belch", 0x15dc09, 650, 0, 12509, 664, 16, 50, 88, 27, False), 
+#"Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15dc67, 609, 76, 17567, 690, 14, 134, 146, 59, False),
+"Master Barf (2)": EarthBoundEnemy("Master Barf", 0x15dcc5, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
+"Loaded Dice (2)": EarthBoundEnemy("Loaded Dice", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
+#"Tangoo": EarthBoundEnemy("Tangoo", 0x15dd81, 371, 5, 14718, 572, 19, 96, 99, 48, False),
+"Boogey Tent (2)": EarthBoundEnemy("Boogey Tent", 0x15dddf, 579, 56, 5500, 407, 10, 43, 69, 25, False),
+#"Squatter Demon": EarthBoundEnemy("Squatter Demon", 0x15de3d, 774, 60, 48311, 897, 45, 158, 192, 69, False),
+"Everdred (2)": EarthBoundEnemy("Everdred", 0x15de9b, 182, 0, 986, 171, 6, 25, 35, 15, False),
+"Electro Specter (2)": EarthBoundEnemy("Electro Specter", 0x15def9, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
+"Thunder and Storm (2)": EarthBoundEnemy("Thunder and Storm", 0x15df57, 2065, 70, 129026, 4736, 21, 111, 178, 56, False),
+"Frankystein Mark II (2)": EarthBoundEnemy("Frankystein Mark II", 0x15dfb5, 91, 0, 76, 31, 4, 15, 18, 7, False),
+"Evil Mani-Mani (2)": EarthBoundEnemy("Evil Mani-Mani", 0x15e013, 860, 88, 28139, 1852, 15, 86, 145, 45, False),
+#"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e071, 1746, 999, 0, 0, 51, 150, 274, 72, False),
+"Clumsy Robot (2)": EarthBoundEnemy("Clumsy Robot", 0x15e0cf, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
+"Robo-pump (2)": EarthBoundEnemy("Robo-pump", 0x15e12d, 431, 0, 4797, 349, 19, 70, 113, 36, False),
+#"Foppy": EarthBoundEnemy("Foppy", 0x15e18b, 120, 10, 1311, 93, 1, 29, 9, 16, False),
+"Guardian General (2)": EarthBoundEnemy("Guardian General", 0x15e1e9, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
 "Black Antoid (2)": EarthBoundEnemy("Black Antoid", 0x15e247, 34, 25, 37, 7, 4, 14, 13, 7, False), #Separate enemy used in the titanic ant fight
 "Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
-"Runaway Dog": EarthBoundEnemy("Runaway Dog", 0x15e303, 21, 0, 4, 3, 26, 4, 5, 73, False),
+#"Runaway Dog (2)": EarthBoundEnemy("Runaway Dog", 0x15e303, 21, 0, 4, 3, 26, 4, 5, 73, False),
 "Cave Boy": EarthBoundEnemy("Cave Boy", 0x15e361, 314, 0, 618, 17, 5, 21, 33, 11, False),
 "Tiny Li'l Ghost": EarthBoundEnemy("Tiny Li'l Ghost", 0x15e3bf, 90, 0, 1, 162, 100, 19, 7, 18, False),
 "Starman Junior": EarthBoundEnemy("Starman Junior", 0x15e41d, 200, 999, 16, 20, 1, 11, 10, 6, False),
 "Buzz Buzz": EarthBoundEnemy("Buzz Buzz", 0x15e47b, 2000, 999, 0, 0, 100, 40, 92, 20, False),
 "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e4d9, 2000, 999, 0, 0, 60, 145, 255, 80, False),
-"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e537, 1746, 999, 0, 0, 51, 150, 274, 72, False),
+#"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e537, 1746, 999, 0, 0, 51, 150, 274, 72, False), Cutscene?
 "Giygas (2)": EarthBoundEnemy("Giygas", 0x15e595, 9999, 999, 0, 0, 80, 255, 255, 80, False),
 "Giygas (3)": EarthBoundEnemy("Giygas", 0x15e5f3, 9999, 0, 0, 0, 80, 255, 255, 80, False),
 "Giygas (4)": EarthBoundEnemy("Giygas", 0x15e651, 2000, 0, 0, 0, 80, 255, 255, 80, False),
@@ -240,12 +232,12 @@ enemies = {
 "Farm Zombie": EarthBoundEnemy("Farm Zombie", 0x15e70d, 171, 0, 700, 58, 10, 31, 24, 19, False),
 "Criminal Caterpillar": EarthBoundEnemy("Criminal Caterpillar", 0x15e76b, 250, 168, 30384, 0, 134, 37, 16, 23, False),
 "Evil Eye": EarthBoundEnemy("Evil Eye", 0x15e7c9, 720, 400, 46376, 896, 38, 141, 162, 63, False),
-"Magic Butterfly": EarthBoundEnemy("Magic Butterfly", 0x15e827, 16, 0, 1, 0, 25, 2, 2, 0, False),
+#"Magic Butterfly": EarthBoundEnemy("Magic Butterfly", 0x15e827, 16, 0, 1, 0, 25, 2, 2, 0, False),
 "Mini Barf": EarthBoundEnemy("Mini Barf", 0x15e885, 616, 0, 7521, 460, 10, 45, 71, 26, False),
 "Master Criminal Worm": EarthBoundEnemy("Master Criminal Worm", 0x15e8e3, 377, 300, 82570, 0, 136, 73, 40, 37, False),
 "Captain Strong": EarthBoundEnemy("Captain Strong", 0x15e941, 140, 0, 492, 159, 15, 20, 24, 13, False),
 "Giygas (6)": EarthBoundEnemy("Giygas", 0x15e99f, 9999, 0, 0, 0, 80, 255, 127, 80, False),
-"Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15e9fd, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
+"Clumsy Robot (3)": EarthBoundEnemy("Clumsy Robot", 0x15e9fd, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
 }
 
 
@@ -263,16 +255,16 @@ regional_enemies = {"Northern Onett": {enemies["Spiteful Crow"], enemies["Runawa
                     "Threed Underground": {enemies["No Good Fly"], enemies["Urban Zombie"], enemies["Zombie Possessor"], enemies["Mini Barf"]},
                     "Grapefruit Falls": {enemies["Armored Frog"], enemies["Black Antoid"], enemies["Coil Snake"], enemies["Farm Zombie"],
                                          enemies["Plain Crocodile"], enemies["Red Antoid"], enemies["Violent Roach"], enemies["Mad Duck"]},
-                    "Belch's Factory": {enemies["Farm Zombie"], enemies["Foppy"], enemies["Mostly Bad Fly"], enemies["Slimy Little Pile"], enemies["Master Belch"]},
+                    "Belch's Factory": {enemies["Farm Zombie"], enemies["Foppy"], enemies["Mostly Bad Fly"], enemies["Slimy Little Pile"], enemies["Master Belch"], enemies["Master Belch (2)"]},
                     "Milky Well": {enemies["Mad Duck"], enemies["Ranboob"], enemies["Struttin' Evil Mushroom (2)"], enemies["Tough Mobile Sprout"], enemies["Trillionage Sprout"]},
                     "Dusty Dunes Desert": {enemies["Bad Buffalo"], enemies["Crested Booka"], enemies["Criminal Caterpillar"], enemies["Cute Li'l UFO"], enemies["Desert Wolf"], enemies["Mole Playing Rough"],
                                            enemies["Skelpion"], enemies["Smilin' Sphere"]},
                     "Fourside": {enemies["Annoying Reveler"], enemies["Crazed Sign"], enemies["Extra Cranky Lady"], enemies["Mad Taxi"],
                                  enemies["Abstract Art"], enemies["Dali's Clock"], enemies["Enraged Fire Plug"], enemies["Robo-pump"], enemies["Evil Mani-Mani"]},
                     "Gold Mine": {enemies["Gigantic Ant"], enemies["Mad Duck"], enemies["Noose Man"], enemies["Thirsty Coil Snake"], enemies["Guardian Digger"]},
-                    "Fourside Dept. Store": {enemies["Musica"], enemies["Mystical Record"], enemies["Scalding Coffee Cup"], enemies["Dept. Store Spook"]},
+                    "Fourside Dept. Store": {enemies["Musica"], enemies["Mystical Record"], enemies["Scalding Coffee Cup"], enemies["Dept. Store Spook"], enemies["Dept. Store Spook (2)"]},
                     "Monkey Caves": {enemies["Struttin' Evil Mushroom (2)"], enemies["Tough Mobile Sprout"]},
-                    "Monotoli Building": {enemies["Sentry Robot"], enemies["Clumsy Robot"]},
+                    "Monotoli Building": {enemies["Sentry Robot"], enemies["Clumsy Robot"], enemies["Clumsy Robot (2)"], enemies["Clumsy Robot (3)"]},
                     "Rainy Circle": {enemies["Arachnid!"], enemies["Cave Boy"], enemies["Elder Batty"], enemies["Mighty Bear Seven"], enemies["Strong Crocodile"], enemies["Shrooom!"]},
                     "Summers": {enemies["Crazed Sign"], enemies["Mad Taxi"], enemies["Mole Playing Rough"], enemies["Over Zealous Cop"], enemies["Tough Guy"], enemies["Kraken"]},
                     "Summers Museum": {enemies["Shattered Man"]},
@@ -280,7 +272,7 @@ regional_enemies = {"Northern Onett": {enemies["Spiteful Crow"], enemies["Runawa
                     "Pink Cloud": {enemies["Conducting Menace"], enemies["Kiss of Death"], enemies["Tangoo"], enemies["Thunder Mite"], enemies["Thunder and Storm"]},
                     "Scaraba": {enemies["Beautiful UFO"], enemies["Dread Skelpion"], enemies["Great Crested Booka"], enemies["High-class UFO"], enemies["Master Criminal Worm"]},
                     "Pyramid": {enemies["Arachnid!!!"], enemies["Fierce Shattered Man"], enemies["Guardian Hieroglyph"], enemies["Lethal Asp Hieroglyph"], enemies["Petrified Royal Guard"],
-                                enemies["Guardian General"]},
+                                enemies["Guardian General"], enemies["Guardian General (2)"]},
                     "Southern Scaraba": {enemies["Beautiful UFO"], enemies["High-class UFO"], enemies["Marauder Octobot"]},
                     "Dungeon Man": {enemies["Dali's Clock"], enemies["Mystical Record"], enemies["Lesser Mook"], enemies["Mystical Record"], enemies["Scalding Coffee Cup"], enemies["Worthless Protoplasm"]},
                     "Deep Darkness": {enemies["Mole Playing Rough"]},
@@ -345,7 +337,7 @@ combat_regions = [
 levels = [
 1,
 2,
-4,
+3,
 5,
 7,
 9,
@@ -407,13 +399,30 @@ def scale_enemies(world, rom):
 
     for region, level in zip(location_order, levels):
         for enemy in regional_enemies[region]:
-            enemy_hp = enemy.hp * level / enemy.level
+            if enemy.is_scaled == False:
+                enemy_hp = int(enemy.hp * level / enemy.level)
+                enemy_pp = int(enemy.pp * level / enemy.level)
+                enemy_exp = int(enemy.exp * level / enemy.level)
+                enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
+                enemy_money = int(enemy.money * level / enemy.level)
+                enemy_speed = int(enemy.speed * level / enemy.level)
+                enemy_offense = int(enemy.offense * level / enemy.level)
+                enemy_defense = int(enemy.defense * level / enemy.level)
+                enemy_level = int(enemy.level * level / enemy.level)
 
-            #enemy_hp = struct.pack('<H', enemy.hp * level / enemy.level)
-            enemy_pp = struct.pack('<H', enemy.pp)
-            enemy_exp = struct.pack('<I', enemy.exp)
-            enemy_money = struct.pack('<H', enemy.money)
-            print(enemy_hp)
-
-            #rom.write_bytes(enemy.address + 33, bytearray(enemy_hp))
-            #rom.write_bytes(enemy.address + 35, bytearray(enemy_pp))
+                #print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed}")
+                enemy_hp = struct.pack('<H', enemy_hp)
+                enemy_pp = struct.pack('<H', enemy_pp)
+                enemy_exp = struct.pack('<I', enemy_exp)
+                enemy_money = struct.pack('<H', enemy_money)
+                enemy_offense = struct.pack('<H', enemy_offense)
+                enemy_defense = struct.pack('<H', enemy_defense)
+                rom.write_bytes(enemy.address + 33, bytearray(enemy_hp))
+                rom.write_bytes(enemy.address + 35, bytearray(enemy_pp))
+                rom.write_bytes(enemy.address + 37, bytearray(enemy_exp))
+                rom.write_bytes(enemy.address + 41, bytearray(enemy_money))
+                rom.write_bytes(enemy.address + 60, bytearray([enemy_speed]))
+                rom.write_bytes(enemy.address + 56, bytearray(enemy_offense))
+                rom.write_bytes(enemy.address + 58, bytearray(enemy_defense))
+                rom.write_bytes(enemy.address + 54, bytearray([enemy_level]))
+                enemy.is_scaled = True

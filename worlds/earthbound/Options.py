@@ -80,6 +80,13 @@ class RareWeight(Range):
     range_end = 100
     default = 5
 
+class ExperienceModifier(Range):
+    """Percentage of EXP enemies give you. 100 is vanilla, after scaling, and 300 is x3."""
+    display_name = "Experience Percentage"
+    range_start = 100
+    range_end = 300
+    default = 150
+
 class RandomFlavors(Toggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
@@ -94,6 +101,7 @@ class EBOptions(PerGameCommonOptions):
     magicant_mode: MagicantMode
     shuffle_teleports: PSIShuffle# Better name?
     character_shuffle: CharacterShuffle
+    experience_modifier: ExperienceModifier
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     random_flavors: RandomFlavors

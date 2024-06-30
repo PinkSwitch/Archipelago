@@ -110,14 +110,14 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         {"Twoson": lambda state: state.has("Threed Tunnels Clear", player),
          "Dusty Dunes Desert": lambda state: state.has("Threed Tunnels Clear", player),
          "Summers": lambda state: state.has_all({"Jeff", "UFO Engine", "Bad Key Machine"}, player),
-         "Grapefruit Falls": lambda state: state.has("Threed Underground", player)})
+         "Threed Underground": lambda state: state.has("Zombie Paper", player)})
 
-    multiworld.get_region("Threed Underground", player).add_exits(["Threed", "Grapefruit Falls"])
+    multiworld.get_region("Threed Underground", player).add_exits(["Grapefruit Falls"])
 
-    multiworld.get_region("Grapefruit Falls", player).add_exits(["Belch's Factory", "Saturn Valley"],
+    multiworld.get_region("Grapefruit Falls", player).add_exits(["Belch's Factory", "Saturn Valley", "Threed Underground"],
         {"Belch's Factory": lambda state: state.has("Jar of Fly Honey", player)})
         
-        
+
     multiworld.get_region("Belch's Factory", player).add_exits(["Upper Saturn Valley"],
         {"Upper Saturn Valley": lambda state: state.has("Threed Tunnels Clear", player)})
 

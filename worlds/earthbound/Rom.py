@@ -233,7 +233,11 @@ def patch_rom(world, rom, player: int, multiworld):
             
             if name in item_space_checks:
                 if item not in item_id_table:
-                    rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
+                    if item_space_checks[name].count == 4:
+                        rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
+                    else:
+                        rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
+                        rom.write_bytes(item_space_checks[name][1], bytearray(item_space_checks[name][5:8]))
 
         
     if world.options.skip_prayer_sequences:
