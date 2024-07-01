@@ -170,6 +170,9 @@ JML RepelEnemies
 ORG $C1FEB2
 JML GetStartingData
 
+ORG $C1FEB6
+JML GetStartingNames
+
 
 
 ORG $C1FEBC
@@ -262,14 +265,7 @@ NOP
 NOP
 NOP
 
-ORG $C1FEB6
-NOP
-NOP
-NOP
-
-ORG $C1FEB8
-NOP
-NOP
+ORG $C1FEBA
 NOP
 NOP
 
@@ -5306,6 +5302,23 @@ ORG $EEBFDA
 db $18, $01, $01, $70, $58, $79, $a4, $57, $a3, $50, $91, $50, $1c, $05, $01, $5e
 db $59, $03, $1d, $0e, $ff, $01, $0a, $76, $b2, $ee
 
+ORG $EFFB66
+GetStartingNames:
+PHB
+PHX
+PHY
+LDA $D7FCD0
+STA $9831
+LDA $D7FCD2
+STA $9833
+LDA #$0017
+LDX #$FCE0
+LDY #$9801
+MVN $D77E
+PLY
+PLX
+PLB
+JML $C1FEBA
 
 
 
