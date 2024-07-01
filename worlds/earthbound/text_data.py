@@ -150,6 +150,14 @@ lumine_hall_text = [
     "WARNING! Scheduled Maintenance in 4 Minutes...",
     "I'm still stuck in BK",
     "John Madden! John Madden! John Madden! John Madden! John Madden! John Madden! John Madden! ",
-    "Did you know that by reading this message you are wasting time not getting checks?"
+    "Did you know that by reading this message you are wasting time not getting checks?",
+    "Your text here! Check the game's design thread on the Archipelago Server for how to submit!",
+    "WITNESS JOKE HERE",
+    "Also try The Witness!",
+    "Also try Adventure!",
+    "Also try DOOM 1993!",
+    "Also try Super Mario World!",
+    "Also try Yoshi's Island!",
+    "Also try Castlevania 64!"
 
 ]

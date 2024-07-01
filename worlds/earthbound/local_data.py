@@ -311,8 +311,14 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Happy-Happy Village - Prisoner": [0x2EBABA],
     "Saturn Valley - Saturn Coffee": [0x2EB008],
     "Monkey Caves - Monkey Power": [0x2EB1A1],
-    #most psi checks
-    #locker
+    "Fourside - Department Store Blackout": [0x2EBFE8],
+    "Summers - Magic Cake": [0x2EBFB4],
+    "Scaraba - Star Master": [0x2EBFA7],
+    "Dalaam - Trial of Mu": [0x2EBF95, 0x2EBF88],
+    "Tenda Village - Tenda Tea": [0x2EB6CC],
+    "Lost Underworld - Talking Rock": [0x2EB751],
+    "Cave of the Present - Star Master": [0x2EB8DF],
+    "Magicant - Ness's Nightmare": [0x2EB803, 0x2EB87C],
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -351,7 +357,7 @@ npc_locations = { #Locations given to you by an NPC
     "Fourside - Venus Gift": [0x2EB1CE],
     "Fourside - Post-Moonside Delivery": [0x07AAC4, 0x07B598],
     "Fourside - Bakery 2F Gift": [0x06DE56],
-    "Monotoli Building - Electra Gift": [0x2EB29A],
+    "Monotoli Building - Electra Gift": [0x2EB29B],
     "Monotoli Building - Monotoli Gift": [0x06EB3C],
     "Summers - Museum Item": [0x08ABF2],
     "Pyramid - Pedestal Item": [0x0931DF],
@@ -556,9 +562,9 @@ psi_locations = {
     "Saturn Valley - Saturn Coffee": [0x2EAFE3, 0xF1, 0xAF, 0xEE, 0x2EB030],
     "Monkey Caves - Monkey Power": [0x2EB12E, 0x68, 0xB1, 0xEE, 0x2EB1B1],
     "Fourside - Department Store Blackout": [0x2EB22F, 0x66, 0xB2, 0xEE, 0x2EB275],
-    "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EB3A1],
+    "Summers - Magic Cake": [0x2EB311, 0x1F, 0xB3, 0xEE, 0x2EBFA2],
     "Dalaam - Trial of Mu": [0x2EB3FA, 0x08, 0xB4, 0xEE, 0x2EB443],
-    "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EB53E],
+    "Scaraba - Star Master": [0x2EB521, 0x32, 0xB5, 0xEE, 0x2EBFAD],
     "Tenda Village - Tenda Tea": [0x2EB6A9, 0xB7, 0xB6, 0xEE, 0x2EB6E7],
     "Lost Underworld - Talking Rock": [0x2EB72D, 0x3B, 0xB7, 0xEE, 0x2EB770],
     "Magicant - Ness's Nightmare": [0x2EB7B4, 0xC7, 0xB7, 0xEE, 0x2EB812],
@@ -987,7 +993,13 @@ item_space_checks = {
     "Monotoli Building - Monotoli Character": [0x2EB2CB, 0xCF, 0xB2, 0xEE],
     "Dalaam - Throne Character": [0x2EB4EA, 0xEE, 0xB4, 0xEE],
     "Deep Darkness - Barf Character": [0x2EB66C, 0x70, 0xB6, 0xEE]
+}
 
+special_name_overrides = {
+    "Snow Wood - Upper Right Locker": 0x2EBFBE,
+    "Snow Wood - Upper Left Locker": 0x2EBFC5,
+    "Snow Wood - Bottom Right Locker": 0x2EBFCC,
+    "Snow Wood - Bottom Left Locker": 0x2EBFD3
 }
 
     #0: Action pointer, call the actual item being given

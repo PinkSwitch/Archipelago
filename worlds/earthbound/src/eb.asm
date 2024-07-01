@@ -3022,6 +3022,7 @@ GetChara:
 JSR UnlockCharacter
 EndGetPSI:
 STZ $F682
+STZ $FF40
 LDA $006D
 AND #$A000
 JML $C0B8F4
@@ -3444,6 +3445,8 @@ CMP #$0016
 BEQ GetSpecialName
 CMP #$0017
 BEQ PullAPName
+CMP #$00B7
+BEQ SilentAPName
 JML $C17DDC
 GetSpecialName:
 JSR PrintSpecialName
@@ -3454,6 +3457,13 @@ INC $FF40
 JSR APCC;Move name data
 LDA #$0000
 JML $C17E65
+SilentAPName:
+INC $FF40
+JSR APC2
+LDA #$0000
+JML $C17F0F
+
+
 
 APCC:
 rep #$31
@@ -3466,6 +3476,24 @@ pla
 ; read ARGS_COUNT bytes of args into $97BA
 ldy #$0001
 jsl R_Peek_Parameter_Bytes
+LDA $97BA
+AND #$00FF
+XBA
+JSL MoveItemNames
+PLD
+RTS
+
+APC2:
+rep #$31
+phd
+pha
+tdc
+adc #$ffee
+tcd
+pla
+; read ARGS_COUNT bytes of args into $97BA
+ldy #$0001
+jsr R_Read_Parameter_Bytes
 LDA $97BA
 AND #$00FF
 XBA
@@ -4286,10 +4314,10 @@ ORG $CFC80B
 db $86, $B2, $EE
 
 ORG $EEB286
-db $06, $8b, $00, $88, $c5, $c7, $00, $06, $ee, $03, $2e, $b2, $ee, $0a, $6b, $2c
-db $c8
+db $06, $8b, $00, $88, $c5, $c7, $00, $06, $ee, $03, $2e, $b2, $ee, $00, $0a, $6b
+db $2c, $c8
 
-ORG $EEB297
+ORG $EEB298
 db $1d, $0e, $ff, $01, $08, $cf, $dc, $c7, $ff, $02
 
 ORG $C6E9D0
@@ -4348,7 +4376,7 @@ db $EF, $03
 
 ORG $C8B22F
 db $1d, $03, $ff, $1b, $02, $ad, $b3, $ee, $ff, $05, $ef, $03, $04, $3d, $00, $0a
-db $95, $b3, $ee
+db $50, $b3, $ee
 
 ORG $C928FB
 db $01, $01
@@ -4556,7 +4584,7 @@ db $18, $04, $04, $f2, $03, $0a, $74, $a2, $ee, $70, $72, $a9, $50, $93, $9c, $9
 db $91, $a2, $99, $9e, $97, $50, $98, $99, $a3, $50, $9d, $99, $9e, $94, $5c, $10
 db $0a, $50, $1c, $02, $01, $50, $a2, $95, $9d, $95, $9d, $92, $95, $a2, $95, $94
 db $50, $a7, $98, $95, $a2, $95, $50, $98, $95, $50, $9c, $95, $96, $a4, $50, $a4
-db $98, $95, $50, $1c, $05, $01, $51, $03, $1d, $03, $ff, $1b, $02, $20, $b8, $ee
+db $98, $95, $50, $1c, $05, $01, $51, $03, $1d, $03, $ff, $1b, $02, $1E, $b8, $ee
 db $ff, $1d, $0e, $ff, $01, $08, $b6, $dc, $c7, $ff, $03, $1f, $81, $ff, $ff, $02
 db $01, $70, $58, $79, $a4, $57, $a3, $50, $98, $95, $a2, $95, $50, $99, $9e, $50
 db $7d, $91, $97, $99, $93, $91, $9e, $a4, $5c, $10, $0a, $50, $a7, $99, $a4, $98
@@ -4567,10 +4595,10 @@ ORG $C772FF
 db $0a, $51, $b8, $ee
 
 ORG $EEB851
-db $06, $d1, $03, $61, $b8, $ee, $ff, $70, $72, $a2, $15, $5d, $0a, $04, $73, $c7
+db $06, $f1, $03, $61, $b8, $ee, $ff, $70, $72, $a2, $15, $5d, $0a, $04, $73, $c7
 db $70, $72, $a2, $9f, $a4, $98, $95, $a2, $51, $03, $00, $70, $79, $50, $96, $9f
 db $a5, $9e, $94, $50, $a9, $9f, $a5, $a2, $50, $1c, $05, $01, $5e, $03, $00, $1d
-db $03, $ff, $1b, $02, $8d, $b8, $ee, $ff, $0a, $11, $b8, $ee, $01, $70, $72, $a5
+db $03, $ff, $1b, $02, $8d, $b8, $ee, $ff, $0a, $0F, $b8, $ee, $01, $70, $72, $a5
 db $a4, $50, $a9, $9f, $a5, $57, $a6, $95, $50, $97, $9f, $a4, $50, $a4, $9f, $9f
 db $50, $9d, $a5, $93, $98, $50, $a3, $a4, $a5, $96, $96, $51, $13
 
@@ -4599,7 +4627,7 @@ ORG $C76FE2
 db $0A, $C3, $B8, $EE
 
 ORG $EEB8C3
-db $1f, $81, $ff, $ff, $08, $d3, $b8, $ee, $ff, $1b, $03, $be, $b8, $ee, $ff, $04
+db $1f, $81, $ff, $ff, $08, $d6, $b8, $ee, $ff, $1b, $03, $be, $b8, $ee, $ff, $04
 db $e5, $03, $02, $01, $70, $84, $98, $99, $a3, $50, $1c, $05, $01, $5e, $03, $1d
 db $03, $ff, $1b, $02, $f7, $b8, $ee, $ff, $1d, $0e, $ff, $01, $08, $cf, $dc, $c7
 db $ff, $03, $1f, $81, $ff, $ff, $02, $01, $70, $7e, $9f, $a4, $50, $9e, $9f, $a7
@@ -5029,7 +5057,7 @@ ORG $EEBB03
 db $18, $04, $02
 
 ORG $EEBB06
-db $18, $01, $01, $0A, $C9, $B7, $EE
+db $18, $01, $01, $0A, $C7, $B7, $EE
 
 ORG $C7DFE9
 db $0A, $0D, $BB, $EE
@@ -5215,6 +5243,70 @@ db $02
 
 ORG $CF0CF8
 db $11, $bf, $ee, $ff, $2C, $81
+
+ORG $C887F5
+db $00, $00, $00
+
+ORG $C88840
+db $00, $00, $00
+
+ORG $EEB53B
+db $0A, $9C, $BF, $EE
+
+ORG $EEB498
+db $0A, $82, $BF, $EE
+
+ORG $EEBF82
+db $98, $99, $a3, $50, $1c, $05, $01, $5e, $03, $0a, $9c, $b4, $ee
+
+ORG $EEB432
+db $0A, $8F, $BF, $EE
+
+ORG $EEBF8F
+db $98, $99, $a3, $50, $1c, $05, $01, $51, $03, $0a, $37, $b4, $ee
+
+ORG $EEBF9C
+db $01, $70, $79, $a4, $57, $a3, $50, $91, $50, $1c, $05, $01, $5e, $03, $1d, $0e
+db $ff, $01, $0a, $3f, $b5, $ee
+
+ORG $EEB37D
+db $0A, $B2, $BF, $EE
+
+ORG $EEBFB2
+db $1c, $05, $01, $50, $91, $a3, $50, $91, $0a, $82, $b3, $ee
+
+ORG $EEB082
+db $0A, $BE, $BF, $EE
+
+ORG $EEBFBE
+db $01, $01, $01, $0a, $40, $a7, $ee
+
+ORG $EEB09C
+db $0A, $C5, $BF, $EE
+
+ORG $EEBFC5
+db $01, $01, $01, $0a, $40, $a7, $ee
+
+ORG $EEB0B6
+db $0A, $CC, $BF, $EE
+
+ORG $EEBFCC
+db $01, $01, $01, $0a, $40, $a7, $ee
+
+ORG $EEB0D0
+db $0A, $D3, $BF, $EE
+
+ORG $EEBFD3
+db $01, $01, $01, $0a, $40, $a7, $ee
+
+ORG $EEB26F
+db $0A, $DA, $BF, $EE
+
+ORG $EEBFDA
+db $18, $01, $01, $70, $58, $79, $a4, $57, $a3, $50, $91, $50, $1c, $05, $01, $5e
+db $59, $03, $1d, $0e, $ff, $01, $0a, $76, $b2, $ee
+
+
 
 
 

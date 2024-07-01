@@ -6,13 +6,15 @@ import bsdiff4
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
-                         special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks)
+                         special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
+                         special_name_overrides)
 from .text_data import barf_text, eb_text_table
 from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING
+from logging import warning
 #from .local_data import local_locations
 
 if TYPE_CHECKING:
@@ -229,7 +231,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 if item in special_name_table: #Apply a special script if teleport or character
                     rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
             else:
-                print(f"WARNING: "+name +" NOT PLACED")
+                warning(f"{name} not placed in {world.multiworld.get_player_name(world.player)}'s EarthBound world. Something went wrong here.")
             
             if name in item_space_checks:
                 if item not in item_id_table:
@@ -238,6 +240,12 @@ def patch_rom(world, rom, player: int, multiworld):
                     else:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
                         rom.write_bytes(item_space_checks[name][1], bytearray(item_space_checks[name][5:8]))
+
+            if name in special_name_overrides:
+                if location.item.player != location.player:
+                    rom.write_bytes(special_name_overrides[name], bytearray([0x1B, 0xB7, location.address - 0xEB0000]))
+                else:
+                    rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
         
     if world.options.skip_prayer_sequences:
