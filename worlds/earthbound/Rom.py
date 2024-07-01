@@ -306,7 +306,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_char += 1
 
     scale_enemies(world, rom)
-    #rom.write_bytes(0x17FCE0, world.options.starting_money.value)
+    rom.write_bytes(0x17FCE0, world.starting_money)
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
