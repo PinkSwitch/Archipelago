@@ -95,7 +95,7 @@ def setup_gamevars(world):
     if world.options.random_flavors:
         for i in range(4):
             chosen_flavor = world.random.choice(random_flavors)
-            world.available_flavors.append(chosen_flavor)
+            world.available_flavors = world.random.sample(random_flavors, 4)
             random_flavors.remove(chosen_flavor)
     else:
         world.available_flavors = [
