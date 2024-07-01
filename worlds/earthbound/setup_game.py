@@ -113,13 +113,13 @@ def setup_gamevars(world):
     world.lumine_text.extend ([0x00])
     world.starting_money = struct.pack('<I', world.options.starting_money.value)
 
-    #prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
-    #for char in prayer_player[:24]:
-     #   if char in eb_text_table:
-      #      world.prayer_player.extend (eb_text_table[char])
-       # else:
-        #    world.prayer_player.extend(0x6F)
-    #world.prayer_player.extend ([0x00])
+    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
+    for char in prayer_player[:24]:
+        if char in eb_text_table:
+            world.prayer_player.extend (eb_text_table[char])
+        else:
+            world.prayer_player.extend(0x6F)
+    world.prayer_player.extend ([0x00])
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))

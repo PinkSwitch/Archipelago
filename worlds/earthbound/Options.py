@@ -97,7 +97,7 @@ class EasyDeaths(DefaultOnToggle):
     """Fully revives and heals all party members after death. If off, only Ness will be healed with 0 PP."""
     display_name = "Easy Deaths"
 
-class RandomFlavors(DefaultOnToggle):
+class RandomFlavors(Toggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
 
