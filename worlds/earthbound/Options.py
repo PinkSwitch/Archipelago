@@ -112,6 +112,8 @@ class EBOptions(PerGameCommonOptions):
     shuffle_teleports: PSIShuffle# Better name?
     character_shuffle: CharacterShuffle
     experience_modifier: ExperienceModifier
+    starting_money: StartingMoney
+    easy_deaths: EasyDeaths
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     random_flavors: RandomFlavors
