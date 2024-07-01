@@ -30,7 +30,6 @@ class MagicantMode(Choice):
     option_alternate_goal = 2
     default = 0
     
-
 class ShortenPrayers(DefaultOnToggle):
     """If enabled, the Prayer cutscenes while fighting Giygas will be skipped, excluding the final one."""
     display_name = "Skip Prayer Sequences"
@@ -87,7 +86,18 @@ class ExperienceModifier(Range):
     range_end = 300
     default = 150
 
-class RandomFlavors(Toggle):
+class StartingMoney(Range):
+    """How much money you start with."""
+    display_name = "Starting Money"
+    range_start = 0
+    range_end = 999999
+    default = 20
+
+class EasyDeaths(DefaultOnToggle):
+    """Fully revives and heals all party members after death. If off, only Ness will be healed with 0 PP."""
+    display_name = "Easy Deaths"
+
+class RandomFlavors(DefaultOnToggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
 
@@ -108,7 +118,6 @@ class EBOptions(PerGameCommonOptions):
     rare_filler_weight: RareWeight
     #RepairJeffItems
     #PSI Checks
-    #EXP Multiplier
     #Monkey caves...
     start_inventory_from_pool: StartInventoryPool
     #death_link: DeathLink
