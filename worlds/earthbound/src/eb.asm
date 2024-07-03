@@ -1468,7 +1468,7 @@ db $a5, $51, $03, $00, $0A, $D4, $B0, $EE, $00, $1b, $03, $F7, $99, $EE, $00, $1
 db $1e, $50, $02, $06, $04, $80, $00, $02; Winters character slot
 
 ORG $D808FB
-db $82
+;db $82 Winters bed FIX THIS!!!!!!
 
 ORG $C7A1BA
 db $02; Leaving Snow Wood hotspot. also free text?
@@ -5354,7 +5354,18 @@ ORG $C912F2
 ;db $0A, $FE, $BF, $EE
 
 ORG $EEBFFE
-;db $1b, $04, $15, $38, $1f, $81, $ff, $ff, $1b, $04, $0a, $f7, $12, $c9
+db $1b, $04, $15, $38, $1f, $81, $ff, $ff, $1b, $04, $0a, $f7, $12, $c9
+
+
+org $D8D35A
+dw new_collision
+
+org $D8D354
+dw new_collision
+
+org $D8FFF0
+new_collision:
+db $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $82, $00, $00, $00, $00
 
 
 ;If prayers skipped:
