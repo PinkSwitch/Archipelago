@@ -5320,7 +5320,41 @@ PLX
 PLB
 JML $C1FEBA
 
+ResetStatus:
+STZ $9A3B
+STZ $9A9A
+STZ $9AF9
+JML $C4C7D4
 
+ORG $C7DE7E
+db $F4, $BF, $EE
+
+ORG $EEBFF4
+db $08, $11, $de, $c7, $00, $02, $00, $ff, $64, $02
+
+
+;If easy death:
+
+ORG $EEBFF9
+;db $1E
+
+ORG $C4C7CE
+;JML ResetStatus
+
+ORG $C4C7D4
+;NOP
+;NOP
+;NOP
+
+ORG $C4C7DA
+;NOP
+;NOP
+
+ORG $C912F2
+;db $0A, $FE, $BF, $EE
+
+ORG $EEBFFE
+;db $1b, $04, $15, $38, $1f, $81, $ff, $ff, $1b, $04, $0a, $f7, $12, $c9
 
 
 ;If prayers skipped:

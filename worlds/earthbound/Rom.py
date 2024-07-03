@@ -257,6 +257,14 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x07BC56, bytearray([0x02])) 
         rom.write_bytes(0x07B9A1, bytearray([0x02])) 
 
+    if world.options.easy_deaths:
+        rom.write_bytes(0x2EBFF9, bytearray([0x1E]))
+        rom.write_bytes(0x04C7CE, bytearray([0x5C, 0x8A, 0xFB, 0xEF]))#Jump to code that restores the party
+        rom.write_bytes(0x04C7D4, bytearray([0xEA, 0xEA, 0xEA]))
+        rom.write_bytes(0x04C7DA, bytearray([0xEA, 0xEA]))#Stop the game from zeroing stuff
+        rom.write_bytes(0x0912F2, bytearray([0x0A, 0xFE, 0xBF, 0xEE]))
+        rom.write_bytes(0x2EBFFE, bytearray([0x00, 0x1B, 0x04, 0x15, 0x38, 0x1F, 0x81, 0xFF, 0xFF, 0x1B, 0x04, 0x0A, 0xF7, 0x12, 0xC9]))#Hospitals = 0$
+
     if world.options.magicant_mode == 2:
         rom.write_bytes(0x07BC96, bytearray([item_id_table[world.magicant_junk[0]]]))
         rom.write_bytes(0x0FF25C, bytearray([item_id_table[world.magicant_junk[1]]]))
@@ -361,15 +369,4 @@ def get_base_rom_path(file_name: str = "") -> str:
     return file_name
 
 
-#Write sanctuary count figure later
 #Fix hint text, I have a special idea where I can give it info on a random region
-#Write Poo's starting item...? I can do this by setting some arbitrary rom address to an item, and having Poo check it.
-#log tpt stuff when interacting with npcs...?
-#NPC teleports have weird line beaks; garbage cans need line breaks
-#Fix paula item text
-#Fix Dialogue names for the PSI checks
-#Fix the Psychic Well and character stuff to properly newline
-#fix paula in cabin?
-#scale enemies
-#fix the rest of the items
-#implement repel sandwich

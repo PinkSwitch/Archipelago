@@ -114,9 +114,9 @@ class EBOptions(PerGameCommonOptions):
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
+    random_flavors: RandomFlavors
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
-    random_flavors: RandomFlavors
     rare_filler_weight: RareWeight
     #RepairJeffItems
     #PSI Checks

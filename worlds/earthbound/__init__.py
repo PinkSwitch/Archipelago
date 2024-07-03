@@ -53,7 +53,7 @@ class EarthBoundWorld(World):
     game = "EarthBound"
     option_definitions = EBOptions
     data_version = 1
-    required_client_version = (0, 4, 6)
+    required_client_version = (0, 5, 0) #Change when 0.5.0 releases
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = {location.name: location.code for
