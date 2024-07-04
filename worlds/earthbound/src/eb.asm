@@ -4605,7 +4605,7 @@ ORG $C9BC48
 db $02
 
 ORG $CFBAC3
-db $22, $C0, $EE
+db $24, $C0, $EE
 
 ORG $EEB8AE
 db $06, $86, $00, $6d, $fe, $c4, $ff, $02
@@ -5213,8 +5213,8 @@ ORG $C7EA80
 db $0A, $2F, $C0, $EE
 ;fix
 ORG $EEC02F
-db $06, $ad, $00, $ff, $ff, $ff, $ff, $06, $ac, $00, $f7, $be, $ee, $ff, $06, $ab
-db $00, $ea, $be, $ee, $ff, $1d, $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89
+db $06, $ad, $00, $ff, $ff, $ff, $ff, $06, $ac, $00, $51, $C0, $ee, $ff, $06, $ab
+db $00, $5E, $C0, $ee, $ff, $1d, $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89
 db $ea, $c7, $1d, $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89, $ea, $c7, $1d
 db $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89, $ea, $c7
 
@@ -5392,6 +5392,9 @@ db $00;Broken Phase distorter not appearing
 
 ORG $D56F7C
 db $00
+
+ORG $C7EA03
+db $49
 
 
 ;If prayers skipped:
