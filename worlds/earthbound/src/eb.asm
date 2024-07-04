@@ -2202,7 +2202,7 @@ ORG $C99ACC
 db $02
 
 ORG $C799D7
-db $0A, $DD, $97, $C7
+db $0A, $DD, $99, $C7
 
 ORG $C79A5E
 db $0A, $05, $94, $C8
