@@ -195,11 +195,11 @@ def patch_rom(world, rom, player: int, multiworld):
                 elif item in psi_item_table:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
-                    rom.write_bytes(character_locations[name][2], bytearray([0xE0, 0xF8, 0xD5]))
+                    rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 else:
                     rom.write_bytes(character_locations[name][0], bytearray(character_locations[name][4:7]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x97]))
-                    rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
+                    rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
                 if name == "Deep Darkness - Barf Character":
                     if name in character_item_table:

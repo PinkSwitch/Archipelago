@@ -5370,7 +5370,7 @@ ORG $EEC00D
 db $50, $99, $9d, $91, $1f, $81, $ff, $ff, $0a, $0D, $96, $C7
 
 ORG $D5F970
-db $1F, $81, $FF, $FF, $0A, $70, $F9, $D5
+db $1F, $81, $FF, $FF, $0A, $E0, $F8, $D5
 
 
 ;If prayers skipped:
