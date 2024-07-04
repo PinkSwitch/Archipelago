@@ -5363,6 +5363,15 @@ org $D8FFF0
 new_collision:
 db $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $82, $00, $00, $00, $00
 
+ORG $C79609
+db $0A, $0D, $C0, $EE
+
+ORG $EEC00D
+db $50, $99, $9d, $91, $1f, $81, $ff, $ff, $0a, $0D, $96, $C7
+
+ORG $D5F970
+db $1F, $81, $FF, $FF, $0A, $70, $F9, $D5
+
 
 ;If prayers skipped:
 ;C7BC96 = 02

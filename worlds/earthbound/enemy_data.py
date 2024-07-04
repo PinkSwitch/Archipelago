@@ -180,44 +180,44 @@ enemies = {
 #"Insane Cultist (2)": EarthBoundEnemy("Insane Cultist", 0x15d3f5, 94, 0, 353, 33, 8, 19, 25, 13, False),
 "Dept. Store Spook (2)": EarthBoundEnemy("Dept. Store Spook (2)", 0x15d453, 610, 290, 24291, 1648, 19, 82, 135, 42, False),
 "Ness's Nightmare (2)": EarthBoundEnemy("Ness's Nightmare (2)", 0x15d4b1, 1654, 882, 89004, 4442, 31, 172, 253, 71, False),
-"Mr. Carpainter (2)": EarthBoundEnemy("Mr. Carpainter", 0x15d50f, 262, 70, 1412, 195, 8, 33, 45, 21, False),
-"Carbon Dog (2)": EarthBoundEnemy("Carbon Dog", 0x15d56d, 1672, 0, 0, 0, 31, 159, 174, 70, False),
+"Mr. Carpainter (2)": EarthBoundEnemy("Mr. Carpainter (2)", 0x15d50f, 262, 70, 1412, 195, 8, 33, 45, 21, False),
+"Carbon Dog (2)": EarthBoundEnemy("Carbon Dog (2)", 0x15d56d, 1672, 0, 0, 0, 31, 159, 174, 70, False),
 "Chomposaur (2)": EarthBoundEnemy("Chomposaur (2)", 0x15d5cb, 1288, 320, 44378, 896, 17, 139, 183, 62, False),
-"Titanic Ant (2)": EarthBoundEnemy("Titanic Ant", 0x15d629, 235, 102, 685, 150, 6, 19, 23, 13, False),
-"Gigantic Ant (2)": EarthBoundEnemy("Gigantic Ant", 0x15d687, 308, 81, 3980, 304, 17, 54, 112, 30, False),
-"Shrooom! (2)": EarthBoundEnemy("Shrooom!", 0x15d6e5, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
-"Plague Rat of Doom (2)": EarthBoundEnemy("Plague Rat of Doom", 0x15d743, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
-"Mondo Mole (2)": EarthBoundEnemy("Mondo Mole", 0x15d7a1, 498, 161, 5791, 400, 9, 37, 50, 23, False),
-"Guardian Digger (2)": EarthBoundEnemy("Guardian Digger", 0x15d7ff, 386, 110, 17301, 1467, 17, 59, 129, 32, False),
-"Kraken (2)": EarthBoundEnemy("Kraken", 0x15d85d, 1097, 176, 79267, 3049, 21, 105, 166, 54, False),
+"Titanic Ant (2)": EarthBoundEnemy("Titanic Ant (2)", 0x15d629, 235, 102, 685, 150, 6, 19, 23, 13, False),
+"Gigantic Ant (2)": EarthBoundEnemy("Gigantic Ant (2)", 0x15d687, 308, 81, 3980, 304, 17, 54, 112, 30, False),
+"Shrooom! (2)": EarthBoundEnemy("Shrooom! (2)", 0x15d6e5, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
+"Plague Rat of Doom (2)": EarthBoundEnemy("Plague Rat of Doom (2)", 0x15d743, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
+"Mondo Mole (2)": EarthBoundEnemy("Mondo Mole (2)", 0x15d7a1, 498, 161, 5791, 400, 9, 37, 50, 23, False),
+"Guardian Digger (2)": EarthBoundEnemy("Guardian Digger (2)", 0x15d7ff, 386, 110, 17301, 1467, 17, 59, 129, 32, False),
+"Kraken (2)": EarthBoundEnemy("Kraken (2)", 0x15d85d, 1097, 176, 79267, 3049, 21, 105, 166, 54, False),
 #"Bionic Kraken (2)": EarthBoundEnemy("Bionic Kraken", 0x15d8bb, 900, 60, 50308, 960, 42, 155, 195, 70, False),
-"Starman (2)": EarthBoundEnemy("Starman", 0x15d919, 545, 155, 23396, 720, 24, 103, 126, 55, False),
-"Starman Super (2)": EarthBoundEnemy("Starman Super", 0x15d977, 568, 310, 30145, 735, 24, 112, 129, 56, False),
-"Ghost of Starman (2)": EarthBoundEnemy("Ghost of Starman", 0x15d9d5, 750, 462, 48695, 807, 46, 152, 170, 68, False),
-"Starman Deluxe (2)": EarthBoundEnemy("Starman Deluxe", 0x15da33, 1400, 418, 160524, 3827, 27, 143, 186, 65, False),
-"Final Starman (2)": EarthBoundEnemy("Final Starman", 0x15da91, 840, 860, 61929, 915, 47, 178, 187, 71, False),
+"Starman (2)": EarthBoundEnemy("Starman (2)", 0x15d919, 545, 155, 23396, 720, 24, 103, 126, 55, False),
+"Starman Super (2)": EarthBoundEnemy("Starman Super (2)", 0x15d977, 568, 310, 30145, 735, 24, 112, 129, 56, False),
+"Ghost of Starman (2)": EarthBoundEnemy("Ghost of Starman (2)", 0x15d9d5, 750, 462, 48695, 807, 46, 152, 170, 68, False),
+"Starman Deluxe (2)": EarthBoundEnemy("Starman Deluxe (2)", 0x15da33, 1400, 418, 160524, 3827, 27, 143, 186, 65, False),
+"Final Starman (2)": EarthBoundEnemy("Final Starman (2)", 0x15da91, 840, 860, 61929, 915, 47, 178, 187, 71, False),
 #"Urban Zombie": EarthBoundEnemy("Urban Zombie", 0x15daef, 171, 0, 700, 58, 10, 31, 24, 19, False),
-"Diamond Dog (2)": EarthBoundEnemy("Diamond Dog", 0x15db4d, 3344, 154, 337738, 6968, 31, 167, 230, 70, False),
-"Trillionage Sprout (2)": EarthBoundEnemy("Trillionage Sprout", 0x15dbab, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
-"Master Belch (2)": EarthBoundEnemy("Master Belch", 0x15dc09, 650, 0, 12509, 664, 16, 50, 88, 27, False), 
+"Diamond Dog (2)": EarthBoundEnemy("Diamond Dog (2)", 0x15db4d, 3344, 154, 337738, 6968, 31, 167, 230, 70, False),
+"Trillionage Sprout (2)": EarthBoundEnemy("Trillionage Sprout (2)", 0x15dbab, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
+"Master Belch (2)": EarthBoundEnemy("Master Belch (2)", 0x15dc09, 650, 0, 12509, 664, 16, 50, 88, 27, False), 
 #"Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15dc67, 609, 76, 17567, 690, 14, 134, 146, 59, False),
-"Master Barf (2)": EarthBoundEnemy("Master Barf", 0x15dcc5, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
-"Loaded Dice (2)": EarthBoundEnemy("Loaded Dice", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
+"Master Barf (2)": EarthBoundEnemy("Master Barf (2)", 0x15dcc5, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
+"Loaded Dice (2)": EarthBoundEnemy("Loaded Dice (2)", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
 #"Tangoo": EarthBoundEnemy("Tangoo", 0x15dd81, 371, 5, 14718, 572, 19, 96, 99, 48, False),
-"Boogey Tent (2)": EarthBoundEnemy("Boogey Tent", 0x15dddf, 579, 56, 5500, 407, 10, 43, 69, 25, False),
+"Boogey Tent (2)": EarthBoundEnemy("Boogey Tent (2)", 0x15dddf, 579, 56, 5500, 407, 10, 43, 69, 25, False),
 #"Squatter Demon": EarthBoundEnemy("Squatter Demon", 0x15de3d, 774, 60, 48311, 897, 45, 158, 192, 69, False),
-"Everdred (2)": EarthBoundEnemy("Everdred", 0x15de9b, 182, 0, 986, 171, 6, 25, 35, 15, False),
-"Electro Specter (2)": EarthBoundEnemy("Electro Specter", 0x15def9, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
-"Thunder and Storm (2)": EarthBoundEnemy("Thunder and Storm", 0x15df57, 2065, 70, 129026, 4736, 21, 111, 178, 56, False),
-"Frankystein Mark II (2)": EarthBoundEnemy("Frankystein Mark II", 0x15dfb5, 91, 0, 76, 31, 4, 15, 18, 7, False),
-"Evil Mani-Mani (2)": EarthBoundEnemy("Evil Mani-Mani", 0x15e013, 860, 88, 28139, 1852, 15, 86, 145, 45, False),
+"Everdred (2)": EarthBoundEnemy("Everdred (2)", 0x15de9b, 182, 0, 986, 171, 6, 25, 35, 15, False),
+"Electro Specter (2)": EarthBoundEnemy("Electro Specter (2)", 0x15def9, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
+"Thunder and Storm (2)": EarthBoundEnemy("Thunder and Storm (2)", 0x15df57, 2065, 70, 129026, 4736, 21, 111, 178, 56, False),
+"Frankystein Mark II (2)": EarthBoundEnemy("Frankystein Mark II (2)", 0x15dfb5, 91, 0, 76, 31, 4, 15, 18, 7, False),
+"Evil Mani-Mani (2)": EarthBoundEnemy("Evil Mani-Mani (2)", 0x15e013, 860, 88, 28139, 1852, 15, 86, 145, 45, False),
 #"Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e071, 1746, 999, 0, 0, 51, 150, 274, 72, False),
-"Clumsy Robot (2)": EarthBoundEnemy("Clumsy Robot", 0x15e0cf, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
-"Robo-pump (2)": EarthBoundEnemy("Robo-pump", 0x15e12d, 431, 0, 4797, 349, 19, 70, 113, 36, False),
+"Clumsy Robot (2)": EarthBoundEnemy("Clumsy Robot (2)", 0x15e0cf, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
+"Robo-pump (2)": EarthBoundEnemy("Robo-pump (2)", 0x15e12d, 431, 0, 4797, 349, 19, 70, 113, 36, False),
 #"Foppy": EarthBoundEnemy("Foppy", 0x15e18b, 120, 10, 1311, 93, 1, 29, 9, 16, False),
-"Guardian General (2)": EarthBoundEnemy("Guardian General", 0x15e1e9, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
-"Black Antoid (2)": EarthBoundEnemy("Black Antoid", 0x15e247, 34, 25, 37, 7, 4, 14, 13, 7, False), #Separate enemy used in the titanic ant fight
-"Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
+"Guardian General (2)": EarthBoundEnemy("Guardian General (2)", 0x15e1e9, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
+"Black Antoid (2)": EarthBoundEnemy("Black Antoid (2)", 0x15e247, 34, 25, 37, 7, 4, 14, 13, 7, False), #Separate enemy used in the titanic ant fight
+"Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom (2)", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
 #"Runaway Dog (2)": EarthBoundEnemy("Runaway Dog", 0x15e303, 21, 0, 4, 3, 26, 4, 5, 73, False),
 "Cave Boy": EarthBoundEnemy("Cave Boy", 0x15e361, 314, 0, 618, 17, 5, 21, 33, 11, False),
 "Tiny Li'l Ghost": EarthBoundEnemy("Tiny Li'l Ghost", 0x15e3bf, 90, 0, 1, 162, 100, 19, 7, 18, False),
@@ -493,7 +493,15 @@ spell_data = {
 
 }
 
+def assumed_player_speed_for_level(level):
+    return 2 + 58 * (level - 1) / 80
 
+def scale_enemy_speed(enemy, new_level):
+    normal_dodge_chance = (2 * enemy.speed - assumed_player_speed_for_level(enemy.level)) / 500
+
+    enemy_scaled_speed  = (normal_dodge_chance * 500 + assumed_player_speed_for_level(new_level)) / 2
+
+    return enemy_scaled_speed
 
 def scale_enemies(world, rom):
     state = world.multiworld.get_all_state(True)
@@ -527,7 +535,7 @@ def scale_enemies(world, rom):
                 enemy_exp = int(enemy.exp * level / enemy.level)
                 enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
-                enemy_speed = min(int(enemy.speed * level / enemy.level), 255)
+                enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
                 enemy_offense = int(enemy.offense * level / enemy.level)
                 enemy_defense = int(enemy.defense * level / enemy.level)
                 enemy_level = int(enemy.level * level / enemy.level)

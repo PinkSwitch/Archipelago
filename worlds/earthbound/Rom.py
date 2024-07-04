@@ -199,7 +199,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 else:
                     rom.write_bytes(character_locations[name][0], bytearray(character_locations[name][4:7]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x97]))
-                    rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
+                    rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
                 if name == "Deep Darkness - Barf Character":
                     if name in character_item_table:
@@ -331,7 +331,7 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".sfc"
     name: bytearray
     procedure = [
-        ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"]),
+        ("apply_bsdiff4", ["src/earthbound_basepatch.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"])
     ]
 
