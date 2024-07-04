@@ -331,7 +331,7 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".sfc"
     name: bytearray
     procedure = [
-        ("apply_bsdiff4", ["src/earthbound_basepatch.bsdiff4"]),
+        ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"])
     ]
 
