@@ -5372,6 +5372,12 @@ db $50, $99, $9d, $91, $1f, $81, $ff, $ff, $0a, $0D, $96, $C7
 ORG $D5F970
 db $1F, $81, $FF, $FF, $0A, $E0, $F8, $D5
 
+ORG $C79640
+db $0A, $19, $C0, $EE
+
+ORG $EEC019
+db $a4, $98, $99, $a3, $50, $0a, $44, $96, $c7
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
