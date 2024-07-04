@@ -2400,7 +2400,7 @@ ORG $D5F2D3
 db $30, $00, $B6
 
 ORG $CFBAC3
-db $6D, $FE, $C4
+;db $6D, $FE, $C4; Valley phase distorter
 
 ORG $CF6253
 db $08, $00
@@ -4605,7 +4605,7 @@ ORG $C9BC48
 db $02
 
 ORG $CFBAC3
-db $AE, $B8, $EE
+db $22, $C0, $EE
 
 ORG $EEB8AE
 db $06, $86, $00, $6d, $fe, $c4, $ff, $02
@@ -5210,9 +5210,9 @@ db $50, $a9, $9f, $a5, $50, $9d, $a9, $50, $1c, $05, $01, $51, $01, $0a, $ec, $e
 db $c9
 
 ORG $C7EA80
-db $0A, $C8, $BE, $EE
-
-ORG $EEBEC8
+db $0A, $2F, $C0, $EE
+;fix
+ORG $EEC02F
 db $06, $ad, $00, $ff, $ff, $ff, $ff, $06, $ac, $00, $f7, $be, $ee, $ff, $06, $ab
 db $00, $ea, $be, $ee, $ff, $1d, $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89
 db $ea, $c7, $1d, $03, $ff, $1b, $02, $25, $eb, $c7, $ff, $0a, $89, $ea, $c7, $1d
@@ -5380,6 +5380,18 @@ db $a4, $98, $99, $a3, $50, $0a, $44, $96, $c7
 
 ORG $C8A2D1
 db $00, $00, $00; summers phonecall oss
+
+ORG $EEC022
+db $96, $c7, $06, $86, $00, $6d, $fe, $c4, $ff, $0a, $9e, $c5, $c7
+
+ORG $C9C27A
+db $02; Future past apple kid. Eventually change with seed-related text
+
+ORG $CFDE16
+db $00;Broken Phase distorter not appearing
+
+ORG $D56F7C
+db $00
 
 
 ;If prayers skipped:

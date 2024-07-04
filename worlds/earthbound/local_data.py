@@ -419,7 +419,7 @@ present_locations = {#Field presents
     "Belch's Factory - Top Right Room Trashcan": 0x0FEA97,
     "Belch's Factory - Pit Room Trashcan #1": 0x0FEADB,
     "Belch's Factory - Pit Room Trashcan #2": 0x0FEA86,
-    "Belch's Factory - Balcony Room Trashcan #1": 0x0FEACB,
+    "Belch's Factory - Balcony Room Trashcan #1": 0x0FEACA,
     "Belch's Factory - Balcony Room Trashcan #2": 0x0FEAB9,
     "Belch's Factory - Balcony Room Trashcan #3": 0x0FEAA8,
     "Dusty Dunes - Northwest Corner Present": 0x0FEC84,
