@@ -136,7 +136,7 @@ def cmd_disable_oss_flag(self, cmd: str = ""):
     from SNIClient import snes_buffered_write
     """Disables the OSS flag. Used for debugging as a failsafe"""
     if self.ctx.game != "EarthBound":
-        logger.warning("This command can only be used while playing EarthBound")
+        print("This command can only be used while playing EarthBound")
         return
     print("Disabling OSS!")
     snes_buffered_write(self.ctx, OSS_FLAG, bytes([0x00]))
