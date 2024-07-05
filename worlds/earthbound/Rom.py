@@ -202,15 +202,15 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
                 if name == "Deep Darkness - Barf Character":
-                    if name in character_item_table:
-                        rom.write_bytes(0xEEA0E2, bytearray(barf_text[item][0:3]))
+                    if item in character_item_table:
+                        rom.write_bytes(0x2EA0E2, bytearray(barf_text[item][0:3]))
                         rom.write_bytes(0x2EA0E7, bytearray(barf_text[item][3:6]))
-                    elif name in psi_item_table:
-                        rom.write_bytes(0xEEA0E2, bytearray([0xC8, 0xF8, 0xD6]))
-                        rom.write_bytes(0x2EA0E7, bytearray([0x26, 0xFA, 0xD6]))
+                    elif item in psi_item_table:
+                        rom.write_bytes(0x2EA0E2, bytearray([0x98, 0xC3, 0xEE]))
+                        rom.write_bytes(0x2EA0E7, bytearray([0xF7, 0xC4, 0xEE]))
                     else:
-                        rom.write_bytes(0xEEA0E2, bytearray([0x9A, 0xFA, 0xD6]))
-                        rom.write_bytes(0x2EA0E7, bytearray([0xE3, 0xF9, 0xD6]))
+                        rom.write_bytes(0x2EA0E2, bytearray([0x6A, 0xC3, 0xEE]))
+                        rom.write_bytes(0x2EA0E7, bytearray([0xB4, 0xC4, 0xEE]))
             
             elif name in locker_locations:
                 if item in item_id_table or location.item.player != location.player:
