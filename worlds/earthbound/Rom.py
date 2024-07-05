@@ -272,6 +272,15 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
         rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
 
+    rom.write_bytes(0x02EC1AA, bytearray([world.options.sanctuaries_required.value]))
+    if world.options.alternate_sanctuary_goal:
+        rom.write_bytes(0x02EC1E2, bytearray([0xFD, 0xC1, 0xEE]))
+
+    if world.options.magicant_mode == 1:
+        rom.write_bytes(0x2EC1D8, bytearray([0x33, 0xC2, 0xEE]))
+    elif world.options.magicant_mode == 2:
+        rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
+
     
     flavor_address = 0x3FAEE0
     for i in range(4):
