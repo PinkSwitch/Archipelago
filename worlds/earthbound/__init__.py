@@ -5,7 +5,7 @@ import threading
 import pkgutil
 
 
-from typing import List, Set, TextIO
+from typing import List, Set, TextIO, Dict
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
@@ -77,6 +77,11 @@ class EarthBoundWorld(World):
         self.locked_locations= []
         self.location_cache= []
         self.event_count = 0
+
+    def fill_slot_data(self) -> Dict[str, List[int]]:
+        return {
+            "starting_area": self.start_location
+        }
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
