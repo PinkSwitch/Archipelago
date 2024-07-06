@@ -5474,6 +5474,19 @@ db $0A, $4A, $C5, $EE
 ORG $EEC54A
 db $18, $01, $01, $70, $72, $a9, $50, $0a, $cb, $b7, $ee
 
+ORG $C8FF31
+db $0A, $55, $C5, $EE
+
+ORG $EEC555
+db $04, $e9, $03, $18, $00, $10, $3c, $0a, $35, $ff, $c8
+
+ORG $C8FF88
+db $0A, $60, $C5, $EE
+
+ORG $EEC560
+db $9f, $a4, $98, $95, $a2, $50, $9d, $a5, $9c, $a4, $99, $a7, $9f, $a2, $9c, $94
+db $0a, $8b, $ff, $c8
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
