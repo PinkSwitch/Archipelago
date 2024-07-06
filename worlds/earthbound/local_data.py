@@ -267,7 +267,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Twoson - Paula's Mother": [0x08061B],
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
-    #Donation lady?
+    "Happy-Happy Village - Donation Lady": [0x2EC578, 0x2EC580],
     "Happy-Happy Village - Prisoner Item": [0x2F95FE, 0x079646],
     "Happy-Happy Village - Defeat Carpainter": [0x098215],
     "Threed - Hospital Drawer": [0x08686C],

@@ -362,7 +362,10 @@ common_items: List[str] = [
     "Molokheiya Soup",
     "Plain Roll",
     "Magic Tart",
-    "Popsicle",
+    "Popsicle"
+]
+
+common_gear = [
     "Cracked Bat",
     "Tee Ball Bat",
     "Sand Lot Bat",
@@ -386,7 +389,7 @@ common_items: List[str] = [
     "Hard Hat",
     "Ribbon",
     "Red Ribbon",
-    "Coin of Defense",
+    "Coin of Defense"
 ]
 
 uncommon_items: List[str] = [
@@ -428,6 +431,11 @@ uncommon_items: List[str] = [
     "Mammoth Burger",
     "Bottle of DXwater",
     "Magic Pudding",
+    "Bazooka"
+
+]
+
+uncommon_gear = [
     "Mr. Baseball Bat",
     "T-Rex's Bat",
     "Big League Bat",
@@ -443,10 +451,9 @@ uncommon_items: List[str] = [
     "Platinum Band",
     "Diamond Band",
     "Defense Ribbon",
-    "Lucky Coin",
-    "Bazooka"
-
+    "Lucky Coin"
 ]
+
 
 rare_items: List[str] = [
     "Broken Antenna",
@@ -478,7 +485,10 @@ rare_items: List[str] = [
     "Piggy Jelly",
     "Spicy Jerky",
     "Luxury Jerky",
-    "Cup of Lifenoodles",
+    "Cup of Lifenoodles"
+]
+
+rare_gear = [
     "Hall of Fame Bat",
     "Ultimate Bat",
     "Gutsy Bat",

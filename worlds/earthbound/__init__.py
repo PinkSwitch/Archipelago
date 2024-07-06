@@ -10,7 +10,7 @@ from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
 import settings
-from .Items import get_item_names_per_category, item_table, common_items, uncommon_items, rare_items
+from .Items import get_item_names_per_category, item_table, common_items, uncommon_items, rare_items, common_gear, uncommon_gear, rare_gear
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions
@@ -99,13 +99,18 @@ class EarthBoundWorld(World):
         self.multiworld.itempool += pool
 
     def roll_filler(self) -> str: #Todo: make this suck less
-        weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value}
+        weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
+                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5), 
+                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
         choices = self.random.choices(list(weights), weights=list(weights.values()), k=len(self.multiworld.get_unfilled_locations(self.player)))
         filler_type = self.random.choice(choices)
         weight_table = {
             "common": common_items,
+            "common_gear": common_gear,
             "uncommon": uncommon_items,
-            "rare": rare_items
+            "uncommon_gear": uncommon_gear,
+            "rare": rare_items,
+            "rare_gear": rare_gear
         }
         return self.random.choice(weight_table[filler_type])
 
