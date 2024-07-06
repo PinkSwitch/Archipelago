@@ -5480,7 +5480,7 @@ db $0A, $55, $C5, $EE
 ORG $EEC555
 db $04, $e9, $03, $18, $00, $10, $3c, $0a, $35, $ff, $c8
 
-ORG $C8FF88
+ORG $C8FF86
 db $0A, $60, $C5, $EE
 
 ORG $EEC560
