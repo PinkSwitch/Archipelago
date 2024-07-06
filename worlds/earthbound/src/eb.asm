@@ -5465,6 +5465,9 @@ db $50, $16, $6f, $51, $08, $58, $24, $c9, $ff, $0a, $bc, $d5, $c9
 ORG $CF213D
 db $D6, $81
 
+ORG $EEA0E6
+db $01
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
