@@ -239,7 +239,7 @@ def patch_rom(world, rom, player: int, multiworld):
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
                     else:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
-                        rom.write_bytes(item_space_checks[name][1], bytearray(item_space_checks[name][5:8]))
+                        rom.write_bytes(item_space_checks[name][4], bytearray(item_space_checks[name][5:8]))
 
             if name in special_name_overrides:
                 if location.item.player != location.player:
