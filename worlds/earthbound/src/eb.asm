@@ -5468,6 +5468,12 @@ db $D6, $81
 ORG $EEA0E6
 db $01
 
+ORG $EEB7C7
+db $0A, $4A, $C5, $EE
+
+ORG $EEC54A
+db $18, $01, $01, $70, $72, $a9, $50, $0a, $cb, $b7, $ee
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
