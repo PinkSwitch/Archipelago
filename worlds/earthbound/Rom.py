@@ -142,7 +142,7 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(item_name_loc, bytearray(item_text))
             rom.write_bytes(player_name_loc, bytearray(player_text))
 
-            if item not in item_id_table:
+            if item not in item_id_table or location.item.player != location.player:
                 item_id = 0xAD
             elif item == "Lucky Sandwich":
                 item_id = world.random.randint(0xE2, 0xE7)
@@ -151,20 +151,20 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in location_dialogue:
                 for i in range(len(location_dialogue[name])):
-                    if item in item_id_table:
-                        rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
-                    elif location.item.player != location.player:
+                    if location.item.player != location.player:
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x17, location.address - 0xEB0000]))
+                    elif item in item_id_table:
+                        rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
 
             if name in present_locations:
                 if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
                     rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
-                elif item in item_id_table:
-                    rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
                 elif location.item.player != location.player:
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00, 0x00, (location.address - 0xEB0000)]))
+                elif item in item_id_table:
+                    rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
                 elif item in psi_item_table:
                     rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
                 elif item in character_item_table:
@@ -179,20 +179,20 @@ def patch_rom(world, rom, player: int, multiworld):
                         rom.write_bytes(npc_locations[name][i] +2, bytearray([0xA5, 0xAA, 0xEE]))
 
             elif name in psi_locations:
-                if item in special_name_table:
+                if item in special_name_table and location.item.player == location.player:
                     rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
                 else:
                     rom.write_bytes(psi_locations[name][0], bytearray(psi_locations[name][1:4]))
                     rom.write_bytes(psi_locations[name][4], bytearray([item_id]))
 
             elif name in character_locations:
-                if item in character_item_table:
+                if item in character_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     if name == "Snow Wood - Bedroom":#Use lying down sprites for the bedroom check
                         rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:5]))
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
-                elif item in psi_item_table:
+                elif item in psi_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
@@ -202,10 +202,10 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
                 if name == "Deep Darkness - Barf Character":
-                    if item in character_item_table:
+                    if item in character_item_table and location.item.player == location.player:
                         rom.write_bytes(0x2EA0E2, bytearray(barf_text[item][0:3]))
                         rom.write_bytes(0x2EA0E8, bytearray(barf_text[item][3:6]))
-                    elif item in psi_item_table:
+                    elif item in psi_item_table and location.item.player == location.player:
                         rom.write_bytes(0x2EA0E2, bytearray([0x98, 0xC3, 0xEE]))
                         rom.write_bytes(0x2EA0E8, bytearray([0xF7, 0xC4, 0xEE]))
                     else:
@@ -218,23 +218,23 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
                 elif item in psi_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
-                    rom.write_bytes(locker_locations[name][1], bytearray(psi_item_table[item]))
+                    rom.write_bytes(locker_locations[name][1], bytearray([psi_item_table[item]]))
                 elif item in character_item_table:
                     rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
                     rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
 
             elif name == "Poo Starting Item":
-                if item in item_id_table:
+                if item in item_id_table and location.item.player == location.player:
                     rom.write_bytes(0x15F63B, bytearray([item_id]))
                 else:
                     rom.write_bytes(0x15F63B, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
-                if item in special_name_table: #Apply a special script if teleport or character
+                if item in special_name_table and location.item.player == location.player: #Apply a special script if teleport or character
                     rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
             else:
                 warning(f"{name} not placed in {world.multiworld.get_player_name(world.player)}'s EarthBound world. Something went wrong here.")
             
             if name in item_space_checks:
-                if item not in item_id_table:
+                if item not in item_id_table or location.item.player != location.player:
                     if len(item_space_checks[name]) == 4:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
                     else:
@@ -243,7 +243,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in special_name_overrides:
                 if location.item.player != location.player:
-                    rom.write_bytes(special_name_overrides[name], bytearray([0x1B, 0xB7, location.address - 0xEB0000]))
+                    rom.write_bytes(special_name_overrides[name], bytearray([0x1C, 0xB7, location.address - 0xEB0000]))
                 else:
                     rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 

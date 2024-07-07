@@ -90,7 +90,7 @@ class StartingMoney(Range):
     """How much money you start with."""
     display_name = "Starting Money"
     range_start = 0
-    range_end = 999999
+    range_end = 99999
     default = 20
 
 class EasyDeaths(DefaultOnToggle):
