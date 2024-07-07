@@ -15,6 +15,7 @@ from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions
 from .setup_game import setup_gamevars, place_static_items
+from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
 from .local_data import item_id_table
 from .Client import EarthBoundClient
@@ -125,6 +126,7 @@ class EarthBoundWorld(World):
                      raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
         setup_gamevars(self)
         create_flavors(self)
+        initialize_enemies(self)
         if self.options.shuffle_teleports == 0:
             self.event_count += 12
             if self.options.magicant_mode != 0:
