@@ -1,4 +1,4 @@
-import struct, random
+import struct
 from .Items import common_items, uncommon_items, rare_items
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
@@ -59,7 +59,6 @@ def setup_gamevars(world):
     world.random.shuffle(world.hinted_regions)
     del world.hinted_regions[6:39]
 
-
     if world.options.random_start_location == 1:
         valid_teleports = [
             "Onett Teleport",
@@ -108,17 +107,18 @@ def setup_gamevars(world):
     world.prayer_player = []
     lumine_str = world.random.choice(lumine_hall_text)
     for char in lumine_str[:213]:
-        world.lumine_text.extend (eb_text_table[char])
-    world.lumine_text.extend ([0x00])
+        world.lumine_text.extend(eb_text_table[char])
+    world.lumine_text.extend([0x00])
     world.starting_money = struct.pack('<I', world.options.starting_money.value)
 
     prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
     for char in prayer_player[:24]:
         if char in eb_text_table:
-            world.prayer_player.extend (eb_text_table[char])
+            world.prayer_player.extend(eb_text_table[char])
         else:
-            world.prayer_player.extend(0x6F)
-    world.prayer_player.extend ([0x00])
+            world.prayer_player.extend([0x6F])
+    world.prayer_player.extend([0x00])
+
 
 def place_static_items(world):
     world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))
@@ -161,4 +161,4 @@ def place_static_items(world):
         #Add magicant, add sanc stuff, add alt goals...
             
 
-#TOdo; client, rules, static location stuff
+##TOdo; client, rules, static location stuff

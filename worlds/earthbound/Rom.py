@@ -248,7 +248,6 @@ def patch_rom(world, rom, player: int, multiworld):
                 else:
                     rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
-        
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
         rom.write_bytes(0x07BA2C, bytearray([0x02]))
