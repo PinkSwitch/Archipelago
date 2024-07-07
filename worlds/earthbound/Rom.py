@@ -19,7 +19,8 @@ from logging import warning
 
 if TYPE_CHECKING:
     from . import EarthBoundWorld
-USHASH = "a864b2e5c141d2dec1c4cbed75a42a85"
+valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85",#Cartridge
+                "6d71ccc8e2afda15d011348291afdf4f"]#VC
 
 
 
@@ -334,7 +335,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
 
 class EBProcPatch(APProcedurePatch, APTokenMixin):
-    hash = [USHASH]
+    hash = valid_hashes
     game = "EarthBound"
     patch_file_ending = ".apeb"
     result_file_ending = ".sfc"
@@ -363,7 +364,8 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
-        if USHASH != basemd5.hexdigest():
+        rom_hash = basemd5.hexdigest
+        if basemd5.hexdigest() not in valid_hashes:
             raise Exception('Supplied Base Rom does not match known MD5 for US(1.0) release. '
                             'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes

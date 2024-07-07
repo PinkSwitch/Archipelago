@@ -20,7 +20,7 @@ from .flavor_data import create_flavors
 from .local_data import item_id_table
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
-from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, USHASH
+from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
@@ -29,7 +29,7 @@ class EBSettings(settings.Group):
         """File name of the EarthBound US ROM"""
         description = "EarthBound ROM File"
         copy_to = "EarthBound.sfc"
-        md5s = [USHASH]
+        md5s = valid_hashes
 
     rom_file: RomFile = RomFile(RomFile.copy_to)
 
