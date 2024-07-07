@@ -189,7 +189,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 if item in character_item_table:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     if name == "Snow Wood - Bedroom":#Use lying down sprites for the bedroom check
-                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:4]))
+                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:5]))
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
                 elif item in psi_item_table:
@@ -235,11 +235,11 @@ def patch_rom(world, rom, player: int, multiworld):
             
             if name in item_space_checks:
                 if item not in item_id_table:
-                    if item_space_checks[name].count == 4:
+                    if len(item_space_checks[name]) == 4:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
                     else:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
-                        rom.write_bytes(item_space_checks[name][1], bytearray(item_space_checks[name][5:8]))
+                        rom.write_bytes(item_space_checks[name][4], bytearray(item_space_checks[name][5:8]))
 
             if name in special_name_overrides:
                 if location.item.player != location.player:
