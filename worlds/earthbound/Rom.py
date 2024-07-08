@@ -182,6 +182,7 @@ def patch_rom(world, rom, player: int, multiworld):
             elif name in psi_locations:
                 if item in special_name_table and location.item.player == location.player:
                     rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
+                    rom.write_bytes(psi_locations[name][0] + 4, bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
                 else:
                     rom.write_bytes(psi_locations[name][0], bytearray(psi_locations[name][1:4]))
                     rom.write_bytes(psi_locations[name][4], bytearray([item_id]))
@@ -261,9 +262,10 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x2EBFF9, bytearray([0x1E]))
         rom.write_bytes(0x04C7CE, bytearray([0x5C, 0x8A, 0xFB, 0xEF]))#Jump to code that restores the party
         rom.write_bytes(0x04C7D4, bytearray([0xEA, 0xEA, 0xEA]))
-        rom.write_bytes(0x04C7DA, bytearray([0xEA, 0xEA]))#Stop the game from zeroing stuff
+        #rom.write_bytes(0x04C7DA, bytearray([0xEA, 0xEA]))#Stop the game from zeroing stuff
         rom.write_bytes(0x0912F2, bytearray([0x0A, 0xFE, 0xBF, 0xEE]))
         rom.write_bytes(0x2EBFFE, bytearray([0x00, 0x1B, 0x04, 0x15, 0x38, 0x1F, 0x81, 0xFF, 0xFF, 0x1B, 0x04, 0x0A, 0xF7, 0x12, 0xC9]))#Hospitals = 0$
+        rom.write_bytes(0x04C822, bytearray([0xEA, 0xEA, 0xEA, 0xEA]))
 
     if world.options.magicant_mode == 2:
         rom.write_bytes(0x077629, bytearray([item_id_table[world.magicant_junk[0]]]))

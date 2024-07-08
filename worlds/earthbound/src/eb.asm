@@ -5324,7 +5324,7 @@ ResetStatus:
 STZ $9A3B
 STZ $9A9A
 STZ $9AF9
-JML $C4C7DC
+JML $C4C7D4
 
 ORG $C7DE7E
 db $F4, $BF, $EE
@@ -5499,6 +5499,9 @@ db $0a, $7d, $c5, $ee
 ORG $EEC57d
 db $50, $1c, $05, $01, $50, $91, $a3, $50, $91, $50, $a3, $9f, $a5, $a6, $95, $9e
 db $99, $a2, $0a, $99, $93, $c8
+
+ORG $CF9829
+db $00
 
 
 ;If prayers skipped:
