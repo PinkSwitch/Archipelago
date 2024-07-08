@@ -265,7 +265,7 @@ def initialize_enemies(world):
                                     world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies["Evil Mani-Mani"]},
                         "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies["Guardian Digger"], world.enemies["Guardian Digger (2)"]},
                         "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Dept. Store Spook"], world.enemies["Dept. Store Spook (2)"]},
-                        "Monkey Caves": {world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"]},
+                        "Monkey Caves": {world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Struttin' Evil Mushroom"]},
                         "Monotoli Building": {world.enemies["Sentry Robot"], world.enemies["Clumsy Robot"], world.enemies["Clumsy Robot (2)"], world.enemies["Clumsy Robot (3)"]},
                         "Rainy Circle": {world.enemies["Arachnid!"], world.enemies["Cave Boy"], world.enemies["Elder Batty"], world.enemies["Mighty Bear Seven"], world.enemies["Strong Crocodile"], world.enemies["Shrooom!"]},
                         "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies["Kraken"], world.enemies["Kraken (2)"]},
@@ -526,7 +526,7 @@ def scale_enemies(world, rom):
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
         regions = {loc.parent_region.name for loc in locs}
         world.location_order.extend(sorted(regions, key=lambda x: distances[x]))
-    if world.options.magicant_mode == 2:
+    if world.options.magicant_mode == 2 and world.options.giygas_required:
         world.location_order.remove ("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
 

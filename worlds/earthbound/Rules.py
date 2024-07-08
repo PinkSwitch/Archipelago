@@ -25,6 +25,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Monkey Caves - West 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
     set_rule(world.multiworld.get_location("Monkey Caves - East 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
     set_rule(world.multiworld.get_location("Monkey Caves - East End Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
+    set_rule(world.multiworld.get_location("Monkey Caves - East End Trashcan", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
     set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #1", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
     set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #2", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: state.has("Pencil Eraser", player) and (twoson_paula_room_present.can_reach(state) or can_buy_pizza))

@@ -63,11 +63,14 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Lost Underworld"),
         create_region(world, player, locations_per_region, "Fire Spring"),
         create_region(world, player, locations_per_region, "Magicant"),
-        create_region(world, player, locations_per_region, "Cave of the Present"),
-        create_region(world, player, locations_per_region, "Cave of the Past"),
-        create_region(world, player, locations_per_region, "Endgame")
+        create_region(world, player, locations_per_region, "Cave of the Present")
 
     ]
+    if world.options.giygas_required:
+        regions.extend([
+            create_region(world, player, locations_per_region, "Cave of the Past"),
+            create_region(world, player, locations_per_region, "Endgame")
+        ])
     multiworld.regions += regions
     connect_menu_region(world)
     
@@ -175,11 +178,12 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Lost Underworld", player).add_exits(["Fire Spring"])
 
-    multiworld.get_region("Cave of the Present", player).add_exits(["Cave of the Past"],
-        {"Cave of the Past": lambda state: state.has("Power of the Earth", player)})
+    if world.options.giygas_required:
+        multiworld.get_region("Cave of the Present", player).add_exits(["Cave of the Past"],
+            {"Cave of the Past": lambda state: state.has("Power of the Earth", player)})
 
-    multiworld.get_region("Cave of the Past", player).add_exits(["Endgame"],
-        {"Endgame": lambda state: state.has("Paula", player)})
+        multiworld.get_region("Cave of the Past", player).add_exits(["Endgame"],
+            {"Endgame": lambda state: state.has("Paula", player)})
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
     location = EBLocation(player, location_data.name, location_data.code, region)
