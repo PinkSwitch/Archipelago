@@ -4737,6 +4737,9 @@ db $12
 ORG $FFEEEE
 db $A4
 
+ORG $FFFFFF
+db $A4
+
 ;db "how come inserting some random ass data into the game makes bsdiff respect my tokens" PUT THIS BACK WHEN PATCHING
 
 ORG $EEBA50
@@ -4762,8 +4765,8 @@ db $0a, $8d, $ba, $ee
 ORG $CF2095
 db $93, $20, $cf
 
-ORG $CF209A
-db $01
+ORG $CF2099
+dw $01D9
 
 
 ORG $D6FAA0
@@ -5502,6 +5505,9 @@ db $99, $a2, $0a, $99, $93, $c8
 
 ORG $CF9829
 db $00
+
+ORG $C6DB04
+db $49
 
 
 ;If prayers skipped:

@@ -60,13 +60,12 @@ def setup_gamevars(world):
     del world.hinted_regions[6:39]
 
     if world.options.random_start_location == 1:
-        valid_teleports = [
+        world.valid_teleports = [
             "Onett Teleport",
             "Twoson Teleport",
             "Happy-Happy Village Teleport",
             "Threed Teleport",
             "Saturn Valley Teleport",
-            "Dusty Dunes Teleport",
             "Fourside Teleport",
             "Winters Teleport",
             "Summers Teleport",
@@ -76,12 +75,13 @@ def setup_gamevars(world):
             "Tenda Village Teleport",
             "Lost Underworld Teleport"
         ]
+
         if world.options.magicant_mode == 0:
-            valid_teleports.append("Magicant Teleport")
+            world.valid_teleports.append("Magicant Teleport")
 
-        del valid_teleports[world.start_location - 1]
+        del world.valid_teleports[world.start_location - 1]
 
-        world.starting_teleport = world.random.choice(valid_teleports)
+        world.starting_teleport = world.random.choice(world.valid_teleports)
 
     filler_items = common_items + uncommon_items + rare_items
 
