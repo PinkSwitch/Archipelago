@@ -5521,6 +5521,9 @@ db $94, $BF, $C7
 ORG $EF6CA2
 db $04, $cc, $00, $1f, $12, $0a, $1f, $12, $0b, $02; stop flying man from living
 
+ORG $C6AE51
+db $01, $01, $01, $01
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
