@@ -812,7 +812,7 @@ db $08, $01, $95, $EE, $00, $18, $00, $02, $00, $00, $00, $00, $00, $00, $00, $0
 
 ORG $EE9C12
 db $07, $D5, $03, $1B, $03, $10, $A5, $EE, $00, $07, $D4, $03, $1B, $03, $00, $A5
-db $EE, $00, $07, $D6, $03, $1B, $03, $D0, $9B, $EE, $00, $18, $00, $00, $02 ;Sanc text
+db $EE, $00, $07, $D3, $03, $1B, $03, $D0, $9B, $EE, $00, $18, $00, $00, $02 ;Sanc text
 
 ORG $EE9620
 db $18, $01, $01, $19, $02, $83, $A4, $9F, $A2, $95, $02, $19, $02, $84, $91, $9B
@@ -3137,7 +3137,7 @@ LDA $F685
 CMP $C4FD70
 BCC SkipSanctuaryTrigger
 PHA
-LDA #$20
+LDA #$04
 TSB $9C82
 PLA
 SkipSanctuaryTrigger:
@@ -5508,6 +5508,15 @@ db $00
 
 ORG $C6DB04
 db $49
+
+ORG $C7C0CD
+db $D6, $C0; Fix rainy circle playing twice
+
+ORG $C9D95E
+db $01, $01, $01
+
+ORG $C7BFF5
+db $94, $BF, $C7
 
 
 ;If prayers skipped:

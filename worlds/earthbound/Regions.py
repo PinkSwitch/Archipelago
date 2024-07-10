@@ -166,7 +166,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         {"Deep Darkness": lambda state: state.has("Submarine to Deep Darkness", player)})
 
     multiworld.get_region("Deep Darkness", player).add_exits(["Deep Darkness Darkness"],
-        {"Tenda Village": lambda state: state.has("Hawk Eye", player)})
+        {"Deep Darkness Darkness": lambda state: state.has("Hawk Eye", player)})
 
     multiworld.get_region("Deep Darkness Darkness", player).add_exits(["Tenda Village", "Deep Darkness"])
 
