@@ -3,7 +3,7 @@ import struct
 
 
 class EarthBoundEnemy:
-    def __init__(self, name, address, hp, pp, exp, money, speed, offense, defense, level, is_scaled):
+    def __init__(self, name, address, hp, pp, exp, money, speed, offense, defense, level, is_scaled, shield=None):
         self.name = name
         self.address = address
         self.hp = hp
@@ -15,6 +15,7 @@ class EarthBoundEnemy:
         self.defense = defense
         self.level = level
         self.is_scaled = is_scaled
+        self.shield = shield
 
 
 def initialize_enemies(world):
@@ -39,7 +40,7 @@ def initialize_enemies(world):
         "Conducting Menace": EarthBoundEnemy("Conducting Menace", 0x159c25, 445, 238, 14792, 574, 20, 107, 107, 52, False),
         "Conducting Spirit": EarthBoundEnemy("Conducting Spirit", 0x159c83, 587, 329, 30390, 804, 26, 130, 139, 59, False),
         "Evil Elemental": EarthBoundEnemy("Evil Elemental", 0x159ce1, 564, 0, 35737, 853, 30, 121, 136, 57, False),
-        "Ness's Nightmare": EarthBoundEnemy("Ness's Nightmare", 0x159d3f, 1654, 882, 89004, 4442, 31, 172, 253, 71, False),
+        "Ness's Nightmare": EarthBoundEnemy("Ness's Nightmare", 0x159d3f, 1654, 882, 89004, 4442, 31, 172, 253, 71, False, "psi_1"),
         "Annoying Old Party Man": EarthBoundEnemy("Annoying Old Party Man", 0x159d9d, 99, 0, 130, 32, 6, 20, 25, 13, False),
         "Annoying Reveler": EarthBoundEnemy("Annoying Reveler", 0x159dfb, 288, 0, 2373, 268, 17, 58, 77, 31, False),
         "Unassuming Local Guy": EarthBoundEnemy("Unassuming Local Guy", 0x159e59, 73, 0, 146, 19, 5, 18, 13, 9, False),
@@ -54,13 +55,13 @@ def initialize_enemies(world):
         "Extra Cranky Lady": EarthBoundEnemy("Extra Cranky Lady", 0x15a1a7, 277, 0, 3651, 134, 17, 48, 70, 27, False),
         "Giygas (1)": EarthBoundEnemy("Giygas (1)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
         "Wetnosaur": EarthBoundEnemy("Wetnosaur", 0x15a263, 1030, 0, 33098, 745, 17, 126, 172, 59, False),
-        "Chomposaur": EarthBoundEnemy("Chomposaur", 0x15a2c1, 1288, 320, 44378, 896, 17, 139, 183, 62, False),
+        "Chomposaur": EarthBoundEnemy("Chomposaur", 0x15a2c1, 1288, 320, 44378, 896, 17, 139, 183, 62, False, "phys_2"),
         "Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15a31f, 235, 102, 685, 150, 6, 19, 23, 13, False),
         "Gigantic Ant": EarthBoundEnemy("Gigantic Ant", 0x15a37d, 308, 81, 3980, 304, 17, 54, 112, 30, False),
         "Shrooom!": EarthBoundEnemy("Shrooom!", 0x15a3db, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
         "Plague Rat of Doom": EarthBoundEnemy("Plague Rat of Doom", 0x15a439, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
         "Mondo Mole": EarthBoundEnemy("Mondo Mole", 0x15a497, 498, 161, 5791, 400, 9, 37, 50, 23, False),
-        "Guardian Digger": EarthBoundEnemy("Guardian Digger", 0x15a4f5, 386, 110, 17301, 1467, 17, 59, 129, 32, False),
+        "Guardian Digger": EarthBoundEnemy("Guardian Digger", 0x15a4f5, 386, 110, 17301, 1467, 17, 59, 129, 32, False, "phys_2"),
         "Scalding Coffee Cup": EarthBoundEnemy("Scalding Coffee Cup", 0x15a553, 190, 0, 2462, 280, 23, 55, 20, 30, False),
         "Loaded Dice": EarthBoundEnemy("Loaded Dice", 0x15a5b1, 307, 0, 10672, 703, 77, 146, 113, 59, False),
         "Slimy Little Pile": EarthBoundEnemy("Slimy Little Pile", 0x15a60f, 224, 0, 1978, 124, 15, 42, 61, 24, False),
@@ -86,14 +87,14 @@ def initialize_enemies(world):
         "Skelpion": EarthBoundEnemy("Skelpion", 0x15ad67, 137, 21, 1823, 140, 37, 41, 23, 24, False),
         "Dread Skelpion": EarthBoundEnemy("Dread Skelpion", 0x15adc5, 214, 125, 9908, 609, 40, 82, 57, 41, False),
         "Starman": EarthBoundEnemy("Starman", 0x15ae23, 545, 155, 23396, 720, 24, 103, 126, 55, False),
-        "Starman Super": EarthBoundEnemy("Starman Super", 0x15ae81, 568, 310, 30145, 735, 24, 112, 129, 56, False),
+        "Starman Super": EarthBoundEnemy("Starman Super", 0x15ae81, 568, 310, 30145, 735, 24, 112, 129, 56, False, "psi_2"),
         "Ghost of Starman": EarthBoundEnemy("Ghost of Starman", 0x15aedf, 750, 462, 48695, 807, 46, 152, 170, 68, False),
         "Smilin' Sphere": EarthBoundEnemy("Smilin' Sphere", 0x15af3d, 233, 60, 2218, 191, 17, 50, 65, 27, False),
-        "Uncontrollable Sphere": EarthBoundEnemy("Uncontrollable Sphere", 0x15af9b, 577, 180, 20389, 796, 27, 116, 134, 56, False),
+        "Uncontrollable Sphere": EarthBoundEnemy("Uncontrollable Sphere", 0x15af9b, 577, 180, 20389, 796, 27, 116, 134, 56, False, "psi_1"),
         "Petrified Royal Guard": EarthBoundEnemy("Petrified Royal Guard", 0x15aff9, 573, 0, 19163, 628, 12, 106, 173, 53, False),
         "Guardian General": EarthBoundEnemy("Guardian General", 0x15b057, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
-        "Starman Deluxe": EarthBoundEnemy("Starman Deluxe", 0x15b0b5, 1400, 418, 160524, 3827, 27, 143, 186, 65, False),
-        "Final Starman": EarthBoundEnemy("Final Starman", 0x15b113, 840, 860, 61929, 915, 47, 178, 187, 71, False),
+        "Starman Deluxe": EarthBoundEnemy("Starman Deluxe", 0x15b0b5, 1400, 418, 160524, 3827, 27, 143, 186, 65, False, "psi_2"),
+        "Final Starman": EarthBoundEnemy("Final Starman", 0x15b113, 840, 860, 61929, 915, 47, 178, 187, 71, False, "psi_2"),
         "Urban Zombie": EarthBoundEnemy("Urban Zombie", 0x15b171, 171, 0, 700, 58, 10, 31, 24, 19, False),
         "Zombie Possessor": EarthBoundEnemy("Zombie Possessor", 0x15b1cf, 176, 0, 950, 81, 30, 28, 19, 17, False),
         "Zombie Dog": EarthBoundEnemy("Zombie Dog", 0x15b22d, 210, 0, 1354, 54, 30, 39, 51, 22, False),
@@ -101,7 +102,7 @@ def initialize_enemies(world):
         "Over Zealous Cop": EarthBoundEnemy("Over Zealous Cop", 0x15b2e9, 325, 0, 7448, 420, 18, 69, 75, 36, False),
         "Territorial Oak": EarthBoundEnemy("Territorial Oak", 0x15b347, 145, 41, 356, 29, 5, 26, 30, 15, False),
         "Hostile Elder Oak": EarthBoundEnemy("Hostile Elder Oak", 0x15b3a5, 609, 76, 17567, 690, 14, 134, 146, 59, False),
-        "Diamond Dog": EarthBoundEnemy("Diamond Dog", 0x15b403, 3344, 154, 337738, 6968, 31, 167, 230, 70, False),
+        "Diamond Dog": EarthBoundEnemy("Diamond Dog", 0x15b403, 3344, 154, 337738, 6968, 31, 167, 230, 70, False, "phys_2"),
         "Marauder Octobot": EarthBoundEnemy("Marauder Octobot", 0x15b461, 482, 0, 14475, 499, 23, 99, 121, 49, False),
         "Military Octobot": EarthBoundEnemy("Military Octobot", 0x15b4bf, 604, 0, 25607, 637, 26, 138, 147, 61, False),
         "Mechanical Octobot": EarthBoundEnemy("Mechanical Octobot", 0x15b51d, 768, 0, 41738, 744, 43, 147, 176, 66, False),
@@ -134,7 +135,7 @@ def initialize_enemies(world):
         "Rowdy Mouse": EarthBoundEnemy("Rowdy Mouse", 0x15bf07, 36, 0, 34, 9, 5, 7, 20, 6, False),
         "Deadly Mouse": EarthBoundEnemy("Deadly Mouse", 0x15bf65, 416, 0, 9225, 406, 18, 63, 98, 38, False),
         "Care Free Bomb": EarthBoundEnemy("Care Free Bomb", 0x15bfc3, 504, 0, 14941, 641, 31, 135, 215, 60, False),
-        "Electro Specter": EarthBoundEnemy("Electro Specter", 0x15c021, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
+        "Electro Specter": EarthBoundEnemy("Electro Specter", 0x15c021, 3092, 80, 261637, 6564, 29, 148, 203, 67, False, "psi_2"),
         "Handsome Tom": EarthBoundEnemy("Handsome Tom", 0x15c07f, 133, 16, 520, 45, 11, 27, 25, 16, False),
         "Smilin' Sam": EarthBoundEnemy("Smilin' Sam", 0x15c0dd, 161, 55, 712, 48, 17, 34, 44, 20, False),
         "Manly Fish": EarthBoundEnemy("Manly Fish", 0x15c13b, 500, 0, 15826, 624, 22, 83, 114, 42, False),
@@ -164,12 +165,12 @@ def initialize_enemies(world):
         "Major Psychic Psycho": EarthBoundEnemy("Major Psychic Psycho", 0x15ca0b, 618, 574, 39247, 862, 31, 145, 152, 65, False),
         "Mole Playing Rough": EarthBoundEnemy("Mole Playing Rough", 0x15ca69, 103, 0, 456, 36, 9, 22, 28, 14, False),
         "Gruff Goat": EarthBoundEnemy("Gruff Goat", 0x15cac7, 45, 0, 20, 9, 12, 8, 23, 7, False),
-        "Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15cb25, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
+        "Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15cb25, 962, 0, 32378, 2081, 83, 88, 137, 46, False, "psi_1"),
         "Soul Consuming Flame": EarthBoundEnemy("Soul Consuming Flame", 0x15cb83, 602, 0, 37618, 768, 30, 131, 262, 59, False),
         "Demonic Petunia": EarthBoundEnemy("Demonic Petunia", 0x15cbe1, 478, 0, 15171, 724, 26, 102, 111, 50, False),
         "Ranboob": EarthBoundEnemy("Ranboob", 0x15cc3f, 232, 42, 2486, 158, 20, 41, 63, 24, False),
         "Li'l UFO": EarthBoundEnemy("Li'l UFO", 0x15cc9d, 82, 0, 223, 14, 53, 18, 17, 12, False),
-        "High-class UFO": EarthBoundEnemy("High-class UFO", 0x15ccfb, 433, 72, 12385, 456, 60, 93, 103, 47, False),
+        "High-class UFO": EarthBoundEnemy("High-class UFO", 0x15ccfb, 433, 72, 12385, 456, 60, 93, 103, 47, False, "phys_1"),
         "Noose Man": EarthBoundEnemy("Noose Man", 0x15cd59, 231, 0, 1990, 220, 18, 47, 52, 26, False),
         "Robo-pump": EarthBoundEnemy("Robo-pump", 0x15cdb7, 431, 0, 4797, 349, 19, 70, 113, 36, False),
         "Plain Crocodile": EarthBoundEnemy("Plain Crocodile", 0x15ce15, 234, 0, 1928, 62, 10, 40, 55, 24, False),
@@ -238,8 +239,8 @@ def initialize_enemies(world):
         "Mini Barf": EarthBoundEnemy("Mini Barf", 0x15e885, 616, 0, 7521, 460, 10, 45, 71, 26, False),
         "Master Criminal Worm": EarthBoundEnemy("Master Criminal Worm", 0x15e8e3, 377, 300, 82570, 0, 136, 73, 40, 37, False),
         "Captain Strong": EarthBoundEnemy("Captain Strong", 0x15e941, 140, 0, 492, 159, 15, 20, 24, 13, False),
-        "Giygas (6)": EarthBoundEnemy("Giygas", 0x15e99f, 9999, 0, 0, 0, 80, 255, 127, 80, False),
-        "Clumsy Robot (3)": EarthBoundEnemy("Clumsy Robot", 0x15e9fd, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
+        "Giygas (6)": EarthBoundEnemy("Giygas (6)", 0x15e99f, 9999, 0, 0, 0, 80, 255, 127, 80, False),
+        "Clumsy Robot (3)": EarthBoundEnemy("Clumsy Robot (3)", 0x15e9fd, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
     }
 
 
@@ -496,6 +497,14 @@ spell_data = {
 
 }
 
+shield_table = {
+    "disabled": 0x00,
+    "phys_1": 0x03,
+    "phys_2": 0x04,
+    "psi_1": 0x01,
+    "psi_2": 0x02
+}
+
 def assumed_player_speed_for_level(level):
     return 2 + 58 * (level - 1) / 80
 
@@ -503,8 +512,28 @@ def scale_enemy_speed(enemy, new_level):
     normal_dodge_chance = (2 * enemy.speed - assumed_player_speed_for_level(enemy.level)) / 500
 
     enemy_scaled_speed  = (normal_dodge_chance * 500 + assumed_player_speed_for_level(new_level)) / 2
-
     return enemy_scaled_speed
+
+def scale_exp(base_exp, base_level, new_level, k):
+    new_exp = base_exp * (new_level / base_level) ** k
+    return new_exp
+
+def scale_shield(level, shield):
+    if shield != None:
+        if level < 10:
+            enemy_shield = "disabled"
+        elif shield in ["phys_1", "phys_2"]:
+            if level < 25:
+                enemy_shield = "phys_1"
+            else:
+                enemy_shield = "phys_2"
+        elif shield in ["psi_1", "psi_2"]:
+            if level < 25:
+                enemy_shield = "psi_1"
+            else:
+                enemy_shield = "psi_2"
+        return enemy_shield
+
 
 def scale_enemies(world, rom):
     state = world.multiworld.get_all_state(True)
@@ -538,15 +567,17 @@ def scale_enemies(world, rom):
             if enemy.is_scaled == False:
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
-                enemy_exp = int(enemy.exp * level / enemy.level)
+                k = 2.258
+                enemy_exp = int(scale_exp(enemy.exp, enemy.level, level, k))
                 enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
                 enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
                 enemy_offense = int(enemy.offense * level / enemy.level)
                 enemy_defense = int(enemy.defense * level / enemy.level)
                 enemy_level = int(enemy.level * level / enemy.level)
+                enemy_shield = scale_shield(level, enemy.shield)
 
-                #print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed}")
+                #print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
                 enemy_hp = struct.pack('<H', enemy_hp)
                 enemy_pp = struct.pack('<H', enemy_pp)
                 enemy_exp = struct.pack('<I', enemy_exp)
@@ -561,6 +592,8 @@ def scale_enemies(world, rom):
                 rom.write_bytes(enemy.address + 56, bytearray(enemy_offense))
                 rom.write_bytes(enemy.address + 58, bytearray(enemy_defense))
                 rom.write_bytes(enemy.address + 54, bytearray([enemy_level]))
+                if enemy.shield != None:
+                    rom.write_bytes(enemy.address + 89, bytearray([shield_table[enemy_shield]]))
                 
                 if enemy.name in enemy_psi:
                     for index, spell in enumerate([i for i in enemy_psi[enemy.name] if i != "null"]):
