@@ -231,6 +231,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 else:
                     rom.write_bytes(0x15F63B, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
                 if item in special_name_table and location.item.player == location.player: #Apply a special script if teleport or character
+                    rom.write_bytes(0x15F7F4, bytearray([0x08]))
                     rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
             else:
                 warning(f"{name} not placed in {world.multiworld.get_player_name(world.player)}'s EarthBound world. Something went wrong here.")

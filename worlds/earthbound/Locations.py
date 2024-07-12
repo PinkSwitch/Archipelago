@@ -285,7 +285,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         location_table += [
             LocationData("Magicant", "Ness's Nightmare", None)
         ]
-    else:
+    elif not world or not world.options.magicant_mode:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
         ]

@@ -382,7 +382,7 @@ levels = [
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {30: "alpha", 50: "beta", 70: "gamma", 100: "omega"},
     "fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
-    "lifeup": {20: "alpha", 40: "beta", 60: "gamma", 100: "omega"},
+    "lifeup": {20: "alpha", 50: "beta", 70: "gamma", 100: "omega"},
     "thunder": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
     "flash": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "special": {25: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
@@ -568,6 +568,7 @@ def scale_enemies(world, rom):
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
+                #enemy_exp = int(scale_exp(enemy.exp, enemy.level, level, k))
                 enemy_exp = int(enemy.exp * level / enemy.level)
                 enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
