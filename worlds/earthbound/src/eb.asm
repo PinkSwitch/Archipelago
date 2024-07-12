@@ -5527,6 +5527,15 @@ db $01, $01, $01, $01
 ORG $CFA94C
 db $EE, $C5, $93
 
+ORG $00FFE6
+db $70, $FE
+
+ORG $00FE70
+CrashLoop:
+SEP #$20
+STZ $B4A1
+BRA CrashLoop
+
 
 ;If prayers skipped:
 ;C7BC96 = 02

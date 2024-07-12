@@ -34,6 +34,7 @@ NPC_TEX_PONTER = WRAM_START + 0xF68E
 OPEN_WINDOW = WRAM_START + 0x8958
 PRESENT_TEXT_POINTER = WRAM_START + 0xF68C
 OSS_FLAG = WRAM_START + 0x5D98
+MELODY_TABLE = WRAM_START + 0x9C1E
 
 
 class EarthBoundClient(SNIClient):
@@ -48,6 +49,7 @@ class EarthBoundClient(SNIClient):
             return False
 
         ctx.command_processor.commands["disable_oss_flag"] = cmd_disable_oss_flag
+        ctx.command_processor.commands["kill"] = kill
         ctx.game = self.game
         ctx.items_handling = 0b001
         ctx.rom = rom_name
@@ -62,19 +64,17 @@ class EarthBoundClient(SNIClient):
         save_num = await snes_read(ctx, SAVE_FILE, 0x1)
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
         oss_status = await snes_read(ctx, OSS_FLAG, 1)
+        melody_table = await snes_read(ctx, MELODY_TABLE, 2)
 
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         if rom != ctx.rom:
             ctx.rom = None
-            print("Return")
             return
         
         if giygas_clear[0] & 0x01 == 0x01: #Are we in the epilogue
-            print("Epilogue")
             return
 
         if save_num[0] == 0x00: #If on the title screen
-            print("Save Not Loaded")
             return
 
         if game_clear[0] & 0x01 == 0x01: #Goal should ignore the item queue and textbox check
@@ -82,15 +82,12 @@ class EarthBoundClient(SNIClient):
             ctx.finished_game = True
 
         if text_open[0] != 0xFF: #Don't check locations or items while text is printing, but scouting is fine
-            print("Text open!")
             return
 
         if item_received[0] or special_received[0] != 0x00: #If processing any item from the server
-            print("Busy!")
             return
 
         if ctx.slot is None:
-            print("Disconnected!")
             return
 
         new_checks = []
@@ -140,3 +137,14 @@ def cmd_disable_oss_flag(self, cmd: str = ""):
         return
     print("Disabling OSS!")
     snes_buffered_write(self.ctx, OSS_FLAG, bytes([0x00]))
+
+def kill(self, cmd: str = ""):
+    from SNIClient import snes_buffered_write
+    """Kills the player"""
+    if self.ctx.game != "EarthBound":
+        print("This command can only be used while playing EarthBound")
+        return
+    snes_buffered_write(self.ctx, WRAM_START + 0x9A13, bytes([0x00, 0x00, 0x00, 0x00]))
+    snes_buffered_write(self.ctx, WRAM_START + 0x9A72, bytes([0x00, 0x00, 0x00, 0x00]))
+    snes_buffered_write(self.ctx, WRAM_START + 0x9AD1, bytes([0x00, 0x00, 0x00, 0x00]))
+    snes_buffered_write(self.ctx, WRAM_START + 0x9B30, bytes([0x00, 0x00, 0x00, 0x00]))
