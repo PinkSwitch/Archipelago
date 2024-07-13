@@ -54,7 +54,7 @@ dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0
 
 ORG $D5F880
 SpecialNameTable:
-dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, $A952
+dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, $C659
 
 
 
@@ -5558,6 +5558,10 @@ db $1b, $97, $a5, $9d, $51, $59, $10, $10, $12, $02
 
 ORG $C932C9
 db $02
+
+ORG $EEC659
+db $7d, $91, $97, $99, $93, $91, $9e, $a4, $50, $84, $95, $9c, $95, $a0, $9f, $a2
+db $a4
 
 
 ;If prayers skipped:
