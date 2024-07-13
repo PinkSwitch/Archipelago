@@ -191,7 +191,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 if item in character_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     if name == "Snow Wood - Bedroom":#Use lying down sprites for the bedroom check
-                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1:5]))
+                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][1]))
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
                 elif item in psi_item_table and location.item.player == location.player:
@@ -230,9 +230,11 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(0x15F63B, bytearray([item_id]))
                 else:
                     rom.write_bytes(0x15F63B, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
+
                 if item in special_name_table and location.item.player == location.player: #Apply a special script if teleport or character
-                    rom.write_bytes(0x15F7F4, bytearray([0x08]))
-                    rom.write_bytes(0x15F7F5, bytearray(special_name_table[item][1:4]))
+                    rom.write_bytes(0x15F7F6, bytearray(special_name_table[item][1:4]))
+                    rom.write_bytes(0x2EC618, bytearray([special_name_table[item][4]]))
+                    rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
             else:
                 warning(f"{name} not placed in {world.multiworld.get_player_name(world.player)}'s EarthBound world. Something went wrong here.")
             
@@ -274,6 +276,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF27E, bytearray([item_id_table[world.magicant_junk[2]]]))
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
         rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
+        rom.write_bytes(0x0FF26D, bytearray([item_id_table[world.magicant_junk[5]]]))
 
     rom.write_bytes(0x02EC1AA, bytearray([world.options.sanctuaries_required.value]))
     if world.options.alternate_sanctuary_goal:

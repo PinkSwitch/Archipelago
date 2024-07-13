@@ -248,7 +248,8 @@ check_table = {
     0xEB00ED: [0x86, 1],
     0xEB00EE: [0x84, 4],
     0xEB00EF: [0x23, 6],
-    0xEB00F0: [0x81, 7]
+    0xEB00F0: [0x81, 7],
+    0xEB00FA: [0x81, 3]
 }
 
 location_dialogue = { #Locations which just need to print the name of the item
@@ -338,7 +339,7 @@ npc_locations = { #Locations given to you by an NPC
     "Twoson - Paula's Mother": [0x08062F],
     "Twoson - Everdred Meeting": [0x096052],
     "Twoson - Insignificant Location": [0x094ED1],
-    "Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B7],
+    "Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B6],
     "Happy-Happy Village - Prisoner Item": [0x2F9664, 0x2EAF41],
     "Happy-Happy Village - Defeat Carpainter": [0x09826F],
     "Threed - Hospital Drawer": [0x086883],
@@ -554,6 +555,7 @@ present_locations = {#Field presents
     "Magicant - Lonely Present": 0x0FF27E,
     "Magicant - North Present": 0x0FF28F,
     "Magicant - Hills Present": 0x0FF2A0,
+    "Magicant - Town Present": 0x0FF26D,
     "Cave of the Past - Present": 0x0FF2B1
 }
 

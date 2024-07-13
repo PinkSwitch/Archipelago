@@ -285,7 +285,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         location_table += [
             LocationData("Magicant", "Ness's Nightmare", None)
         ]
-    elif not world or not world.options.magicant_mode:
+
+    if not world or not world.options.magicant_mode:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
         ]
@@ -296,7 +297,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Magicant", "Magicant - Present Near Ness", 0xEB00E9),
         LocationData("Magicant", "Magicant - Lonely Present", 0xEB00EA),
         LocationData("Magicant", "Magicant - North Present", 0xEB00EB),
-        LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC)
+        LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC),
+        LocationData("Magicant", "Magicant - Town Present", 0xEB00FA)
         ]
     else:
         location_table += [
