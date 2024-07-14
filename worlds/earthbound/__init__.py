@@ -77,7 +77,7 @@ class EarthBoundWorld(World):
 
         self.locked_locations= []
         self.location_cache= []
-        self.event_count = 0
+        self.event_count = 8
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
@@ -107,17 +107,23 @@ class EarthBoundWorld(World):
         filler_type = self.random.choice(choices)
         weight_table = {
             "common": common_items,
-            "common_gear": common_gear,
-            "uncommon": uncommon_items,
-            "uncommon_gear": uncommon_gear,
-            "rare": rare_items,
-            "rare_gear": rare_gear
+            "common_gear": self.common_gear,
+            "uncommon": self.uncommon_items,
+            "uncommon_gear": self.uncommon_gear,
+            "rare": self.rare_items,
+            "rare_gear": self.rare_gear
         }
         return self.random.choice(weight_table[filler_type])
 
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         local_space_count = 0
+        self.common_items = common_items
+        self.uncommon_items = uncommon_items
+        self.rare_items = rare_items
+        self.common_gear = common_gear
+        self.uncommon_gear = uncommon_gear
+        self.rare_gear = rare_gear
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
                 local_space_count += amount

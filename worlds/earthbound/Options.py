@@ -58,6 +58,11 @@ class CharacterShuffle(Choice):
     option_anywhere = 1
     default = 0
 
+class PreFixItems(Toggle):
+    """If enabled, broken items in the multiworld pool will be replaced with their fixed versions.
+       This does not affect any items that are not placed by the multiworld."""
+    display_name = "Prefixed Items"
+
 class CommonWeight(Range):
     """Weight for placing a common filler item."""
     display_name = "Common Filler Weight"
@@ -115,6 +120,7 @@ class EBOptions(PerGameCommonOptions):
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
     random_flavors: RandomFlavors
+    prefixed_items: PreFixItems
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight

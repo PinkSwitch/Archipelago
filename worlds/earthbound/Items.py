@@ -12,18 +12,18 @@ item_table: Dict[str, ItemData] = {
     "Teddy Bear": ItemData("Characters", 0xEB0002, ItemClassification.filler, 0),
     "Super Plush Bear": ItemData("Characters", 0xEB0003, ItemClassification.useful, 0),
 
-    "Broken Machine": ItemData("Broken Items", 0xEB0004, ItemClassification.useful),
+    "Broken Machine": ItemData("Broken Items", 0xEB0004, ItemClassification.useful, 0),
     "Broken Gadget": ItemData("Broken Items", 0xEB0005, ItemClassification.useful, 0),
-    "Broken Air Gun": ItemData("Broken Items", 0xEB0006, ItemClassification.filler),
+    "Broken Air Gun": ItemData("Broken Items", 0xEB0006, ItemClassification.filler, 0),
     "Broken Spray Can": ItemData("Broken Items", 0xEB0007, ItemClassification.filler, 0),
-    "Broken Laser": ItemData("Broken Items", 0xEB0008, ItemClassification.useful),
+    "Broken Laser": ItemData("Broken Items", 0xEB0008, ItemClassification.useful, 0),
     "Broken Iron": ItemData("Broken Items", 0xEB0009, ItemClassification.filler, 0),
-    "Broken Pipe": ItemData("Broken Items", 0xEB000A, ItemClassification.useful),
+    "Broken Pipe": ItemData("Broken Items", 0xEB000A, ItemClassification.useful, 0),
     "Broken Cannon": ItemData("Broken Items", 0xEB000B, ItemClassification.useful, 0),
-    "Broken Tube": ItemData("Broken Items", 0xEB000C, ItemClassification.useful),
-    "Broken Bazooka": ItemData("Broken Items", 0xEB000D, ItemClassification.useful),
-    "Broken Trumpet": ItemData("Broken Items", 0xEB000E, ItemClassification.filler),
-    "Broken Harmonica": ItemData("Broken Items", 0xEB000F, ItemClassification.useful),
+    "Broken Tube": ItemData("Broken Items", 0xEB000C, ItemClassification.useful, 0),
+    "Broken Bazooka": ItemData("Broken Items", 0xEB000D, ItemClassification.useful, 0),
+    "Broken Trumpet": ItemData("Broken Items", 0xEB000E, ItemClassification.filler, 0),
+    "Broken Harmonica": ItemData("Broken Items", 0xEB000F, ItemClassification.useful, 0),
     "Broken Antenna": ItemData("Broken Items", 0xEB0010, ItemClassification.useful, 0),
 
     "Cracked Bat": ItemData("Ness Weapons", 0xEB0011, ItemClassification.filler, 0),
@@ -365,7 +365,7 @@ common_items: List[str] = [
     "Popsicle"
 ]
 
-common_gear = [
+common_gear: List[str] = [
     "Cracked Bat",
     "Tee Ball Bat",
     "Sand Lot Bat",
@@ -375,7 +375,6 @@ common_gear = [
     "Deluxe Fry Pan",
     "Toy Air Gun",
     "Zip Gun",
-    "Broken Gadget",
     "Yo-yo",
     "Slingshot",
     "Travel Charm",
@@ -393,8 +392,6 @@ common_gear = [
 ]
 
 uncommon_items: List[str] = [
-    "Broken Iron",
-    "Broken Cannon",
     "Flame Pendant",
     "Rain Pendant",
     "Night Pendant",
@@ -435,7 +432,7 @@ uncommon_items: List[str] = [
 
 ]
 
-uncommon_gear = [
+uncommon_gear: List[str] = [
     "Mr. Baseball Bat",
     "T-Rex's Bat",
     "Big League Bat",
@@ -456,7 +453,6 @@ uncommon_gear = [
 
 
 rare_items: List[str] = [
-    "Broken Antenna",
     "Sword of Kings",
     "Earth Pendant",
     "Sea Pendant",
@@ -488,7 +484,7 @@ rare_items: List[str] = [
     "Cup of Lifenoodles"
 ]
 
-rare_gear = [
+rare_gear: List[str] = [
     "Hall of Fame Bat",
     "Ultimate Bat",
     "Gutsy Bat",

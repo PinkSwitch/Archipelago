@@ -1,5 +1,5 @@
 import struct
-from .Items import common_items, uncommon_items, rare_items
+from .Items import common_items, uncommon_items, rare_items, common_gear, uncommon_gear, rare_gear
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
 
@@ -13,6 +13,35 @@ def setup_gamevars(world):
         world.start_location = world.random.randint(1, valid_starts)
     else:
         world.start_location = 0
+
+    if world.options.prefixed_items:
+        world.multiworld.itempool.append(world.create_item("Counter-PSI Unit"))
+        world.multiworld.itempool.append(world.create_item("Magnum Air Gun"))
+        world.multiworld.itempool.append(world.create_item("Laser Gun"))
+        world.multiworld.itempool.append(world.create_item("Shield Killer"))
+        world.multiworld.itempool.append(world.create_item("Hungry HP-Sucker"))
+        world.multiworld.itempool.append(world.create_item("Defense Shower"))
+        world.multiworld.itempool.append(world.create_item("Baddest Beam"))
+        world.multiworld.itempool.append(world.create_item("Heavy Bazooka"))
+        world.common_items.append("Defense Spray")
+        world.common_gear.append("Double Beam")
+        world.uncommon_items.append("Slime Generator")
+        world.uncommon_gear.append("Spectrum Beam")
+        world.rare_gear.append("Gaia Beam")
+    else:
+        world.multiworld.itempool.append(world.create_item("Broken Machine"))
+        world.multiworld.itempool.append(world.create_item("Broken Air Gun"))
+        world.multiworld.itempool.append(world.create_item("Broken Laser"))
+        world.multiworld.itempool.append(world.create_item("Broken Pipe"))
+        world.multiworld.itempool.append(world.create_item("Broken Tube"))
+        world.multiworld.itempool.append(world.create_item("Broken Trumpet"))
+        world.multiworld.itempool.append(world.create_item("Broken Harmonica"))
+        world.multiworld.itempool.append(world.create_item("Broken Bazooka"))
+        world.common_items.append("Broken Spray Can")
+        world.common_gear.append("Broken Gadget")
+        world.uncommon_items.append("Broken Iron")
+        world.uncommon_gear.append("Broken Cannon")
+        world.rare_gear.append("Broken Antenna")
 
     world.hinted_regions = [
         "Northern Onett",
@@ -83,7 +112,7 @@ def setup_gamevars(world):
 
         world.starting_teleport = world.random.choice(world.valid_teleports)
 
-    filler_items = common_items + uncommon_items + rare_items
+    filler_items = world.common_items + world.uncommon_items + world.rare_items + world.common_gear + world.uncommon_gear + world.rare_gear
 
     if world.options.magicant_mode == 2:
         world.magicant_junk = []
