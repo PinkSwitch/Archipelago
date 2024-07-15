@@ -802,7 +802,7 @@ item_id_table = {
     "Eraser Eraser": 0xD2,
     "Tendakraut": 0xD3,
     "T-Rex's Bat": 0xD4,
-    "Big League Bat": 0xD5,
+    #"Big League Bat": 0xD5,
     "Ultimate Bat": 0xD6,
     "Double Beam": 0xD7,
     "Defense Ribbon": 0xDA,

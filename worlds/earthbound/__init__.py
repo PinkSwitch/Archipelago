@@ -1,11 +1,10 @@
-import base64
 import os
 import typing
 import threading
 import pkgutil
 
 
-from typing import List, Set, TextIO, Dict
+from typing import List, Set, Dict
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
@@ -24,6 +23,7 @@ from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hash
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
+
 class EBSettings(settings.Group):
     class RomFile(settings.SNESRomPath):
         """File name of the EarthBound US ROM"""
@@ -32,6 +32,7 @@ class EBSettings(settings.Group):
         md5s = valid_hashes
 
     rom_file: RomFile = RomFile(RomFile.copy_to)
+
 
 class EBWeb(WebWorld):
     theme = "ocean"
@@ -47,6 +48,7 @@ class EBWeb(WebWorld):
     )
 
     tutorials = [setup_en]
+
 
 class EarthBoundWorld(World):
     """EarthBound is a contemporary-themed JRPG. Take four psychically-endowed children
@@ -75,8 +77,8 @@ class EarthBoundWorld(World):
         self.rom_name_available_event = threading.Event()
         super().__init__(world, player)
 
-        self.locked_locations= []
-        self.location_cache= []
+        self.locked_locations = []
+        self.location_cache = []
         self.event_count = 8
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
@@ -101,8 +103,8 @@ class EarthBoundWorld(World):
 
     def roll_filler(self) -> str: #Todo: make this suck less
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
-                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5), 
-                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
+                   "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
+                   "common_gear": int(self.options.common_filler_weight.value * 0.5)}
         choices = self.random.choices(list(weights), weights=list(weights.values()), k=len(self.multiworld.get_unfilled_locations(self.player)))
         filler_type = self.random.choice(choices)
         weight_table = {
@@ -128,8 +130,8 @@ class EarthBoundWorld(World):
             if item_name in item_id_table:
                 local_space_count += amount
                 if local_space_count > 12:
-                     player = self.multiworld.get_player_name(self.player)
-                     raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
+                    player = self.multiworld.get_player_name(self.player)
+                    raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
         setup_gamevars(self)
         create_flavors(self)
         initialize_enemies(self)
@@ -141,11 +143,9 @@ class EarthBoundWorld(World):
         if self.options.character_shuffle == 0:
             self.event_count += 6
             
-
     def set_rules(self) -> None:
         set_location_rules(self)
         self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
-
 
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()

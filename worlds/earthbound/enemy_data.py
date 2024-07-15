@@ -222,7 +222,7 @@ def initialize_enemies(world):
         "Black Antoid (2)": EarthBoundEnemy("Black Antoid (2)", 0x15e247, 34, 25, 37, 7, 4, 14, 13, 7, False), #Separate enemy used in the titanic ant fight
         "Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom (2)", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
         #"Runaway Dog (2)": EarthBoundEnemy("Runaway Dog", 0x15e303, 21, 0, 4, 3, 26, 4, 5, 73, False),
-        "Cave Boy": EarthBoundEnemy("Cave Boy", 0x15e361, 314, 0, 618, 17, 5, 21, 33, 11, False),
+        "Cave Boy (2)": EarthBoundEnemy("Cave Boy (2)", 0x15e361, 314, 0, 618, 17, 5, 21, 33, 11, False),
         "Tiny Li'l Ghost": EarthBoundEnemy("Tiny Li'l Ghost", 0x15e3bf, 90, 0, 1, 162, 100, 19, 7, 18, False),
         "Starman Junior": EarthBoundEnemy("Starman Junior", 0x15e41d, 200, 999, 16, 20, 1, 11, 10, 6, False),
         "Buzz Buzz": EarthBoundEnemy("Buzz Buzz", 0x15e47b, 2000, 999, 0, 0, 100, 40, 92, 20, False),
@@ -245,24 +245,24 @@ def initialize_enemies(world):
 
 
     world.regional_enemies = {"Northern Onett": {world.enemies["Spiteful Crow"], world.enemies["Runaway Dog"], world.enemies["Coil Snake"]},
-                        "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies["Frank"], world.enemies["Frankystein Mark II"]},
-                        "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies["Titanic Ant"]},
-                        "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies["Captain Strong"], world.enemies["Ramblin' Evil Mushroom"],
-                                world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"]},
-                        "Everdred's House": {world.enemies["Everdred"]},
-                        "Peaceful Rest Valley": {world.enemies["Li'l UFO"], world.enemies["Mobile Sprout"], world.enemies["Spinning Robo"], world.enemies["Territorial Oak"]},
-                        "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies["Mr. Carpainter"], world.enemies["Mr. Carpainter (2)"]},
-                        "Lilliput Steps": {world.enemies["Mighty Bear"], world.enemies["Mole Playing Rough"], world.enemies["Mr. Batty"], world.enemies["Mondo Mole"]},
-                        "Threed": {world.enemies["Coil Snake"], world.enemies["Handsome Tom"], world.enemies["Smilin' Sam"], world.enemies["Trick or Trick Kid"],
-                                world.enemies["Boogey Tent"], world.enemies["Zombie Dog"], world.enemies["Putrid Moldyman"], world.enemies["Smelly Ghost"], world.enemies["Boogey Tent (2)"]},
-                        "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies["Mini Barf"]},
-                        "Grapefruit Falls": {world.enemies["Armored Frog"], world.enemies["Black Antoid"], world.enemies["Coil Snake"], world.enemies["Farm Zombie"],
-                                            world.enemies["Plain Crocodile"], world.enemies["Red Antoid"], world.enemies["Violent Roach"], world.enemies["Mad Duck"], world.enemies["Black Antoid (2)"]},
-                        "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies["Master Belch"], world.enemies["Master Belch (2)"]},
-                        "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Trillionage Sprout"]},
-                        "Dusty Dunes Desert": {world.enemies["Bad Buffalo"], world.enemies["Crested Booka"], world.enemies["Criminal Caterpillar"], world.enemies["Cute Li'l UFO"], world.enemies["Desert Wolf"], world.enemies["Mole Playing Rough"],
-                                            world.enemies["Skelpion"], world.enemies["Smilin' Sphere"]},
-                        "Fourside": {world.enemies["Annoying Reveler"], world.enemies["Crazed Sign"], world.enemies["Extra Cranky Lady"], world.enemies["Mad Taxi"],
+                              "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies["Frank"], world.enemies["Frankystein Mark II"]},
+                              "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies["Titanic Ant"]},
+                              "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies["Captain Strong"], world.enemies["Ramblin' Evil Mushroom"],
+                                         world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"]},
+                              "Everdred's House": {world.enemies["Everdred"]},
+                              "Peaceful Rest Valley": {world.enemies["Li'l UFO"], world.enemies["Mobile Sprout"], world.enemies["Spinning Robo"], world.enemies["Territorial Oak"]},
+                              "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies["Mr. Carpainter"], world.enemies["Mr. Carpainter (2)"]},
+                              "Lilliput Steps": {world.enemies["Mighty Bear"], world.enemies["Mole Playing Rough"], world.enemies["Mr. Batty"], world.enemies["Mondo Mole"]},
+                              "Threed": {world.enemies["Coil Snake"], world.enemies["Handsome Tom"], world.enemies["Smilin' Sam"], world.enemies["Trick or Trick Kid"],
+                                         world.enemies["Boogey Tent"], world.enemies["Zombie Dog"], world.enemies["Putrid Moldyman"], world.enemies["Smelly Ghost"], world.enemies["Boogey Tent (2)"]},
+                              "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies["Mini Barf"]},
+                              "Grapefruit Falls": {world.enemies["Armored Frog"], world.enemies["Black Antoid"], world.enemies["Coil Snake"], world.enemies["Farm Zombie"],
+                                                   world.enemies["Plain Crocodile"], world.enemies["Red Antoid"], world.enemies["Violent Roach"], world.enemies["Mad Duck"], world.enemies["Black Antoid (2)"]},
+                              "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies["Master Belch"], world.enemies["Master Belch (2)"]},
+                              "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Trillionage Sprout"]},
+                              "Dusty Dunes Desert": {world.enemies["Bad Buffalo"], world.enemies["Crested Booka"], world.enemies["Criminal Caterpillar"], world.enemies["Cute Li'l UFO"], world.enemies["Desert Wolf"], world.enemies["Mole Playing Rough"],
+                                                     world.enemies["Skelpion"], world.enemies["Smilin' Sphere"]},
+                              "Fourside": {world.enemies["Annoying Reveler"], world.enemies["Crazed Sign"], world.enemies["Extra Cranky Lady"], world.enemies["Mad Taxi"],
                                     world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies["Evil Mani-Mani"]},
                         "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies["Guardian Digger"], world.enemies["Guardian Digger (2)"]},
                         "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Dept. Store Spook"], world.enemies["Dept. Store Spook (2)"]},
@@ -295,6 +295,7 @@ def initialize_enemies(world):
                         "Endgame": {world.enemies["Heavily Armed Pokey"], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
                         
     }
+
 
 combat_regions = [
     "Northern Onett",
@@ -339,7 +340,7 @@ combat_regions = [
 ]
 
 levels = [
-    1, #north onett
+    1,  #north onett
     2, #south onett
     3, #giant step
     5, #twoson
@@ -556,7 +557,7 @@ def scale_enemies(world, rom):
         regions = {loc.parent_region.name for loc in locs}
         world.location_order.extend(sorted(regions, key=lambda x: distances[x]))
     if world.options.magicant_mode == 2 and world.options.giygas_required:
-        world.location_order.remove ("Magicant")
+        world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
 
     #print(location_order)
@@ -564,7 +565,7 @@ def scale_enemies(world, rom):
 
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:
-            if enemy.is_scaled == False:
+            if enemy.is_scaled is False:
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
@@ -593,7 +594,7 @@ def scale_enemies(world, rom):
                 rom.write_bytes(enemy.address + 56, bytearray(enemy_offense))
                 rom.write_bytes(enemy.address + 58, bytearray(enemy_defense))
                 rom.write_bytes(enemy.address + 54, bytearray([enemy_level]))
-                if enemy.shield != None:
+                if enemy.shield is not None:
                     rom.write_bytes(enemy.address + 89, bytearray([shield_table[enemy_shield]]))
                 
                 if enemy.name in enemy_psi:

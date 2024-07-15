@@ -8,6 +8,7 @@ class GiygasRequired(DefaultOnToggle):
        enough Sanctuaries, or completing Magicant if it is required."""
     display_name = "Giygas Required"
 
+
 class SanctuariesRequired(Range):
     """How many of the eight "Your Sanctuary" locations are required to be cleared."""
     display_name = "Required Sanctuaries"
@@ -15,10 +16,12 @@ class SanctuariesRequired(Range):
     range_end = 8
     default = 4
 
+
 class SanctuaryAltGoal(Toggle):
     """If enabled, you will be able to win by completing 2 more Sanctuaries than are required.
        Does nothing if 7 or more Sanctuaries are required, or if Magicant and Giygas are not required."""
     display_name = "Sanctuary Alternate Goal"
+
 
 class MagicantMode(Choice):
     """PSI Location: You will be able to find a Magicant teleport item. Ness's Nightmare contains a PSI location, and no stat boost.
@@ -30,15 +33,18 @@ class MagicantMode(Choice):
     option_alternate_goal = 2
     default = 0
     
+
 class ShortenPrayers(DefaultOnToggle):
     """If enabled, the Prayer cutscenes while fighting Giygas will be skipped, excluding the final one."""
     display_name = "Skip Prayer Sequences"
+
 
 class RandomStartLocation(Toggle):
     """If disabled, you will always start at Ness's house with no teleports unlocked.
        If enabled, you will start at a random teleport destination with one teleport unlocked.
        Additionally, you will need to fight Captain Strong to access the north part of Onett if this is enabled."""
     display_name = "Random Starting Location"
+
 
 class PSIShuffle(Choice):
     """Shuffled: Teleports and Starstorm will be shuffled amongst the PSI locations. A few redundant Teleports may not be available.
@@ -49,6 +55,7 @@ class PSIShuffle(Choice):
     option_anywhere = 1
     default = 0
 
+
 class CharacterShuffle(Choice):
     """Shuffled: Characters will be shuffled amongst Character Locations. Extra locations will have Flying Man, a Teddy Bear, or a Super Plush Bear.
        Anywhere: Characters can be found anywhere in the multiworld, and character locations will have regular checks.
@@ -58,10 +65,12 @@ class CharacterShuffle(Choice):
     option_anywhere = 1
     default = 0
 
+
 class PreFixItems(Toggle):
     """If enabled, broken items in the multiworld pool will be replaced with their fixed versions.
        This does not affect any items that are not placed by the multiworld."""
     display_name = "Prefixed Items"
+
 
 class CommonWeight(Range):
     """Weight for placing a common filler item."""
@@ -70,12 +79,14 @@ class CommonWeight(Range):
     range_end = 100
     default = 80
 
+
 class UncommonWeight(Range):
     """Weight for placing an uncommon filler item."""
     display_name = "Uncommon Filler Weight"
     range_start = 1
     range_end = 100
     default = 30
+
 
 class RareWeight(Range):
     """Weight for placing a rare filler item."""
@@ -84,12 +95,14 @@ class RareWeight(Range):
     range_end = 100
     default = 5
 
+
 class ExperienceModifier(Range):
     """Percentage of EXP enemies give you. 100 is vanilla, after scaling, and 300 is x3."""
     display_name = "Experience Percentage"
     range_start = 100
     range_end = 300
     default = 150
+
 
 class StartingMoney(Range):
     """How much money you start with."""
@@ -98,13 +111,16 @@ class StartingMoney(Range):
     range_end = 99999
     default = 20
 
+
 class EasyDeaths(DefaultOnToggle):
     """Fully revives and heals all party members after death. If off, only Ness will be healed with 0 PP."""
     display_name = "Easy Deaths"
 
+
 class RandomFlavors(DefaultOnToggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):

@@ -19,9 +19,8 @@ from logging import warning
 
 if TYPE_CHECKING:
     from . import EarthBoundWorld
-valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85",#Cartridge
+valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85", #Cartridge
                 "6d71ccc8e2afda15d011348291afdf4f"]#VC
-
 
 
 class LocalRom(object):
@@ -60,7 +59,6 @@ class LocalRom(object):
 
     def apply_patch(self, patch: bytes):
         self.file = bytearray(bsdiff4.patch(bytes(self.file), patch))
-
 
 
 def patch_rom(world, rom, player: int, multiworld):
@@ -116,7 +114,6 @@ def patch_rom(world, rom, player: int, multiworld):
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
-
     #Todo: sanc alt goal, change sanc script
 
     for location in world.multiworld.get_locations(player):
@@ -129,17 +126,17 @@ def patch_rom(world, rom, player: int, multiworld):
             player_text = bytearray(0)
             for char in location.item.name[:128]:
                 if char in eb_text_table:
-                    item_text.extend (eb_text_table[char])
+                    item_text.extend(eb_text_table[char])
                 else:
-                    item_text.extend ([0x6F])
-            item_text.extend ([0x00])
+                    item_text.extend([0x6F])
+            item_text.extend([0x00])
             player_name_loc = (((location.address - 0xEB0000) * 48) + 0x3F8000)
             for char in receiver_name[:48]:
                 if char in eb_text_table:
-                    player_text.extend (eb_text_table[char])
+                    player_text.extend(eb_text_table[char])
                 else:
-                    player_text.extend ([0x6F])
-            player_text.extend ([0x00])
+                    player_text.extend([0x6F])
+            player_text.extend([0x00])
             rom.write_bytes(item_name_loc, bytearray(item_text))
             rom.write_bytes(player_name_loc, bytearray(player_text))
 
@@ -176,8 +173,8 @@ def patch_rom(world, rom, player: int, multiworld):
                     if item in item_id_table or location.item.player != location.player:
                         rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
-                        rom.write_bytes(npc_locations[name][i] -3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
-                        rom.write_bytes(npc_locations[name][i] +2, bytearray([0xA5, 0xAA, 0xEE]))
+                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
+                        rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
 
             elif name in psi_locations:
                 if item in special_name_table and location.item.player == location.player:
@@ -190,7 +187,7 @@ def patch_rom(world, rom, player: int, multiworld):
             elif name in character_locations:
                 if item in character_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
-                    if name == "Snow Wood - Bedroom":#Use lying down sprites for the bedroom check
+                    if name == "Snow Wood - Bedroom": #Use lying down sprites for the bedroom check
                         rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][2:4]))
                         rom.write_bytes(0x0FB0D8, bytearray([0x06]))
                     else:
@@ -287,7 +284,6 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x2EC1D8, bytearray([0x33, 0xC2, 0xEE]))
     elif world.options.magicant_mode == 2:
         rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
-
     
     flavor_address = 0x3FAEE0
     for i in range(4):
@@ -376,6 +372,7 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
                             'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
     return base_rom_bytes
+
 
 def get_base_rom_path(file_name: str = "") -> str:
     options: Utils.OptionsType = Utils.get_options()

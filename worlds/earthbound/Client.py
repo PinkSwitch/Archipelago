@@ -90,7 +90,6 @@ class EarthBoundClient(SNIClient):
         new_checks = []
         from .local_data import check_table
 
-
         location_ram_data = await snes_read(ctx, WRAM_START + 0x9C00, 0x88)
         for loc_id, loc_data in check_table.items():
             if loc_id not in ctx.locations_checked:
@@ -137,6 +136,7 @@ def cmd_disable_oss_flag(self, cmd: str = ""):
         return
     print("Disabling OSS!")
     snes_buffered_write(self.ctx, OSS_FLAG, bytes([0x00]))
+
 
 def kill(self, cmd: str = ""):
     from SNIClient import snes_buffered_write

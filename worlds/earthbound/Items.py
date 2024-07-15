@@ -1,11 +1,13 @@
 from typing import Dict, Set, List, NamedTuple, Optional
 from BaseClasses import ItemClassification
 
+
 class ItemData(NamedTuple):
     category: str
     code: Optional[int]
     classification: ItemClassification
     amount: Optional[int] = 1
+
 
 item_table: Dict[str, ItemData] = {
     "Franklin Badge": ItemData("Key Items", 0xEB0001, ItemClassification.progression),
@@ -240,7 +242,7 @@ item_table: Dict[str, ItemData] = {
     "Tendakraut": ItemData("Key Items", 0xEB00D3, ItemClassification.progression),
 
     "T-Rex's Bat": ItemData("Ness Weapons", 0xEB00D4, ItemClassification.useful, 0),
-    "Big League Bat": ItemData("Ness Weapons", 0xEB00D5, ItemClassification.useful, 0),
+    #"Big League Bat": ItemData("Ness Weapons", 0xEB00D5, ItemClassification.useful, 0), Summers copy
     "Ultimate Bat": ItemData("Ness Weapons", 0xEB00D6, ItemClassification.useful, 0),
     "Double Beam": ItemData("Jeff Weapons", 0xEB00D7, ItemClassification.useful, 0),
     #"Platinum Band": ItemData("Arm Equipment", 0xEB00D8, ItemClassification.useful, 0), Summers copy
@@ -493,6 +495,7 @@ rare_gear: List[str] = [
     "Magic Fry Pan",
     "Combat Yo-yo"
 ]
+
 
 def get_item_names_per_category() -> Dict[str, Set[str]]:
     categories: Dict[str, Set[str]] = {}
