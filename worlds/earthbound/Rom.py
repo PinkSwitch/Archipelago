@@ -260,7 +260,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x07B9A1, bytearray([0x02])) 
 
     if world.options.easy_deaths:
-        rom.write_bytes(0x2EBFF9, bytearray([0x1E]))
+        rom.write_bytes(0x2EBFF9, bytearray([0x0A]))
         rom.write_bytes(0x04C7CE, bytearray([0x5C, 0x8A, 0xFB, 0xEF]))#Jump to code that restores the party
         rom.write_bytes(0x04C7D4, bytearray([0xEA, 0xEA, 0xEA]))
         #rom.write_bytes(0x04C7DA, bytearray([0xEA, 0xEA]))#Stop the game from zeroing stuff

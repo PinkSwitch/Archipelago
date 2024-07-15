@@ -5367,7 +5367,7 @@ ORG $C7DE7E
 db $F4, $BF, $EE
 
 ORG $EEBFF4
-db $08, $11, $de, $c7, $00, $02, $00, $ff, $64, $02
+db $08, $11, $de, $c7, $00, $02, $7B, $C6, $EE, $02
 
 
 ;If easy death:
@@ -5624,6 +5624,15 @@ db $ee
 
 ORG $C6D3A2
 db $ba
+
+ORG $C7D35A
+db $49
+
+ORG $C3E064
+db $27, $00
+
+ORG $EEC67B
+db $1e, $00, $ff, $64, $1e, $04, $ff, $64, $02
 
 
 ;If prayers skipped:
