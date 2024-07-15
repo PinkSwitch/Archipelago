@@ -603,4 +603,6 @@ def scale_enemies(world, rom):
                         rom.write_bytes(enemy.address + 70 + (index * 2), bytearray([spell_data[spell][psi_level][0]]))
                         rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][1]]))
                         #print(f"{spell} {psi_level} at {hex(enemy.address + 70 + (index * 2))}")
+                if world.options.shuffle_enemy_drops:
+                    rom.write_bytes(enemy.address + 88, bytearray([world.random.choice(world.filler_drops)]))
                 enemy.is_scaled = True

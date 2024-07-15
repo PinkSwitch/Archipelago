@@ -455,13 +455,6 @@ uncommon_gear: List[str] = [
 
 
 rare_items: List[str] = [
-    "Sword of Kings",
-    "Earth Pendant",
-    "Sea Pendant",
-    "Star Pendant",
-    "Goddess Ribbon",
-    "Talisman Coin",
-    "Shiny Coin",
     "Large Pizza",
     "Magic Truffle",
     "Brain Food Lunch",
@@ -493,7 +486,14 @@ rare_gear: List[str] = [
     "Casey Bat",
     "Holy Fry Pan",
     "Magic Fry Pan",
-    "Combat Yo-yo"
+    "Combat Yo-yo",
+    "Sword of Kings",
+    "Earth Pendant",
+    "Sea Pendant",
+    "Star Pendant",
+    "Goddess Ribbon",
+    "Talisman Coin",
+    "Shiny Coin"
 ]
 
 

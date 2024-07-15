@@ -71,6 +71,10 @@ class PreFixItems(Toggle):
        This does not affect any items that are not placed by the multiworld."""
     display_name = "Prefixed Items"
 
+class ShuffleDrops(Toggle):
+    """If enabled, enemies will drop random filler items. This does not put checks on enemy drops.
+       Drop rates are unchanged."""
+    display_name = "Shuffle Drops"
 
 class CommonWeight(Range):
     """Weight for placing a common filler item."""
@@ -137,6 +141,7 @@ class EBOptions(PerGameCommonOptions):
     easy_deaths: EasyDeaths
     random_flavors: RandomFlavors
     prefixed_items: PreFixItems
+    shuffle_enemy_drops: ShuffleDrops
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight

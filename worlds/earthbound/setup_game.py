@@ -2,6 +2,7 @@ import struct
 from .Items import common_items, uncommon_items, rare_items, common_gear, uncommon_gear, rare_gear
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
+from .local_data import item_id_table
 
 
 def setup_gamevars(world):
@@ -113,6 +114,12 @@ def setup_gamevars(world):
         world.starting_teleport = world.random.choice(world.valid_teleports)
 
     filler_items = world.common_items + world.uncommon_items + world.rare_items + world.common_gear + world.uncommon_gear + world.rare_gear
+    world.filler_drops = [item_id_table[i] for i in filler_items if i in item_id_table]
+    world.filler_drops.append(0x00)
+    if not world.options.prefixed_items:
+        world.filler_drops.extend([0xA1, 0xD7, 0x8A, 0x2C, 0x30])
+    else:
+        world.filler_drops.extend([0x07, 0x05, 0x09, 0x0B, 0x10])
 
     if world.options.magicant_mode == 2:
         world.magicant_junk = []
