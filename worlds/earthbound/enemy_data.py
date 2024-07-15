@@ -339,45 +339,45 @@ combat_regions = [
 ]
 
 levels = [
-    1,
-    2,
-    3,
-    5,
-    7,
-    9,
-    10,
-    12,
-    13,
-    14,
-    15,
-    17,
-    18,
-    19,
-    21,
-    23,
-    24,
-    25,
-    26,
-    28,
-    29,
-    31,
-    32,
-    33,
-    36,
-    38,
-    39,
-    42,
-    43,
-    45,
-    47,
-    49,
-    52,
-    56,
-    59,
-    65,
-    69,
-    70,
-    73]
+    1, #north onett
+    2, #south onett
+    3, #giant step
+    5, #twoson
+    7, #everdred
+    9, #peaceful rest
+    10, #happy happy
+    12, #lilliput steps
+    13, #threed
+    14, #threed caverns
+    15, #grapefruit falls
+    17, #belch base
+    18, #milky well
+    19, #duty dunes
+    21, #fourside
+    23, #gold mine
+    24, #dept store
+    25, #monkey cabves
+    26, #monotoli building
+    28, #winters
+    29, #southern winters
+    31, #rainy circle
+    32, #summers
+    33, #museum
+    36, #magnet hill
+    38, #pink cloud
+    39, #scaraba
+    42, #pyramid
+    43, #scaraba south
+    45, #dungeon man
+    47, #deep darkness
+    49, #deep darkness swamp
+    52, #stonehenge
+    56, #lumine hall
+    59, #lost underworld
+    65, #fire spring
+    69, #magicant
+    70, #cave of the past
+    73] #gigyas
 
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {30: "alpha", 50: "beta", 70: "gamma", 100: "omega"},

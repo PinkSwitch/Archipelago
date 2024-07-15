@@ -39,6 +39,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Snow Wood - Bottom Left Locker", player), lambda state: state.has("Key to the Locker", player))
     set_rule(world.multiworld.get_location("Fourside - Bakery 2F Gift", player), lambda state: state.has("Contact Lens", player))
     set_rule(world.multiworld.get_location("Fourside - Department Store Blackout", player), lambda state: state.has("Jeff", player))
+    set_rule(world.multiworld.get_location("Fourside - Venus Gift", player), lambda state: state.has("Diamond", player))
     set_rule(world.multiworld.get_location("Summers - Museum Item", player), lambda state: state.has("Tiny Ruby", player))
     set_rule(world.multiworld.get_location("Dalaam - Trial of Mu", player), lambda state: state.has("Poo", player))
     set_rule(world.multiworld.get_location("Poo Starting Item", player), lambda state: state.has("Poo", player))

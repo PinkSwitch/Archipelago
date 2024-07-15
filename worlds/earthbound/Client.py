@@ -84,9 +84,6 @@ class EarthBoundClient(SNIClient):
         if text_open[0] != 0xFF: #Don't check locations or items while text is printing, but scouting is fine
             return
 
-        if item_received[0] or special_received[0] != 0x00: #If processing any item from the server
-            return
-
         if ctx.slot is None:
             return
 
@@ -109,6 +106,9 @@ class EarthBoundClient(SNIClient):
             snes_logger.info(
                 f'New Check: {location} ({len(ctx.locations_checked)}/{len(ctx.missing_locations) + len(ctx.checked_locations)})')
             await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
+
+        if item_received[0] or special_received[0] != 0x00: #If processing any item from the server
+            return
 
         recv_count = await snes_read(ctx, ITEMQUEUE_HIGH, 2)
         recv_index = struct.unpack("H", recv_count)[0]
