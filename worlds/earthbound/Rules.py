@@ -1,4 +1,4 @@
-from worlds.generic.Rules import set_rule
+from worlds.generic.Rules import set_rule, forbid_items_for_player
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from . import EarthBoundWorld
@@ -60,6 +60,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift #2", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Lost Underworld - Talking Rock", player), lambda state: state.has("Tendakraut", player))
     set_rule(world.multiworld.get_location("Sanctuary Goal", player), lambda state: state.has("Melody", player, world.options.sanctuaries_required.value))
+    forbid_items_for_player(world.multiworld.get_location("Poo Starting Item", player), {"Poo"}, player)
     
     
     if world.options.giygas_required:
