@@ -5634,6 +5634,21 @@ db $27, $00
 ORG $EEC67B
 db $1e, $00, $ff, $64, $1e, $04, $ff, $64, $02
 
+ORG $D56FCC
+db $2F;Store tiny ruby
+
+ORG $D5528C
+db $84, $0e ;broken antenna price
+
+ORG $D5576A
+db $08, $1d; Gaia beam price
+
+ORG $D5556F
+db $02, $00; Sword of Kings
+
+ORG $CF11BA
+db $47, $80
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
