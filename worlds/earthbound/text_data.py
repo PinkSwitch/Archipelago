@@ -158,6 +158,15 @@ lumine_hall_text = [
     "Also try DOOM 1993!",
     "Also try Super Mario World!",
     "Also try Yoshi's Island!",
-    "Also try Castlevania 64!"
+    "Also try Castlevania 64!",
+    "Hi Mom! I'm on AP!",
+    "Looking for hot multiworlds in your area?",
+    "Paleontologists do it in the dirt.",
+    "Wait... something seems off...   Things seem more random than usual...",
+    "Shoutouts to SimpleFlips.",
+    "How long have you been BK?",
+    "Also try PK Scramble!",
+    "Also try Ancient Cave!"
+
 
 ]

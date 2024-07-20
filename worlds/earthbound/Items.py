@@ -417,8 +417,6 @@ uncommon_items: List[str] = [
     "Sudden Guts Pill",
     "Picture Postcard",
     "Viper",
-    "Brain Stone",
-    "Monkey's Love",
     "Coin of Silence",
     "Repel Sandwich",
     "Lucky Sandwich",

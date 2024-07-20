@@ -325,6 +325,17 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_character_count.append(item.name)
                 starting_char += 1
 
+    for sphere_number, sphere in enumerate(world.multiworld.get_spheres(), start=1):
+        for location in sphere:
+            if location.parent_region.name in combat_regions:
+                world.last_combat_region = location.parent_region.name
+            if location.item.name in ["Paula", "Jeff", "Poo"]:
+                if location.parent_region.name in combat_regions:
+                    setattr(world, f"{location.item.name}_region", location.parent_region.name)
+                else:
+                    setattr(world, f"{location.item.name}_region", world.last_combat_region)
+
+
     scale_enemies(world, rom)
     rom.write_bytes(0x17FCD0, world.starting_money)
     rom.write_bytes(0x17FCE0, world.prayer_player)

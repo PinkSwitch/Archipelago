@@ -1,4 +1,5 @@
 from typing import Dict
+from logging import warning
 import struct
 
 
@@ -312,17 +313,17 @@ def initialize_enemies(world):
         "Master Belch": [0x0FB7CF],
         "Boogey Tent": [0x0FACEB],
         "Guardian Digger": [0x0FC11B, 0x0FC0B5, 0x0FC12C, 0x0FC0D7, 0x0FC0C6],
-        "Dept. Store Spook": [0xC7, 0x01],
-        "Evil Mani-Mani": [0x25, 0x01],
-        "Clumsy Robot": [0xA2, 0x01],
-        "Starman Deluxe": [0x2F, 0x01],
-        "Kraken": [0x27, 0x01],
-        "Guardian General": [0x42, 0x01],
-        "Master Barf": [0x2B, 0x01],
-        "Ness's Nightmare": [0x25, 0x01],
+        "Dept. Store Spook": [0x0FC803],
+        "Evil Mani-Mani": [0x0FE6E4],
+        "Clumsy Robot": [0x0FC429],
+        "Starman Deluxe": [0x0FB626],
+        "Kraken": [],
+        "Guardian General": [],
+        "Master Barf": [],
+        "Ness's Nightmare": [],
         #"Starman Junior": [0x2F, 0x01],
-        "Mini Barf": [0x3B, 0x01],
-        "Heavily Armed Pokey": [0xCA, 0x01],
+        "Mini Barf": [],
+        "Heavily Armed Pokey": [],
     }
 
     coupled_bosses = {
@@ -354,36 +355,36 @@ def initialize_enemies(world):
                               "Dusty Dunes Desert": {world.enemies["Bad Buffalo"], world.enemies["Crested Booka"], world.enemies["Criminal Caterpillar"], world.enemies["Cute Li'l UFO"], world.enemies["Desert Wolf"], world.enemies["Mole Playing Rough"],
                                                      world.enemies["Skelpion"], world.enemies["Smilin' Sphere"]},
                               "Fourside": {world.enemies["Annoying Reveler"], world.enemies["Crazed Sign"], world.enemies["Extra Cranky Lady"], world.enemies["Mad Taxi"],
-                                    world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies["Evil Mani-Mani"]},
-                        "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies["Guardian Digger"], world.enemies["Guardian Digger (2)"]},
-                        "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Dept. Store Spook"], world.enemies["Dept. Store Spook (2)"]},
-                        "Monkey Caves": {world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Struttin' Evil Mushroom"]},
-                        "Monotoli Building": {world.enemies["Sentry Robot"], world.enemies["Clumsy Robot"], world.enemies["Clumsy Robot (2)"], world.enemies["Clumsy Robot (3)"]},
-                        "Rainy Circle": {world.enemies["Arachnid!"], world.enemies["Cave Boy"], world.enemies["Elder Batty"], world.enemies["Mighty Bear Seven"], world.enemies["Strong Crocodile"], world.enemies["Shrooom!"]},
-                        "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies["Kraken"], world.enemies["Kraken (2)"]},
-                        "Summers Museum": {world.enemies["Shattered Man"]},
-                        "Magnet Hill": {world.enemies["Deadly Mouse"], world.enemies["Filthy Attack Roach"], world.enemies["Stinky Ghost"], world.enemies["Plague Rat of Doom"]},
-                        "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies["Thunder and Storm"]},
-                        "Scaraba": {world.enemies["Beautiful UFO"], world.enemies["Dread Skelpion"], world.enemies["Great Crested Booka"], world.enemies["High-class UFO"], world.enemies["Master Criminal Worm"]},
-                        "Pyramid": {world.enemies["Arachnid!!!"], world.enemies["Fierce Shattered Man"], world.enemies["Guardian Hieroglyph"], world.enemies["Lethal Asp Hieroglyph"], world.enemies["Petrified Royal Guard"],
-                                    world.enemies["Guardian General"], world.enemies["Guardian General (2)"]},
-                        "Southern Scaraba": {world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Marauder Octobot"]},
-                        "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"]},
-                        "Deep Darkness": {world.enemies["Mole Playing Rough"]},
-                        "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
-                                                world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies["Master Barf"]},
-                        "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
-                        "Southern Winters": {world.enemies["Rowdy Mouse"], world.enemies["Worthless Protoplasm"], world.enemies["Mad Duck"]},
-                        "Stonehenge Base": {world.enemies["Atomic Power Robot"], world.enemies["Military Octobot"], world.enemies["Mook Senior"], world.enemies["Starman"], world.enemies["Starman Super"], world.enemies["Starman Deluxe"], world.enemies["Starman Super (2)"]},
-                        "Lumine Hall": {world.enemies["Conducting Spirit"], world.enemies["Fobby"], world.enemies["Hyper Spinning Robo"], world.enemies["Uncontrollable Sphere"], world.enemies["Electro Specter"]},
-                        "Lost Underworld": {world.enemies["Chomposaur"], world.enemies["Chomposaur (2)"], world.enemies["Ego Orb"], world.enemies["Wetnosaur"]},
-                        "Fire Spring": {world.enemies["Evil Elemental"], world.enemies["Major Psychic Psycho"], world.enemies["Psychic Psycho"], world.enemies["Soul Consuming Flame"], world.enemies["Carbon Dog"], world.enemies["Diamond Dog"]},
-                        "Magicant": {world.enemies["Care Free Bomb"], world.enemies["Electro Swoosh"], world.enemies["French Kiss of Death"], world.enemies["Loaded Dice"], world.enemies["Mr. Molecule"], world.enemies["Uncontrollable Sphere"],
-                                    world.enemies["Fobby"], world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Kraken"], world.enemies["Ness's Nightmare"], world.enemies["Ness's Nightmare (2)"], world.enemies["Kraken (2)"],
-                                    world.enemies["Loaded Dice (2)"]},
-                        "Cave of the Past": {world.enemies["Bionic Kraken"], world.enemies["Final Starman"], world.enemies["Ghost of Starman"], world.enemies["Nuclear Reactor Robot"], world.enemies["Squatter Demon"],
-                                            world.enemies["Ultimate Octobot"], world.enemies["Wild 'n Wooly Shambler"], world.enemies["Final Starman (2)"], world.enemies["Ghost of Starman (2)"]},
-                        "Endgame": {world.enemies["Heavily Armed Pokey"], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
+                                           world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies["Evil Mani-Mani"]},
+                              "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies["Guardian Digger"], world.enemies["Guardian Digger (2)"]},
+                              "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Dept. Store Spook"], world.enemies["Dept. Store Spook (2)"]},
+                              "Monkey Caves": {world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Struttin' Evil Mushroom"]},
+                              "Monotoli Building": {world.enemies["Sentry Robot"], world.enemies["Clumsy Robot"], world.enemies["Clumsy Robot (2)"], world.enemies["Clumsy Robot (3)"]},
+                              "Rainy Circle": {world.enemies["Arachnid!"], world.enemies["Cave Boy"], world.enemies["Elder Batty"], world.enemies["Mighty Bear Seven"], world.enemies["Strong Crocodile"], world.enemies["Shrooom!"]},
+                              "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies["Kraken"], world.enemies["Kraken (2)"]},
+                              "Summers Museum": {world.enemies["Shattered Man"]},
+                              "Magnet Hill": {world.enemies["Deadly Mouse"], world.enemies["Filthy Attack Roach"], world.enemies["Stinky Ghost"], world.enemies["Plague Rat of Doom"]},
+                              "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies["Thunder and Storm"]},
+                              "Scaraba": {world.enemies["Beautiful UFO"], world.enemies["Dread Skelpion"], world.enemies["Great Crested Booka"], world.enemies["High-class UFO"], world.enemies["Master Criminal Worm"]},
+                              "Pyramid": {world.enemies["Arachnid!!!"], world.enemies["Fierce Shattered Man"], world.enemies["Guardian Hieroglyph"], world.enemies["Lethal Asp Hieroglyph"], world.enemies["Petrified Royal Guard"],
+                                          world.enemies["Guardian General"], world.enemies["Guardian General (2)"]},
+                              "Southern Scaraba": {world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Marauder Octobot"]},
+                              "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"]},
+                              "Deep Darkness": {world.enemies["Mole Playing Rough"]},
+                              "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
+                                                         world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies["Master Barf"]},
+                              "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
+                              "Southern Winters": {world.enemies["Rowdy Mouse"], world.enemies["Worthless Protoplasm"], world.enemies["Mad Duck"]},
+                              "Stonehenge Base": {world.enemies["Atomic Power Robot"], world.enemies["Military Octobot"], world.enemies["Mook Senior"], world.enemies["Starman"], world.enemies["Starman Super"], world.enemies["Starman Deluxe"], world.enemies["Starman Super (2)"]},
+                              "Lumine Hall": {world.enemies["Conducting Spirit"], world.enemies["Fobby"], world.enemies["Hyper Spinning Robo"], world.enemies["Uncontrollable Sphere"], world.enemies["Electro Specter"]},
+                              "Lost Underworld": {world.enemies["Chomposaur"], world.enemies["Chomposaur (2)"], world.enemies["Ego Orb"], world.enemies["Wetnosaur"]},
+                              "Fire Spring": {world.enemies["Evil Elemental"], world.enemies["Major Psychic Psycho"], world.enemies["Psychic Psycho"], world.enemies["Soul Consuming Flame"], world.enemies["Carbon Dog"], world.enemies["Diamond Dog"]},
+                              "Magicant": {world.enemies["Care Free Bomb"], world.enemies["Electro Swoosh"], world.enemies["French Kiss of Death"], world.enemies["Loaded Dice"], world.enemies["Mr. Molecule"], world.enemies["Uncontrollable Sphere"],
+                                           world.enemies["Fobby"], world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Kraken"], world.enemies["Ness's Nightmare"], world.enemies["Ness's Nightmare (2)"], world.enemies["Kraken (2)"],
+                                           world.enemies["Loaded Dice (2)"]},
+                              "Cave of the Past": {world.enemies["Bionic Kraken"], world.enemies["Final Starman"], world.enemies["Ghost of Starman"], world.enemies["Nuclear Reactor Robot"], world.enemies["Squatter Demon"],
+                                                   world.enemies["Ultimate Octobot"], world.enemies["Wild 'n Wooly Shambler"], world.enemies["Final Starman (2)"], world.enemies["Ghost of Starman (2)"]},
+                              "Endgame": {world.enemies["Heavily Armed Pokey"], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
                         
     }
 
@@ -632,27 +633,39 @@ def scale_enemies(world, rom):
     distances: Dict[str, int] = {}
     for region in world.multiworld.get_regions(world.player):
         if region.name != "Menu":
-            connected, connection = state.path[region]
-            distance = 0
-            while connection is not None:
-                if not any(connected == entrance.name for entrance in world.multiworld.get_entrances(world.player)):
-                    distance += 1
-                connected, connection = connection
-            distances[region.name] = distance
+            if region in state.path:
+                connected, connection = state.path[region]
+                distance = 0
+                while connection is not None:
+                    if not any(connected == entrance.name for entrance in world.multiworld.get_entrances(world.player)):
+                        distance += 1
+                    connected, connection = connection
+                distances[region.name] = distance
 
     paths = state.path
     world.location_order = []
     location_test = []
+    world.scale_warning = False
     for i, sphere in enumerate(world.multiworld.get_spheres()):
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
         regions = {loc.parent_region.name for loc in locs}
-        world.location_order.extend(sorted(regions, key=lambda x: distances[x]))
+        for region in sorted(regions, key=lambda x: distances.get(x, float('inf'))):
+            if region not in distances:
+                warning(f"Warning: {region} is not in distances. for player {world.player}")
+                if world.scale_warning == False:
+                    warning(f"{distances}")
+                    world.scale_warning = True
+            world.location_order.append(region)
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
 
-    #print(location_order)
-    #print(world.player)
+    if world.scale_warning == True:
+        warning(f"{world.location_order}")
+
+    rom.write_bytes(0x15F60F, bytearray([(levels[world.location_order.index(world.Paula_region)]) + world.random.randint(-3,3)])) #Paula starting level
+    rom.write_bytes(0x15F623, bytearray([(levels[world.location_order.index(world.Jeff_region)]) + world.random.randint(-3,3)])) #Jeff starting level
+    rom.write_bytes(0x15F637, bytearray([(levels[world.location_order.index(world.Poo_region)]) + world.random.randint(-3,3)])) #Poo starting level
 
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:

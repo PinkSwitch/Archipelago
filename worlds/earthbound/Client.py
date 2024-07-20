@@ -24,9 +24,9 @@ SRAM_START = 0xE00000
 EB_ROMHASH_START = 0x00FFC0
 ROMHASH_SIZE = 0x15
 
-ITEMQUEUE_HIGH = WRAM_START + 0xF686
-ITEM_RECEIVED = WRAM_START + 0xF680
-SPECIAL_RECEIVED = WRAM_START + 0xF682
+ITEMQUEUE_HIGH = WRAM_START + 0xB576
+ITEM_RECEIVED = WRAM_START + 0xB570
+SPECIAL_RECEIVED = WRAM_START + 0xB572
 SAVE_FILE = WRAM_START + 0xB4A1
 GIYGAS_CLEAR = WRAM_START + 0x9C11
 GAME_CLEAR = WRAM_START + 0x9C85
@@ -122,9 +122,9 @@ class EarthBoundClient(SNIClient):
 
             snes_buffered_write(ctx, ITEMQUEUE_HIGH, pack("H", recv_index))
             if item_id <= 0xFD:
-                snes_buffered_write(ctx, WRAM_START + 0xF680, bytes([item_id]))
+                snes_buffered_write(ctx, WRAM_START + 0xB570, bytes([item_id]))
             else:
-                snes_buffered_write(ctx, WRAM_START + 0xF682, bytes([client_specials[item_id]]))
+                snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
                     
         await snes_flush_writes(ctx)
 

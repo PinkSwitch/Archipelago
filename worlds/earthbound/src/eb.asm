@@ -820,7 +820,7 @@ db $EE, $00, $07, $D3, $03, $1B, $03, $D0, $9B, $EE, $00, $18, $00, $00, $02 ;Sa
 ORG $EE9620
 db $18, $01, $01, $19, $02, $83, $A4, $9F, $A2, $95, $02, $19, $02, $84, $91, $9B
 db $95, $02, $19, $02, $74, $95, $9C, $95, $A4, $95, $02, $1C, $07, $03, $11, $09
-db $03, $50, $96, $EE, $00, $99, $96, $EE, $00, $DC, $96, $EE, $00, $18, $04, $02
+db $03, $50, $96, $EE, $00, $99, $96, $EE, $00, $84, $C6, $EE, $00, $18, $04, $02
 db $08, $31, $E4, $C5, $00, $1B, $02, $20, $96, $EE, $00, $1D, $0C, $01, $01, $18
 db $07, $02, $00, $00, $00, $00, $1B, $03, $20, $96, $EE, $00, $08, $56, $E4
 db $C5, $00, $01, $1B, $02, $20, $96, $EE, $00, $1B, $00, $1D, $0C, $00, $00, $1B
@@ -831,7 +831,7 @@ db $00, $18, $02, $08, $4A, $E5, $C5, $00, $1B, $02, $99, $96, $EE, $00, $1B, $0
 db $03, $0D, $18, $00, $18, $03, $01, $1B, $06, $1D, $13, $00, $00, $19, $19
 db $00, $00, $00, $0A, $99, $96, $EE, $18, $04, $0A, $20, $96
 db $EE, $00
-db $08, $56, $E4, $C5, $00, $01, $1B, $02, $20, $96, $EE, $00, $1B, $00, $19, $19
+db $08, $F8, $C6, $EE, $00, $01, $1B, $02, $84, $C6, $EE, $00, $1B, $00, $19, $19
 db $00, $00, $1D, $0B, $00, $1B, $02, $DD, $96, $EE, $00, $1B, $01, $1D, $0F, $00
 db $00, $01, $0A, $DD, $96, $EE, $00, $18, $04, $02, $DD, $96, $EE, $18, $04 ;Pocket Storage menu
 
@@ -2695,7 +2695,7 @@ ORG $C39F22
 db $42, $B5, $FE, $c4; Jeff robot
 
 ORG $C39F2D
-db $42, $C5, $FE, $c4; Poo robot
+db $42, $CA, $FE, $c4; Poo robot
 
 ORG $C9C07F
 db $70, $7f, $98, $5c, $10, $0a, $50, $79, $50, $91, $9c, $9d, $9f, $a3, $a4, $50
@@ -2870,18 +2870,18 @@ ORG $00F8D0
 GetItemRemote:
 PHX
 SEP #$10
-LDX $F680
+LDX $B570
 BEQ SkipItemGet
 JSR CalcCharSpace
 CMP #$69
 BEQ SkipItemGet
 SEP #$10
 REP #$20
-LDA $F681
+LDA $B571
 AND #$00FF
-LDX $F680
+LDX $B570
 JSL $C18BC6
-STZ $F680
+STZ $B570
 LDA #$0074
 JSL $C0ABE0
 SkipItemGet:
@@ -2894,7 +2894,7 @@ JML $C04D4C
 CalcCharSpace:
 LDY #$00
 SEP #$20
-STZ $F681
+STZ $B571
 CheckNextChar:
 LDA $986F,Y
 JSR CheckCharInv
@@ -2902,21 +2902,21 @@ CPY $98A4
 BEQ CharacterInvalid
 BRA CheckNextChar
 CharacterInvalid:
-LDA $986E
+LDA $F764
 BEQ SendItemToStorage
 LDA #$69
 RTS
 SendItemToStorage:
-LDA $F680
+LDA $B570
 JSL StoreItem
 LDA #$0074
 JSL $C0ABE0
 SEP #$20
 LDA #$69
-STZ $F680
+STZ $B570
 RTS
 CheckCharInv:
-STA $F681
+STA $B571
 DEC
 ASL
 TAX
@@ -3003,7 +3003,7 @@ SkipCollision:
 JML $C0D62B
 
 GetRemoteTeleport:
-LDA $F682
+LDA $B572
 AND #$00FF
 BEQ EndGetPSI
 CMP #$0010
@@ -3020,7 +3020,7 @@ BRA EndGetPSI
 GetChara:
 JSR UnlockCharacter
 EndGetPSI:
-STZ $F682
+STZ $B572
 STZ $FF40
 LDA $006D
 AND #$A000
@@ -3031,14 +3031,14 @@ PHX
 SEC
 SBC #$0010
 ASL
-STA $F682
+STA $B572
 %FUNCTION_PROLOGUE(18)
 JSL $C0943C
 PHX
-LDX $F682
+LDX $B572
 LDA CharUnlockPointers,X
 PLX
-;STZ $F682
+;STZ $B572
 STA $0E
 LDA #$00D5
 STA $10
@@ -3056,7 +3056,7 @@ REP #$31
 CPX #$00FE
 BNE SkipSpecialNameLoad
 SEP #$10
-LDX $F682
+LDX $B572
 REP #$10
 SkipSpecialNameLoad:
 PHD
@@ -3076,8 +3076,8 @@ PLA
 ForceAPItem:
 CMP #$00AD
 BNE SetPlayerNameFlag
-INC $F683
-INC $F689
+INC $B573
+INC $B579
 SetPlayerNameFlag:
 JSL GetItemName
 LDA #$0000
@@ -3087,7 +3087,7 @@ LoadPlayerName:
 TDC
 ADC #$FFF2
 PHA
-LDA $F683
+LDA $B573
 AND #$00FF
 BEQ SkipPlayerName
 LDX #$001F
@@ -3097,17 +3097,17 @@ JML $C14FDF
 
 DrawPlayerName:
 PHA
-LDA $F683
+LDA $B573
 AND #$00FF
 BEQ DrawNormalName
 PLA
-LDA $F689
+LDA $B575
 AND #$00FF
 BEQ SkipPriorityName
-STZ $F689
+STZ $B575
 BRA DontSkipPrior
 SkipPriorityName:
-STZ $F683
+STZ $B573
 DontSkipPrior:
 LDA #$FF50
 STA $0E
@@ -3133,10 +3133,10 @@ CPX #$0010
 BEQ NormalEvent
 BRA CheckSoundStoneScript
 IncrementMelody:
-INC $F685
+INC $B575
 SEP #$20
 PHA
-LDA $F685
+LDA $B575
 CMP $C4FD70
 BCC SkipSanctuaryTrigger
 PHA
@@ -3191,7 +3191,7 @@ JML $C0B90A
 
 SkipArchiSpaceCheck:
 PHA
-LDA $F683
+LDA $B573
 AND #$00FF
 BNE SkipSpaceCheck
 PLA
@@ -3211,7 +3211,7 @@ SkipInvAdd:
 JML $C156AD
 
 GetServerItemName:
-LDA $F683
+LDA $B573
 AND #$00FF
 BEQ WriteNormalName
 LDA #$FF80
@@ -3302,7 +3302,12 @@ BRA CalcSaveSpot
 RunDataSave:
 TAY
 LDA #$000F
-LDX #$F680
+LDX #$B570
+MVN $7E20
+
+LDA #$0063
+LDX #$F700
+LDY #$7E40
 MVN $7E20
 PLB
 PLY
@@ -3425,7 +3430,7 @@ DEX
 BRA CheckFileNum
 GotFileData:
 TAX
-LDY #$F680
+LDY #$B570
 LDA #$000F
 MVN $207E
 PLB
@@ -5363,6 +5368,34 @@ SEP #$35
 REP #$CA
 JML $C08000
 
+ClearStorageMenu:
+JSL $EF0115
+LDA $8958
+AND #$00FF
+CMP #$000D
+BNE EndStorageCheck2
+PHY
+JSL $C3E7E3
+JSL $C1DD53
+PLY
+EndStorageCheck2:
+RTL
+
+ClearStoragePage:
+JSL $C0ABE0
+LDA $8958
+AND #$00FF
+CMP #$000D
+BNE DontClearPage
+PHY
+JSL $C3E7E3
+;JSL $
+
+PLY
+DontClearPage:
+RTL
+
+
 ORG $C7DE7E
 db $F4, $BF, $EE
 
@@ -5648,6 +5681,58 @@ db $02, $00; Sword of Kings
 
 ORG $CF11BA
 db $47, $80
+;;;;;;;;;;;;;;;;;;;;;
+;New storage
+ORG $C17A9D
+;LDA $F700,X
+
+ORG $C1911B
+;LDA $F700,X
+
+ORG $C19AB9
+;LDA $F700,X
+
+ORG $C191BE
+;LDA $F700,X
+
+ORG $C191C9
+;STA $F700,X
+
+ORG $C19152
+;ADC #$F700
+
+ORG $C191D3
+;LDA $F701,X
+
+ORG $C191E5
+;CMP #$0064
+
+ORG $C19B1E
+;CMP #$0064
+
+ORG $C190F9
+;LDA #$0064
+
+ORG $C19B3B
+JSL ClearStorageMenu
+
+ORG $C11E25
+;JSL ClearStoragePage
+
+ORG $EEC684
+db $18, $01, $29, $19, $02, $79, $9e, $a6, $95, $9e, $a4, $9f, $a2, $a9, $02, $19
+db $02, $83, $a4, $9f, $a2, $91, $97, $95, $02, $1c, $07, $02, $11, $09, $02, $dc
+db $96, $ee, $11, $b1, $c6, $ee, $22, $18, $00, $0a, $20, $96, $ee, $0e, $01, $19
+db $14, $1b, $02, $84, $c6, $ee, $ff, $18, $02, $1a, $07, $18, $03, $0d, $18, $00
+db $18, $03, $29, $1b, $02, $eb, $c6, $ee, $00, $1b, $04, $1b, $05, $19, $1a, $00
+db $1b, $04, $1d, $0b, $00, $1b, $02, $bd, $c6, $ee, $ff, $1b, $06, $1b, $0c, $19
+db $1c, $ff, $00, $0a, $bd, $c6, $ee, $18, $03, $0d, $18, $00, $18, $03, $29, $12
+db $0a, $87, $c6, $ee, $1c, $04, $1d, $19, $02, $1b, $03, $99, $e4, $c5, $00, $1a
+db $01, $84, $e5, $c5, $00, $8b, $e5, $c5, $00, $92, $e5, $c5, $00, $99, $e5, $c5
+db $00, $00, $0d, $00, $1b, $02, $30, $C7, $EE, $00, $19, $1b, $02, $1b, $02, $F6
+db $80, $EE, $00, $18, $09, $02, $1b, $02, $F6, $80, $EE, $00, $18, $03, $02, $18
+db $00, $18, $03, $29, $1b, $04, $02, $00
+
 
 
 ;If prayers skipped:
