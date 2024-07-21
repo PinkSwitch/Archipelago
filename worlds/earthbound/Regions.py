@@ -170,7 +170,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Tenda Village", player).add_exits(["Lumine Hall", "Deep Darkness Darkness"],
                                                              {"Lumine Hall": lambda state: state.has("Shyness Book", player),
-                                                              "Deep Darkness": lambda state: state.has_all({"Shyness Book", "Hawk Eye"}, player)})
+                                                              "Deep Darkness Darkness": lambda state: state.has_all({"Shyness Book", "Hawk Eye"}, player)})
 
     multiworld.get_region("Lumine Hall", player).add_exits(["Lost Underworld"])
 

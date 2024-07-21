@@ -663,9 +663,9 @@ def scale_enemies(world, rom):
     if world.scale_warning == True:
         warning(f"{world.location_order}")
 
-    rom.write_bytes(0x15F60F, bytearray([(levels[world.location_order.index(world.Paula_region)]) + world.random.randint(-3,3)])) #Paula starting level
-    rom.write_bytes(0x15F623, bytearray([(levels[world.location_order.index(world.Jeff_region)]) + world.random.randint(-3,3)])) #Jeff starting level
-    rom.write_bytes(0x15F637, bytearray([(levels[world.location_order.index(world.Poo_region)]) + world.random.randint(-3,3)])) #Poo starting level
+    rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) #Paula starting level
+    rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) #Jeff starting level
+    rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)])) #Poo starting level
 
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:
