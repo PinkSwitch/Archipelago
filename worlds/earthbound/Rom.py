@@ -158,7 +158,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in present_locations:
                 if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
-                    rom.write_bytes(present_locations[name], bytearray([0x00, 0x01]))
+                    rom.write_bytes(present_locations[name], bytearray([0x00, 0x00, 0x01]))
                 elif location.item.player != location.player:
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00, 0x00, (location.address - 0xEB0000)]))
                 elif item in item_id_table:

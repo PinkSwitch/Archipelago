@@ -98,7 +98,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                       "Northern Onett": lambda state: state.has("Police Badge", player)})
 
     multiworld.get_region("Twoson", player).add_exits(["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House"],
-                                                      {"Onett": lambda state: True,
+                                                      {"Onett": lambda state: state.has("Police Badge", player),
                                                        "Peaceful Rest Valley": lambda state: state.has("Pencil Eraser", player),
                                                        "Threed": lambda state: state.has_any({"Threed Tunnels Clear", "Wad of Bills"}, player),
                                                        "Everdred's House": lambda state: state.has("Paula", player)})
