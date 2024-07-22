@@ -5386,18 +5386,29 @@ PLY
 EndStorageCheck2:
 RTL
 
-ClearStoragePage:
-JSL $C0ABE0
-LDA $8958
-AND #$00FF
-CMP #$000D
-BNE DontClearPage
-PHY
-JSL $C3E7E3
-;JSL $
+AutoText:
+LDA $0069
+AND #$4000;Is Y held?
+BEQ .HoldY
+RTL
+.HoldY:
+LDA $006D
+AND #$E0A0
+RTL
 
-PLY
-DontClearPage:
+LostScriptedFight:
+STZ $5D98
+LDA #$0001
+PLD
+RTL
+
+PrintVersionNumber:
+JSL $C3E4D4
+LDA #$0000B
+JSL $C1DD47
+
+LDA #$0100
+JSL $C10EFC
 RTL
 
 
@@ -5832,7 +5843,38 @@ ORG $EEC8DB
 db $19, $10, $01, $0d, $00, $1b, $05, $18, $02, $1b, $06, $1a, $05, $02, $00, $1b
 db $06, $18, $09, $02, $1b, $05, $18, $03, $02, $18, $00, $18, $03, $29, $1b, $06
 db $1b, $02, $c2, $e4, $c5, $00, $1b, $04, $02, $02
+;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C10119
+JSL AutoText
+BRA $00
 
+ORG $C1015C
+JSL AutoText
+BRA $00
+
+ORG $C10224
+JSL AutoText
+BRA $00
+
+ORG $C10278
+JSL AutoText
+BRA $00
+
+ORG $C101D8
+JSL AutoText
+BRA $00
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;Fix OSS Bug
+ORG $C22FD1
+JML LostScriptedFight
+NOP
+
+ORG $C22FEC
+JML LostScriptedFight
+NOP
+;;;;;;;;;;;;;;;;;;;
+ORG $C1F80D
+;JSL PrintVersionNumber
 
 
 
