@@ -949,13 +949,13 @@ ORG $C9AF4B
 db $D9,$00
 
 ORG $CFDA7E
-db $D9,$03,$02; Dungeon Man signs
+db $D8,$03,$02; Dungeon Man signs
 
 ORG $CFDA8F
-db $D9,$03,$01; Dungeon Man signs
+db $D8,$03,$01; Dungeon Man signs
 
 ORG $CFD908
-db $D9, $03, $01;Submarine Visibility
+db $D8, $03, $01;Submarine Visibility
 
 ORG $C57C2E
 db $04, $d8, $03, $0a, $39, $7c, $c5, $6f, $7c
