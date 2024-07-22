@@ -398,7 +398,7 @@ uncommon_items: List[str] = [
     "Pasta di Summers",
     "Pizza",
     "Chef's Special",
-    "Super Plush Bear"
+    "Super Plush Bear",
     "PSI Caramel",
     "Jar of Delisauce",
     "Secret Herb",
