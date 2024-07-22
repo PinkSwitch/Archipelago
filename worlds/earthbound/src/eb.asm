@@ -5825,6 +5825,9 @@ db $00, $00
 ORG $C636E5
 db $0a, $29, $59, $c7; Disables Escargo phone call
 
+ORG $C8A01F
+db $02
+
 
 
 
