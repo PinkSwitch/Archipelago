@@ -215,7 +215,7 @@ item_table: Dict[str, ItemData] = {
     "Contact Lens": ItemData("Key Items", 0xEB00BB, ItemClassification.progression),
 
     "Hand-Aid": ItemData("Food", 0xEB00BC, ItemClassification.useful),
-    "Trout Yogurt": ItemData("Food", 0xEB00BD, ItemClassification.filler),
+    "Trout Yogurt": ItemData("Food", 0xEB00BD, ItemClassification.filler, 0),
     "Banana": ItemData("Food", 0xEB00BE, ItemClassification.filler, 0),
     "Calorie Stick": ItemData("Food", 0xEB00BF, ItemClassification.filler, 0),
     "Key to the Tower": ItemData("Key Items", 0xEB00C0, ItemClassification.progression),
@@ -322,6 +322,7 @@ item_table: Dict[str, ItemData] = {
 common_items: List[str] = [
     "Cookie",
     "Bag of Fries",
+    "Teddy Bear",
     "Hamburger",
     "Boiled Egg",
     "Fresh Egg",
@@ -364,7 +365,8 @@ common_items: List[str] = [
     "Molokheiya Soup",
     "Plain Roll",
     "Magic Tart",
-    "Popsicle"
+    "Popsicle",
+    "Bottle Rocket"
 ]
 
 common_gear: List[str] = [
@@ -383,7 +385,6 @@ common_gear: List[str] = [
     "Great Charm",
     "Cheap Bracelet",
     "Copper Bracelet",
-    "Silver Bracelet",
     "Baseball Cap",
     "Mr. Baseball Cap",
     "Holmes Hat",
@@ -394,21 +395,15 @@ common_gear: List[str] = [
 ]
 
 uncommon_items: List[str] = [
-    "Flame Pendant",
-    "Rain Pendant",
-    "Night Pendant",
-    "Silver Bracelet",
-    "Gold Bracelet",
-    "Coin of Slumber",
     "Pasta di Summers",
     "Pizza",
     "Chef's Special",
+    "Super Plush Bear"
     "PSI Caramel",
     "Jar of Delisauce",
     "Secret Herb",
     "Xterminator Spray",
     "Snake Bag",
-    "Bottle Rocket",
     "Bomb",
     "Rust Promoter DX",
     "Pair of Dirty Socks",
@@ -417,7 +412,6 @@ uncommon_items: List[str] = [
     "Sudden Guts Pill",
     "Picture Postcard",
     "Viper",
-    "Coin of Silence",
     "Repel Sandwich",
     "Lucky Sandwich",
     "Peanut Cheese Bar",
@@ -428,6 +422,7 @@ uncommon_items: List[str] = [
     "Mammoth Burger",
     "Bottle of DXwater",
     "Magic Pudding",
+    "Big Bottle Rocket",
     "Bazooka"
 
 ]
@@ -444,11 +439,18 @@ uncommon_gear: List[str] = [
     "Trick Yo-yo",
     "Bionic Slingshot",
     "Crystal Charm",
-    "Gold Bracelet",
     "Platinum Band",
     "Diamond Band",
     "Defense Ribbon",
-    "Lucky Coin"
+    "Earth Pendant",
+    "Flame Pendant",
+    "Rain Pendant",
+    "Night Pendant",
+    "Lucky Coin",
+    "Silver Bracelet",
+    "Gold Bracelet",
+    "Coin of Slumber",
+    "Coin of Silence",
 ]
 
 
@@ -464,7 +466,6 @@ rare_items: List[str] = [
     "Vital Capsule",
     "Luck Capsule",
     "Horn of Life",
-    "Big Bottle Rocket",
     "Multi Bottle Rocket",
     "Super Bomb",
     "Bag of Dragonite",
@@ -486,7 +487,6 @@ rare_gear: List[str] = [
     "Magic Fry Pan",
     "Combat Yo-yo",
     "Sword of Kings",
-    "Earth Pendant",
     "Sea Pendant",
     "Star Pendant",
     "Goddess Ribbon",

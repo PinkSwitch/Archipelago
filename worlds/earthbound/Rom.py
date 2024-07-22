@@ -285,7 +285,7 @@ def patch_rom(world, rom, player: int, multiworld):
     elif world.options.magicant_mode == 2:
         rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
     
-    flavor_address = 0x3FAEE0
+    flavor_address = 0x3FAF10
     for i in range(4):
         rom.write_bytes(flavor_address, bytearray(world.flavor_text[i]))
         flavor_addr = flavor_address - 0x3F0000

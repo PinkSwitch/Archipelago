@@ -946,16 +946,16 @@ ORG $CF794B
 db $00
 
 ORG $C9AF4B
-db $D8,$00
+db $D9,$00
 
 ORG $CFDA7E
-db $D8,$03,$02; Dungeon Man signs
+db $D9,$03,$02; Dungeon Man signs
 
 ORG $CFDA8F
-db $D8,$03,$01; Dungeon Man signs
+db $D9,$03,$01; Dungeon Man signs
 
 ORG $CFD908
-db $D8, $03, $01;Submarine Visibility
+db $D9, $03, $01;Submarine Visibility
 
 ORG $C57C2E
 db $04, $d8, $03, $0a, $39, $7c, $c5, $6f, $7c
@@ -5054,7 +5054,7 @@ ORG $C1F780
 LDA #$00FF
 
 ORG $C1F72A
-LDA #$AEE0
+LDA #$AF10;Flavor pointer
 
 ORG $C1FE8A
 LDA #$1FB8
@@ -5203,7 +5203,7 @@ ORG $C9DAB4
 db $0A, $58, $BE, $EE
 
 ORG $EEA9AF
-db $0A, $8A, $BE, $EE
+db $0A, $9A, $BE, $EE
 
 ORG $EEBE8A
 db $50, $99, $9e, $50, $a4, $98, $95, $50, $a3, $a4, $91, $a4, $a5, $95, $57, $a3
@@ -5747,6 +5747,7 @@ db $00, $00, $0d, $00, $1b, $02, $30, $C7, $EE, $00, $19, $1b, $02, $1b, $02, $F
 db $C6, $EE, $00, $18, $09, $02, $1b, $02, $F8, $C6, $EE, $00, $18, $03, $02, $18
 db $00, $18, $03, $29, $1b, $04, $02, $00
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Twoson police officer
 ORG $CF67AF
 db $0b, $00
 
@@ -5782,7 +5783,47 @@ db $5e, $03, $18, $04, $04, $69, $00, $1f, $16, $9b, $00, $02, $10, $04, $1f, $1
 db $9b, $00, $00, $02
 
 ORG $D56EDF
-db $3B
+db $3B;Item type for the Police Badge
+
+ORG $CF6277
+db $00, $00; Remove police from Onett
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C577A0
+db $0A, $6F, $C8, $EE
+
+ORG $EEC86F
+db $04, $5e, $02, $1d, $01, $ff, $c0, $0a, $a4, $77, $c5
+
+ORG $C6FB13
+db $7A, $C8, $EE
+
+ORG $EEC87A
+db $08, $33, $fb, $c6, $ff, $1d, $01, $ff, $ac, $02
+
+ORG $C8720F
+db $84, $C8, $EE
+
+ORG $EEC884
+db $1d, $01, $ff, $b9, $0a, $20, $72, $c8
+
+ORG $C57076
+db $01, $01, $01, $01
+
+ORG $C9FD1A
+db $0A, $8C, $C8, $EE
+
+ORG $EEC88C
+db $a4, $51, $03, $00, $70, $79, $9e, $50, $99, $a4, $a3, $50, $9c, $91, $a3, $a4
+db $50, $9d, $9f, $9d, $95, $9e, $a4, $a3, $5c, $10, $0a, $50, $a4, $98, $95, $50
+db $95, $a2, $91, $a3, $95, $a2, $50, $a5, $a3, $95, $94, $50, $a4, $98, $95, $50
+db $75, $a2, $91, $a3, $95, $a2, $50, $75, $a2, $91, $a3, $95, $a2, $50, $75, $a2
+db $91, $a3, $95, $a2, $51, $59, $03, $1d, $01, $ff, $d2, $0a, $1e, $fd, $c9
+
+ORG $C8255E
+db $00, $00
+
+ORG $C636E5
+db $0a, $29, $59, $c7; Disables Escargo phone call
 
 
 
