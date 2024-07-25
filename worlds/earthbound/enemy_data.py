@@ -629,6 +629,10 @@ def scale_shield(level, shield):
 
 
 def scale_enemies(world, rom):
+    world.Paula_scaled = False
+    world.Jeff_scaled = False
+    world.Poo_scaled = False
+    world.last_combat_region = None
     state = world.multiworld.get_all_state(True)
     distances: Dict[str, int] = {}
     for region in world.multiworld.get_regions(world.player):
@@ -647,6 +651,20 @@ def scale_enemies(world, rom):
     location_test = []
     world.scale_warning = False
     for i, sphere in enumerate(world.multiworld.get_spheres()):
+        all_locs = [loc for loc in sphere]
+        for loc in all_locs:
+            if loc.parent_region.name in combat_regions:
+                world.last_combat_region = loc.parent_region.name
+            if loc.parent_region.name in [world.Paula_region, world.Jeff_region, world.Poo_region] and loc.parent_region.name not in combat_regions:
+                if loc.parent_region.name == world.Paula_region and world.Paula_scaled == False:
+                    world.Paula_region = world.last_combat_region
+                    world.Paula_scaled = True
+                elif loc.parent_region.name == world.Jeff_region and world.Jeff_scaled == False:
+                    world.Jeff_region = world.last_combat_region
+                    world.Jeff_scaled = True
+                if loc.parent_region.name == world.Poo_region and world.Poo_scaled == False:
+                    world.Poo_region = world.last_combat_region
+                    world.Poo_scaled = True
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
         regions = {loc.parent_region.name for loc in locs}
         for region in sorted(regions, key=lambda x: distances.get(x, float('inf'))):
@@ -663,6 +681,12 @@ def scale_enemies(world, rom):
     if world.scale_warning == True:
         warning(f"{world.location_order}")
 
+    if "Paula" in world.start_items:
+        world.Paula_region = world.location_order[0]
+    if "Jeff" in world.start_items:
+        world.Jeff_region = world.location_order[0]
+    if "Poo" in world.start_items:
+        world.Poo_region = world.location_order[0]
     rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) #Paula starting level
     rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) #Jeff starting level
     rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)])) #Poo starting level

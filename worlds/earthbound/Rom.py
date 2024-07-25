@@ -79,7 +79,9 @@ def patch_rom(world, rom, player: int, multiworld):
                     13: [0x9C, 0x00, 0x84, 0x17], #Lost Underworld
                     14: [0x4B, 0x11, 0xAD, 0x18] #Magicant
     }
-
+    world.start_items = []
+    for item in world.multiworld.precollected_items[world.player]:
+        world.start_items.append(item.name)
 
     if world.options.random_start_location != 0:
         rom.write_bytes(0x0F96C2, bytearray([0x69, 0x00]))
@@ -325,15 +327,15 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_character_count.append(item.name)
                 starting_char += 1
 
+    world.Paula_placed = False
+    world.Jeff_placed = False
+    world.Poo_placed = False
     for sphere_number, sphere in enumerate(world.multiworld.get_spheres(), start=1):
         for location in sphere:
-            if location.parent_region.name in combat_regions:
-                world.last_combat_region = location.parent_region.name
-            if location.item.name in ["Paula", "Jeff", "Poo"]:
-                if location.parent_region.name in combat_regions:
-                    setattr(world, f"{location.item.name}_region", location.parent_region.name)
-                else:
-                    setattr(world, f"{location.item.name}_region", world.last_combat_region)
+            if location.item.name in ["Paula", "Jeff", "Poo"] and not getattr(world, f"{location.item.name}_placed"):
+                setattr(world, f"{location.item.name}_region", location.parent_region.name)
+                setattr(world, f"{location.item.name}_placed", True)
+
 
 
     scale_enemies(world, rom)
