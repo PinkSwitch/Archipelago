@@ -321,6 +321,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Lost Underworld - Talking Rock": [0x2EB751],
     "Cave of the Present - Star Master": [0x2EB8DF],
     "Magicant - Ness's Nightmare": [0x2EB803, 0x2EB87C],
+    "Dungeon Man - 1F Exit Ledge Present": [0x057A55]
 }
 
 npc_locations = { #Locations given to you by an NPC
@@ -373,7 +374,8 @@ npc_locations = { #Locations given to you by an NPC
     "Tenda Village - Tenda Gift": [0x09DAF0],
     "Tenda Village - Tenda Gift #2": [0x09D814],
     "Magicant - Ness's Gift": [0x077629],
-    "Cave of the Present - Broken Phase Distorter": [0x2F590C]
+    "Cave of the Present - Broken Phase Distorter": [0x2F590C],
+    "Dungeon Man - 1F Exit Ledge Present": [0x057A6B]
 
 }
 

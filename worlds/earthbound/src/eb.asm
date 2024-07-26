@@ -176,6 +176,9 @@ JML GetStartingNames
 ORG $C40BCE
 JML ResetGame
 
+ORG $C04AA6
+JML ClearNameOnBattle
+
 
 
 ORG $C1FEBC
@@ -5402,13 +5405,10 @@ LDA #$0001
 PLD
 RTL
 
-PrintVersionNumber:
-JSL $C3E4D4
-LDA #$0000B
-JSL $C1DD47
-
-LDA #$0100
-JSL $C10EFC
+ClearNameOnBattle:
+LDA #$0001
+STA $5D98
+STZ $B573
 RTL
 
 
@@ -5875,6 +5875,26 @@ NOP
 ;;;;;;;;;;;;;;;;;;;
 ORG $C1F80D
 ;JSL PrintVersionNumber
+
+ORG $C57948
+db $49, $00; Dungeon man if submarine is used
+
+ORG $C5796B
+db $D8, $03
+
+ORG $C5794F
+db $D8, $03
+
+ORG $C57A26
+db $06, $9c, $03, $55, $79, $c5, $ff, $70, $78, $95, $a2, $95, $5c, $10, $0a, $50
+db $79, $50, $92, $95, $9c, $99, $95, $a6, $95, $50, $a9, $9f, $a5, $50, $98, $91
+db $a6, $95, $50, $9c, $95, $96, $a4, $50, $a4, $98, $99, $a3, $50, $1c, $05, $01
+db $50, $92, $95, $98, $99, $9e, $94, $5e, $03, $1d, $03, $ff, $1b, $02, $76, $7a
+db $c5, $ff, $1d, $0e, $ff, $01, $08, $cf, $dc, $c7, $ff, $03, $04, $9c, $03, $02
+db $00, $70, $89, $9f, $a5, $50, $a3, $98, $9f, $a5, $9c, $94, $50, $93, $9f, $9d
+db $95, $50, $92, $91, $93, $9b, $50, $a7, $98, $95, $9e, $50, $a9, $9f, $a5, $50
+db $98, $91, $a6, $95, $50, $9d, $9f, $a2, $95, $50, $a2, $9f, $9f, $9d, $5e, $13
+db $02
 
 
 
