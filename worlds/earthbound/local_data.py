@@ -1007,6 +1007,36 @@ special_name_overrides = {
     "Snow Wood - Bottom Left Locker": 0x2EBFD3
 }
 
+protection_checks = {
+    "thunder": [0x0297D2],
+    "fire": [0x2FFC35, 0x2FFC77],
+    "freeze": [0x2FFC56],
+    "flash": [0x2FFC9B],
+    "starstorm": [0x2FFCC0],
+    "special": [0x2FFC1E],
+    "explosive": [0x2FFCE0]
+}
+
+badge_names = {
+    "thunder": "Franklin badge",
+    "fire": "Bunsen badge",
+    "freeze": "Thilorier badge",
+    "flash": "Cowen badge",
+    "starstorm": "Leavitt badge",
+    "special": "Mesmer badge",
+    "explosive": "Nobel badge"
+}
+
+protection_text = {
+    "thunder": [0x11, 0xC9, 0xEE, 0x5F, 0xC9, 0xEE],
+    "fire": [0x1C, 0xC9, 0xEE, 0x69, 0xC9, 0xEE],
+    "freeze": [0x22, 0xC9, 0xEE, 0x6E, 0xC9, 0xEE],
+    "flash": [0x28, 0xC9, 0xEE, 0x72, 0xC9, 0xEE],
+    "starstorm": [0x2F, 0xC9, 0xEE, 0x78, 0xC9, 0xEE],
+    "special": [0x3A, 0xC9, 0xEE, 0x82, 0xC9, 0xEE],
+    "explosive": [0x4A, 0xC9, 0xEE, 0x89, 0xC9, 0xEE]
+}
+
     #0: Action pointer, call the actual item being given
     #1: Sprite ID
     #2: Secondary routine pointer, used for items and psi

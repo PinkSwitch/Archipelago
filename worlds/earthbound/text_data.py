@@ -170,3 +170,12 @@ lumine_hall_text = [
 
 
 ]
+
+def text_encoder(text, eb_text_table, textcap):
+    encoded_text = bytearray()
+    for char in text[:textcap]:
+        if char in eb_text_table:
+            encoded_text.extend(eb_text_table[char])
+        else:
+            encoded_text.extend([0x6F])
+    return encoded_text

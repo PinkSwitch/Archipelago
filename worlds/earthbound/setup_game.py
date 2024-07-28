@@ -44,6 +44,21 @@ def setup_gamevars(world):
         world.uncommon_gear.append("Broken Cannon")
         world.rare_gear.append("Broken Antenna")
 
+    world.franklinbadge_elements = [
+        "thunder",
+        "fire",
+        "freeze",
+        "flash",
+        "starstorm",
+        "special",
+        "explosive"
+    ]
+
+    if world.options.randomize_franklinbadge_protection:
+        world.franklin_protection = world.random.choice(world.franklinbadge_elements)
+    else:
+        world.franklin_protection = "thunder"
+
     world.hinted_regions = [
         "Northern Onett",
         "Onett",

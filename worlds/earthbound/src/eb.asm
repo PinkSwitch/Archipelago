@@ -178,7 +178,32 @@ JML ResetGame
 
 ORG $C04AA6
 JML ClearNameOnBattle
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;Franklin badge checks
+ORG $C29549
+JML ReflectSpecial
 
+ORG $C29597
+JML ReflectFire
+
+ORG $C2901E
+JML ReflectFireBall
+
+ORG $C295F4
+JML ReflectFreeze
+
+ORG $C298B6
+JML ReflectFlash
+
+ORG $C29A90
+JML ReflectStarstorm
+
+ORG $C2A666
+JML ReflectExplode
+
+ORG $C2A6A4
+;JML ReflectExplosionSplash
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ORG $C1FEBC
@@ -5410,8 +5435,167 @@ LDA #$0001
 STA $5D98
 STZ $B573
 RTL
+;;;;;;;;;;;;;;;;
+;Franklin badge stuff
+ReflectSpecial:
+LDX #$00FF
+LDA $12
+PHA
+PHX
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLX
+PLA
+JML $C2954E
+
+ReflectFire:
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+LDX $A972
+LDA $003A,X
+JML $C2959D
+
+ReflectFreeze:
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+LDX $A972
+LDA $0038,X
+JML $C295FA
+
+ReflectFireBall:
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+LDX $A972
+LDA $003A,X
+AND #$00FF
+JML $C29024
+
+ReflectFlash:
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+LDX $A972
+SEP #$20
+JML $C298BB
+
+ReflectStarstorm:
+CMP #$0000
+BNE StarstormEnd
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+JML $C29A95
+StarstormEnd:
+JML $C29AA4
+
+ReflectExplode:
+PHX
+LDA $0E
+PHA
+LDA $0F
+PHA
+JSR CheckFranklinBadge
+CMP #$0000
+BEQ .Reflect
+JSR ReflectAttack
+.Reflect:
+PLA
+STA $0F
+PLA
+STA $0E
+LDA #$0000
+STA $04
+PLX
+JML $C2A66B
+
+CheckFranklinBadge:
+LDX #$0001
+STX $16
+LDX $A972
+LDA $0010,X
+AND #$00FF
+INC
+LDX $16
+JSL $C45683
+RTS
+
+ReflectAttack:
+LDA #$7160
+STA $0E
+LDA #$00EF
+STA $10
+JSL $C1DC1C
+LDA #$0001
+STA $AA96
+JSL DealReflect
+RTS
+
+ORG $C2FFE0
+DealReflect:
+JSR $7E8A
+RTL
 
 
+
+
+
+;;;;;;;;;;;;;;;;
 ORG $C7DE7E
 db $F4, $BF, $EE
 
@@ -5896,7 +6080,28 @@ db $95, $50, $92, $91, $93, $9b, $50, $a7, $98, $95, $9e, $50, $a9, $9f, $a5, $5
 db $98, $91, $a6, $95, $50, $9d, $9f, $a2, $95, $50, $a2, $9f, $9f, $9d, $5e, $13
 db $02
 
+ORG $C5373A
+db $0a, $05, $c9, $ee
 
+ORG $EEC905
+db $a3, $50, $91, $08, $3a, $c9, $ee, $ff, $0a, $41, $37, $c5, $50, $9c, $99, $97
+db $98, $a4, $9e, $99, $9e, $97, $02, $50, $96, $99, $a2, $95, $02, $9e, $50, $99
+db $93, $95, $02, $50, $96, $9c, $91, $a3, $98, $02, $50, $a3, $a4, $91, $a2, $a3
+db $a4, $9f, $a2, $9d, $02, $50, $a0, $a3, $a9, $93, $98, $99, $93, $50, $95, $9e
+db $95, $a2, $97, $a9, $02, $9e, $50, $95, $a8, $a0, $9c, $9f, $a3, $99, $a6, $95
+db $02
+
+ORG $EF717B
+db $0a, $56, $c9, $ee
+
+ORG $EEC956
+db $08, $82, $c9, $ee, $ff, $0a, $80, $71, $ef, $9c, $99, $97, $98, $a4, $9e, $99
+db $9e, $97, $02, $96, $99, $a2, $95, $02, $99, $93, $95, $02, $9c, $99, $97, $98
+db $a4, $02, $a3, $a4, $91, $a2, $a3, $a4, $9f, $a2, $9d, $02, $95, $9e, $95, $a2
+db $97, $a9, $02, $92, $9c, $91, $a3, $a4, $02
+
+ORG $EF7163
+db $1c, $05, $01, $0a, $70, $71, $ef
 
 
 ;If prayers skipped:

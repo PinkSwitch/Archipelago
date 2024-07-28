@@ -681,11 +681,11 @@ def scale_enemies(world, rom):
     if world.scale_warning == True:
         warning(f"{world.location_order}")
 
-    if "Paula" in world.start_items:
+    if "Paula" in world.start_items or world.Paula_region == None:
         world.Paula_region = world.location_order[0]
-    if "Jeff" in world.start_items:
+    if "Jeff" in world.start_items or world.Jeff_region == None:
         world.Jeff_region = world.location_order[0]
-    if "Poo" in world.start_items:
+    if "Poo" in world.start_items or world.Poo_region == None:
         world.Poo_region = world.location_order[0]
     rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) #Paula starting level
     rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) #Jeff starting level

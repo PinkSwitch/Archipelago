@@ -470,7 +470,6 @@ rare_items: List[str] = [
     "Super Bomb",
     "Bag of Dragonite",
     "Meteotite",
-    "Charm Coin",
     "Repel Superwich",
     "Piggy Jelly",
     "Spicy Jerky",
@@ -491,7 +490,8 @@ rare_gear: List[str] = [
     "Star Pendant",
     "Goddess Ribbon",
     "Talisman Coin",
-    "Shiny Coin"
+    "Shiny Coin",
+    "Charm Coin"
 ]
 
 

@@ -76,6 +76,11 @@ class ShuffleDrops(Toggle):
        Drop rates are unchanged."""
     display_name = "Shuffle Drops"
 
+class RandomFranklinBadge(Toggle):
+    """If enabled, the Franklin Badge will reflect a randomly selected attack type. The type can be determined from the item's name, as well as the help
+       text for it. The badge's function outside of battle will not change, and neither will its name outside of the game itself."""
+    display_name = "Franklin Badge Protection"
+
 class CommonWeight(Range):
     """Weight for placing a common filler item."""
     display_name = "Common Filler Weight"
@@ -141,6 +146,7 @@ class EBOptions(PerGameCommonOptions):
     easy_deaths: EasyDeaths
     random_flavors: RandomFlavors
     prefixed_items: PreFixItems
+    randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
