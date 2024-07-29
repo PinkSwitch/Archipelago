@@ -201,8 +201,8 @@ JML ReflectStarstorm
 ORG $C2A666
 JML ReflectExplode
 
-ORG $C2A6A4
-;JML ReflectExplosionSplash
+ORG $C2A66B
+JML SkipExplosionDeathReflect
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -5565,6 +5565,11 @@ PLX
 JML $C2A66B
 
 CheckFranklinBadge:
+LDX $A972
+REP #$20
+LDA $000E,X
+AND #$00FF
+BNE NotPlayerChar
 LDX #$0001
 STX $16
 LDX $A972
@@ -5574,8 +5579,14 @@ INC
 LDX $16
 JSL $C45683
 RTS
+NotPlayerChar:
+LDA #$0000
+RTS
 
 ReflectAttack:
+;LDA $AA96
+;AND #$00FF
+;BNE SkipReflect
 LDA #$7160
 STA $0E
 LDA #$00EF
@@ -5585,11 +5596,31 @@ LDA #$0001
 STA $AA96
 JSL DealReflect
 RTS
+SkipReflect:
+STZ $AA96
+SkipSuperreflect:
+RTS
+
+SkipExplosionDeathReflect:
+LDA $AA90; Is death attack?
+AND #$00FF
+BEQ .ForceExplode
+LDA $AA96
+BNE .SkipExplode; Is already reflected
+.ForceExplode
+LDA $1A
+JML ExplodeReturn
+.SkipExplode:
+JML $C2A6A9
 
 ORG $C2FFE0
 DealReflect:
 JSR $7E8A
 RTL
+
+ExplodeReturn:
+JSR $6A44
+JML $C2A670
 
 
 
