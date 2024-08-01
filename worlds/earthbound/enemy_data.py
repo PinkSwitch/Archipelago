@@ -340,7 +340,8 @@ def initialize_enemies(world):
                               "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies["Frank"], world.enemies["Frankystein Mark II"]},
                               "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies["Titanic Ant"]},
                               "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies["Captain Strong"], world.enemies["Ramblin' Evil Mushroom"],
-                                         world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"]},
+                                         world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"],
+                                         world.enemies["Runaway Dog"]},
                               "Everdred's House": {world.enemies["Everdred"]},
                               "Peaceful Rest Valley": {world.enemies["Li'l UFO"], world.enemies["Mobile Sprout"], world.enemies["Spinning Robo"], world.enemies["Territorial Oak"]},
                               "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies["Mr. Carpainter"], world.enemies["Mr. Carpainter (2)"]},
@@ -655,7 +656,7 @@ def scale_enemies(world, rom):
         for loc in all_locs:
             if loc.parent_region.name in combat_regions:
                 world.last_combat_region = loc.parent_region.name
-            if loc.parent_region.name in [world.Paula_region, world.Jeff_region, world.Poo_region] and loc.parent_region.name not in combat_regions:
+            if (loc.parent_region.name in [world.Paula_region, world.Jeff_region, world.Poo_region] and loc.parent_region.name not in combat_regions) and world.options.auto_scale_party_members:
                 if loc.parent_region.name == world.Paula_region and world.Paula_scaled == False:
                     world.Paula_region = world.last_combat_region
                     world.Paula_scaled = True
@@ -668,28 +669,31 @@ def scale_enemies(world, rom):
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
         regions = {loc.parent_region.name for loc in locs}
         for region in sorted(regions, key=lambda x: distances.get(x, float('inf'))):
-            if region not in distances:
-                warning(f"Warning: {region} is not in distances. for player {world.player}")
-                if world.scale_warning == False:
-                    warning(f"{distances}")
-                    world.scale_warning = True
+            #if region not in distances:
+                #warning(f"Warning: {region} is not in distances. for player {world.player}")
+                #if world.scale_warning == False:
+                    #warning(f"{distances}")
+                    #world.scale_warning = True
             world.location_order.append(region)
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
+    elif world.options.magicant_mode == 3:
+        world.location_order.remove("Magicant")
+        world.location_order.insert(world.location_order.index("Endgame") - 1, "Magicant")
 
-    if world.scale_warning == True:
-        warning(f"{world.location_order}")
-
-    if "Paula" in world.start_items or world.Paula_region == None:
-        world.Paula_region = world.location_order[0]
-    if "Jeff" in world.start_items or world.Jeff_region == None:
-        world.Jeff_region = world.location_order[0]
-    if "Poo" in world.start_items or world.Poo_region == None:
-        world.Poo_region = world.location_order[0]
-    rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) #Paula starting level
-    rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) #Jeff starting level
-    rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)])) #Poo starting level
+    #if world.scale_warning == True:
+        #warning(f"{world.location_order}")
+    if world.options.auto_scale_party_members:
+        if "Paula" in world.start_items or world.Paula_region == None:
+            world.Paula_region = world.location_order[0]
+        if "Jeff" in world.start_items or world.Jeff_region == None:
+            world.Jeff_region = world.location_order[0]
+        if "Poo" in world.start_items or world.Poo_region == None:
+            world.Poo_region = world.location_order[0]
+        rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) #Paula starting level
+        rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) #Jeff starting level
+        rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)])) #Poo starting level
 
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:

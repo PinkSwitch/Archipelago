@@ -166,7 +166,7 @@ class EarthBoundWorld(World):
             excluded_items.add("Magicant Teleport")
             excluded_items.add("Progressive Poo PSI")
             excluded_items.add("Dalaam Teleport")
-        elif self.options.magicant_mode != 0:
+        elif self.options.magicant_mode not in [0, 3]:
             excluded_items.add("Magicant Teleport")
 
         if self.options.character_shuffle == 0:
@@ -179,6 +179,9 @@ class EarthBoundWorld(World):
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
+
+        if name == "Magicant Teleport" and self.options.magicant_mode == 3:
+            item.classification = ItemClassification.useful
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
@@ -232,7 +235,7 @@ class EarthBoundWorld(World):
                 self.create_item("Progressive Poo PSI")
             ])
 
-            if self.options.magicant_mode == 0:
+            if self.options.magicant_mode in [0, 3]:
                 prefill_items.append(self.create_item("Magicant Teleport"))
             self.random.shuffle(prefill_items)
             add_item_rule(self.multiworld.get_location("Onett - Buzz Buzz", self.player), lambda item: item.name in self.item_name_groups["PSI"])

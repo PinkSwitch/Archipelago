@@ -31,8 +31,8 @@ SAVE_FILE = WRAM_START + 0xB4A1
 GIYGAS_CLEAR = WRAM_START + 0x9C11
 GAME_CLEAR = WRAM_START + 0x9C85
 OPEN_WINDOW = WRAM_START + 0x8958
-OSS_FLAG = WRAM_START + 0x5D98
 MELODY_TABLE = WRAM_START + 0x9C1E
+CUR_SCENE = WRAM_START + 0x97B8
 
 
 class EarthBoundClient(SNIClient):
@@ -46,8 +46,6 @@ class EarthBoundClient(SNIClient):
         if rom_name is None or rom_name[:6] != b"MOM2AP":
             return False
 
-        ctx.command_processor.commands["disable_oss_flag"] = cmd_disable_oss_flag
-        ctx.command_processor.commands["kill"] = kill
         ctx.game = self.game
         ctx.items_handling = 0b001
         ctx.rom = rom_name
@@ -61,8 +59,8 @@ class EarthBoundClient(SNIClient):
         special_received = await snes_read(ctx, SPECIAL_RECEIVED, 0x1)
         save_num = await snes_read(ctx, SAVE_FILE, 0x1)
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
-        oss_status = await snes_read(ctx, OSS_FLAG, 1)
         melody_table = await snes_read(ctx, MELODY_TABLE, 2)
+        cur_script = awaitsnes_read(ctx, CUR_SCENE, 1)
 
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         if rom != ctx.rom:
@@ -107,6 +105,9 @@ class EarthBoundClient(SNIClient):
         if item_received[0] or special_received[0] != 0x00: #If processing any item from the server
             return
 
+        if cur_script[0]: #Stop items during cutscenes
+            return
+
         recv_count = await snes_read(ctx, ITEMQUEUE_HIGH, 2)
         recv_index = struct.unpack("H", recv_count)[0]
         if recv_index < len(ctx.items_received):
@@ -125,24 +126,3 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
                     
         await snes_flush_writes(ctx)
-
-def cmd_disable_oss_flag(self, cmd: str = ""):
-    from SNIClient import snes_buffered_write
-    """Disables the OSS flag. Used for debugging as a failsafe"""
-    if self.ctx.game != "EarthBound":
-        print("This command can only be used while playing EarthBound")
-        return
-    print("Disabling OSS!")
-    snes_buffered_write(self.ctx, OSS_FLAG, bytes([0x00]))
-
-
-def kill(self, cmd: str = ""):
-    from SNIClient import snes_buffered_write
-    """Kills the player"""
-    if self.ctx.game != "EarthBound":
-        print("This command can only be used while playing EarthBound")
-        return
-    snes_buffered_write(self.ctx, WRAM_START + 0x9A13, bytes([0x00, 0x00, 0x00, 0x00]))
-    snes_buffered_write(self.ctx, WRAM_START + 0x9A72, bytes([0x00, 0x00, 0x00, 0x00]))
-    snes_buffered_write(self.ctx, WRAM_START + 0x9AD1, bytes([0x00, 0x00, 0x00, 0x00]))
-    snes_buffered_write(self.ctx, WRAM_START + 0x9B30, bytes([0x00, 0x00, 0x00, 0x00]))

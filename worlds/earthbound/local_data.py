@@ -309,7 +309,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Dalaam - Throne Character": [0x2EB4E2],
     "Monotoli Building - Monotoli Character": [0x2EB2C3],
     "Snow Wood - Bedroom": [0x2EB10D],
-    "Threed - Zombie Prisoner": [0x2EAFB1],
+    "Threed - Zombie Prisoner": [0x2EAFB1, 0x2EC9E1],
     "Happy-Happy Village - Prisoner": [0x2EBABA],
     "Saturn Valley - Saturn Coffee": [0x2EB008],
     "Monkey Caves - Monkey Power": [0x2EB1A1],

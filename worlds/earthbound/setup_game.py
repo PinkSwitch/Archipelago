@@ -136,7 +136,7 @@ def setup_gamevars(world):
     else:
         world.filler_drops.extend([0x07, 0x05, 0x09, 0x0B, 0x10])
 
-    if world.options.magicant_mode == 2:
+    if world.options.magicant_mode.value >= 2:
         world.magicant_junk = []
         for i in range(6):
             world.magicant_junk.append(world.random.choice(filler_items))
@@ -205,6 +205,8 @@ def place_static_items(world):
     if world.options.magicant_mode == 2:
         world.get_location("+1 Sanctuary").place_locked_item(world.create_item("Magicant Unlock"))
         world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Alternate Goal"))
+    elif world.options.magicant_mode == 3:
+        world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Magicant Boost"))
 
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))

@@ -25,12 +25,16 @@ class SanctuaryAltGoal(Toggle):
 
 class MagicantMode(Choice):
     """PSI Location: You will be able to find a Magicant teleport item. Ness's Nightmare contains a PSI location, and no stat boost.
-       Required: You will unlock the Magicant Teleport upon reaching your Sanctuary goal. If Giygas is required, beating Ness's Nightmare will unlock the Cave of the Past. Otherwise, Ness's Nightmare will finish your game.
-       Alternate Goal: You will unlock the Magicant Teleport upon reaching one more Sanctuary than required. Beating Ness's Nightmare will finish your game. Does nothing if Giygas is not required, or if 8 Sanctuaries are required."""
+       Required: You will unlock the Magicant Teleport upon reaching your Sanctuary goal. If Giygas is required, beating Ness's Nightmare will unlock the Cave of the Past and grant a party-wide stat boost. Otherwise, Ness's Nightmare will finish your game.
+       Alternate Goal: You will unlock the Magicant Teleport upon reaching one more Sanctuary than required. Beating Ness's Nightmare will finish your game. Does nothing if Giygas is not required, or if 8 Sanctuaries are required. Magicant locations are removed from the multiworld, but contain random junk for yourself.
+       Optional Boost: You will be able to find a Magicant teleport item. Beating Ness's Nightmare will grant a party-wide stat boost. Magicant locations are removed from the multiworld, but contain random junk for yourself.
+       Removed: Magicant will be completely inacessible."""
     display_name = "Magicant Mode"
     option_psi_location = 0
     option_required = 1
     option_alternate_goal = 2
+    option_optional_boost = 3
+    option_removed = 4
     default = 0
     
 
@@ -70,6 +74,10 @@ class PreFixItems(Toggle):
     """If enabled, broken items in the multiworld pool will be replaced with their fixed versions.
        This does not affect any items that are not placed by the multiworld."""
     display_name = "Prefixed Items"
+
+class AutoscaleParty(Toggle):
+    """If enabled, joining party members will be scaled to roughly the level of the sphere they were obtained in."""
+    display_name = "Autoscale Party Members"
 
 class ShuffleDrops(Toggle):
     """If enabled, enemies will drop random filler items. This does not put checks on enemy drops.
@@ -144,6 +152,7 @@ class EBOptions(PerGameCommonOptions):
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
+    auto_scale_party_members: AutoscaleParty
     random_flavors: RandomFlavors
     prefixed_items: PreFixItems
     randomize_franklinbadge_protection: RandomFranklinBadge
