@@ -115,6 +115,8 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(0x2EA26A, bytearray([0x08, 0xD9, 0x9B, 0xEE])) #Give stat boost if magicant + giygas required
         else:
             rom.write_bytes(0x2EA26A, bytearray([0x0A, 0x10, 0xA5, 0xEE])) #If no giygas, set credits
+    elif world.options.magicant_mode == 3:
+        rom.write_bytes(0x2EA26A, bytearray([0x08, 0x0F, 0x9C, 0xEE]))# Give only stat boost if set to boost
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
