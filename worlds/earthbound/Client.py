@@ -60,7 +60,7 @@ class EarthBoundClient(SNIClient):
         save_num = await snes_read(ctx, SAVE_FILE, 0x1)
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
         melody_table = await snes_read(ctx, MELODY_TABLE, 2)
-        cur_script = awaitsnes_read(ctx, CUR_SCENE, 1)
+        cur_script = await snes_read(ctx, CUR_SCENE, 1)
 
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         if rom != ctx.rom:
