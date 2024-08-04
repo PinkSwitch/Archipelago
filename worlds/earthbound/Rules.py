@@ -1,4 +1,4 @@
-from worlds.generic.Rules import set_rule, forbid_items_for_player
+from worlds.generic.Rules import set_rule, forbid_items_for_player, add_rule
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from . import EarthBoundWorld
@@ -21,16 +21,10 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #1", player), lambda state: state.has("Threed Tunnels Clear", player))
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #2", player), lambda state: state.has("Threed Tunnels Clear", player))
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #3", player), lambda state: state.has("Threed Tunnels Clear", player))
-    set_rule(world.multiworld.get_location("Monkey Caves - West 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - East 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - East End Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - East End Trashcan", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #1", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #2", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: state.has("Pencil Eraser", player) and (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: state.has("Pencil Eraser", player) and (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: state.has("Pencil Eraser", player) and (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
-    set_rule(world.multiworld.get_location("Monkey Caves - Monkey Power", player), lambda state: state.has("Pencil Eraser", player) and (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: state.has("Pencil Eraser", player))
+    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: state.has("Pencil Eraser", player))
+    set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: state.has("Pencil Eraser", player))
+    set_rule(world.multiworld.get_location("Monkey Caves - Monkey Power", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Dusty Dunes - Mine Reward", player), lambda state: state.has("Mining Permit", player))
     set_rule(world.multiworld.get_location("Snow Wood - Upper Right Locker", player), lambda state: state.has("Key to the Locker", player))
     set_rule(world.multiworld.get_location("Snow Wood - Upper Left Locker", player), lambda state: state.has("Key to the Locker", player))
@@ -42,17 +36,6 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Summers - Museum Item", player), lambda state: state.has("Tiny Ruby", player))
     set_rule(world.multiworld.get_location("Dalaam - Trial of Mu", player), lambda state: state.has("Poo", player))
     set_rule(world.multiworld.get_location("Poo Starting Item", player), lambda state: state.has("Poo", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Helicopter Present", player), lambda state: state.has("Hawk Eye", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Yellow Bird Present", player), lambda state: state.has("Hawk Eye", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Swamp Present", player), lambda state: state.has("Hawk Eye", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Corner Present", player), lambda state: state.has("Hawk Eye", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Alcove Present", player), lambda state: state.has("Hawk Eye", player))
-    set_rule(world.multiworld.get_location("Deep Darkness - North Alcove Truffle", player), lambda state: state.has_all({'Piggy Nose', 'Hawk Eye'}, player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Near Land Truffle", player), lambda state: state.has_all({'Piggy Nose', 'Hawk Eye'}, player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Present Truffle", player), lambda state: state.has_all({'Piggy Nose', 'Hawk Eye'}, player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Village Truffle", player), lambda state: state.has_all({'Piggy Nose', 'Hawk Eye'}, player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Entrance Truffle", player), lambda state: state.has_all({'Piggy Nose', 'Hawk Eye'}, player))
-    set_rule(world.multiworld.get_location("Deep Darkness - Barf Character", player), lambda state: state.has("Hawk Eye", player))
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Tea", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift #2", player), lambda state: state.has("Shyness Book", player))
@@ -63,3 +46,16 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     
     if world.options.giygas_required:
         set_rule(world.multiworld.get_location("Giygas", player), lambda state: state.has("Paula", player))
+
+    if world.options.monkey_caves_mode < 2:
+        set_rule(world.multiworld.get_location("Monkey Caves - West 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        set_rule(world.multiworld.get_location("Monkey Caves - East 2F Left Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        set_rule(world.multiworld.get_location("Monkey Caves - East End Chest", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        set_rule(world.multiworld.get_location("Monkey Caves - East End Trashcan", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #1", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        set_rule(world.multiworld.get_location("Monkey Caves - East West 3F Right Chest #2", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+
+        add_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        add_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        add_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
+        add_rule(world.multiworld.get_location("Monkey Caves - Monkey Power", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))

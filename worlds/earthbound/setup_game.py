@@ -211,6 +211,18 @@ def place_static_items(world):
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))
 
+    if not world.options.monkey_caves_mode:
+        world.get_location("Monkey Caves - 1F Right Chest").place_locked_item(world.create_item("Wet Towel"))
+        world.get_location("Monkey Caves - 1F Left Chest").place_locked_item(world.create_item("Pizza"))
+        world.get_location("Monkey Caves - West 2F Left Chest").place_locked_item(world.create_item("Pizza"))
+        world.get_location("Monkey Caves - West 2F Right Chest #1").place_locked_item(world.create_item("Hamburger"))
+        world.get_location("Monkey Caves - West 2F Right Chest #2").place_locked_item(world.create_item("Ruler"))
+        world.get_location("Monkey Caves - East 2F Left Chest").place_locked_item(world.create_item("Protein Drink"))
+        world.get_location("Monkey Caves - East 2F Right Chest").place_locked_item(world.create_item("Hamburger"))
+        world.get_location("Monkey Caves - East West 3F Right Chest #1").place_locked_item(world.create_item("Hamburger"))
+        world.get_location("Monkey Caves - East West 3F Right Chest #2").place_locked_item(world.create_item("Picnic Lunch"))
+
+
         #Add magicant, add sanc stuff, add alt goals...
             
 

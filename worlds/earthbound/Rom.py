@@ -120,6 +120,11 @@ def patch_rom(world, rom, player: int, multiworld):
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
+    if world.options.monkey_caves_mode == 2:
+        rom.write_bytes(0x062B87, bytearray([0x0A, 0x28, 0xCA, 0xEE]))
+    elif world.options.monkey_caves_mode == 3:
+        rom.write_bytes(0x0F1388, bytearray([0x03, 0xCA, 0xEE]))
+
     #Todo: sanc alt goal, change sanc script
 
     for location in world.multiworld.get_locations(player):
@@ -237,9 +242,9 @@ def patch_rom(world, rom, player: int, multiworld):
             if name == "Poo Starting Item":
                 world.handled_locations.append(name)
                 if item in item_id_table and location.item.player == location.player:
-                    rom.write_bytes(0x15F63B, bytearray([item_id]))
+                    rom.write_bytes(0x15F63C, bytearray([item_id]))
                 else:
-                    rom.write_bytes(0x15F63B, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
+                    rom.write_bytes(0x15F63C, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
 
                 if item in special_name_table and location.item.player == location.player: #Apply a special script if teleport or character
                     rom.write_bytes(0x15F7F6, bytearray(special_name_table[item][1:4]))
