@@ -6255,6 +6255,9 @@ db $1f, $02, $74, $10, $10, $02; Monkey caves Monkey Bundle
 ORG $C807F5
 db $1c, $05, $01, $0a, $fc, $07, $c8
 
+ORG $C57A14
+db $02
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
