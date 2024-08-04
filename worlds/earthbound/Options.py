@@ -36,6 +36,18 @@ class MagicantMode(Choice):
     option_optional_boost = 3
     option_removed = 4
     default = 0
+
+class MonkeyCavesMode(Choice):
+    """Chests: Items required to finish the Monkey Caves will be forcibly placed on the chests that can be found in-between rooms of the monkey caves. The "reward" locations, usually found at the end of a branch, are still random. If you waste chest items, they will need to be replaced via the methods in hunt mode.
+       Hunt: Items required to finish the Monkey Caves will need to be found outside. They can be obtained from the Dusty Dunes drugstore, the Fourside department store, and the pizza shop in either Twoson or Threed.
+       Shop: The monkey outside the Monkey Caves will sell you every minor item needed to complete the caves for 500$.
+       Solved: The Monkey Caves monkeys will already be moved out of the way and not require any items."""
+    display_name = "Monkey Caves Mode"
+    option_chests = 0
+    option_hunt = 1
+    option_shop = 2
+    option_solved = 3
+    default = 1
     
 
 class ShortenPrayers(DefaultOnToggle):
@@ -147,6 +159,7 @@ class EBOptions(PerGameCommonOptions):
     random_start_location: RandomStartLocation
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
+    monkey_caves_mode: MonkeyCavesMode
     shuffle_teleports: PSIShuffle# Better name?
     character_shuffle: CharacterShuffle
     experience_modifier: ExperienceModifier
@@ -160,8 +173,5 @@ class EBOptions(PerGameCommonOptions):
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight
-    #RepairJeffItems
-    #PSI Checks
-    #Monkey caves...
     start_inventory_from_pool: StartInventoryPool
     #death_link: DeathLink

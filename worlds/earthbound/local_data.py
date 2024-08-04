@@ -337,7 +337,7 @@ npc_locations = { #Locations given to you by an NPC
     "Twoson - Apple Kid's Mouse": [0x0819DF],
     "Twoson - Apple Kid Invention": [0x082015],
     "Twoson - Antique Shop": [0x2EAEFD],
-    "Twoson - Paula's Mother": [0x08062F],
+    "Twoson - Paula's Mother": [0x08062F, 0x08081F],
     "Twoson - Everdred Meeting": [0x096052],
     "Twoson - Insignificant Location": [0x094ED1],
     "Happy-Happy Village - Donation Lady": [0x098A97, 0x0893B6],
