@@ -265,7 +265,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Twoson - Apple Kid Invention": [0x081F89],
     "Twoson - Apple Kid's Mouse": [0x2EBA86],
     "Twoson - Antique Shop": [0x093E5F],
-    "Twoson - Paula's Mother": [0x08061B],
+    "Twoson - Paula's Mother": [0x08061B, 0x0807F7],
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
     "Happy-Happy Village - Donation Lady": [0x2EC578, 0x2EC580],

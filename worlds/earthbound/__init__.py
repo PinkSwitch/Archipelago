@@ -83,7 +83,8 @@ class EarthBoundWorld(World):
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
-            "starting_area": self.start_location
+            "starting_area": self.start_location,
+            "pizza_logic": self.options.monkey_caves_mode.value
         }
 
     def create_item(self, name: str) -> Item:
