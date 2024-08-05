@@ -77,7 +77,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Ness's Mind", player).add_exits(["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert", "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village", "Lost Underworld", "Magicant"],
                                                            {"Onett": lambda state: state.has("Onett Teleport", player),
                                                             "Twoson": lambda state: state.has("Twoson Teleport", player),
-                                                            "Happy-Happy Village": lambda state: state.has("Happy-Happy Teleport", player),
+                                                            "Happy-Happy Village": lambda state: state.has("Happy-Happy Village Teleport", player),
                                                             "Threed": lambda state: state.has("Threed Teleport", player),
                                                             "Saturn Valley": lambda state: state.has("Saturn Valley Teleport", player),
                                                             "Dusty Dunes Desert": lambda state: state.has("Dusty Dunes Teleport", player),
