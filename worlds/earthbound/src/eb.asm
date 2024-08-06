@@ -6258,6 +6258,18 @@ db $1c, $05, $01, $0a, $fc, $07, $c8
 ORG $C57A14
 db $02
 
+ORG $C98276
+db $0A, $BE, $CE, $EE
+
+ORG $EECEBE
+db $18, $04, $04, $7a, $00, $05, $f6, $03, $02
+
+ORG $C98025
+db $F6, $03
+
+ORG $C9827D
+db $F6, $03
+
 
 ;If prayers skipped:
 ;C7BC96 = 02
