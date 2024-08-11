@@ -9,7 +9,7 @@ from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
 import settings
-from .Items import get_item_names_per_category, item_table, common_items, uncommon_items, rare_items, common_gear, uncommon_gear, rare_gear
+from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions
@@ -109,7 +109,7 @@ class EarthBoundWorld(World):
         choices = self.random.choices(list(weights), weights=list(weights.values()), k=len(self.multiworld.get_unfilled_locations(self.player)))
         filler_type = self.random.choice(choices)
         weight_table = {
-            "common": common_items,
+            "common": self.common_items,
             "common_gear": self.common_gear,
             "uncommon": self.uncommon_items,
             "uncommon_gear": self.uncommon_gear,
@@ -121,12 +121,6 @@ class EarthBoundWorld(World):
     def generate_early(self):#Todo: place locked items in generate_early
         self.locals = []
         local_space_count = 0
-        self.common_items = common_items
-        self.uncommon_items = uncommon_items
-        self.rare_items = rare_items
-        self.common_gear = common_gear
-        self.uncommon_gear = uncommon_gear
-        self.rare_gear = rare_gear
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
                 local_space_count += amount

@@ -1,11 +1,186 @@
 import struct
-from .Items import common_items, uncommon_items, rare_items, common_gear, uncommon_gear, rare_gear
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
 from .local_data import item_id_table
 
 
 def setup_gamevars(world):
+    world.common_items: List[str] = [
+        "Cookie",
+        "Bag of Fries",
+        "Teddy Bear",
+        "Hamburger",
+        "Boiled Egg",
+        "Fresh Egg",
+        "Picnic Lunch",
+        "Croissant",
+        "Bread Roll",
+        "Can of Fruit Juice",
+        "Royal Iced Tea",
+        "Protein Drink",
+        "Bottle of Water",
+        "Cold Remedy",
+        "Vial of Serum",
+        "Ketchup Packet",
+        "Sugar Packet",
+        "Tin of Cocoa",
+        "Carton of Cream",
+        "Sprig of Parsley",
+        "Jar of Hot Sauce",
+        "Salt Packet",
+        "Wet Towel",
+        "Refreshing Herb",
+        "Ruler",
+        "Protractor",
+        "Insecticide Spray",
+        "Rust Promoter",
+        "Stag Beetle",
+        "Toothbrush",
+        "Handbag Strap",
+        "Chick",
+        "Chicken",
+        "Trout Yogurt",
+        "Banana",
+        "Calorie Stick",
+        "Gelato de Resort",
+        "Snake",
+        "Cup of Noodles",
+        "Cup of Coffee",
+        "Double Burger",
+        "Bean Croquette",
+        "Molokheiya Soup",
+        "Plain Roll",
+        "Magic Tart",
+        "Popsicle",
+        "Bottle Rocket"
+    ]
+
+    world.common_gear: List[str] = [
+        "Cracked Bat",
+        "Tee Ball Bat",
+        "Sand Lot Bat",
+        "Minor League Bat",
+        "Fry Pan",
+        "Thick Fry Pan",
+        "Deluxe Fry Pan",
+        "Toy Air Gun",
+        "Zip Gun",
+        "Yo-yo",
+        "Slingshot",
+        "Travel Charm",
+        "Great Charm",
+        "Cheap Bracelet",
+        "Copper Bracelet",
+        "Baseball Cap",
+        "Mr. Baseball Cap",
+        "Holmes Hat",
+        "Hard Hat",
+        "Ribbon",
+        "Red Ribbon",
+        "Coin of Defense"
+    ]
+
+    world.uncommon_items: List[str] = [
+        "Pasta di Summers",
+        "Pizza",
+        "Chef's Special",
+        "Super Plush Bear",
+        "PSI Caramel",
+        "Jar of Delisauce",
+        "Secret Herb",
+        "Xterminator Spray",
+        "Snake Bag",
+        "Bomb",
+        "Rust Promoter DX",
+        "Pair of Dirty Socks",
+        "Mummy Wrap",
+        "Pharaoh's Curse",
+        "Sudden Guts Pill",
+        "Picture Postcard",
+        "Viper",
+        "Repel Sandwich",
+        "Lucky Sandwich",
+        "Peanut Cheese Bar",
+        "Bowl of Rice Gruel",
+        "Kabob",
+        "Plain Yogurt",
+        "Beef Jerky",
+        "Mammoth Burger",
+        "Bottle of DXwater",
+        "Magic Pudding",
+        "Big Bottle Rocket",
+        "Bazooka"
+
+    ]
+
+    world.uncommon_gear: List[str] = [
+        "Mr. Baseball Bat",
+        "T-Rex's Bat",
+        "Big League Bat",
+        "Chef's Fry Pan",
+        "Non-Stick Frypan",
+        "French Fry Pan",
+        "Hyper Beam",
+        "Crusher Beam",
+        "Trick Yo-yo",
+        "Bionic Slingshot",
+        "Crystal Charm",
+        "Platinum Band",
+        "Diamond Band",
+        "Defense Ribbon",
+        "Earth Pendant",
+        "Flame Pendant",
+        "Rain Pendant",
+        "Night Pendant",
+        "Lucky Coin",
+        "Silver Bracelet",
+        "Gold Bracelet",
+        "Coin of Slumber",
+        "Coin of Silence",
+    ]
+
+
+    world.rare_items: List[str] = [
+        "Large Pizza",
+        "Magic Truffle",
+        "Brain Food Lunch",
+        "Rock Candy",
+        "Kraken Soup",
+        "IQ Capsule",
+        "Guts Capsule",
+        "Speed Capsule",
+        "Vital Capsule",
+        "Luck Capsule",
+        "Horn of Life",
+        "Multi Bottle Rocket",
+        "Super Bomb",
+        "Bag of Dragonite",
+        "Meteotite",
+        "Repel Superwich",
+        "Piggy Jelly",
+        "Spicy Jerky",
+        "Luxury Jerky",
+        "Cup of Lifenoodles"
+    ]
+
+    world.rare_gear: List[str] = [
+        "Hall of Fame Bat",
+        "Ultimate Bat",
+        "Gutsy Bat",
+        "Casey Bat",
+        "Holy Fry Pan",
+        "Magic Fry Pan",
+        "Combat Yo-yo",
+        "Sword of Kings",
+        "Sea Pendant",
+        "Star Pendant",
+        "Goddess Ribbon",
+        "Talisman Coin",
+        "Shiny Coin",
+        "Charm Coin"
+    ]
+
+
     valid_starts = 14
     if world.options.magicant_mode != 00:
         valid_starts -= 1
@@ -43,6 +218,8 @@ def setup_gamevars(world):
         world.uncommon_items.append("Broken Iron")
         world.uncommon_gear.append("Broken Cannon")
         world.rare_gear.append("Broken Antenna")
+
+    print(f"{world.player}: {world.common_gear} {world.options.prefixed_items}")
 
     world.franklinbadge_elements = [
         "thunder",
