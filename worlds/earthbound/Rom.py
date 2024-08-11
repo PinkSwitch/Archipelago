@@ -274,7 +274,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x07BB38, bytearray([0x02]))
         rom.write_bytes(0x07BBF3, bytearray([0x02])) 
         rom.write_bytes(0x07BC56, bytearray([0x02])) 
-        rom.write_bytes(0x07B9A1, bytearray([0x02])) 
+        rom.write_bytes(0x07B9A1, bytearray([0x1f, 0xeb, 0xff, 0x02, 0x1f, 0x1f, 0xca, 0x01, 0x06, 0x1f, 0x1f, 0x72, 0x01, 0x06, 0x02])) #Clean up overworld stuff
 
     if world.options.easy_deaths:
         rom.write_bytes(0x2EBFF9, bytearray([0x0A]))
