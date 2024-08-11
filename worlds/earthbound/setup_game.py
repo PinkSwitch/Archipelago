@@ -5,7 +5,7 @@ from .local_data import item_id_table
 
 
 def setup_gamevars(world):
-    world.common_items: List[str] = [
+    world.common_items = [
         "Cookie",
         "Bag of Fries",
         "Teddy Bear",
@@ -55,7 +55,7 @@ def setup_gamevars(world):
         "Bottle Rocket"
     ]
 
-    world.common_gear: List[str] = [
+    world.common_gear = [
         "Cracked Bat",
         "Tee Ball Bat",
         "Sand Lot Bat",
@@ -80,7 +80,7 @@ def setup_gamevars(world):
         "Coin of Defense"
     ]
 
-    world.uncommon_items: List[str] = [
+    world.uncommon_items = [
         "Pasta di Summers",
         "Pizza",
         "Chef's Special",
@@ -113,7 +113,7 @@ def setup_gamevars(world):
 
     ]
 
-    world.uncommon_gear: List[str] = [
+    world.uncommon_gear = [
         "Mr. Baseball Bat",
         "T-Rex's Bat",
         "Big League Bat",
@@ -140,7 +140,7 @@ def setup_gamevars(world):
     ]
 
 
-    world.rare_items: List[str] = [
+    world.rare_items = [
         "Large Pizza",
         "Magic Truffle",
         "Brain Food Lunch",
@@ -163,7 +163,7 @@ def setup_gamevars(world):
         "Cup of Lifenoodles"
     ]
 
-    world.rare_gear: List[str] = [
+    world.rare_gear = [
         "Hall of Fame Bat",
         "Ultimate Bat",
         "Gutsy Bat",
@@ -218,8 +218,6 @@ def setup_gamevars(world):
         world.uncommon_items.append("Broken Iron")
         world.uncommon_gear.append("Broken Cannon")
         world.rare_gear.append("Broken Antenna")
-
-    print(f"{world.player}: {world.common_gear} {world.options.prefixed_items}")
 
     world.franklinbadge_elements = [
         "thunder",
