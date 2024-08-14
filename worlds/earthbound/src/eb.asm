@@ -5656,6 +5656,8 @@ RTL
 
 PlayerJustDied:
 SEP #$20
+LDA $B582; If the player just died in battle, dont send any more deaths
+BNE SkipSendingDeath
 INC $B582;Player is currently dead
 LDA $B583;Did the player just get killed by a deathlink death?
 BNE SkipSendingDeath
@@ -5673,7 +5675,7 @@ LDX $A972
 LDA $000E,X
 AND #$00FF
 BNE NotHealPlayer;1 if enemy
-LDA $B582;Deathlink from server- if mortal mode, this will always return 1 if the death was from a link
+LDA $B583;Deathlink from server- if mortal mode, this will always return 1 if the death was from a link
 AND #$00FF
 BEQ ResetDeathLinkHeal;Mortal no mercy mode will put this here; else, it will be a BRA
 PLY
@@ -5691,7 +5693,7 @@ LDA $02
 JML $C272CD
 ResetDeathLinkHeal:
 SEP #$20
-STZ $B582;This means that the player healed, and the death is not solely from the deathlink anymore
+STZ $B583;This means that the player healed, and the death is not solely from the deathlink anymore
 REP #$20
 BRA NotHealPlayer
 
@@ -5700,7 +5702,7 @@ LDX $A972
 LDA $000E,X
 AND #$00FF
 BNE .NotPlayer
-LDA $B582;
+LDA $B583;
 AND #$0FF
 BEQ .NotPlayer;If the player is not currently in a deathlink, act normal. This will be a BRA if mercy mode is ON
 LDA #$CD0C
@@ -5718,7 +5720,7 @@ LDX $A972
 LDA $000E,X
 AND #$00FF
 BNE NotPlayerForRevive
-LDA $B582
+LDA $B583
 BEQ ReviveClearDeathlinkFlag;Change to BRA if mercy mode ON
 LDA #$CD0C
 STA $0E
@@ -5731,7 +5733,7 @@ JSL $C1DC1C
 JML $C273B4
 ReviveClearDeathlinkFlag:
 SEP #$20
-STZ $B582
+STZ $B583
 REP #$20
 BRA NotPlayerForRevive
 

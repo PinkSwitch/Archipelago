@@ -124,6 +124,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.death_link_mode == 2:
         rom.write_bytes(0x2FFDDD, bytearray([0x80]))#Mercy healing
         rom.write_bytes(0x2FFE0F, bytearray([0x80]))#Mercy text
+        rom.write_bytes(0x2FFE35, bytearray([0x80]))#Mercy revive
 
 
     if world.options.monkey_caves_mode == 2:
