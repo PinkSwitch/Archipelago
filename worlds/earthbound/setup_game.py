@@ -345,7 +345,7 @@ def setup_gamevars(world):
         else:
             world.prayer_player.extend([0x6F])
     world.prayer_player.extend([0x00])
-    shuffle_psi(world)
+    #shuffle_psi(world)
 
 
 def place_static_items(world):
