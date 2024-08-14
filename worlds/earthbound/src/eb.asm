@@ -201,6 +201,19 @@ JML SkipExplosionDeathReflect
 ORG $C0B967
 JSL PlayerJustDied
 
+ORG $C272C8
+JML CheckDeathHealing
+
+ORG $C272D0
+JML OverrideDeathlinkText
+
+ORG $C273B0
+JML OverrideDeathlinkHeal
+
+ORG $C25F16
+JSL SendDeathInBattle
+;Deathlink stuff
+;;;;;;;;;;;;;;;;;;;;;
 ORG $C1FEBC
 LDA #$0000
 ;Skip flyover
@@ -5653,7 +5666,86 @@ REP #$20
 JSL $C4C718
 RTL
 
+CheckDeathHealing:
+PHX
+PHY
+LDX $A972
+LDA $000E,X
+AND #$00FF
+BNE NotHealPlayer;1 if enemy
+LDA $B582;Deathlink from server- if mortal mode, this will always return 1 if the death was from a link
+AND #$00FF
+BEQ ResetDeathLinkHeal;Mortal no mercy mode will put this here; else, it will be a BRA
+PLY
+PLX
+STY $16
+TYX
+LDA $02
+JML $C272D0
+NotHealPlayer:
+PLY
+PLX
+STY $16
+TYX
+LDA $02
+JML $C272CD
+ResetDeathLinkHeal:
+SEP #$20
+STZ $B582;This means that the player healed, and the death is not solely from the deathlink anymore
+REP #$20
+BRA NotHealPlayer
 
+OverrideDeathlinkText:
+LDX $A972
+LDA $000E,X
+AND #$00FF
+BNE .NotPlayer
+LDA $B582;
+AND #$0FF
+BEQ .NotPlayer;If the player is not currently in a deathlink, act normal. This will be a BRA if mercy mode is ON
+LDA #$CD0C
+STA $0E
+LDA #$00EE
+STA $10
+JML $C272E4
+.NotPlayer:
+LDX $02
+LDY $16
+JML $C272D4
+
+OverrideDeathlinkHeal:
+LDX $A972
+LDA $000E,X
+AND #$00FF
+BNE NotPlayerForRevive
+LDA $B582
+BEQ ReviveClearDeathlinkFlag;Change to BRA if mercy mode ON
+LDA #$CD0C
+STA $0E
+LDA #$00EE
+STA $10
+JSL $C1DC1C
+JML $C2754B
+NotPlayerForRevive:
+JSL $C1DC1C
+JML $C273B4
+ReviveClearDeathlinkFlag:
+SEP #$20
+STZ $B582
+REP #$20
+BRA NotPlayerForRevive
+
+SendDeathInBattle:
+SEP #$20
+INC $B582;Player is currently dead
+LDA $B583;Did the player just get killed by a deathlink death?
+BNE .SkipSendingDeath
+INC $B584;Is the player sending a death
+.SkipSendingDeath:
+STZ $B583
+REP #$20
+JSL $C1DC1C
+RTL
 
 
 ORG $C2FFE0
@@ -6306,6 +6398,11 @@ db $0A, $04, $CD, $EE
 
 ORG $EECD04
 db $18, $04, $1f, $e1, $00, $5c, $01, $02
+
+ORG $EECD0C
+db $01, $70, $72, $a5, $a4, $50, $a3, $9f, $9d, $95, $a4, $98, $99, $9e, $97, $50
+db $a0, $a2, $95, $a6, $95, $9e, $a4, $95, $94, $50, $99, $a4, $50, $96, $a2, $9f
+db $9d, $50, $a7, $9f, $a2, $9b, $99, $9e, $97, $51, $03, $02, $00; Deathlink heal text
 
 
 
