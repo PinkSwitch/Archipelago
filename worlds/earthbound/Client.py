@@ -33,11 +33,66 @@ GAME_CLEAR = WRAM_START + 0x9C85
 OPEN_WINDOW = WRAM_START + 0x8958
 MELODY_TABLE = WRAM_START + 0x9C1E
 CUR_SCENE = WRAM_START + 0x97B8
+IS_IN_BATTLE = WRAM_START + 0x9643
+DEATHLINK_ENABLED = ROM_START + 0x04FD74
+DEATHLINK_TYPE = ROM_START + 0x04FD75
+IS_CURRENTLY_DEAD = WRAM_START + 0xB582
+GOT_DEATH_FROM_SERVER = WRAM_START + 0xB583
+PLAYER_JUST_DIED_SEND_DEATHLINK = WRAM_START + 0xB584
+IS_ABLE_TO_RECEIVE_DEATHLINKS = WRAM_START + 0xB585
+CHAR_COUNT = WRAM_START + 0x98A4
 
 
 class EarthBoundClient(SNIClient):
     game = "EarthBound"
     patch_suffix = ".apeb"
+
+    async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
+        import struct
+        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
+        ness_scrolling_hp = WRAM_START + 0x9A13
+        battle_hp = {
+            1: WRAM_START + 0x9FBF,
+            2: WRAM_START + 0xA00D,
+            3: WRAM_START + 0xA05B,
+            4: WRAM_START + 0xA0A9,
+        }
+
+        active_hp = {
+            1: WRAM_START + 0x9A15,
+            2: WRAM_START + 0x9A74,
+            3: WRAM_START + 0x9AD3,
+            4: WRAM_START + 0x9B32,
+        }
+
+        scrolling_hp = {
+            1: WRAM_START + 0x9A13,
+            2: WRAM_START + 0x9A72,
+            3: WRAM_START + 0x9AD1,
+            4: WRAM_START + 0x9B30,
+        }
+
+        deathlink_mode = await snes_read(ctx, DEATHLINK_TYPE, 1)
+        is_currently_dead = await snes_read(ctx, IS_CURRENTLY_DEAD, 1)
+        can_receive_deathlinks = await snes_read(ctx, IS_ABLE_TO_RECEIVE_DEATHLINKS, 1)
+        is_in_battle = await snes_read(ctx, IS_IN_BATTLE, 1)
+        char_count = await snes_read(ctx, CHAR_COUNT, 1)
+        snes_buffered_write(ctx, GOT_DEATH_FROM_SERVER, bytes([0x01]))
+        if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
+            return
+
+        for i in range(char_count[0]):
+            CUR_CHAR = WRAM_START + 0x986F + i
+            current_char = await snes_read(ctx, CUR_CHAR, 1)
+            snes_buffered_write(ctx, active_hp[current_char[0]], bytes([0x00, 0x00]))
+            snes_buffered_write(ctx, battle_hp[i + 1], bytes([0x00, 0x00]))
+            if deathlink_mode[0] == 0 or is_in_battle[0] == 0:
+                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))#This should be the check for instant or mercy. Write the value, call it here
+        #todo; send deathlink instantly during battle
+        #todo;  see how deathlink interacts with normal menus? esp. with mortal mode
+        await snes_flush_writes(ctx)
+        ctx.death_state = DeathState.dead
+        ctx.last_death_link = time.time()
 
     async def validate_rom(self, ctx):
         from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
@@ -49,6 +104,10 @@ class EarthBoundClient(SNIClient):
         ctx.game = self.game
         ctx.items_handling = 0b001
         ctx.rom = rom_name
+
+        death_link = await snes_read(ctx, DEATHLINK_ENABLED, 1)
+        if death_link:
+            await ctx.update_death_link(bool(death_link[0] & 0b1))
         return True
 
     async def game_watcher(self, ctx):
@@ -73,14 +132,22 @@ class EarthBoundClient(SNIClient):
         if save_num[0] == 0x00: #If on the title screen
             return
 
+        if ctx.slot is None:
+            return
+
         if game_clear[0] & 0x01 == 0x01: #Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
 
-        if text_open[0] != 0xFF: #Don't check locations or items while text is printing, but scouting is fine
-            return
+        #death link handling goes here
+        if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
+            send_deathlink = await snes_read(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, 1)
+            currently_dead = send_deathlink[0] != 0x00
+            if send_deathlink[0] != 0x00:
+                snes_buffered_write(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, bytes([0x00]))
+            await ctx.handle_deathlink_state(currently_dead)
 
-        if ctx.slot is None:
+        if text_open[0] != 0xFF: #Don't check locations or items while text is printing, but scouting is fine
             return
 
         new_checks = []

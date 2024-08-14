@@ -198,7 +198,8 @@ JML ReflectExplode
 ORG $C2A66B
 JML SkipExplosionDeathReflect
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+ORG $C0B967
+JSL PlayerJustDied
 
 ORG $C1FEBC
 LDA #$0000
@@ -2890,6 +2891,11 @@ db $7D,$91,$97,$99,$93,$91,$9E,$A4,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$
 
 ORG $00F8D0
 GetItemRemote:
+SEP #$20
+STZ $B582
+LDA #$01
+STA $B585
+REP #$20
 PHX
 SEP #$10
 LDX $B570
@@ -4713,7 +4719,7 @@ db $9e, $50, $a3, $a4, $91, $9d, $a0, $50, $9f, $96, $50, $94, $a5, $92, $99, $9
 db $a5, $a3, $50, $9c, $95, $97, $99, $a4, $99, $9d, $91, $93, $a9, $5e, $13, $02
 
 ORG $D57220
-db $82, $95, $a0, $95, $9c, $50, $83, $91, $9e, $94, $a7, $99, $93, $98
+db $82, $95, $a0, $95, $9c, $50, $a3, $91, $9e, $94, $a7, $99, $93, $98
 
 ORG $C5601B
 db $82, $95, $a0, $95, $9c, $a3, $50, $a9, $9f, $a5, $a2, $50, $95, $9e, $95, $9d
@@ -5635,6 +5641,19 @@ PLY
 PLX
 RTL
 
+PlayerJustDied:
+SEP #$20
+INC $B582;Player is currently dead
+LDA $B583;Did the player just get killed by a deathlink death?
+BNE SkipSendingDeath
+INC $B584;Is the player sending a death
+SkipSendingDeath:
+STZ $B583
+REP #$20
+JSL $C4C718
+RTL
+
+
 
 
 ORG $C2FFE0
@@ -6259,29 +6278,46 @@ ORG $C57A14
 db $02
 
 ORG $C98276
-db $0A, $BE, $CE, $EE
+db $0A, $BE, $CC, $EE
 
-ORG $EECEBE
+ORG $EECCBE
 db $18, $04, $04, $7a, $00, $05, $f6, $03, $02
 
 ORG $C98025
 db $F6, $03
 
 ORG $C9827D
-db $F6, $03
+db $F6, $03; Carpainter stuff
+
+ORG $C97633
+db $02
+
+ORG $C86DFC
+;db $7A, $00, $C7, $CC, $EE
+
+ORG $EECCC7
+db $70, $58, $83, $9f, $a5, $9e, $94, $a3, $50, $9c, $99, $9b, $95, $50, $a3, $9f
+db $9d, $95, $9f, $9e, $95, $57, $a3, $50, $9f, $a5, $a4, $a3, $99, $94, $95, $5e
+db $03, $00, $70, $72, $95, $a4, $a4, $95, $a2, $50, $93, $9f, $9d, $95, $50, $92
+db $91, $93, $9b, $50, $9c, $91, $a4, $95, $a2, $5e, $59, $13, $02;Fix re-entering moonside. Do I need this? Doesn't it set the checkpoint when clearing moonside?
+
+ORG $C58ED1
+db $0A, $04, $CD, $EE
+
+ORG $EECD04
+db $18, $04, $1f, $e1, $00, $5c, $01, $02
 
 
-;If prayers skipped:
-;C7BC96 = 02
 
-;C7BA2C = 02
+;;;;;;;;;;;NAME STUFF PLS DELETE
+;ORG $C1F984
+;LDA #$0006;character limit in the name screen
 
-;C7BAC7 = 02
+;ORG $C193BA
+;LDA #$0006;Character limit on are you sure screen
 
-;C7BB38 = 02
+;ORG $C19924
+;LDX #$0006; Character menu header, goods/status
 
-;C7BBF3 = 02
 
-;C7BC56 = 02
-
-;C7B9A1 = 02
+;B580 reserved for new names?

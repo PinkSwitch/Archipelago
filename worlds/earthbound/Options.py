@@ -150,6 +150,18 @@ class RandomFlavors(DefaultOnToggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
 
+class DeathLinkMode(Choice):
+    """Controls how receiving a Deathlink functions in battle.
+       Instant: The player will be instantly defeated.
+       Mortal: All characters will receieve mortal damage. The player will not be able to heal until the battle is finished.
+       Mortal Mercy: All characters will receieve mortal damage, but the player will be able to heal it before they die.
+       Regardless of this setting, receiving a deathlink outside of battle will always instantly defeat the player."""
+    display_name = "Death Link Mode"
+    option_instant = 0
+    option_mortal = 1
+    option_mortal_mercy = 2
+    default = 1
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -174,4 +186,5 @@ class EBOptions(PerGameCommonOptions):
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight
     start_inventory_from_pool: StartInventoryPool
-    #death_link: DeathLink
+    death_link: DeathLink
+    death_link_mode: DeathLinkMode

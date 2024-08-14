@@ -61,7 +61,7 @@ eb_text_table = {" ": ([0x50]), "!": ([0x51]), '"': ([0x52]), "■": ([0x53]), "
                  "i": ([0x99]), "j": ([0x9A]), 'k': ([0x9B]), "l": ([0x9C]), 'm': ([0x9D]), "n": ([0x9E]),
                  "o": ([0x9F]), "p": ([0xA0]), 'q': ([0xA1]), "r": ([0xA2]), 's': ([0xA3]), "t": ([0xA4]),
                  "u": ([0xA5]), "v": ([0xA6]), 'w': ([0xA7]), "x": ([0xA8]), 'y': ([0xA9]), "z": ([0xAA]),
-                 "([": ([0xAB]), "♪": ([0xAC]), '])': ([0xAD]), "~": ([0xAE]), '◯': ([0xAF])}
+                 "[": ([0xAB]), "♪": ([0xAC]), ']': ([0xAD]), "~": ([0xAE]), '◯': ([0xAF])}
 
 
 lumine_hall_text = [
@@ -166,7 +166,14 @@ lumine_hall_text = [
     "Shoutouts to SimpleFlips.",
     "How long have you been BK?",
     "Also try PK Scramble!",
-    "Also try Ancient Cave!"
+    "Also try Ancient Cave!",
+    "I am playing this on AP version 1.0 and it is amazing.",
+    "WHAT A HORRIBLE NIGHT TO HAVE A CURSE.",
+    "It's so jover",
+    "The National Weather Service has issued a severe thunderstorm warning for the following areas, starting at 7:49 PM Eastern Daylight Time and ending at 7:49 PM Eastern Daylight Time.",
+    "Where is everyone? I've done most of my checks and I still can't find my friends, it's so lonely here.",
+    "Can you hurry up and go to Ness's Nightmare it has my Morph Ball for my Super Metroid seed Thanks in advance Berserker"
+
 
 
 ]

@@ -146,7 +146,7 @@ item_table: Dict[str, ItemData] = {
     "Sprig of Parsley": ItemData("Food", 0xEB007A, ItemClassification.filler, 0),
     "Jar of Hot Sauce": ItemData("Food", 0xEB007B, ItemClassification.filler, 0),
     "Salt Packet": ItemData("Food", 0xEB007C, ItemClassification.filler, 0),
-    "Backstage Pass": ItemData("Key Items", 0xEB007D, ItemClassification.filler, 0),
+    "Backstage Pass": ItemData("Key Items", 0xEB007D, ItemClassification.filler, 0), #Progressive Gun
     "Jar of Delisauce": ItemData("Food", 0xEB007E, ItemClassification.useful, 0),
     "Wet Towel": ItemData("Food", 0xEB007F, ItemClassification.filler, 0),
     "Refreshing Herb": ItemData("Food", 0xEB0080, ItemClassification.useful, 0),
@@ -204,9 +204,9 @@ item_table: Dict[str, ItemData] = {
     "Bicycle": ItemData("Key Items", 0xEB00B0, ItemClassification.useful),
     "ATM Card": ItemData("Key Items", 0xEB00B1, ItemClassification.progression, 0),
     "Show Ticket": ItemData("Key Items", 0xEB00B2, ItemClassification.filler, 0),
-    "Letter from Kids": ItemData("Key Items", 0xEB00B3, ItemClassification.filler, 0),
+    "Letter from Kids": ItemData("Key Items", 0xEB00B3, ItemClassification.filler, 0), #Progressive Bat
     "Wad of Bills": ItemData("Key Items", 0xEB00B4, ItemClassification.progression),
-    "Receiver Phone": ItemData("Key Items", 0xEB00B5, ItemClassification.filler, 0),
+    "Receiver Phone": ItemData("Key Items", 0xEB00B5, ItemClassification.filler, 0), #Progressive Fry Pan
     "Diamond": ItemData("Key Items", 0xEB00B6, ItemClassification.progression),
     "Signed Banana": ItemData("Key Items", 0xEB00B7, ItemClassification.progression),
     "Pencil Eraser": ItemData("Key Items", 0xEB00B8, ItemClassification.progression),
@@ -257,11 +257,11 @@ item_table: Dict[str, ItemData] = {
     "Repel Sandwich": ItemData("Food", 0xEB00E0, ItemClassification.useful, 0),
     "Repel Superwich": ItemData("Food", 0xEB00E1, ItemClassification.useful, 0),
     "Lucky Sandwich": ItemData("Food", 0xEB00E2, ItemClassification.useful, 0),
-    #"Lucky Sandwich": ItemData("Food", 0xEB00E3, ItemClassification.useful, 0),
-    #"Lucky Sandwich": ItemData("Food", 0xEB00E4, ItemClassification.useful, 0),
-    #"Lucky Sandwich": ItemData("Food", 0xEB00E5, ItemClassification.useful, 0),
-    #"Lucky Sandwich": ItemData("Food", 0xEB00E6, ItemClassification.useful, 0),
-    #"Lucky Sandwich": ItemData("Food", 0xEB00E7, ItemClassification.useful, 0),Yes, this is really how the game intenrally randomizes the Lucky Sandwich effect.
+    #"Progressive Bat": ItemData("Progressive Equipment", 0xEB00E3, ItemClassification.useful, 0), 
+    #"Progressive Fry Pan": ItemData("Progressive Equipment", 0xEB00E4, ItemClassification.filler, 0),
+    #"Progressive Gun": ItemData("Progressive Equipment", 0xEB00E5, ItemClassification.useful, 0),
+    #"Progressive Bracelet": ItemData("Progressive Equipment", 0xEB00E6, ItemClassification.useful, 0),
+    #"Progressive Other": ItemData("Progressive Equipment", 0xEB00E7, ItemClassification.useful, 0),
 
     "Cup of Coffee": ItemData("Food", 0xEB00E8, ItemClassification.filler, 0),
     "Double Burger": ItemData("Food", 0xEB00E9, ItemClassification.filler, 0),

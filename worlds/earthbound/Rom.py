@@ -118,14 +118,20 @@ def patch_rom(world, rom, player: int, multiworld):
     elif world.options.magicant_mode == 3:
         rom.write_bytes(0x2EA26A, bytearray([0x08, 0x0F, 0x9C, 0xEE]))# Give only stat boost if set to boost
 
-    rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
+    rom.write_bytes(0x04FD74, bytearray([world.options.death_link.value]))
+    rom.write_bytes(0x04FD75, bytearray([world.options.death_link_mode.value]))
+
+    if world.options.death_link_mode == 2:
+        rom.write_bytes(0x2FFDDD, bytearray([0x80]))#Mercy healing
+        rom.write_bytes(0x2FFE0F, bytearray([0x80]))#Mercy text
+
 
     if world.options.monkey_caves_mode == 2:
         rom.write_bytes(0x062B87, bytearray([0x0A, 0x28, 0xCA, 0xEE]))
     elif world.options.monkey_caves_mode == 3:
         rom.write_bytes(0x0F1388, bytearray([0x03, 0xCA, 0xEE]))
 
-    #Todo: sanc alt goal, change sanc script
+    rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))
 
     for location in world.multiworld.get_locations(player):
         if location.address:

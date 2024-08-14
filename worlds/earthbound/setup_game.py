@@ -2,6 +2,7 @@ import struct
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
 from .local_data import item_id_table
+from .psi_shuffle import shuffle_psi
 
 
 def setup_gamevars(world):
@@ -344,6 +345,7 @@ def setup_gamevars(world):
         else:
             world.prayer_player.extend([0x6F])
     world.prayer_player.extend([0x00])
+    shuffle_psi(world)
 
 
 def place_static_items(world):
@@ -385,6 +387,11 @@ def place_static_items(world):
 
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))
+
+    #if not world.options.shuffle_sound_stone:
+        #world.multiworld.push_precollected(world.create_item("Sound Stone"))
+    #else:
+        #world.multiworld.itempool.append(world.create_item("Sound Stone"))
 
     if not world.options.monkey_caves_mode:
         world.get_location("Monkey Caves - 1F Right Chest").place_locked_item(world.create_item("Wet Towel"))
