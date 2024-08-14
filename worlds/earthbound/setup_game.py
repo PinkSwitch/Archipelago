@@ -2,7 +2,7 @@ import struct
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
 from .local_data import item_id_table
-from .psi_shuffle import shuffle_psi
+#from .psi_shuffle import shuffle_psi
 
 
 def setup_gamevars(world):
