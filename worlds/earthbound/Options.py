@@ -91,6 +91,10 @@ class AutoscaleParty(Toggle):
     """If enabled, joining party members will be scaled to roughly the level of the sphere they were obtained in."""
     display_name = "Autoscale Party Members"
 
+class PresentSprites(DefaultOnToggle):
+    """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""
+    display_name = "Match Present Sprites"
+
 class ShuffleDrops(Toggle):
     """If enabled, enemies will drop random filler items. This does not put checks on enemy drops.
        Drop rates are unchanged."""
@@ -179,6 +183,7 @@ class EBOptions(PerGameCommonOptions):
     easy_deaths: EasyDeaths
     auto_scale_party_members: AutoscaleParty
     random_flavors: RandomFlavors
+    match_present_sprites: PresentSprites
     prefixed_items: PreFixItems
     randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
