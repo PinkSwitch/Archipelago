@@ -183,7 +183,7 @@ class EBOptions(PerGameCommonOptions):
     easy_deaths: EasyDeaths
     auto_scale_party_members: AutoscaleParty
     random_flavors: RandomFlavors
-    match_present_sprites: PresentSprites
+    presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
     randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
