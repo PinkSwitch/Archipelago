@@ -214,6 +214,10 @@ ORG $C25F16
 JSL SendDeathInBattle
 ;Deathlink stuff
 ;;;;;;;;;;;;;;;;;;;;;
+ORG $C18A1D
+JML ClearStoredAPItem
+
+
 ORG $C1FEBC
 LDA #$0000
 ;Skip flyover
@@ -5656,7 +5660,7 @@ RTL
 
 PlayerJustDied:
 SEP #$20
-LDA $B582; If the player just died in battle, dont send any more deaths
+LDA $B582; If the player just died in battle, dont send any more deaths 
 BNE SkipSendingDeath
 INC $B582;Player is currently dead
 LDA $B583;Did the player just get killed by a deathlink death?
@@ -5749,6 +5753,20 @@ REP #$20
 JSL $C1DC1C
 RTL
 
+ClearStoredAPItem:
+LDA $06
+CMP #$EA7F
+BNE SkipAPCheck
+LDA $08
+AND #$00FF
+CMP #$00C7
+BNE SkipAPCheck
+STZ $B573
+STZ $B579
+SkipAPCheck:
+LDX #$0000
+LDA #$0001
+JML $C18A23
 
 ORG $C2FFE0
 DealReflect:
@@ -6404,7 +6422,7 @@ db $18, $04, $1f, $e1, $00, $5c, $01, $02
 ORG $EECD0C
 db $01, $70, $72, $a5, $a4, $50, $a3, $9f, $9d, $95, $a4, $98, $99, $9e, $97, $50
 db $a0, $a2, $95, $a6, $95, $9e, $a4, $95, $94, $50, $99, $a4, $50, $96, $a2, $9f
-db $9d, $50, $a7, $9f, $a2, $9b, $99, $9e, $97, $51, $03, $02, $00; Deathlink heal text
+db $9d, $50, $a7, $9f, $a2, $9b, $99, $9e, $97, $51, $03, $02, $00; Deathlink heal tex
 
 
 

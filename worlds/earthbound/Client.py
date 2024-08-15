@@ -41,6 +41,7 @@ GOT_DEATH_FROM_SERVER = WRAM_START + 0xB583
 PLAYER_JUST_DIED_SEND_DEATHLINK = WRAM_START + 0xB584
 IS_ABLE_TO_RECEIVE_DEATHLINKS = WRAM_START + 0xB585
 CHAR_COUNT = WRAM_START + 0x98A4
+OSS_FLAG = WRAM_START + 0x5D98
 
 
 class EarthBoundClient(SNIClient):
@@ -50,7 +51,6 @@ class EarthBoundClient(SNIClient):
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         import struct
         from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
-        ness_scrolling_hp = WRAM_START + 0x9A13
         battle_hp = {
             1: WRAM_START + 0x9FBF,
             2: WRAM_START + 0xA00D,
@@ -73,12 +73,17 @@ class EarthBoundClient(SNIClient):
         }
 
         deathlink_mode = await snes_read(ctx, DEATHLINK_TYPE, 1)
+        oss_flag = await snes_read(ctx, OSS_FLAG, 1)
         is_currently_dead = await snes_read(ctx, IS_CURRENTLY_DEAD, 1)
         can_receive_deathlinks = await snes_read(ctx, IS_ABLE_TO_RECEIVE_DEATHLINKS, 1)
         is_in_battle = await snes_read(ctx, IS_IN_BATTLE, 1)
         char_count = await snes_read(ctx, CHAR_COUNT, 1)
         snes_buffered_write(ctx, GOT_DEATH_FROM_SERVER, bytes([0x01]))
+
         if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
+            return
+
+        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00: #If suppression is set and we're not in a battle dont do deathlinks
             return
 
         for i in range(char_count[0]):
@@ -88,8 +93,6 @@ class EarthBoundClient(SNIClient):
             snes_buffered_write(ctx, battle_hp[i + 1], bytes([0x00, 0x00]))
             if deathlink_mode[0] == 0 or is_in_battle[0] == 0:
                 snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))#This should be the check for instant or mercy. Write the value, call it here
-        #todo; send deathlink instantly during battle
-        #todo;  see how deathlink interacts with normal menus? esp. with mortal mode
         await snes_flush_writes(ctx)
         ctx.death_state = DeathState.dead
         ctx.last_death_link = time.time()
