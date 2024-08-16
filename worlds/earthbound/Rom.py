@@ -277,20 +277,17 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in present_locations and "Lost Underworld" not in name and world.options.presents_match_contents:
                 world.present_type = location.item.classification
-                print(location.item.classification)
-                print(location.item.name)
                 if location.item.player == world.player:
                     rom.write_bytes(present_locations[name] - 12, bytearray(local_present_types[world.present_type]))
                     rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))
                 else:
                     rom.write_bytes(present_locations[name] - 12, bytearray(nonlocal_present_types[world.present_type]))
                     if world.present_type in [1, 3]:
-                        rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))
+                        rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
+                    elif world.present_type == 4:
+                        rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee])
                     else:
-                        if world.present_type in [0, 2]:
-                            rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
-                        else:
-                            rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
+                        rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
