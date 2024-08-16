@@ -8,7 +8,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
 from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
-                         present_text_pointers)
+                         present_text_pointers, ap_text_pntrs)
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
@@ -287,7 +287,10 @@ def patch_rom(world, rom, player: int, multiworld):
                     if world.present_type in [1, 3]:
                         rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))
                     else:
-                        rom.write_bytes(present_locations[name] - 4, bytearray([0x]))
+                        if world.present_type in [0, 2]:
+                            rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
+                        else:
+                            rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
