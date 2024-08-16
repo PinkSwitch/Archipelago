@@ -285,7 +285,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     if world.present_type in [1, 3]:
                         rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
                     elif world.present_type == 4:
-                        rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee])
+                        rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee]))
                     else:
                         rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
 
