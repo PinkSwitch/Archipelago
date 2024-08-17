@@ -276,18 +276,27 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
             if name in present_locations and "Lost Underworld" not in name and world.options.presents_match_contents:
-                world.present_type = location.item.classification
+                if location.item.classification & ItemClassification.trap:
+                    world.present_type = "trap"
+                elif location.item.classification & ItemClassification.progression:
+                    world.present_type = "progression"
+                elif location.item.classification & ItemClassification.useful:
+                    world.present_type = "useful"
+                else:
+                    world.present_type = "filler"
                 if location.item.player == world.player:
                     rom.write_bytes(present_locations[name] - 12, bytearray(local_present_types[world.present_type]))
-                    rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))
+                    if name != "Threed - Boogey Tent Trashcan":
+                        rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))
                 else:
                     rom.write_bytes(present_locations[name] - 12, bytearray(nonlocal_present_types[world.present_type]))
-                    if world.present_type in [1, 3]:
-                        rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
-                    elif world.present_type == 4:
-                        rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee]))
-                    else:
-                        rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
+                    if name != "Threed - Boogey Tent Trashcan":
+                        if world.present_type == "progression":
+                            rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
+                        elif world.present_type == "trap":
+                            rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee]))
+                        else:
+                            rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))

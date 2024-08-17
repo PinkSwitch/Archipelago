@@ -347,8 +347,8 @@ def initialize_enemies(world):
                               "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies["Mr. Carpainter"], world.enemies["Mr. Carpainter (2)"]},
                               "Lilliput Steps": {world.enemies["Mighty Bear"], world.enemies["Mole Playing Rough"], world.enemies["Mr. Batty"], world.enemies["Mondo Mole"]},
                               "Threed": {world.enemies["Coil Snake"], world.enemies["Handsome Tom"], world.enemies["Smilin' Sam"], world.enemies["Trick or Trick Kid"],
-                                         world.enemies["Boogey Tent"], world.enemies["Zombie Dog"], world.enemies["Putrid Moldyman"], world.enemies["Smelly Ghost"], world.enemies["Boogey Tent (2)"]},
-                              "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies["Mini Barf"]},
+                                         world.enemies["Zombie Dog"], world.enemies["Putrid Moldyman"], world.enemies["Smelly Ghost"]},
+                              "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies["Mini Barf"], world.enemies["Zombie Dog"]},
                               "Grapefruit Falls": {world.enemies["Armored Frog"], world.enemies["Black Antoid"], world.enemies["Coil Snake"], world.enemies["Farm Zombie"],
                                                    world.enemies["Plain Crocodile"], world.enemies["Red Antoid"], world.enemies["Violent Roach"], world.enemies["Mad Duck"], world.enemies["Black Antoid (2)"]},
                               "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies["Master Belch"], world.enemies["Master Belch (2)"]},
@@ -374,8 +374,9 @@ def initialize_enemies(world):
                               "Deep Darkness": {world.enemies["Mole Playing Rough"]},
                               "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
                                                          world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies["Master Barf"]},
-                              "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
-                              "Southern Winters": {world.enemies["Rowdy Mouse"], world.enemies["Worthless Protoplasm"], world.enemies["Mad Duck"]},
+                              "Boogey Tent": {world.enemies["Boogey Tent"], world.enemies["Boogey Tent (2)"]},
+                              "Southern Winters": {world.enemies["Rowdy Mouse"], world.enemies["Worthless Protoplasm"], world.enemies["Mad Duck"],
+                                                   world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
                               "Stonehenge Base": {world.enemies["Atomic Power Robot"], world.enemies["Military Octobot"], world.enemies["Mook Senior"], world.enemies["Starman"], world.enemies["Starman Super"], world.enemies["Starman Deluxe"], world.enemies["Starman Super (2)"]},
                               "Lumine Hall": {world.enemies["Conducting Spirit"], world.enemies["Fobby"], world.enemies["Hyper Spinning Robo"], world.enemies["Uncontrollable Sphere"], world.enemies["Electro Specter"]},
                               "Lost Underworld": {world.enemies["Chomposaur"], world.enemies["Chomposaur (2)"], world.enemies["Ego Orb"], world.enemies["Wetnosaur"]},
@@ -398,7 +399,6 @@ combat_regions = [
     "Happy-Happy Village",
     "Lilliput Steps",
     "Threed",
-    "Winters",
     "Milky Well",
     "Dusty Dunes Desert",
     "Fourside",
@@ -429,7 +429,8 @@ combat_regions = [
     "Southern Winters",
     "Summers Museum",
     "Fourside Dept. Store",
-    "Threed Underground"
+    "Threed Underground",
+    "Boogey Tent"
 ]
 
 levels = [
@@ -730,7 +731,9 @@ def scale_enemies(world, rom):
                     rom.write_bytes(enemy.address + 89, bytearray([shield_table[enemy_shield]]))
                 
                 if enemy.name in enemy_psi:
-                    for index, spell in enumerate([i for i in enemy_psi[enemy.name] if i != "null"]):
+                    for index, spell in [(i, s) for i, s in enumerate(enemy_psi[enemy.name]) if s != "null"]:
+                        #print(enemy.name)
+                        #print(index, spell)
                         psi_level = get_psi_levels(level, spell_breaks[spell])
                         rom.write_bytes(enemy.address + 70 + (index * 2), bytearray([spell_data[spell][psi_level][0]]))
                         rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][1]]))

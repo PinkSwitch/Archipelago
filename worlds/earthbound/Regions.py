@@ -31,6 +31,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Lilliput Steps"),
         create_region(world, player, locations_per_region, "Threed"),
         create_region(world, player, locations_per_region, "Threed Underground"),
+        create_region(world, player, locations_per_region, "Boogey Tent"),
         create_region(world, player, locations_per_region, "Grapefruit Falls"),
         create_region(world, player, locations_per_region, "Belch's Factory"),
         create_region(world, player, locations_per_region, "Saturn Valley"),
@@ -108,11 +109,12 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
     
-    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Summers", "Threed Underground"],
+    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Summers", "Threed Underground", "Boogey Tent"],
         {"Twoson": lambda state: state.has("Threed Tunnels Clear", player),
          "Dusty Dunes Desert": lambda state: state.has("Threed Tunnels Clear", player),
          "Summers": lambda state: state.has_all({"Jeff", "UFO Engine", "Bad Key Machine"}, player),
-         "Threed Underground": lambda state: state.has("Zombie Paper", player)})
+         "Threed Underground": lambda state: state.has("Zombie Paper", player),
+         "Boogey Tent": lambda state: state.has("Jeff", player)})
 
     multiworld.get_region("Threed Underground", player).add_exits(["Grapefruit Falls"])
 
