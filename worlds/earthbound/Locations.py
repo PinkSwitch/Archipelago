@@ -57,7 +57,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Lilliput Steps", "Lilliput Steps - Southwest Pool Present", 0xEB0029),
         LocationData("Lilliput Steps", "Lilliput Steps - East Cliff Present", 0xEB002A),
         LocationData("Lilliput Steps", "Lilliput Steps - North Stream Present", 0xEB002B),
-        LocationData("Threed", "Threed - Boogey Tent Trashcan", 0xEB002C),
+        LocationData("Boogey Tent", "Threed - Boogey Tent Trashcan", 0xEB002C),
         LocationData("Threed", "Threed - Cemetary Trashcan", 0xEB002D),
         LocationData("Threed", "Threed - Downtown Trashcan", 0xEB002E),
         LocationData("Threed", "Threed - East Side Trashcan", 0xEB002F),

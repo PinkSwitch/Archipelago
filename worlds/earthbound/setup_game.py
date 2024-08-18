@@ -140,7 +140,6 @@ def setup_gamevars(world):
         "Coin of Silence",
     ]
 
-
     world.rare_items = [
         "Large Pizza",
         "Magic Truffle",
@@ -180,7 +179,6 @@ def setup_gamevars(world):
         "Shiny Coin",
         "Charm Coin"
     ]
-
 
     valid_starts = 14
     if world.options.magicant_mode != 00:
@@ -363,18 +361,18 @@ def place_static_items(world):
     world.get_location("Fire Spring Sanctuary").place_locked_item(world.create_item("Melody"))
 
     if world.options.giygas_required == 1:
-        world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))#Normal final boss
+        world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))  #Normal final boss
         if world.options.magicant_mode == 1:
-            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))#If required magicant
+            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))  #If required magicant
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
-            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))#If not required, place this condition on sanctuary goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))  #If not required, place this condition on sanctuary goal
     else:
         if world.options.magicant_mode == 1:
-            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))#If Magicant required but not Giygas, place goal
+            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))  #If Magicant required but not Giygas, place goal
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
-            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))# If neither final boss, place goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))  # If neither final boss, place goal
 
     if world.options.alternate_sanctuary_goal:
         world.get_location("+2 Sanctuaries").place_locked_item(world.create_item("Alternate Goal"))
@@ -404,8 +402,7 @@ def place_static_items(world):
         world.get_location("Monkey Caves - East West 3F Right Chest #1").place_locked_item(world.create_item("Hamburger"))
         world.get_location("Monkey Caves - East West 3F Right Chest #2").place_locked_item(world.create_item("Picnic Lunch"))
 
-
         #Add magicant, add sanc stuff, add alt goals...
             
 
-##TOdo; client, rules, static location stuff
+#TOdo; client, rules, static location stuff

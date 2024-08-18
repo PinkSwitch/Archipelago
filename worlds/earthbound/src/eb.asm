@@ -6567,6 +6567,147 @@ db $0A, $AE, $CE, $EE
 
 ORG $C7D9E4
 db $0A, $CA, $D0, $EE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;BATTLE ACTION STUFF WEE-WOO WEE-WOO
+
+macro LoadAddress06(address)
+   LDA #$AFB0
+   STA $06
+   lda #$00FF
+   sta $08
+endmacro
+
+macro LoadAddress0A(address)
+   LDA #$AFB0
+   STA $0A
+   lda #$00FF
+   sta $0C
+endmacro
+
+macro LoadAddress18(address)
+   LDA #$AFB0
+   STA $18
+   lda #$00FF
+   sta $1A
+endmacro
+
+ORG $FFAFB0
+
+ORG $C11FF1
+LDA $FFAFB0,X
+
+ORG $C1B6E4
+LDA $FFAFB0,X
+
+ORG $C1B80E
+LDA $FFAFB0,X
+
+ORG $C1C9E7
+LDA $FFAFB0,X
+
+ORG $C1CD55
+LDA $FFAFB0,X
+
+ORG $C1CDDF
+LDA $FFAFB0,X
+
+ORG $C244D4
+LDA $FFAFB0,X
+
+ORG $C256EE
+LDA $FFAFB0,X
+
+ORG $C257E4
+LDA $FFAFB0,X
+
+ORG $C25A12
+LDA $FFAFB0,X
+
+ORG $C25A8A
+LDA $FFAFB0,X
+
+ORG $C25B4E
+LDA $FFAFB0,X
+
+ORG $C25B9D
+LDA $FFAFB0,X
+
+ORG $C2699F
+LDA $FFAFB0,X
+
+ORG $C29447
+LDA $FFAFB0,X
+
+ORG $C1ADC8
+%LoadAddress06(BattleActions)
+
+ORG $C1AFFD
+%LoadAddress0A(BattleActions)
+
+ORG $C1B04F
+%LoadAddress0A(BattleActions)
+
+ORG $C1B0CB
+%LoadAddress0A(BattleActions)
+
+ORG $C1B138
+%LoadAddress0A(BattleActions)
+
+ORG $C1B1A7
+%LoadAddress0A(BattleActions)
+
+ORG $C1B259
+%LoadAddress0A(BattleActions)
+
+ORG $C1B371
+%LoadAddress18(BattleActions)
+
+ORG $C1B466
+%LoadAddress0A(BattleActions)
+
+ORG $C1B89C
+%LoadAddress0A(BattleActions)
+
+ORG $C1B8E7
+%LoadAddress06(BattleActions)
+
+ORG $C1B9AD
+%LoadAddress0A(BattleActions)
+
+ORG $C1C913
+%LoadAddress0A(BattleActions)
+
+ORG $C1CC9B
+%LoadAddress06(BattleActions)
+
+ORG $C1DF64
+%LoadAddress06(BattleActions)
+
+ORG $C1DFB8
+%LoadAddress06(BattleActions)
+
+ORG $C2451F
+%LoadAddress06(BattleActions)
+
+ORG $C2582E
+%LoadAddress06(BattleActions)
+
+ORG $C25C32
+%LoadAddress0A(BattleActions)
+
+ORG $C25CEB
+%LoadAddress0A(BattleActions)
+
+ORG $C2794D
+%LoadAddress0A(BattleActions)
+
+ORG $FFBE98;START OF NEW BATTLE ACTIONS
+db $00, $01, $05, $00, $30, $9c, $ef, $00, $2c, $8b, $c2, $00
+
+
+
+
+
 
 
 

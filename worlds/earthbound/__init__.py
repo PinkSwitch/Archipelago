@@ -118,7 +118,7 @@ class EarthBoundWorld(World):
         }
         return self.random.choice(weight_table[filler_type])
 
-    def generate_early(self):#Todo: place locked items in generate_early
+    def generate_early(self): #Todo: place locked items in generate_early
         self.locals = []
         local_space_count = 0
         for item_name, amount in self.options.start_inventory.items():
@@ -289,8 +289,6 @@ class EarthBoundWorld(World):
 
     def generate_output(self, output_directory: str):
         try:
-            world = self.multiworld
-            player = self.player
             patch = EBProcPatch()
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
             patch_rom(self, patch, self.player, self.multiworld)

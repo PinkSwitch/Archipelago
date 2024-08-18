@@ -4,7 +4,7 @@ import Utils
 import typing
 import bsdiff4
 import struct
-from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes
+from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
@@ -14,7 +14,7 @@ from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from logging import warning
 #from .local_data import local_locations
 
@@ -26,40 +26,26 @@ valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85", #Cartridge
 
 class LocalRom(object):
 
-    def __init__(self, file: str) -> None:
-        self.name = None
-        self.hash = hash
-        self.orig_buffer = None
+    def __init__(self, file: bytes, name: Optional[str] = None) -> None:
+        self.file = bytearray(file)
+        self.name = name
 
-        with open(file, "rb") as stream:
-            self.buffer = Utils.read_snes_rom(stream)
+    def read_byte(self, offset: int) -> int:
+        return self.file[offset]
 
-    def read_bit(self, address: int, bit_number: int) -> bool:
-        bitflag = 1 << bit_number
-        return (self.buffer[address] & bitflag) != 0
+    def read_bytes(self, offset: int, length: int) -> bytes:
+        return self.file[offset:offset + length]
 
-    def read_byte(self, address: int) -> int:
-        return self.buffer[address]
+    def write_byte(self, offset: int, value: int) -> None:
+        self.file[offset] = value
 
-    def read_bytes(self, startaddress: int, length: int) -> bytes:
-        return self.buffer[startaddress:startaddress + length]
+    def write_bytes(self, offset: int, values) -> None:
+        self.file[offset:offset + len(values)] = values
 
-    def write_byte(self, address: int, value: int) -> None:
-        self.buffer[address] = value
+    def get_bytes(self) -> bytes:
+        return bytes(self.file)
 
-    def write_bytes(self, startaddress: int, values: bytearray) -> None:
-        self.buffer[startaddress:startaddress + len(values)] = values
 
-    def write_to_file(self, file: str) -> None:
-        with open(file, "wb") as outfile:
-            outfile.write(self.buffer)
-
-    def read_from_file(self, file: str) -> None:
-        with open(file, "rb") as stream:
-            self.buffer = bytearray(stream.read())
-
-    def apply_patch(self, patch: bytes):
-        self.file = bytearray(bsdiff4.patch(bytes(self.file), patch))
 
 
 def patch_rom(world, rom, player: int, multiworld):
@@ -414,7 +400,8 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     name: bytearray
     procedure = [
         ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"]),
-        ("apply_tokens", ["token_patch.bin"])
+        ("apply_tokens", ["token_patch.bin"]),
+        ("alloc_battle_actions", [])
     ]
 
     @classmethod
@@ -426,6 +413,19 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
 
     def write_bytes(self, offset, value: typing.Iterable[int]):
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
+
+class EBPatchExtensions(APPatchExtension):
+    game = "EarthBound"
+
+    @staticmethod
+    def alloc_battle_actions(caller: APProcedurePatch, rom: LocalRom) -> bytes:
+        rom = LocalRom(rom)
+        for action_number in range(0x013F):
+            current_action = rom.read_bytes(0x157B68 + (12 * action_number), 12)
+            rom.write_bytes(0x3FAFB0 + (12 * action_number), current_action)
+        print("goodbye")
+        return rom.get_bytes()
+
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:

@@ -28,7 +28,7 @@ def initialize_enemies(world):
         "Black Antoid": EarthBoundEnemy("Black Antoid", 0x15975f, 34, 25, 37, 7, 4, 14, 13, 7, False),
         "Red Antoid": EarthBoundEnemy("Red Antoid", 0x1597bd, 112, 30, 1175, 35, 10, 29, 27, 20, False),
         "Ramblin' Evil Mushroom": EarthBoundEnemy("Ramblin' Evil Mushroom", 0x15981b, 60, 0, 95, 15, 5, 15, 10, 7, False),
-        "Struttin' Evil Mushroom (2)": EarthBoundEnemy("Struttin' Evil Mushroom", 0x159879, 157, 0, 1492, 95, 28, 29, 22, 17, False),
+        "Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom", 0x159879, 157, 0, 1492, 95, 28, 29, 22, 17, False),
         "Mobile Sprout": EarthBoundEnemy("Mobile Sprout", 0x1598d7, 79, 9, 133, 13, 6, 17, 12, 10, False),
         "Tough Mobile Sprout": EarthBoundEnemy("Tough Mobile Sprout", 0x159935, 179, 13, 1865, 119, 18, 33, 27, 21, False),
         "Enraged Fire Plug": EarthBoundEnemy("Enraged Fire Plug", 0x159993, 309, 0, 4321, 346, 14, 60, 81, 32, False),
@@ -221,7 +221,7 @@ def initialize_enemies(world):
         #"Foppy": EarthBoundEnemy("Foppy", 0x15e18b, 120, 10, 1311, 93, 1, 29, 9, 16, False),
         "Guardian General (2)": EarthBoundEnemy("Guardian General (2)", 0x15e1e9, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
         "Black Antoid (2)": EarthBoundEnemy("Black Antoid (2)", 0x15e247, 34, 25, 37, 7, 4, 14, 13, 7, False), #Separate enemy used in the titanic ant fight
-        "Struttin' Evil Mushroom": EarthBoundEnemy("Struttin' Evil Mushroom (2)", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
+        "Struttin' Evil Mushroom (2)": EarthBoundEnemy("Struttin' Evil Mushroom (2)", 0x15e2a5, 60, 0, 95, 15, 5, 15, 10, 7, False),
         #"Runaway Dog (2)": EarthBoundEnemy("Runaway Dog", 0x15e303, 21, 0, 4, 3, 26, 4, 5, 73, False),
         "Cave Boy (2)": EarthBoundEnemy("Cave Boy (2)", 0x15e361, 314, 0, 618, 17, 5, 21, 33, 11, False),
         "Tiny Li'l Ghost": EarthBoundEnemy("Tiny Li'l Ghost", 0x15e3bf, 90, 0, 1, 162, 100, 19, 7, 18, False),
@@ -352,7 +352,7 @@ def initialize_enemies(world):
                               "Grapefruit Falls": {world.enemies["Armored Frog"], world.enemies["Black Antoid"], world.enemies["Coil Snake"], world.enemies["Farm Zombie"],
                                                    world.enemies["Plain Crocodile"], world.enemies["Red Antoid"], world.enemies["Violent Roach"], world.enemies["Mad Duck"], world.enemies["Black Antoid (2)"]},
                               "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies["Master Belch"], world.enemies["Master Belch (2)"]},
-                              "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Trillionage Sprout"]},
+                              "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom"], world.enemies["Tough Mobile Sprout"], world.enemies["Trillionage Sprout"]},
                               "Dusty Dunes Desert": {world.enemies["Bad Buffalo"], world.enemies["Crested Booka"], world.enemies["Criminal Caterpillar"], world.enemies["Cute Li'l UFO"], world.enemies["Desert Wolf"], world.enemies["Mole Playing Rough"],
                                                      world.enemies["Skelpion"], world.enemies["Smilin' Sphere"]},
                               "Fourside": {world.enemies["Annoying Reveler"], world.enemies["Crazed Sign"], world.enemies["Extra Cranky Lady"], world.enemies["Mad Taxi"],
@@ -483,6 +483,22 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "special": {25: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "healing": {20: "alpha", 40: "beta", 60: "gamma", 100: "omega"},
     "starstorm": {50: "alpha", 100: "beta"},
+    "diamond_eyes": {20: "alpha", 40: "beta", 100: "gamma"},
+    "nauseous_breath": {25: "alpha", 100: "beta"},
+    "poison_stinger": {25: "alpha", 100: "beta"},
+    "kiss_of_death": {25: "alpha", 100: "beta"},
+    "nauseous_breath": {25: "alpha", 100: "beta"},
+    #"summon_storm": {25: "alpha", 100: "beta"},
+    #"scalding_espresso": {25: "alpha", 100: "beta"},
+    #"extinguishing_blast": {25: "alpha", 100: "beta"},
+    #"spray_fire": {25: "alpha", 100: "beta"},
+    #"breathe_fire": {25: "alpha", 100: "beta"},
+    "poisonous_fangs": {25: "alpha", 100: "beta"},
+    #"flaming_fireball": {25: "alpha", 100: "beta"},
+    #"glorious_light": {25: "alpha", 100: "beta"},
+    "poison_flute": {25: "alpha", 100: "beta"},
+    "diamond_bite": {20: "alpha", 40: "beta", 100: "gamma"},
+    "scatter_spores": {25: "alpha", 100: "beta"}
 }
 
 def get_psi_levels(level: int, breaks: Dict[int, str]) -> str:
@@ -495,6 +511,7 @@ enemy_psi = {
     "Dept. Store Spook": ["freeze", "fire", "lifeup", "null"],
     "Dept. Store Spook (2)": ["null", "null", "freeze", "null"],
     "Black Antoid": ["null", "null", "null", "lifeup"],
+    "Struttin' Evil Mushroom": ["null", "null", "null", "scatter_spores"],
     "Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Tough Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Mystical Record": ["null", "null", "lifeup", "null"],
@@ -544,50 +561,54 @@ enemy_psi = {
 
 spell_data = {
     "freeze": {
-        "alpha": [0x12, 0x09],
-        "beta": [0x13, 0x0A],
-        "gamma": [0x14, 0x0B],
-        "omega": [0x15, 0x0C]
+        "alpha": [0x12, 0x00, 0x09],
+        "beta": [0x13, 0x00, 0x0A],
+        "gamma": [0x14, 0x00, 0x0B],
+        "omega": [0x15, 0x00, 0x0C]
     },
     "fire": {
-        "alpha": [0x0E, 0x05],
-        "beta": [0x0F, 0x06],
-        "gamma": [0x10, 0x07],
-        "omega": [0x11, 0x08]
+        "alpha": [0x0E, 0x00, 0x05],
+        "beta": [0x0F, 0x00, 0x06],
+        "gamma": [0x10, 0x00, 0x07],
+        "omega": [0x11, 0x00, 0x08]
     },
     "lifeup": {
-        "alpha": [0x20, 0x17],
-        "beta": [0x21, 0x18],
-        "gamma": [0x22, 0x19],
-        "omega": [0x23, 0x1A]
+        "alpha": [0x20, 0x00, 0x17],
+        "beta": [0x21, 0x00, 0x18],
+        "gamma": [0x22, 0x00, 0x19],
+        "omega": [0x23, 0x00, 0x1A]
     },
     "flash": {
-        "alpha": [0x1A, 0x11],
-        "beta": [0x1B, 0x12],
-        "gamma": [0x1C, 0x13],
-        "omega": [0x1D, 0x14]
+        "alpha": [0x1A, 0x00, 0x11],
+        "beta": [0x1B, 0x00, 0x12],
+        "gamma": [0x1C, 0x00, 0x13],
+        "omega": [0x1D, 0x00, 0x14]
     },
     "thunder": {
-        "alpha": [0x16, 0x0D],
-        "beta": [0x17, 0x0E],
-        "gamma": [0x18, 0x0F],
-        "omega": [0x19, 0x10]
+        "alpha": [0x16, 0x00, 0x0D],
+        "beta": [0x17, 0x00, 0x0E],
+        "gamma": [0x18, 0x00, 0x0F],
+        "omega": [0x19, 0x00, 0x10]
     },
     "special": {
-        "alpha": [0x0A, 0x01],
-        "beta": [0x0B, 0x02],
-        "gamma": [0x0C, 0x03],
-        "omega": [0x0D, 0x04]
+        "alpha": [0x0A, 0x00, 0x01],
+        "beta": [0x0B, 0x00, 0x02],
+        "gamma": [0x0C, 0x00, 0x03],
+        "omega": [0x0D, 0x00, 0x04]
     },
     "healing": {
-        "alpha": [0x24, 0x1B],
-        "beta": [0x25, 0x1C],
-        "gamma": [0x26, 0x1D],
-        "omega": [0x27, 0x1E]
+        "alpha": [0x24, 0x00, 0x1B],
+        "beta": [0x25, 0x00, 0x1C],
+        "gamma": [0x26, 0x00, 0x1D],
+        "omega": [0x27, 0x00, 0x1E]
     },
     "starstorm": {
-        "alpha": [0x1E, 0x15],
-        "beta": [0x1F, 0x16]
+        "alpha": [0x1E, 0x00, 0x15],
+        "beta": [0x1F, 0x00, 0x16]
+    },
+    "scatter_spores": {
+        "alpha": [0xED, 0x00, 0x00],
+        "beta": [0x3F, 0x01, 0x00]
     }
 
 }
@@ -735,8 +756,8 @@ def scale_enemies(world, rom):
                         #print(enemy.name)
                         #print(index, spell)
                         psi_level = get_psi_levels(level, spell_breaks[spell])
-                        rom.write_bytes(enemy.address + 70 + (index * 2), bytearray([spell_data[spell][psi_level][0]]))
-                        rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][1]]))
+                        rom.write_bytes(enemy.address + 70 + (index * 2), bytearray(spell_data[spell][psi_level][0:2]))
+                        rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][2]]))
                         #print(f"{spell} {psi_level} at {hex(enemy.address + 70 + (index * 2))}")
                 if world.options.shuffle_enemy_drops:
                     rom.write_bytes(enemy.address + 88, bytearray([world.random.choice(world.filler_drops)]))
