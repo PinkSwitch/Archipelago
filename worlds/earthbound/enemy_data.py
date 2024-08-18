@@ -483,22 +483,27 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "special": {25: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "healing": {20: "alpha", 40: "beta", 60: "gamma", 100: "omega"},
     "starstorm": {50: "alpha", 100: "beta"},
-    "diamond_eyes": {20: "alpha", 40: "beta", 100: "gamma"},
+    "diamond_eyes": {35: "alpha", 40: "beta", 100: "gamma"},
     "nauseous_breath": {25: "alpha", 100: "beta"},
     "poison_stinger": {25: "alpha", 100: "beta"},
     "kiss_of_death": {25: "alpha", 100: "beta"},
-    "nauseous_breath": {25: "alpha", 100: "beta"},
-    #"summon_storm": {25: "alpha", 100: "beta"},
-    #"scalding_espresso": {25: "alpha", 100: "beta"},
-    #"extinguishing_blast": {25: "alpha", 100: "beta"},
-    #"spray_fire": {25: "alpha", 100: "beta"},
-    #"breathe_fire": {25: "alpha", 100: "beta"},
+    "summon_storm": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
+    "scalding_espresso": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "extinguishing_blast": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "spray_fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "breathe_fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "poisonous_fangs": {25: "alpha", 100: "beta"},
-    #"flaming_fireball": {25: "alpha", 100: "beta"},
-    #"glorious_light": {25: "alpha", 100: "beta"},
+    "flaming_fireball": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "glorious_light": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "poison_flute": {25: "alpha", 100: "beta"},
-    "diamond_bite": {20: "alpha", 40: "beta", 100: "gamma"},
-    "scatter_spores": {25: "alpha", 100: "beta"}
+    "diamond_bite": {35: "alpha", 40: "beta", 100: "gamma"},
+    "scatter_spores": {25: "alpha", 100: "beta"},
+    "hacking_cough": {25: "alpha", 100: "beta"},
+    "stuffiness_beam": {25: "alpha", 100: "beta"},
+    "crashing_boom_bang": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
+    "paralysis": {35: "alpha", 60: "beta", 100: "gamma"},
+    "electrical_shock": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
+    #bombs and bottle rockets too? Also missile maybe? hmmm
 }
 
 def get_psi_levels(level: int, breaks: Dict[int, str]) -> str:
@@ -518,44 +523,85 @@ enemy_psi = {
     "Guardian Hieroglyph": ["null", "thunder", "flash", "thunder"],
     "Conducting Menace": ["flash", "flash", "thunder", "thunder"],
     "Conducting Spirit": ["flash", "flash", "thunder", "thunder"],
-    "Ness's Nightmare": ["null", "special", "null", "null"],
-    "Mr. Carpainter": ["null", "lifeup", "null", "null"],
+    "Ness's Nightmare": ["null", "special", "glorious_light", "null"],
+    "Mr. Carpainter": ["crashing_boom_bang", "lifeup", "null", "null"],
+    "Carbon Dog": ["flaming_fireball", "null", "null", "null"],
     "Thunder Mite": ["thunder", "thunder", "thunder", "thunder"],
     "Chomposaur": ["fire", "fire", "null", "null"],
-    "Shrooom!": ["null", "lifeup", "null", "null"],
+    "Gigantic Ant": ["null", "poison_stinger", "null", "null"],
+    "Shrooom!": ["null", "lifeup", "scatter_spores", "null"],
+    "Plague Rat of Doom": ["poisonous_fangs", "null", "null", "null"],
     "Mondo Mole": ["lifeup", "null", "null", "null"],
+    "Scalding Coffee Cup": ["scalding_espresso", "scalding_espresso", "scalding_espresso", "scalding_espresso"],
+    "Arachnid!": ["null", "null", "null", "poison_stinger"],
+    "Arachnid!!!": ["poison_stinger", "null", "null", "null"],
+    "Kraken": ["breathe_fire", "null", "crashing_boom_bang", "null"],
+    "Bionic Kraken": ["null", "crashing_boom_bang", "breathe_fire", "null"], #Generate tornado?
+    "Thirsty Coil Snake": ["poisonous_fangs", "null", "null", "null"],
+    "Crazed Sign": ["null", "null", "paralysis", "null"],
     "Wooly Shambler": ["null", "null", "null", "flash"],
     "Wild 'n Wooly Shambler": ["null", "null", "null", "flash"],
-    "Skelpion": ["null", "null", "null", "thunder"],
-    "Dread Skelpion": ["null", "null", "thunder", "thunder"],
+    "Skelpion": ["null", "poison_stinger", "null", "thunder"],
+    "Dread Skelpion": ["poison_stinger", "null", "thunder", "thunder"],
     "Ghost of Starman": ["starstorm", "null", "null", "null"],
     "Smilin' Sphere": ["null", "fire", "null", "null"],
     "Uncontrollable Sphere": ["null", "fire", "fire", "null"],
     "Starman Deluxe": ["null", "null", "starstorm", "null"],
     "Final Starman": ["null", "null", "starstorm", "null"],
-    "Trillionage Sprout": ["null", "null", "flash", "null"],
-    "Lesser Mook": ["freeze", "freeze", "null", "null"],
-    "Mook Senior": ["freeze", "fire", "lifeup", "null"],
+    "Urban Zombie": ["null", "null", "nauseous_breath", "null"],
+    "Zombie Dog": ["null", "null", "null", "poisonous_fangs"],
+    "Diamond Dog": ["null", "null", "null", "glorious_light"],
+    "Trillionage Sprout": ["null", "null", "flash", "paralysis"],
+    "Musica": ["electrical_shock", "null", "null", "electrical_shock"],
+    "Desert Wolf": ["null", "null", "null", "poisonous_fangs"],
+    "Master Belch": ["nauseous_breath", "nauseous_breath", "null", "null"],
+    "Big Pile of Puke": ["null", "null", "null", "nauseous_breath"],
+    "Master Barf": ["nauseous_breath", "null", "null", "null"],
+    "Kiss of Death": ["null", "null", "kiss_of_death", "null"],
+    "French Kiss of Death": ["kiss_of_death", "kiss_of_death", "kiss_of_death", "kiss_of_death"],
+    "Zap Eel": ["electrical_shock", "electrical_shock", "electrical_shock", "electrical_shock"],
+    "Tangoo": ["null", "null", "poison_flute", "null"],
+    "Squatter Demon": ["poisonous_fangs", "diamond_bite", "null", "null"],
+    "Lesser Mook": ["freeze", "freeze", "null", "diamond_eyes"],
+    "Mook Senior": ["freeze", "fire", "lifeup", "diamond_eyes"],
     "Smelly Ghost": ["null", "null", "lifeup", "null"],
+    "Deadly Mouse": ["poisonous_fangs", "null", "null", "null"],
+    "Electro Specter": ["electrical_shock", "null", "electrical_shock", "null"],
     "Smilin' Sam": ["null", "null", "null", "lifeup"],
     "Manly Fish's Brother": ["null", "null", "freeze", "healing"],
+    "Thunder and Storm": ["crashing_boom_bang", "null", "null", "null"],
     "Cute Li'l UFO": ["null", "null", "null", "lifeup"],
     "Beautiful UFO": ["null", "null", "null", "lifeup"],
+    "Evil Mani-Mani": ["null", "paralysis", "null", "null"],
     "Mr. Molecule": ["thunder", "flash", "fire", "freeze"],
     "Heavily Armed Pokey": ["null", "fire", "null", "null"],
     "Psychic Psycho": ["fire", "fire", "fire", "fire"],
-    "Major Psychic Psycho": ["fire", "null", "null", "fire"],
+    "Major Psychic Psycho": ["fire", "null", "paralysis", "fire"],
+    "Soul Consuming Flame": ["null", "breathe_fire", "flaming_fireball", "spray_fire"],
+    "Demonic Petunia": ["null", "extinguishing_blast", "null", "null"],
     "Ness's Nightmare (2)": ["special", "lifeup", "special", "null"],
+    "Mr. Carpainter (2)": ["crashing_boom_bang", "null", "null", "null"],
+    "Carbon Dog (2)": ["fire_spray", "null", "null", "null"],
+    "Gigantic Ant (2)": ["paralysis", "null", "null", "null"],
     "Chomposaur (2)": ["null", "null", "fire", "fire"],
     "Guardian Digger (2)": ["null", "null", "null", "lifeup"],
-    "Kraken (2)": ["flash", "null", "null", "null"],
+    "Kraken (2)": ["flash", "breathe_fire", "null", "null"], #tornado?
     "Starman Super (2)": ["null", "healing", "null", "null"],
     "Ghost of Starman (2)": ["null", "null", "starstorm", "null"],
     "Final Starman (2)": ["starstorm", "null", "healing", "null"],
+    "Diamond Dog (2)": ["null", "null", "null", "diamond_bite"],
+    "Trillionage Sprout (2)": ["null", "null", "diamond_eyes", "null"],
+    "Master Belch (2)": ["nauseous_breath", "null", "null", "null"],
+    "Master Barf (2)": ["null", "null", "nauseous_breath", "null"],
     "Boogey Tent (2)": ["null", "null", "flash", "null"],
+    "Electro Specter (2)": ["null", "null", "electrical_shock", "null"],
+    "Thunder and Storm (2)": ["summon_storm", "null", "crashing_boom_bang", "null"],
+    "Evil Mani-Mani (2)": ["null", "null", "glorious_light", "null"],
     "Black Antoid (2)": ["lifeup", "lifeup", "lifeup", "lifeup"],
     "Giygas (1)": ["special", "special", "special", "special"],
+    "Farm Zombie": ["null", "null", "nauseous_breath", "null"],
     "Criminal Caterpillar": ["fire", "fire", "fire", "fire"],
+    "Evil Eye": ["null", "diamond_eyes", "paralysis", "null"],
     "Master Criminal Worm": ["fire", "fire", "fire", "fire"]
 }
 
@@ -609,6 +655,90 @@ spell_data = {
     "scatter_spores": {
         "alpha": [0xED, 0x00, 0x00],
         "beta": [0x3F, 0x01, 0x00]
+    },
+    "nauseous_breath": {
+        "alpha": [0x4A, 0x00, 0x00],
+        "beta": [0x47, 0x00, 0x00]
+    },
+    "diamond_eyes": {
+        "alpha": [0x40, 0x01, 0x00],
+        "beta": [0x41, 0x01, 0x00],
+        "gamma": [0x44, 0x00, 0x00]
+    },
+    "glorious_light": {
+        "alpha": [0x42, 0x01, 0x00],
+        "beta": [0x43, 0x01, 0x00],
+        "gamma": [0xC9, 0x00, 0x00],
+        "omega": [0x44, 0x01, 0x00],
+    },
+    "flaming_fireball": {
+        "alpha": [0x56, 0x01, 0x00],
+        "beta": [0x46, 0x01, 0x00],
+        "gamma": [0x47, 0x01, 0x00],
+        "omega": [0x68, 0x00, 0x00],
+    },
+    "breathe_fire": {
+        "alpha": [0x48, 0x01, 0x00],
+        "beta": [0x49, 0x01, 0x00],
+        "gamma": [0x5E, 0x00, 0x00],
+        "omega": [0x4A, 0x00, 0x00],
+    },
+    "spray_fire": {
+        "alpha": [0x4B, 0x01, 0x00],
+        "beta": [0x4C, 0x01, 0x00],
+        "gamma": [0x4D, 0x01, 0x00],
+        "omega": [0x5D, 0x00, 0x00],
+    },
+    "paralysis": {
+        "alpha": [0xFF, 0xFF, 0xFF],#CHANGE LATER
+        "beta": [0x38, 0x00, 0x2F],
+        "gamma": [0x39, 0x00, 0x30]
+    },
+    "poisonous_fangs": {
+        "alpha": [0x4E, 0x01, 0x00],
+        "beta": [0x64, 0x00, 0x00]
+    },
+    "poison_stinger": {
+        "alpha": [0x4F, 0x01, 0x00],
+        "beta": [0x48, 0x00, 0x00]
+    },
+    "crashing_boom_bang": {
+        "alpha": [0x50, 0x01, 0x00],
+        "beta": [0x5C, 0x00, 0x00],
+        "gamma": [0x51, 0x01, 0x00],
+        "omega": [0x52, 0x01, 0x00]
+    },
+
+    "electrical_shock": {
+        "alpha": [0x53, 0x01, 0x00],
+        "beta": [0xCA, 0x00, 0x00],
+        "gamma": [0x54, 0x01, 0x00],
+        "omega": [0x55, 0x01, 0x00]
+    },
+    "scalding_espresso": {
+        "alpha": [0x59, 0x00, 0x00],
+        "beta": [0x56, 0x01, 0x00],
+        "gamma": [0x57, 0x01, 0x00],
+        "omega": [0x58, 0x01, 0x00]
+    },
+    "extinguishing_blast": {
+        "alpha": [0x59, 0x01, 0x00],
+        "beta": [0x5A, 0x01, 0x00],
+        "gamma": [0x5B, 0x00, 0x00],
+        "omega": [0x5B, 0x01, 0x00]
+    },
+    "diamond_bite": {
+        "alpha": [0x5C, 0x01, 0x00],
+        "beta": [0x5D, 0x01, 0x00],
+        "gamma": [0xE4, 0x00, 0x00]
+    },
+    "poison_flute": {
+        "alpha": [0x5E, 0x01, 0x00],
+        "beta": [0xCD, 0x00, 0x00]
+    },
+    "kiss_of_death": {
+        "alpha": [0x5F, 0x01, 0x00],
+        "beta": [0x49, 0x00, 0x00]
     }
 
 }
