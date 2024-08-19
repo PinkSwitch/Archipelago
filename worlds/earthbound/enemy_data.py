@@ -475,25 +475,25 @@ levels = [
     73] #gigyas
 
 spell_breaks: Dict[str, Dict[int, str]] = {
-    "freeze": {30: "alpha", 50: "beta", 70: "gamma", 100: "omega"},
-    "fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 40: "alpha", 65: "beta", 70: "gamma", 100: "omega"},
+    "fire": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "lifeup": {20: "alpha", 50: "beta", 70: "gamma", 100: "omega"},
-    "thunder": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
+    "thunder": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "flash": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
-    "special": {25: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "special": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 70: "gamma", 100: "omega"},
     "healing": {20: "alpha", 40: "beta", 60: "gamma", 100: "omega"},
-    "starstorm": {50: "alpha", 100: "beta"},
+    "starstorm": {5: "zeta", 12: "epsilon", 20: "delta", 45: "lambda", 70: "alpha", 100: "beta"},
     "diamond_eyes": {35: "alpha", 40: "beta", 100: "gamma"},
     "nauseous_breath": {25: "alpha", 100: "beta"},
     "poison_stinger": {25: "alpha", 100: "beta"},
     "kiss_of_death": {25: "alpha", 100: "beta"},
     "summon_storm": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
-    "scalding_espresso": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
-    "extinguishing_blast": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
-    "spray_fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
-    "breathe_fire": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "scalding_espresso": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "extinguishing_blast": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "spray_fire": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "breathe_fire": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "poisonous_fangs": {25: "alpha", 100: "beta"},
-    "flaming_fireball": {20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
+    "flaming_fireball": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
     "glorious_light": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "poison_flute": {25: "alpha", 100: "beta"},
     "diamond_bite": {35: "alpha", 40: "beta", 100: "gamma"},
@@ -501,7 +501,7 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "hacking_cough": {25: "alpha", 100: "beta"},
     "stuffiness_beam": {25: "alpha", 100: "beta"},
     "crashing_boom_bang": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
-    "paralysis": {35: "alpha", 60: "beta", 100: "gamma"},
+    "paralysis": {30: "lambda", 60: "alpha", 100: "omega"},
     "electrical_shock": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
     #bombs and bottle rockets too? Also missile maybe? hmmm
 }
@@ -612,12 +612,18 @@ enemy_psi = {
 
 spell_data = {
     "freeze": {
+        "zeta": [0x62, 0x01, 0x37],
+        "epsilon": [0x63, 0x01, 0x38],
+        "delta": [0x64, 0x01, 0x39],
+        "lambda": [0x65, 0x01, 0x3A],
         "alpha": [0x12, 0x00, 0x09],
         "beta": [0x13, 0x00, 0x0A],
         "gamma": [0x14, 0x00, 0x0B],
         "omega": [0x15, 0x00, 0x0C]
     },
     "fire": {
+        "zeta": [0x60, 0x01, 0x35],
+        "epsilon": [0x61, 0x01, 0x36],
         "alpha": [0x0E, 0x00, 0x05],
         "beta": [0x0F, 0x00, 0x06],
         "gamma": [0x10, 0x00, 0x07],
@@ -636,12 +642,18 @@ spell_data = {
         "omega": [0x1D, 0x00, 0x14]
     },
     "thunder": {
+        "zeta": [0x69, 0x01, 0x3E],
+        "epsilon": [0x6A, 0x01, 0x3F],
+        "delta": [0x6B, 0x01, 0x40],
+        "lambda": [0x6C, 0x01, 0x41],
         "alpha": [0x16, 0x00, 0x0D],
         "beta": [0x17, 0x00, 0x0E],
         "gamma": [0x18, 0x00, 0x0F],
         "omega": [0x19, 0x00, 0x10]
     },
     "special": {
+        "zeta": [0x66, 0x01, 0x3B],
+        "epsilon": [0x67, 0x01, 0x3C],
         "alpha": [0x0A, 0x00, 0x01],
         "beta": [0x0B, 0x00, 0x02],
         "gamma": [0x0C, 0x00, 0x03],
@@ -654,6 +666,10 @@ spell_data = {
         "omega": [0x27, 0x00, 0x1E]
     },
     "starstorm": {
+        "zeta": [0x6D, 0x01, 0x42],
+        "epsilon": [0x6E, 0x01, 0x43],
+        "delta": [0x6F, 0x01, 0x44],
+        "lambda": [0x70, 0x01, 0x45],
         "alpha": [0x1E, 0x00, 0x15],
         "beta": [0x1F, 0x00, 0x16]
     },
@@ -677,27 +693,33 @@ spell_data = {
         "omega": [0x44, 0x01, 0x00],
     },
     "flaming_fireball": {
-        "alpha": [0x45, 0x01, 0x00],
+        "zeta": [0x73, 0x01, 0x00],
+        "epsilon": [0x74, 0x01, 0x00],
+        "alpha": [0x47, 0x01, 0x00],
         "beta": [0x46, 0x01, 0x00],
-        "gamma": [0x47, 0x01, 0x00],
+        "gamma": [0x45, 0x01, 0x00],
         "omega": [0x68, 0x00, 0x00],
     },
     "breathe_fire": {
+        "zeta": [0x71, 0x01, 0x00],
+        "epsilon": [0x72, 0x01, 0x00],
         "alpha": [0x48, 0x01, 0x00],
         "beta": [0x49, 0x01, 0x00],
         "gamma": [0x5E, 0x00, 0x00],
         "omega": [0x4A, 0x00, 0x00],
     },
     "spray_fire": {
+        "zeta": [0x75, 0x01, 0x00],
+        "epsilon": [0x76, 0x01, 0x00],
         "alpha": [0x4B, 0x01, 0x00],
         "beta": [0x4C, 0x01, 0x00],
         "gamma": [0x4D, 0x01, 0x00],
         "omega": [0x5D, 0x00, 0x00],
     },
     "paralysis": {
-        "alpha": [0xFF, 0xFF, 0xFF],#CHANGE LATER
-        "beta": [0x38, 0x00, 0x2F],
-        "gamma": [0x39, 0x00, 0x30]
+        "lambda": [0x68, 0x01, 0x3D],
+        "alpha": [0x38, 0x00, 0x2F],
+        "omega": [0x39, 0x00, 0x30]
     },
     "poisonous_fangs": {
         "alpha": [0x4E, 0x01, 0x00],
@@ -708,6 +730,10 @@ spell_data = {
         "beta": [0x48, 0x00, 0x00]
     },
     "crashing_boom_bang": {
+        "zeta": [0x7D, 0x01, 0x00],
+        "epsilon": [0x7E, 0x01, 0x00],
+        "delta": [0x7F, 0x01, 0x00],
+        "lambda": [0x80, 0x01, 0x00],
         "alpha": [0x50, 0x01, 0x00],
         "beta": [0x5C, 0x00, 0x00],
         "gamma": [0x51, 0x01, 0x00],
@@ -715,18 +741,26 @@ spell_data = {
     },
 
     "electrical_shock": {
+        "zeta": [0x79, 0x01, 0x00],
+        "epsilon": [0x7A, 0x01, 0x00],
+        "delta": [0x7C, 0x01, 0x00],
+        "lambda": [0x7B, 0x01, 0x00],
         "alpha": [0x53, 0x01, 0x00],
         "beta": [0xCA, 0x00, 0x00],
         "gamma": [0x54, 0x01, 0x00],
         "omega": [0x55, 0x01, 0x00]
     },
     "scalding_espresso": {
+        "zeta": [0x77, 0x01, 0x00],
+        "epsilon": [0x78, 0x01, 0x00],
         "alpha": [0x59, 0x00, 0x00],
         "beta": [0x56, 0x01, 0x00],
         "gamma": [0x57, 0x01, 0x00],
         "omega": [0x58, 0x01, 0x00]
     },
     "extinguishing_blast": {
+        "zeta": [0x81, 0x01, 0x00],
+        "epsilon": [0x82, 0x01, 0x00],
         "alpha": [0x59, 0x01, 0x00],
         "beta": [0x5A, 0x01, 0x00],
         "gamma": [0x5B, 0x00, 0x00],

@@ -6833,6 +6833,146 @@ db $00, $01, $05, $00
 dd dirty_kiss
 dd $00C28B6D;
 
+db $00, $03, $03, $01;fire zeta
+dd $00EF8543
+dd fire_zeta
+
+db $00, $03, $03, $03;fire epsilon
+dd $00EF8543
+dd fire_epsilon
+
+db $00, $01, $03, $01;Freeze zeta
+dd $00EF8543
+dd freeze_zeta
+
+db $00, $01, $03, $01;Freeze epsilon
+dd $00EF8543
+dd freeze_epsilon
+
+db $00, $01, $03, $02;Freeze delta
+dd $00EF8543
+dd freeze_delta
+
+db $00, $01, $03, $02;Freeze lambda
+dd $00EF8543
+dd freeze_lambda
+
+db $00, $04, $03, $03;Special zeta
+dd $00EF8543
+dd special_zeta
+
+db $00, $04, $03, $05;Special epsilon
+dd $00EF8543
+dd special_epsilon
+
+db $00, $01, $03, $04;Paralysis Delta
+dd $00EF8543
+dd paralyz_delta
+
+db $00, $04, $03, $01;Thunder zeta
+dd $00EF8543
+dd thunder_zeta
+
+db $00, $04, $03, $01;Thunder epsilon
+dd $00EF8543
+dd thunder_epsilon
+
+db $00, $04, $03, $01;Thunder lambda
+dd $00EF8543
+dd thunder_delta
+
+db $00, $04, $03, $01;Thunder delta
+dd $00EF8543
+dd thunder_lambda
+
+db $00, $04, $03, $01;starstorm zeta
+dd $00EF8543
+dd starstorm_zeta
+
+db $00, $04, $03, $03;starstorm epsilon
+dd $00EF8543
+dd starstorm_epsilon
+
+db $00, $04, $03, $06;starstorm delta
+dd $00EF8543
+dd starstorm_delta
+
+db $00, $04, $03, $0C;starstorm lambda
+dd $00EF8543
+dd starstorm_lambda
+
+db $00, $04, $03, $00
+dd warm_breath
+dd fire_zeta
+
+db $00, $04, $03, $00
+dd sizzle_breath
+dd fire_epsilon
+
+db $00, $01, $05, $00
+dd fireball_zeta
+dd flaming_fireball_zeta
+
+db $00, $01, $05, $00
+dd fireball_epsilon
+dd flaming_fireball_epsilon
+
+db $00, $04, $05, $00
+dd spray_fire_zeta
+dd fire_zeta
+
+db $00, $04, $05, $00
+dd spray_fire_epsilon
+dd fire_epsilon
+
+db $00, $04, $05, $00
+dd lukewarm_espresso
+dd fire_zeta;
+
+db $00, $04, $05, $00
+dd piping_espresso
+dd fire_epsilon;
+
+db $00, $04, $05, $00
+dd tingling_jolt
+dd thunder_zeta;
+
+db $00, $04, $05, $00
+dd minor_zap
+dd thunder_epsilon
+
+db $00, $04, $05, $00
+dd dull_shock
+dd thunder_delta;
+
+db $00, $04, $05, $00
+dd lv_shock
+dd thunder_lambda;
+
+db $00, $04, $05, $00
+dd fizzled_zap
+dd thunder_zeta;
+
+db $00, $04, $05, $00
+dd crackling_whoosh_bam
+dd thunder_epsilon
+
+db $00, $04, $05, $00
+dd sparking_swish_bang
+dd thunder_delta;
+
+db $00, $04, $05, $00
+dd jolting_shock_zap
+dd thunder_lambda;
+
+db $00, $04, $05, $00
+dd extinguish_zeta
+dd fire_zeta;
+
+db $00, $04, $05, $00
+dd extinguish_epsilon
+dd fire_epsilon;
+
 
 
 ;New battle text
@@ -6998,7 +7138,96 @@ db $01, $1f, $02, $19, $70, $1c, $0d, $50, $97, $91, $a6, $95, $50, $a4, $98, $9
 db $50, $a3, $9d, $9f, $9f, $93, $98, $50, $9f, $96, $50, $a3, $99, $93, $9b, $9e
 db $95, $a3, $a3, $51, $03, $10, $01, $02
 
+warm_breath:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $92, $a2, $95, $91, $a4, $98, $95, $94
+db $50, $a7, $91, $a2, $9d, $9c, $a9, $50, $9f, $9e, $50, $a9, $9f, $a5, $51, $1F
+db $02, $4b, $03, $10, $01, $02
 
+sizzle_breath:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $92, $a2, $95, $91, $a4, $98, $95, $94
+db $50, $91, $50, $a3, $99, $aa, $aa, $9c, $99, $9e, $97, $50, $98, $9f, $a4, $50
+db $92, $a2, $95, $91, $a4, $98, $51, $1F, $02, $4b, $03, $10, $01, $02
+
+fireball_zeta:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $a0, $95, $a7, $95, $94, $50, $9f
+db $a5, $a4, $50, $98, $9f, $a4, $50, $95, $9d, $92, $95, $a2, $a3, $51, $1f, $02
+db $4b, $03, $10, $01, $02
+
+fireball_epsilon:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $a0, $95, $a7, $95, $94, $50, $9f
+db $a5, $a4, $50, $91, $50, $96, $9c, $99, $93, $9b, $95, $a2, $99, $9e, $97, $50
+db $96, $99, $a2, $95, $92, $91, $9c, $9c, $51, $1f, $02, $4b, $03, $10, $01, $02
+
+spray_fire_zeta:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $9f, $a5, $a4
+db $50, $91, $50, $a3, $a0, $9c, $91, $a3, $98, $50, $9f, $96, $50, $96, $99, $a2
+db $95, $51, $1f, $02, $4b, $03, $10, $01, $02
+
+spray_fire_epsilon:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $9f, $a5, $a4
+db $50, $91, $50, $92, $a5, $a2, $a3, $a4, $50, $9f, $96, $50, $96, $99, $a2, $95
+db $51, $1f, $02, $4b, $03, $10, $01, $02
+
+lukewarm_espresso:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $a0, $99, $9c, $9c, $95, $94, $50
+db $a3, $9f, $9d, $95, $50, $9c, $a5, $9b, $95, $a7, $91, $a2, $9d, $50, $95, $a3
+db $a0, $a2, $95, $a3, $a3, $9f, $51, $03, $02
+
+piping_espresso:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a3, $a0, $99, $9c, $9c, $95, $94, $50
+db $a3, $9f, $9d, $95, $50, $a0, $99, $a0, $99, $9e, $97, $50, $98, $9f, $a4, $50
+db $95, $a3, $a0, $a2, $95, $a3, $a3, $9f, $51, $03, $02
+
+tingling_jolt:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $a4
+db $99, $9e, $97, $9c, $99, $9e, $97, $50, $9a, $9f, $9c, $a4, $50, $91, $a4, $a4
+db $91, $93, $9b, $51, $03, $02
+
+minor_zap:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $9d
+db $99, $9e, $9f, $a2, $50, $aa, $91, $a0, $50, $91, $a4, $a4, $91, $93, $9b, $51
+db $03, $02
+
+dull_shock:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $94
+db $a5, $9c, $9c, $50, $a3, $98, $9f, $93, $9b, $50, $91, $a4, $a4, $91, $93, $9b
+db $51, $03, $02
+
+lv_shock:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $69
+db $5d, $a6, $9f, $9c, $a4, $50, $a3, $98, $9f, $93, $9b, $50, $91, $a4, $a4, $91
+db $93, $9b, $51, $03, $02
+
+fizzled_zap:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $76
+db $99, $aa, $aa, $9c, $99, $9e, $97, $50, $87, $98, $99, $96, $96, $50, $8a, $91
+db $a0, $50, $91, $a4, $a4, $91, $93, $9b, $51, $03, $02
+
+crackling_whoosh_bam:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $73
+db $a2, $91, $93, $9b, $9c, $99, $9e, $97, $50, $87, $98, $9f, $9f, $a3, $98, $50
+db $72, $91, $9d, $50, $91, $a4, $a4, $91, $93, $9b, $51, $03, $02
+
+sparking_swish_bang:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $83
+db $a0, $91, $a2, $9b, $99, $9e, $97, $50, $83, $a7, $99, $a3, $98, $50, $72, $91
+db $9e, $97, $50, $91, $a4, $a4, $91, $93, $9b, $51, $03, $02
+
+jolting_shock_zap:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $a5, $a3, $95, $94, $50, $91, $50, $7a
+db $9f, $9c, $a4, $99, $9e, $97, $50, $83, $98, $9f, $93, $9b, $50, $8a, $91, $a0
+db $50, $91, $a4, $a4, $91, $93, $9b, $51, $03, $02
+
+extinguish_zeta:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $94, $99, $a3, $a0, $95, $9e, $a3, $95
+db $94, $50, $91, $9e, $50, $95, $a8, $a4, $99, $9e, $97, $a5, $99, $a3, $98, $99
+db $9e, $97, $50, $a0, $a5, $96, $96, $51, $1f, $02, $58, $03, $10, $01, $02
+
+extinguish_epsilon:
+db $01, $1f, $02, $19, $70, $1c, $0d, $50, $94, $99, $a3, $a0, $95, $9e, $a3, $95
+db $94, $50, $91, $9e, $50, $95, $a8, $a4, $99, $9e, $97, $a5, $99, $a3, $98, $99
+db $9e, $97, $50, $a3, $a0, $9c, $91, $a3, $98, $51, $1f, $02, $58, $03, $10, $01
+db $02
 
 ;New battle code
 ORG $FD0000
@@ -7085,6 +7314,141 @@ STA $B587
 STA $B588
 JML $C2916E
 
+fire_zeta:
+REP #$31
+LDA #$0014
+JML $C295B0
+
+fire_epsilon:
+REP #$31
+LDA #$0028
+JML $C295B0
+
+freeze_zeta:
+REP #$31
+LDA #$0010
+JML $C2964C
+
+freeze_epsilon:
+REP #$31
+LDA #$0020
+JML $C2964C
+
+freeze_delta:
+REP #$31
+LDA #$003C
+JML $C2964C
+
+freeze_lambda:
+REP #$31
+LDA #$0064
+JML $C2964C
+
+special_zeta:
+REP #$31
+LDA #$000F
+JML $C2955B
+
+special_epsilon:
+REP #$31
+LDA #$001E
+JML $C2955B
+
+paralyz_delta:
+LDA #$0003
+STA $B587
+STA $B588
+JML $C29FFE
+
+para_stun:
+LDA $B587
+AND #$00FF
+BEQ .paralyze
+LDY #$0004
+LDX #$0002
+BRA .stun
+.paralyze:
+LDY #$0003
+LDX #$0000
+.stun:
+JML $C2A024
+
+para_text:
+LDA $B587
+AND #$00FF
+BEQ .paralyze
+LDA #$6BEF
+BRA .stun
+.paralyze:
+LDA #$6AE0
+.stun:
+STA $0E
+STZ $B587
+STZ $B588
+JML $C2A034
+
+thunder_zeta:
+REP #$31
+LDX #$0001
+LDA #$0010
+JML $C29879
+
+thunder_epsilon:
+REP #$31
+LDX #$0002
+LDA #$0010
+JML $C29879
+
+thunder_delta:
+REP #$31
+LDX #$0001
+LDA #$0032
+JML $C29879
+
+thunder_lambda:
+REP #$31
+LDX #$0002
+LDA #$0032
+JML $C29879
+
+starstorm_zeta:
+REP #$31
+LDA #$0016
+JML $C29AAB
+
+starstorm_epsilon:
+REP #$31
+LDA #$002D
+JML $C29AAB
+
+starstorm_delta:
+REP #$31
+LDA #$005A
+JML $C29AAB
+
+starstorm_lambda:
+REP #$31
+LDA #$00B4
+JML $C29AAB
+
+flaming_fireball_zeta:
+REP #$31
+PHD
+TDC
+ADC #$FFF0
+TCD
+LDA #$0014
+JML $C29016
+
+flaming_fireball_epsilon:
+REP #$31
+PHD
+TDC
+ADC #$FFF0
+TCD
+LDA #$002D
+JML $C29016
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C28FC8
 JML check_status_types
 
@@ -7093,6 +7457,12 @@ JML check_status_text
 
 ORG $C291B6
 JML check_diamond_types
+
+ORG $C2A01E
+JML para_stun
+
+ORG $C2A02F
+JML para_text
 
 ORG $D5F9B0
 StatusChecks:
@@ -7106,8 +7476,205 @@ dw $6B18, $6B2F
 
 DiamondText:
 dw $6AC7, $6AE0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Repointed PSI table
+macro PSIAddress06(address)
+   LDA #$7B68
+   STA $06
+   lda #$00D5
+   sta $08
+endmacro
+
+macro PSIAddress0A(address)
+   LDA #$7B68
+   STA $0A
+   lda #$00D5
+   sta $0C
+endmacro
+
+ORG $C1C4AA
+   LDA #$7CA3
+   STA $06
+   lda #$00D5
+   sta $08
+
+ORG $C1C548
+   LDA #$7CB2
+   STA $06
+   lda #$00D5
+   sta $08
+
+ORG $C1B694
+%PSIAddress06(NewPSI)
+
+ORG $C1B7CF
+%PSIAddress06(NewPSI)
+
+ORG $C1B8F9
+%PSIAddress0A(NewPSI)
+
+ORG $C1BB34
+%PSIAddress0A(NewPSI)
+
+ORG $C1B8BB
+LDA AllocPsiTable,X
+
+ORG $C1B9CC
+LDA AllocPsiTable,X
+
+ORG $C1C243
+%PSIAddress06(NewPSI)
+
+ORG $C1C2AD
+%PSIAddress06(NewPSI)
+
+ORG $C1C6E4
+%PSIAddress06(NewPSI)
+
+ORG $C1C8D6
+%PSIAddress06(NewPSI)
+
+ORG $C1C9D6
+LDA AllocPsiTable,X
+
+ORG $C1CADF
+LDA AllocPsiTable,X
+
+ORG $C1CA12
+%PSIAddress06(NewPSI)
+
+ORG $C1CCB6
+LDA AllocPsiTable,X
+
+ORG $C1CD49
+LDA AllocPsiTable,X
+
+ORG $C1CD8F
+%PSIAddress06(NewPSI)
+
+ORG $C1CE3B
+LDA AllocPsiTable,X
+
+ORG $C1D7D6
+%PSIAddress06(NewPSI)
+
+ORG $C1D839
+%PSIAddress06(NewPSI)
+
+ORG $C1D89B
+%PSIAddress06(NewPSI)
+
+ORG $C45EFE
+LDA AllocPsiTable,X
+
+ORG $C45F1B
+LDA AllocPsiTable,X
+
+ORG $C45F38
+LDA AllocPsiTable,X
+
+ORG $D57E83
+db $02, $06, $00;fire z
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $02, $07, $00;Fire ep
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;;
+db $03, $06, $00;freeze z
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $03, $07, $00;freeze e
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $03, $08, $00;freeze d
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $03, $09, $00;freeze l
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;
+db $01, $06, $00;special z
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $01, $07, $00;special e
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;
+db $0f, $09, $00;paralyze l
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;
+db $04, $06, $00;thunder z
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $04, $07, $00;thunder e
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $04, $08, $00;thunder d
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $04, $09, $00;thunder l
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $06, $06, $00;starstorm z
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $06, $07, $00;starstorm e
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $06, $08, $00;starstorm d
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+db $06, $09, $00;starstorm l
+db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;
+;PSI ANIMATIONS
+ORG $D57B68
+AllocPsiTable:
+
+ORG $EF8580
+db $0A, $00, $00, $FB
+
+ORG $FB0000
+db $1F, $C0, $45; number of anims
+
+ORG $FB00CB
+dd $00EF88E9; Teleport 1. change to a $02
+dd $00EF88E9;Teleport 2. change to a $02
+
+dd $00EF874A ;Fire zeta
+dd $00EF874A ; Fire epsilon
+
+dd $00EF87AC ;Freeze zeta
+dd $00EF87AC ;Freeze epsilon
+dd $00EF87AC ;Freeze Delta
+dd $00EF87AC ;Freeze Lambda
+
+dd $00EF864C ;Special zeta
+dd $00EF864C ;Special epsilon
+
+dd $00EF899C ;Paralysis delta
+
+dd $00EF8813 ;thunder zeta
+dd $00EF8813 ;thunder epsilon
+dd $00EF8813 ;thunder Delta
+dd $00EF8813 ;thunder Lambda
+
+dd $00EF8882;Starstorm zeta
+dd $00EF8882;starstorm epsilon
+dd $00EF8882 ;starstorm lambda
+dd $00EF8882 ;starstorm delta
+
+db $02
 
 
+
+
+
+;ORG $D59CD3
+;db $42;spell type test
+
+;ORG $D59CC9
+;dw $016D
 
 
 
