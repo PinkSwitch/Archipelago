@@ -520,7 +520,7 @@ enemy_psi = {
     "Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Tough Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Mystical Record": ["null", "null", "lifeup", "null"],
-    "Guardian Hieroglyph": ["null", "thunder", "flash", "thunder"],
+    "Guardian Hieroglyph": ["hacking_cough", "thunder", "flash", "thunder"],
     "Conducting Menace": ["flash", "flash", "thunder", "thunder"],
     "Conducting Spirit": ["flash", "flash", "thunder", "thunder"],
     "Ness's Nightmare": ["null", "special", "glorious_light", "null"],
@@ -535,8 +535,12 @@ enemy_psi = {
     "Scalding Coffee Cup": ["scalding_espresso", "scalding_espresso", "scalding_espresso", "scalding_espresso"],
     "Arachnid!": ["null", "null", "null", "poison_stinger"],
     "Arachnid!!!": ["poison_stinger", "null", "null", "null"],
+    "Slimy Little Pile": ["hacking_cough", "null", "null", "null"],
+    "Even Slimier Little Pile": ["null", "null", "null", "hacking_cough"],
     "Kraken": ["breathe_fire", "null", "crashing_boom_bang", "null"],
     "Bionic Kraken": ["null", "crashing_boom_bang", "breathe_fire", "null"], #Generate tornado?
+    "Spinning Robo": ["null", "null", "stuffiness_beam", "null"],
+    "Whirling Robo": ["null", "stuffiness_beam", "null", "null"],
     "Thirsty Coil Snake": ["poisonous_fangs", "null", "null", "null"],
     "Crazed Sign": ["null", "null", "paralysis", "null"],
     "Wooly Shambler": ["null", "null", "null", "flash"],
@@ -555,7 +559,7 @@ enemy_psi = {
     "Musica": ["electrical_shock", "null", "null", "electrical_shock"],
     "Desert Wolf": ["null", "null", "null", "poisonous_fangs"],
     "Master Belch": ["nauseous_breath", "nauseous_breath", "null", "null"],
-    "Big Pile of Puke": ["null", "null", "null", "nauseous_breath"],
+    "Big Pile of Puke": ["null", "hacking_cough", "null", "nauseous_breath"],
     "Master Barf": ["nauseous_breath", "null", "null", "null"],
     "Kiss of Death": ["null", "null", "kiss_of_death", "null"],
     "French Kiss of Death": ["kiss_of_death", "kiss_of_death", "kiss_of_death", "kiss_of_death"],
@@ -579,6 +583,7 @@ enemy_psi = {
     "Major Psychic Psycho": ["fire", "null", "paralysis", "fire"],
     "Soul Consuming Flame": ["null", "breathe_fire", "flaming_fireball", "spray_fire"],
     "Demonic Petunia": ["null", "extinguishing_blast", "null", "null"],
+    "Li'l UFO": ["null", "null", "stuffiness_beam", "null"],
     "Ness's Nightmare (2)": ["special", "lifeup", "special", "null"],
     "Mr. Carpainter (2)": ["crashing_boom_bang", "null", "null", "null"],
     "Carbon Dog (2)": ["fire_spray", "null", "null", "null"],
@@ -672,7 +677,7 @@ spell_data = {
         "omega": [0x44, 0x01, 0x00],
     },
     "flaming_fireball": {
-        "alpha": [0x56, 0x01, 0x00],
+        "alpha": [0x45, 0x01, 0x00],
         "beta": [0x46, 0x01, 0x00],
         "gamma": [0x47, 0x01, 0x00],
         "omega": [0x68, 0x00, 0x00],
@@ -739,6 +744,14 @@ spell_data = {
     "kiss_of_death": {
         "alpha": [0x5F, 0x01, 0x00],
         "beta": [0x49, 0x00, 0x00]
+    },
+    "stuffiness_beam": {
+        "alpha": [0xF1, 0x00, 0x00],
+        "beta": [0x45, 0x00, 0x00]
+    },
+        "hacking_cough": {
+        "alpha": [0xD5, 0x00, 0x00],
+        "beta": [0x57, 0x00, 0x00]
     }
 
 }
