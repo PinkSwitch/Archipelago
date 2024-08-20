@@ -107,6 +107,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
     rom.write_bytes(0x04FD74, bytearray([world.options.death_link.value]))
     rom.write_bytes(0x04FD75, bytearray([world.options.death_link_mode.value]))
+    rom.write_bytes(0x04FD76, bytearray([world.options.remote_items.value]))
 
     if world.options.death_link_mode == 2:
         rom.write_bytes(0x2FFDDD, bytearray([0x80]))#Mercy healing
@@ -145,7 +146,7 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(item_name_loc, bytearray(item_text))
             rom.write_bytes(player_name_loc, bytearray(player_text))
 
-            if item not in item_id_table or location.item.player != location.player:
+            if item not in item_id_table or location.item.player != location.player or world.options.remote_items:
                 item_id = 0xAD
             elif item == "Lucky Sandwich":
                 item_id = world.random.randint(0xE2, 0xE7)

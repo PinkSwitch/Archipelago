@@ -166,6 +166,12 @@ class DeathLinkMode(Choice):
     option_mortal_mercy = 2
     default = 1
 
+class RemoteItems(Toggle):
+    """If enabled, you will receive your own items from the server upon collecting them, rather than locally.
+       This allows co-op within the same game, and protects against loss of save data.
+       However, you will not be able to play offline if this is enabled."""
+    display_name = "Remote Items"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):

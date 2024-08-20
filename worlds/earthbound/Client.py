@@ -24,6 +24,8 @@ SRAM_START = 0xE00000
 EB_ROMHASH_START = 0x00FFC0
 ROMHASH_SIZE = 0x15
 
+ITEM_MODE = ROM_START + 0x04FD76
+
 ITEMQUEUE_HIGH = WRAM_START + 0xB576
 ITEM_RECEIVED = WRAM_START + 0xB570
 SPECIAL_RECEIVED = WRAM_START + 0xB572
@@ -101,11 +103,16 @@ class EarthBoundClient(SNIClient):
         from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
 
         rom_name = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
+
+        item_handling = await snes_read(ctx, ITEM_MODE, 1)
         if rom_name is None or rom_name[:6] != b"MOM2AP":
             return False
 
         ctx.game = self.game
-        ctx.items_handling = 0b001
+        if item_handling[0] = 0x00:
+            ctx.items_handling = 0b001
+        else:
+            ctx.items_handling = 0b111
         ctx.rom = rom_name
 
         death_link = await snes_read(ctx, DEATHLINK_ENABLED, 1)
