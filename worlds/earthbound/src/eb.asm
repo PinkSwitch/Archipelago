@@ -7448,6 +7448,23 @@ ADC #$FFF0
 TCD
 LDA #$002D
 JML $C29016
+
+psi_letters:
+dw $008B ;alpha
+dw $008C ;beta
+dw $008D ;gamma
+dw $008E ;sigma
+dw $008F ;omega
+
+dw $00B2 ;Zeta
+dw $00B3 ;Epsilon
+dw $00B4 ;Delta
+dw $00B5 ;Lambda
+
+
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C28FC8
 JML check_status_types
@@ -7479,29 +7496,29 @@ dw $6AC7, $6AE0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Repointed PSI table
 macro PSIAddress06(address)
-   LDA #$7B68
+   LDA #$0000
    STA $06
-   lda #$00D5
+   lda #$00F5
    sta $08
 endmacro
 
 macro PSIAddress0A(address)
-   LDA #$7B68
+   LDA #$0000
    STA $0A
-   lda #$00D5
+   lda #$00F5
    sta $0C
 endmacro
 
 ORG $C1C4AA
-   LDA #$7CA3
+   LDA #$013B
    STA $06
-   lda #$00D5
+   lda #$00F5
    sta $08
 
 ORG $C1C548
-   LDA #$7CB2
+   LDA #$8B9A
    STA $06
-   lda #$00D5
+   lda #$00F5
    sta $08
 
 ORG $C1B694
@@ -7573,7 +7590,7 @@ LDA AllocPsiTable,X
 ORG $C45F38
 LDA AllocPsiTable,X
 
-ORG $D57E83
+ORG $F5031B
 db $02, $06, $00;fire z
 db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
@@ -7628,7 +7645,7 @@ db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
 ;;;;;;;;;;;;;;;
 ;PSI ANIMATIONS
-ORG $D57B68
+ORG $F50000
 AllocPsiTable:
 
 ORG $EF8580
@@ -7665,6 +7682,85 @@ dd $00EF8882 ;starstorm lambda
 dd $00EF8882 ;starstorm delta
 
 db $02
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;psi symbol extensions
+macro GreekLetter06(address)
+   LDA.w #psi_letters
+   STA $06
+   lda #$00FD
+   sta $08
+endmacro
+
+ORG $C1C4F8
+%GreekLetter06(address)
+
+ORG $C1C569
+%GreekLetter06(address)
+
+ORG $C1C695
+%GreekLetter06(address)
+
+ORG $C1C78D
+%GreekLetter06(address)
+
+ORG $C1C7FE
+%GreekLetter06(address)
+
+ORG $c1ca53
+%GreekLetter06(address)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;font stuff
+ORG $C3F054
+dd FontDataTable
+
+ORG $C3F058
+dd FontGFXTable
+
+ORG $C3F060
+dd SaturnFontTable
+
+ORG $C3F064
+dd SaturnFontGFX
+
+ORG $FA0000
+FontDataTable:
+
+ORG $FA0060
+FontExtensionData:
+db $05; _
+db $04 ;<
+db $06 ;Ζ
+db $03 ;ε
+db $04 ;δ
+db $05 ;λ
+
+ORG $FA0100
+SaturnFontTable:
+
+ORG $FA0160
+SaturnExtensionData:
+db $0A; _
+db $08;<
+
+ORG $FC0000
+FontGFXTable:
+
+ORG $FC0C00
+incbin main_font_extended.bin
+
+
+ORG $FC0D00
+SaturnFontGFX:
+
+ORG $FC1900
+incbin saturn_font_extended.bin
+
+
+
+ORG $C93B60
+;db $B1, $63, $03;Font test, delete later. Also update the saturn font
+
+
 
 
 

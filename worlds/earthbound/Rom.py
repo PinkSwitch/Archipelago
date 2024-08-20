@@ -401,7 +401,7 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
     procedure = [
         ("apply_bsdiff4", ["earthbound_basepatch.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"]),
-        ("alloc_battle_actions", [])
+        ("repoint_vanilla_tables", [])
     ]
 
     @classmethod
@@ -418,7 +418,7 @@ class EBPatchExtensions(APPatchExtension):
     game = "EarthBound"
 
     @staticmethod
-    def alloc_battle_actions(caller: APProcedurePatch, rom: LocalRom) -> bytes:
+    def repoint_vanilla_tables(caller: APProcedurePatch, rom: LocalRom) -> bytes:
         rom = LocalRom(rom)
         for action_number in range(0x013F):
             current_action = rom.read_bytes(0x157B68 + (12 * action_number), 12)
@@ -426,11 +426,22 @@ class EBPatchExtensions(APPatchExtension):
         
         for psi_number in range(0x35):
             current_action = rom.read_bytes(0x158A50 + (15 * psi_number), 15)
-            rom.write_bytes(0x157B68 + (15 * psi_number), current_action)
+            rom.write_bytes(0x350000 + (15 * psi_number), current_action)
 
         for psi_number in range(0xBC):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)
             rom.write_bytes(0x3B0003, psi_anim)
+
+        main_font_data = rom.read_bytes(0x210C7A, 90)
+        main_font_gfx = rom.read_bytes(0x210CDA, 0x0C00)
+        saturn_font_data = rom.read_bytes(0x201359, 90)
+        saturn_font_gfx = rom.read_bytes(0x2013B9, 0x0C00)
+
+        rom.write_bytes(0x3A0000, main_font_data)
+        rom.write_bytes(0x3C0000, main_font_gfx)
+
+        rom.write_bytes(0x3A0100, saturn_font_data)
+        rom.write_bytes(0x3C0D00, saturn_font_gfx)
         return rom.get_bytes()
 
 
