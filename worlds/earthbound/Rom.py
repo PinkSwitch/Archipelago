@@ -360,6 +360,18 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_character_count.append(item.name)
                 starting_char += 1
 
+    if world.options.random_battle_backgrounds:
+        if world.options.random_battle_backgrounds.value == 2:
+            background_cap = 0xFFFF
+        else:
+            background_cap = 0x0146
+        for i in range(483):
+            drawn_background = struct.pack("H",world.random.randint(0x00, background_cap))
+            drawn_background_2 = struct.pack("H",world.random.randint(0x00, background_cap))
+            rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
+            rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
+
+
     world.Paula_placed = False
     world.Jeff_placed = False
     world.Poo_placed = False
@@ -433,9 +445,9 @@ class EBPatchExtensions(APPatchExtension):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)
             rom.write_bytes(0x3B0003, psi_anim)
 
-        main_font_data = rom.read_bytes(0x210C7A, 90)
+        main_font_data = rom.read_bytes(0x210C7A, 96)
         main_font_gfx = rom.read_bytes(0x210CDA, 0x0C00)
-        saturn_font_data = rom.read_bytes(0x201359, 90)
+        saturn_font_data = rom.read_bytes(0x201359, 96)
         saturn_font_gfx = rom.read_bytes(0x2013B9, 0x0C00)
 
         rom.write_bytes(0x3A0000, main_font_data)

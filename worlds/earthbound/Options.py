@@ -166,6 +166,17 @@ class DeathLinkMode(Choice):
     option_mortal_mercy = 2
     default = 1
 
+class RandomBattleBG(Choice):
+    """Generates random battle backgrounds.
+       Normal: Battle backgrounds are not randomized.
+       Random Safe: Generates battle backgrounds from valid backgrounds or combining valid backgrounds.
+       Random Chaos: Generates random battle backgrounds. Results may look glitchy, or weird"""
+    display_name = "Random Battle backgrounds"
+    option_normal = 0
+    option_random_safe = 1
+    option_random_chaos = 2
+    default = 0
+
 class RemoteItems(Toggle):
     """If enabled, you will receive your own items from the server upon collecting them, rather than locally.
        This allows co-op within the same game, and protects against loss of save data.
@@ -190,6 +201,7 @@ class EBOptions(PerGameCommonOptions):
     auto_scale_party_members: AutoscaleParty
     remote_items: RemoteItems
     random_flavors: RandomFlavors
+    random_battle_backgrounds: RandomBattleBG
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
     randomize_franklinbadge_protection: RandomFranklinBadge
