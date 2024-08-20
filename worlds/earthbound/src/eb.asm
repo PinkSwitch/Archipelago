@@ -5521,6 +5521,10 @@ JSR CheckFranklinBadge
 CMP #$0000
 BEQ .Reflect
 JSR ReflectAttack
+SEP #$20
+LDA #$02
+STA $AA96
+REP #$20
 .Reflect:
 PLA
 STA $0F
@@ -5573,7 +5577,9 @@ LDA $AA90; Is death attack?
 AND #$00FF
 BEQ .ForceExplode
 LDA $AA96
-BNE .SkipExplode; Is already reflected
+AND #$00FF
+CMP #$0002
+BEQ .SkipExplode; Is already reflected
 .ForceExplode
 LDA $1A
 JML ExplodeReturn
@@ -6567,6 +6573,26 @@ db $0A, $AE, $CE, $EE
 
 ORG $C7D9E4
 db $0A, $CA, $D0, $EE
+
+ORG $C8972A
+db $0A, $F5, $D0, $EE
+
+ORG $C897C1
+db $0A, $48, $D1, $EE
+
+ORG $EED0F5
+db $06, $8b, $00, $04, $d1, $ee, $ff, $70, $58, $79, $50, $0a, $2e, $97, $c8, $70
+db $58, $79, $50, $98, $95, $91, $a2, $94, $50, $a4, $98, $91, $a4, $50, $91, $50
+db $a3, $93, $91, $a2, $a9, $50, $9d, $9f, $9e, $a3, $a4, $95, $a2, $50, $94, $9f
+db $95, $a3, $9e, $57, $a4, $50, $9c, $99, $a6, $95, $50, $9f, $9e, $50, $a4, $98
+db $95, $50, $a4, $9f, $a0, $50, $96, $9c, $9f, $9f, $a2, $5e, $03, $00, $70, $0a
+db $c8, $97, $c8
+
+
+db $5c, $50, $10, $10, $9c, $99, $9b, $95, $50, $91, $50, $1c, $05, $11, $5e, $03
+db $00, $70, $0a, $c8, $97, $c8
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
 
@@ -6608,7 +6634,7 @@ LDA $FFAFB0,X
 ORG $C1CD55
 LDA $FFAFB0,X
 
-ORG $C1CDDF
+ORG $C1CDCF
 LDA $FFAFB0,X
 
 ORG $C244D4

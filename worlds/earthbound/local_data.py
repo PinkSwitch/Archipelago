@@ -313,7 +313,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Happy-Happy Village - Prisoner": [0x2EBABA],
     "Saturn Valley - Saturn Coffee": [0x2EB008],
     "Monkey Caves - Monkey Power": [0x2EB1A1],
-    "Fourside - Department Store Blackout": [0x2EBFE8],
+    "Fourside - Department Store Blackout": [0x2EBFE8, 0x2ED155],
     "Summers - Magic Cake": [0x2EBFB4],
     "Scaraba - Star Master": [0x2EBFA7],
     "Dalaam - Trial of Mu": [0x2EBF95, 0x2EBF88],
