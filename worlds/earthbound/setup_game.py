@@ -387,9 +387,9 @@ def place_static_items(world):
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))
 
     #if not world.options.shuffle_sound_stone:
-        #world.multiworld.push_precollected(world.create_item("Sound Stone"))
+     #   world.multiworld.push_precollected(world.create_item("Sound Stone"))
     #else:
-        #world.multiworld.itempool.append(world.create_item("Sound Stone"))
+     #   world.multiworld.itempool.append(world.create_item("Sound Stone"))
 
     if not world.options.monkey_caves_mode:
         world.get_location("Monkey Caves - 1F Right Chest").place_locked_item(world.create_item("Wet Towel"))

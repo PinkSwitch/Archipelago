@@ -170,7 +170,7 @@ class RandomBattleBG(Choice):
     """Generates random battle backgrounds.
        Normal: Battle backgrounds are not randomized.
        Random Safe: Generates battle backgrounds from valid backgrounds or combining valid backgrounds.
-       Random Chaos: Generates random battle backgrounds. Results may look glitchy, or weird"""
+       Random Chaos: Generates random battle backgrounds. Results may look glitchy, or weird. WARNING: MAY CAUSE FLASHING OR MOVING LIGHTS, USE WITH CAUTION"""
     display_name = "Random Battle backgrounds"
     option_normal = 0
     option_random_safe = 1
@@ -182,6 +182,10 @@ class RemoteItems(Toggle):
        This allows co-op within the same game, and protects against loss of save data.
        However, you will not be able to play offline if this is enabled."""
     display_name = "Remote Items"
+
+class SoundStoneShuffle(Toggle):
+    """Randomizes the Sound Stone. It will need to be found before Sanctuary guardians can be challenged."""
+    display_name = "Sound Stone Shuffle"
 
 
 @dataclass
@@ -195,6 +199,7 @@ class EBOptions(PerGameCommonOptions):
     monkey_caves_mode: MonkeyCavesMode
     shuffle_teleports: PSIShuffle# Better name?
     character_shuffle: CharacterShuffle
+    #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
