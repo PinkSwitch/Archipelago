@@ -109,7 +109,7 @@ class EarthBoundClient(SNIClient):
             return False
 
         ctx.game = self.game
-        if item_handling[0] = 0x00:
+        if item_handling[0] == 0x00:
             ctx.items_handling = 0b001
         else:
             ctx.items_handling = 0b111

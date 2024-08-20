@@ -188,6 +188,7 @@ class EBOptions(PerGameCommonOptions):
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
     auto_scale_party_members: AutoscaleParty
+    remote_items: RemoteItems
     random_flavors: RandomFlavors
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
