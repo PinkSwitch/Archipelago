@@ -217,6 +217,9 @@ JSL SendDeathInBattle
 ORG $C18A1D
 JML ClearStoredAPItem
 
+ORG $C2AD2A
+JML PrayerReflectIgnore
+
 
 ORG $C1FEBC
 LDA #$0000
@@ -2820,7 +2823,7 @@ db $00, $00, $5e, $5e, $0a, $6e, $a5, $ee; Credits choice
 ORG $EEA5D0
 db $04, $d1, $00, $04, $d2, $00, $04, $d3, $00, $04, $d5, $00, $05, $d6, $00, $04
 db $d7, $00, $04, $d8, $00, $04, $d9, $00, $04, $da, $00, $04, $db, $00, $04, $dc
-db $00, $04, $dd, $00, $04, $de, $00, $04, $00, $e0, $04, $69, $00, $12, $70, $80
+db $00, $04, $dd, $00, $04, $de, $00, $04, $df, $00, $04, $69, $00, $12, $70, $80
 db $9c, $95, $91, $a3, $95, $50, $9b, $95, $95, $a0, $50, $99, $9e, $50, $9d, $99
 db $9e, $94, $50, $a4, $98, $91, $a4, $50, $a3, $9f, $9d, $95, $50, $a3, $95, $a1
 db $a5, $95, $9e, $93, $95, $a3, $50, $9d, $91, $a9, $50, $9e, $9f, $a4, $50, $a7
@@ -5481,8 +5484,12 @@ PHA
 JSR CheckFranklinBadge
 CMP #$0000
 BEQ .Reflect
+LDA $B58A
+AND #$00FF
+BNE ReflectPrayClear
 JSR ReflectAttack
 .Reflect:
+ReflectFlash.Reflect:
 PLA
 STA $0F
 PLA
@@ -5490,6 +5497,9 @@ STA $0E
 LDX $A972
 SEP #$20
 JML $C298BB
+ReflectPrayClear:
+STZ $B58A
+BRA ReflectFlash.Reflect
 
 ReflectStarstorm:
 CMP #$0000
@@ -5758,6 +5768,12 @@ LDX #$0000
 LDA #$0001
 JML $C18A23
 
+PrayerReflectIgnore:
+LDA #$0001
+STA $B58A
+LDA $C4A2F9,X
+JML $C2AD2E
+
 ORG $C2FFE0
 DealReflect:
 JSR $7E8A
@@ -5766,6 +5782,8 @@ RTL
 ExplodeReturn:
 JSR $6A44
 JML $C2A670
+
+
 
 
 
