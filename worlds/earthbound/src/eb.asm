@@ -7017,7 +7017,139 @@ db $00, $04, $05, $00
 dd extinguish_epsilon
 dd fire_epsilon;
 
+db $00, $04, $05, $00
+dd $00ef8f17
+dd $00C29871;Giygas phase 2 thunder 1
 
+db $00, $04, $05, $00
+dd $00ef8f17
+dd thunder_lambda
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd thunder_delta
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd thunder_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd thunder_zeta
+;;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd $00C29871
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd thunder_lambda
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd thunder_delta
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd thunder_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd thunder_zeta
+;;;;;;;;;;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd $00C2987
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd thunder_lambda
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd thunder_delta
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd thunder_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd thunder_zeta
+;;;;;;;;;;;;;;;
+;freeze giygas
+db $00, $04, $05, $00
+dd $00EF8F17
+dd freeze_zeta
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd freeze_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd freeze_delta
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd freeze_lambda
+;;;;;;;;;;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd freeze_zeta
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd freeze_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd freeze_delta
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd freeze_lambda
+;;;;;;;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd freeze_zeta
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd freeze_epsilon
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd freeze_delta
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd freeze_lambda
+;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8F17
+dd $00C29987
+
+db $00, $04, $05, $00
+dd $00EF8F17
+dd $00C299AE
+;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd $00C29987
+
+db $00, $04, $05, $00
+dd $00EF8EE2
+dd $00C299AE
+;;;;;;;;;;;;;;;;
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd $00C29987
+
+db $00, $04, $05, $00
+dd $00EF8F4A
+dd $00C299AE
+;;;;;;;;;;;;
 
 ;New battle text
 ORG $FE0000
@@ -7445,14 +7577,14 @@ JML $C29879
 
 thunder_delta:
 REP #$31
-LDX #$0001
-LDA #$0032
+LDX #$0003
+LDA #$0010
 JML $C29879
 
 thunder_lambda:
 REP #$31
-LDX #$0002
-LDA #$0032
+LDX #$0004
+LDA #$0010
 JML $C29879
 
 starstorm_zeta:

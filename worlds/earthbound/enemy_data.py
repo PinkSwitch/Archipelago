@@ -500,9 +500,20 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "scatter_spores": {25: "alpha", 100: "beta"},
     "hacking_cough": {25: "alpha", 100: "beta"},
     "stuffiness_beam": {25: "alpha", 100: "beta"},
-    "crashing_boom_bang": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
+    "crashing_boom_bang": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "paralysis": {30: "lambda", 60: "alpha", 100: "omega"},
-    "electrical_shock": {20: "alpha", 30: "beta", 50: "gamma", 100: "omega"},
+    "electrical_shock": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
+    "giygas_phase2_thunder": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 100: "beta"},
+    "giygas_phase3_thunder": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 100: "beta"},
+    "giygas_phase4_thunder": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 100: "beta"},
+    "giygas_phase2_freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 100: "alpha"},
+    "giygas_phase3_freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 100: "alpha"},
+    "giygas_phase4_freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 100: "alpha"},
+    "giygas_phase2_flash": {25: "alpha", 45: "beta", 100: "gamma"},
+    "giygas_phase3_flash": {25: "alpha", 45: "beta", 100: "gamma"},
+    "giygas_phase4_flash": {25: "alpha", 45: "beta", 100: "gamma"}
+
+
     #bombs and bottle rockets too? Also missile maybe? hmmm
 }
 
@@ -607,7 +618,10 @@ enemy_psi = {
     "Farm Zombie": ["null", "null", "nauseous_breath", "null"],
     "Criminal Caterpillar": ["fire", "fire", "fire", "fire"],
     "Evil Eye": ["null", "diamond_eyes", "paralysis", "null"],
-    "Master Criminal Worm": ["fire", "fire", "fire", "fire"]
+    "Master Criminal Worm": ["fire", "fire", "fire", "fire"],
+    "Giygas (4)": ["giygas_phase2_thunder", "giygas_phase2_freeze", "giygas_phase2_flash", "null"],
+    "Giygas (5)": ["giygas_phase3_thunder", "giygas_phase3_freeze", "giygas_phase3_flash", "null"],
+    "Giygas (6)": ["giygas_phase4_thunder", "giygas_phase4_freeze", "giygas_phase4_flash", "null"]
 }
 
 spell_data = {
@@ -786,7 +800,69 @@ spell_data = {
         "hacking_cough": {
         "alpha": [0xD5, 0x00, 0x00],
         "beta": [0x57, 0x00, 0x00]
-    }
+    },
+    "giygas_phase2_thunder": {
+        "zeta": [0x87, 0x01, 0x00],
+        "epsilon": [0x86, 0x01, 0x00],
+        "delta": [0x85, 0x01, 0x00],
+        "lambda": [0x84, 0x01, 0x00],
+        "alpha": [0x83, 0x01, 0x00],
+        "beta": [0x12, 0x01, 0x00]
+    },
+    "giygas_phase3_thunder": {
+        "zeta": [0x8C, 0x01, 0x00],
+        "epsilon": [0x8B, 0x01, 0x00],
+        "delta": [0x8A, 0x01, 0x00],
+        "lambda": [0x89, 0x01, 0x00],
+        "alpha": [0x88, 0x01, 0x00],
+        "beta": [0x2E, 0x01, 0x00]
+    },
+    "giygas_phase4_thunder": {
+        "zeta": [0x91, 0x01, 0x00],
+        "epsilon": [0x90, 0x01, 0x00],
+        "delta": [0x8F, 0x01, 0x00],
+        "lambda": [0x8E, 0x01, 0x00],
+        "alpha": [0x8D, 0x01, 0x00],
+        "beta": [0x31, 0x01, 0x00]
+    },
+
+    "giygas_phase2_freeze": {
+        "zeta": [0x92, 0x01, 0x00],
+        "epsilon": [0x93, 0x01, 0x00],
+        "delta": [0x94, 0x01, 0x00],
+        "lambda": [0x95, 0x01, 0x00],
+        "alpha": [0x2C, 0x01, 0x00]
+    },
+    "giygas_phase3_freeze": {
+        "zeta": [0x96, 0x01, 0x00],
+        "epsilon": [0x97, 0x01, 0x00],
+        "delta": [0x98, 0x01, 0x00],
+        "lambda": [0x99, 0x01, 0x00],
+        "alpha": [0x2F, 0x01, 0x00]
+    },
+    "giygas_phase4_freeze": {
+        "zeta": [0x9A, 0x01, 0x00],
+        "epsilon": [0x9B, 0x01, 0x00],
+        "delta": [0x9C, 0x01, 0x00],
+        "lambda": [0x9D, 0x01, 0x00],
+        "alpha": [0x32, 0x01, 0x00]
+    },
+
+    "giygas_phase2_flash": {
+        "alpha": [0x9E, 0x01, 0x00],
+        "beta": [0x9F, 0x01, 0x00],
+        "gamma": [0x2D, 0x01, 0x00]
+    },
+    "giygas_phase3_flash": {
+        "alpha": [0xA0, 0x01, 0x00],
+        "beta": [0xA1, 0x01, 0x00],
+        "gamma": [0x30, 0x01, 0x00]
+    },
+    "giygas_phase4_flash": {
+        "alpha": [0xA2, 0x01, 0x00],
+        "beta": [0xA3, 0x01, 0x00],
+        "gamma": [0x33, 0x01, 0x00]
+    },
 
 }
 
