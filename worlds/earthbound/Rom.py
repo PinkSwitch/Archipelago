@@ -9,6 +9,7 @@ from .local_data import (item_id_table, location_dialogue, present_locations, ps
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
                          present_text_pointers, ap_text_pntrs)
+from .battle_bg_data import battle_bg_bpp
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
@@ -110,9 +111,9 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x04FD76, bytearray([world.options.remote_items.value]))
 
     if world.options.death_link_mode == 2:
-        rom.write_bytes(0x2FFDDD, bytearray([0x80]))#Mercy healing
-        rom.write_bytes(0x2FFE0F, bytearray([0x80]))#Mercy text
-        rom.write_bytes(0x2FFE35, bytearray([0x80]))#Mercy revive
+        rom.write_bytes(0x2FFDFE, bytearray([0x80]))#Mercy healing
+        rom.write_bytes(0x2FFE30, bytearray([0x80]))#Mercy text
+        rom.write_bytes(0x2FFE56, bytearray([0x80]))#Mercy revive
 
 
     if world.options.monkey_caves_mode == 2:
@@ -361,15 +362,24 @@ def patch_rom(world, rom, player: int, multiworld):
                 starting_char += 1
 
     if world.options.random_battle_backgrounds:
+        bpp2_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 2]
         if world.options.random_battle_backgrounds.value == 2:
             background_cap = 0xFFFF
         else:
             background_cap = 0x0146
         for i in range(483):
-            drawn_background = struct.pack("H",world.random.randint(0x00, background_cap))
-            drawn_background_2 = struct.pack("H",world.random.randint(0x00, background_cap))
-            rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
-            rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
+            world.flipped_bg = world.random.randint(0,100)
+            drawn_background = struct.pack("H",world.random.randint(0x01, background_cap))
+            if battle_bg_bpp[struct.unpack("H", drawn_background)[0]] == 4:
+                drawn_background_2 = struct.pack("H",0x0000)
+            else:
+                drawn_background_2 = struct.pack("H",world.random.choice(bpp2_bgs))
+            if world.flipped_bg > 33:
+                rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
+                rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
+            else:
+                rom.write_bytes(0x0BD89A + (i * 4), drawn_background_2)
+                rom.write_bytes(0x0BD89C + (i * 4), drawn_background)
 
 
     world.Paula_placed = False
@@ -441,9 +451,10 @@ class EBPatchExtensions(APPatchExtension):
             current_action = rom.read_bytes(0x158A50 + (15 * psi_number), 15)
             rom.write_bytes(0x350000 + (15 * psi_number), current_action)
 
-        for psi_number in range(0xBC):
+        for psi_number in range(0x32):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)
-            rom.write_bytes(0x3B0003, psi_anim)
+            rom.write_bytes(0x3B0003 + (4 * psi_number), psi_anim)
+            rom.write_bytes(0x3B0003, bytearray([0x4C]))
 
         main_font_data = rom.read_bytes(0x210C7A, 96)
         main_font_gfx = rom.read_bytes(0x210CDA, 0x0C00)
