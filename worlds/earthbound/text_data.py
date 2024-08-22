@@ -173,7 +173,11 @@ lumine_hall_text = [
     "It's so jover",
     "The National Weather Service has issued a severe thunderstorm warning for the following areas, starting at 7:49 PM Eastern Daylight Time and ending at 7:49 PM Eastern Daylight Time.",
     "Where is everyone? I've done most of my checks and I still can't find my friends, it's so lonely here.",
-    "Can you hurry up and go to Ness's Nightmare it has my Morph Ball for my Super Metroid seed Thanks in advance Berserker"
+    "Can you hurry up and go to Ness's Nightmare it has my Morph Ball for my Super Metroid seed Thanks in advance Berserker",
+    "gottem",
+    "Dear Ness,      please come to the house. I've baked a steak for you.       Yours truly,       mom.",
+    "Phar why",
+    "Tell Figment to check POD!"
 
 
 
