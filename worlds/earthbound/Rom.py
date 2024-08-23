@@ -8,7 +8,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
-                         present_text_pointers, ap_text_pntrs)
+                         present_text_pointers, ap_text_pntrs, party_id_nums)
 from .battle_bg_data import battle_bg_bpp
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
@@ -362,7 +362,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     starting_psi += 1
         elif item.name in character_item_table:
             if item.name not in starting_character_count:
-                rom.write_bytes(0x17FC8D + starting_char, bytearray([character_item_table[item.name][1]]))
+                rom.write_bytes(0x17FC8D + starting_char, bytearray([party_id_nums[item.name]]))
                 starting_character_count.append(item.name)
                 starting_char += 1
 

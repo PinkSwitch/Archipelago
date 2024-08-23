@@ -7695,13 +7695,13 @@ ORG $C1C4AA
    LDA #$013B
    STA $06
    lda #$00F5
-   sta $08
+   sta $08;Change for PSI shuffle- this is Poo's toplevel offensive psi
 
 ORG $C1C548
-   LDA #$8B9A
+   LDA #$014A
    STA $06
    lda #$00F5
-   sta $08
+   sta $08;Change for PSI shuffle- this is Poo's toplevel offensive psi
 
 ORG $C1B694
 %PSIAddress06(NewPSI)

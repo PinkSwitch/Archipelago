@@ -471,9 +471,10 @@ levels = [
     52, #stonehenge
     56, #lumine hall
     59, #lost underworld
-    65, #fire spring
-    69, #magicant
-    70, #cave of the past
+    61, #fire spring
+    63, #magicant
+    65, #cave of the past
+    70,
     73] #gigyas
 
 spell_breaks: Dict[str, Dict[int, str]] = {
@@ -1007,6 +1008,7 @@ def scale_enemies(world, rom):
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
+                #print(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
@@ -1045,7 +1047,6 @@ def scale_enemies(world, rom):
                         psi_level = get_psi_levels(level, spell_breaks[spell])
                         rom.write_bytes(enemy.address + 70 + (index * 2), bytearray(spell_data[spell][psi_level][0:2]))
                         rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][2]]))
-                        #print(f"{spell} {psi_level} at {hex(enemy.address + 70 + (index * 2))}")
                 if world.options.shuffle_enemy_drops:
                     rom.write_bytes(enemy.address + 88, bytearray([world.random.choice(world.filler_drops)]))
                 enemy.is_scaled = True
