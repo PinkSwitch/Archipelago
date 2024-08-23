@@ -515,6 +515,8 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "giygas_phase3_flash": {25: "alpha", 45: "beta", 100: "gamma"},
     "giygas_phase4_flash": {25: "alpha", 45: "beta", 100: "gamma"},
     "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
+    "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 100: "beta"},
+    "flash_minus": {45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
 
 
     #bombs and bottle rockets too? Also missile maybe? hmmm
@@ -536,12 +538,12 @@ enemy_psi = {
     "Mystical Record": ["null", "null", "lifeup", "null"],
     "Guardian Hieroglyph": ["hacking_cough", "thunder_minus", "flash", "thunder"],
     "Electro Swoosh": ["null", "electrical_shock", "electrical_shock", "null"],
-    "Conducting Menace": ["flash", "flash", "thunder", "thunder"],
-    "Conducting Spirit": ["flash", "flash", "thunder_minus", "thunder"],
+    "Conducting Menace": ["flash_minus", "flash", "thunder_minus", "thunder"],
+    "Conducting Spirit": ["flash_minus", "flash", "thunder_minus", "thunder"],
     "Ness's Nightmare": ["null", "special", "glorious_light", "null"],
     "Mr. Carpainter": ["crashing_boom_bang", "lifeup", "null", "null"],
     "Carbon Dog": ["flaming_fireball", "null", "null", "null"],
-    "Thunder Mite": ["thunder", "thunder", "thunder", "thunder"],
+    "Thunder Mite": ["thunder_minus", "thunder_minus", "thunder", "thunder"],
     "Chomposaur": ["fire", "fire", "null", "null"],
     "Gigantic Ant": ["null", "poison_stinger", "null", "null"],
     "Shrooom!": ["null", "lifeup", "scatter_spores", "null"],
@@ -562,7 +564,7 @@ enemy_psi = {
     "Wild 'n Wooly Shambler": ["null", "null", "null", "flash"],
     "Skelpion": ["null", "poison_stinger", "null", "thunder"],
     "Dread Skelpion": ["poison_stinger", "null", "thunder", "thunder"],
-    "Ghost of Starman": ["starstorm", "null", "null", "null"],
+    "Ghost of Starman": ["starstorm_minus", "null", "null", "null"],
     "Smilin' Sphere": ["null", "fire", "null", "null"],
     "Uncontrollable Sphere": ["null", "fire", "fire", "null"],
     "Starman Deluxe": ["null", "null", "starstorm", "null"],
@@ -881,6 +883,20 @@ spell_data = {
         "beta": [0x17, 0x00, 0x0E],
         "gamma": [0x18, 0x00, 0x0F],
         "omega": [0x19, 0x00, 0x10]
+    },
+    "flash_minus": {
+        "alpha": [0x1A, 0x00, 0x11],
+        "beta": [0x1B, 0x00, 0x12],
+        "gamma": [0x1C, 0x00, 0x13],
+        "omega": [0x1D, 0x00, 0x14]
+    },
+    "starstorm_minus": {
+        "zeta": [0x6D, 0x01, 0x42],
+        "epsilon": [0x6E, 0x01, 0x43],
+        "delta": [0x6F, 0x01, 0x44],
+        "lambda": [0x70, 0x01, 0x45],
+        "alpha": [0x1E, 0x00, 0x15],
+        "beta": [0x1F, 0x00, 0x16]
     },
 
 }
