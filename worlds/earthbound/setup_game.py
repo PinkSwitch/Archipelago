@@ -380,8 +380,6 @@ def place_static_items(world):
     if world.options.magicant_mode == 2:
         world.get_location("+1 Sanctuary").place_locked_item(world.create_item("Magicant Unlock"))
         world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Alternate Goal"))
-    elif world.options.magicant_mode == 3:
-        world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Magicant Boost"))
 
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))

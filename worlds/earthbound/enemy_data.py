@@ -372,6 +372,7 @@ def initialize_enemies(world):
                               "Southern Scaraba": {world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Marauder Octobot"]},
                               "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"]},
                               "Deep Darkness": {world.enemies["Mole Playing Rough"]},
+                              "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
                               "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
                                                          world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies["Master Barf"]},
                               "Boogey Tent": {world.enemies["Boogey Tent"], world.enemies["Boogey Tent (2)"]},
@@ -398,6 +399,7 @@ combat_regions = [
     "Twoson",
     "Happy-Happy Village",
     "Lilliput Steps",
+    "Winters",
     "Threed",
     "Milky Well",
     "Dusty Dunes Desert",
@@ -511,7 +513,8 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "giygas_phase4_freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 100: "alpha"},
     "giygas_phase2_flash": {25: "alpha", 45: "beta", 100: "gamma"},
     "giygas_phase3_flash": {25: "alpha", 45: "beta", 100: "gamma"},
-    "giygas_phase4_flash": {25: "alpha", 45: "beta", 100: "gamma"}
+    "giygas_phase4_flash": {25: "alpha", 45: "beta", 100: "gamma"},
+    "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
 
 
     #bombs and bottle rockets too? Also missile maybe? hmmm
@@ -531,9 +534,10 @@ enemy_psi = {
     "Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Tough Mobile Sprout": ["null", "null", "null", "lifeup"],
     "Mystical Record": ["null", "null", "lifeup", "null"],
-    "Guardian Hieroglyph": ["hacking_cough", "thunder", "flash", "thunder"],
+    "Guardian Hieroglyph": ["hacking_cough", "thunder_minus", "flash", "thunder"],
+    "Electro Swoosh": ["null", "electrical_shock", "electrical_shock", "null"],
     "Conducting Menace": ["flash", "flash", "thunder", "thunder"],
-    "Conducting Spirit": ["flash", "flash", "thunder", "thunder"],
+    "Conducting Spirit": ["flash", "flash", "thunder_minus", "thunder"],
     "Ness's Nightmare": ["null", "special", "glorious_light", "null"],
     "Mr. Carpainter": ["crashing_boom_bang", "lifeup", "null", "null"],
     "Carbon Dog": ["flaming_fireball", "null", "null", "null"],
@@ -868,6 +872,16 @@ spell_data = {
         "beta": [0xA3, 0x01, 0x00],
         "gamma": [0x33, 0x01, 0x00]
     },
+    "thunder_minus": {
+        "zeta": [0x69, 0x01, 0x3E],
+        "epsilon": [0x6A, 0x01, 0x3F],
+        "delta": [0x6B, 0x01, 0x40],
+        "lambda": [0x6C, 0x01, 0x41],
+        "alpha": [0x16, 0x00, 0x0D],
+        "beta": [0x17, 0x00, 0x0E],
+        "gamma": [0x18, 0x00, 0x0F],
+        "omega": [0x19, 0x00, 0x10]
+    },
 
 }
 
@@ -949,17 +963,16 @@ def scale_enemies(world, rom):
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
         regions = {loc.parent_region.name for loc in locs}
         for region in sorted(regions, key=lambda x: distances.get(x, float('inf'))):
-            #if region not in distances:
-                #warning(f"Warning: {region} is not in distances. for player {world.player}")
-                #if world.scale_warning == False:
-                    #warning(f"{distances}")
-                    #world.scale_warning = True
+            if region not in distances:
+                warning(f"Warning: {region} is not in distances. for player {world.player}")
+                if world.scale_warning == False:
+                    warning(f"{distances}")
+                    world.scale_warning = True
             world.location_order.append(region)
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
     elif world.options.magicant_mode == 3:
-        world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") - 1, "Magicant")
 
     #if world.scale_warning == True:

@@ -127,7 +127,10 @@ def patch_rom(world, rom, player: int, multiworld):
         if location.address:
             receiver_name = world.multiworld.get_player_name(location.item.player)
             name = location.name
-            item = location.item.name
+            if world.options.remote_items:
+                item = "Remote Item"
+            else:
+                item = location.item.name
             item_name_loc = (((location.address - 0xEB0000) * 128) + 0x3F0000)
             item_text = bytearray(0)
             player_text = bytearray(0)
@@ -147,7 +150,7 @@ def patch_rom(world, rom, player: int, multiworld):
             rom.write_bytes(item_name_loc, bytearray(item_text))
             rom.write_bytes(player_name_loc, bytearray(player_text))
 
-            if item not in item_id_table or location.item.player != location.player or world.options.remote_items:
+            if item not in item_id_table or location.item.player != location.player:
                 item_id = 0xAD
             elif item == "Lucky Sandwich":
                 item_id = world.random.randint(0xE2, 0xE7)
@@ -156,7 +159,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in location_dialogue:
                 for i in range(len(location_dialogue[name])):
-                    if location.item.player != location.player:
+                    if location.item.player != location.player or item == "Remote Item":
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x17, location.address - 0xEB0000]))
                     elif item in item_id_table:
                         rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
@@ -167,7 +170,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 world.handled_locations.append(name)
                 if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
                     rom.write_bytes(present_locations[name], bytearray([0x00, 0x00, 0x01]))
-                elif location.item.player != location.player:
+                elif location.item.player != location.player or item == "Remote Item":
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00, 0x00, (location.address - 0xEB0000)]))
                 elif item in item_id_table:
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00]))
@@ -179,7 +182,7 @@ def patch_rom(world, rom, player: int, multiworld):
             if name in npc_locations:
                 world.handled_locations.append(name)
                 for i in range(len(npc_locations[name])):
-                    if item in item_id_table or location.item.player != location.player:
+                    if item in item_id_table or location.item.player != location.player or item == "Remote Item":
                         rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
@@ -187,7 +190,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in psi_locations:
                 world.handled_locations.append(name)
-                if item in special_name_table and location.item.player == location.player:
+                if item in special_name_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(psi_locations[name][0], bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(psi_locations[name][0] + 4, bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
                 else:
@@ -196,7 +199,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in character_locations:
                 world.handled_locations.append(name)
-                if item in character_item_table and location.item.player == location.player:
+                if item in character_item_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     if name == "Snow Wood - Bedroom": #Use lying down sprites for the bedroom check
                         rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][2:4]))
@@ -225,7 +228,7 @@ def patch_rom(world, rom, player: int, multiworld):
             
             if name in locker_locations:
                 world.handled_locations.append(name)
-                if item in item_id_table or location.item.player != location.player:
+                if item in item_id_table or location.item.player != location.player or item == "Remote Item":
                     rom.write_bytes(locker_locations[name][0], bytearray([0xFF]))
                     rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
                 elif item in psi_item_table:
@@ -237,7 +240,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name == "Poo Starting Item":
                 world.handled_locations.append(name)
-                if item in item_id_table and location.item.player == location.player:
+                if item in item_id_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(0x15F63C, bytearray([item_id]))
                 else:
                     rom.write_bytes(0x15F63C, bytearray([0x00])) #Don't give anything if the item doesn't have a tangible ID
@@ -341,6 +344,8 @@ def patch_rom(world, rom, player: int, multiworld):
     starting_psi_types = []
     starting_character_count = []
     for item in world.multiworld.precollected_items[player]:
+        if world.options.remote_items:
+            continue
         if item.name in item_id_table:
             rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))
             starting_item_address += 1
