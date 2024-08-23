@@ -203,4 +203,4 @@ Thumbs.db
 [Dd]esktop.ini
 
 #EarthBound GFX files
-!worlds/earthbound/*.bin
+!worlds/earthbound/src/*.bin
