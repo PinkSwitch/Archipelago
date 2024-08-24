@@ -1021,7 +1021,7 @@ protection_checks = {
     "flash": [0x2FFC9B],
     "starstorm": [0x2FFCC0],
     "special": [0x2FFC1E],
-    "explosive": [0x2FFCE0]
+    "explosive": [0x2FFCED]
 }
 
 badge_names = {

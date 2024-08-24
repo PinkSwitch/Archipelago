@@ -121,7 +121,7 @@ def patch_rom(world, rom, player: int, multiworld):
     elif world.options.monkey_caves_mode == 3:
         rom.write_bytes(0x0F1388, bytearray([0x03, 0xCA, 0xEE]))
 
-    rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))
+    rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
     for location in world.multiworld.get_locations(player):
         if location.address:
@@ -285,7 +285,7 @@ def patch_rom(world, rom, player: int, multiworld):
                         if world.present_type == "progression":
                             rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
                         elif world.present_type == "trap":
-                            rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xcd, 0xee]))
+                            rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xce, 0xee]))
                         else:
                             rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
 
