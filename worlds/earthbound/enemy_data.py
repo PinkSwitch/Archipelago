@@ -1,6 +1,7 @@
 from typing import Dict
 from logging import warning
 import struct
+import math
 
 
 class EarthBoundEnemy:
@@ -477,6 +478,49 @@ levels = [
     70,
     73] #gigyas
 
+average_exp = [
+    3,  #north onett
+    13, #south onett
+    32, #giant step
+    144, #twoson
+    292, #everdred
+    350, #peaceful rest
+    456, #happy happy
+    625, #lilliput steps
+    831, #threed
+    1425, #threed caverns
+    1468, #grapefruit falls
+    1947, #belch base
+    2736, #milky well
+    2994, #duty dunes
+    3032, #fourside
+    3316,
+    3540, #gold mine
+    3995, #dept store
+    4200,
+    4643,
+    5034, #monkey cabves
+    5532,
+    6273,
+    6410, #monotoli building
+    7587,
+    8379, #winters
+    10982, #southern winters
+    12278, #rainy circle
+    12665, #summers
+    14121,
+    15242, #museum
+    15657, #magnet hill
+    17672,
+    20164,
+    22534, #scaraba
+    25383,
+    33885, #pyramid
+    35674, #scaraba south
+    40226, #dungeon man
+    49230
+]
+
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 40: "alpha", 65: "beta", 70: "gamma", 100: "omega"},
     "fire": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 40: "gamma", 100: "omega"},
@@ -923,6 +967,21 @@ def scale_exp(base_exp, base_level, new_level, k):
     new_exp = base_exp * (new_level / base_level) ** k
     return new_exp
 
+def scale_exp_2(base_exp, base_level, new_level, world):
+    base_scaled_exp = calculate_exp(base_level)
+    scaled_exp = calculate_exp(new_level)
+    new_exp = base_exp * scaled_exp / base_scaled_exp
+    new_exp = math.ceil(new_exp * world.options.experience_modifier / 100)
+    return new_exp
+
+def calculate_exp(level):
+    if level > 30:
+        return 1000 * math.exp(0.05 * level)
+    else:
+        return 10 * math.exp(0.2 * level)
+
+    
+
 def scale_shield(level, shield):
     if shield != None:
         if level < 10:
@@ -1012,7 +1071,7 @@ def scale_enemies(world, rom):
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
-                #enemy_exp = int(scale_exp(enemy.exp, enemy.level, level, k))
+                #enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
                 enemy_exp = int(enemy.exp * level / enemy.level)
                 enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
@@ -1022,7 +1081,8 @@ def scale_enemies(world, rom):
                 enemy_level = int(enemy.level * level / enemy.level)
                 enemy_shield = scale_shield(level, enemy.shield)
 
-                #print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
+                #if world.multiworld.get_player_name(world.player) == "Pink":
+                    #print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
                 enemy_hp = struct.pack('<H', enemy_hp)
                 enemy_pp = struct.pack('<H', enemy_pp)
                 enemy_exp = struct.pack('<I', enemy_exp)

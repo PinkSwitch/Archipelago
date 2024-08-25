@@ -110,7 +110,7 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x04FD75, bytearray([world.options.death_link_mode.value]))
     rom.write_bytes(0x04FD76, bytearray([world.options.remote_items.value]))
 
-    if world.options.death_link_mode == 2:
+    if world.options.death_link_mode != 1:
         rom.write_bytes(0x2FFDFE, bytearray([0x80]))#Mercy healing
         rom.write_bytes(0x2FFE30, bytearray([0x80]))#Mercy text
         rom.write_bytes(0x2FFE56, bytearray([0x80]))#Mercy revive
