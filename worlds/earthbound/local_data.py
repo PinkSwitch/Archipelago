@@ -1019,7 +1019,7 @@ protection_checks = {
     "fire": [0x2FFC35, 0x2FFC77],
     "freeze": [0x2FFC56],
     "flash": [0x2FFC9B],
-    "starstorm": [0x2FFCC0],
+    "starstorm": [0x2FFCCD],
     "special": [0x2FFC1E],
     "explosive": [0x2FFCED]
 }

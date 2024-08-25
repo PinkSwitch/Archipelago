@@ -113,7 +113,8 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.death_link_mode != 1:
         rom.write_bytes(0x2FFDFE, bytearray([0x80]))#Mercy healing
         rom.write_bytes(0x2FFE30, bytearray([0x80]))#Mercy text
-        rom.write_bytes(0x2FFE56, bytearray([0x80]))#Mercy revive
+        rom.write_bytes(0x2FFE59, bytearray([0x80]))#Mercy revive
+        #IF YOU ADD ASM, CHANGE THESE OR THE GAME WILL CRASH
 
 
     if world.options.monkey_caves_mode == 2:
@@ -368,13 +369,14 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.random_battle_backgrounds:
         bpp2_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 2]
-        if world.options.random_battle_backgrounds.value == 2:
-            background_cap = 0xFFFF
-        else:
-            background_cap = 0x0146
+        bpp4_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 4]
         for i in range(483):
             world.flipped_bg = world.random.randint(0,100)
-            drawn_background = struct.pack("H",world.random.randint(0x01, background_cap))
+            if i == 480:
+                drawn_background = struct.pack("H",world.random.choice(bpp4_bgs))
+            else:
+                drawn_background = struct.pack("H",world.random.randint(0x01, 0x0146))
+
             if battle_bg_bpp[struct.unpack("H", drawn_background)[0]] == 4:
                 drawn_background_2 = struct.pack("H",0x0000)
             else:
@@ -395,6 +397,8 @@ def patch_rom(world, rom, player: int, multiworld):
             if location.item.name in ["Paula", "Jeff", "Poo"] and not getattr(world, f"{location.item.name}_placed"):
                 setattr(world, f"{location.item.name}_region", location.parent_region.name)
                 setattr(world, f"{location.item.name}_placed", True)
+            #if location.item.name == "Paula" and location.item.player == world.player:
+                #print(location.name)
 
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
@@ -410,6 +414,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 rom.write_bytes(address, [0xF0])
             else:
                 rom.write_bytes(address, [0x80])
+                #THIS WILL CRASH IF ADDRESS IS WRONG.
     rom.write_bytes(0x2EC909, bytearray(protection_text[world.franklin_protection][0:3])) #help text
     rom.write_bytes(0x2EC957, bytearray(protection_text[world.franklin_protection][3:6]))# battle text
     from Main import __version__
@@ -460,6 +465,7 @@ class EBPatchExtensions(APPatchExtension):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)
             rom.write_bytes(0x3B0003 + (4 * psi_number), psi_anim)
             rom.write_bytes(0x3B0003, bytearray([0x4C]))
+            rom.write_bytes(0x3B0002, bytearray([0x45]))
 
         main_font_data = rom.read_bytes(0x210C7A, 96)
         main_font_gfx = rom.read_bytes(0x210CDA, 0x0C00)

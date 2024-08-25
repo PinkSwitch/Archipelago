@@ -5725,6 +5725,7 @@ LDA $000E,X
 AND #$00FF
 BNE NotPlayerForRevive
 LDA $B583
+AND #$00FF
 BEQ ReviveClearDeathlinkFlag;Change to BRA if mercy mode ON
 LDA #$CD0C
 STA $0E

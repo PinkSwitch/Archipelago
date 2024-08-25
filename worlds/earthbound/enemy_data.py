@@ -1067,7 +1067,7 @@ def scale_enemies(world, rom):
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
-                #print(f"{enemy.name} {level}")
+                #gprint(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
