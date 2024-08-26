@@ -67,7 +67,7 @@ palette_list = [
     0x33, #Hospital 1
     0x34, #Apple kid house
     0x35, #?
-    0x36 #Orange kid house
+    0x36, #Orange kid house
     0x37, #Everdred's House
     0x38, #?
     0x39, #Ness's room
@@ -99,7 +99,7 @@ palette_list = [
     0x4F, #Monotoli lobby
     0x50,
     0x51,
-    0x52
+    0x52,
 
     0x53,
     0x54,
