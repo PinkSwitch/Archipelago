@@ -106,6 +106,15 @@ def shuffle_psi(world):
         "Starstorm": [0x013B, 0x014A]
     }
 
+    world.starstorm_spell_id = {
+        "Special": [0x03, 0x04],
+        "Flash": [0x13, 0x14],
+        "Fire": [0x07, 0x08],
+        "Freeze": [0x0B, 0x0C],
+        "Thunder": [0x0F, 0x10],
+        "Starstorm": [0x15, 0x16]
+    }
+
 
 def write_psi(world, rom):
     psi_num = 0
@@ -117,6 +126,8 @@ def write_psi(world, rom):
                 rom.write_bytes(address, bytearray([0x01]))
             elif psi_num == 5 and i > 1:
                 rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[key][i - 2]))
+                rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]]))
+                rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if key == "Special" and psi_num != 0:
                 rom.write_bytes(address, bytearray([0x12]))
@@ -124,4 +135,7 @@ def write_psi(world, rom):
             address += 15
             if key == "Starstorm" and i == 1:
                 address = 0x158B8B
+    #todo; expanded psi
+    #todo; swap enemy actions for Special?
+    #todo: modify PSI learn text for poo
         psi_num += 1
