@@ -10,6 +10,7 @@ from .local_data import (item_id_table, location_dialogue, present_locations, ps
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
                          present_text_pointers, ap_text_pntrs, party_id_nums)
 from .battle_bg_data import battle_bg_bpp
+from .psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
@@ -400,6 +401,7 @@ def patch_rom(world, rom, player: int, multiworld):
             #if location.item.name == "Paula" and location.item.player == world.player:
                 #print(location.name)
 
+    write_psi(world, rom)
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, eb_text_table, 23)
@@ -460,6 +462,9 @@ class EBPatchExtensions(APPatchExtension):
         for psi_number in range(0x35):
             current_action = rom.read_bytes(0x158A50 + (15 * psi_number), 15)
             rom.write_bytes(0x350000 + (15 * psi_number), current_action)
+        
+        psi_text_table = rom.read_bytes(0x158D7A, (25 * 17))
+        rom.write_bytes(0x3B0118, psi_text_table)
 
         for psi_number in range(0x32):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)

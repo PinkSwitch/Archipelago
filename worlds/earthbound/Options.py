@@ -62,7 +62,7 @@ class RandomStartLocation(Toggle):
     display_name = "Random Starting Location"
 
 
-class PSIShuffle(Choice):
+class TeleportShuffle(Choice):
     """Shuffled: Teleports and Starstorm will be shuffled amongst the PSI locations. A few redundant Teleports may not be available.
        Anywhere: Teleports and Starstorm will be placed anywhere in the multiworld, and PSI locations will have regular checks.
        See the Game Page for more information on PSI Locations."""
@@ -80,6 +80,10 @@ class CharacterShuffle(Choice):
     option_shuffled = 0
     option_anywhere = 1
     default = 0
+
+class PSIShuffle(Toggle):
+    """Randomizes PSI skills."""
+    display_name = "PSI Shuffle"
 
 
 class PreFixItems(Toggle):
@@ -202,8 +206,9 @@ class EBOptions(PerGameCommonOptions):
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
     monkey_caves_mode: MonkeyCavesMode
-    shuffle_teleports: PSIShuffle# Better name?
+    shuffle_teleports: TeleportShuffle# Better name?
     character_shuffle: CharacterShuffle
+    psi_shuffle: PSIShuffle
     #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney

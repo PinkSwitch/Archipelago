@@ -1,25 +1,94 @@
-#def shuffle_psi(world):
-#
-#    class PlayerPSI:
-#        def __init__():
-#            self.address = address
-#            self.level_ness = level_ness
-#            self.level_paula = level_paula
-#            self.level_poo = level_poo
-#            self.x_pos = menu_x
-#            self.y_pos = menu_y
+import struct
 
-    #world.enemies = {
-     #   "Special": PlayerPSI("Insane Cultist", 0x1595e7, 94, 0, 353, 33, 8, 19, 25, 13, False),
-    #}
+def shuffle_psi(world):
+    offensive_psi_slots = [
+        "Special",
+        "Flash",
+        "Fire",
+        "Freeze",
+        "Thunder",
+        "Starstorm"
+    ]
+
+    assist_psi_slots = [
+        "Hypnosis",
+        "Paralysis",
+        "Offense Up",
+        "Defense Down",
+        "Brainshock"
+    ]
+
+    shield_slots = [
+        "Shield",
+        "PSI Shield"
+    ]
+    #Can I shuffle shield with regular assists?
+
+    world.psi_address = {
+        "Special": [0x158A5F, 4],
+        "Flash": [0x158B4F, 4],
+        "Fire": [0x158A9B, 4],
+        "Freeze": [0x158AD7, 4],
+        "Thunder": [0x158B13, 4],
+        "Starstorm": [0x3503FC, 4]
+    }
+
+    if world.options.psi_shuffle:
+        world.random.shuffle(offensive_psi_slots)
+        world.random.shuffle(assist_psi_slots)
+        world.random.shuffle(shield_slots)
+        world.psi_address = {key: world.psi_address[key] for key in offensive_psi_slots}
+
+    world.psi_slot_data = [
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Special
+        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]], #Flash
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Fire
+        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]], #Freeze
+        [[0x09, 0x02], [0x0B, 0x02], [0x0D, 0x02], [0x0F, 0x02]], #Thunder
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Starstorm
+    ]
+    world.psi_action_data = [
+        [[0x0A, 0x00], [0x0B, 0x00], [0x0C, 0x00], [0x0D, 0x00]], #Special
+        [[0x1A, 0x00], [0x1B, 0x00], [0x1C, 0x00], [0x1D, 0x00]], #Flash
+        [[0x0E, 0x00], [0x0F, 0x00], [0x10, 0x00], [0x11, 0x00]], #Fire
+        [[0x12, 0x00], [0x13, 0x00], [0x14, 0x00], [0x15, 0x00]], #Freeze
+        [[0x16, 0x00], [0x17, 0x00], [0x18, 0x00], [0x19, 0x00]], #Thunder
+        [[0x6F, 0x01], [0x70, 0x01], [0x1E, 0x00], [0x1F, 0x00]] #Starstorm
+    ]
+    world.psi_level_data = [
+        [[0x08, 0x00, 0x00], [0x16, 0x00, 0x00], [0x31, 0x00, 0x00], [0x4B, 0x00, 0x00]], #Special
+        [[0x12, 0x00, 0x00], [0x26, 0x00, 0x00], [0x3D, 0x00, 0x00], [0x43, 0x00, 0x00]], #Flash
+        [[0x00, 0x03, 0x00], [0x00, 0x13, 0x00], [0x00, 0x25, 0x00], [0x00, 0x40, 0x00]], #Fire
+        [[0x00, 0x01, 0x01], [0x00, 0x0B, 0x01], [0x00, 0x1F, 0x21], [0x00, 0x2E, 0x00]], #Freeze
+        [[0x00, 0x08, 0x01], [0x00, 0x19, 0x01], [0x00, 0x39, 0x29], [0x00, 0x00, 0x37]], #Thunder
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]] #Starstorm
+    ]
+
+    world.starstorm_address = {
+        "Special": [0x002D, 0x003C],
+        "Flash": [0x011D, 0x012C],
+        "Fire": [0x0069, 0x0078],
+        "Freeze": [0x00A5, 0x00B4],
+        "Thunder": [0x00E1, 0x00F0],
+        "Starstorm": [0x013B, 0x014A]
+    }
 
 
+def write_psi(world, rom):
+    psi_num = 0
+    for key, (address, levels) in world.psi_address.items():
+        for i in range(levels):
+            rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i]))
+            rom.write_bytes(address + 6, bytearray(world.psi_level_data[psi_num][i]))
+            if psi_num == 0:
+                rom.write_bytes(address, bytearray([0x01]))
+            elif psi_num == 5 and i > 1:
+                rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[key][i - 2]))
+                
+            if key == "Special":
+                rom.write_bytes(address, bytearray([0x12]))
 
-    #psi_slots = {
-     #   "Special",
-      #  "Flash", # Ness off 2
-       # "Fire", #Paula off 1
-        #"Freeze", #Paula/Poo off 2 
-        #"Thunder", #Paula/Poo off 3
-        #"Starstorm", #Poo off 1
-    #}
+            address += 15
+            if key == "Starstorm" and i == 1:
+                address = 0x158B8B
+        psi_num += 1

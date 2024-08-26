@@ -7822,11 +7822,11 @@ db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 db $06, $07, $00;starstorm e
 db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
-db $06, $08, $00;starstorm d
-db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $06, $08, $01;starstorm d
+db $02, $6F, $01, $00, $00, $00, $09, $00, $00, $00, $00, $00
 
-db $06, $09, $00;starstorm l
-db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+db $06, $09, $01;starstorm l
+db $02, $70, $01, $00, $00, $00, $0B, $00, $00, $00, $00, $00
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;
@@ -7866,8 +7866,22 @@ dd $00EF8882;Starstorm zeta
 dd $00EF8882;starstorm epsilon
 dd $00EF8882 ;starstorm lambda
 dd $00EF8882 ;starstorm delta
-
 db $02
+
+PSINameTable:
+
+;Extended PSI names
+ORG $FB02C1
+db $80, $83, $79, $50, $87, $91, $a6, $95;PSI Wave
+
+
+ORG $C1C423
+LDA #$0118
+STA $06
+LDA #$00FB
+STA $08
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;psi symbol extensions
 macro GreekLetter06(address)

@@ -2,7 +2,7 @@ import struct
 from .flavor_data import random_flavors
 from .text_data import lumine_hall_text, eb_text_table
 from .local_data import item_id_table
-#from .psi_shuffle import shuffle_psi
+from .psi_shuffle import shuffle_psi
 
 
 def setup_gamevars(world):
@@ -343,7 +343,7 @@ def setup_gamevars(world):
         else:
             world.prayer_player.extend([0x6F])
     world.prayer_player.extend([0x00])
-    #shuffle_psi(world)
+    shuffle_psi(world)
 
 
 def place_static_items(world):
