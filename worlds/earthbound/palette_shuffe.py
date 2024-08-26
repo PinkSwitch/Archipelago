@@ -3,7 +3,7 @@ palette_list = [
     0x00, #Pyramid
     0x01, #Underworld
     0x02, #Cave of the Past
-    0x03 #Giygas's lair
+    0x03, #Giygas's lair
 
 
     0x04, #Onett daytime
