@@ -127,6 +127,7 @@ def write_psi(world, rom):
             elif psi_num == 5 and i > 1:
                 rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[key][i - 2]))
                 rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]]))
+                rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]]))
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if key == "Special" and psi_num != 0:
