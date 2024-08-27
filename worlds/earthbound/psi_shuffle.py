@@ -137,6 +137,6 @@ def write_psi(world, rom):
             if key == "Starstorm" and i == 1:
                 address = 0x158B8B
     #todo; expanded psi
+    #todo; animation for Starstorm L/D
     #todo; swap enemy actions for Special?
-    #todo: modify PSI learn text for poo
         psi_num += 1

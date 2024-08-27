@@ -6628,9 +6628,103 @@ db $08, $df, $69, $c5, $00, $01, $70, $79, $a4, $50, $94, $95, $91, $9c, $a3, $5
 db $91, $92, $9f, $a5, $a4, $50, $61, $68, $60, $50, $a0, $9f, $99, $9e, $a4, $a3
 db $50, $9f, $96, $50, $94, $91, $9d, $91, $97, $95, $50, $a4, $9f, $50, $95, $91
 db $93, $98, $50, $95, $9e, $95, $9d, $a9, $5e, $02
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C1C84A
+JSR $C80E
 
+ORG $C1C7FD
+CLC
+  LDA.w #psi_letters
+  STA $06
+  lda #$00FD
+  sta $08
+STZ $12
+STZ $14
+BRA $10
+JSL sort_psi_menu
+JMP $163C
 
-
+ORG $F00000
+sort_psi_menu:
+REP #$31
+PHD
+TDC
+ADC #$FFF8
+TCD
+LDA $8958
+CMP #$FFFF
+BNE .nojump
+JMP .Return
+.nojump:
+ASL
+TAX
+LDA $88E4,X
+LDY #$0052
+JSL $C08FF7
+TAY
+LDA $867B,Y
+STA $00
+JSL $C10C49
+DEC
+BNE $06
+LDA #$FFFF
+JMP .Return
+BMI $F8
+STA $02
+LDA $00
+LDY #$002D
+JSL $C08FF7
+CLC
+ADC #$89D4
+STA $04
+LDX $04
+TXA
+.selsort_outer:
+LDY $02
+STY $06
+CLC
+ADC #$002D
+TAY
+LDA $000A,X
+CMP $000A,Y
+BNE $06
+LDA $0008,X
+CMP $0008,Y
+BCC $01
+TYX
+TYA
+DEC $06
+BNE $E5
+CPX $04
+BEQ .selsort_outer_no_swap
+LDY $04
+SEP #$20
+LDA #$27
+STA $00
+.swap_loop:
+LDA $0006,X
+XBA
+LDA $0006,Y
+STA $0006,X
+XBA
+STA $0006,Y
+INX
+INY
+DEC $00
+BNE .swap_loop
+REP #$20
+.selsort_outer_no_swap:
+LDA $04
+CLC
+ADC #$002D
+STA $04
+TAX
+DEC $02
+BNE .selsort_outer
+LDA #$0000
+.Return:
+PLD
+RTL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
 
@@ -7914,7 +8008,7 @@ ORG $C1C78D
 %GreekLetter06(address)
 
 ORG $C1C7FE
-%GreekLetter06(address)
+;%GreekLetter06(address)
 
 ORG $c1ca53
 %GreekLetter06(address)

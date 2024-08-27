@@ -305,7 +305,7 @@ def setup_gamevars(world):
     filler_items = world.common_items + world.uncommon_items + world.rare_items + world.common_gear + world.uncommon_gear + world.rare_gear
     world.filler_drops = [item_id_table[i] for i in filler_items if i in item_id_table]
     world.filler_drops.append(0x00)
-    if not world.options.prefixed_items:
+    if world.options.prefixed_items:
         world.filler_drops.extend([0xA1, 0xD7, 0x8A, 0x2C, 0x30])
     else:
         world.filler_drops.extend([0x07, 0x05, 0x09, 0x0B, 0x10])
