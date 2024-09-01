@@ -1048,8 +1048,10 @@ def scale_enemies(world, rom):
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         world.location_order.remove("Magicant")
         world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
-    elif world.options.magicant_mode == 3:
+    elif world.options.magicant_mode == 3 and world.options.giygas_required:
         world.location_order.insert(world.location_order.index("Endgame") - 1, "Magicant")
+    elif world.options.magicant_mode == 3 and not world.options.giygas_required:
+        world.location_order.append("Magicant")
 
     #if world.scale_warning == True:
         #warning(f"{world.location_order}")

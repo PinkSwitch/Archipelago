@@ -6628,16 +6628,63 @@ db $08, $df, $69, $c5, $00, $01, $70, $79, $a4, $50, $94, $95, $91, $9c, $a3, $5
 db $91, $92, $9f, $a5, $a4, $50, $61, $68, $60, $50, $a0, $9f, $99, $9e, $a4, $a3
 db $50, $9f, $96, $50, $94, $91, $9d, $91, $97, $95, $50, $a4, $9f, $50, $95, $91
 db $93, $98, $50, $95, $9e, $95, $9d, $a9, $5e, $02
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+db $70, $71, $50, $98, $91, $a2, $a3, $98, $50, $92, $9c, $91, $a3, $a4, $50, $9f
+db $96, $50, $95, $9e, $95, $a2, $97, $a9, $50, $95, $9e, $97, $a5, $9c, $96, $a3
+db $50, $9f, $9e, $95, $50, $95, $9e, $95, $9d, $a9, $5c, $50, $99, $9e, $96, $9c
+db $99, $93, $a4, $99, $9e, $97, $50, $91, $92, $9f, $a5, $a4, $02, $08, $df, $d1
+db $ee, $ff, $50, $69, $60, $50, $a0, $9f, $99, $9e, $a4, $a3, $50, $9f, $96, $50
+db $94, $91, $9d, $91, $97, $95, $5e, $01, $70, $79, $a4, $50, $9d, $91, $a9, $50
+db $99, $9e, $96, $9c, $99, $93, $a4, $50, $91, $92, $9f, $a5, $a4, $50, $98, $91
+db $9c, $96, $50, $91, $a3, $50, $9d, $a5, $93, $98, $50, $a4, $9f, $50, $9f, $a4
+db $98, $95, $a2, $50, $95, $9e, $95, $9d, $99, $95, $a3, $5e, $02, $08, $df, $d1
+db $ee, $ff, $50, $61, $68, $60, $50, $a0, $9f, $99, $9e, $a4, $a3, $50, $9f, $96
+db $50, $94, $91, $9d, $91, $97, $95, $5e, $01, $70, $79, $a4, $50, $9d, $91, $a9
+db $50, $99, $9e, $96, $9c, $99, $93, $a4, $50, $91, $92, $9f, $a5, $a4, $50, $98
+db $91, $9c, $96, $50, $91, $a3, $50, $9d, $a5, $93, $98, $50, $a4, $9f, $50, $9f
+db $a4, $98, $95, $a2, $50, $95, $9e, $95, $9d, $99, $95, $a3, $5e, $02, $08, $df
+db $d1, $ee, $ff, $50, $62, $67, $60, $50, $a0, $9f, $99, $9e, $a4, $a3, $50, $9f
+db $96, $50, $94, $91, $9d, $91, $97, $95, $5e, $01, $70, $79, $a4, $50, $9d, $91
+db $a9, $50, $99, $9e, $96, $9c, $99, $93, $a4, $50, $91, $92, $9f, $a5, $a4, $50
+db $98, $91, $9c, $96, $50, $91, $a3, $50, $9d, $a5, $93, $98, $50, $a4, $9f, $50
+db $9f, $a4, $98, $95, $a2, $50, $95, $9e, $95, $9d, $99, $95, $a3, $5e, $02, $08
+db $df, $d1, $ee, $ff, $50, $63, $66, $60, $50, $a0, $9f, $99, $9e, $a4, $a3, $50
+db $9f, $96, $50, $94, $91, $9d, $91, $97, $95, $5e, $01, $70, $79, $a4, $50, $9d
+db $91, $a9, $50, $99, $9e, $96, $9c, $99, $93, $a4, $50, $91, $92, $9f, $a5, $a4
+db $50, $98, $91, $9c, $96, $50, $91, $a3, $50, $9d, $a5, $93, $98, $50, $a4, $9f
+db $50, $9f, $a4, $98, $95, $a2, $50, $95, $9e, $95, $9d, $99, $95, $a3, $5e, $02;PSI blast help text
+
+db $70, $71, $50, $a3, $a0, $91, $a2, $9b, $50, $9f, $96, $50, $95, $9e, $95, $a2, $97
+db $a9, $50, $99, $a3, $50, $a3, $98, $9f, $a4, $50, $91, $a4, $50, $9f, $9e, $95
+db $50, $95, $9e, $95, $9d, $a9, $5c, $50, $99, $9e, $96, $9c, $99, $93, $a4, $99
+db $9e, $97, $50, $91, $92, $9f, $a5, $a4, $50, $61, $62, $60, $50, $a0, $9f, $99
+db $9e, $a4, $a3, $50, $9f, $96, $50, $94, $91, $9d, $91, $97, $95, $5e, $01, $70
+db $84, $98, $95, $50, $96, $91, $a3, $a4, $95, $a2, $50, $a9, $9f, $a5, $50, $91
+db $a2, $95, $5c, $50, $a4, $98, $95, $50, $9d, $9f, $a2, $95, $50, $9c, $99, $9b
+db $95, $9c, $a9, $50, $99, $a4, $50, $99, $a3, $50, $96, $9f, $a2, $50, $a4, $98
+db $95, $50, $a3, $a0, $91, $a2, $9b, $50, $a4, $9f, $50, $98, $99, $a4, $5e, $02
+db $70, $7f, $9e, $95, $50, $95, $9e, $95, $9d, $a9, $50, $99, $a3, $50, $a3, $a4
+db $a2, $a5, $93, $9b, $50, $92, $a9, $50, $02, $a3, $a0, $91, $a2, $9b, $a3, $50
+db $9f, $96, $50, $95, $9e, $95, $a2, $97, $a9, $50, $96, $9f, $a2, $50, $91, $92
+db $9f, $a5, $a4, $50, $61, $62, $60, $50, $a0, $9f, $99, $9e, $a4, $a3, $50, $9f
+db $96, $50, $94, $91, $9d, $91, $97, $95, $50, $95, $91, $93, $98, $5e, $01, $70
+db $84, $98, $95, $50, $a3, $a0, $91, $a2, $9b, $a3, $50, $91, $a2, $95, $50, $9d
+db $9f, $a2, $95, $50, $9c, $99, $9b, $95, $9c, $a9, $50, $a4, $9f, $50, $98, $99
+db $a4, $50, $a4, $98, $95, $50, $96, $91, $a3, $a4, $95, $a2, $50, $a9, $9f, $a5
+db $50, $91, $a2, $95, $50, $a4, $98, $91, $9e, $50, $a4, $98, $95, $50, $a4, $91
+db $a2, $97, $95, $a4, $5e, $02, $08, $f0, $d3, $ee, $ff, $63, $50, $08, $09, $d4
+db $ee, $ff, $02, $08, $f0, $d3, $ee, $ff, $65, $50, $08, $09, $d4, $ee, $ff, $02
+db $08, $f0, $d3, $ee, $ff, $61, $65, $50, $08, $09, $d4, $ee, $ff, $02;PSI Missile help text
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
 JSR $C80E
 
 ORG $C1C7FD
 CLC
-  LDA.w #psi_letters
-  STA $06
+  ADC #psi_letters
+  STA $0E
   lda #$00FD
-  sta $08
+  sta $10
 STZ $12
 STZ $14
 BRA $10
@@ -6725,6 +6772,14 @@ LDA #$0000
 .Return:
 PLD
 RTL
+
+macro JSL_RTS_C2(target)
+   phk
+   pea .ret-1
+   pea $00B7
+   jml the_bank_c2_function
+.ret:
+endmacro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
 
@@ -7264,6 +7319,40 @@ db $00, $04, $05, $00
 dd $00EF8F4A
 dd $00C299AE
 ;;;;;;;;;;;;
+db $00, $01, $03, $05
+dd $00EF8543;Blast alpha
+dd blast_alpha
+
+db $00, $01, $03, $0F
+dd $00EF8543;Blast beta
+dd blast_beta
+
+db $00, $01, $03, $14
+dd $00EF8543;Blast gamma
+dd blast_gamma
+
+db $00, $01, $03, $1E
+dd $00EF8543;Blast omega
+dd blast_omega
+;;;;;;;;;;;;;;;;;;
+db $00, $01, $03, $05
+dd $00EF8543;Missile alpha
+dd missile_alpha
+
+db $00, $01, $03, $0F
+dd $00EF8543;Missile beta
+dd missile_beta
+
+db $00, $01, $03, $1E
+dd $00EF8543;Missile gamma
+dd missile_gamma
+
+db $00, $01, $03, $64
+dd $00EF8543;Missile omega
+dd missile_omega
+;;;;;;;;;;;;;;;;;
+
+
 
 ;New battle text
 ORG $FE0000
@@ -7739,6 +7828,117 @@ TCD
 LDA #$002D
 JML $C29016
 
+blast_alpha:
+REP #$31
+LDA #$005A
+JSR blast_common
+RTL
+
+blast_beta:
+REP #$31
+LDA #$00B4
+JSR blast_common
+RTL
+
+blast_gamma:
+REP #$31
+LDA #$010E
+JSR blast_common
+RTL
+
+blast_omega:
+REP #$31
+LDA #$0168
+JSR blast_common
+RTL
+
+missile_alpha:
+REP #$31
+LDA #$0001
+JSR missile_common
+RTL
+
+missile_beta:
+REP #$31
+LDA #$0003
+JSR missile_common
+RTL
+
+missile_gamma:
+REP #$31
+LDA #$0005
+JSR missile_common
+RTL
+
+missile_omega:
+REP #$31
+LDA #$0014
+JSR missile_common
+RTL
+
+
+
+blast_common:
+REP #$31
+PHD
+PHA
+TDC
+ADC #$FFEA
+TCD
+PLA
+TAX
+STX $1A
+LDY #$941C
+JSL goto_bank_c2
+CMP #$0000
+BNE .Return
+LDY #$A657
+LDA $1A
+JSL goto_bank_c2
+
+.Return:
+PLD
+RTS
+
+
+goto_bank_c2:
+STA $00BC
+STY $00BE
+PEA $00B7
+SEP #$20
+LDA #$C2
+PHA
+REP #$20
+PHY
+LDA $00BC
+LDY $00BE
+RTL
+
+missile_common:
+REP #$31
+PHD
+PHA
+TDC
+ADC #$FFEA
+TCD
+PLA
+TAX
+STX $1A
+LDY #$941C
+JSL goto_bank_c2
+CMP #$0000
+BNE .Return
+LDY #$A579
+LDA $1A
+JSL goto_bank_c2
+.Return:
+PLD
+RTS
+
+;Y has the jump address
+
+
+
 psi_letters:
 dw $008B ;alpha
 dw $008C ;beta
@@ -7931,7 +8131,32 @@ db $02, $6F, $01, $00, $00, $00, $09, $00, $6C, $D1, $EE, $00
 
 db $06, $09, $01;starstorm l
 db $02, $70, $01, $00, $00, $00, $0B, $00, $A5, $D1, $EE, $00
+
+db $13, $01, $01;blast a
+db $02, $A4, $01, $00, $00, $00, $09, $00, $1C, $D2, $EE, $FF
+
+db $13, $02, $01;blast b
+db $02, $A5, $01, $00, $00, $00, $0B, $00, $6C, $D2, $EE, $FF
+
+db $13, $03, $01;blast g
+db $02, $A6, $01, $00, $00, $00, $0D, $00, $BD, $D2, $EE, $FF
+
+db $13, $05, $01;blast o
+db $02, $A7, $01, $00, $00, $00, $0F, $00, $0E, $D3, $EE, $FF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $14, $01, $01;missile a
+db $02, $A8, $01, $00, $00, $00, $09, $00, $5F, $D3, $EE, $FF
+
+db $14, $02, $01;missile b
+db $02, $A9, $01, $00, $00, $00, $0B, $00, $86, $D4, $EE, $FF
+
+db $14, $03, $01;missile g
+db $02, $AA, $01, $00, $00, $00, $0D, $00, $93, $D4, $EE, $FF
+
+db $14, $05, $01;missile o
+db $02, $AB, $01, $00, $00, $00, $0F, $00, $A0, $D4, $EE, $FF
+
+
 
 ;;;;;;;;;;;;;;;
 ;PSI ANIMATIONS
@@ -7942,7 +8167,7 @@ ORG $EF8580
 db $0A, $00, $00, $FB
 
 ORG $FB0000
-db $1F, $C0, $45; number of anims
+db $1F, $C0, $4D; number of anims
 
 ORG $FB00CB
 dd $00EF88E9; Teleport 1. change to a $02
@@ -7970,17 +8195,73 @@ dd $00EF8882;Starstorm zeta
 dd $00EF8882;starstorm epsilon
 dd $00EF8882 ;starstorm lambda
 dd $00EF8882 ;starstorm delta
+
+dd blast_alpha_anim;Blast alpha
+dd blast_beta_anim;Blast beta
+dd blast_gamma_anim;Blast gamma
+dd blast_omega_anim;Blast gamma
+
+dd missile_alpha_anim
+dd missile_beta_anim
+dd missile_gamma_anim
+dd missile_omega_anim
+
 db $02
 
 PSINameTable:
 
 ;Extended PSI names
-ORG $FB02C1
+ORG $FB06A9
 db $80, $83, $79, $50, $87, $91, $a6, $95, $50;PSI Wave
+
+ORG $FB06C2
+db $80, $83, $79, $50, $72, $9C, $91, $A3, $A4, $50;PSI Blast
+
+ORG $FB06DB
+db $80, $83, $79, $50, $7D, $99, $A3, $A3, $99, $9C, $95, $50;PSI Missile
+
+ORG $FB06F4
+
+blast_alpha_anim:
+db $1f, $02, $34, $1c, $13, $00, $37, $10, $17, $1f, $02, $5b, $10, $10, $1f, $02
+db $33, $10, $14, $1c, $13, $25, $00, $10, $0f, $10, $10, $02
+
+blast_beta_anim:
+db $1f, $02, $34, $1c, $13, $00, $38, $10, $17, $1f, $02, $5b, $10, $10, $1f, $02
+db $33, $10, $14, $1c, $13, $25, $00, $10, $0f, $10, $10, $02
+
+blast_gamma_anim:
+db $1f, $02, $34, $1c, $13, $00, $39, $10, $17, $1f, $02, $5b, $10, $10, $1f, $02
+db $33, $10, $14, $1c, $13, $25, $00, $10, $0f, $10, $10, $02
+
+blast_omega_anim:
+db $1f, $02, $34, $1c, $13, $00, $3A, $10, $17, $1f, $02, $5b, $10, $10, $1f, $02
+db $33, $10, $14, $1c, $13, $25, $00, $10, $0f, $10, $10, $02
+
+missile_alpha_anim:
+db $1f, $02, $46, $1c, $13, $00, $3B, $10, $04, $1f, $02, $01, $1c, $13, $2b, $00
+db $10, $0f, $02
+
+missile_beta_anim:
+db $1f, $02, $46, $10, $05, $1f, $02, $46, $10, $05, $1f, $02, $46, $1c, $13, $00
+db $3c, $10, $04, $1f, $02, $01, $1c, $13, $2b, $00, $10, $0f, $02
+
+missile_gamma_anim:
+db $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f
+db $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1c, $13, $00, $3d, $10, $04, $1f
+db $02, $01, $1c, $13, $2b, $00, $02
+
+missile_omega_anim:
+db $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f
+db $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02
+db $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46
+db $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10
+db $02, $1f, $02, $46, $10, $02, $1f, $02, $46, $10, $02, $1c, $13, $00, $3e, $10
+db $04, $1f, $02, $01, $1c, $13, $2b, $00, $02
 
 
 ORG $C1C423
-LDA #$0118
+LDA #$0500
 STA $06
 LDA #$00FB
 STA $08
@@ -8058,16 +8339,107 @@ SaturnFontGFX:
 
 ORG $FC1900
 incbin saturn_font_extended.bin
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;PSI Animations
+ORG $C3F98D
+JMP $FE00
+
+ORG $C3FE00
+  CMP #$FFFF
+  BEQ $18
+  CMP #$0023
+  BCC $0B
+  CMP #$0036
+  BCS $03
+  JMP $F99B
+  SBC #$0014
+  STA $02
+  LDA $02
+  JSL $C2E116
+  JMP $FAC7
+
+ORG $C2E34F
+  LDA #$0000
+  STA $06
+  LDA #$00F6
+  STA $08
+
+ORG $C2E461
+  LDA #$0400
+  STA $06
+  LDA #$00F6
+  STA $08
+
+ORG $C2E2F4
+  LDA #$0600
+  STA $06
+  LDA #$00F6
+  STA $08
+
+ORG $C2E154
+dl new_psi_anims
+
+ORG $C2E1BB
+dl new_psi_anims
+
+ORG $C2E50A
+dl new_psi_anims
+
+ORG $F60000
+new_psi_anims:
+
+ORG $F60198
+;Headers for new PSI. Blast alpha.
+db $25, $AC, $04, $03, $01, $03, $0e, $00, $19, $32, $9c, $0a
+;Blast beta
+db $25, $AC, $04, $03, $01, $03, $0e, $00, $19, $32, $9c, $0a
+;Blast Gamma
+db $25, $AC, $04, $03, $01, $03, $10, $00, $19, $32, $9c, $0a
+;Blast Omega
+db $25, $AC, $04, $03, $01, $03, $10, $00, $19, $32, $9c, $0a
+
+;Missile
+db $27, $DB, $02, $03, $01, $03, $06, $00, $05, $19, $d4, $4b
+db $27, $DB, $02, $03, $01, $03, $0B, $00, $05, $19, $d4, $4b
+db $27, $DB, $02, $03, $01, $03, $0A, $00, $05, $19, $d4, $4b
+db $27, $DB, $02, $03, $01, $03, $0E, $00, $05, $19, $d4, $4b
+
+ORG $F60400
+animation_pointer_table:
+
+ORG $F60488
+dd $00F70000;Blast A
+dd $00F7015E; Blast b
+dd $00F702C8; Blast g
+dd $00F7049E; Blast o
+dd $00F706E8; Missile a
+dd $00F70736; Missile B
+dd $00F707CD; Missile g
+dd $00F70874; Missile o
+
+
+ORG $F60600
+animation_palette_table:
+
+ORG $F60710
+db $00, $00, $9c, $0a, $75, $19, $bf, $63;Blast palette
+db $00, $00, $9c, $0a, $75, $19, $bf, $63;Blast palette
+db $00, $00, $9c, $0a, $75, $19, $bf, $63;Blast Gamma
+db $00, $00, $9c, $0a, $75, $19, $bf, $63;Blast Omega
+
+db $00, $00, $d4, $4b, $e5, $09, $ff, $7f;Missile alpha
+db $00, $00, $d4, $4b, $e5, $09, $ff, $7f
+db $00, $00, $d4, $4b, $e5, $09, $ff, $7f
+db $00, $00, $d4, $4b, $e5, $09, $ff, $7f; Missile omega
+
+ORG $F70000
+incbin psi_animations.bin
+
 
 
 
 ORG $C93B60
 ;db $B1, $63, $03;Font test, delete later. Also update the saturn font
-
-
-
-
-
 
 
 ;ORG $D59CD3

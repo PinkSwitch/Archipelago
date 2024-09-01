@@ -1,16 +1,18 @@
 import struct
 
 def shuffle_psi(world):
-    offensive_psi_slots = [
+    world.offensive_psi_slots = [
         "Special",
         "Flash",
         "Fire",
         "Freeze",
         "Thunder",
-        "Starstorm"
+        "Starstorm",
+        "Blast",
+        "Missile"
     ]
 
-    assist_psi_slots = [
+    world.assist_psi_slots = [
         "Hypnosis",
         "Paralysis",
         "Offense Up",
@@ -18,11 +20,13 @@ def shuffle_psi(world):
         "Brainshock"
     ]
 
-    shield_slots = [
+    world.shield_slots = [
         "Shield",
         "PSI Shield"
     ]
     #Can I shuffle shield with regular assists?
+
+    world.jeff_offense_items = []
 
     world.psi_address = {
         "Special": [0x158A5F, 4],
@@ -39,19 +43,32 @@ def shuffle_psi(world):
         "Paralysis": [0x158D11, 2],
         "Offense Up": [0x158C99, 2],
         "Defense Down": [0x158CB7, 2],
-        "Brainshock": [0x158D2F, 2]
+        "Brainshock": [0x158D2F, 2],
+
+        "Blast": [0x35041A, 4],
+        "Missile": [0x350456, 4],
     }
 
     if world.options.psi_shuffle:
-        world.random.shuffle(offensive_psi_slots)
-        world.random.shuffle(assist_psi_slots)
-        world.random.shuffle(shield_slots)
+        world.random.shuffle(world.offensive_psi_slots)
 
-        shield_data = {key: world.psi_address[key] for key in shield_slots}
-        assist_data = {key: world.psi_address[key] for key in assist_psi_slots}
-        world.psi_address = {key: world.psi_address[key] for key in offensive_psi_slots}
+        if world.options.psi_shuffle == 2:
+            world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
+            world.offensive_psi_slots = world.offensive_psi_slots[:-2]
+        else:
+            world.jeff_offense_items.extend(["Blast", "Missile"])
+
+        world.random.shuffle(world.assist_psi_slots)
+        world.random.shuffle(world.shield_slots)
+
+        shield_data = {key: world.psi_address[key] for key in world.shield_slots}
+        assist_data = {key: world.psi_address[key] for key in world.assist_psi_slots}
+        world.psi_address = {key: world.psi_address[key] for key in world.offensive_psi_slots}
         world.psi_address.update(shield_data)
         world.psi_address.update(assist_data)
+        print(world.offensive_psi_slots)
+        print(world.jeff_offense_items)
+    
 
     world.psi_slot_data = [
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Special
@@ -69,6 +86,9 @@ def shuffle_psi(world):
         [[0x09, 0x01], [0x0B, 0x01]], #Offense Up
         [[0x09, 0x02], [0x0B, 0x02]], #Defense Down
         [[0x09, 0x01], [0x0B, 0x01]], #Brainshock
+
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Blast
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Missile
     ]
     world.psi_action_data = [
         [[0x0A, 0x00], [0x0B, 0x00], [0x0C, 0x00], [0x0D, 0x00]], #Special
@@ -94,8 +114,35 @@ def shuffle_psi(world):
         [[0x00, 0x15, 0x00], [0x00, 0x28, 0x00]], #Offense Up
         [[0x00, 0x1D, 0x00], [0x00, 0x36, 0x00]], #Defense Down
         [[0x00, 0x00, 0x18], [0x00, 0x00, 0x2C]], #Brainshock
+
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]], #Blast
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]], #Missile
         
     ]
+
+    world.bomb_names = {
+        "Special": ["Psycho bomb", "????"],
+        "Flash": ["Flashbang", "????"],
+        "Freeze": ["Ice bomb", "Dry ice bomb"],
+        "Fire": ["Fire bomb", "Napalm bomb"],
+        "Thunder": ["Electric bomb", "EMP bomb"],
+        "Starstorm": ["Comet bomb", "?????"],
+        "Blast": ["Bomb", "Super bomb"],
+        "Missile": ["Rocket", "Super rocket"]
+
+    }
+
+    world.rocket_names = {
+        "Special": ["????", "????", "????"],
+        "Flash": ["Flashbang", "????", "????"],
+        "Freeze": ["????", "????", "????"],
+        "Fire": ["????", "????", "????"],
+        "Thunder": ["????", "????", "????"],
+        "Starstorm": ["????", "?????", "????"],
+        "Blast": ["Grenade", "Big grenade", "Combat grenade"],
+        "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
+
+    }
 
     world.starstorm_address = {
         "Special": [0x002D, 0x003C],
@@ -115,8 +162,28 @@ def shuffle_psi(world):
         "Starstorm": [0x15, 0x16]
     }
 
+    world.jeff_addresses = [
+        0x156665, #Bomb
+        0x15668C, #Super Bomb
+        0x1565F0, #Bottle Rocket
+        0x156616, #Big Bottle Rocket
+        0x15663E #multi Bottle Rocket
+
+    ]
+
+    world.jeff_item_counts = [
+        2, #Bomb
+        3 #Bottle Rocket
+    ]
+
+    world.jeff_item_names = [
+        world.bomb_names,
+        world.rocket_names
+    ]
+
 
 def write_psi(world, rom):
+    from .text_data import text_encoder, eb_text_table
     psi_num = 0
     for key, (address, levels) in world.psi_address.items():
         for i in range(levels):
@@ -140,3 +207,13 @@ def write_psi(world, rom):
     #todo; animation for Starstorm L/D
     #todo; swap enemy actions for Special?
         psi_num += 1
+
+    jeff_item_num = 0
+    jeff_item_index = 0
+    for item in world.jeff_offense_items:
+        for i in range(world.jeff_item_counts[jeff_item_num]):
+            address = world.jeff_addresses[jeff_item_index]
+            jeff_item_index += 1
+            name = world.jeff_item_names[jeff_item_num][item][i]
+            name = text_encoder(name, eb_text_table, 23)
+        jeff_item_num += 1

@@ -464,13 +464,23 @@ class EBPatchExtensions(APPatchExtension):
             rom.write_bytes(0x350000 + (15 * psi_number), current_action)
         
         psi_text_table = rom.read_bytes(0x158D7A, (25 * 17))
-        rom.write_bytes(0x3B0118, psi_text_table)
+        rom.write_bytes(0x3B0500, psi_text_table)
+
+        psi_anim_config = rom.read_bytes(0x0CF04D, 0x0198)
+        rom.write_bytes(0x360000, psi_anim_config)
+        
+        psi_anim_pointers = rom.read_bytes(0x0CF58F, 0x088)
+        rom.write_bytes(0x360400, psi_anim_pointers)
+
+        psi_anim_palettes = rom.read_bytes(0x0CF47F, 0x0110)
+        rom.write_bytes(0x360600, psi_anim_palettes)
+        
 
         for psi_number in range(0x32):
             psi_anim = rom.read_bytes(0x2F8583 + (0x04 * psi_number), 4)
             rom.write_bytes(0x3B0003 + (4 * psi_number), psi_anim)
             rom.write_bytes(0x3B0003, bytearray([0x4C]))
-            rom.write_bytes(0x3B0002, bytearray([0x45]))
+            #rom.write_bytes(0x3B0002, bytearray([0x45]))
 
         main_font_data = rom.read_bytes(0x210C7A, 96)
         main_font_gfx = rom.read_bytes(0x210CDA, 0x0C00)

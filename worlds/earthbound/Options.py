@@ -81,9 +81,15 @@ class CharacterShuffle(Choice):
     option_anywhere = 1
     default = 0
 
-class PSIShuffle(Toggle):
-    """Randomizes PSI skills."""
+class PSIShuffle(Choice):
+    """None: Characters will learn their normal PSI skills.
+       Basic: Offensive and Assist PSI will be shuffled. Recovery PSI is not modified. Ness's Favorite Thing will be named Wave in other slots.
+       Extended: Basic shuffle, but includes Jeff gadgets and some combat items.
+       See the Game Page for more information."""
     display_name = "PSI Shuffle"
+    option_none = 0
+    option_basic = 1
+    option_extended = 2
 
 
 class PreFixItems(Toggle):
