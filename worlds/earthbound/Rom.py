@@ -376,7 +376,7 @@ def patch_rom(world, rom, player: int, multiworld):
             if i == 480:
                 drawn_background = struct.pack("H",world.random.choice(bpp4_bgs))
             else:
-                drawn_background = struct.pack("H",world.random.randint(0x01, 0x0146))
+                drawn_background = struct.pack("H",world.random.randint(0x01, 0x0146))#clearly this isn't giygas
 
             if battle_bg_bpp[struct.unpack("H", drawn_background)[0]] == 4:
                 drawn_background_2 = struct.pack("H",0x0000)

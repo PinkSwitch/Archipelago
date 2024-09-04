@@ -85,7 +85,7 @@ class EarthBoundClient(SNIClient):
         if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
             return
 
-        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00: #If suppression is set and we're not in a battle dont do deathlinks
+        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00: # If suppression is set and we're not in a battle dont do deathlinks
             return
 
         for i in range(char_count[0]):
@@ -94,7 +94,7 @@ class EarthBoundClient(SNIClient):
             snes_buffered_write(ctx, active_hp[current_char[0]], bytes([0x00, 0x00]))
             snes_buffered_write(ctx, battle_hp[i + 1], bytes([0x00, 0x00]))
             if deathlink_mode[0] == 0 or is_in_battle[0] == 0:
-                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))#This should be the check for instant or mercy. Write the value, call it here
+                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))# This should be the check for instant or mercy. Write the value, call it here
         await snes_flush_writes(ctx)
         ctx.death_state = DeathState.dead
         ctx.last_death_link = time.time()
@@ -136,20 +136,20 @@ class EarthBoundClient(SNIClient):
             ctx.rom = None
             return
         
-        if giygas_clear[0] & 0x01 == 0x01: #Are we in the epilogue
+        if giygas_clear[0] & 0x01 == 0x01: # Are we in the epilogue
             return
 
-        if save_num[0] == 0x00: #If on the title screen
+        if save_num[0] == 0x00: # If on the title screen
             return
 
         if ctx.slot is None:
             return
 
-        if game_clear[0] & 0x01 == 0x01: #Goal should ignore the item queue and textbox check
+        if game_clear[0] & 0x01 == 0x01: # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
 
-        #death link handling goes here
+        # death link handling goes here
         if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
             send_deathlink = await snes_read(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, 1)
             currently_dead = send_deathlink[0] != 0x00
@@ -157,7 +157,7 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, bytes([0x00]))
             await ctx.handle_deathlink_state(currently_dead)
 
-        if text_open[0] != 0xFF: #Don't check locations or items while text is printing, but scouting is fine
+        if text_open[0] != 0xFF: # Don't check locations or items while text is printing, but scouting is fine
             return
 
         new_checks = []
@@ -179,10 +179,10 @@ class EarthBoundClient(SNIClient):
                 f'New Check: {location} ({len(ctx.locations_checked)}/{len(ctx.missing_locations) + len(ctx.checked_locations)})')
             await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
 
-        if item_received[0] or special_received[0] != 0x00: #If processing any item from the server
+        if item_received[0] or special_received[0] != 0x00: # If processing any item from the server
             return
 
-        if cur_script[0]: #Stop items during cutscenes
+        if cur_script[0]:  # Stop items during cutscenes
             return
 
         recv_count = await snes_read(ctx, ITEMQUEUE_HIGH, 2)

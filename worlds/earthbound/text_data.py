@@ -63,7 +63,7 @@ eb_text_table = {" ": ([0x50]), "!": ([0x51]), '"': ([0x52]), "■": ([0x53]), "
                  "u": ([0xA5]), "v": ([0xA6]), 'w': ([0xA7]), "x": ([0xA8]), 'y': ([0xA9]), "z": ([0xAA]),
                  "[": ([0xAB]), "♪": ([0xAC]), ']': ([0xAD]), "~": ([0xAE]), '◯': ([0xAF]), "_": ([0xB0]),
                  "<": ([0xB1]), "»": ([0x90])}
-                 #0x90 is a half-width space, should only be used for excessively long names in menus, not regular item/player text
+# 0x90 is a half-width space, should only be used for excessively long names in menus, not regular item/player text
 
 
 lumine_hall_text = [
@@ -183,6 +183,7 @@ lumine_hall_text = [
 
 
 ]
+
 
 def text_encoder(text, eb_text_table, textcap):
     encoded_text = bytearray()

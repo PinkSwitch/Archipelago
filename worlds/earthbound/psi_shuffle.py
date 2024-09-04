@@ -1,5 +1,6 @@
 import struct
 
+
 def shuffle_psi(world):
     world.offensive_psi_slots = [
         "Special",
@@ -68,24 +69,23 @@ def shuffle_psi(world):
         world.psi_address.update(assist_data)
         print(world.offensive_psi_slots)
         print(world.jeff_offense_items)
-    
 
     world.psi_slot_data = [
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Special
-        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]], #Flash
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Fire
-        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]], #Freeze
-        [[0x09, 0x02], [0x0B, 0x02], [0x0D, 0x02], [0x0F, 0x02]], #Thunder
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Starstorm
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Special
+        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]],  # Flash
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Fire
+        [[0x09, 0x01], [0x0B, 0x01], [0x0D, 0x01], [0x0F, 0x01]],  # Freeze
+        [[0x09, 0x02], [0x0B, 0x02], [0x0D, 0x02], [0x0F, 0x02]],  # Thunder
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Starstorm
 
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Shield
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #PSI Shield
 
-        [[0x09, 0x01], [0x0B, 0x01]], #Hypnosis
-        [[0x09, 0x02], [0x0B, 0x02]], #Paralysis
-        [[0x09, 0x01], [0x0B, 0x01]], #Offense Up
-        [[0x09, 0x02], [0x0B, 0x02]], #Defense Down
-        [[0x09, 0x01], [0x0B, 0x01]], #Brainshock
+        [[0x09, 0x01], [0x0B, 0x01]], # Hypnosis
+        [[0x09, 0x02], [0x0B, 0x02]], # Paralysis
+        [[0x09, 0x01], [0x0B, 0x01]], # Offense Up
+        [[0x09, 0x02], [0x0B, 0x02]], # Defense Down
+        [[0x09, 0x01], [0x0B, 0x01]], # Brainshock
 
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Blast
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Missile
@@ -109,38 +109,54 @@ def shuffle_psi(world):
         [[0x0C, 0x00, 0x0E], [0x00, 0x00, 0x0F], [0x22, 0x00, 0x10], [0x00, 0x00, 0x33]], #Shield
         [[0x00, 0x06, 0x00], [0x00, 0x1B, 0x00], [0x00, 0x33, 0x00], [0x00, 0x3C, 0x00]], #PSI Shield
 
-        [[0x04, 0x00, 0x00], [0x1B, 0x00, 0x00]], #Hypnosis
-        [[0x0E, 0x00, 0x00], [0x1D, 0x00, 0x00]], #Paralysis
-        [[0x00, 0x15, 0x00], [0x00, 0x28, 0x00]], #Offense Up
-        [[0x00, 0x1D, 0x00], [0x00, 0x36, 0x00]], #Defense Down
-        [[0x00, 0x00, 0x18], [0x00, 0x00, 0x2C]], #Brainshock
+        [[0x04, 0x00, 0x00], [0x1B, 0x00, 0x00]],  # Hypnosis
+        [[0x0E, 0x00, 0x00], [0x1D, 0x00, 0x00]],  # Paralysis
+        [[0x00, 0x15, 0x00], [0x00, 0x28, 0x00]],  # Offense Up
+        [[0x00, 0x1D, 0x00], [0x00, 0x36, 0x00]],  # Defense Down
+        [[0x00, 0x00, 0x18], [0x00, 0x00, 0x2C]],  # Brainshock
 
-        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]], #Blast
-        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]], #Missile
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Blast
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Missile
         
     ]
 
     world.bomb_names = {
-        "Special": ["Psycho bomb", "????"],
-        "Flash": ["Flashbang", "????"],
-        "Freeze": ["Ice bomb", "Dry ice bomb"],
-        "Fire": ["Fire bomb", "Napalm bomb"],
+        "Special": ["Psycho bomb", "Mad psycho bomb", "Psywave emitter", "Psywave blaster"],
+        "Flash": ["Smoke bomb", "Flashbang", "Flash pan", "Digital camera"],
+        "Freeze": ["Ice bomb", "Dry ice bomb", "Frost ray", "Freeze ray"],
+        "Fire": ["Fire bomb", "Napalm bomb", "Blowtorch", "Flamethrower"],
         "Thunder": ["Electric bomb", "EMP bomb"],
-        "Starstorm": ["Comet bomb", "?????"],
-        "Blast": ["Bomb", "Super bomb"],
-        "Missile": ["Rocket", "Super rocket"]
-
+        "Starstorm": ["Comet bomb", "Nova bomb", "Meteor radar", "Star radar"],
+        "Blast": ["Bomb", "Super bomb", "Bazooka", "Heavy bazooka"],
+        "Missile": ["Rocket", "Nitro rocket"]
     }
 
     world.rocket_names = {
         "Special": ["????", "????", "????"],
-        "Flash": ["Flashbang", "????", "????"],
+        "Flash": ["????", "????", "????"],
         "Freeze": ["????", "????", "????"],
-        "Fire": ["????", "????", "????"],
+        "Fire": ["Flare", "Big flare", "Blitz flare"],
         "Thunder": ["????", "????", "????"],
         "Starstorm": ["????", "?????", "????"],
-        "Blast": ["Grenade", "Big grenade", "Combat grenade"],
+        "Blast": ["Grenade", "Tactical grenade", "Fragment»grenade"],
         "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
+
+    }
+    
+    world.broken_names = {
+        "Special": "Broken radio",
+        "Flash": "Broken camera",
+        "Freeze": "Broken minifridge",
+        "Fire": "Broken toaster",
+        "Thunder": "Broken spring",
+        "Starstorm": "Broken GPS",
+        "Blast": "Broken bazooka",
+        "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
+    }
+
+    world.bazooka_names = {
+        "Thunder": ["Shock wire", "Tesla coil"],
+        "Missile": ["Missile launcher", "Super missile launcher"]
 
     }
 
@@ -150,7 +166,9 @@ def shuffle_psi(world):
         "Fire": [0x0069, 0x0078],
         "Freeze": [0x00A5, 0x00B4],
         "Thunder": [0x00E1, 0x00F0],
-        "Starstorm": [0x013B, 0x014A]
+        "Starstorm": [0x013B, 0x014A],
+        "Blast": [0x0438, 0x0447],
+        "Missile": [0x0474, 0x0483]
     }
 
     world.starstorm_spell_id = {
@@ -160,25 +178,59 @@ def shuffle_psi(world):
         "Freeze": [0x0B, 0x0C],
         "Thunder": [0x0F, 0x10],
         "Starstorm": [0x15, 0x16]
+        #add blast and missile
     }
 
     world.jeff_addresses = [
-        0x156665, #Bomb
-        0x15668C, #Super Bomb
-        0x1565F0, #Bottle Rocket
-        0x156616, #Big Bottle Rocket
-        0x15663E #multi Bottle Rocket
+        0x156665, # Bomb
+        0x15668C, # Super Bomb
+        0x156443, # Bazooka
+        0x15646A, # Heavy bazooka
+
+        0x1565F0, # Bottle Rocket
+        0x156616, # Big Bottle Rocket
+        0x15663E # multi Bottle Rocket
 
     ]
 
+    world.bomb_desc = {
+        "Special": [0x00EED4D8, 0x00EED521, 0x00EEDA4F, 0x00EEDA6B],
+        "Flash": [0x00EED538, 0x00EED5AB, 0x00EEDA87, 0x00EEDAD7],
+        "Fire": [0x00EED659, 0x00EED6CC],
+        "Freeze": [0x00EED744, 0x00EED79D],
+        "Thunder": [0x00EED822, 0x00EED88E],
+        "Starstorm": [0x00EED4D8, 0x00EED84E],
+        "Blast": [0x00C54EA7, 0x00C54EF7, 0x00C54AA1, 0x00C54AF5],
+        "Missile": [0x00EED9A5, 0x00EED9FF]
+    }
+
+    world.rocket_desc = {
+        "Special": [0x00000000, 0x00000000, 0x00000000],
+        "Flash": [0x00000000, 0x00000000],
+        "Fire": [0x00000000, 0x00000000],
+        "Freeze": [0x00000000, 0x00000000],
+        "Thunder": [0x00000000, 0x00000000],
+        "Starstorm": [0x00000000, 0x00000000],
+        "Blast": [0x00000000, 0x00000000, 0x00000000],
+        "Missile": [0x00C54E01, 0x00000000]
+    }
+
     world.jeff_item_counts = [
-        2, #Bomb
+        4, #Bomb
         3 #Bottle Rocket
     ]
 
     world.jeff_item_names = [
         world.bomb_names,
-        world.rocket_names
+        world.rocket_names,
+        world.broken_names,
+        world.bazooka_names,
+        #world.gadget_names
+    ]
+
+    world.jeff_help_text = [
+        world.bomb_desc,
+        world.rocket_desc
     ]
 
 
@@ -206,6 +258,8 @@ def write_psi(world, rom):
     #todo; expanded psi
     #todo; animation for Starstorm L/D
     #todo; swap enemy actions for Special?
+    #todo; item-based prices?
+    #Should starstorm bomb do an early tier and follow the struct instead of alpha/omega?
         psi_num += 1
 
     jeff_item_num = 0
@@ -215,5 +269,9 @@ def write_psi(world, rom):
             address = world.jeff_addresses[jeff_item_index]
             jeff_item_index += 1
             name = world.jeff_item_names[jeff_item_num][item][i]
-            name = text_encoder(name, eb_text_table, 23)
+            name = text_encoder(name, eb_text_table, 22)
+            name.extend(([0x00]))
+            description = world.jeff_help_text[jeff_item_num][item][i]
+            rom.write_bytes(address, name)
+            rom.write_bytes(address + 35, struct.pack("I", description))
         jeff_item_num += 1

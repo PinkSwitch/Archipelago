@@ -37,6 +37,7 @@ class MagicantMode(Choice):
     option_removed = 4
     default = 0
 
+
 class MonkeyCavesMode(Choice):
     """Chests: Items required to finish the Monkey Caves will be forcibly placed on the chests that can be found in-between rooms of the monkey caves. The "reward" locations, usually found at the end of a branch, are still random. If you waste chest items, they will need to be replaced via the methods in hunt mode.
        Hunt: Items required to finish the Monkey Caves will need to be found outside. They can be obtained from the Dusty Dunes drugstore, the Fourside department store, and the pizza shop in either Twoson or Threed.
@@ -97,9 +98,11 @@ class PreFixItems(Toggle):
        This does not affect any items that are not placed by the multiworld."""
     display_name = "Prefixed Items"
 
+
 class AutoscaleParty(Toggle):
     """If enabled, joining party members will be scaled to roughly the level of the sphere they were obtained in."""
     display_name = "Autoscale Party Members"
+
 
 class PresentSprites(DefaultOnToggle):
     """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""

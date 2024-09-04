@@ -56,7 +56,7 @@ class EarthBoundWorld(World):
     game = "EarthBound"
     option_definitions = EBOptions
     data_version = 1
-    required_client_version = (0, 5, 0) #Change when 0.5.0 releases
+    required_client_version = (0, 5, 0) # Change when 0.5.0 releases
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = {location.name: location.code for
@@ -65,7 +65,7 @@ class EarthBoundWorld(World):
 
     web = EBWeb()
     settings: typing.ClassVar[EBSettings]
-    #topology_present = True
+    # topology_present = True
 
     options_dataclass = EBOptions
     options: EBOptions
@@ -102,7 +102,7 @@ class EarthBoundWorld(World):
 
         self.multiworld.itempool += pool
 
-    def roll_filler(self) -> str: #Todo: make this suck less
+    def roll_filler(self) -> str: # Todo: make this suck less
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
@@ -118,7 +118,7 @@ class EarthBoundWorld(World):
         }
         return self.random.choice(weight_table[filler_type])
 
-    def generate_early(self): #Todo: place locked items in generate_early
+    def generate_early(self): # Todo: place locked items in generate_early
         self.locals = []
         local_space_count = 0
         for item_name, amount in self.options.start_inventory.items():
@@ -180,7 +180,7 @@ class EarthBoundWorld(World):
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
-        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count): #Change to fix event count
+        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count): # Change to fix event count
             item = self.set_classifications(self.roll_filler())
             pool.append(item)
 
