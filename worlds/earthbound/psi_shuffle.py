@@ -121,42 +121,25 @@ def shuffle_psi(world):
     ]
 
     world.bomb_names = {
-        "Special": ["Psycho bomb", "Mad psycho bomb", "Psywave emitter", "Psywave blaster"],
-        "Flash": ["Smoke bomb", "Flashbang", "Flash pan", "Digital camera"],
-        "Freeze": ["Ice bomb", "Dry ice bomb", "Frost ray", "Freeze ray"],
-        "Fire": ["Fire bomb", "Napalm bomb", "Blowtorch", "Flamethrower"],
-        "Thunder": ["Electric bomb", "EMP bomb"],
-        "Starstorm": ["Comet bomb", "Nova bomb", "Meteor radar", "Star radar"],
-        "Blast": ["Bomb", "Super bomb", "Bazooka", "Heavy bazooka"],
-        "Missile": ["Rocket", "Nitro rocket"]
+        "Special": ["Psycho bomb", "Mad psycho bomb", "Psywave emitter", "Psywave blaster", "Broken radio"],
+        "Flash": ["Smoke bomb", "Flashbang", "Flash pan", "Digital camera", "Broken camera"],
+        "Freeze": ["Ice bomb", "Dry ice bomb", "Frost ray", "Freeze ray", "Broken minifridge"],
+        "Fire": ["Fire bomb", "Napalm bomb", "Blowtorch", "Flamethrower", "Broken toaster"],
+        "Thunder": ["Electric bomb", "EMP bomb", "Shock coil", "Tesla coil", "Broken spring"],
+        "Starstorm": ["Comet bomb", "Nova bomb", "Meteor radar", "Star radar", "Broken radar"],
+        "Blast": ["Bomb", "Super bomb", "Bazooka", "Heavy bazooka", "Broken bazooka"],
+        "Missile": ["Rocket", "Nitro rocket", "Missile launcher", "Nitro launcher", "Broken vacuum"]
     }
 
     world.rocket_names = {
         "Special": ["????", "????", "????"],
         "Flash": ["????", "????", "????"],
-        "Freeze": ["????", "????", "????"],
+        "Freeze": ["Snowball", "Big snowball", "Wet snowball"], #?
         "Fire": ["Flare", "Big flare", "Blitz flare"],
         "Thunder": ["????", "????", "????"],
         "Starstorm": ["????", "?????", "????"],
         "Blast": ["Grenade", "Tactical grenade", "Fragment»grenade"],
         "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
-
-    }
-    
-    world.broken_names = {
-        "Special": "Broken radio",
-        "Flash": "Broken camera",
-        "Freeze": "Broken minifridge",
-        "Fire": "Broken toaster",
-        "Thunder": "Broken spring",
-        "Starstorm": "Broken GPS",
-        "Blast": "Broken bazooka",
-        "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
-    }
-
-    world.bazooka_names = {
-        "Thunder": ["Shock wire", "Tesla coil"],
-        "Missile": ["Missile launcher", "Super missile launcher"]
 
     }
 
@@ -186,6 +169,7 @@ def shuffle_psi(world):
         0x15668C, # Super Bomb
         0x156443, # Bazooka
         0x15646A, # Heavy bazooka
+        0x1551FB, #broken bazooka
 
         0x1565F0, # Bottle Rocket
         0x156616, # Big Bottle Rocket
@@ -194,14 +178,14 @@ def shuffle_psi(world):
     ]
 
     world.bomb_desc = {
-        "Special": [0x00EED4D8, 0x00EED521, 0x00EEDA4F, 0x00EEDA6B],
-        "Flash": [0x00EED538, 0x00EED5AB, 0x00EEDA87, 0x00EEDAD7],
-        "Fire": [0x00EED659, 0x00EED6CC],
-        "Freeze": [0x00EED744, 0x00EED79D],
-        "Thunder": [0x00EED822, 0x00EED88E],
-        "Starstorm": [0x00EED4D8, 0x00EED84E],
-        "Blast": [0x00C54EA7, 0x00C54EF7, 0x00C54AA1, 0x00C54AF5],
-        "Missile": [0x00EED9A5, 0x00EED9FF]
+        "Special": [0x00EED4D8, 0x00EED521, 0x00EEDA4F, 0x00EEDA6B, 0x00EEDCFB],
+        "Flash": [0x00EED538, 0x00EED5AB, 0x00EEDA87, 0x00EEDAD7, 0x00EEDD1D],
+        "Fire": [0x00EED659, 0x00EED6CC, 0x00EEDB37, 0x00EEDB68, 0x00EEDD40],
+        "Freeze": [0x00EED744, 0x00EED79D, 0x00EEDB85, 0x00EEDBA2, 0x00EEDD64],
+        "Thunder": [0x00EED822, 0x00EED88E, 0x00EEDBBF, 0x00EEDBE4, 0x00EEDDA0],
+        "Starstorm": [0x00EED4D8, 0x00EED521, 0x00EEDA4F, 0x00EEDCD2, 0x00EEDDC3],
+        "Blast": [0x00C54EA7, 0x00C54EF7, 0x00C54AA1, 0x00C54AF5, 0x00C53908],
+        "Missile": [0x00EED9A5, 0x00EED9FF, 0x00EEDC09, 0x00EEDC40, 0x00EEDDEE]
     }
 
     world.rocket_desc = {
@@ -216,15 +200,13 @@ def shuffle_psi(world):
     }
 
     world.jeff_item_counts = [
-        4, #Bomb
+        5, #Bomb
         3 #Bottle Rocket
     ]
 
     world.jeff_item_names = [
         world.bomb_names,
         world.rocket_names,
-        world.broken_names,
-        world.bazooka_names,
         #world.gadget_names
     ]
 
