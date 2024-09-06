@@ -134,9 +134,9 @@ def shuffle_psi(world):
     world.rocket_names = {
         "Special": ["????", "????", "????"],
         "Flash": ["????", "????", "????"],
-        "Freeze": ["Snowball", "Big snowball", "Wet snowball"], #?
+        "Freeze": ["LN2 bottle", "LN2 jug", "LN2 bucket"],
         "Fire": ["Flare", "Big flare", "Blitz flare"],
-        "Thunder": ["????", "????", "????"],
+        "Thunder": ["Sparkler", "Big sparkler", "Mega sparkler"],
         "Starstorm": ["????", "?????", "????"],
         "Blast": ["Grenade", "Tactical grenade", "Fragment»grenade"],
         "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
@@ -172,7 +172,7 @@ def shuffle_psi(world):
         0x1551FB, #broken bazooka
 
         0x1565F0, # Bottle Rocket
-        0x156616, # Big Bottle Rocket
+        0x156617, # Big Bottle Rocket
         0x15663E # multi Bottle Rocket
 
     ]
@@ -189,14 +189,14 @@ def shuffle_psi(world):
     }
 
     world.rocket_desc = {
-        "Special": [0x00000000, 0x00000000, 0x00000000],
-        "Flash": [0x00000000, 0x00000000],
-        "Fire": [0x00000000, 0x00000000],
-        "Freeze": [0x00000000, 0x00000000],
-        "Thunder": [0x00000000, 0x00000000],
-        "Starstorm": [0x00000000, 0x00000000],
-        "Blast": [0x00000000, 0x00000000, 0x00000000],
-        "Missile": [0x00C54E01, 0x00000000]
+        "Special": [0x00EEDE25, 0x00EEDE41, 0x00EEDE80],
+        "Flash": [0x00EEDEDC, 0x00EEDF37, 0x00EEDFAE],
+        "Fire": [0x00EEE013, 0x00EEE031, 0x00EEE061],
+        "Freeze": [0x00EEE098, 0x00EEE0B5, 0x00EEE11E],
+        "Thunder": [0x00EEE190, 0x00EEE1B6, 0x00EEE220],
+        "Starstorm": [0x00EEE28B, 0x00EEE2A7, 0x00EEE2DB],
+        "Blast": [0x00EEE344, 0x00EEE35B, 0x00EEE36E],
+        "Missile": [0x00C54E01, 0x00C54E20, 0x00C54E54]
     }
 
     world.jeff_item_counts = [
