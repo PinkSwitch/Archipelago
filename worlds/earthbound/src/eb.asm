@@ -6995,10 +6995,10 @@ db $03, $00, $08, $ab, $6d, $c5, $ff, $13, $02;Starstorm MBR
 db $01, $50, $6c, $1c, $05, $90, $6e, $03, $00, $08, $b7, $6d, $c5, $00, $08, $c5
 db $6d, $c5, $ff, $0a, $b5, $4e, $c5;Bomb BR
 
-db $01, $50, $6c, $1c, $05, $90, $6e, $03, $00, $08, $b7, $6d, $c5, $00, $0a, $00
+db $01, $50, $6c, $1c, $05, $91, $6e, $03, $00, $08, $b7, $6d, $c5, $00, $0a, $00
 db $4f, $c5;Bomb BBR
 
-db $01, $50, $6c, $1c, $05, $90, $6e, $03, $00, $08, $b7, $6d, $c5, $00, $70, $75
+db $01, $50, $6c, $1c, $05, $92, $6e, $03, $00, $08, $b7, $6d, $c5, $00, $70, $75
 db $9e, $97, $a5, $9c, $96, $a3, $50, $91, $9e, $50, $95, $9e, $95, $9d, $a9, $50
 db $99, $9e, $50, $91, $50, $9d, $91, $a3, $a3, $99, $a6, $95, $50, $95, $a8, $a0
 db $9c, $9f, $a3, $99, $9f, $9e, $5e, $03, $00, $70, $84, $98, $95, $50, $92, $9c
@@ -7685,6 +7685,209 @@ db $00, $01, $03, $64
 dd $00EF8543;Missile omega
 dd missile_omega
 ;;;;;;;;;;;;;;;;;
+;01ac
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29556
+
+;01AD
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29568
+
+;flash bomb
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29987
+
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c299ef
+
+;fire bomb
+db $00, $03, $04, $00
+dd $00c97eb7
+dd $00c295ab
+
+db $00, $03, $04, $00
+dd $00c97eb7
+dd $00c295bd
+;freeze bomb
+db $00, $01, $04, $00
+dd $00c97eb7
+dd $00c29647
+
+db $00, $01, $04, $00
+dd $00c97eb7
+dd $00c29659
+;thunder bomb
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29871
+
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29889
+;Starstorm bomb
+db $00, $04, $04, $00
+dd $00c97eb7
+dd starstorm_delta
+
+db $00, $04, $04, $00
+dd $00c97eb7
+dd $00c29aa6
+;Missile bomb
+db $00, $01, $04, $00
+dd $00c97eb7
+dd $00c2a5d1
+
+db $00, $01, $04, $00
+dd $00c97eb7
+dd $00c2a5da
+;;;;;;;;;;;;
+;Special missile
+db $00, $04, $04, $00
+dd $00c97ddc
+dd $00c29556
+
+db $00, $04, $04, $00
+dd $00c97df5
+dd $00c2955f
+
+db $00, $04, $04, $00
+dd $00c97e24
+dd $00c29571
+;Flash missile
+db $00, $04, $04, $00
+dd $00c97ddc
+dd $00c29987
+
+db $00, $04, $04, $00
+dd $00c97df5
+dd $00c299ae
+
+db $00, $04, $04, $00
+dd $00c97e24
+dd $00c29a35
+;Fire missile
+db $00, $03, $04, $00
+dd $00c97ddc
+dd $00c295ab
+
+db $00, $03, $04, $00
+dd $00c97df5
+dd $00c295b4
+
+db $00, $03, $04, $00
+dd $00c97e24
+dd $00c295c6
+;freeze missile
+db $00, $01, $04, $00
+dd $00c97ddc
+dd $00c29647
+
+db $00, $01, $04, $00
+dd $00c97df5
+dd $00c29650
+
+db $00, $01, $04, $00
+dd $00c97e24
+dd $00c29662
+;thunder missile
+db $00, $04, $04, $00
+dd $00c97ddc
+dd $00c29871
+
+db $00, $04, $04, $00
+dd $00c97df5
+dd $00c2987d
+
+db $00, $04, $04, $00
+dd $00c97e24
+dd $00c29895
+;Star missile
+db $00, $04, $04, $00
+dd $00c97ddc
+dd starstorm_delta
+
+db $00, $04, $04, $00
+dd $00c97df5
+dd starstorm_lambda
+
+db $00, $04, $04, $00
+dd $00c29aaf
+dd $00c29aaf
+;Bomb missile
+db $00, $01, $04, $00
+dd $00c97ddc
+dd $00c2a818
+
+db $00, $01, $04, $00
+dd $00c97df5
+dd blast_beta
+
+db $00, $01, $04, $00
+dd $00c97e24
+dd blast_omega
+;;;;;;;;;;;;;;;;;;;;;;
+;bazookas
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c29556
+
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c29568
+
+;flash bomb
+db $00, $04, $04, $00
+dd $00cc97e9e
+dd $00c29987
+
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c299ef
+
+;fire bomb
+db $00, $03, $04, $00
+dd $00c97e9e
+dd $00c295ab
+
+db $00, $03, $04, $00
+dd $00c97e9e
+dd $00c295bd
+;freeze bomb
+db $00, $01, $04, $00
+dd $00c97e9e
+dd $00c29647
+
+db $00, $01, $04, $00
+dd $00c97e9e
+dd $00c29659
+;thunder bomb
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c29871
+
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c29889
+;Starstorm bomb
+db $00, $04, $04, $00
+dd $00c97e9e
+dd starstorm_delta
+
+db $00, $04, $04, $00
+dd $00c97e9e
+dd $00c29aa6
+;Missile bomb
+db $00, $01, $04, $00
+dd $00c97e9e
+dd $00c2a5d1
+
+db $00, $01, $04, $00
+dd $00c97e9e
+dd $00c2a5da
 
 
 

@@ -90,14 +90,10 @@ def shuffle_psi(world):
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Blast
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Missile
     ]
-    world.psi_action_data = [
-        [[0x0A, 0x00], [0x0B, 0x00], [0x0C, 0x00], [0x0D, 0x00]], #Special
-        [[0x1A, 0x00], [0x1B, 0x00], [0x1C, 0x00], [0x1D, 0x00]], #Flash
-        [[0x0E, 0x00], [0x0F, 0x00], [0x10, 0x00], [0x11, 0x00]], #Fire
-        [[0x12, 0x00], [0x13, 0x00], [0x14, 0x00], [0x15, 0x00]], #Freeze
-        [[0x16, 0x00], [0x17, 0x00], [0x18, 0x00], [0x19, 0x00]], #Thunder
-        [[0x6F, 0x01], [0x70, 0x01], [0x1E, 0x00], [0x1F, 0x00]] #Starstorm
-    ]
+    world.attack_data = {
+        "Special": [0x00C29556, 0x00C2955F],
+
+    }
     world.psi_level_data = [
         [[0x08, 0x00, 0x00], [0x16, 0x00, 0x00], [0x31, 0x00, 0x00], [0x4B, 0x00, 0x00]], #Special
         [[0x12, 0x00, 0x00], [0x26, 0x00, 0x00], [0x3D, 0x00, 0x00], [0x43, 0x00, 0x00]], #Flash
@@ -137,8 +133,8 @@ def shuffle_psi(world):
         "Freeze": ["LN2 bottle", "LN2 jug", "LN2 bucket"],
         "Fire": ["Flare", "Big flare", "Blitz flare"],
         "Thunder": ["Sparkler", "Big sparkler", "Mega sparkler"],
-        "Starstorm": ["????", "?????", "????"],
-        "Blast": ["Grenade", "Tactical grenade", "Fragment»grenade"],
+        "Starstorm": ["Meteor missile", "Star missile", "Nova missile"],
+        "Blast": ["Firecracker", "Big firecracker", "Super firecracker"],
         "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
 
     }
@@ -199,6 +195,28 @@ def shuffle_psi(world):
         "Missile": [0x00C54E01, 0x00C54E20, 0x00C54E54]
     }
 
+    world.bomb_actions = {
+        "Special": [0x01AC, 0x01AD, 0x01CF, 0x01D0],
+        "Flash": [0x01AE, 0x01AF, 0x01D1, 0x01D2],
+        "Fire": [0x01B0, 0x01B1, 0x01D3, 0x01D4],
+        "Freeze": [0x01B2, 0x01B3, 0x01D5, 0x01D6],
+        "Thunder": [0x01B4, 0x01B5, 0x01D7, 0x01D8],
+        "Starstorm": [0x01B6, 0x01B7, 0x01D9, 0x01DA],
+        "Blast": [0x00A7, 0x00A8, 0x0136, 0x0137],
+        "Missile": [0x01B8, 0x01B9, 0x01DB, 0x01DC]
+    }
+
+    world.missile_actions = {
+        "Special": [0x01BA, 0x01BB, 0x01BC],
+        "Flash": [0x01BD, 0x01BE, 0x01BF],
+        "Fire": [0x01C0, 0x01C1, 0x01C2],
+        "Freeze": [0x01C3, 0x01C4, 0x01C5],
+        "Thunder": [0x01C6, 0x01C7, 0x01C8],
+        "Starstorm": [0x01C9, 0x01CA, 0x01CB],
+        "Blast": [0x01CC, 0x01CD, 0x01CE],
+        "Missile": [0x00A3, 0x00A4, 0x00A5]
+    }
+
     world.jeff_item_counts = [
         5, #Bomb
         3 #Bottle Rocket
@@ -213,6 +231,11 @@ def shuffle_psi(world):
     world.jeff_help_text = [
         world.bomb_desc,
         world.rocket_desc
+    ]
+
+    world.attack_types = [
+        world.bomb_actions,
+        world.missile_actions
     ]
 
 
@@ -251,9 +274,12 @@ def write_psi(world, rom):
             address = world.jeff_addresses[jeff_item_index]
             jeff_item_index += 1
             name = world.jeff_item_names[jeff_item_num][item][i]
-            name = text_encoder(name, eb_text_table, 22)
-            name.extend(([0x00]))
+            name_encoded = text_encoder(name, eb_text_table, 22)
+            name_encoded.extend(([0x00]))
             description = world.jeff_help_text[jeff_item_num][item][i]
-            rom.write_bytes(address, name)
+            rom.write_bytes(address, name_encoded)
             rom.write_bytes(address + 35, struct.pack("I", description))
+            if "Broken" not in name: #broken items don't need attack data
+                attack = world.attack_types[jeff_item_num][item][i]
+                rom.write_bytes(address + 29, struct.pack("H", attack))
         jeff_item_num += 1
