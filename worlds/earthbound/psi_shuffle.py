@@ -253,20 +253,22 @@ def shuffle_psi(world):
         0x1565F0, # Bottle Rocket
         0x156617, # Big Bottle Rocket
         0x15663E, # multi Bottle Rocket
+    ]
 
-        0x156887, # defense spray
-        0x1567EB, # defense shower
+    world.gadget_addresses = [
+        [0, 0x1567EB], # defense shower
+        [0x156491, 0x1564B8], # HP-Sucker
+        [0x1563F5], #Counter-PSI Unit
+        [0x156506], #Slime Generator
+        [0x15641C, 0x156DB5], #Shield Killer
+    ]
 
-        0x156491, # HP-Sucker
-        0x15646A, #Hungry HP-Sucker
-        
-        0x1563F5, #Counter-PSI Unit
-
-        0x156506, #Slime Generator
-
-        0x15641C, #Shield Killer
-        0x156BD5 #Neutralizer
-
+    world.broken_gadget_addresses = [
+        0x155222,
+        0x1551D4,
+        0x15509C,
+        0x15515F,
+        0x155186
     ]
 
     world.bomb_desc = {
@@ -366,13 +368,19 @@ def shuffle_psi(world):
     ]
 
     world.gadget_ids = [
-        0x9D,
-        0x87,
-        0x88,
-        0x83,
-        0x8A,
-        0x84,
-        0xC3
+        [0x00, 0x9D],
+        [0x87, 0x88],
+        [0x83],
+        [0x8A],
+        [0x84, 0xC3]
+    ]
+
+    world.broken_gadget_ids = [
+        0x0E, #Broken trumpet
+        0x0C, #Broken tube
+        0x04, #Broken machine
+        0x09, #Broken iron
+        0x0A #Broken pipe
     ]
 
     world.jeff_item_names = [
@@ -444,22 +452,36 @@ def write_psi(world, rom):
     rom.write_bytes(address + 35, struct.pack("I", description))
     rom.write_bytes(address + 29, struct.pack("H", action))
 
+    print(world.jeff_assist_items)
     for item in world.jeff_assist_items:
         for i in range(world.gadget_counts[jeff_item_num]):
             if jeff_item_num == 0:
                 i = 1
             name = world.gadget_names[item][i]
+            name_encoded = text_encoder(name, eb_text_table, 22)
+            name_encoded.extend(([0x00]))
             description = world.gadget_desc[item][i]
             action = world.gadget_actions[world.jeff_assist_items[jeff_item_num]][i]
+            address = world.gadget_addresses[jeff_item_num][i]
             rom.write_bytes(address, name_encoded)
             rom.write_bytes(address + 35, struct.pack("I", description))
             rom.write_bytes(address + 29, struct.pack("H", action))
-            rom.write_bytes(description - 0xC00000 + 5, bytearray([world.gadget_ids[jeff_item_num]]))
-
-            name = world.broken_gadgets[item][i]
-            description = world.broken_desc[item][i]
-            #rom.write_bytes(address, name_encoded)
-            #rom.write_bytes(address + 35, struct.pack("I", description))
-            #rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[jeff_item_num]]))
+            #print(f"Writing {hex(address)} item {name} id number {world.gadget_ids[jeff_item_num]}")
+            rom.write_bytes(description - 0xC00000 + 5, bytearray([world.gadget_ids[jeff_item_num][i]]))
         jeff_item_num += 1
-        #todo, broken items after this part
+
+    for i in range(5):
+        item = world.jeff_assist_items[i]
+        if i == 0:
+            level = 1
+        else:
+            level = 0
+        address = world.broken_gadget_addresses[i]
+        name = world.broken_gadgets[item][level]
+        description = world.broken_desc[item][level]
+        name_encoded = text_encoder(name, eb_text_table, 22)
+        name_encoded.extend(([0x00]))
+        rom.write_bytes(address, name_encoded)
+        rom.write_bytes(address + 35, struct.pack("I", description))
+        rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[i]]))
+        
