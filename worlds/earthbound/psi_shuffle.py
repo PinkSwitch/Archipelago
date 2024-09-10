@@ -18,16 +18,24 @@ def shuffle_psi(world):
         "Paralysis",
         "Offense Up",
         "Defense Down",
-        "Brainshock"
+        "Brainshock",
+        "Defense up",
+        "Drain",
+        "Disable",
+        "Stop",
+        "Neutralize"
     ]
 
     world.shield_slots = [
         "Shield",
         "PSI Shield"
     ]
-    #Can I shuffle shield with regular assists?
+
 
     world.jeff_offense_items = []
+    world.jeff_assist_items = []
+    world.test = []
+    world.test2 = []
 
     world.psi_address = {
         "Special": [0x158A5F, 4],
@@ -48,27 +56,43 @@ def shuffle_psi(world):
 
         "Blast": [0x35041A, 4],
         "Missile": [0x350456, 4],
+
+        "Defense up": [0x350492, 2],
+        "Drain": [0x3504B0, 2],
+        "Disable": [0x3504Ce, 2],
+        "Stop": [0x3504EC, 2],
+        "Neutralize": [0x35050A, 2],
     }
 
     if world.options.psi_shuffle:
         world.random.shuffle(world.offensive_psi_slots)
+        world.random.shuffle(world.assist_psi_slots)
 
         if world.options.psi_shuffle == 2:
             world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
+            #world.jeff_offense_items.extend(world.assist_psi_slots[-5:])
+            world.jeff_assist_items.extend(world.assist_psi_slots[-5:])
+            world.test2.extend(world.offensive_psi_slots[-2:])
             world.offensive_psi_slots = world.offensive_psi_slots[:-2]
+            world.test.extend(world.assist_psi_slots[-5:])
+            world.assist_psi_slots = world.assist_psi_slots[:-5]
         else:
             world.jeff_offense_items.extend(["Blast", "Missile"])
+            world.jeff_assist_items.extend(["Defense Up", "Drain", "Disable", "Stop", "Neutralize"])
 
-        world.random.shuffle(world.assist_psi_slots)
         world.random.shuffle(world.shield_slots)
 
         shield_data = {key: world.psi_address[key] for key in world.shield_slots}
         assist_data = {key: world.psi_address[key] for key in world.assist_psi_slots}
+        assist_data_plus = {key: world.psi_address[key] for key in world.test}
+        offense_data_plus = {key: world.psi_address[key] for key in world.test2}
+
+
         world.psi_address = {key: world.psi_address[key] for key in world.offensive_psi_slots}
         world.psi_address.update(shield_data)
         world.psi_address.update(assist_data)
-        print(world.offensive_psi_slots)
-        print(world.jeff_offense_items)
+        world.psi_address.update(offense_data_plus)
+        world.psi_address.update(assist_data_plus)
 
     world.psi_slot_data = [
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Special
@@ -89,11 +113,14 @@ def shuffle_psi(world):
 
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Blast
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Missile
-    ]
-    world.attack_data = {
-        "Special": [0x00C29556, 0x00C2955F],
 
-    }
+        [[0x09, 0x01], [0x0B, 0x01]], # Defense up
+        [[0x09, 0x02], [0x0B, 0x02]], # Drain
+        [[0x09, 0x01], [0x0B, 0x01]], # Disable
+        [[0x09, 0x02], [0x0B, 0x02]], # Stop
+        [[0x09, 0x01], [0x0B, 0x01]], # Neutralize
+    ]
+
     world.psi_level_data = [
         [[0x08, 0x00, 0x00], [0x16, 0x00, 0x00], [0x31, 0x00, 0x00], [0x4B, 0x00, 0x00]], #Special
         [[0x12, 0x00, 0x00], [0x26, 0x00, 0x00], [0x3D, 0x00, 0x00], [0x43, 0x00, 0x00]], #Flash
@@ -113,6 +140,12 @@ def shuffle_psi(world):
 
         [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Blast
         [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Missile
+
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Defense up
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Drain
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Disable
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Stop
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00]]  # Neutralize
         
     ]
 
@@ -128,15 +161,65 @@ def shuffle_psi(world):
     }
 
     world.rocket_names = {
-        "Special": ["????", "????", "????"],
-        "Flash": ["????", "????", "????"],
+        "Special": ["Psionic shard", "Psionic orb", "Psionic crystal"],
+        "Flash": ["Flashbulb", "Bright bulb", "Magna bulb"],
         "Freeze": ["LN2 bottle", "LN2 jug", "LN2 bucket"],
         "Fire": ["Flare", "Big flare", "Blitz flare"],
         "Thunder": ["Sparkler", "Big sparkler", "Mega sparkler"],
         "Starstorm": ["Meteor missile", "Star missile", "Nova missile"],
         "Blast": ["Firecracker", "Big firecracker", "Super firecracker"],
         "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
+    }
 
+    world.spray_names = {
+        "Hypnosis": "Chloroform spray",
+        "Paralysis": "Nerve spray",
+        "Offense Up": "Offense spray",
+        "Defense Down": "Weakness spray",
+        "Brainshock": "Confusion spray",
+        "Defense up": "Defense spray",
+        "Drain": "HP-straw",
+        "Disable": "Distraction spray",
+        "Stop": "Slime spray",
+        "Neutralize": "Shield-off spray"
+    }
+    world.broken_gadgets = {
+        "Hypnosis": ["Broken watch", "Broken screen"],
+        "Paralysis": ["Broken razor", "Broken fan"],
+        "Offense Up": ["Broken faucet", "Broken tuba"],
+        "Defense Down": ["Broken sprinkler", "Broken trombone"],
+        "Brainshock": ["Broken microwave", "Broken fryer"],
+        "Defense up": ["Broken nozzle", "Broken trumpet"],
+        "Drain": ["Broken hose", "Broken tube"],
+        "Disable": ["Broken machine", "Broken device"],
+        "Stop": ["Broken iron", "Broken steamer"],
+        "Neutralize": ["Broken pipe", "Broken motherboard"]
+    }
+
+    world.broken_desc = {
+        "Hypnosis": [0x00EEEBA4, 0x00EEEBCC],
+        "Paralysis": [0x00EEEC06, 0x00EEEC28],
+        "Offense Up": [0x00EEEC4D, 0x00EEEC75],
+        "Defense Down": [0x00EEECA5, 0x00EEECCB],
+        "Brainshock": [0x00EEED00, 0x00EEED2B],
+        "Defense up": [0x00EEED5A, 0x00C53929],
+        "Drain": [0x00EEED8A, 0x00C538E0],
+        "Disable": [0x00C53772, 0x00EEEDB2],
+        "Stop": [0x00C53870, 0x00EEEE03],
+        "Neutralize": [0x00C53897, 0x00EEEE2F]
+    }
+
+    world.gadget_names = {
+        "Hypnosis": ["Hypno pendulum", "Hypno screen"],
+        "Paralysis": ["Nerve taser", "Nerve ray"],
+        "Offense Up": ["Offense mist", "Offense shower"],
+        "Defense Down": ["Weakness mist", "Weakness shower"],
+        "Brainshock": ["Mind jammer", "Mind fryer"],
+        "Defense up": ["Defense mist", "Defense shower"],
+        "Drain": ["HP-sucker", "Hungry HP-sucker"],
+        "Disable": ["Counter-PSI unit", "PSI-nullifier unit"],
+        "Stop": ["Slime generator", "Slime blaster"],
+        "Neutralize": ["Shield killer", "Neutralizer"]
     }
 
     world.starstorm_address = {
@@ -169,7 +252,20 @@ def shuffle_psi(world):
 
         0x1565F0, # Bottle Rocket
         0x156617, # Big Bottle Rocket
-        0x15663E # multi Bottle Rocket
+        0x15663E, # multi Bottle Rocket
+
+        0x156887, # defense spray
+        0x1567EB, # defense shower
+
+        0x156491, # HP-Sucker
+        0x15646A, #Hungry HP-Sucker
+        
+        0x1563F5, #Counter-PSI Unit
+
+        0x156506, #Slime Generator
+
+        0x15641C, #Shield Killer
+        0x156BD5 #Neutralizer
 
     ]
 
@@ -195,6 +291,32 @@ def shuffle_psi(world):
         "Missile": [0x00C54E01, 0x00C54E20, 0x00C54E54]
     }
 
+    world.spray_desc = {
+        "Hypnosis": 0x00EEE653,
+        "Paralysis": 0x00EEE688,
+        "Offense Up": 0x00EEE6B9,
+        "Defense Down": 0x00EEE705,
+        "Brainshock": 0x00EEE751,
+        "Defense up": 0x00C2558D,
+        "Drain": 0x00EEE802,
+        "Disable": 0x00EEE838,
+        "Stop": 0x00EEE7D0,
+        "Neutralize": 0x00EEE78F
+    }
+
+    world.gadget_desc = {
+        "Hypnosis": [0x00EEE87B, 0x00EEE8AA],
+        "Paralysis": [0x00EEE8DA, 0x00EEE905],
+        "Offense Up": [0x00EEE933, 0x00EEE97F],
+        "Defense Down": [0x00EEE9C2, 0x00EEEA0E],
+        "Brainshock": [0x00EEEA9D, 0x00EEEAD2],
+        "Defense up": [0x00EEEA51, 0x00C5519F],
+        "Drain": [0x00C54B67, 0x00C54BB0],
+        "Disable": [0x00C54A3A, 0x00EEEB5E],
+        "Stop": [0x00C54C32, 0x00EEEB09],
+        "Neutralize": [0x00C54A6C, 0x00C559D9]
+    }
+
     world.bomb_actions = {
         "Special": [0x01AC, 0x01AD, 0x01CF, 0x01D0],
         "Flash": [0x01AE, 0x01AF, 0x01D1, 0x01D2],
@@ -217,15 +339,45 @@ def shuffle_psi(world):
         "Missile": [0x00A3, 0x00A4, 0x00A5]
     }
 
+    world.gadget_actions = {
+        "Hypnosis": [0x0000, 0x0000],
+        "Paralysis": [0x0000, 0x0000],
+        "Offense Up": [0x0000, 0x0000],
+        "Defense Down": [0x0000, 0x0000],
+        "Brainshock": [0x0000, 0x0000],
+        "Defense up": [0x00B7, 0x00B8],
+        "Drain": [0x00A1, 0x00B0],
+        "Disable": [0x009F, 0x0000],
+        "Stop": [0x00A9, 0x0000],
+        "Neutralize": [0x00A0, 0x00F7]   
+    }
+
     world.jeff_item_counts = [
         5, #Bomb
         3 #Bottle Rocket
     ]
 
+    world.gadget_counts = [
+        1, #defense shower
+        2, #HP-Sucker
+        1, #Counter PSI unit
+        1, #Slime generator
+        2 #Neutralizer
+    ]
+
+    world.gadget_ids = [
+        0x9D,
+        0x87,
+        0x88,
+        0x83,
+        0x8A,
+        0x84,
+        0xC3
+    ]
+
     world.jeff_item_names = [
         world.bomb_names,
-        world.rocket_names,
-        #world.gadget_names
+        world.rocket_names
     ]
 
     world.jeff_help_text = [
@@ -263,8 +415,6 @@ def write_psi(world, rom):
     #todo; expanded psi
     #todo; animation for Starstorm L/D
     #todo; swap enemy actions for Special?
-    #todo; item-based prices?
-    #Should starstorm bomb do an early tier and follow the struct instead of alpha/omega?
         psi_num += 1
 
     jeff_item_num = 0
@@ -274,12 +424,42 @@ def write_psi(world, rom):
             address = world.jeff_addresses[jeff_item_index]
             jeff_item_index += 1
             name = world.jeff_item_names[jeff_item_num][item][i]
+            description = world.jeff_help_text[jeff_item_num][item][i]
             name_encoded = text_encoder(name, eb_text_table, 22)
             name_encoded.extend(([0x00]))
-            description = world.jeff_help_text[jeff_item_num][item][i]
             rom.write_bytes(address, name_encoded)
             rom.write_bytes(address + 35, struct.pack("I", description))
             if "Broken" not in name: #broken items don't need attack data
                 attack = world.attack_types[jeff_item_num][item][i]
                 rom.write_bytes(address + 29, struct.pack("H", attack))
         jeff_item_num += 1
+    jeff_item_num = 0
+    name = world.spray_names[world.jeff_assist_items[0]]
+    name_encoded = text_encoder(name, eb_text_table, 22)
+    name_encoded.extend(([0x00]))
+    description = world.spray_desc[world.jeff_assist_items[0]]
+    address = 0x156887
+    action = world.gadget_actions[world.jeff_assist_items[0]][0]
+    rom.write_bytes(address, name_encoded)
+    rom.write_bytes(address + 35, struct.pack("I", description))
+    rom.write_bytes(address + 29, struct.pack("H", action))
+
+    for item in world.jeff_assist_items:
+        for i in range(world.gadget_counts[jeff_item_num]):
+            if jeff_item_num == 0:
+                i = 1
+            name = world.gadget_names[item][i]
+            description = world.gadget_desc[item][i]
+            action = world.gadget_actions[world.jeff_assist_items[jeff_item_num]][i]
+            rom.write_bytes(address, name_encoded)
+            rom.write_bytes(address + 35, struct.pack("I", description))
+            rom.write_bytes(address + 29, struct.pack("H", action))
+            rom.write_bytes(description - 0xC00000 + 5, bytearray([world.gadget_ids[jeff_item_num]]))
+
+            name = world.broken_gadgets[item][i]
+            description = world.broken_desc[item][i]
+            #rom.write_bytes(address, name_encoded)
+            #rom.write_bytes(address + 35, struct.pack("I", description))
+            #rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[jeff_item_num]]))
+        jeff_item_num += 1
+        #todo, broken items after this part

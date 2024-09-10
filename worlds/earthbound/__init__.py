@@ -288,6 +288,7 @@ class EarthBoundWorld(World):
         return pool
 
     def generate_output(self, output_directory: str):
+        self.world_version = "2.1"
         try:
             patch = EBProcPatch()
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))

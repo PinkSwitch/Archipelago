@@ -401,7 +401,8 @@ def patch_rom(world, rom, player: int, multiworld):
             #if location.item.name == "Paula" and location.item.player == world.player:
                 #print(location.name)
 
-    write_psi(world, rom)
+    if world.options.psi_shuffle:
+        write_psi(world, rom)
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, eb_text_table, 23)
@@ -409,6 +410,8 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x17FCD0, world.starting_money)
     rom.write_bytes(0x17FCE0, world.prayer_player)
     rom.write_bytes(0x155027, world.badge_name)
+    rom.write_bytes(0x3FF0A0, world.world_version.encode("ascii"))
+
 
     for element in world.franklinbadge_elements:
         for address in protection_checks[element]:
@@ -425,7 +428,6 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x00FFC0, rom.name)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
-
 
 class EBProcPatch(APProcedurePatch, APTokenMixin):
     hash = valid_hashes
@@ -455,6 +457,17 @@ class EBPatchExtensions(APPatchExtension):
     @staticmethod
     def repoint_vanilla_tables(caller: APProcedurePatch, rom: LocalRom) -> bytes:
         rom = LocalRom(rom)
+        version_check = rom.read_bytes(0x3FF0A0, 16)
+        version_check = version_check.split(b'\x00', 1)[0]
+        version_check_str = version_check.decode("ascii")
+        client_version = "2.1"
+        if client_version != version_check_str and version_check_str != "":
+            raise Exception(f"Error! Patch generated on EarthBound APWorld version {version_check_str} doesn't match client version {client_version}! " +
+                            f"Please use EarthBound APWorld version {version_check_str} for patching.")
+        elif version_check_str == "":
+            raise Exception(f"Error! Patch generated on old EarthBound APWorld version, doesn't match client version {client_version}! "  +
+                            f"Please verify you are using the same APWorld as the generator.")
+
         for action_number in range(0x013F):
             current_action = rom.read_bytes(0x157B68 + (12 * action_number), 12)
             rom.write_bytes(0x3FAFB0 + (12 * action_number), current_action)
