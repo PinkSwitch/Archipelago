@@ -81,6 +81,7 @@ class EarthBoundWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.event_count = 8
+        self.world_version = "2.1"
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
@@ -293,7 +294,6 @@ class EarthBoundWorld(World):
         return pool
 
     def generate_output(self, output_directory: str):
-        self.world_version = "2.1"
         try:
             patch = EBProcPatch()
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))

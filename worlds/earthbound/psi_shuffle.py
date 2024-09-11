@@ -63,16 +63,28 @@ def shuffle_psi(world):
 
     if world.options.psi_shuffle:
         world.random.shuffle(world.offensive_psi_slots)
+
+        if not world.options.allow_flash_as_favorite_thing:
+            if world.offensive_psi_slots[0] == "Flash":
+                adjust_psi_list(world.offensive_psi_slots, "Flash", world.random.randint(1,5))
+
         world.random.shuffle(world.assist_psi_slots)
 
-        if world.options.psi_shuffle == 2:
-            world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
-            world.jeff_assist_items.extend(world.assist_psi_slots[-5:])
-            world.offensive_psi_slots = world.offensive_psi_slots[:-2]
-            world.assist_psi_slots = world.assist_psi_slots[:-5]
-        else:
-            world.jeff_offense_items.extend(["Blast", "Missile"])
-            world.jeff_assist_items.extend(["Defense Up", "Drain", "Disable", "Stop", "Neutralize"])
+        if world.options.psi_shuffle != 2:
+            adjust_psi_list(world.offensive_psi_slots, "Blast", 7)
+            adjust_psi_list(world.offensive_psi_slots, "Missile", 7)
+
+            adjust_psi_list(world.assist_psi_slots, "Defense up", 10)
+            adjust_psi_list(world.assist_psi_slots, "Drain", 10)
+            adjust_psi_list(world.assist_psi_slots, "Disable", 10)
+            adjust_psi_list(world.assist_psi_slots, "Stop", 10)
+            adjust_psi_list(world.assist_psi_slots, "Neutralize", 10)
+
+
+        world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
+        world.jeff_assist_items.extend(world.assist_psi_slots[-5:])
+        world.offensive_psi_slots = world.offensive_psi_slots[:-2]
+        world.assist_psi_slots = world.assist_psi_slots[:-5]
 
         world.random.shuffle(world.shield_slots)
 
@@ -491,4 +503,6 @@ def write_psi(world, rom):
     rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3])))
 
     rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1])))
-        
+
+def adjust_psi_list(psi_input, spell, index):
+    psi_input.insert(index, (psi_input.pop(psi_input.index(spell))))

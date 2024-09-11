@@ -93,6 +93,11 @@ class PSIShuffle(Choice):
     option_basic = 1
     option_extended = 2
 
+class BanFlashFavorite(Toggle):
+    """If enabled, allows PSI Flash to be shuffled onto the Favorite Thing PSI slot. Can be quite annoying early-game. 
+       Does nothing if PSI Shuffle is set to None."""
+    display_name = "Flash as Favorite"
+
 
 class PreFixItems(Toggle):
     """If enabled, broken items in the multiworld pool will be replaced with their fixed versions.
@@ -223,6 +228,7 @@ class EBOptions(PerGameCommonOptions):
     shuffle_teleports: TeleportShuffle# Better name?
     character_shuffle: CharacterShuffle
     psi_shuffle: PSIShuffle
+    allow_flash_as_favorite_thing: BanFlashFavorite
     #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
