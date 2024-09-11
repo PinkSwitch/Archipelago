@@ -482,4 +482,19 @@ def write_psi(world, rom):
         rom.write_bytes(address, name_encoded)
         rom.write_bytes(address + 35, struct.pack("I", description))
         rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[i]]))
+
+    rom.write_bytes(0x15A8E7, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1]))) #Whirling Robo
+    rom.write_bytes(0x15BB45, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[0]][0]))) # Boogey Tent (1)
+    rom.write_bytes(0x15BBA5, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0]))) # Squatter Demon
+    rom.write_bytes(0x15DF41, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0]))) # Electro Specter (2)
+    rom.write_bytes(0x15DF3F, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1]))) # Electro Specter (2)
+    rom.write_bytes(0x15BA2B, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][0]))) # Fobby
+    rom.write_bytes(0x15C06D, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][1]))) # Eelectro Specter (1)
+
+    rom.write_bytes(0x15C009, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
+    rom.write_bytes(0x15C00B, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
+    rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
+    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3]))) # Care Free Bomb
+
+    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1]))) # Sentry Robot
         

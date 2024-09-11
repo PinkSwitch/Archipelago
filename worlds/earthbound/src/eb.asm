@@ -8166,11 +8166,12 @@ dd paralysis_omega_item_anim
 dd $00c29f57
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;TODO: MAKE NEW ITEM ANIM CODES FOR THE EXTENDED ASSISTS
-db $00, $01, $04, $00
+;Offense Up
+db $01, $01, $04, $00
 dd $00ef8e27
 dd $00c29e38
 
-db $00, $04, $04, $00
+db $01, $04, $04, $00
 dd $00ef8e27
 dd $00c29e7f
 ;;;;;;;;;;;;;;;;;;;;;;;
