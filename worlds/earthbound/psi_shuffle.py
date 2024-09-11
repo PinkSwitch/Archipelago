@@ -342,16 +342,16 @@ def shuffle_psi(world):
     }
 
     world.gadget_actions = {
-        "Hypnosis": [0x0000, 0x0000],
-        "Paralysis": [0x0000, 0x0000],
-        "Offense Up": [0x0000, 0x0000],
-        "Defense Down": [0x0000, 0x0000],
-        "Brainshock": [0x0000, 0x0000],
+        "Hypnosis": [0x01E7, 0x01E8],
+        "Paralysis": [0x01E9, 0x01EA],
+        "Offense Up": [0x01EB, 0x01EC],
+        "Defense Down": [0x01ED, 0x01EE],
+        "Brainshock": [0x01EF, 0x01F0],
         "Defense up": [0x00B7, 0x00B8],
         "Drain": [0x00A1, 0x00B0],
-        "Disable": [0x009F, 0x0000],
-        "Stop": [0x00A9, 0x0000],
-        "Neutralize": [0x00A0, 0x00F7]   
+        "Disable": [0x009F, 0x01F1],
+        "Stop": [0x00A9, 0x01F2],
+        "Neutralize": [0x00A0, 0x00F7]
     }
 
     world.jeff_item_counts = [
@@ -452,7 +452,6 @@ def write_psi(world, rom):
     rom.write_bytes(address + 35, struct.pack("I", description))
     rom.write_bytes(address + 29, struct.pack("H", action))
 
-    print(world.jeff_assist_items)
     for item in world.jeff_assist_items:
         for i in range(world.gadget_counts[jeff_item_num]):
             if jeff_item_num == 0:
@@ -466,7 +465,6 @@ def write_psi(world, rom):
             rom.write_bytes(address, name_encoded)
             rom.write_bytes(address + 35, struct.pack("I", description))
             rom.write_bytes(address + 29, struct.pack("H", action))
-            #print(f"Writing {hex(address)} item {name} id number {world.gadget_ids[jeff_item_num]}")
             rom.write_bytes(description - 0xC00000 + 5, bytearray([world.gadget_ids[jeff_item_num][i]]))
         jeff_item_num += 1
 

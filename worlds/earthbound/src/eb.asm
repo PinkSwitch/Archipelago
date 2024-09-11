@@ -8147,11 +8147,59 @@ dd $00c2a422
 db $00, $04, $03, $1E
 dd $00EF8543
 dd $00c290c6
-;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Action 01E7
 db $00, $01, $04, $00
+dd hypnosis_alpha_item_anim
+dd $00c29f06
+
+db $00, $04, $04, $00
+dd hypnosis_omega_item_anim
+dd $00c29f57
+;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $04, $00
+dd paralysis_alpha_item_anim
+dd $00c29f06
+
+db $00, $04, $04, $00
+dd paralysis_omega_item_anim
+dd $00c29f57
+;;;;;;;;;;;;;;;;;;;;;;;
+;TODO: MAKE NEW ITEM ANIM CODES FOR THE EXTENDED ASSISTS
+db $00, $01, $04, $00
 dd $00ef8e27
-dd $00c29647
+dd $00c29e38
+
+db $00, $04, $04, $00
+dd $00ef8e27
+dd $00c29e7f
+;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $04, $00
+dd defdown_alpha_item_anim
+dd $00cc29e86
+
+db $00, $04, $04, $00
+dd defdown_omega_item_anim
+dd $00cc29eff
+;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $04, $00
+dd brainshock_alpha_item_anim
+dd $00c2a056
+
+db $00, $04, $04, $00
+dd brainshock_omega_item_anim
+dd $00c2a0a7
+;;;;;;;;;;;;;;;;;;;;
+;new jeffer items go here?
+db $00, $04, $04, $00
+dd $00ef8e3c
+dd $00c2a3d1
+
+db $00, $04, $04, $00
+dd $00c97d75
+dd $00c28cf1
+
+
 
 ;New battle text
 ORG $FE0000
@@ -9129,6 +9177,38 @@ db $1f, $02, $36, $10, $1e, $1c, $13, $00, $01, $10, $3c, $03, $02
 
 neutralize_anim:
 db $1f, $02, $63, $1c, $13, $00, $1b, $10, $3c, $03, $02
+
+hypnosis_alpha_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $5c, $89, $ef
+
+hypnosis_omega_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $6c, $89, $ef
+
+paralysis_alpha_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $9c, $89, $ef
+
+paralysis_omega_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $ac, $89, $ef
+
+defdown_alpha_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $3c, $89, $ef
+
+defdown_omega_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $4c, $89, $ef
+
+brainshock_alpha_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $bc, $89, $ef
+
+brainshock_omega_item_anim:
+db $01, $70, $1c, $0d, $19, $1f, $1b, $04, $16, $ac, $16, $47, $00, $50, $50, $1c
+db $05, $00, $51, $03, $0a, $ce, $89, $ef
 
 
 ORG $C1C423
