@@ -170,7 +170,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
             if name in present_locations:
                 world.handled_locations.append(name)
-                if item == "Nothing": #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
+                if item == "Nothing":  #I can change this to "In nothing_table" later todo: make it so nonlocal items do not follow this table
                     rom.write_bytes(present_locations[name], bytearray([0x00, 0x00, 0x01]))
                 elif location.item.player != location.player or item == "Remote Item":
                     rom.write_bytes(present_locations[name], bytearray([item_id, 0x00, 0x00, (location.address - 0xEB0000)]))
@@ -381,7 +381,7 @@ def patch_rom(world, rom, player: int, multiworld):
             if battle_bg_bpp[struct.unpack("H", drawn_background)[0]] == 4:
                 drawn_background_2 = struct.pack("H",0x0000)
             else:
-                drawn_background_2 = struct.pack("H",world.random.choice(bpp2_bgs))
+                drawn_background_2 = struct.pack("H", world.random.choice(bpp2_bgs))
             if world.flipped_bg > 33:
                 rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
                 rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
@@ -429,6 +429,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
+
 class EBProcPatch(APProcedurePatch, APTokenMixin):
     hash = valid_hashes
     game = "EarthBound"
@@ -450,6 +451,7 @@ class EBProcPatch(APProcedurePatch, APTokenMixin):
 
     def write_bytes(self, offset, value: typing.Iterable[int]):
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
+
 
 class EBPatchExtensions(APPatchExtension):
     game = "EarthBound"
@@ -534,4 +536,4 @@ def get_base_rom_path(file_name: str = "") -> str:
     return file_name
 
 
-#Fix hint text, I have a special idea where I can give it info on a random region
+# Fix hint text, I have a special idea where I can give it info on a random region

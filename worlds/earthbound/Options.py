@@ -82,6 +82,7 @@ class CharacterShuffle(Choice):
     option_anywhere = 1
     default = 0
 
+
 class PSIShuffle(Choice):
     """None: Characters will learn their normal PSI skills.
        Basic: Offensive and Assist PSI will be shuffled. Recovery PSI is not modified. Ness's Favorite Thing will be named Wave in other slots.
@@ -108,15 +109,18 @@ class PresentSprites(DefaultOnToggle):
     """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""
     display_name = "Match Present Sprites"
 
+
 class ShuffleDrops(Toggle):
     """If enabled, enemies will drop random filler items. This does not put checks on enemy drops.
        Drop rates are unchanged."""
     display_name = "Shuffle Drops"
 
+
 class RandomFranklinBadge(Toggle):
     """If enabled, the Franklin Badge will reflect a randomly selected attack type. The type can be determined from the item's name, as well as the help
        text for it. The badge's function outside of battle will not change, and neither will its name outside of the game itself."""
     display_name = "Franklin Badge Protection"
+
 
 class CommonWeight(Range):
     """Weight for placing a common filler item."""
@@ -167,6 +171,7 @@ class RandomFlavors(DefaultOnToggle):
     """Randomizes the non-plain window color options."""
     display_name = "Random Flavors"
 
+
 class DeathLinkMode(Choice):
     """Controls how receiving a Deathlink functions in battle.
        Instant: The player will be instantly defeated.
@@ -179,7 +184,7 @@ class DeathLinkMode(Choice):
     option_mortal_mercy = 2
     default = 1
 
-#class RandomBattleBG(Choice):
+# class RandomBattleBG(Choice):
  #   """Generates random battle backgrounds.
   #     Normal: Battle backgrounds are not randomized.
    #    Random Safe: Generates battle backgrounds from valid backgrounds or combining valid backgrounds.

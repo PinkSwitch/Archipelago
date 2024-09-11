@@ -4,7 +4,7 @@ import threading
 import pkgutil
 
 
-from typing import List, Set, Dict
+from typing import List, Set, Dict, TextIO
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
@@ -17,6 +17,7 @@ from .setup_game import setup_gamevars, place_static_items
 from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
 from .local_data import item_id_table
+# from .text_data import spoiler_log_translations
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
@@ -56,7 +57,7 @@ class EarthBoundWorld(World):
     game = "EarthBound"
     option_definitions = EBOptions
     data_version = 1
-    required_client_version = (0, 5, 0) # Change when 0.5.0 releases
+    required_client_version = (0, 5, 0)  # Change when 0.5.0 releases
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = {location.name: location.code for
@@ -87,6 +88,10 @@ class EarthBoundWorld(World):
             "pizza_logic": self.options.monkey_caves_mode.value
         }
 
+    # def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
+        # spoiler_handle.write(f"Starting Location:    {self.start_location}\n")
+        # spoiler_handle.write(f"Franklin Badge Protection:    {self.franklin_protection}\n")
+
     def create_item(self, name: str) -> Item:
         data = item_table[name]
         return Item(name, data.classification, data.code, self.player)
@@ -102,7 +107,7 @@ class EarthBoundWorld(World):
 
         self.multiworld.itempool += pool
 
-    def roll_filler(self) -> str: # Todo: make this suck less
+    def roll_filler(self) -> str:  # Todo: make this suck less
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
@@ -118,7 +123,7 @@ class EarthBoundWorld(World):
         }
         return self.random.choice(weight_table[filler_type])
 
-    def generate_early(self): # Todo: place locked items in generate_early
+    def generate_early(self):  # Todo: place locked items in generate_early
         self.locals = []
         local_space_count = 0
         for item_name, amount in self.options.start_inventory.items():
@@ -180,7 +185,7 @@ class EarthBoundWorld(World):
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
-        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count): # Change to fix event count
+        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count):  # Change to fix event count
             item = self.set_classifications(self.roll_filler())
             pool.append(item)
 

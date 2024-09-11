@@ -105,7 +105,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                        "Everdred's House": lambda state: state.has("Paula", player)})
 
     multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village",],
-                                                                    {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Franklin Badge"}, player)})  #Change to franklin badge
+                                                                    {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Franklin Badge"}, player)})  # Change to franklin badge
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
     
@@ -133,13 +133,13 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Dusty Dunes Desert", player).add_exits(["Threed", "Monkey Caves", "Gold Mine", "Fourside"],
                                                                   {"Threed": lambda state: state.has("Threed Tunnels Clear", player),
                                                                   "Monkey Caves": lambda state: state.has("King Banana", player),
-                                                                  "Gold Mine": lambda state: state.has("Mining Permit", player)})
+                                                                   "Gold Mine": lambda state: state.has("Mining Permit", player)})
 
     multiworld.get_region("Fourside", player).add_exits(["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed", "Fourside Dept. Store"],
-        {"Monotoli Building": lambda state: state.has("Yogurt Dispenser", player),
-         "Magnet Hill": lambda state: state.has("Signed Banana", player),
-         "Threed": lambda state: state.has("Diamond", player),
-         "Fourside Dept. Store": lambda state: state.has("Jeff", player)})
+                                                        {"Monotoli Building": lambda state: state.has("Yogurt Dispenser", player),
+                                                            "Magnet Hill": lambda state: state.has("Signed Banana", player),
+                                                            "Threed": lambda state: state.has("Diamond", player),
+                                                            "Fourside Dept. Store": lambda state: state.has("Jeff", player)})
 
     multiworld.get_region("Summers", player).add_exits(["Scaraba", "Summers Museum"],
         {"Summers Museum": lambda state: state.has("Tiny Ruby", player)})

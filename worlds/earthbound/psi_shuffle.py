@@ -31,7 +31,6 @@ def shuffle_psi(world):
         "PSI Shield"
     ]
 
-
     world.jeff_offense_items = []
     world.jeff_assist_items = []
 
@@ -68,7 +67,6 @@ def shuffle_psi(world):
 
         if world.options.psi_shuffle == 2:
             world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
-            #world.jeff_offense_items.extend(world.assist_psi_slots[-5:])
             world.jeff_assist_items.extend(world.assist_psi_slots[-5:])
             world.offensive_psi_slots = world.offensive_psi_slots[:-2]
             world.assist_psi_slots = world.assist_psi_slots[:-5]
@@ -82,7 +80,6 @@ def shuffle_psi(world):
         assist_data = {key: world.psi_address[key] for key in world.assist_psi_slots}
         assist_data_plus = {key: world.psi_address[key] for key in world.jeff_assist_items}
         offense_data_plus = {key: world.psi_address[key] for key in world.jeff_offense_items}
-
 
         world.psi_address = {key: world.psi_address[key] for key in world.offensive_psi_slots}
         world.psi_address.update(shield_data)
@@ -98,35 +95,35 @@ def shuffle_psi(world):
         [[0x09, 0x02], [0x0B, 0x02], [0x0D, 0x02], [0x0F, 0x02]],  # Thunder
         [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Starstorm
 
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Shield
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #PSI Shield
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Shield
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # PSI Shield
 
-        [[0x09, 0x01], [0x0B, 0x01]], # Hypnosis
-        [[0x09, 0x02], [0x0B, 0x02]], # Paralysis
-        [[0x09, 0x01], [0x0B, 0x01]], # Offense Up
-        [[0x09, 0x02], [0x0B, 0x02]], # Defense Down
-        [[0x09, 0x01], [0x0B, 0x01]], # Brainshock
+        [[0x09, 0x01], [0x0B, 0x01]],  # Hypnosis
+        [[0x09, 0x02], [0x0B, 0x02]],  # Paralysis
+        [[0x09, 0x01], [0x0B, 0x01]],  # Offense Up
+        [[0x09, 0x02], [0x0B, 0x02]],  # Defense Down
+        [[0x09, 0x01], [0x0B, 0x01]],  # Brainshock
 
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Blast
-        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]], #Missile
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Blast
+        [[0x09, 0x00], [0x0B, 0x00], [0x0D, 0x00], [0x0F, 0x00]],  # Missile
 
-        [[0x09, 0x01], [0x0B, 0x01]], # Defense up
-        [[0x09, 0x02], [0x0B, 0x02]], # Drain
-        [[0x09, 0x01], [0x0B, 0x01]], # Disable
-        [[0x09, 0x02], [0x0B, 0x02]], # Stop
-        [[0x09, 0x01], [0x0B, 0x01]], # Neutralize
+        [[0x09, 0x01], [0x0B, 0x01]],  # Defense up
+        [[0x09, 0x02], [0x0B, 0x02]],  # Drain
+        [[0x09, 0x01], [0x0B, 0x01]],  # Disable
+        [[0x09, 0x02], [0x0B, 0x02]],  # Stop
+        [[0x09, 0x01], [0x0B, 0x01]],  # Neutralize
     ]
 
     world.psi_level_data = [
-        [[0x08, 0x00, 0x00], [0x16, 0x00, 0x00], [0x31, 0x00, 0x00], [0x4B, 0x00, 0x00]], #Special
-        [[0x12, 0x00, 0x00], [0x26, 0x00, 0x00], [0x3D, 0x00, 0x00], [0x43, 0x00, 0x00]], #Flash
-        [[0x00, 0x03, 0x00], [0x00, 0x13, 0x00], [0x00, 0x25, 0x00], [0x00, 0x40, 0x00]], #Fire
-        [[0x00, 0x01, 0x01], [0x00, 0x0B, 0x01], [0x00, 0x1F, 0x21], [0x00, 0x2E, 0x00]], #Freeze
-        [[0x00, 0x08, 0x01], [0x00, 0x19, 0x01], [0x00, 0x39, 0x29], [0x00, 0x00, 0x37]], #Thunder
-        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]], #Starstorm
+        [[0x08, 0x00, 0x00], [0x16, 0x00, 0x00], [0x31, 0x00, 0x00], [0x4B, 0x00, 0x00]],  # Special
+        [[0x12, 0x00, 0x00], [0x26, 0x00, 0x00], [0x3D, 0x00, 0x00], [0x43, 0x00, 0x00]],  # Flash
+        [[0x00, 0x03, 0x00], [0x00, 0x13, 0x00], [0x00, 0x25, 0x00], [0x00, 0x40, 0x00]],  # Fire
+        [[0x00, 0x01, 0x01], [0x00, 0x0B, 0x01], [0x00, 0x1F, 0x21], [0x00, 0x2E, 0x00]],  # Freeze
+        [[0x00, 0x08, 0x01], [0x00, 0x19, 0x01], [0x00, 0x39, 0x29], [0x00, 0x00, 0x37]],  # Thunder
+        [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Starstorm
 
-        [[0x0C, 0x00, 0x0E], [0x00, 0x00, 0x0F], [0x22, 0x00, 0x10], [0x00, 0x00, 0x33]], #Shield
-        [[0x00, 0x06, 0x00], [0x00, 0x1B, 0x00], [0x00, 0x33, 0x00], [0x00, 0x3C, 0x00]], #PSI Shield
+        [[0x0C, 0x00, 0x0E], [0x00, 0x00, 0x0F], [0x22, 0x00, 0x10], [0x00, 0x00, 0x33]],  # Shield
+        [[0x00, 0x06, 0x00], [0x00, 0x1B, 0x00], [0x00, 0x33, 0x00], [0x00, 0x3C, 0x00]],  # PSI Shield
 
         [[0x04, 0x00, 0x00], [0x1B, 0x00, 0x00]],  # Hypnosis
         [[0x0E, 0x00, 0x00], [0x1D, 0x00, 0x00]],  # Paralysis
@@ -241,23 +238,23 @@ def shuffle_psi(world):
     }
 
     world.jeff_addresses = [
-        0x156665, # Bomb
-        0x15668C, # Super Bomb
-        0x156443, # Bazooka
-        0x15646A, # Heavy bazooka
-        0x1551FB, #broken bazooka
+        0x156665,  # Bomb
+        0x15668C,  # Super Bomb
+        0x156443,  # Bazooka
+        0x15646A,  # Heavy bazooka
+        0x1551FB,  # broken bazooka
 
-        0x1565F0, # Bottle Rocket
-        0x156617, # Big Bottle Rocket
-        0x15663E, # multi Bottle Rocket
+        0x1565F0,  # Bottle Rocket
+        0x156617,  # Big Bottle Rocket
+        0x15663E,  # multi Bottle Rocket
     ]
 
     world.gadget_addresses = [
-        [0, 0x1567EB], # defense shower
-        [0x156491, 0x1564B8], # HP-Sucker
-        [0x1563F5], #Counter-PSI Unit
-        [0x156506], #Slime Generator
-        [0x15641C, 0x156DB5], #Shield Killer
+        [0, 0x1567EB],  # defense shower
+        [0x156491, 0x1564B8],  # HP-Sucker
+        [0x1563F5],  # Counter-PSI Unit
+        [0x156506],  # Slime Generator
+        [0x15641C, 0x156DB5],  # Shield Killer
     ]
 
     world.broken_gadget_addresses = [
@@ -352,16 +349,16 @@ def shuffle_psi(world):
     }
 
     world.jeff_item_counts = [
-        5, #Bomb
-        3 #Bottle Rocket
+        5,  # Bomb
+        3  # Bottle Rocket
     ]
 
     world.gadget_counts = [
-        1, #defense shower
-        2, #HP-Sucker
-        1, #Counter PSI unit
-        1, #Slime generator
-        2 #Neutralizer
+        1,  # defense shower
+        2,  # HP-Sucker
+        1,  # Counter PSI unit
+        1,  # Slime generator
+        2  # Neutralizer
     ]
 
     world.gadget_ids = [
@@ -373,11 +370,11 @@ def shuffle_psi(world):
     ]
 
     world.broken_gadget_ids = [
-        0x0E, #Broken trumpet
-        0x0C, #Broken tube
-        0x04, #Broken machine
-        0x09, #Broken iron
-        0x0A #Broken pipe
+        0x0E,  # Broken trumpet
+        0x0C,  # Broken tube
+        0x04,  # Broken machine
+        0x09,  # Broken iron
+        0x0A  # Broken pipe
     ]
 
     world.jeff_item_names = [
@@ -417,9 +414,9 @@ def write_psi(world, rom):
             address += 15
             if key == "Starstorm" and i == 1:
                 address = 0x158B8B
-    #todo; expanded psi
-    #todo; animation for Starstorm L/D
-    #todo; swap enemy actions for Special?
+    # todo; expanded psi
+    # todo; animation for Starstorm L/D
+    # todo; swap enemy actions for Special?
         psi_num += 1
 
     jeff_item_num = 0
@@ -434,7 +431,7 @@ def write_psi(world, rom):
             name_encoded.extend(([0x00]))
             rom.write_bytes(address, name_encoded)
             rom.write_bytes(address + 35, struct.pack("I", description))
-            if "Broken" not in name: #broken items don't need attack data
+            if "Broken" not in name:  # broken items don't need attack data
                 attack = world.attack_types[jeff_item_num][item][i]
                 rom.write_bytes(address + 29, struct.pack("H", attack))
         jeff_item_num += 1
@@ -480,18 +477,18 @@ def write_psi(world, rom):
         rom.write_bytes(address + 35, struct.pack("I", description))
         rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[i]]))
 
-    rom.write_bytes(0x15A8E7, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1]))) #Whirling Robo
-    rom.write_bytes(0x15BB45, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[0]][0]))) # Boogey Tent (1)
-    rom.write_bytes(0x15BBA5, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0]))) # Squatter Demon
-    rom.write_bytes(0x15DF41, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0]))) # Electro Specter (2)
-    rom.write_bytes(0x15DF3F, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1]))) # Electro Specter (2)
-    rom.write_bytes(0x15BA2B, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][0]))) # Fobby
-    rom.write_bytes(0x15C06D, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][1]))) # Eelectro Specter (1)
+    rom.write_bytes(0x15A8E7, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1])))
+    rom.write_bytes(0x15BB45, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[0]][0])))
+    rom.write_bytes(0x15BBA5, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0])))
+    rom.write_bytes(0x15DF41, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0])))
+    rom.write_bytes(0x15DF3F, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1])))
+    rom.write_bytes(0x15BA2B, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][0])))
+    rom.write_bytes(0x15C06D, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][1])))
 
-    rom.write_bytes(0x15C009, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
-    rom.write_bytes(0x15C00B, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
-    rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0]))) # Care Free Bomb
-    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3]))) # Care Free Bomb
+    rom.write_bytes(0x15C009, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
+    rom.write_bytes(0x15C00B, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
+    rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
+    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3])))
 
-    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1]))) # Sentry Robot
+    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1])))
         

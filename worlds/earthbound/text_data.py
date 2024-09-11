@@ -184,6 +184,14 @@ lumine_hall_text = [
 
 ]
 
+franklin_spoiler = {
+
+}
+
+startloc_spoiler = [
+    "Default"
+]
+
 
 def text_encoder(text, eb_text_table, textcap):
     encoded_text = bytearray()
