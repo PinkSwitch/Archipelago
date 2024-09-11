@@ -562,6 +562,10 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
     "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 100: "beta"},
     "flash_minus": {45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
+    "blast": {30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
+    "missile": {20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
+    #Todo; blast/missile delta and lambda
+    #"blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
 
 
     # bombs and bottle rockets too? Also missile maybe? hmmm
@@ -943,6 +947,22 @@ spell_data = {
         "alpha": [0x1E, 0x00, 0x15],
         "beta": [0x1F, 0x00, 0x16]
     },
+    "blast": {
+        "zeta": [0x00, 0x00, 0x00],
+        "epsilon": [0x00, 0x00, 0x00],
+        "alpha": [0xA4, 0x01, 0x46],
+        "beta": [0xA5, 0x01, 0x47],
+        "gamma": [0xA6, 0x01, 0x48],
+        "omega": [0xA7, 0x01, 0x48]
+    },
+    "missile": {
+        "zeta": [0x00, 0x00, 0x00],
+        "epsilon": [0x00, 0x00, 0x00],
+        "alpha": [0xA8, 0x01, 0x4A],
+        "beta": [0xA9, 0x01, 0x4B],
+        "gamma": [0xAA, 0x01, 0x4C],
+        "omega": [0xAB, 0x01, 0x4D]
+    },
 
 }
 
@@ -1104,6 +1124,8 @@ def scale_enemies(world, rom):
                 
                 if enemy.name in enemy_psi:
                     for index, spell in [(i, s) for i, s in enumerate(enemy_psi[enemy.name]) if s != "null"]:
+                        if spell == "special":
+                            spell = world.offensive_psi_slots[0].lower()
                         # print(enemy.name)
                         # print(index, spell)
                         psi_level = get_psi_levels(level, spell_breaks[spell])

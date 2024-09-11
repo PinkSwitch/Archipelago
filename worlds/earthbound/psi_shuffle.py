@@ -34,8 +34,6 @@ def shuffle_psi(world):
 
     world.jeff_offense_items = []
     world.jeff_assist_items = []
-    world.test = []
-    world.test2 = []
 
     world.psi_address = {
         "Special": [0x158A5F, 4],
@@ -72,9 +70,7 @@ def shuffle_psi(world):
             world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
             #world.jeff_offense_items.extend(world.assist_psi_slots[-5:])
             world.jeff_assist_items.extend(world.assist_psi_slots[-5:])
-            world.test2.extend(world.offensive_psi_slots[-2:])
             world.offensive_psi_slots = world.offensive_psi_slots[:-2]
-            world.test.extend(world.assist_psi_slots[-5:])
             world.assist_psi_slots = world.assist_psi_slots[:-5]
         else:
             world.jeff_offense_items.extend(["Blast", "Missile"])
@@ -84,8 +80,8 @@ def shuffle_psi(world):
 
         shield_data = {key: world.psi_address[key] for key in world.shield_slots}
         assist_data = {key: world.psi_address[key] for key in world.assist_psi_slots}
-        assist_data_plus = {key: world.psi_address[key] for key in world.test}
-        offense_data_plus = {key: world.psi_address[key] for key in world.test2}
+        assist_data_plus = {key: world.psi_address[key] for key in world.jeff_assist_items}
+        offense_data_plus = {key: world.psi_address[key] for key in world.jeff_offense_items}
 
 
         world.psi_address = {key: world.psi_address[key] for key in world.offensive_psi_slots}
@@ -239,8 +235,9 @@ def shuffle_psi(world):
         "Fire": [0x07, 0x08],
         "Freeze": [0x0B, 0x0C],
         "Thunder": [0x0F, 0x10],
-        "Starstorm": [0x15, 0x16]
-        #add blast and missile
+        "Starstorm": [0x15, 0x16],
+        "Blast": [0x48, 0x49],
+        "Missile": [0x4C, 0x4D]
     }
 
     world.jeff_addresses = [
