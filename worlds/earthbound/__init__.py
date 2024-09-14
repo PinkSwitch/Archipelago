@@ -17,7 +17,7 @@ from .setup_game import setup_gamevars, place_static_items
 from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
 from .local_data import item_id_table
-# from .text_data import spoiler_log_translations
+from .text_data import spoiler_psi, spoiler_starts
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
@@ -89,9 +89,30 @@ class EarthBoundWorld(World):
             "pizza_logic": self.options.monkey_caves_mode.value
         }
 
-    # def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
-        # spoiler_handle.write(f"Starting Location:    {self.start_location}\n")
-        # spoiler_handle.write(f"Franklin Badge Protection:    {self.franklin_protection}\n")
+    def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
+        spoiler_handle.write(f"\nStarting Location:    {spoiler_starts[self.start_location]}\n")
+        spoiler_handle.write(f"Franklin Badge Protection:    {self.franklin_protection}\n")
+        if self.options.psi_shuffle:
+            spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_psi[self.offensive_psi_slots[0]]}\n")
+            spoiler_handle.write(f"Ness Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[1]]}\n")
+            spoiler_handle.write(f"Paula Offensive PSI Top Slot:    {spoiler_psi[self.offensive_psi_slots[2]]}\n")
+            spoiler_handle.write(f"Paula/Poo Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[3]]}\n")
+            spoiler_handle.write(f"Paula/Poo Offensive PSI Bottom Slot:    {spoiler_psi[self.offensive_psi_slots[4]]}\n")
+            spoiler_handle.write(f"Poo Progressive PSI Slot:    {spoiler_psi[self.offensive_psi_slots[5]]}\n")
+
+            spoiler_handle.write(f"Ness/Poo Shield Slot:    {spoiler_psi[self.shield_slots[0]]}\n")
+            spoiler_handle.write(f"Paula Shield Slot:    {spoiler_psi[self.shield_slots[1]]}\n")
+
+            spoiler_handle.write(f"Ness Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[0]]}\n")
+            spoiler_handle.write(f"Ness Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[1]]}\n")
+            spoiler_handle.write(f"Paula Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[2]]}\n")
+            spoiler_handle.write(f"Paula Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[3]]}\n")
+            spoiler_handle.write(f"Poo Assist PSI Slot:    {spoiler_psi[self.assist_psi_slots[4]]}\n")
+        if self.options.psi_shuffle == 2:
+            spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_jeffs[self.jeff_assist_items[0]]}\n") #todo: ?????
+
+            
+
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

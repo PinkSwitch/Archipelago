@@ -1099,9 +1099,9 @@ def scale_enemies(world, rom):
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
-                # enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
-                enemy_exp = int(enemy.exp * level / enemy.level)
-                enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
+                enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
+                #enemy_exp = int(enemy.exp * level / enemy.level)
+                #enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
                 enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
                 enemy_offense = int(enemy.offense * level / enemy.level)

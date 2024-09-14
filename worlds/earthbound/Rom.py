@@ -348,6 +348,10 @@ def patch_rom(world, rom, player: int, multiworld):
     for item in world.multiworld.precollected_items[player]:
         if world.options.remote_items:
             continue
+
+        if item.name == "Poo" and world.multiworld.get_location("Poo Starting Item", world.player).item.name in special_name_table:
+            world.multiworld.push_precollected(world.multiworld.get_location("Poo Starting Item", world.player).item)
+
         if item.name in item_id_table:
             rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))
             starting_item_address += 1

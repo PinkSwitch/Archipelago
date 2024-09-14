@@ -184,12 +184,40 @@ lumine_hall_text = [
 
 ]
 
-franklin_spoiler = {
-
+spoiler_psi = {
+    "Special": "PSI Rockin",
+    "Fire": "PSI Fire",
+    "Freeze": "PSI Freeze",
+    "Thunder": "PSI Thunder",
+    "Flash": "PSI Flash",
+    "Starstorm": "PSI Starstorm",
+    "Shield": "Shield",
+    "PSI Shield": "PSI Shield",
+    "Offense Up": "Offense up",
+    "Defense Down": "Defense down",
+    "Hypnosis": "Hypnosis",
+    "Paralysis": "Paralysis",
+    "Brainshock": "Brainshock",
+    "Blast": "PSI Blast",
+    "Missile": "PSI Missile"
 }
 
-startloc_spoiler = [
-    "Default"
+spoiler_starts = [
+    "Ness's House",
+    "Onett Downtown",
+    "Twoson",
+    "Happy-Happy Village",
+    "Threed",
+    "Saturn Valley",
+    "Fourside",
+    "Winters",
+    "Summers",
+    "Dalaam",
+    "Scaraba",
+    "Deep Darkness",
+    "Tenda Village",
+    "Lost Underworld",
+    "Magicant"
 ]
 
 
