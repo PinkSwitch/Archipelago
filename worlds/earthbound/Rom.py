@@ -307,7 +307,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x2EBFFE, bytearray([0x00, 0x1B, 0x04, 0x15, 0x38, 0x1F, 0x81, 0xFF, 0xFF, 0x1B, 0x04, 0x0A, 0xF7, 0x12, 0xC9]))#Hospitals = 0$
         rom.write_bytes(0x04C822, bytearray([0xEA, 0xEA, 0xEA, 0xEA]))
 
-    if world.options.magicant_mode == 2:
+    if world.options.magicant_mode > 2:
         rom.write_bytes(0x077629, bytearray([item_id_table[world.magicant_junk[0]]]))
         rom.write_bytes(0x0FF25C, bytearray([item_id_table[world.magicant_junk[1]]]))
         rom.write_bytes(0x0FF27E, bytearray([item_id_table[world.magicant_junk[2]]]))
@@ -380,7 +380,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 drawn_background_2 = struct.pack("H",0x0000)
             else:
                 drawn_background_2 = struct.pack("H", world.random.choice(bpp2_bgs))
-            if world.flipped_bg > 33:
+            if world.flipped_bg > 33 or drawn_background not in bpp2_bgs:
                 rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
                 rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
             else:
