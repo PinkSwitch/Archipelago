@@ -476,7 +476,7 @@ def write_psi(world, rom):
 
     for i in range(5):
         item = world.jeff_assist_items[i]
-        if i == 0:
+        if i < 2:
             level = 1
         else:
             level = 0
