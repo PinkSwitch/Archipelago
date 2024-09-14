@@ -7249,6 +7249,9 @@ db $01, $6e, $03, $00, $70, $80, $99, $95, $93, $95, $a3, $50, $9f, $96, $50, $9
 db $50, $92, $a2, $9f, $9b, $95, $9e, $50, $9d, $9f, $a4, $98, $95, $a2, $92, $9f
 db $91, $a2, $94, $5e, $03, $00, $08, $6f, $6b, $c5, $00, $13, $02;Descriptions for broken items
 
+db $97, $95, $9e, $95, $a2, $9f, $a3, $99, $a4, $a9, $5e, $13, $18, $04, $0a, $7a
+db $90, $c7
+
 ORG $D57295
 db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $92, $91, $A4, $00
 
@@ -7272,6 +7275,9 @@ db $FE; Lucky sandwiches no longer randomize themselves
 
 ORG $D5728B
 dw $01F3 ;Lucky Sandwich new action
+
+ORG $C89358
+db $0A, $61, $EE, $EE
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
@@ -8460,7 +8466,20 @@ dd $00c28cf1
 db $01, $01, $04, $00
 dd $00c97b6b
 dd NewLuckySandwich
+;;;;;;;;;;;;;;;
+;Unique text for these?
+db $00, $04, $05, $00
+dd $00ef9e05
+dd $00C29987
 
+db $00, $04, $05, $00
+dd $00ef9e05
+dd $00C299AE
+
+db $00, $04, $05, $00
+dd $00ef9e05
+dd $00C299EF
+;;;;;;;;;;
 
 
 ;New battle text

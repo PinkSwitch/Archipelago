@@ -314,6 +314,7 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
         rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
         rom.write_bytes(0x0FF26D, bytearray([item_id_table[world.magicant_junk[5]]]))
+        rom.write_bytes(0x04FD76, bytearray([0x01]))
 
     rom.write_bytes(0x02EC1AA, bytearray([world.options.sanctuaries_required.value]))
     if world.options.alternate_sanctuary_goal:

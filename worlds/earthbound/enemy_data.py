@@ -366,7 +366,7 @@ def initialize_enemies(world):
                               "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies["Kraken"], world.enemies["Kraken (2)"]},
                               "Summers Museum": {world.enemies["Shattered Man"]},
                               "Magnet Hill": {world.enemies["Deadly Mouse"], world.enemies["Filthy Attack Roach"], world.enemies["Stinky Ghost"], world.enemies["Plague Rat of Doom"]},
-                              "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies["Thunder and Storm"]},
+                              "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies["Thunder and Storm"], world.enemies["Thunder and Storm (2)"]},
                               "Scaraba": {world.enemies["Beautiful UFO"], world.enemies["Dread Skelpion"], world.enemies["Great Crested Booka"], world.enemies["High-class UFO"], world.enemies["Master Criminal Worm"]},
                               "Pyramid": {world.enemies["Arachnid!!!"], world.enemies["Fierce Shattered Man"], world.enemies["Guardian Hieroglyph"], world.enemies["Lethal Asp Hieroglyph"], world.enemies["Petrified Royal Guard"],
                                           world.enemies["Guardian General"], world.enemies["Guardian General (2)"]},
@@ -963,6 +963,12 @@ spell_data = {
         "gamma": [0xAA, 0x01, 0x4C],
         "omega": [0xAB, 0x01, 0x4D]
     },
+    "summon_storm": {
+        "alpha": [0xF4, 0x01, 0x00],
+        "beta": [0xF5, 0x01, 0x00],
+        "gamma": [0x58, 0x00, 0x00],
+        "omega": [0xF6, 0x01, 0x00]
+    }
 
 }
 

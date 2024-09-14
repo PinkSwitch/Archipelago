@@ -45,6 +45,7 @@ PLAYER_JUST_DIED_SEND_DEATHLINK = WRAM_START + 0xB584
 IS_ABLE_TO_RECEIVE_DEATHLINKS = WRAM_START + 0xB585
 CHAR_COUNT = WRAM_START + 0x98A4
 OSS_FLAG = WRAM_START + 0x5D98
+MAGICANT_LOCATIONS = ROM_START + 0x04FD76
 
 
 class EarthBoundClient(SNIClient):
@@ -135,6 +136,7 @@ class EarthBoundClient(SNIClient):
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
         melody_table = await snes_read(ctx, MELODY_TABLE, 2)
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
+        #magicant_locations_enabled = await snes_read(ctx, MAGICANT_LOCATIONS, 1)
 
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         if rom != ctx.rom:
@@ -153,6 +155,13 @@ class EarthBoundClient(SNIClient):
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
+
+        #if disabled_locations == None:
+         #   if magicant_locations_enabled[0] == 0x01:
+          #      disabled_locations = [0xEB00E8, 0xEB00E9, 0xEB00EA, 0xEB00EB, 0xEB00EC, 0xEB00ED
+           #                           0xEB00FA]
+            #else:
+             #   disabled_locations = []
 
         # death link handling goes here
         if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
@@ -175,7 +184,7 @@ class EarthBoundClient(SNIClient):
                 masked_data = data & (1 << loc_data[1])
                 bit_set = masked_data != 0
                 invert_bit = ((len(loc_data) >= 3) and loc_data[2])
-                if bit_set != invert_bit:
+                if bit_set != invert_bit and loc_id in ctx.server_locations:
                     new_checks.append(loc_id)
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
