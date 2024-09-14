@@ -172,6 +172,7 @@ JSL CopyAPData
 
 ORG $C1F3B3
 JSL DeleteAPData
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Franklin badge checks
 ORG $C29549
@@ -219,6 +220,10 @@ JML ClearStoredAPItem
 
 ORG $C2AD2A
 JML PrayerReflectIgnore
+
+ORG $C1915F
+JML GetProgressiveGoingtoStorage 
+;new jmls
 
 
 ORG $C1FEBC
@@ -3113,7 +3118,7 @@ BNE SetPlayerNameFlag
 INC $B573
 INC $B579
 SetPlayerNameFlag:
-JSL GetItemName
+JSL CheckifNameProgressive
 LDA #$0000
 JML $C146DC
 
@@ -3294,7 +3299,7 @@ TYA
 SEP #$20
 CMP #$AD
 BEQ SkipArchiWrite
-STA $0000,X
+JML GetProgressiveItems
 SkipArchiWrite:
 JML $C18B65
 
@@ -3355,6 +3360,7 @@ LDA $D55000,X
 BEQ CheckKeys
 JML $C14F5A
 CheckKeys:
+STZ $B58B
 PHX
 PHY
 LDA $06
@@ -3372,12 +3378,27 @@ INY
 INX
 CPY #$000E
 BNE CheckNextItem
-CPX #$012B
+CPX #$012B;Change this condition?
 BEQ CheckStorageForKeys
 PHA
 TXA
-CLC
-ADC #$0051
+INC $B58B
+LDA $98A4
+AND #$00FF
+DEC
+CMP $B58B
+BCS .CheckNextChar
+PLA
+JMP CheckStorageForKeys
+.CheckNextChar:
+LDA $B58B
+AND #$00FF
+TAX
+LDA $986F,X
+AND #$00FF
+ASL
+TAX
+LDA InvPointers,X
 TAX
 PLA
 BRA CheckNextItemStash
@@ -4778,6 +4799,9 @@ db $0a, $8d, $ba, $ee
 ORG $CF2095
 db $93, $20, $cf
 
+ORG $CF61D5
+db $D1, $80;Music flag for the lilliput void
+
 ORG $CF2099
 dw $01D9
 
@@ -5992,9 +6016,9 @@ ORG $CFA94C
 db $93, $C5, $EE
 
 ORG $00FFE6
-db $70, $FE
+db $F0, $FE
 
-ORG $00FE70
+ORG $00FEF0
 ;Crash handler
 SEP #$20
 STZ $B4A1
@@ -7225,6 +7249,30 @@ db $01, $6e, $03, $00, $70, $80, $99, $95, $93, $95, $a3, $50, $9f, $96, $50, $9
 db $50, $92, $a2, $9f, $9b, $95, $9e, $50, $9d, $9f, $a4, $98, $95, $a2, $92, $9f
 db $91, $a2, $94, $5e, $03, $00, $08, $6f, $6b, $c5, $00, $13, $02;Descriptions for broken items
 
+ORG $D57295
+db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $92, $91, $A4, $00
+
+ORG $D572BC
+db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $96, $A2, $A9, $50
+db $A0, $91, $9E, $00
+
+ORG $D572E3
+db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $97, $A5, $9E, $00
+
+ORG $D5730A
+db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $92, $A2, $91, $93
+db $95, $9C, $95, $A4, $00
+
+ORG $D57331
+db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $9F, $A4, $98, $95
+db $A2, $00
+
+ORG $C5E3BF
+db $FE; Lucky sandwiches no longer randomize themselves
+
+ORG $D5728B
+dw $01F3 ;Lucky Sandwich new action
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
 JSR $C80E
@@ -7323,13 +7371,221 @@ LDA #$0000
 PLD
 RTL
 
-macro JSL_RTS_C2(target)
-   phk
-   pea .ret-1
-   pea $00B7
-   jml the_bank_c2_function
-.ret:
-endmacro
+GetProgressiveItems:
+JSR SwapItemForProg
+STA $0000,X
+JML $C18B65
+
+GetProgressiveGoingtoStorage:
+AND #$00FF
+SEP #$20
+JSR SwapItemForProg
+STA $0000,X
+JML $C19164
+
+CheckifNameProgressive:
+SEP #$20
+CMP #$E3
+BCC .NormalItem
+CMP #$E8
+BCS .NormalItem
+JSR SwapNameForProg
+.NormalItem:
+REP #$20
+JML GetItemName
+
+SwapItemForProg:
+CMP #$E3
+BCC .NormalItem
+CMP #$E8
+BCS .NormalItem
+SEC
+SBC #$E3
+PHX
+TAX
+LDA $B5E0,X ;Progressive item count
+CMP ProgCaps,X
+BCS .CappedItem
+INC $B5E0,X
+BRA .GetItem
+.CappedItem:
+LDA $B5E0,X
+.GetItem:
+SEP #$10
+CPX #$00
+BEQ .GetProgBat
+CPX #$01
+BEQ .GetProgPan
+CPX #$02
+BEQ .GetProgGun
+CPX #$03
+BEQ .GetProgBrace
+CPX #$04
+BEQ .GetProgOther
+.GotProgItem:
+REP #$10
+PLX
+.NormalItem:
+RTS
+.GetProgBat:
+TAX
+LDA ProgBats,X
+JMP .GotProgItem
+.GetProgPan:
+TAX
+LDA ProgPans,X
+JMP .GotProgItem
+.GetProgGun:
+TAX
+LDA ProgGuns,X
+JMP .GotProgItem
+.GetProgBrace
+TAX
+LDA ProgBracelets,X
+JMP .GotProgItem
+.GetProgOther
+TAX
+LDA ProgOther,X
+JMP .GotProgItem
+
+SwapNameForProg:
+SEC
+SBC #$E3
+PHX
+TAX
+LDA $B5E0,X ;Progressive item count
+SEP #$10
+CPX #$00
+BEQ .GetProgBat
+CPX #$01
+BEQ .GetProgPan
+CPX #$02
+BEQ .GetProgGun
+CPX #$03
+BEQ .GetProgBrace
+CPX #$04
+BEQ .GetProgOther
+.GotProgItem:
+REP #$10
+PLX
+RTS
+.GetProgBat:
+TAX
+LDA ProgBats,X
+JMP .GotProgItem
+.GetProgPan:
+TAX
+LDA ProgPans,X
+JMP .GotProgItem
+.GetProgGun:
+TAX
+LDA ProgGuns,X
+JMP .GotProgItem
+.GetProgBrace
+TAX
+LDA ProgBracelets,X
+JMP .GotProgItem
+.GetProgOther
+TAX
+LDA ProgOther,X
+JMP .GotProgItem
+
+NewLuckySandwich:
+REP #$31
+LDA #$0010
+JSL .RandBankC2
+CMP #$0007
+BCC .60HPRS
+LDA #$0009
+JSL .RandBankC2
+CMP #$0004
+BCC .240HPRS
+LDA #$0005
+JSL .RandBankC2
+CMP #$0003
+BCC .FullHPRS
+LDA #$0002
+JSL .RandBankC2
+CMP #$0000
+BEQ .5PP
+LDA #$0003
+JSL .RandBankC2
+BCS .20PP
+BRA .FullHeal
+.60HPRS:
+LDA #$003C
+JSL .MultBankC2
+TAX
+LDA $A972
+JSL .RestHP
+BRA .Return
+.240HPRS:
+LDA #$00F0
+JSL .MultBankC2
+TAX
+LDA $A972
+JSL .RestHP
+BRA .Return
+.FullHPRS
+LDX #$0F27
+LDA $A972
+JSL .RestHP
+BRA .Return
+.5PP:
+LDA #$0005
+JSL .MultBankC2
+TAX
+LDA $A972
+JSL .RestPP
+BRA .Return
+.20PP:
+LDA #$0014
+JSL .MultBankC2
+TAX
+LDA $A972
+JSL .RestPP
+BRA .Return
+.FullHeal:
+LDX #$0F27
+LDA $A972
+JSL .RestHP
+LDX $A972
+LDA $001B,X
+TAX
+LDA $A972
+JSL .RestPP
+.Return:
+RTL
+
+.RandBankC2:
+PHY
+LDY #$6A2C
+JSL goto_bank_c2
+PLY
+RTL
+
+.MultBankC2:
+PHY
+LDY #$6AFC
+JSL goto_bank_c2
+PLY
+RTL
+
+.RestHP:
+PHY
+LDY #$7293
+JSL goto_bank_c2
+PLY
+RTL
+
+.RestPP:
+PHY
+LDY #$7317
+JSL goto_bank_c2
+PLY
+RTL
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
 
@@ -8199,6 +8455,11 @@ dd $00c2a3d1
 db $00, $04, $04, $00
 dd $00c97d75
 dd $00c28cf1
+;;;;;;;;;;
+;01F3
+db $01, $01, $04, $00
+dd $00c97b6b
+dd NewLuckySandwich
 
 
 
@@ -8748,7 +9009,6 @@ JSL goto_bank_c2
 PLD
 RTS
 
-
 goto_bank_c2:
 STA $00BC
 STY $00BE
@@ -8831,6 +9091,28 @@ dw $6B18, $6B2F
 
 DiamondText:
 dw $6AC7, $6AE0
+
+InvPointers:
+dw $0000, $005F, $005F, $00BE, $011D
+
+ProgBats:
+db $13, $14, $15, $D4, $16, $17, $D6, $1B, $18, $19
+
+ProgPans:
+db $1C, $1D, $1E, $1F, $F8, $20, $22, $21
+
+ProgGuns:
+db $24, $25, $26, $27, $28, $29, $2A, $D7, $2B, $2C, $2D, $2E, $2F, $30
+;REPLACE BROKEN ONES IF NOT PREFIXED
+
+ProgBracelets:
+db $40, $41, $42, $43, $44, $45, $46, $47, $48
+
+ProgOther:
+db $4A, $4C, $4B, $4D, $51, $52, $F9, $DD, $DE, $53, $54, $55, $56
+
+ProgCaps:
+db $09, $07, $0D, $08, $0C
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Repointed PSI table
 macro PSIAddress06(address)

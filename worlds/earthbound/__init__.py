@@ -103,7 +103,6 @@ class EarthBoundWorld(World):
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())
-
         self.generate_filler(pool)
 
         self.multiworld.itempool += pool
@@ -179,6 +178,17 @@ class EarthBoundWorld(World):
 
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
+        if data.category == "Ness Weapons" and self.options.progressive_weapons:
+            name = "Progressive Bat"
+            data = item_table[name]
+            
+        if data.category == "Paula Weapons" and self.options.progressive_weapons:
+            name = "Progressive Fry Pan"
+            data = item_table[name]
+
+        if data.category == "Jeff Weapons" and self.options.progressive_weapons:
+            name = "Progressive Gun"
+            data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
 
         if name == "Magicant Teleport" and self.options.magicant_mode == 3:

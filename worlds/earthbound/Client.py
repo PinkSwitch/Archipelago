@@ -22,6 +22,7 @@ WRAM_SIZE = 0x20000
 SRAM_START = 0xE00000
 
 EB_ROMHASH_START = 0x00FFC0
+WORLD_VERSION = 0x3FF0A0
 ROMHASH_SIZE = 0x15
 
 ITEM_MODE = ROM_START + 0x04FD76
@@ -103,10 +104,14 @@ class EarthBoundClient(SNIClient):
         from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
 
         rom_name = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
+        apworld_version = await snes_read(ctx, WORLD_VERSION, 16)
 
         item_handling = await snes_read(ctx, ITEM_MODE, 1)
         if rom_name is None or rom_name[:6] != b"MOM2AP":
             return False
+        
+        if apworld_version[0] != "2.1":
+            return False #Raise except?
 
         ctx.game = self.game
         if item_handling[0] == 0x00:

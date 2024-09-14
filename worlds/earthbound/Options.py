@@ -109,6 +109,10 @@ class AutoscaleParty(Toggle):
     """If enabled, joining party members will be scaled to roughly the level of the sphere they were obtained in."""
     display_name = "Autoscale Party Members"
 
+class ProgressiveWeapons(Toggle):
+    """If enabled, Bats, Fry Pans, and Guns will be progressive. Does not apply to items dropped by enemies or found in shops."""
+    display_name = "Progressive Weapons"
+
 
 class PresentSprites(DefaultOnToggle):
     """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""
@@ -233,12 +237,14 @@ class EBOptions(PerGameCommonOptions):
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
+    progressive_weapons: ProgressiveWeapons
     auto_scale_party_members: AutoscaleParty
     remote_items: RemoteItems
     random_flavors: RandomFlavors
     random_battle_backgrounds: RandomBattleBG
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
+    #excluded_teleports: ExcludedTeleports
     randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
     common_filler_weight: CommonWeight
