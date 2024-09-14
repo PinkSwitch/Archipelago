@@ -307,8 +307,9 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x2EBFFE, bytearray([0x00, 0x1B, 0x04, 0x15, 0x38, 0x1F, 0x81, 0xFF, 0xFF, 0x1B, 0x04, 0x0A, 0xF7, 0x12, 0xC9]))#Hospitals = 0$
         rom.write_bytes(0x04C822, bytearray([0xEA, 0xEA, 0xEA, 0xEA]))
 
-    if world.options.magicant_mode > 2:
+    if world.options.magicant_mode >= 2:
         rom.write_bytes(0x077629, bytearray([item_id_table[world.magicant_junk[0]]]))
+        rom.write_bytes(0x077614, bytearray([item_id_table[world.magicant_junk[0]]]))
         rom.write_bytes(0x0FF25C, bytearray([item_id_table[world.magicant_junk[1]]]))
         rom.write_bytes(0x0FF27E, bytearray([item_id_table[world.magicant_junk[2]]]))
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
