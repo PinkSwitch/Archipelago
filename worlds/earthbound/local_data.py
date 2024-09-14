@@ -819,6 +819,8 @@ item_id_table = {
     "Progressive Bat": 0xE3,
     "Progressive Fry Pan": 0xE4,
     "Progressive Gun": 0xE5,
+    "Progressive Bracelet": 0xE7,
+    "Progressive Other": 0xE7,
     "Cup of Coffee": 0xE8,
     "Double Burger": 0xE9,
     "Peanut Cheese Bar": 0xEA,

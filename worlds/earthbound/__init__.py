@@ -191,6 +191,16 @@ class EarthBoundWorld(World):
             data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
 
+        if data.category == "Arm Equipment" and self.options.progressive_armor:
+            name = "Progressive Bracelet"
+            data = item_table[name]
+        item = Item(name, data.classification, data.code, self.player)
+
+        if data.category == "Other Equipment" and self.options.progressive_armor:
+            name = "Progressive Other"
+            data = item_table[name]
+        item = Item(name, data.classification, data.code, self.player)
+
         if name == "Magicant Teleport" and self.options.magicant_mode == 3:
             item.classification = ItemClassification.useful
         return item

@@ -388,12 +388,12 @@ def patch_rom(world, rom, player: int, multiworld):
                 rom.write_bytes(0x0BD89C + (i * 4), drawn_background)
 
     if not world.options.prefixed_items:
-        rom.write_bytes(0x15F9DB bytearray([0x06]))
-        rom.write_bytes(0x15F9DD bytearray([0x08]))
-        rom.write_bytes(0x15F9DF bytearray([0x05]))
-        rom.write_bytes(0x15F9E1 bytearray([0x0B]))
-        rom.write_bytes(0x15F9E3 bytearray([0x0F]))
-        rom.write_bytes(0x15F9E4 bytearray([0x10]))
+        rom.write_bytes(0x15F9DB, bytearray([0x06]))
+        rom.write_bytes(0x15F9DD, bytearray([0x08]))
+        rom.write_bytes(0x15F9DF, bytearray([0x05]))
+        rom.write_bytes(0x15F9E1, bytearray([0x0B]))
+        rom.write_bytes(0x15F9E3, bytearray([0x0F]))
+        rom.write_bytes(0x15F9E4, bytearray([0x10]))
         #change if necessary
 
 
