@@ -227,6 +227,56 @@ def setup_gamevars(world):
         "special",
         "explosive"
     ]
+    
+    world.starting_progressive_bats = 0
+    world.starting_progressive_pans = 0
+    world.starting_progressive_guns = 0
+    world.starting_progressive_bracelets = 0
+    world.starting_progressive_others = 0
+
+    world.bats = [
+        "Sand Lot Bat",
+        "Minor League Bat",
+        "Mr. Baseball Bat",
+        "T-Rex's Bat",
+        "Big League Bat",
+        "Hall of Fame Bat",
+        "Casey Bat",
+        "Magicant Bat",
+        "Legendary Bat"
+    ]
+
+    world.pans = [
+        "Fry Pan"
+    ]
+
+    world.guns = [
+        "Gun"
+    ]
+
+    world.bracelets = [
+        "Fry Pan"
+    ]
+
+    world.others = [
+        "Fry Pan"
+    ]
+
+    world.progressive_item_groups = {
+        "Progressive Bat": world.bats,
+        "Progressive Fry Pan": world.pans,
+        "Progressive Gun": world.guns,
+        "Progressive Bracelet": world.bracelets,
+        "Progressive Other": world.others
+    }
+
+    world.start_prog_counts = {
+        "Progressive Bat": world.starting_progressive_bats,
+        "Progressive Fry Pan": world.starting_progressive_pans,
+        "Progressive Gun": world.starting_progressive_guns,
+        "Progressive Bracelet": world.starting_progressive_bracelets,
+        "Progressive Other": world.starting_progressive_others
+    }
 
     if world.options.randomize_franklinbadge_protection:
         world.franklin_protection = world.random.choice(world.franklinbadge_elements)

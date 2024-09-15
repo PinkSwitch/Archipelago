@@ -114,7 +114,7 @@ def initialize_enemies(world):
         "Trillionage Sprout": EarthBoundEnemy("Trillionage Sprout", 0x15b695, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
         "Musica": EarthBoundEnemy("Musica", 0x15b6f3, 292, 0, 3748, 341, 21, 69, 85, 35, False),
         "Desert Wolf": EarthBoundEnemy("Desert Wolf", 0x15b751, 247, 0, 3740, 114, 33, 57, 67, 30, False),
-        "Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False), #Real one
+        "Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False),  # Real one
         "Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15b80d, 631, 0, 19659, 728, 16, 120, 158, 57, False),
         "Master Barf": EarthBoundEnemy("Master Barf", 0x15b86b, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
         "Kiss of Death": EarthBoundEnemy("Kiss of Death", 0x15b8c9, 333, 0, 10354, 528, 19, 91, 100, 46, False),
@@ -336,7 +336,6 @@ def initialize_enemies(world):
         "Carbon Dog": ["Diamond Dog"]
     }
 
-
     world.regional_enemies = {"Northern Onett": {world.enemies["Spiteful Crow"], world.enemies["Runaway Dog"], world.enemies["Coil Snake"]},
                               "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies["Frank"], world.enemies["Frankystein Mark II"]},
                               "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies["Titanic Ant"]},
@@ -438,19 +437,19 @@ combat_regions = [
 
 levels = [
     1,  # north onett
-    2, # south onett
-    3, # giant step
-    5, # twoson
-    7, # everdred
-    9, # peaceful rest
-    10, # happy happy
-    12, # lilliput steps
-    13, # threed
-    14, # threed caverns
-    15, # grapefruit falls
-    17, # belch base
-    18, # milky well
-    19, # duty dunes
+    2,  # south onett
+    3,  # giant step
+    5,  # twoson
+    7,  # everdred
+    9,  # peaceful rest
+    10,  # happy happy
+    12,  # lilliput steps
+    13,  # threed
+    14,  # threed caverns
+    15,  # grapefruit falls
+    17,  # belch base
+    18,  # milky well
+    19,  # duty dunes
     21, # fourside
     23, # gold mine
     24, # dept store
@@ -477,49 +476,6 @@ levels = [
     65, # cave of the past
     70,
     73] # gigyas
-
-average_exp = [
-    3,  # north onett
-    13, # south onett
-    32, # giant step
-    144, # twoson
-    292, # everdred
-    350, # peaceful rest
-    456, # happy happy
-    625, # lilliput steps
-    831, # threed
-    1425, # threed caverns
-    1468, # grapefruit falls
-    1947, # belch base
-    2736, # milky well
-    2994, # duty dunes
-    3032, # fourside
-    3316,
-    3540, # gold mine
-    3995, # dept store
-    4200,
-    4643,
-    5034, # monkey cabves
-    5532,
-    6273,
-    6410, # monotoli building
-    7587,
-    8379, # winters
-    10982, # southern winters
-    12278, # rainy circle
-    12665, # summers
-    14121,
-    15242, # museum
-    15657, # magnet hill
-    17672,
-    20164,
-    22534, # scaraba
-    25383,
-    33885, # pyramid
-    35674, # scaraba south
-    40226, # dungeon man
-    49230
-]
 
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 40: "alpha", 65: "beta", 70: "gamma", 100: "omega"},
