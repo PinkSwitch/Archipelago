@@ -351,7 +351,11 @@ def patch_rom(world, rom, player: int, multiworld):
 
         if item.name in ["Progressive Bat", "Progressive Fry Pan", "Progressive Gun", "Progressive Bracelet",
                          "Progressive Other"]:
+            old_item_name = item.name
             item.name = world.progressive_item_groups[item.name][world.start_prog_counts[item.name]]
+            if world.start_prog_counts[old_item_name] != len(world.progressive_item_groups[old_item_name]) - 1:
+                world.start_prog_counts[old_item_name] += 1
+                print(world.start_prog_counts[old_item_name])
 
         if item.name in item_id_table:
             rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))

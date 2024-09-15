@@ -157,7 +157,7 @@ class EarthBoundWorld(World):
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
                 local_space_count += amount
-                if local_space_count > 12:
+                if local_space_count > 12 and not world.options.remote_items:
                     player = self.multiworld.get_player_name(self.player)
                     raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
         setup_gamevars(self)

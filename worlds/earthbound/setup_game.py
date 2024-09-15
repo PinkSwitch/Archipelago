@@ -227,12 +227,31 @@ def setup_gamevars(world):
         "special",
         "explosive"
     ]
-    
+
     world.starting_progressive_bats = 0
     world.starting_progressive_pans = 0
     world.starting_progressive_guns = 0
     world.starting_progressive_bracelets = 0
     world.starting_progressive_others = 0
+
+    if world.options.prefixed_items:
+        world.broken_guns = [
+            "Magnum Air Gun",
+            "Laser Gun",
+            "Double Beam",
+            "Spectrum Beam",
+            "Baddest Beam",
+            "Gaia Beam"
+        ]
+    else:
+        world.broken_guns = [
+            "Broken Air Gun",
+            "Broken Laser",
+            "Broken Gadget",
+            "Broken Cannon",
+            "Broken Harmonica",
+            "Broken Antenna"
+        ]
 
     world.bats = [
         "Sand Lot Bat",
@@ -247,19 +266,60 @@ def setup_gamevars(world):
     ]
 
     world.pans = [
-        "Fry Pan"
+        "Fry Pan",
+        "Thick Fry Pan",
+        "Deluxe Fry Pan",
+        "Chef's Fry Pan",
+        "Non-Stick Fry Pan",
+        "French Fry Pan",
+        "Holy Fry Pan",
+        "Magic Fry Pan"
     ]
 
     world.guns = [
-        "Gun"
+        "Pop Gun",
+        "Stun Gun",
+        "Toy Air Gun",
+        world.broken_guns[0],
+        "Zip Gun",
+        world.broken_guns[1],
+        "Hyper Beam",
+        world.broken_guns[2],
+        "Crusher Beam",
+        world.broken_guns[3],
+        "Death Ray",
+        world.broken_guns[4],
+        "Moon Beam Gun",
+        world.broken_guns[5]
     ]
 
     world.bracelets = [
-        "Fry Pan"
+        "Cheap Bracelet",
+        "Copper Bracelet",
+        "Silver Bracelet",
+        "Gold Bracelet",
+        "Platinum Band",
+        "Diamond Band",
+        "Pixie's Bracelet",
+        "Cherub's Band",
+        "Goddess Band"
     ]
 
     world.others = [
-        "Fry Pan"
+        "Baseball Cap",
+        "Mr. Baseball Cap",
+        "Holmes Hat",
+        "Hard Hat",
+        "Coin of Slumber",
+        "Coin of Defense",
+        "Coin of Slience"
+        "Mr. Saturn Coin",
+        "Charm Coin",
+        "Lucky Coin",
+        "Talisman Coin",
+        "Shiny Coin",
+        "Souvenir Coin"
+
     ]
 
     world.progressive_item_groups = {
