@@ -180,8 +180,6 @@ lumine_hall_text = [
     "Phar why",
     "Tell Figment to check POD!"
 
-
-
 ]
 
 spoiler_psi = {
@@ -199,7 +197,12 @@ spoiler_psi = {
     "Paralysis": "Paralysis",
     "Brainshock": "Brainshock",
     "Blast": "PSI Blast",
-    "Missile": "PSI Missile"
+    "Missile": "PSI Missile",
+    "Stop": "Stop",
+    "Drain": "Drain",
+    "Defense up": "Defense up",
+    "Neutralize": "Neutralize",
+    "Disable": "Disable"
 }
 
 spoiler_starts = [
@@ -219,6 +222,16 @@ spoiler_starts = [
     "Lost Underworld",
     "Magicant"
 ]
+
+spoiler_badges = {
+    "special": "Rockin",
+    "fire": "Fire",
+    "freeze": "Freeze",
+    "flash": "Flash",
+    "starstorm": "Starstorm",
+    "explosive": "Bomb",
+    "thunder": "Thunder",
+}
 
 
 def text_encoder(text, eb_text_table, textcap):

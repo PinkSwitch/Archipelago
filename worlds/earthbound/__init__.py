@@ -17,7 +17,7 @@ from .setup_game import setup_gamevars, place_static_items
 from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
 from .local_data import item_id_table
-from .text_data import spoiler_psi, spoiler_starts
+from .text_data import spoiler_psi, spoiler_starts, spoiler_badges
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
@@ -91,7 +91,7 @@ class EarthBoundWorld(World):
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         spoiler_handle.write(f"\nStarting Location:    {spoiler_starts[self.start_location]}\n")
-        spoiler_handle.write(f"Franklin Badge Protection:    {self.franklin_protection}\n")
+        spoiler_handle.write(f"Franklin Badge Protection:    {spoiler_badges[self.franklin_protection]}\n")
         if self.options.psi_shuffle:
             spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_psi[self.offensive_psi_slots[0]]}\n")
             spoiler_handle.write(f"Ness Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[1]]}\n")
@@ -109,7 +109,14 @@ class EarthBoundWorld(World):
             spoiler_handle.write(f"Paula Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[3]]}\n")
             spoiler_handle.write(f"Poo Assist PSI Slot:    {spoiler_psi[self.assist_psi_slots[4]]}\n")
         if self.options.psi_shuffle == 2:
-            spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_jeffs[self.jeff_assist_items[0]]}\n") #todo: ?????
+            spoiler_handle.write(f"Bomb/Bazooka Slot:    {spoiler_psi[self.jeff_offense_items[0]]}\n")
+            spoiler_handle.write(f"Bottle Rocket Slot:    {spoiler_psi[self.jeff_offense_items[1]]}\n")
+
+            spoiler_handle.write(f"Spray Can Slot:    {spoiler_psi[self.jeff_assist_items[0]]}\n")
+            spoiler_handle.write(f"Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[1]]}\n")
+            spoiler_handle.write(f"Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[2]]}\n")
+            spoiler_handle.write(f"Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[3]]}\n")
+            spoiler_handle.write(f"Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[4]]}\n")
 
             
 
