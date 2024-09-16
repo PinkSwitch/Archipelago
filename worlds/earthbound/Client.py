@@ -8,6 +8,7 @@ from .text_data import eb_text_table
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
+import Utils
 
 if typing.TYPE_CHECKING:
     from SNIClient import SNIContext
@@ -35,6 +36,7 @@ GIYGAS_CLEAR = WRAM_START + 0x9C11
 GAME_CLEAR = WRAM_START + 0x9C85
 OPEN_WINDOW = WRAM_START + 0x8958
 MELODY_TABLE = WRAM_START + 0x9C1E
+EARTH_POWER_FLAG = WRAM_START + 0x9C82
 CUR_SCENE = WRAM_START + 0x97B8
 IS_IN_BATTLE = WRAM_START + 0x9643
 DEATHLINK_ENABLED = ROM_START + 0x04FD74
@@ -141,6 +143,7 @@ class EarthBoundClient(SNIClient):
         save_num = await snes_read(ctx, SAVE_FILE, 0x1)
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
         melody_table = await snes_read(ctx, MELODY_TABLE, 2)
+        earth_power_absorbed = await snes_read(ctx, EARTH_POWER_FLAG, 1)
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         if rom != ctx.rom:
@@ -159,6 +162,22 @@ class EarthBoundClient(SNIClient):
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
+
+        await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"{ctx.team}_{ctx.slot}_melody_status",
+                    "default": None,
+                    "want_reply": True,
+                    "operations": [{"operation": "replace", "value": int.from_bytes(melody_table, "little")}]
+                }])
+
+        await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"{ctx.team}_{ctx.slot}_earthpower",
+                    "default": None,
+                    "want_reply": True,
+                    "operations": [{"operation": "replace", "value": int.from_bytes(earth_power_absorbed, "little")}]
+                }])
 
         # death link handling goes here
         if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
@@ -214,3 +233,11 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
                     
         await snes_flush_writes(ctx)
+
+
+def test_bits(value, bit):
+    byte_index = bit // 8
+    bit_pos = bit % 8
+    byte_val = value[byte_index]
+    bitmask = 1 << (7 - bit_pos)
+    return (byte_val & bitmask) != 0

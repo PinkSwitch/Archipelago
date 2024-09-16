@@ -312,7 +312,6 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF28F, bytearray([item_id_table[world.magicant_junk[3]]]))
         rom.write_bytes(0x0FF2A0, bytearray([item_id_table[world.magicant_junk[4]]]))
         rom.write_bytes(0x0FF26D, bytearray([item_id_table[world.magicant_junk[5]]]))
-        rom.write_bytes(0x04FD76, bytearray([0x01]))
 
     rom.write_bytes(0x02EC1AA, bytearray([world.options.sanctuaries_required.value]))
     if world.options.alternate_sanctuary_goal:
@@ -382,7 +381,7 @@ def patch_rom(world, rom, player: int, multiworld):
         for i in range(483):
             world.flipped_bg = world.random.randint(0, 100)
             if i == 480:
-                drawn_background = struct.pack("H", world.random.choice(bpp4_bgs))
+                drawn_background = struct.pack("H", 0x00E3)
             else:
                 drawn_background = struct.pack("H", world.random.randint(0x01, 0x0146))  # clearly this isn't giygas
 
