@@ -1006,16 +1006,16 @@ def scale_enemies(world, rom):
     for i, sphere in enumerate(world.multiworld.get_spheres()):
         all_locs = [loc for loc in sphere]
         for loc in all_locs:
-            if loc.parent_region.name in combat_regions:
+            if loc.parent_region.name in combat_regions and loc.player == world.player:
                 world.last_combat_region = loc.parent_region.name
-            if (loc.parent_region.name in [world.Paula_region, world.Jeff_region, world.Poo_region] and loc.parent_region.name not in combat_regions) and world.options.auto_scale_party_members:
-                if loc.parent_region.name == world.Paula_region and world.Paula_scaled == False:
+            if (loc.parent_region in [world.Paula_region, world.Jeff_region, world.Poo_region]) and world.options.auto_scale_party_members:
+                if loc.parent_region == world.Paula_region and world.Paula_scaled == False:
                     world.Paula_region = world.last_combat_region
                     world.Paula_scaled = True
-                elif loc.parent_region.name == world.Jeff_region and world.Jeff_scaled == False:
+                elif loc.parent_region == world.Jeff_region and world.Jeff_scaled == False:
                     world.Jeff_region = world.last_combat_region
                     world.Jeff_scaled = True
-                if loc.parent_region.name == world.Poo_region and world.Poo_scaled == False:
+                if loc.parent_region == world.Poo_region and world.Poo_scaled == False:
                     world.Poo_region = world.last_combat_region
                     world.Poo_scaled = True
         locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]

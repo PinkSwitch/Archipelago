@@ -355,7 +355,6 @@ def patch_rom(world, rom, player: int, multiworld):
             item.name = world.progressive_item_groups[item.name][world.start_prog_counts[item.name]]
             if world.start_prog_counts[old_item_name] != len(world.progressive_item_groups[old_item_name]) - 1:
                 world.start_prog_counts[old_item_name] += 1
-                print(world.start_prog_counts[old_item_name])
 
         if item.name in item_id_table:
             rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))
@@ -412,11 +411,15 @@ def patch_rom(world, rom, player: int, multiworld):
     world.Poo_placed = False
     for sphere_number, sphere in enumerate(world.multiworld.get_spheres(), start=1):
         for location in sphere:
-            if location.item.name in ["Paula", "Jeff", "Poo"] and not getattr(world, f"{location.item.name}_placed"):
-                setattr(world, f"{location.item.name}_region", location.parent_region.name)
-                setattr(world, f"{location.item.name}_placed", True)
-            # if location.item.name == "Paula" and location.item.player == world.player:
-                # print(location.name)
+            if location.item.name == "Paula" and location.item.player == world.player and world.Paula_placed == False:
+               world.Paula_region = location.parent_region
+               world.Paula_placed = True
+            elif location.item.name == "Jeff" and location.item.player == world.player and world.Jeff_placed == False:
+               world.Jeff_region = location.parent_region
+               world.Jeff_placed = True
+            elif location.item.name == "Poo" and location.item.player == world.player and world.Poo_placed == False:
+               world.Poo_region = location.parent_region
+               world.Poo_placed = True
 
     if world.options.psi_shuffle:
         write_psi(world, rom)
