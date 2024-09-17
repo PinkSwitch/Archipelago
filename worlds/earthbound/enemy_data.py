@@ -953,6 +953,7 @@ def scale_exp_2(base_exp, base_level, new_level, world):
     base_scaled_exp = calculate_exp(base_level)
     scaled_exp = calculate_exp(new_level)
     new_exp = base_exp * scaled_exp / base_scaled_exp
+    new_exp  = max(new_exp, scaled_exp)#maybe remove? if early scaled
     new_exp = math.ceil(new_exp * world.options.experience_modifier / 100)
     return new_exp
 
@@ -960,7 +961,8 @@ def calculate_exp(level):
     if level > 30:
         return 1000 * math.exp(0.05 * level)
     else:
-        return 10 * math.exp(0.2 * level)
+        return 50 * math.exp(0.15 * level)
+        #return 10 * math.exp(0.2 * level) if not boosted
 
     
 

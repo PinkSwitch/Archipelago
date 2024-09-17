@@ -98,7 +98,7 @@ lumine_hall_text = [
     "Long ago, two races ruled over Earth: HUMANS and MONSTERS. One day, war broke out between the two races. After a long battle, the humans were victorious. They sealed the monsters underground with a magic spell.",
     "Once upon a time, a LEGEND was whispered among shadows. It was a LEGEND of HOPE. It was a LEGEND of DREAMS. It was a LEGEND of LIGHT. It was a LEGEND of DARK.",
     "OwO? What's This?",
-    "What about now it's time to rock with the Bickedy Buck Bumble! What about now it's time to rock with the Bickedy Buck Bumble! Bum to the bum to the bum to the bass to the bum to the boom to the Bumble!",
+    "What about now it's time to rock with the Bickedy Buck Buzz Buzz! What about now it's time to rock with the Bickedy Buck Buzz Buzz! Bum to the bum to the bum to the bass to the bum to the boom to the Buzz Buzz!",
     "HOW ARE YOU GENTLEMEN !! ALL YOUR BASE ARE BELONG TO US.",
     "You're just the delivery boy. Sorry, your parts over now. Here, go play hero with this.",
     "My friends are my power, and I'm theirs!",
