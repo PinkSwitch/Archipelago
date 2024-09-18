@@ -123,6 +123,9 @@ class EarthBoundWorld(World):
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
+        if data.category == "Jeff Weapons" and self.options.progressive_weapons:
+            name = "Progressive Gun"
+            data = item_table[name]
         return Item(name, data.classification, data.code, self.player)
 
     def create_regions(self) -> None:
