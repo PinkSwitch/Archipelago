@@ -2849,7 +2849,7 @@ ORG $C9C582
 db $0a, $87, $c5, $c9
 
 ORG $C48535
-LDA #$0072;Lumine hall hardcoded length
+LDA #$00FF;Lumine hall hardcoded length
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7341,6 +7341,9 @@ db $00, $00;Threed tunnel door flag
 ORG $C7C41F
 db $CD, $C3; Lumine hole double flag
 
+ORG $EEA9B6
+db $1d, $0e, $ff, $01, $0a, $ef, $a9, $ee
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
 JSR $C80E
@@ -8483,11 +8486,11 @@ dd $00c29f57
 ;;;;;;;;;;;;;;;;;;;;;;;
 db $00, $01, $04, $00
 dd paralysis_alpha_item_anim
-dd $00c29f06
+dd $00c29ffe
 
 db $00, $04, $04, $00
 dd paralysis_omega_item_anim
-dd $00c29f57
+dd $00c2a04f
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;TODO: MAKE NEW ITEM ANIM CODES FOR THE EXTENDED ASSISTS
 ;Offense Up
