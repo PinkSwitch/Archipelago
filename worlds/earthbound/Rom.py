@@ -524,6 +524,18 @@ class EBPatchExtensions(APPatchExtension):
 
         rom.write_bytes(0x3A0100, saturn_font_data)
         rom.write_bytes(0x3C0D00, saturn_font_gfx)
+        #---------------------------------------
+        #paula_level = rom.read_bytes(0x15f60f, 1)
+        #jeff_level = rom.read_bytes(0x15f623, 1)
+        #poo_level = rom.read_bytes(0x15f637, 1)
+
+        #paula_start_exp = rom.read_bytes(0x?? + paula_level, ????)
+        #jeff_start_exp = rom.read_bytes(0x?? + jeff_level, ????)
+        #poo_start_exp = rom.read_bytes(0x?? + poo_level, ????)
+
+        #rom.write_bytes(0x??, paula_start_exp)
+        #rom.write_bytes(0x??, jeff_start_exp)
+        #rom.write_bytes(0x??, poo_start_exp)
         return rom.get_bytes()
 
 
