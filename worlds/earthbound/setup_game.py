@@ -191,32 +191,50 @@ def setup_gamevars(world):
 
     if world.options.prefixed_items:
         world.multiworld.itempool.append(world.create_item("Counter-PSI Unit"))
-        world.multiworld.itempool.append(world.create_item("Magnum Air Gun"))
-        world.multiworld.itempool.append(world.create_item("Laser Gun"))
         world.multiworld.itempool.append(world.create_item("Shield Killer"))
         world.multiworld.itempool.append(world.create_item("Hungry HP-Sucker"))
         world.multiworld.itempool.append(world.create_item("Defense Shower"))
-        world.multiworld.itempool.append(world.create_item("Baddest Beam"))
         world.multiworld.itempool.append(world.create_item("Heavy Bazooka"))
         world.common_items.append("Defense Spray")
-        world.common_gear.append("Double Beam")
         world.uncommon_items.append("Slime Generator")
-        world.uncommon_gear.append("Spectrum Beam")
-        world.rare_gear.append("Gaia Beam")
+        if not world.options.progressive_weapons:
+            world.multiworld.itempool.append(world.create_item("Magnum Air Gun"))
+            world.multiworld.itempool.append(world.create_item("Laser Gun"))
+            world.multiworld.itempool.append(world.create_item("Baddest Beam"))
+            world.common_gear.append("Double Beam")
+            world.uncommon_gear.append("Spectrum Beam")
+            world.rare_gear.append("Gaia Beam")
+        else:
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.common_gear.append("Progressive Gun")
+            world.uncommon_gear.append("Progressive Gun")
+            world.rare_gear.append("Progressive Gun")
     else:
         world.multiworld.itempool.append(world.create_item("Broken Machine"))
-        world.multiworld.itempool.append(world.create_item("Broken Air Gun"))
-        world.multiworld.itempool.append(world.create_item("Broken Laser"))
         world.multiworld.itempool.append(world.create_item("Broken Pipe"))
         world.multiworld.itempool.append(world.create_item("Broken Tube"))
         world.multiworld.itempool.append(world.create_item("Broken Trumpet"))
-        world.multiworld.itempool.append(world.create_item("Broken Harmonica"))
         world.multiworld.itempool.append(world.create_item("Broken Bazooka"))
         world.common_items.append("Broken Spray Can")
-        world.common_gear.append("Broken Gadget")
         world.uncommon_items.append("Broken Iron")
-        world.uncommon_gear.append("Broken Cannon")
-        world.rare_gear.append("Broken Antenna")
+        if not world.options.progressive_weapons:
+            world.multiworld.itempool.append(world.create_item("Broken Air Gun"))
+            world.multiworld.itempool.append(world.create_item("Broken Laser"))
+            world.multiworld.itempool.append(world.create_item("Broken Harmonica"))
+            world.common_gear.append("Broken Gadget")
+            world.uncommon_gear.append("Broken Cannon")
+            world.rare_gear.append("Broken Antenna")
+        else:
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.common_gear.append("Progressive Gun")
+            world.uncommon_gear.append("Progressive Gun")
+            world.rare_gear.append("Progressive Gun")
+
+
 
     world.franklinbadge_elements = [
         "thunder",

@@ -490,7 +490,7 @@ def write_psi(world, rom):
         rom.write_bytes(address + 35, struct.pack("I", description))
         rom.write_bytes(description - 0xC00000 + 5, bytearray([world.broken_gadget_ids[i]]))
 
-    rom.write_bytes(0x15A8E7, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1])))
+    rom.write_bytes(0x15A8EB, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][1])))
     rom.write_bytes(0x15BB45, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[0]][0])))
     rom.write_bytes(0x15BBA5, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0])))
     rom.write_bytes(0x15DF41, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[4]][0])))
