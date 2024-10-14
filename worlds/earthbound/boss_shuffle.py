@@ -33,9 +33,6 @@ def initialize_bosses(world):
         "Starman Junior"
     ]
 
-    class BossData(str):
-        slot: str
-
     class SlotInfo(NamedTuple):
         sprite_addrs: List[int]
         short_names: List[int]
@@ -48,8 +45,8 @@ def initialize_bosses(world):
         long_name_pointer: int
         battle_group: int
 
-    world.slot_info: Dict[str, SlotInfo] = {
-        "Frank": SlotInfo([0x0F9338], [0x066111, 0x066198, 0x0661AC], [0x065F11, 0x065F20, 0x066481, 0x0660C5, 0x0746E2, 0x074BC1, 0x074E1D], [0x0683FF]),
+    world.boss_slots: Dict[str, SlotInfo] = {
+        "Frank": SlotInfo([0x0F9338], [0x066111, 0x066198, 0x0661AC], [0x065F11, 0x065F20, 0x066482, 0x0660C5, 0x0746E2, 0x074BC1, 0x074E1D], [0x0683FF]),
         "Frankystein Mark II": SlotInfo([0x0F96F0], [], [0x066146, 0x06648B, 0x0664FC], [0x068406]),
         "Titanic Ant": SlotInfo([], [], [], [0x06840D]),
         "Captain Strong": SlotInfo([0x0302CE, 0x05F870, 0x0F8E3D, 0x05F886, 0x05F8A1, 0x05F8E3, 0x05FB0E, 0x05FBFC, 0x05FD08, 0x05FD5C], [0x5FC2B, 0x05FCF7, 0x065F88, 0x066085], [0x05FC59], [0x068468]),
@@ -58,7 +55,7 @@ def initialize_bosses(world):
         "Mondo Mole": SlotInfo([], [], [], [0x068414]),
         "Boogey Tent": SlotInfo([0x0FACEB], [], [], [0x068535]),
         "Mini Barf": SlotInfo([0x0FB0B4], [], [], [0x2F9515]),
-        "Master Belch": SlotInfo([0x0FB7CF], [0x09E64D, 0x09E690, 0x2EEEED7, 0x08EF21, 0x08EF38], [0x2F6296, 0x2F62B3, 0x2F6910, 0x2F6973], [0x068558]),
+        "Master Belch": SlotInfo([0x0FB7CF], [0x09E64D, 0x09E690, 0x2EEED7, 0x08EF21, 0x08EF38], [0x2F6296, 0x2F62B3, 0x2F6910, 0x2F6973], [0x068558]),
         "Trillionage Sprout": SlotInfo([], [], [], [0x068422]),
         "Guardian Digger": SlotInfo([0x0FC11B, 0x0FC0B5, 0x0FC12C, 0x0FC0D7, 0x0FC0C6], [], [], [0x06858E, 0x068595, 0x06859C, 0x0685A3, 0x0685AA]),
         "Dept. Store Spook": SlotInfo([0x0FC803], [], [], [0x06855F]),
@@ -78,6 +75,7 @@ def initialize_bosses(world):
         "Starman Junior": SlotInfo([], [], [], [])
     }
     #todo, end boss action for Barf and mole/rat text
+    #Todo; Make a group with HAP, and  make sure pokey doesnt shuffle the actual battle
 
     world.boss_info: Dict[str, BossData] = {
         "Frank": BossData(0x0099, 0xEEEEBC, 0xEEEEBC, 0x01C0),
@@ -108,13 +106,22 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": BossData(0x01CA, 0xEEF064, 0xEEF056, 0x01D9),
         "Starman Junior": BossData(0x012F, 0xEEF082, 0xEEF07A, 0x01DA),
     }
-    #todo, tomorrow try to fix this and figure out emily's idea
 
     if world.options.boss_shuffle:
+        world.boss_slot_order = world.boss_list.copy()
         world.random.shuffle(world.boss_list)
 
 def write_bosses(world, rom):
-    for boss in world.boss_list:
-        for slot in world.slot_info:
-            print(world.slot_info)
-    #print(world.boss_list)
+    for slot, boss in enumerate(world.boss_slot_order):
+        for address in world.boss_slots[boss].sprite_addrs:  # sprite
+            rom.write_bytes(address, struct.pack("H", world.boss_info[world.boss_list[slot]].sprite_pointer))
+
+        for address in world.boss_slots[boss].short_names:  # short name
+            rom.write_bytes(address, struct.pack("I", world.boss_info[world.boss_list[slot]].short_name_pointer))
+
+        for address in world.boss_slots[boss].long_names:  # long name
+            rom.write_bytes(address, struct.pack("I", world.boss_info[world.boss_list[slot]].long_name_pointer))
+
+        for address in world.boss_slots[boss].battle_data:  # battle
+            rom.write_bytes(address, struct.pack("H", world.boss_info[world.boss_list[slot]].battle_group))
+            

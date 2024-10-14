@@ -5,7 +5,7 @@ import math
 
 
 class EarthBoundEnemy:
-    def __init__(self, name, address, hp, pp, exp, money, speed, offense, defense, level, is_scaled, shield=None):
+    def __init__(self, name, address, hp, pp, exp, money, speed, offense, defense, level, is_scaled, shield=None, attack_extensions=0):
         self.name = name
         self.address = address
         self.hp = hp
@@ -18,12 +18,13 @@ class EarthBoundEnemy:
         self.level = level
         self.is_scaled = is_scaled
         self.shield = shield
+        self.attack_extensions = attack_extensions
 
 
 def initialize_enemies(world):
     world.enemies = {
         "Insane Cultist": EarthBoundEnemy("Insane Cultist", 0x1595e7, 94, 0, 353, 33, 8, 19, 25, 13, False),
-        "Dept. Store Spook": EarthBoundEnemy("Dept. Store Spook", 0x159645, 610, 290, 24291, 1648, 19, 82, 135, 42, False),
+        "Dept. Store Spook": EarthBoundEnemy("Dept. Store Spook", 0x159645, 610, 290, 24291, 1648, 19, 82, 135, 42, False, None, 2),
         "Armored Frog": EarthBoundEnemy("Armored Frog", 0x1596a3, 202, 0, 1566, 77, 7, 37, 108, 22, False),
         "Bad Buffalo": EarthBoundEnemy("Bad Buffalo", 0x159701, 341, 0, 4108, 172, 11, 64, 104, 34, False),
         "Black Antoid": EarthBoundEnemy("Black Antoid", 0x15975f, 34, 25, 37, 7, 4, 14, 13, 7, False),
@@ -42,13 +43,13 @@ def initialize_enemies(world):
         "Conducting Menace": EarthBoundEnemy("Conducting Menace", 0x159c25, 445, 238, 14792, 574, 20, 107, 107, 52, False),
         "Conducting Spirit": EarthBoundEnemy("Conducting Spirit", 0x159c83, 587, 329, 30390, 804, 26, 130, 139, 59, False),
         "Evil Elemental": EarthBoundEnemy("Evil Elemental", 0x159ce1, 564, 0, 35737, 853, 30, 121, 136, 57, False),
-        "Ness's Nightmare": EarthBoundEnemy("Ness's Nightmare", 0x159d3f, 1654, 882, 89004, 4442, 31, 172, 253, 71, False, "psi_1"),
+        "Ness's Nightmare": EarthBoundEnemy("Ness's Nightmare", 0x159d3f, 1654, 882, 89004, 4442, 31, 172, 253, 71, False, "psi_1", 2),
         "Annoying Old Party Man": EarthBoundEnemy("Annoying Old Party Man", 0x159d9d, 99, 0, 130, 32, 6, 20, 25, 13, False),
         "Annoying Reveler": EarthBoundEnemy("Annoying Reveler", 0x159dfb, 288, 0, 2373, 268, 17, 58, 77, 31, False),
         "Unassuming Local Guy": EarthBoundEnemy("Unassuming Local Guy", 0x159e59, 73, 0, 146, 19, 5, 18, 13, 9, False),
         "New Age Retro Hippie": EarthBoundEnemy("New Age Retro Hippie", 0x159eb7, 87, 0, 160, 23, 5, 19, 14, 11, False),
-        "Mr. Carpainter": EarthBoundEnemy("Mr. Carpainter", 0x159f15, 262, 70, 1412, 195, 8, 33, 45, 21, False),
-        "Carbon Dog": EarthBoundEnemy("Carbon Dog", 0x159f73, 1672, 0, 0, 0, 31, 159, 174, 70, False),
+        "Mr. Carpainter": EarthBoundEnemy("Mr. Carpainter", 0x159f15, 262, 70, 1412, 195, 8, 33, 45, 21, False, None, 2),
+        "Carbon Dog": EarthBoundEnemy("Carbon Dog", 0x159f73, 1672, 0, 0, 0, 31, 159, 174, 70, False, None, 2),
         "Mighty Bear": EarthBoundEnemy("Mighty Bear", 0x159fd1, 167, 0, 609, 49, 7, 29, 31, 16, False),
         "Mighty Bear Seven": EarthBoundEnemy("Mighty Bear Seven", 0x15a02f, 367, 0, 8884, 440, 11, 85, 76, 42, False),
         "Putrid Moldyman": EarthBoundEnemy("Putrid Moldyman", 0x15a08d, 203, 0, 830, 53, 9, 36, 41, 21, False),
@@ -58,19 +59,19 @@ def initialize_enemies(world):
         "Giygas (1)": EarthBoundEnemy("Giygas (1)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
         "Wetnosaur": EarthBoundEnemy("Wetnosaur", 0x15a263, 1030, 0, 33098, 745, 17, 126, 172, 59, False),
         "Chomposaur": EarthBoundEnemy("Chomposaur", 0x15a2c1, 1288, 320, 44378, 896, 17, 139, 183, 62, False, "phys_2"),
-        "Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15a31f, 235, 102, 685, 150, 6, 19, 23, 13, False),
+        "Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15a31f, 235, 102, 685, 150, 6, 19, 23, 13, False, None, 2),
         "Gigantic Ant": EarthBoundEnemy("Gigantic Ant", 0x15a37d, 308, 81, 3980, 304, 17, 54, 112, 30, False),
-        "Shrooom!": EarthBoundEnemy("Shrooom!", 0x15a3db, 1700, 112, 96323, 4086, 18, 95, 154, 48, False),
-        "Plague Rat of Doom": EarthBoundEnemy("Plague Rat of Doom", 0x15a439, 1827, 60, 115272, 4464, 19, 71, 180, 47, False),
-        "Mondo Mole": EarthBoundEnemy("Mondo Mole", 0x15a497, 498, 161, 5791, 400, 9, 37, 50, 23, False),
-        "Guardian Digger": EarthBoundEnemy("Guardian Digger", 0x15a4f5, 386, 110, 17301, 1467, 17, 59, 129, 32, False, "phys_2"),
+        "Shrooom!": EarthBoundEnemy("Shrooom!", 0x15a3db, 1700, 112, 96323, 4086, 18, 95, 154, 48, False, None, 2),
+        "Plague Rat of Doom": EarthBoundEnemy("Plague Rat of Doom", 0x15a439, 1827, 60, 115272, 4464, 19, 71, 180, 47, False, None, 2),
+        "Mondo Mole": EarthBoundEnemy("Mondo Mole", 0x15a497, 498, 161, 5791, 400, 9, 37, 50, 23, False, None, 2),
+        "Guardian Digger": EarthBoundEnemy("Guardian Digger", 0x15a4f5, 386, 110, 17301, 1467, 17, 59, 129, 32, False, "phys_2", 2),
         "Scalding Coffee Cup": EarthBoundEnemy("Scalding Coffee Cup", 0x15a553, 190, 0, 2462, 280, 23, 55, 20, 30, False),
         "Loaded Dice": EarthBoundEnemy("Loaded Dice", 0x15a5b1, 307, 0, 10672, 703, 77, 146, 113, 59, False),
         "Slimy Little Pile": EarthBoundEnemy("Slimy Little Pile", 0x15a60f, 224, 0, 1978, 124, 15, 42, 61, 24, False),
         "Even Slimier Little Pile": EarthBoundEnemy("Even Slimier Little Pile", 0x15a66d, 326, 0, 15075, 579, 22, 103, 101, 49, False),
         "Arachnid!": EarthBoundEnemy("Arachnid!", 0x15a6cb, 216, 0, 4933, 296, 23, 61, 30, 32, False),
         "Arachnid!!!": EarthBoundEnemy("Arachnid!!!", 0x15a729, 344, 0, 10449, 412, 20, 87, 86, 45, False),
-        "Kraken": EarthBoundEnemy("Kraken", 0x15a787, 1097, 176, 79267, 3049, 21, 105, 166, 54, False),
+        "Kraken": EarthBoundEnemy("Kraken", 0x15a787, 1097, 176, 79267, 3049, 21, 105, 166, 54, False, None, 2),
         "Bionic Kraken": EarthBoundEnemy("Bionic Kraken", 0x15a7e5, 900, 60, 50308, 960, 42, 155, 195, 70, False),
         "Spinning Robo": EarthBoundEnemy("Spinning Robo", 0x15a843, 113, 17, 297, 21, 7, 21, 22, 14, False),
         "Whirling Robo": EarthBoundEnemy("Whirling Robo", 0x15a8a1, 374, 36, 5782, 256, 18, 78, 90, 39, False),
@@ -94,8 +95,8 @@ def initialize_enemies(world):
         "Smilin' Sphere": EarthBoundEnemy("Smilin' Sphere", 0x15af3d, 233, 60, 2218, 191, 17, 50, 65, 27, False),
         "Uncontrollable Sphere": EarthBoundEnemy("Uncontrollable Sphere", 0x15af9b, 577, 180, 20389, 796, 27, 116, 134, 56, False, "psi_1"),
         "Petrified Royal Guard": EarthBoundEnemy("Petrified Royal Guard", 0x15aff9, 573, 0, 19163, 628, 12, 106, 173, 53, False),
-        "Guardian General": EarthBoundEnemy("Guardian General", 0x15b057, 831, 6, 95390, 3235, 21, 109, 214, 55, False),
-        "Starman Deluxe": EarthBoundEnemy("Starman Deluxe", 0x15b0b5, 1400, 418, 160524, 3827, 27, 143, 186, 65, False, "psi_2"),
+        "Guardian General": EarthBoundEnemy("Guardian General", 0x15b057, 831, 6, 95390, 3235, 21, 109, 214, 55, False, None, 2),
+        "Starman Deluxe": EarthBoundEnemy("Starman Deluxe", 0x15b0b5, 1400, 418, 160524, 3827, 27, 143, 186, 65, False, "psi_2", 2),
         "Final Starman": EarthBoundEnemy("Final Starman", 0x15b113, 840, 860, 61929, 915, 47, 178, 187, 71, False, "psi_2"),
         "Urban Zombie": EarthBoundEnemy("Urban Zombie", 0x15b171, 171, 0, 700, 58, 10, 31, 24, 19, False),
         "Zombie Possessor": EarthBoundEnemy("Zombie Possessor", 0x15b1cf, 176, 0, 950, 81, 30, 28, 19, 17, False),
@@ -104,26 +105,26 @@ def initialize_enemies(world):
         "Over Zealous Cop": EarthBoundEnemy("Over Zealous Cop", 0x15b2e9, 325, 0, 7448, 420, 18, 69, 75, 36, False),
         "Territorial Oak": EarthBoundEnemy("Territorial Oak", 0x15b347, 145, 41, 356, 29, 5, 26, 30, 15, False),
         "Hostile Elder Oak": EarthBoundEnemy("Hostile Elder Oak", 0x15b3a5, 609, 76, 17567, 690, 14, 134, 146, 59, False),
-        "Diamond Dog": EarthBoundEnemy("Diamond Dog", 0x15b403, 3344, 154, 337738, 6968, 31, 167, 230, 70, False, "phys_2"),
+        "Diamond Dog": EarthBoundEnemy("Diamond Dog", 0x15b403, 3344, 154, 337738, 6968, 31, 167, 230, 70, False, "phys_2", 2),
         "Marauder Octobot": EarthBoundEnemy("Marauder Octobot", 0x15b461, 482, 0, 14475, 499, 23, 99, 121, 49, False),
         "Military Octobot": EarthBoundEnemy("Military Octobot", 0x15b4bf, 604, 0, 25607, 637, 26, 138, 147, 61, False),
         "Mechanical Octobot": EarthBoundEnemy("Mechanical Octobot", 0x15b51d, 768, 0, 41738, 744, 43, 147, 176, 66, False),
         "Ultimate Octobot": EarthBoundEnemy("Ultimate Octobot", 0x15b57b, 792, 0, 47876, 815, 44, 163, 181, 70, False),
         "Mad Duck": EarthBoundEnemy("Mad Duck", 0x15b5d9, 51, 0, 41, 12, 30, 12, 24, 8, False),
         "Dali's Clock": EarthBoundEnemy("Dali's Clock", 0x15b637, 296, 0, 2503, 314, 4, 65, 66, 34, False),
-        "Trillionage Sprout": EarthBoundEnemy("Trillionage Sprout", 0x15b695, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
+        "Trillionage Sprout": EarthBoundEnemy("Trillionage Sprout", 0x15b695, 1048, 240, 30303, 1358, 16, 54, 88, 29, False, None, 2),
         "Musica": EarthBoundEnemy("Musica", 0x15b6f3, 292, 0, 3748, 341, 21, 69, 85, 35, False),
         "Desert Wolf": EarthBoundEnemy("Desert Wolf", 0x15b751, 247, 0, 3740, 114, 33, 57, 67, 30, False),
-        "Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False),  # Real one
+        "Master Belch": EarthBoundEnemy("Master Belch", 0x15b7af, 650, 0, 12509, 664, 16, 50, 88, 27, False, None, 2),  # Real one
         "Big Pile of Puke": EarthBoundEnemy("Big Pile of Puke", 0x15b80d, 631, 0, 19659, 728, 16, 120, 158, 57, False),
-        "Master Barf": EarthBoundEnemy("Master Barf", 0x15b86b, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
+        "Master Barf": EarthBoundEnemy("Master Barf", 0x15b86b, 1319, 0, 125056, 3536, 24, 136, 177, 60, False, None, 2),
         "Kiss of Death": EarthBoundEnemy("Kiss of Death", 0x15b8c9, 333, 0, 10354, 528, 19, 91, 100, 46, False),
         "French Kiss of Death": EarthBoundEnemy("French Kiss of Death", 0x15b927, 588, 0, 19210, 879, 30, 160, 160, 70, False),
         "Foppy": EarthBoundEnemy("Foppy", 0x15b985, 120, 10, 1311, 93, 1, 29, 9, 16, False),
         "Fobby": EarthBoundEnemy("Fobby", 0x15b9e3, 240, 19, 18348, 620, 5, 98, 84, 48, False),
         "Zap Eel": EarthBoundEnemy("Zap Eel", 0x15ba41, 370, 0, 12170, 611, 29, 97, 93, 48, False),
         "Tangoo": EarthBoundEnemy("Tangoo", 0x15ba9f, 371, 5, 14718, 572, 19, 96, 99, 48, False),
-        "Boogey Tent": EarthBoundEnemy("Boogey Tent", 0x15bafd, 579, 56, 5500, 407, 10, 43, 69, 25, False),
+        "Boogey Tent": EarthBoundEnemy("Boogey Tent", 0x15bafd, 579, 56, 5500, 407, 10, 43, 69, 25, False, None, 2),
         "Squatter Demon": EarthBoundEnemy("Squatter Demon", 0x15bb5b, 774, 60, 48311, 897, 45, 158, 192, 69, False),
         "Crested Booka": EarthBoundEnemy("Crested Booka", 0x15bbb9, 265, 0, 3011, 130, 17, 53, 73, 28, False),
         "Great Crested Booka": EarthBoundEnemy("Great Crested Booka", 0x15bc17, 452, 0, 16365, 604, 20, 100, 110, 49, False),
@@ -131,13 +132,13 @@ def initialize_enemies(world):
         "Mook Senior": EarthBoundEnemy("Mook Senior", 0x15bcd3, 501, 700, 21056, 715, 25, 108, 122, 54, False),
         "Smelly Ghost": EarthBoundEnemy("Smelly Ghost", 0x15bd31, 194, 50, 606, 71, 10, 35, 89, 21, False),
         "Stinky Ghost": EarthBoundEnemy("Stinky Ghost", 0x15bd8f, 444, 0, 13179, 541, 18, 90, 179, 46, False),
-        "Everdred": EarthBoundEnemy("Everdred", 0x15bded, 182, 0, 986, 171, 6, 25, 35, 15, False),
+        "Everdred": EarthBoundEnemy("Everdred", 0x15bded, 182, 0, 986, 171, 6, 25, 35, 15, False, None, 2),
         "Attack Slug": EarthBoundEnemy("Attack Slug", 0x15be4b, 30, 6, 27, 6, 1, 9, 2, 5, False),
         "Pit Bull Slug": EarthBoundEnemy("Pit Bull Slug", 0x15bea9, 217, 11, 9994, 543, 2, 79, 77, 39, False),
         "Rowdy Mouse": EarthBoundEnemy("Rowdy Mouse", 0x15bf07, 36, 0, 34, 9, 5, 7, 20, 6, False),
         "Deadly Mouse": EarthBoundEnemy("Deadly Mouse", 0x15bf65, 416, 0, 9225, 406, 18, 63, 98, 38, False),
         "Care Free Bomb": EarthBoundEnemy("Care Free Bomb", 0x15bfc3, 504, 0, 14941, 641, 31, 135, 215, 60, False),
-        "Electro Specter": EarthBoundEnemy("Electro Specter", 0x15c021, 3092, 80, 261637, 6564, 29, 148, 203, 67, False, "psi_2"),
+        "Electro Specter": EarthBoundEnemy("Electro Specter", 0x15c021, 3092, 80, 261637, 6564, 29, 148, 203, 67, False, "psi_2", 2),
         "Handsome Tom": EarthBoundEnemy("Handsome Tom", 0x15c07f, 133, 16, 520, 45, 11, 27, 25, 16, False),
         "Smilin' Sam": EarthBoundEnemy("Smilin' Sam", 0x15c0dd, 161, 55, 712, 48, 17, 34, 44, 20, False),
         "Manly Fish": EarthBoundEnemy("Manly Fish", 0x15c13b, 500, 0, 15826, 624, 22, 83, 114, 42, False),
@@ -149,16 +150,16 @@ def initialize_enemies(world):
         "Shattered Man": EarthBoundEnemy("Shattered Man", 0x15c36f, 694, 0, 44690, 2630, 18, 104, 138, 51, False),
         "Fierce Shattered Man": EarthBoundEnemy("Fierce Shattered Man", 0x15c3cd, 516, 0, 17423, 577, 12, 101, 116, 50, False),
         "Ego Orb": EarthBoundEnemy("Ego Orb", 0x15c42b, 592, 0, 24180, 836, 17, 125, 140, 58, False),
-        "Thunder and Storm": EarthBoundEnemy("Thunder and Storm", 0x15c489, 2065, 70, 129026, 4736, 21, 111, 178, 56, False),
+        "Thunder and Storm": EarthBoundEnemy("Thunder and Storm", 0x15c489, 2065, 70, 129026, 4736, 21, 111, 178, 56, False, None, 2),
         "Yes Man Junior": EarthBoundEnemy("Yes Man Junior", 0x15c4e7, 33, 0, 13, 18, 4, 8, 9, 4, False),
-        "Frankystein Mark II": EarthBoundEnemy("Frankystein Mark II", 0x15c545, 91, 0, 76, 31, 4, 15, 18, 7, False),
+        "Frankystein Mark II": EarthBoundEnemy("Frankystein Mark II", 0x15c545, 91, 0, 76, 31, 4, 15, 18, 7, False, None, 2),
         "Frank": EarthBoundEnemy("Frank", 0x15c5a3, 63, 0, 50, 48, 7, 12, 17, 6, False),
         "Cute Li'l UFO": EarthBoundEnemy("Cute Li'l UFO", 0x15c601, 162, 25, 1519, 110, 58, 49, 32, 27, False),
         "Beautiful UFO": EarthBoundEnemy("Beautiful UFO", 0x15c65f, 339, 15, 8257, 426, 59, 86, 87, 44, False),
         "Pogo Punk": EarthBoundEnemy("Pogo Punk", 0x15c6bd, 35, 0, 15, 18, 3, 8, 10, 4, False),
         "Tough Guy": EarthBoundEnemy("Tough Guy", 0x15c71b, 342, 0, 9310, 525, 18, 72, 92, 37, False),
         "Mad Taxi": EarthBoundEnemy("Mad Taxi", 0x15c779, 253, 0, 2336, 216, 38, 53, 68, 28, False),
-        "Evil Mani-Mani": EarthBoundEnemy("Evil Mani-Mani", 0x15c7d7, 860, 88, 28139, 1852, 15, 86, 145, 45, False),
+        "Evil Mani-Mani": EarthBoundEnemy("Evil Mani-Mani", 0x15c7d7, 860, 88, 28139, 1852, 15, 86, 145, 45, False, None, 2),
         "Mr. Molecule": EarthBoundEnemy("Mr. Molecule", 0x15c835, 280, 21, 8708, 659, 18, 118, 97, 56, False),
         "Worthless Protoplasm": EarthBoundEnemy("Worthless Protoplasm", 0x15c893, 38, 0, 17, 11, 27, 11, 21, 7, False),
         "Sentry Robot": EarthBoundEnemy("Sentry Robot", 0x15c8f1, 372, 0, 5034, 392, 17, 77, 105, 39, False),
@@ -167,7 +168,7 @@ def initialize_enemies(world):
         "Major Psychic Psycho": EarthBoundEnemy("Major Psychic Psycho", 0x15ca0b, 618, 574, 39247, 862, 31, 145, 152, 65, False),
         "Mole Playing Rough": EarthBoundEnemy("Mole Playing Rough", 0x15ca69, 103, 0, 456, 36, 9, 22, 28, 14, False),
         "Gruff Goat": EarthBoundEnemy("Gruff Goat", 0x15cac7, 45, 0, 20, 9, 12, 8, 23, 7, False),
-        "Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15cb25, 962, 0, 32378, 2081, 83, 88, 137, 46, False, "psi_1"),
+        "Clumsy Robot": EarthBoundEnemy("Clumsy Robot", 0x15cb25, 962, 0, 32378, 2081, 83, 88, 137, 46, False, "psi_1", 3),
         "Soul Consuming Flame": EarthBoundEnemy("Soul Consuming Flame", 0x15cb83, 602, 0, 37618, 768, 30, 131, 262, 59, False),
         "Demonic Petunia": EarthBoundEnemy("Demonic Petunia", 0x15cbe1, 478, 0, 15171, 724, 26, 102, 111, 50, False),
         "Ranboob": EarthBoundEnemy("Ranboob", 0x15cc3f, 232, 42, 2486, 158, 20, 41, 63, 24, False),
@@ -275,69 +276,79 @@ def initialize_enemies(world):
         "Heavily Armed Pokey": [0x07, 0x00],
     }
 
-    coupled_bosses = {
-        "Titanic Ant": ["Black Antoid (2)"],
-        "Master Belch": ["Slimy Little Pile"],
-        "Trillionage Sprout": ["Tough Mobile Sprout"],
-        "Master Barf": ["Even Slimier Little Pile"],
-        "Starman Deluxe": ["Starman Super", "Starman"],
-        "Carbon Dog": ["Diamond Dog"]
-    }
-
     world.regional_enemies = {"Northern Onett": {world.enemies["Spiteful Crow"], world.enemies["Runaway Dog"], world.enemies["Coil Snake"]},
-                              "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies["Frank"], world.enemies["Frankystein Mark II"]},
-                              "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies["Titanic Ant"]},
-                              "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies["Captain Strong"], world.enemies["Ramblin' Evil Mushroom"],
+                              "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies[world.boss_list[0]], world.enemies[world.boss_list[1]]},
+                              "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies[world.boss_list[2]]},
+                              "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies[world.boss_list[3]], world.enemies["Ramblin' Evil Mushroom"],
                                          world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"],
                                          world.enemies["Runaway Dog"]},
-                              "Everdred's House": {world.enemies["Everdred"]},
+                              "Everdred's House": {world.enemies[world.boss_list[4]]},
                               "Peaceful Rest Valley": {world.enemies["Li'l UFO"], world.enemies["Mobile Sprout"], world.enemies["Spinning Robo"], world.enemies["Territorial Oak"]},
-                              "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies["Mr. Carpainter"], world.enemies["Mr. Carpainter (2)"]},
-                              "Lilliput Steps": {world.enemies["Mighty Bear"], world.enemies["Mole Playing Rough"], world.enemies["Mr. Batty"], world.enemies["Mondo Mole"]},
+                              "Happy-Happy Village": {world.enemies["Coil Snake"], world.enemies["Insane Cultist"], world.enemies["Spiteful Crow"], world.enemies["Unassuming Local Guy"], world.enemies[world.boss_list[5]]},
+                              "Lilliput Steps": {world.enemies["Mighty Bear"], world.enemies["Mole Playing Rough"], world.enemies["Mr. Batty"], world.enemies[world.boss_list[6]]},
                               "Threed": {world.enemies["Coil Snake"], world.enemies["Handsome Tom"], world.enemies["Smilin' Sam"], world.enemies["Trick or Trick Kid"],
                                          world.enemies["Zombie Dog"], world.enemies["Putrid Moldyman"], world.enemies["Smelly Ghost"]},
-                              "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies["Mini Barf"], world.enemies["Zombie Dog"]},
+                              "Threed Underground": {world.enemies["No Good Fly"], world.enemies["Urban Zombie"], world.enemies["Zombie Possessor"], world.enemies[world.boss_list[8]], world.enemies["Zombie Dog"]},
                               "Grapefruit Falls": {world.enemies["Armored Frog"], world.enemies["Black Antoid"], world.enemies["Coil Snake"], world.enemies["Farm Zombie"],
                                                    world.enemies["Plain Crocodile"], world.enemies["Red Antoid"], world.enemies["Violent Roach"], world.enemies["Mad Duck"], world.enemies["Black Antoid (2)"]},
-                              "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies["Master Belch"], world.enemies["Master Belch (2)"]},
-                              "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom"], world.enemies["Tough Mobile Sprout"], world.enemies["Trillionage Sprout"], world.enemies["Trillionage Sprout (2)"]},
+                              "Belch's Factory": {world.enemies["Farm Zombie"], world.enemies["Foppy"], world.enemies["Mostly Bad Fly"], world.enemies["Slimy Little Pile"], world.enemies[world.boss_list[9]]},
+                              "Milky Well": {world.enemies["Mad Duck"], world.enemies["Ranboob"], world.enemies["Struttin' Evil Mushroom"], world.enemies["Tough Mobile Sprout"], world.enemies[world.boss_list[10]]},
                               "Dusty Dunes Desert": {world.enemies["Bad Buffalo"], world.enemies["Crested Booka"], world.enemies["Criminal Caterpillar"], world.enemies["Cute Li'l UFO"], world.enemies["Desert Wolf"], world.enemies["Mole Playing Rough"],
                                                      world.enemies["Skelpion"], world.enemies["Smilin' Sphere"]},
                               "Fourside": {world.enemies["Annoying Reveler"], world.enemies["Crazed Sign"], world.enemies["Extra Cranky Lady"], world.enemies["Mad Taxi"],
-                                           world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies["Evil Mani-Mani"]},
-                              "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies["Guardian Digger"], world.enemies["Guardian Digger (2)"], world.enemies["Gigantic Ant (2)"]},
-                              "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Dept. Store Spook"], world.enemies["Dept. Store Spook (2)"]},
+                                           world.enemies["Abstract Art"], world.enemies["Dali's Clock"], world.enemies["Enraged Fire Plug"], world.enemies["Robo-pump"], world.enemies[world.boss_list[13]]},
+                              "Gold Mine": {world.enemies["Gigantic Ant"], world.enemies["Mad Duck"], world.enemies["Noose Man"], world.enemies["Thirsty Coil Snake"], world.enemies[world.boss_list[11]], world.enemies["Gigantic Ant (2)"]},
+                              "Fourside Dept. Store": {world.enemies["Musica"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies[world.boss_list[12]]},
                               "Monkey Caves": {world.enemies["Struttin' Evil Mushroom (2)"], world.enemies["Tough Mobile Sprout"], world.enemies["Struttin' Evil Mushroom"]},
-                              "Monotoli Building": {world.enemies["Sentry Robot"], world.enemies["Clumsy Robot"], world.enemies["Clumsy Robot (2)"], world.enemies["Clumsy Robot (3)"]},
-                              "Rainy Circle": {world.enemies["Arachnid!"], world.enemies["Cave Boy"], world.enemies["Elder Batty"], world.enemies["Mighty Bear Seven"], world.enemies["Strong Crocodile"], world.enemies["Shrooom!"]},
-                              "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies["Kraken"], world.enemies["Kraken (2)"]},
+                              "Monotoli Building": {world.enemies["Sentry Robot"], world.enemies[world.boss_list[14]]},
+                              "Rainy Circle": {world.enemies["Arachnid!"], world.enemies["Cave Boy"], world.enemies["Elder Batty"], world.enemies["Mighty Bear Seven"], world.enemies["Strong Crocodile"], world.enemies[world.boss_list[15]]},
+                              "Summers": {world.enemies["Crazed Sign"], world.enemies["Mad Taxi"], world.enemies["Mole Playing Rough"], world.enemies["Over Zealous Cop"], world.enemies["Tough Guy"], world.enemies[world.boss_list[18]]},
                               "Summers Museum": {world.enemies["Shattered Man"]},
-                              "Magnet Hill": {world.enemies["Deadly Mouse"], world.enemies["Filthy Attack Roach"], world.enemies["Stinky Ghost"], world.enemies["Plague Rat of Doom"]},
-                              "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies["Thunder and Storm"], world.enemies["Thunder and Storm (2)"]},
+                              "Magnet Hill": {world.enemies["Deadly Mouse"], world.enemies["Filthy Attack Roach"], world.enemies["Stinky Ghost"], world.enemies[world.boss_list[16]]},
+                              "Pink Cloud": {world.enemies["Conducting Menace"], world.enemies["Kiss of Death"], world.enemies["Tangoo"], world.enemies["Thunder Mite"], world.enemies[world.boss_list[17]]},
                               "Scaraba": {world.enemies["Beautiful UFO"], world.enemies["Dread Skelpion"], world.enemies["Great Crested Booka"], world.enemies["High-class UFO"], world.enemies["Master Criminal Worm"]},
                               "Pyramid": {world.enemies["Arachnid!!!"], world.enemies["Fierce Shattered Man"], world.enemies["Guardian Hieroglyph"], world.enemies["Lethal Asp Hieroglyph"], world.enemies["Petrified Royal Guard"],
-                                          world.enemies["Guardian General"], world.enemies["Guardian General (2)"]},
+                                          world.enemies[world.boss_list[19]]},
                               "Southern Scaraba": {world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Marauder Octobot"]},
                               "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"]},
                               "Deep Darkness": {world.enemies["Mole Playing Rough"]},
                               "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
                               "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
-                                                         world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies["Master Barf"]},
-                              "Boogey Tent": {world.enemies["Boogey Tent"], world.enemies["Boogey Tent (2)"]},
+                                                         world.enemies["Manly Fish"], world.enemies["Manly Fish's Brother"], world.enemies["Pit Bull Slug"], world.enemies["Zap Eel"], world.enemies[world.boss_list[20]]},
+                              "Boogey Tent": {world.enemies[world.boss_list[7]]},
                               "Southern Winters": {world.enemies["Rowdy Mouse"], world.enemies["Worthless Protoplasm"], world.enemies["Mad Duck"],
                                                    world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
-                              "Stonehenge Base": {world.enemies["Atomic Power Robot"], world.enemies["Military Octobot"], world.enemies["Mook Senior"], world.enemies["Starman"], world.enemies["Starman Super"], world.enemies["Starman Deluxe"], world.enemies["Starman Super (2)"]},
-                              "Lumine Hall": {world.enemies["Conducting Spirit"], world.enemies["Fobby"], world.enemies["Hyper Spinning Robo"], world.enemies["Uncontrollable Sphere"], world.enemies["Electro Specter"]},
+                              "Stonehenge Base": {world.enemies["Atomic Power Robot"], world.enemies["Military Octobot"], world.enemies["Mook Senior"], world.enemies["Starman"], world.enemies["Starman Super"], world.enemies[world.boss_list[21]]},
+                              "Lumine Hall": {world.enemies["Conducting Spirit"], world.enemies["Fobby"], world.enemies["Hyper Spinning Robo"], world.enemies["Uncontrollable Sphere"], world.enemies[world.boss_list[22]]},
                               "Lost Underworld": {world.enemies["Chomposaur"], world.enemies["Chomposaur (2)"], world.enemies["Ego Orb"], world.enemies["Wetnosaur"]},
-                              "Fire Spring": {world.enemies["Evil Elemental"], world.enemies["Major Psychic Psycho"], world.enemies["Psychic Psycho"], world.enemies["Soul Consuming Flame"], world.enemies["Carbon Dog"], world.enemies["Diamond Dog"], world.enemies["Diamond Dog (2)"]},
+                              "Fire Spring": {world.enemies["Evil Elemental"], world.enemies["Major Psychic Psycho"], world.enemies["Psychic Psycho"], world.enemies["Soul Consuming Flame"], world.enemies[world.boss_list[23]]},
                               "Magicant": {world.enemies["Care Free Bomb"], world.enemies["Electro Swoosh"], world.enemies["French Kiss of Death"], world.enemies["Loaded Dice"], world.enemies["Mr. Molecule"], world.enemies["Uncontrollable Sphere"],
-                                           world.enemies["Fobby"], world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Kraken"], world.enemies["Ness's Nightmare"], world.enemies["Ness's Nightmare (2)"], world.enemies["Kraken (2)"],
+                                           world.enemies["Fobby"], world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies[world.boss_list[18]], world.enemies[world.boss_list[24]],
                                            world.enemies["Loaded Dice (2)"]},
                               "Cave of the Past": {world.enemies["Bionic Kraken"], world.enemies["Final Starman"], world.enemies["Ghost of Starman"], world.enemies["Nuclear Reactor Robot"], world.enemies["Squatter Demon"],
                                                    world.enemies["Ultimate Octobot"], world.enemies["Wild 'n Wooly Shambler"], world.enemies["Final Starman (2)"], world.enemies["Ghost of Starman (2)"]},
-                              "Endgame": {world.enemies["Heavily Armed Pokey"], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
+                              "Endgame": {world.enemies[world.boss_list[25]], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
                         
                               }
+    for region in world.regional_enemies:
+        enemy_list = world.regional_enemies[region]
+        updated_list = set(enemy_list)
+        for enemy in enemy_list:
+            if enemy.name == "Carbon Dog":
+                updated_list.add(world.enemies["Diamond Dog"])
+                updated_list.add(world.enemies["Diamond Dog (2)"])
+                #todo; option to not have in Giygas/Mine
+
+            if enemy.attack_extensions > 1:
+                for i in range(1, enemy.attack_extensions):
+                    updated_list.add(world.enemies[f"{enemy.name} ({i + 1})"])
+        world.regional_enemies[region] = updated_list
+
+
+    for region, enemies in world.regional_enemies.items():
+        # Create a list of enemy names for each enemy in the set
+        enemy_names = [enemy.name for enemy in enemies]
+        print(f"{region}: {enemy_names}")
 
 
 combat_regions = [
@@ -555,7 +566,7 @@ enemy_psi = {
     "Li'l UFO": ["null", "null", "stuffiness_beam", "null"],
     "Ness's Nightmare (2)": ["special", "lifeup", "special", "null"],
     "Mr. Carpainter (2)": ["crashing_boom_bang", "null", "null", "null"],
-    "Carbon Dog (2)": ["fire_spray", "null", "null", "null"],
+    "Carbon Dog (2)": ["spray_fire", "null", "null", "null"],
     "Gigantic Ant (2)": ["paralysis", "null", "null", "null"],
     "Chomposaur (2)": ["null", "null", "fire", "fire"],
     "Guardian Digger (2)": ["null", "null", "null", "lifeup"],
@@ -1005,8 +1016,6 @@ def scale_enemies(world, rom):
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 k = 2.258
                 enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
-                #enemy_exp = int(enemy.exp * level / enemy.level)
-                #enemy_exp = int(enemy_exp * world.options.experience_modifier.value / 100)
                 enemy_money = int(enemy.money * level / enemy.level)
                 enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
                 enemy_offense = int(enemy.offense * level / enemy.level)
