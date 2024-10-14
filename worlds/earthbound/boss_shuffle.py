@@ -1,6 +1,9 @@
 from typing import NamedTuple, List
 import struct
 
+if TYPE_CHECKING:
+    import Dict
+
 
 def initialize_bosses(world):
     world.boss_list = [

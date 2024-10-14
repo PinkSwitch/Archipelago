@@ -475,13 +475,13 @@ def place_static_items(world):
     if world.options.giygas_required == 1:
         world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))  # Normal final boss
         if world.options.magicant_mode == 1:
-            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))  # If required magicant
+            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))  # If required magicant
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))  # If not required, place this condition on sanctuary goal
     else:
         if world.options.magicant_mode == 1:
-            world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))  # If Magicant required but not Giygas, place goal
+            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))  # If Magicant required but not Giygas, place goal
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))  # If neither final boss, place goal
@@ -491,7 +491,7 @@ def place_static_items(world):
 
     if world.options.magicant_mode == 2:
         world.get_location("+1 Sanctuary").place_locked_item(world.create_item("Magicant Unlock"))
-        world.get_location("Ness's Nightmare").place_locked_item(world.create_item("Alternate Goal"))
+        world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Alternate Goal"))
 
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))
