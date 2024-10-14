@@ -81,7 +81,7 @@ class EarthBoundWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.event_count = 8
-        self.world_version = "2.1"
+        self.world_version = "2.2"
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {

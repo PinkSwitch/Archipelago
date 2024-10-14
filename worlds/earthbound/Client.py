@@ -54,7 +54,7 @@ class EarthBoundClient(SNIClient):
     game = "EarthBound"
     patch_suffix = ".apeb"
     most_recent_connect: str = ""
-    client_version = "2.1"
+    client_version = "2.2"
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         import struct

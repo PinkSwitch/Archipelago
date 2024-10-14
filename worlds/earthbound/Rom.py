@@ -14,6 +14,7 @@ from .psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
 from .enemy_data import combat_regions, scale_enemies
+from .boss_shuffle import write_bosses
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING, Optional
@@ -422,6 +423,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.psi_shuffle:
         write_psi(world, rom)
+    write_bosses(world, rom)
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, eb_text_table, 23)
@@ -480,7 +482,7 @@ class EBPatchExtensions(APPatchExtension):
         version_check = rom.read_bytes(0x3FF0A0, 16)
         version_check = version_check.split(b'\x00', 1)[0]
         version_check_str = version_check.decode("ascii")
-        client_version = "2.1"
+        client_version = "2.2"
         if client_version != version_check_str and version_check_str != "":
             raise Exception(f"Error! Patch generated on EarthBound APWorld version {version_check_str} doesn't match client version {client_version}! " +
                             f"Please use EarthBound APWorld version {version_check_str} for patching.")

@@ -93,6 +93,12 @@ class PSIShuffle(Choice):
     option_basic = 1
     option_extended = 2
 
+class BossShuffle(Toggle):
+    """Shuffles boss encounters amongst each other."""
+    display_name = "Boss Shuffle"
+
+
+
 class BanFlashFavorite(Toggle):
     """If enabled, allows PSI Flash to be shuffled onto the Favorite Thing PSI slot. Can be quite annoying early-game. 
        Does nothing if PSI Shuffle is set to None."""
@@ -198,21 +204,13 @@ class DeathLinkMode(Choice):
     option_mortal_mercy = 2
     default = 1
 
-# class RandomBattleBG(Choice):
- #   """Generates random battle backgrounds.
-  #     Normal: Battle backgrounds are not randomized.
-   #    Random Safe: Generates battle backgrounds from valid backgrounds or combining valid backgrounds.
-   #    Random Chaos: Generates random battle backgrounds. Results may look glitchy, or weird. WARNING: MAY CAUSE FLASHING OR MOVING LIGHTS, USE WITH CAUTION"""
-   # display_name = "Random Battle backgrounds"
-    #option_normal = 0
-    #option_random_safe = 1
-    #option_random_chaos = 2
-    #default = 0
-    #Broken. may fix later.
-
 class RandomBattleBG(Toggle):
     """Generates random battle backgrounds."""
     display_name = "Randomize Battle Backgrounds"
+
+class RandomSwirlColors(Toggle):
+    """Generates random colors for pre-battle swirls."""
+    display_name = "Randomize Swirl Colors"
 
 class RemoteItems(Toggle):
     """If enabled, you will receive your own items from the server upon collecting them, rather than locally.
@@ -238,6 +236,7 @@ class EBOptions(PerGameCommonOptions):
     character_shuffle: CharacterShuffle
     psi_shuffle: PSIShuffle
     allow_flash_as_favorite_thing: BanFlashFavorite
+    boss_shuffle: BossShuffle
     #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
@@ -248,6 +247,7 @@ class EBOptions(PerGameCommonOptions):
     remote_items: RemoteItems
     random_flavors: RandomFlavors
     random_battle_backgrounds: RandomBattleBG
+    random_swirl_colors: RandomSwirlColors
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
     #excluded_teleports: ExcludedTeleports

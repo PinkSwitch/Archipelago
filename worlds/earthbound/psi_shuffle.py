@@ -408,24 +408,24 @@ def shuffle_psi(world):
 def write_psi(world, rom):
     from .text_data import text_encoder, eb_text_table
     psi_num = 0
-    for key, (address, levels) in world.psi_address.items():
+    for spell, (address, levels) in world.psi_address.items():
         for i in range(levels):
             rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i]))
             rom.write_bytes(address + 6, bytearray(world.psi_level_data[psi_num][i]))
             if psi_num == 0:
                 rom.write_bytes(address, bytearray([0x01]))
             elif psi_num == 5 and i > 1:
-                rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[key][i - 2]))
-                rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]]))
-                rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]]))
-                rom.write_bytes(0x2EAE23 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[key][i - 2]])) #Local texts
+                rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[spell][i - 2]))
+                rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
+                rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
+                rom.write_bytes(0x2EAE23 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
-            if key == "Special" and psi_num != 0:
+            if spell == "Special" and psi_num != 0:
                 rom.write_bytes(address, bytearray([0x12]))
 
             address += 15
-            if key == "Starstorm" and i == 1:
+            if spell == "Starstorm" and i == 1:
                 address = 0x158B8B
     # todo; expanded psi
     # todo; animation for Starstorm L/D
@@ -503,7 +503,7 @@ def write_psi(world, rom):
     rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
     rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3])))
 
-    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1])))
+    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1]))) #todo, fix
 
 def adjust_psi_list(psi_input, spell, index):
     psi_input.insert(index, (psi_input.pop(psi_input.index(spell))))
