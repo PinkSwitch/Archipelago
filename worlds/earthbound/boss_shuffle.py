@@ -1,8 +1,5 @@
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Dict
 import struct
-
-if TYPE_CHECKING:
-    import Dict
 
 
 def initialize_bosses(world):
@@ -117,10 +114,7 @@ def initialize_bosses(world):
         world.random.shuffle(world.boss_list)
 
 def write_bosses(world, rom):
-    #for boss, slot in boss_dict:
-        #info: SlotInfo = world.slot_info[slot]
-        #data: BossData = world.boss_info[slot]
-        # do whatever
-        #for sprite_addr in info.sprite_addrs:
-            #rom.write_bytes(sprite_addr, bytearray(????))
-    print(world.boss_list)
+    for boss in world.boss_list:
+        for slot in world.slot_info:
+            print(world.slot_info)
+    #print(world.boss_list)
