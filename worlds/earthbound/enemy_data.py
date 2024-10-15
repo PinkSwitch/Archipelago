@@ -229,7 +229,7 @@ def initialize_enemies(world):
         "Tiny Li'l Ghost": EarthBoundEnemy("Tiny Li'l Ghost", 0x15e3bf, 90, 0, 1, 162, 100, 19, 7, 18, False),
         "Starman Junior": EarthBoundEnemy("Starman Junior", 0x15e41d, 200, 999, 16, 20, 1, 11, 10, 6, False),
         "Buzz Buzz": EarthBoundEnemy("Buzz Buzz", 0x15e47b, 2000, 999, 0, 0, 100, 40, 92, 20, False),
-        "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e4d9, 2000, 999, 0, 0, 60, 145, 255, 80, False),
+        "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e4d9, 2000, 999, 70000, 0, 60, 145, 255, 80, False),
         # "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e537, 1746, 999, 0, 0, 51, 150, 274, 72, False), Cutscene?
         "Giygas (2)": EarthBoundEnemy("Giygas (2)", 0x15e595, 9999, 999, 0, 0, 80, 255, 255, 80, False),
         "Giygas (3)": EarthBoundEnemy("Giygas (3)", 0x15e5f3, 9999, 0, 0, 0, 80, 255, 255, 80, False),
@@ -343,12 +343,6 @@ def initialize_enemies(world):
                 for i in range(1, enemy.attack_extensions):
                     updated_list.add(world.enemies[f"{enemy.name} ({i + 1})"])
         world.regional_enemies[region] = updated_list
-
-
-    for region, enemies in world.regional_enemies.items():
-        # Create a list of enemy names for each enemy in the set
-        enemy_names = [enemy.name for enemy in enemies]
-        print(f"{region}: {enemy_names}")
 
 
 combat_regions = [
