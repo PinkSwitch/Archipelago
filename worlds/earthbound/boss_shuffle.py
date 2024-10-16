@@ -107,7 +107,6 @@ def initialize_bosses(world):
     }
 
     #mole/rat text
-    #Todo; Make sure Diamond Dog gets the Barf/Pokey stuff and not carbon dot
 
     if world.options.boss_shuffle:
         world.boss_slot_order = world.boss_list.copy()
@@ -116,12 +115,19 @@ def initialize_bosses(world):
 def write_bosses(world, rom):
     rom.write_bytes(0x15E527, bytearray([0x00, 0x00])) #Blank out Pokey's end battle action
     rom.write_bytes(0x15B8B9, bytearray([0x00, 0x00])) #Blank out barf's end battle script
-    rom.write_bytes(world.enemies[world.boss_slot_order[25]].address + 78, bytearray([0x13, 0x01]))
-    rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
+    if world.enemies[world.boss_slot_order[25]].name == "Carbon Dog":
+        rom.write_bytes(0x15B451, bytearray([0x13, 0x01]))
+    else:
+        rom.write_bytes(world.enemies[world.boss_slot_order[25]].address + 78, bytearray([0x13, 0x01]))
+
+    if world.enemies[world.boss_slot_order[20]].name == "Carbon Dog":
+        rom.write_bytes(0x15B451, bytearray([0xF4, 0x00]))
+    else:
+        rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
+
     if world.boss_list[25] != "Heavily Armed Pokey":
         rom.write_bytes(0x15E50A, bytearray([0x19, 0x6E, 0xEF]))
         rom.write_bytes(0x15E4FE, bytearray([0x70, 0x11, 0x01])) #Add to the scaling list?
-
 
     for slot, boss in enumerate(world.boss_slot_order):
         for address in world.boss_slots[boss].sprite_addrs:  # sprite
@@ -137,5 +143,8 @@ def write_bosses(world, rom):
             rom.write_bytes(address, struct.pack("H", world.boss_info[world.boss_list[slot]].battle_group))
 
     rom.write_bytes(0x10DF7F, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(0x10DF86, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(0x10DF8D, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(0x10DFA2, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
     rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
             
