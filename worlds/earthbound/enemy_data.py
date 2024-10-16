@@ -276,9 +276,17 @@ def initialize_enemies(world):
         "Heavily Armed Pokey": [0x07, 0x00],
     }
 
+    flunkies = {
+        "Titanic Ant": world.enemies["Black Antoid (2)"],
+        "Master Belch": world.enemies["Slimy Little Pile"],
+        "Trillionage Sprout": world.enemies["Tough Mobile Sprout"],
+        "Master Barf": world.enemies["Even Slimier Little Pile"],
+        "Starman Deluxe": [world.enemies["Starman"], world.enemies["Starman Super"]]
+    }
+
     world.regional_enemies = {"Northern Onett": {world.enemies["Spiteful Crow"], world.enemies["Runaway Dog"], world.enemies["Coil Snake"]},
                               "Onett": {world.enemies["Pogo Punk"], world.enemies["Skate Punk"], world.enemies["Yes Man Junior"], world.enemies[world.boss_list[0]], world.enemies[world.boss_list[1]]},
-                              "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Black Antoid (2)"], world.enemies["Rowdy Mouse"], world.enemies[world.boss_list[2]]},
+                              "Giant Step": {world.enemies["Attack Slug"], world.enemies["Black Antoid"], world.enemies["Rowdy Mouse"], world.enemies[world.boss_list[2]]},
                               "Twoson": {world.enemies["Black Antoid"], world.enemies["Cop"], world.enemies[world.boss_list[3]], world.enemies["Ramblin' Evil Mushroom"],
                                          world.enemies["Annoying Old Party Man"], world.enemies["Cranky Lady"], world.enemies["Mobile Sprout"], world.enemies["New Age Retro Hippie"], world.enemies["Unassuming Local Guy"],
                                          world.enemies["Runaway Dog"]},
@@ -338,6 +346,11 @@ def initialize_enemies(world):
                 updated_list.add(world.enemies["Diamond Dog"])
                 updated_list.add(world.enemies["Diamond Dog (2)"])
                 #todo; option to not have in Giygas/Mine
+            elif enemy.name in flunkies:
+                if enemy.name == "Starman Deluxe":
+                    updated_list.update(flunkies[enemy.name])
+                else:
+                    updated_list.add(flunkies[enemy.name])
 
             if enemy.attack_extensions > 1:
                 for i in range(1, enemy.attack_extensions):
@@ -387,6 +400,7 @@ combat_regions = [
     "Threed Underground",
     "Boogey Tent"
 ]
+
 
 levels = [
     1,  # north onett

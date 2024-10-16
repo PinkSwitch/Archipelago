@@ -107,9 +107,6 @@ def initialize_bosses(world):
     }
 
     #mole/rat text
-    #Todo; make sure pokey doesnt shuffle the actual battle
-    #todo; assign flunkies per battle
-    #todo; Change the row value of Non-Pokey final battles?
     #Todo; Make sure Diamond Dog gets the Barf/Pokey stuff and not carbon dot
 
     if world.options.boss_shuffle:
@@ -139,5 +136,6 @@ def write_bosses(world, rom):
         for address in world.boss_slots[boss].battle_data:  # battle
             rom.write_bytes(address, struct.pack("H", world.boss_info[world.boss_list[slot]].battle_group))
 
-    rom.write_bytes(0x10DF7F, struct.pack("H", world.boss_info[world.boss_list[slot]].enemy_id))
+    rom.write_bytes(0x10DF7F, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
             
