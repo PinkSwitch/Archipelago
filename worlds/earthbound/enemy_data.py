@@ -231,7 +231,7 @@ def initialize_enemies(world):
         "Buzz Buzz": EarthBoundEnemy("Buzz Buzz", 0x15e47b, 2000, 999, 0, 0, 100, 40, 92, 20, False),
         "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e4d9, 2000, 999, 70000, 0, 60, 145, 255, 80, False),
         # "Heavily Armed Pokey": EarthBoundEnemy("Heavily Armed Pokey", 0x15e537, 1746, 999, 0, 0, 51, 150, 274, 72, False), Cutscene?
-        "Giygas (2)": EarthBoundEnemy("Giygas (2)", 0x15e595, 9999, 999, 0, 0, 80, 255, 255, 80, False),
+        "Giygas (2)": EarthBoundEnemy("Giygas (2)", 0x15e595, 9999, 999, 70000, 0, 80, 255, 255, 80, False),
         "Giygas (3)": EarthBoundEnemy("Giygas (3)", 0x15e5f3, 9999, 0, 0, 0, 80, 255, 255, 80, False),
         "Giygas (4)": EarthBoundEnemy("Giygas (4)", 0x15e651, 2000, 0, 0, 0, 80, 255, 255, 80, False),
         "Giygas (5)": EarthBoundEnemy("Giygas (5)", 0x15e6af, 9999, 0, 0, 0, 80, 255, 255, 80, False),
@@ -245,43 +245,14 @@ def initialize_enemies(world):
         "Giygas (6)": EarthBoundEnemy("Giygas (6)", 0x15e99f, 9999, 0, 0, 0, 80, 255, 127, 80, False),
         "Clumsy Robot (3)": EarthBoundEnemy("Clumsy Robot (3)", 0x15e9fd, 962, 0, 32378, 2081, 83, 88, 137, 46, False),
     }
-    
-    boss_data = {
-        "Frank": [0xC0, 0x01, 0x2EC684],
-        "Frankystein Mark II": [0xC1, 0x01, 0x2EC68A],
-        "Titanic Ant": [0xC2, 0x01, 0x2EC69E],
-        "Captain Strong": [0xC4, 0x01],
-        "Everdred": [0xC5, 0x01],
-        "Mr. Carpainter": [0xC6, 0x01],
-        "Mondo Mole": [0xC7, 0x01],
-        "Master Belch": [0xC8, 0x01],
-        "Trillionage Sprout": [0xC9, 0x01],
-        "Boogey Tent": [0xCA, 0x01],
-        "Guardian Digger": [0xCB, 0x01],
-        "Dept. Store Spook": [0xCC, 0x01],
-        "Evil Mani-Mani": [0xCD, 0x01],
-        "Clumsy Robot": [0xCE, 0x01],
-        "Plague Rat of Doom": [0xCF, 0x01],
-        "Thunder and Storm": [0xD0, 0x01],
-        "Shrooom!": [0xD1, 0x01],
-        "Starman Deluxe": [0xD2, 0x01],
-        "Kraken": [0xD3, 0x01],
-        "Guardian General": [0xD4, 0x01],
-        "Master Barf": [0xD5, 0x01],
-        "Electro Specter": [0xD6, 0x01],
-        "Carbon Dog": [0xD7, 0x01],
-        "Ness's Nightmare": [0xD8, 0x01],
-        "Starman Junior": [0xDA, 0x01],
-        "Mini Barf": [0xE2, 0x01],
-        "Heavily Armed Pokey": [0x07, 0x00],
-    }
 
     flunkies = {
         "Titanic Ant": world.enemies["Black Antoid (2)"],
         "Master Belch": world.enemies["Slimy Little Pile"],
         "Trillionage Sprout": world.enemies["Tough Mobile Sprout"],
         "Master Barf": world.enemies["Even Slimier Little Pile"],
-        "Starman Deluxe": [world.enemies["Starman"], world.enemies["Starman Super"]]
+        "Starman Deluxe": [world.enemies["Starman"], world.enemies["Starman Super"]],
+        "Carbon Dog": world.enemies["Diamond Dog"]
     }
 
     world.regional_enemies = {"Northern Onett": {world.enemies["Spiteful Crow"], world.enemies["Runaway Dog"], world.enemies["Coil Snake"]},
@@ -318,7 +289,7 @@ def initialize_enemies(world):
                               "Pyramid": {world.enemies["Arachnid!!!"], world.enemies["Fierce Shattered Man"], world.enemies["Guardian Hieroglyph"], world.enemies["Lethal Asp Hieroglyph"], world.enemies["Petrified Royal Guard"],
                                           world.enemies[world.boss_list[19]]},
                               "Southern Scaraba": {world.enemies["Beautiful UFO"], world.enemies["High-class UFO"], world.enemies["Marauder Octobot"]},
-                              "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"]},
+                              "Dungeon Man": {world.enemies["Dali's Clock"], world.enemies["Mystical Record"], world.enemies["Lesser Mook"], world.enemies["Mystical Record"], world.enemies["Scalding Coffee Cup"], world.enemies["Worthless Protoplasm"], world.enemies["Cute Li'l UFO"]},
                               "Deep Darkness": {world.enemies["Mole Playing Rough"]},
                               "Winters": {world.enemies["Lesser Mook"], world.enemies["Whirling Robo"], world.enemies["Wooly Shambler"]},
                               "Deep Darkness Darkness": {world.enemies["Big Pile of Puke"], world.enemies["Demonic Petunia"], world.enemies["Even Slimier Little Pile"], world.enemies["Hard Crocodile"], world.enemies["Hostile Elder Oak"],
@@ -335,7 +306,7 @@ def initialize_enemies(world):
                                            world.enemies["Loaded Dice (2)"]},
                               "Cave of the Past": {world.enemies["Bionic Kraken"], world.enemies["Final Starman"], world.enemies["Ghost of Starman"], world.enemies["Nuclear Reactor Robot"], world.enemies["Squatter Demon"],
                                                    world.enemies["Ultimate Octobot"], world.enemies["Wild 'n Wooly Shambler"], world.enemies["Final Starman (2)"], world.enemies["Ghost of Starman (2)"]},
-                              "Endgame": {world.enemies[world.boss_list[25]], world.enemies["Giygas (1)"], world.enemies["Giygas (2)"], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
+                              "Endgame": {world.enemies[world.boss_list[25]], world.enemies["Giygas (1)"], world.enemies[world.boss_list[28]], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
                         
                               }
     for region in world.regional_enemies:
@@ -343,10 +314,13 @@ def initialize_enemies(world):
         updated_list = set(enemy_list)
         for enemy in enemy_list:
             if enemy.name == "Carbon Dog":
-                updated_list.add(world.enemies["Diamond Dog"])
-                updated_list.add(world.enemies["Diamond Dog (2)"])
+                updated_list.add(world.enemies[world.boss_list[27]])
+                for i in range(1, world.enemies[world.boss_list[27]].attack_extensions):
+                    updated_list.add(world.enemies[f"{world.enemies[world.boss_list[27]].name} ({i + 1})"])
+                #Todo; FIgure otu what to do with non-carbon diamond dog
                 #todo; option to not have in Giygas/Mine
-            elif enemy.name in flunkies:
+
+            if enemy.name in flunkies:
                 if enemy.name == "Starman Deluxe":
                     updated_list.update(flunkies[enemy.name])
                 else:
@@ -356,6 +330,11 @@ def initialize_enemies(world):
                 for i in range(1, enemy.attack_extensions):
                     updated_list.add(world.enemies[f"{enemy.name} ({i + 1})"])
         world.regional_enemies[region] = updated_list
+
+    for region, enemies in world.regional_enemies.items():
+        # Create a list of enemy names for each enemy in the set
+        enemy_names = [enemy.name for enemy in enemies]
+        print(f"{region}: {enemy_names}")
 
 
 combat_regions = [

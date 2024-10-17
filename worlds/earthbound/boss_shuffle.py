@@ -30,7 +30,9 @@ def initialize_bosses(world):
         "Carbon Dog",
         "Ness's Nightmare",
         "Heavily Armed Pokey",
-        "Starman Junior"
+        "Starman Junior",
+        "Diamond Dog",
+        "Giygas (2)"
     ]
 
     class SlotInfo(NamedTuple):
@@ -45,6 +47,7 @@ def initialize_bosses(world):
         long_name_pointer: int
         battle_group: int
         enemy_id: int
+        music: int
 
     world.boss_slots: Dict[str, SlotInfo] = {
         "Frank": SlotInfo([0x0F9338], [0x066111, 0x066198, 0x0661AC], [0x065F11, 0x065F20, 0x066482, 0x0660C5, 0x0746E2, 0x074BC1, 0x074E1D], [0x0683FF]),
@@ -73,48 +76,61 @@ def initialize_bosses(world):
         "Carbon Dog": SlotInfo([], [], [], [0x06843E]),
         "Ness's Nightmare": SlotInfo([0x0FE3B4], [], [], [0x068580]),
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
-        "Starman Junior": SlotInfo([], [], [], [])
+        "Starman Junior": SlotInfo([], [], [], []),
+        "Diamond Dog": SlotInfo([], [], [], []),
+        "Giygas (2)": SlotInfo([], [], [], [0x02C506])
     }
 
     world.boss_info: Dict[str, BossData] = {
-        "Frank": BossData(0x0099, 0xEEEEBC, 0xEEEEBC, 0x01C0, 0x83),
-        "Frankystein Mark II": BossData(0x0191, 0xEEEF0A, 0xEEEEF6, 0x01C1, 0x82),
-        "Titanic Ant": BossData(0x0139, 0xEEEF1E, 0xEEEF16, 0x01C2, 0x25),
-        "Captain Strong": BossData(0x004B, 0xEEEF2A, 0xEEEF22, 0x01C4, 0xE4),
-        "Everdred": BossData(0x009D, 0xEEEF31, 0xEEEF31, 0x01C5, 0x6E),
-        "Mr. Carpainter": BossData(0x009F, 0xEEEF3E, 0xEEEF3A, 0x01C6, 0x1A),
-        "Mondo Mole": BossData(0x019F, 0xEEEF4F, 0xEEEF49, 0x01C7, 0x29),
-        "Boogey Tent": BossData(0x0110, 0xEEEF5B, 0xEEEF54, 0x01CA, 0x66),
-        "Mini Barf": BossData(0x013B, 0xEEEF65, 0xEEEF60, 0x01E2, 0xE2),
-        "Master Belch": BossData(0x0148, 0xEEEF71, 0xEEEF6A, 0x01C8, 0x5D),
-        "Trillionage Sprout": BossData(0x013D, 0xEEEF83, 0xEEEF77, 0x01C9, 0x5A),
-        "Guardian Digger": BossData(0x01A3, 0xEEEF93, 0xEEEF8A, 0x01CB, 0x2A),
-        "Dept. Store Spook": BossData(0x01C7, 0xEEEFA6, 0xEEEF9A, 0x01CC, 0x02),
-        "Evil Mani-Mani": BossData(0x0125, 0xEEEFB1, 0xEEEFAC, 0x01CD, 0x89),
-        "Clumsy Robot": BossData(0x01A2, 0xEEEFC1, 0xEEEFBB, 0x01CE, 0x92),
-        "Shrooom!": BossData(0x0123, 0xEEEFD8, 0xEEEFD8, 0x01D1, 0x27),
-        "Plague Rat of Doom": BossData(0x01A0, 0xEEEFEE, 0xEEEFE0, 0x01CF, 0x28),
-        "Thunder and Storm": BossData(0x0144, 0xEEEFFF, 0xEEEFF3, 0x01D0, 0x80),
-        "Kraken": BossData(0x0127, 0xEEF005, 0xEEF005, 0x01D3, 0x32),
-        "Guardian General": BossData(0x0142, 0xEEF015, 0xEEEF0C, 0x01D4, 0x49),
-        "Master Barf": BossData(0x012B, 0xEEEF65, 0xEEF01D, 0x01D5, 0x5F),
-        "Starman Deluxe": BossData(0x012F, 0xEEF034, 0xEEF029, 0x01D2, 0x4A),
-        "Electro Specter": BossData(0x01A5, 0xEEF043, 0xEEF03B, 0x01D6, 0x74),
-        "Carbon Dog": BossData(0x014A, 0xEEF052, 0xEEF04B, 0x01D7, 0x1B),
-        "Ness's Nightmare": BossData(0x0125, 0xEEF070, 0xEEF06A, 0x01D8, 0x15),
-        "Heavily Armed Pokey": BossData(0x01CA, 0xEEF064, 0xEEF056, 0x01E1, 0xD8),
-        "Starman Junior": BossData(0x012F, 0xEEF082, 0xEEF07A, 0x01DA, 0xD6),
+        "Frank": BossData(0x0099, 0xEEEEBC, 0xEEEEBC, 0x01C0, 0x83, 0x64),
+        "Frankystein Mark II": BossData(0x0191, 0xEEEF0A, 0xEEEEF6, 0x01C1, 0x82, 0x66),
+        "Titanic Ant": BossData(0x0139, 0xEEEF1E, 0xEEEF16, 0x01C2, 0x25, 0x67),
+        "Captain Strong": BossData(0x004B, 0xEEEF2A, 0xEEEF22, 0x01C4, 0xE4, 0x66),
+        "Everdred": BossData(0x009D, 0xEEEF31, 0xEEEF31, 0x01C5, 0x6E, 0x62),
+        "Mr. Carpainter": BossData(0x009F, 0xEEEF3E, 0xEEEF3A, 0x01C6, 0x1A, 0x94),
+        "Mondo Mole": BossData(0x019F, 0xEEEF4F, 0xEEEF49, 0x01C7, 0x29, 0x67),
+        "Boogey Tent": BossData(0x0110, 0xEEEF5B, 0xEEEF54, 0x01CA, 0x66, 0x66),
+        "Mini Barf": BossData(0x013B, 0xEEEF65, 0xEEEF60, 0x01E2, 0xE2, 0x63),
+        "Master Belch": BossData(0x0148, 0xEEEF71, 0xEEEF6A, 0x01C8, 0x5D, 0x63),
+        "Trillionage Sprout": BossData(0x013D, 0xEEEF83, 0xEEEF77, 0x01C9, 0x5A, 0x67),
+        "Guardian Digger": BossData(0x01A3, 0xEEEF93, 0xEEEF8A, 0x01CB, 0x2A, 0x67),
+        "Dept. Store Spook": BossData(0x01C7, 0xEEEFA6, 0xEEEF9A, 0x01CC, 0x02, 0x66),
+        "Evil Mani-Mani": BossData(0x0125, 0xEEEFB1, 0xEEEFAC, 0x01CD, 0x89, 0x94),
+        "Clumsy Robot": BossData(0x01A2, 0xEEEFC1, 0xEEEFBB, 0x01CE, 0x92, 0x94),
+        "Shrooom!": BossData(0x0123, 0xEEEFD8, 0xEEEFD8, 0x01D1, 0x27, 0x67),
+        "Plague Rat of Doom": BossData(0x01A0, 0xEEEFEE, 0xEEEFE0, 0x01CF, 0x28, 0x67),
+        "Thunder and Storm": BossData(0x0144, 0xEEEFFF, 0xEEEFF3, 0x01D0, 0x80, 0x68),
+        "Kraken": BossData(0x0127, 0xEEF005, 0xEEF005, 0x01D3, 0x32, 0x68),
+        "Guardian General": BossData(0x0142, 0xEEF015, 0xEEEF0C, 0x01D4, 0x49, 0x67),
+        "Master Barf": BossData(0x012B, 0xEEEF65, 0xEEF01D, 0x01D5, 0x5F, 0x63),
+        "Starman Deluxe": BossData(0x012F, 0xEEF034, 0xEEF029, 0x01D2, 0x4A, 0x61),
+        "Electro Specter": BossData(0x01A5, 0xEEF043, 0xEEF03B, 0x01D6, 0x74, 0x68),
+        "Carbon Dog": BossData(0x014A, 0xEEF052, 0xEEF04B, 0x01D7, 0x1B, 0x67),
+        "Ness's Nightmare": BossData(0x0125, 0xEEF070, 0xEEF06A, 0x01D8, 0x15, 0x94),
+        "Heavily Armed Pokey": BossData(0x01CA, 0xEEF064, 0xEEF056, 0x01E1, 0xD8, 0x69),
+        "Starman Junior": BossData(0x012F, 0xEEF082, 0xEEF07A, 0x01DA, 0xD6, 0x94),
+        "Diamond Dog": BossData(0x014A, 0xEEF082, 0xEEF089, 0x01D9, 0x53, 0x61),
+        "Giygas (2)": BossData(0x0172, 0xEEF095, 0xEEF095, 0x01DD, 0xDC, 0x49) #Giygas in text and also the transformation sprite
     }
 
     #mole/rat text
+    #todo; Giygas sprites/text
 
     if world.options.boss_shuffle:
         world.boss_slot_order = world.boss_list.copy()
         world.random.shuffle(world.boss_list)
+        if not world.options.decouple_diamond_dog:
+            world.boss_list.remove("Diamond Dog")
+            world.boss_list.append("Diamond Dog") #Reorder it
+        if not world.options.boss_shuffle_add_giygas:
+            world.boss_list.remove("Giygas (2)")
+            world.boss_list.append("Giygas (2)")
+
 
 def write_bosses(world, rom):
     rom.write_bytes(0x15E527, bytearray([0x00, 0x00])) #Blank out Pokey's end battle action
     rom.write_bytes(0x15B8B9, bytearray([0x00, 0x00])) #Blank out barf's end battle script
+    rom.write_bytes(0x15E5E3, bytearray([0x00, 0x00])) #Blank giygas
     if world.enemies[world.boss_slot_order[25]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0x13, 0x01]))
     else:
@@ -122,6 +138,11 @@ def write_bosses(world, rom):
 
     if world.enemies[world.boss_slot_order[20]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0xF4, 0x00]))
+    else:
+        rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
+
+    if world.enemies[world.boss_slot_order[28]].name == "Carbon Dog":
+        rom.write_bytes(0x15B451, bytearray([0x16, 0x01]))
     else:
         rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
 
@@ -146,5 +167,11 @@ def write_bosses(world, rom):
     rom.write_bytes(0x10DF86, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
     rom.write_bytes(0x10DF8D, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
     rom.write_bytes(0x10DFA2, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(0x10DF83, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
+    rom.write_bytes(0x02C4FD, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
+    rom.write_bytes(0x159FC7, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id)) #carbon dog's transformation
+    rom.write_bytes(0x02C503, bytearray(world.boss_info[world.boss_list[28]].music)) #music
+    
+    #c2c505 sets the song
             

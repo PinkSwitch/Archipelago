@@ -97,6 +97,16 @@ class BossShuffle(Toggle):
     """Shuffles boss encounters amongst each other."""
     display_name = "Boss Shuffle"
 
+class DecoupleDiamondDog(Toggle):
+    """Shuffles Diamond Dog as a boss separate from Carbon Dog. Carbon Dog will transform into a random boss.
+       Does nothing if Boss Shuffle is disabled."""
+    display_name = "Decouple Diamond Dog"
+
+class ShuffleGiygas(Toggle):
+    """Adds the standalone Giygas fight to the shuffled boss pool.
+       This only applies to the second phase Giygas. The prayer fight is not affected.
+       Does nothing if Boss Shuffle is disabled."""
+    display_name = "Add Giygas to Boss Pool"
 
 
 class BanFlashFavorite(Toggle):
@@ -237,6 +247,8 @@ class EBOptions(PerGameCommonOptions):
     psi_shuffle: PSIShuffle
     allow_flash_as_favorite_thing: BanFlashFavorite
     boss_shuffle: BossShuffle
+    decouple_diamond_dog: DecoupleDiamondDog
+    boss_shuffle_add_giygas: ShuffleGiygas
     #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
