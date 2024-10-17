@@ -317,7 +317,6 @@ def initialize_enemies(world):
                 updated_list.add(world.enemies[world.boss_list[27]])
                 for i in range(1, world.enemies[world.boss_list[27]].attack_extensions):
                     updated_list.add(world.enemies[f"{world.enemies[world.boss_list[27]].name} ({i + 1})"])
-                #Todo; FIgure otu what to do with non-carbon diamond dog
                 #todo; option to not have in Giygas/Mine
 
             if enemy.name in flunkies:

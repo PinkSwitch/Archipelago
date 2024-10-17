@@ -78,7 +78,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
         "Starman Junior": SlotInfo([], [], [], []),
         "Diamond Dog": SlotInfo([], [], [], []),
-        "Giygas (2)": SlotInfo([], [], [], [0x02C506])
+        "Giygas (2)": SlotInfo([0x09C2BF, 0x09C2E5], [], [], [0x02C506])
     }
 
     world.boss_info: Dict[str, BossData] = {
@@ -113,8 +113,14 @@ def initialize_bosses(world):
         "Giygas (2)": BossData(0x0172, 0xEEF095, 0xEEF095, 0x01DD, 0xDC, 0x49) #Giygas in text and also the transformation sprite
     }
 
+    if world.options.skip_prayer_sequences:
+        #Boss shuffle sprites needs to apply to the skip prayer cleanup too
+        world.boss_slots["Giygas (2)"].sprite_addrs.append(0x07B9AC)
+        world.boss_slots["Heavily Armed Pokey"].sprite_addrs.append(0x07B9A7)
+
     #mole/rat text
     #todo; Giygas sprites/text
+    #investigate a carbon dog on carbon dog slot paradox
 
     if world.options.boss_shuffle:
         world.boss_slot_order = world.boss_list.copy()
@@ -144,7 +150,7 @@ def write_bosses(world, rom):
     if world.enemies[world.boss_slot_order[28]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0x16, 0x01]))
     else:
-        rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
+        rom.write_bytes(world.enemies[world.boss_slot_order[28]].address + 78, bytearray([0x16, 0x01]))
 
     if world.boss_list[25] != "Heavily Armed Pokey":
         rom.write_bytes(0x15E50A, bytearray([0x19, 0x6E, 0xEF]))
