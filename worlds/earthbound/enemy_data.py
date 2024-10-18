@@ -330,11 +330,6 @@ def initialize_enemies(world):
                     updated_list.add(world.enemies[f"{enemy.name} ({i + 1})"])
         world.regional_enemies[region] = updated_list
 
-    for region, enemies in world.regional_enemies.items():
-        # Create a list of enemy names for each enemy in the set
-        enemy_names = [enemy.name for enemy in enemies]
-        print(f"{region}: {enemy_names}")
-
 
 combat_regions = [
     "Northern Onett",

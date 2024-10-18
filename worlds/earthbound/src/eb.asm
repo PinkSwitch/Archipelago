@@ -7363,10 +7363,28 @@ ORG $D014C0
 db $80
 ;Color Math on swirls
 ORG $C2E989
-LDX #$007F
+;LDX #$007F
 
 ORG $C2E995
-LDX #$003F
+;LDX #$003F
+;;;;;;;;;;;;;;;;;
+;New battle entry for Heavily Armed Pokey
+ORG $CBE01E
+db $DC;Battle Background
+
+ORG $D0DFA6
+db $d8, $00;Pokey battle
+;;;;;;;;;;;;
+;new entry for Diamond Dog
+ORG $D0DF70
+db $01, $53, $00, $ff
+
+ORG $CBDFFE
+db $37, $01
+
+ORG $D5E688
+db $49
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Frank
@@ -7498,10 +7516,6 @@ db $08, $bc, $ee, $ee, $ff, $0a, $7b, $69, $ef
 
 
 
-
-
-
-
 ;Mani Mani
 ORG $C978AC
 db $08, $bc, $ee, $ee, $ff, $50, $99, $a3, $50, $0a, $bb, $78, $c9
@@ -7562,6 +7576,13 @@ db $0a, $c2, $ee, $ee
 ORG $C57E57
 db $0a, $cb, $ee, $ee
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C8FC59
+db $0A, $9C, $F0, $EE
+
+ORG $C57F4A
+db $0A, $A7, $F0, $EE
+
+
 
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
@@ -7640,6 +7661,14 @@ db $9b, $95, $a9, $02;Heavily Pokey
 db $1c, $02, $01, $57, $a3, $50, $7e, $99, $97, $98, $a4, $9d, $91, $a2, $95, $02;Nightmare
 
 db $83, $a4, $91, $a2, $9d, $91, $9e, $50, $7a, $a5, $9e, $99, $9f, $a2, $02;Junior
+
+db $74, $99, $91, $9d, $9f, $9e, $94, $50, $74, $9f, $97, $02;Diamond Dog
+
+db $77, $99, $A9, $97, $91, $A3, $02; giygas
+
+db $00, $70, $08, $bc, $ee, $ee, $ff, $0a, $5d, $fc, $c8
+
+db $50, $08, $bc, $ee, $ee, $ff, $5e, $0a, $4e, $7f, $c5
 
 
 
@@ -9940,12 +9969,15 @@ FontDataTable:
 
 ORG $FA0060
 FontExtensionData:
+;Font Widths
 db $05; _
 db $04 ;<
 db $06 ;Ζ
 db $03 ;ε
 db $04 ;δ
 db $05 ;λ
+db $06 ;&
+db $06 ;#
 
 ORG $FA0100
 SaturnFontTable:
@@ -9954,6 +9986,12 @@ ORG $FA0160
 SaturnExtensionData:
 db $0A; _
 db $08;<
+db $0B
+db $0B
+db $0B
+db $0B
+db $0D
+db $0B
 
 ORG $FC0000
 FontGFXTable:

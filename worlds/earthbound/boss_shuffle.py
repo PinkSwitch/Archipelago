@@ -78,7 +78,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
         "Starman Junior": SlotInfo([], [], [], []),
         "Diamond Dog": SlotInfo([], [], [], []),
-        "Giygas (2)": SlotInfo([0x09C2BF, 0x09C2E5], [], [], [0x02C506])
+        "Giygas (2)": SlotInfo([0x09C2BF, 0x09C2E5], [], [0x2EF09F, 0x2EF0A9], [0x02C506])
     }
 
     world.boss_info: Dict[str, BossData] = {
@@ -118,9 +118,8 @@ def initialize_bosses(world):
         world.boss_slots["Giygas (2)"].sprite_addrs.append(0x07B9AC)
         world.boss_slots["Heavily Armed Pokey"].sprite_addrs.append(0x07B9A7)
 
-    #mole/rat text
+    #mole/rat text 
     #todo; Giygas sprites/text
-    #investigate a carbon dog on carbon dog slot paradox
 
     if world.options.boss_shuffle:
         world.boss_slot_order = world.boss_list.copy()
