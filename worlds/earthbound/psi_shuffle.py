@@ -332,7 +332,7 @@ def shuffle_psi(world):
         "Freeze": [0x01B2, 0x01B3, 0x01D5, 0x01D6],
         "Thunder": [0x01B4, 0x01B5, 0x01D7, 0x01D8],
         "Starstorm": [0x01B6, 0x01B7, 0x01D9, 0x01DA],
-        "Blast": [0x00A7, 0x00A8, 0x0136, 0x0137],
+        "Blast": [0x00A7, 0x00A8, 0x00A8, 0x00A8],
         "Missile": [0x01B8, 0x01B9, 0x01DB, 0x01DC]
     }
 
@@ -503,7 +503,7 @@ def write_psi(world, rom):
     rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
     rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3])))
 
-    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[0]][1]))) #todo, fix
+    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[1]][0]))) #todo, fix
 
 def adjust_psi_list(psi_input, spell, index):
     psi_input.insert(index, (psi_input.pop(psi_input.index(spell))))

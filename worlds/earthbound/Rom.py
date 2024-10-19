@@ -397,6 +397,25 @@ def patch_rom(world, rom, player: int, multiworld):
                 rom.write_bytes(0x0BD89A + (i * 4), drawn_background_2)
                 rom.write_bytes(0x0BD89C + (i * 4), drawn_background)
 
+    if world.options.random_swirl_colors:
+        if world.random.random() < 0.5:
+            rom.write_bytes(0x02E98A, bytearray([0x7F])) #Color math mode
+            rom.write_bytes(0x02E996, bytearray([0x3F]))
+
+            rom.write_bytes(0x300240, bytearray(world.random.randint(0x00,0x1F))) #Normal swirls
+            rom.write_bytes(0x300245, bytearray(world.random.randint(0x00,0x1F)))
+            rom.write_bytes(0x30024A, bytearray(world.random.randint(0x00,0x1F)))
+
+            rom.write_bytes(0x300253, bytearray(world.random.randint(0x00,0x1F))) #Green swirls
+            rom.write_bytes(0x300258, bytearray(world.random.randint(0x00,0x1F)))
+            rom.write_bytes(0x30025D, bytearray(world.random.randint(0x00,0x1F)))
+
+            rom.write_bytes(0x300269, bytearray(world.random.randint(0x00,0x1F))) #Red swirls
+            rom.write_bytes(0x30026E, bytearray(world.random.randint(0x00,0x1F)))
+            rom.write_bytes(0x300273, bytearray(world.random.randint(0x00,0x1F)))
+
+
+
     if not world.options.prefixed_items:
         rom.write_bytes(0x15F9DB, bytearray([0x06]))
         rom.write_bytes(0x15F9DD, bytearray([0x08]))

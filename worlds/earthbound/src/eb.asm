@@ -226,6 +226,12 @@ JML GetProgressiveGoingtoStorage
 
 ORG $C2E8ED
 JML GetNewSwirlColorNormal
+
+ORG $C2E91D
+JML GetNewSwirlColorGood
+
+ORG $C2E93A
+JML GetNewSwirlColorBad
 ;new jmls
 
 
@@ -3418,7 +3424,7 @@ CheckStorageForKeys:
 LDX #$0000
 CheckStorageSlot:
 SEP #$20
-CMP $F700,X
+CMP $B590,X
 REP #$20
 BEQ FoundItemCopy2
 CPX #$0023
@@ -7367,6 +7373,13 @@ ORG $C2E989
 
 ORG $C2E995
 ;LDX #$003F
+
+ORG $C5770D
+db $A3, $9F, $A5, $A4, $98
+
+ORG $C57665
+db $a3, $9f, $a5, $a4
+
 ;;;;;;;;;;;;;;;;;
 ;New battle entry for Heavily Armed Pokey
 ORG $CBE01E
@@ -7986,13 +7999,32 @@ PLY
 RTL
 
 GetNewSwirlColorNormal:
-LDA #$0001
+LDA #$0004
 STA $14
-LDA #$0001
+LDA #$0004
 STA $04
-LDY #$0003
+LDY #$0000
 STY $12
 JML $C2E8F9
+
+GetNewSwirlColorGood:
+LDA #$001C
+STA $14
+LDA #$0005
+STA $04
+LDY #$000C
+STY $12
+LDA #$0006
+JML $C2E92F
+
+GetNewSwirlColorBad:
+LDA #$0000
+STA $14
+LDA #$001F
+STA $04
+LDY #$001F
+STY $12
+JML $C2E944
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
