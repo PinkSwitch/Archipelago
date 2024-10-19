@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool
+from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup
 
 
 class GiygasRequired(DefaultOnToggle):
@@ -271,3 +271,63 @@ class EBOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     death_link: DeathLink
     death_link_mode: DeathLinkMode
+
+
+eb_option_groups = [
+    OptionGroup("Goal Settings", [
+        GiygasRequired,
+        SanctuariesRequired,
+        SanctuaryAltGoal
+    ]),
+    
+    OptionGroup("Item Settings", [
+        TeleportShuffle,
+        CharacterShuffle,
+        ProgressiveWeapons,
+        ProgressiveArmor,
+        RandomFranklinBadge,
+        CommonWeight,
+        UncommonWeight,
+        RareWeight,
+        PreFixItems
+    ]),
+
+    OptionGroup("World Modes", [
+        RandomStartLocation,
+        MagicantMode,
+        MonkeyCavesMode
+    ]),
+
+    OptionGroup("PSI Randomization", [
+        PSIShuffle,
+        BanFlashFavorite
+    ]),
+
+    OptionGroup("Enemy Randomization", [
+        BossShuffle,
+        DecoupleDiamondDog,
+        ShuffleGiygas,
+        ExperienceModifier,
+        ShuffleDrops
+    ]),
+
+    OptionGroup("Convenience Settings", [
+        ShortenPrayers,
+        EasyDeaths,
+        StartingMoney,
+        RemoteItems,
+        AutoscaleParty
+    ]),
+
+    OptionGroup("Aesthetic Settings", [
+        RandomSwirlColors,
+        RandomBattleBG,
+        PresentSprites,
+        RandomFlavors
+    ]),
+
+    OptionGroup("Deathlink", [
+        DeathLink,
+        DeathLinkMode
+    ])
+]

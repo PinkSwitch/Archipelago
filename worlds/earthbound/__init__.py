@@ -13,7 +13,7 @@ import settings
 from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations
 from .Regions import init_areas
-from .Options import EBOptions
+from .Options import EBOptions, eb_option_groups
 from .setup_game import setup_gamevars, place_static_items
 from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
@@ -51,64 +51,7 @@ class EBWeb(WebWorld):
 
     tutorials = [setup_en]
 
-    option_groups = [
-        OptionGroup("Goal Settings", [
-            Options.GiygasRequired,
-            Options.SanctuariesRequired,
-            Options.SanctuaryAltGoal
-        ]),
-        
-        OptionGroup("Item Settings", [
-            Options.TeleportShuffle,
-            Options.CharacterShuffle,
-            Options.ProgressiveWeapons,
-            Options.ProgressiveArmor,
-            Options.RandomFranklinBadge,
-            Options.CommonWeight,
-            Options.UncommonWeight,
-            Options.RareWeight,
-            Options.PreFixItems
-        ]),
-
-        OptionGroup("World Modes", [
-            Options.RandomStartLocation,
-            Options.MagicantMode,
-            Options.MonkeyCavesMode
-        ]),
-
-        OptionGroup("PSI Randomization", [
-            Options.PSIShuffle,
-            Options.BanFlashFavorite
-        ]),
-
-        OptionGroup("Enemy Randomization", [
-            Options.BossShuffle,
-            Options.DecoupleDiamondDog,
-            Options.ShuffleGiygas,
-            Options.ExperienceModifier,
-            Options.ShuffleDrops
-        ]),
-
-        OptionGroup("Convenience Settings", [
-            Options.ShortenPrayers,
-            Options.EasyDeaths,
-            Options.StartingMoney,
-            Options.RemoteItems,
-            Options.AutoscaleParty
-        ]),
-
-        OptionGroup("Aesthetic Settings", [
-            Options.RandomSwirlColors,
-            Options.RandomBattleBG,
-            Options.PresentSprites,
-            Options.RandomFlavors
-        ]),
-
-        OptionGroup("Deathlink", [
-            Options.DeathLink,
-            Options.DeathLinkMode
-        ])
-    ]
+    option_groups = eb_option_groups
 
 
 class EarthBoundWorld(World):
