@@ -205,7 +205,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
                 elif item in psi_item_table and location.item.player == location.player:
-                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
+                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4] + 1))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 else:
@@ -315,16 +315,18 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x0FF26D, bytearray([item_id_table[world.magicant_junk[5]]]))
 
     rom.write_bytes(0x02EC1AA, bytearray([world.options.sanctuaries_required.value]))
-    if world.options.alternate_sanctuary_goal:
+    if world.options.alternate_sanctuary_goal and world.options.giygas_required:
         rom.write_bytes(0x02EC1E2, bytearray([0xFD, 0xC1, 0xEE]))
 
-    if world.options.magicant_mode == 1: #Apple kid text
+    if world.options.magicant_mode == 1 and world.options.giygas_required: #Apple kid text
         rom.write_bytes(0x2EC1D8, bytearray([0x33, 0xC2, 0xEE]))
     elif world.options.magicant_mode == 2:
         rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
 
     if not world.options.giygas_required:
         rom.write_bytes(0x2EC164, bytearray([0xE8, 0xF0, 0xEE]))
+        rom.write_bytes(0x02EC1E2, bytearray([0x40, 0xC1, 0xEE]))
+        rom.write_bytes(0x02EC1E2, bytearray([0x40, 0xC1, 0xEE]))
 
     
     flavor_address = 0x3FAF10
