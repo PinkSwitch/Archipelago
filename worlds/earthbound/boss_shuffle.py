@@ -32,7 +32,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey",
         "Starman Junior",
         "Diamond Dog",
-        "Giygas (2)"
+        "Giygas (4)"
     ]
 
     class SlotInfo(NamedTuple):
@@ -78,7 +78,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
         "Starman Junior": SlotInfo([], [], [], []),
         "Diamond Dog": SlotInfo([], [], [], []),
-        "Giygas (2)": SlotInfo([0x09C2BF, 0x09C2E5], [], [0x2EF09F, 0x2EF0A9], [0x02C506])
+        "Giygas (4)": SlotInfo([0x09C2BF, 0x09C2E5], [], [0x2EF09F, 0x2EF0A9], [0x02C506])
     }
 
     world.boss_info: Dict[str, BossData] = {
@@ -110,12 +110,12 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": BossData(0x01CA, 0xEEF064, 0xEEF056, 0x01E1, 0xD8, 0x69),
         "Starman Junior": BossData(0x012F, 0xEEF082, 0xEEF07A, 0x01DA, 0xD6, 0x94),
         "Diamond Dog": BossData(0x014A, 0xEEF082, 0xEEF089, 0x01D9, 0x53, 0x61),
-        "Giygas (2)": BossData(0x0172, 0xEEF095, 0xEEF095, 0x01DD, 0xDC, 0x49) #Giygas in text and also the transformation sprite
+        "Giygas (4)": BossData(0x0172, 0xEEF095, 0xEEF095, 0x01DD, 0xDC, 0x49) #Giygas in text and also the transformation sprite
     }
 
     if world.options.skip_prayer_sequences:
         #Boss shuffle sprites needs to apply to the skip prayer cleanup too
-        world.boss_slots["Giygas (2)"].sprite_addrs.append(0x07B9AC)
+        world.boss_slots["Giygas (4)"].sprite_addrs.append(0x07B9AC)
         world.boss_slots["Heavily Armed Pokey"].sprite_addrs.append(0x07B9A7)
 
     #mole/rat text 
@@ -128,8 +128,8 @@ def initialize_bosses(world):
             world.boss_list.remove("Diamond Dog")
             world.boss_list.append("Diamond Dog") #Reorder it
         if not world.options.boss_shuffle_add_giygas:
-            world.boss_list.remove("Giygas (2)")
-            world.boss_list.append("Giygas (2)")
+            world.boss_list.remove("Giygas (4)")
+            world.boss_list.append("Giygas (4)")
 
 
 def write_bosses(world, rom):

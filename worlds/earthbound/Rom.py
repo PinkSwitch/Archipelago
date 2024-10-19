@@ -318,10 +318,14 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x02EC1E2, bytearray([0xFD, 0xC1, 0xEE]))
 
-    if world.options.magicant_mode == 1:
+    if world.options.magicant_mode == 1: #Apple kid text
         rom.write_bytes(0x2EC1D8, bytearray([0x33, 0xC2, 0xEE]))
     elif world.options.magicant_mode == 2:
         rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
+
+    if not world.options.giygas_required:
+        rom.write_bytes(0x2EC164, bytearray([0xE8, 0xF0, 0xEE]))
+
     
     flavor_address = 0x3FAF10
     for i in range(4):

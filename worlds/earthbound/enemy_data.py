@@ -56,7 +56,7 @@ def initialize_enemies(world):
         "Thunder Mite": EarthBoundEnemy("Thunder Mite", 0x15a0eb, 293, 200, 10798, 430, 20, 85, 83, 43, False),
         "Cranky Lady": EarthBoundEnemy("Cranky Lady", 0x15a149, 95, 0, 200, 17, 6, 16, 18, 8, False),
         "Extra Cranky Lady": EarthBoundEnemy("Extra Cranky Lady", 0x15a1a7, 277, 0, 3651, 134, 17, 48, 70, 27, False),
-        "Giygas (1)": EarthBoundEnemy("Giygas (1)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
+        #F"Giygas (Unused)": EarthBoundEnemy("Giygas (Unused)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
         "Wetnosaur": EarthBoundEnemy("Wetnosaur", 0x15a263, 1030, 0, 33098, 745, 17, 126, 172, 59, False),
         "Chomposaur": EarthBoundEnemy("Chomposaur", 0x15a2c1, 1288, 320, 44378, 896, 17, 139, 183, 62, False, "phys_2"),
         "Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15a31f, 235, 102, 685, 150, 6, 19, 23, 13, False, None, 2),
@@ -306,7 +306,7 @@ def initialize_enemies(world):
                                            world.enemies["Loaded Dice (2)"]},
                               "Cave of the Past": {world.enemies["Bionic Kraken"], world.enemies["Final Starman"], world.enemies["Ghost of Starman"], world.enemies["Nuclear Reactor Robot"], world.enemies["Squatter Demon"],
                                                    world.enemies["Ultimate Octobot"], world.enemies["Wild 'n Wooly Shambler"], world.enemies["Final Starman (2)"], world.enemies["Ghost of Starman (2)"]},
-                              "Endgame": {world.enemies[world.boss_list[25]], world.enemies["Giygas (1)"], world.enemies[world.boss_list[28]], world.enemies["Giygas (3)"], world.enemies["Giygas (4)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
+                              "Endgame": {world.enemies[world.boss_list[25]], world.enemies["Giygas (2)"], world.enemies[world.boss_list[28]], world.enemies["Giygas (3)"], world.enemies["Giygas (5)"], world.enemies["Giygas (6)"]},
                         
                               }
     for region in world.regional_enemies:
@@ -423,7 +423,7 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "lifeup": {20: "alpha", 50: "beta", 70: "gamma", 100: "omega"},
     "thunder": {5: "zeta", 10: "epsilon", 15: "delta", 20: "lambda", 35: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
     "flash": {25: "alpha", 45: "beta", 60: "gamma", 100: "omega"},
-    "special": {5: "zeta", 10: "epsilon", 20: "alpha", 30: "beta", 70: "gamma", 100: "omega"},
+    "special": {5: "zeta", 10: "epsilon", 30: "alpha", 65: "beta", 80: "gamma", 100: "omega"},
     "healing": {20: "alpha", 40: "beta", 60: "gamma", 100: "omega"},
     "starstorm": {5: "zeta", 12: "epsilon", 20: "delta", 45: "lambda", 70: "alpha", 100: "beta"},
     "diamond_eyes": {35: "alpha", 40: "beta", 100: "gamma"},
@@ -564,7 +564,7 @@ enemy_psi = {
     "Thunder and Storm (2)": ["summon_storm", "null", "crashing_boom_bang", "null"],
     "Evil Mani-Mani (2)": ["null", "null", "glorious_light", "null"],
     "Black Antoid (2)": ["lifeup", "lifeup", "lifeup", "lifeup"],
-    "Giygas (1)": ["special", "special", "special", "special"],
+    "Giygas (2)": ["special", "special", "special", "special"],
     "Farm Zombie": ["null", "null", "nauseous_breath", "null"],
     "Criminal Caterpillar": ["fire", "fire", "fire", "fire"],
     "Evil Eye": ["null", "diamond_eyes", "paralysis", "null"],
