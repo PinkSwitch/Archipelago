@@ -78,7 +78,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
         "Starman Junior": SlotInfo([], [], [], []),
         "Diamond Dog": SlotInfo([], [], [], []),
-        "Giygas (4)": SlotInfo([0x09C2BF, 0x09C2E5], [], [0x2EF09F, 0x2EF0A9], [0x02C506])
+        "Giygas (4)": SlotInfo([0x09C2BF, 0x09C2E5], [0x2EF0A9], [0x2EF09F], [0x02C506])
     }
 
     world.boss_info: Dict[str, BossData] = {
@@ -139,17 +139,17 @@ def write_bosses(world, rom):
     if world.enemies[world.boss_slot_order[25]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0x13, 0x01]))
     else:
-        rom.write_bytes(world.enemies[world.boss_slot_order[25]].address + 78, bytearray([0x13, 0x01]))
+        rom.write_bytes(world.enemies[world.boss_list[25]].address + 78, bytearray([0x13, 0x01]))
 
     if world.enemies[world.boss_slot_order[20]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0xF4, 0x00]))
     else:
-        rom.write_bytes(world.enemies[world.boss_slot_order[20]].address + 78, bytearray([0xF4, 0x00]))
+        rom.write_bytes(world.enemies[world.boss_list[20]].address + 78, bytearray([0xF4, 0x00]))
 
     if world.enemies[world.boss_slot_order[28]].name == "Carbon Dog":
         rom.write_bytes(0x15B451, bytearray([0x16, 0x01]))
     else:
-        rom.write_bytes(world.enemies[world.boss_slot_order[28]].address + 78, bytearray([0x16, 0x01]))
+        rom.write_bytes(world.enemies[world.boss_list[28]].address + 78, bytearray([0x16, 0x01]))
 
     if world.boss_list[25] != "Heavily Armed Pokey":
         rom.write_bytes(0x15E50A, bytearray([0x19, 0x6E, 0xEF]))
@@ -176,7 +176,7 @@ def write_bosses(world, rom):
     rom.write_bytes(0x02C4FD, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
     rom.write_bytes(0x159FC7, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id)) #carbon dog's transformation
-    rom.write_bytes(0x02C503, bytearray(world.boss_info[world.boss_list[28]].music)) #music
+    rom.write_bytes(0x02C503, bytearray([world.boss_info[world.boss_list[28]].music])) #music
     
     #c2c505 sets the song
             
