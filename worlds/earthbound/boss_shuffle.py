@@ -175,7 +175,8 @@ def write_bosses(world, rom):
     rom.write_bytes(0x10DF83, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(0x02C4FD, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
-    rom.write_bytes(0x159FC7, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id)) #carbon dog's transformation
+    rom.write_bytes(0x159FC7, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id))
+    rom.write_bytes(0x10DF69, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id)) #carbon dog's transformation
     rom.write_bytes(0x02C503, bytearray([world.boss_info[world.boss_list[28]].music])) #music
     
     #c2c505 sets the song
