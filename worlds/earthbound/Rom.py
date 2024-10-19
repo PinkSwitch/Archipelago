@@ -205,7 +205,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
                 elif item in psi_item_table and location.item.player == location.player:
-                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4] + 1))
+                    rom.write_bytes(character_locations[name][0], bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 else:
