@@ -22,6 +22,7 @@ from .text_data import spoiler_psi, spoiler_starts, spoiler_badges
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
+from .local_data import world_version
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
@@ -60,7 +61,7 @@ class EarthBoundWorld(World):
     game = "EarthBound"
     option_definitions = EBOptions
     data_version = 1
-    required_client_version = (0, 5, 0)  # Change when 0.5.0 releases
+    required_client_version = (0, 5, 0)
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = {location.name: location.code for
@@ -84,7 +85,7 @@ class EarthBoundWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.event_count = 8
-        self.world_version = "2.2"
+        self.world_version = world_version
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
@@ -120,6 +121,38 @@ class EarthBoundWorld(World):
             spoiler_handle.write(f"Single-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[2]]}\n")
             spoiler_handle.write(f"Single-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[3]]}\n")
             spoiler_handle.write(f"Multi-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[4]]}\n")
+
+        if self.options.boss_shuffle:
+            spoiler_handle.write("\nBoss Randomization:\n" + 
+                                 f" Frank => {self.boss_list[0]}\n" +
+                                 f" Frankystein Mark II => {self.boss_list[1]}\n" +
+                                 f" Titanic Ant => {self.boss_list[2]}\n" +
+                                 f" Captain Strong => {self.boss_list[3]}\n" +
+                                 f" Everdred => {self.boss_list[4]}\n" +
+                                 f" Mr. Carpainter => {self.boss_list[5]}\n" +
+                                 f" Mondo Mole => {self.boss_list[6]}\n" +
+                                 f" Boogey Tent => {self.boss_list[7]}\n" +
+                                 f" Mini Barf => {self.boss_list[8]}\n" +
+                                 f" Master Belch => {self.boss_list[9]}\n" +
+                                 f" Trillionage Sprout => {self.boss_list[10]}\n" +
+                                 f" Guardian Digger => {self.boss_list[11]}\n" +
+                                 f" Dept. Store Spook => {self.boss_list[12]}\n" +
+                                 f" Evil Mani-Mani => {self.boss_list[13]}\n" +
+                                 f" Clumsy Robot => {self.boss_list[14]}\n" +
+                                 f" Shrooom! => {self.boss_list[15]}\n" +
+                                 f" Plague Rat of Doom => {self.boss_list[16]}\n" +
+                                 f" Thunder and Storm => {self.boss_list[17]}\n" +
+                                 f" Kraken => {self.boss_list[18]}\n" +
+                                 f" Guardian General => {self.boss_list[19]}\n" +
+                                 f" Master Barf => {self.boss_list[20]}\n" +
+                                 f" Starman Deluxe => {self.boss_list[21]}\n" +
+                                 f" Electro Specter => {self.boss_list[22]}\n" +
+                                 f" Carbon Dog => {self.boss_list[23]}\n" +
+                                 f" Ness's Nightmare => {self.boss_list[24]}\n" +
+                                 f" Heavily Armed Pokey => {self.boss_list[25]}\n" +
+                                 f" Starman Junior => {self.boss_list[26]}\n" +
+                                 f" Diamond Dog => {self.boss_list[27]}\n" +
+                                 f" Giygas (Phase 2) => {self.boss_list[28]}\n")
 
             
 

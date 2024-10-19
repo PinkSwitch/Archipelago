@@ -8,7 +8,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
-                         present_text_pointers, ap_text_pntrs, party_id_nums)
+                         present_text_pointers, ap_text_pntrs, party_id_nums, world_version)
 from .battle_bg_data import battle_bg_bpp
 from .psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
@@ -509,7 +509,7 @@ class EBPatchExtensions(APPatchExtension):
         version_check = rom.read_bytes(0x3FF0A0, 16)
         version_check = version_check.split(b'\x00', 1)[0]
         version_check_str = version_check.decode("ascii")
-        client_version = "2.2"
+        client_version = world_version
         if client_version != version_check_str and version_check_str != "":
             raise Exception(f"Error! Patch generated on EarthBound APWorld version {version_check_str} doesn't match client version {client_version}! " +
                             f"Please use EarthBound APWorld version {version_check_str} for patching.")

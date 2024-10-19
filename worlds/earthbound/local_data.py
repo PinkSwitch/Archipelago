@@ -1,3 +1,5 @@
+world_version = "2.2"
+
 check_table = {
     0xEB0000: [0x11, 3],
     0xEB0001: [0x6C, 4],

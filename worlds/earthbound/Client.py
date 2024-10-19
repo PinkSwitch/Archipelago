@@ -3,7 +3,7 @@ import struct
 import typing
 import time
 from struct import pack, unpack
-from .local_data import check_table, client_specials
+from .local_data import check_table, client_specials, world_version
 from .text_data import eb_text_table
 
 from NetUtils import ClientStatus, color
@@ -54,7 +54,7 @@ class EarthBoundClient(SNIClient):
     game = "EarthBound"
     patch_suffix = ".apeb"
     most_recent_connect: str = ""
-    client_version = "2.2"
+    client_version = world_version
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         import struct
