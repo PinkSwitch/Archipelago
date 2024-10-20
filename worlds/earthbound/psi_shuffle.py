@@ -173,7 +173,7 @@ def shuffle_psi(world):
         "Thunder": ["Sparkler", "Big sparkler", "Mega sparkler"],
         "Starstorm": ["Meteor missile", "Star missile", "Nova missile"],
         "Blast": ["Firecracker", "Big firecracker", "Super firecracker"],
-        "Missile": ["Bottle Rocket", "Big bottle rocket", "Multi»bottle rocket"]
+        "Missile": ["Bottle rocket", "Big bottle rocket", "Multi»bottle rocket"]
     }
 
     world.spray_names = {
@@ -417,8 +417,13 @@ def write_psi(world, rom):
             elif psi_num == 5 and i > 1:
                 rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[spell][i - 2]))
                 rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
+                #Write the ID of PSI Starstorm into dialogue for receiving Progressive Poo PSI.
+                #The reason it's done like this is because starstorm's slot only has the 2 upper slots (so the id is i - 2)
+                #and it writes to a base address + the byte difference, will be *0 for level 1 and * 1 for level 2, so it
+                #writes correctly during each loop
+                #come to think of it i might be able to clean this up with a manual lookup
                 rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
-                rom.write_bytes(0x2EAE23 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
+                rom.write_bytes(0x2EAE2E + (0x0A * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if spell == "Special" and psi_num != 0:
@@ -430,7 +435,12 @@ def write_psi(world, rom):
     # todo; expanded psi
     # todo; animation for Starstorm L/D
     # todo; swap enemy actions for Special?
+    # todo; cleanup stuff
         psi_num += 1
+
+    rom.write_bytes(0x2EAE2E,  bytearray([world.starstorm_spell_id[world.offensive_psi_slots[5]][0]])) #Starstorm spell for the item locally
+    rom.write_bytes(0x2EAE38,  bytearray([world.starstorm_spell_id[world.offensive_psi_slots[5]][1]]))
+
 
     jeff_item_num = 0
     jeff_item_index = 0

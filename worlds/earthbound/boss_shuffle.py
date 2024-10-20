@@ -57,7 +57,7 @@ def initialize_bosses(world):
         "Everdred": SlotInfo([0x0F9A64, 0x0F9FB4], [0x2EEEEA], [0x095C70], [0x06846F]),
         "Mr. Carpainter": SlotInfo([0x0FA27E], [0x0990DA, 0x0684D0], [0x0993DB, 0x09945E, 0x099311, 0x099364, 0x098EF6, 0x099143, 0x099028, 0x0983BB, 0x09840C, 0x09835B, 0x09056F, 0x0794EC], [0x0684FD]),
         "Mondo Mole": SlotInfo([], [], [], [0x068414]),
-        "Boogey Tent": SlotInfo([0x0FACEB], [], [], [0x068535]),
+        "Boogey Tent": SlotInfo([0x0FACEB], [], [], [0x06853C]),
         "Mini Barf": SlotInfo([0x0FB0B4], [], [], [0x2F9515]),
         "Master Belch": SlotInfo([0x0FB7CF], [0x09E64D, 0x09E690, 0x2EEED7, 0x08EF21, 0x08EF38], [0x2F6296, 0x2F62B3, 0x2F6910, 0x2F6973], [0x068558]),
         "Trillionage Sprout": SlotInfo([], [], [], [0x068422]),
@@ -68,7 +68,7 @@ def initialize_bosses(world):
         "Shrooom!": SlotInfo([], [], [], [0x06841B]),
         "Plague Rat of Doom": SlotInfo([], [], [], [0x068429]),
         "Thunder and Storm": SlotInfo([], [], [], [0x068430]),
-        "Kraken": SlotInfo([0x092CD0, 0x0FE370, 0x0FE381, 0x0FE392], [0x092D4D], [0x086061, 0x086139, 0x08B430, 0x08B6FC, 0x08B8B4, 0x08B591, 0x09AB2B], [0x0685B1, 0x2F9472, 0x2F9491, 0x2F94B1]),
+        "Kraken": SlotInfo([0x092CD0, 0x0FE370, 0x0FE381, 0x0FE392, 0x092D13], [0x092D4D], [0x086061, 0x086139, 0x08B430, 0x08B6FC, 0x08B8B4, 0x08B591, 0x09AB2B], [0x0685B1, 0x2F9472, 0x2F9491, 0x2F94B0]),
         "Guardian General": SlotInfo([0x0FD7E2], [], [], [0x2F9453]),
         "Master Barf": SlotInfo([0x0FDB23], [], [], [0x068574]),
         "Starman Deluxe": SlotInfo([0x0FB626], [], [0x092C29], [0x2F942F]),
@@ -121,15 +121,17 @@ def initialize_bosses(world):
     #mole/rat text 
     #todo; Giygas sprites/text
 
+    world.boss_slot_order = world.boss_list.copy()
+
     if world.options.boss_shuffle:
-        world.boss_slot_order = world.boss_list.copy()
         world.random.shuffle(world.boss_list)
-        if not world.options.decouple_diamond_dog:
-            world.boss_list.remove("Diamond Dog")
-            world.boss_list.append("Diamond Dog") #Reorder it
-        if not world.options.boss_shuffle_add_giygas:
-            world.boss_list.remove("Giygas (4)")
-            world.boss_list.append("Giygas (4)")
+
+    if not world.options.decouple_diamond_dog:
+        world.boss_list.remove("Diamond Dog")
+        world.boss_list.append("Diamond Dog") #Reorder it
+    if not world.options.boss_shuffle_add_giygas:
+        world.boss_list.remove("Giygas (4)")
+        world.boss_list.append("Giygas (4)")
 
 
 def write_bosses(world, rom):

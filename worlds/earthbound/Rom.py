@@ -449,8 +449,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.psi_shuffle:
         write_psi(world, rom)
 
-    if world.options.boss_shuffle:
-        write_bosses(world, rom)
+    write_bosses(world, rom)
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, eb_text_table, 23)
