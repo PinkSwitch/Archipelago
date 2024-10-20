@@ -422,8 +422,8 @@ def write_psi(world, rom):
                 #and it writes to a base address + the byte difference, will be *0 for level 1 and * 1 for level 2, so it
                 #writes correctly during each loop
                 #come to think of it i might be able to clean this up with a manual lookup
-                rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
-                rom.write_bytes(0x2EAE2E + (0x0A * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
+                #rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
+                #rom.write_bytes(0x2EAE2E + (0x0A * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if spell == "Special" and psi_num != 0:

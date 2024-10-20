@@ -232,6 +232,9 @@ JML GetNewSwirlColorGood
 
 ORG $C2E93A
 JML GetNewSwirlColorBad
+
+ORG $C2E94B
+JML PokeySwirl
 ;new jmls
 
 
@@ -7389,11 +7392,14 @@ db $a3, $9f, $a5, $a4
 
 ;;;;;;;;;;;;;;;;;
 ;New battle entry for Heavily Armed Pokey
-ORG $CBE01E
-db $DC;Battle Background
+ORG $CBD8D2
+db $DC, $00;Battle Background
 
-ORG $D0DFA6
+ORG $D0D5A5
 db $d8, $00;Pokey battle
+
+ORG $D5E533
+db $01
 ;;;;;;;;;;;;
 ;new entry for Diamond Dog
 ORG $D0DF70
@@ -8044,6 +8050,17 @@ STA $04
 LDY #$001F
 STY $12
 JML $C2E944
+
+PokeySwirl:
+LDA $4A8C
+CMP #$000E
+BEQ .BossSwirl
+CMP #$01C0
+BCC .NormalSwirl
+.BossSwirl:
+JML $C2E953
+.NormalSwirl:
+JML $C2E964
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10179,3 +10196,5 @@ ORG $C93B60
 
 
 ;B580 reserved for new names?
+;;;;;;;;;;;;;;;;;;
+
