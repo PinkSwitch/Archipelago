@@ -7410,6 +7410,19 @@ db $37, $01
 
 ORG $D5E688
 db $49
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;entry for giygas phase 2 fix
+ORG $C2C505
+LDA #$0005;Set the group number
+
+ORG $D0D562
+db $00
+
+ORG $D0C63C
+db $00
+
+ORG $CBD8AE
+db $e0, $00, $df, $00
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

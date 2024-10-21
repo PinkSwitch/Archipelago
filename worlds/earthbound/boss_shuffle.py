@@ -78,7 +78,7 @@ def initialize_bosses(world):
         "Heavily Armed Pokey": SlotInfo([0x09C2EC], [0x2EEEC3, 0x2EEECC], [], []),
         "Starman Junior": SlotInfo([], [], [], []),
         "Diamond Dog": SlotInfo([], [], [], []),
-        "Giygas (4)": SlotInfo([0x09C2BF, 0x09C2E5], [0x2EF0A9], [0x2EF09F], [0x02C506])
+        "Giygas (4)": SlotInfo([0x09C2BF, 0x09C2E5], [0x2EF0A9], [0x2EF09F], [])
     }
 
     world.boss_info: Dict[str, BossData] = {
@@ -185,8 +185,10 @@ def write_bosses(world, rom):
 
     rom.write_bytes(0x10DF7F, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
     rom.write_bytes(0x10DF86, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
-    rom.write_bytes(0x10DF8D, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    #rom.write_bytes(0x10DF8D, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
     rom.write_bytes(0x10DFA2, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+    rom.write_bytes(0x10D563, struct.pack("H", world.boss_info[world.boss_list[25]].enemy_id))
+
     rom.write_bytes(0x10DF83, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(0x02C4FD, struct.pack("H", world.boss_info[world.boss_list[28]].enemy_id))
     rom.write_bytes(world.enemies[world.boss_list[25]].address + 91, bytearray([0x00])) #Row of the enemy
