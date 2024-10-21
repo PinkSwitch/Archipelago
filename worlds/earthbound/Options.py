@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup, FreeText
+from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup, FreeText, Visibility
 
 
 class GiygasRequired(DefaultOnToggle):
@@ -233,8 +233,9 @@ class SoundStoneShuffle(Toggle):
     display_name = "Sound Stone Shuffle"
 
 class PlandoLumineHallText(FreeText):
-    """Randomizes the Sound Stone. It will need to be found before Sanctuary guardians can be challenged."""
+    """Set text to be displayed at Lumine Hall. If nothing is entered, random community-submitted text will be selected instead."""
     display_name = "Lumine Hall Text Plando"
+    visibility = Visibility.none
 
 
 @dataclass
