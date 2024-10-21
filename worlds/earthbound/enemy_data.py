@@ -571,7 +571,8 @@ enemy_psi = {
     "Master Criminal Worm": ["fire", "fire", "fire", "fire"],
     "Giygas (4)": ["giygas_phase2_thunder", "giygas_phase2_freeze", "giygas_phase2_flash", "null"],
     "Giygas (5)": ["giygas_phase3_thunder", "giygas_phase3_freeze", "giygas_phase3_flash", "null"],
-    "Giygas (6)": ["giygas_phase4_thunder", "giygas_phase4_freeze", "giygas_phase4_flash", "null"]
+    "Giygas (6)": ["giygas_phase4_thunder", "giygas_phase4_freeze", "giygas_phase4_flash", "null"],
+    "Starman Junior": ["fire", "freeze", "null", "fire"]
 }
 
 spell_data = {
