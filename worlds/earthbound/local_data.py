@@ -260,7 +260,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Onett - Library Counter": [0x05EC0C],
     "Onett - Library Bookshelf": [0x2EBA66],
     "Onett - Treehouse Guy": [0x073F34],
-    "Onett - Mayor Pirkle": [0x0661D6, 0x072D4B],
+    "Onett - Mayor Pirkle": [0x0661D6, 0x072D4B, 0x072BE9],
     "Onett - Traveling Entertainer": [0x07476C],
     "Twoson - Bike Shop Rental": [0x080046],
     "Twoson - Orange Kid Donation": [0x08134A],

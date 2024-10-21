@@ -109,10 +109,10 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
     
-    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Summers", "Threed Underground", "Boogey Tent"],
+    multiworld.get_region("Threed", player).add_exits(["Twoson", "Dusty Dunes Desert", "Southern Winters", "Threed Underground", "Boogey Tent"],
                                                       {"Twoson": lambda state: state.has("Threed Tunnels Clear", player),
                                                       "Dusty Dunes Desert": lambda state: state.has("Threed Tunnels Clear", player),
-                                                       "Summers": lambda state: state.has_all({"Jeff", "UFO Engine", "Bad Key Machine"}, player),
+                                                       "Southern Winters": lambda state: state.has_all({"UFO Engine", "Bad Key Machine"}, player),
                                                        "Threed Underground": lambda state: state.has("Zombie Paper", player),
                                                        "Boogey Tent": lambda state: state.has("Jeff", player)})
 

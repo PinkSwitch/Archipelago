@@ -307,7 +307,7 @@ class EarthBoundWorld(World):
                 self.create_item("Saturn Valley Teleport"),
                 self.create_item("Dusty Dunes Teleport"),
                 self.create_item("Fourside Teleport"),
-                self.create_item("Summers Teleport"),
+                self.create_item("Winters Teleport"),
                 self.create_item("Scaraba Teleport"),
                 self.create_item("Deep Darkness Teleport"),
                 self.create_item("Tenda Village Teleport"),
@@ -318,7 +318,7 @@ class EarthBoundWorld(World):
             del prefill_items[0:5]
             prefill_items.extend([
                 self.create_item("Dalaam Teleport"),
-                self.create_item("Winters Teleport"),
+                self.create_item("Summers Teleport"),
                 self.create_item("Progressive Poo PSI"),
                 self.create_item("Progressive Poo PSI")
             ])

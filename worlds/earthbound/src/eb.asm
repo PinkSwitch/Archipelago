@@ -604,13 +604,13 @@ db $95, $9e, $5c, $10, $15, $50, $1c, $02, $fe, $50, $a3, $95, $9e, $94, $a3, $5
 db $a4, $98, $95, $99, $a2, $50, $a2, $95, $97, $91, $a2, $94, $a3, $51, $13, $02;AP Item join
 
 db $0e, $01, $0d, $01, $1d, $19, $00, $1b, $03, $20, $5e, $c7, $00, $19, $10, $00
-db $0b, $03, $1b, $03, $63, $5e, $c7, $00, $0f, $0a, $05, $5e, $c7, $18, $01, $01
-db $50, $50, $58, $84, $98, $95, $50, $9d, $91, $93, $98, $99, $9e, $95, $50, $91
-db $a0, $a0, $95, $91, $a2, $a3, $50, $99, $9e, $9f, $a0, $95, $a2, $91, $92, $9c
-db $95, $5e, $10, $20, $50, $1c, $02, $03, $50, $9d, $91, $a9, $50, $9b, $9e, $9f
-db $a7, $50, $a7, $98, $91, $a4, $50, $a4, $9f, $50, $94, $9f, $5e, $59, $13, $02
+db $0b, $03, $1b, $03, $63, $5e, $c7, $00, $0f, $0a, $05, $5e, $c7, $10, $20, $1F
+db $02, $76, $10, $03, $18, $01, $01, $19, $10, $01, $1b, $04, $70, $1C, $02, $00
+db $50, $93, $A2, $91, $9d, $9d, $95, $94, $50, $a4, $98, $95, $50, $95, $9e, $97
+db $99, $9e, $95, $50, $99, $9e, $a4, $9f, $50, $a0, $9c, $91, $93, $95, $51, $1D
+db $01, $FF, $9E, $03, $0A, $1D, $F1, $EE, $9f, $50, $94, $9f, $5e, $59, $13, $02
 db $08, $7f, $dc, $c7, $00, $1b, $03, $20, $5e, $c7, $00, $1d, $05, $ff, $9e, $1b
-db $03, $f1, $5e, $c7, $00, $18, $01, $01, $50, $50, $58, $79, $a4, $50, $91, $a0
+db $03, $f2, $5e, $c7, $00, $18, $01, $01, $01, $70, $58, $79, $a4, $50, $91, $a0
 db $a0, $95, $91, $a2, $a3, $50, $a4, $9f, $50, $92, $95, $50, $9d, $99, $a3, $a3
 db $99, $9e, $97, $50, $91, $9e, $50, $95, $9e, $97, $99, $9e, $95, $5e, $5e, $5e
 db $03, $00, $70, $79, $96, $50, $a4, $98, $95, $50, $95, $9e, $97, $99, $9e, $95
@@ -622,14 +622,14 @@ db $01, $04, $30, $00, $0a, $c9, $1c, $c9, $00; Broken sky runner
 
 ORG $C91D5E
 db $70, $7c, $9f, $9f, $9b, $a3, $50, $9c, $99, $9b, $95, $50, $99, $a4, $57, $a3, $50
-db $a2, $95, $91, $94, $a9, $50, $a4, $9f, $50, $97, $9f, $50, $a4, $9f, $50, $83
-db $a5, $9d, $9d, $95, $a2, $a3, $5e, $03, $00, $70, $0a, $33, $1e, $c9, $00;Fixed Sky Runner
+db $a2, $95, $91, $94, $a9, $50, $a4, $9f, $50, $97, $9f, $50, $a4, $9f, $50, $87
+db $99, $9e, $a4, $95, $a2, $a3, $5e, $03, $00, $70, $0a, $33, $1e, $c9, $00;Fixed Sky Runner
 
 ORG $C91CC1
 db $0A, $03,$5E,$C7,$00
 
 ORG $C91E94
-db $ed, $1d, $05, $ff, $9e, $1d, $01, $ff, $9e, $0A, $2C, $20, $C9, $00
+;db $ed, $1d, $05, $ff, $9e, $1d, $01, $ff, $9e, $0A, $2C, $20, $C9, $00
 
 ORG $CFA949
 db $47,$00,$01
@@ -1611,7 +1611,7 @@ ORG $CFB284
 db $B2, $01, $02; Saturn in lab
 
 ORG $CF7459
-db $01, $00, $69, $02, $68, $98
+db $02, $00, $69, $02, $68, $98, $BB, $00
 
 ORG $CFB275
 db $00
@@ -7423,6 +7423,39 @@ db $00
 
 ORG $CBD8AE
 db $e0, $00, $df, $00
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C91EAD
+db $0a, $fc, $1e, $c9
+
+ORG $C3CF10
+db $04
+;sky runner event stuff
+
+ORG $C91E56
+db $0A, $60, $F2, $EE
+
+ORG $C3CEFE
+db $D8
+
+ORG $C91F11
+db $1F, $00, $00, $6E
+db $10, $F0, $10, $40, $0A, $FE, $F1, $EE
+
+ORG $CF95F6
+db $EC, $02, $02
+
+ORG $CF95F1
+db $0D
+
+ORG $CF6C31
+db $03; Remove sky runner npc from Onett
+
+ORG $C6BBF9
+db $0A, $24, $F2, $EE
+
+;;;;;;;;;
+ORG $EFA455
+db $0A, $3A, $F1, $EE
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7720,6 +7753,126 @@ db $a0, $a5, $a2, $97, $95, $50, $77, $99, $a9, $97, $91, $a3, $57, $a3, $50, $9
 db $a6, $99, $9c, $50, $96, $a2, $9f, $9d, $50, $a4, $98, $95, $50, $a7, $9f, $a2
 db $9c, $94, $50, $9f, $9e, $93, $95, $50, $91, $9e, $94, $50, $96, $9f, $a2, $50
 db $91, $9c, $9c, $5c, $02
+
+db $18, $04
+;patch moves stuff here
+
+
+ORG $EEF136
+db $0A, $42, $1E, $C9
+
+display_melodies:
+db $93, $9b, $6a, $18, $05, $4e, $00, $07, $b6, $00, $1B, $03
+dd .has_giant_step
+db $08
+dd .display_dot
+db $0A
+dl .check_lilliput
+.has_giant_step:
+db $08
+dd .display_melody
+.check_lilliput:
+db $07, $B7, $00, $1B, $03
+dd .has_lilliput_steps
+db $08
+dd .display_dot
+db $0A
+dl .check_milky
+.has_lilliput_steps:
+db $08
+dd .display_melody
+.check_milky
+db $07, $B8, $00, $1B, $03
+dd .has_milky_well
+db $08
+dd .display_dot
+db $0A
+dl .check_rainy_circle
+.has_milky_well:
+db $08
+dd .display_melody
+.check_rainy_circle:
+db $07, $b9, $00, $1B, $03
+dd .has_rainy_circle
+db $08
+dd .display_dot
+db $0A
+dl .check_magnet_hill
+.has_rainy_circle:
+db $08
+dd .display_melody
+.check_magnet_hill:
+db $07, $BA, $00, $1B, $03
+dd .has_magnet_hill
+db $08
+dd .display_dot
+db $0A
+dl .check_pink_cloud
+.has_magnet_hill:
+db $08
+dd .display_melody
+.check_pink_cloud:
+db $07, $BB, $00, $1b, $03
+dd .has_pink_cloud
+db $08
+dd .display_dot
+db $0A
+dl .check_lumine_hall
+.has_pink_cloud:
+db $08
+dd .display_melody
+.check_lumine_hall:
+db $07, $BC, $00, $1B, $03
+dd .has_lumine_hall
+db $08
+dd .display_dot
+db $0A
+dl .check_fire_spring
+.has_lumine_hall:
+db $08
+dd .display_melody
+.check_fire_spring:
+db $07, $BD, $00, $1B, $03
+dd .has_fire_spring
+db $08
+dd .display_dot
+db $0A
+dl .done_melodies
+.has_fire_spring:
+db $08
+dd .display_melody
+.done_melodies:
+db $02
+
+.display_dot:
+db $70, $02
+
+.display_melody:
+db $AC, $02
+;;;;;;;;;;;;;;;;;;;;
+;sky runner stuff
+db $1F, $E5, $FF
+db $04, $EC, $02
+db $05, $8F, $02
+db $1F, $21, $DA
+db $10, $30
+db $1F, $1E, $BB, $00, $00, $10, $02
+db $1F, $EC, $FF, $00
+db $19, $26, $FF
+db $05, $EC, $02;Unset the flag
+db $04, $30, $00; remove the old sky runner
+db $05, $0B, $00
+db $02
+
+db $07, $30, $00, $1b, $02, $00, $bc, $c6, $ff, $06, $76, $02, $77, $b2, $c6, $00
+db $70, $7b, $99, $5d, $9b, $95, $99, $5d, $9b, $a9, $95, $5d, $9b, $a9, $95, $5d
+db $9b, $99, $99, $99, $5e, $03, $00, $70, $58, $89, $95, $a0, $5c, $10, $0f, $50
+db $79, $50, $96, $9f, $a5, $9e, $94, $50, $0a, $22, $bc, $c6
+
+db $1f, $eb, $ff, $06, $04, $0B, $00, $0A, $5A, $1E, $C9
+
+
+
 
 
 
