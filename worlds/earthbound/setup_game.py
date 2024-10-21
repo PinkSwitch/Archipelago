@@ -441,7 +441,11 @@ def setup_gamevars(world):
 
     world.lumine_text = []
     world.prayer_player = []
-    lumine_str = world.random.choice(lumine_hall_text)
+    if world.options.plando_lumine_hall_text == "":
+        lumine_str = world.random.choice(lumine_hall_text)
+    else:
+        lumine_str = world.options.plando_lumine_hall_text.value
+
     for char in lumine_str[:213]:
         world.lumine_text.extend(eb_text_table[char])
     world.lumine_text.extend([0x00])

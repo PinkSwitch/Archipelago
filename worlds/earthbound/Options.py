@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup
+from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup, FreeText
 
 
 class GiygasRequired(DefaultOnToggle):
@@ -232,6 +232,10 @@ class SoundStoneShuffle(Toggle):
     """Randomizes the Sound Stone. It will need to be found before Sanctuary guardians can be challenged."""
     display_name = "Sound Stone Shuffle"
 
+class PlandoLumineHallText(FreeText):
+    """Randomizes the Sound Stone. It will need to be found before Sanctuary guardians can be challenged."""
+    display_name = "Lumine Hall Text Plando"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -271,6 +275,7 @@ class EBOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     death_link: DeathLink
     death_link_mode: DeathLinkMode
+    plando_lumine_hall_text: PlandoLumineHallText
 
 
 eb_option_groups = [
@@ -320,10 +325,11 @@ eb_option_groups = [
     ]),
 
     OptionGroup("Aesthetic Settings", [
+        RandomFlavors,
         RandomSwirlColors,
         RandomBattleBG,
         PresentSprites,
-        RandomFlavors
+        PlandoLumineHallText
     ]),
 
     OptionGroup("Deathlink", [
