@@ -4,6 +4,7 @@ from .text_data import lumine_hall_text, eb_text_table
 from .local_data import item_id_table
 from .psi_shuffle import shuffle_psi
 from .boss_shuffle import initialize_bosses
+from .hint_data import setup_hints
 
 
 def setup_gamevars(world):
@@ -344,51 +345,6 @@ def setup_gamevars(world):
     else:
         world.franklin_protection = "thunder"
 
-    world.hinted_regions = [
-        "Northern Onett",
-        "Onett",
-        "Giant Step",
-        "Twoson",
-        "Peaceful Rest Valley",
-        "Happy-Happy Village",
-        "Lilliput Steps",
-        "Threed",
-        "Grapefruit Falls",
-        "Belch's Factory",
-        "Saturn Valley",
-        "Upper Saturn Valley",
-        "Milky Well",
-        "Dusty Dunes Desert",
-        "Gold Mine",
-        "Monkey Caves",
-        "Fourside",
-        "Magnet Hill",
-        "Monotoli Building",
-        "Winters",
-        "Snow Wood Boarding School",
-        "Southern Winters",
-        "Rainy Circle",
-        "Stonehenge Base",
-        "Summers",
-        "Dalaam",
-        "Pink Cloud",
-        "Scaraba",
-        "Pyramid",
-        "Southern Scaraba",
-        "Dungeon Man",
-        "Deep Darkness",
-        "Tenda Village",
-        "Lumine Hall",
-        "Lost Underworld",
-        "Fire Spring",
-        "Magicant",
-        "Cave of the Present",
-        "Cave of the Past"
-    ]
-    
-    world.random.shuffle(world.hinted_regions)
-    del world.hinted_regions[6:39]
-
     if world.options.random_start_location == 1:
         world.valid_teleports = [
             "Onett Teleport",
@@ -460,6 +416,8 @@ def setup_gamevars(world):
     world.prayer_player.extend([0x00])
     shuffle_psi(world)
     initialize_bosses(world)
+
+    setup_hints(world)
 
 
 def place_static_items(world):
