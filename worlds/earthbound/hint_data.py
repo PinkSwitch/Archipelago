@@ -19,7 +19,8 @@ def setup_hints(world):
         "Twoson - Orange Kid Donation",
         "Twoson - Everdred Meeting",
         "Onett - South Road Present",
-        "Deep Darkness - Teleporting Monkey"
+        "Deep Darkness - Teleporting Monkey",
+        "Fourside - Post-Moonside Delivery"
     ]
 
     for i in range(6):
