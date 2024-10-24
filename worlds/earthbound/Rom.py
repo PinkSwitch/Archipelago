@@ -13,6 +13,7 @@ from .battle_bg_data import battle_bg_bpp
 from .psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
+from .hint_data import parse_hint_data, write_hints
 from .enemy_data import combat_regions, scale_enemies
 from .boss_shuffle import write_bosses
 from BaseClasses import ItemClassification, CollectionState
@@ -286,6 +287,18 @@ def patch_rom(world, rom, player: int, multiworld):
                             rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xce, 0xee]))
                         else:
                             rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
+    
+    hintable_locations = [
+    location for location in world.multiworld.get_locations() 
+    if location.player == world.player or location.item.player == world.player
+    ]
+
+    for index, hint in enumerate(world.in_game_hint_types):
+        if hint == "item_at_location":
+            for location in hintable_locations:
+                if location.name == world.hinted_locations[index]:
+                    parse_hint_data(world, location, world.hint_text[index])
+        
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
