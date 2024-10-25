@@ -73,6 +73,7 @@ def patch_rom(world, rom, player: int, multiworld):
     
     for item in world.multiworld.precollected_items[world.player]:
         world.start_items.append(item.name)
+        print(world.start_items)
 
     if world.options.random_start_location != 0:
         rom.write_bytes(0x0F96C2, bytearray([0x69, 0x00]))
@@ -297,7 +298,7 @@ def patch_rom(world, rom, player: int, multiworld):
         if hint == "item_at_location":
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index]:
-                    parse_hint_data(world, location, world.hint_text[index])
+                    parse_hint_data(world, location, world.hint_text[index], hint)
         
 
     if world.options.skip_prayer_sequences:
@@ -458,6 +459,15 @@ def patch_rom(world, rom, player: int, multiworld):
             elif location.item.name == "Poo" and location.item.player == world.player and world.Poo_placed == False:
                world.Poo_region = location.parent_region
                world.Poo_placed = True
+    
+    if "Paula" in world.start_items:
+        world.Paula_region = "Ness's Mind"
+
+    if "Jeff" in world.start_items:
+        world.Jeff_region = "Ness's Mind"
+
+    if "Poo" in world.start_items:
+        world.Poo_region = "Ness's Mind"
 
     if world.options.psi_shuffle:
         write_psi(world, rom)

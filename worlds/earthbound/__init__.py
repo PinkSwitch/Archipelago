@@ -11,7 +11,7 @@ from worlds.AutoWorld import World, WebWorld
 from Options import OptionGroup
 import settings
 from .Items import get_item_names_per_category, item_table
-from .Locations import get_locations
+from .Locations import get_locations, location_groups
 from .Regions import init_areas
 from .Options import EBOptions, eb_option_groups
 from .setup_game import setup_gamevars, place_static_items
@@ -67,6 +67,7 @@ class EarthBoundWorld(World):
     location_name_to_id = {location.name: location.code for
                            location in get_locations(None)}
     item_name_groups = get_item_names_per_category()
+    location_name_groups = location_groups
 
     web = EBWeb()
     settings: typing.ClassVar[EBSettings]

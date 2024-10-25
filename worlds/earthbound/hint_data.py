@@ -57,8 +57,63 @@ def setup_hints(world):
         "Fire Spring - 1st Cave Present",
         "Tenda Village - Tenda Tea",
         "Deep Darkness - Barf Character",
-        "Dalaam - Trial of Mu"
+        "Dalaam - Trial of Mu",
+        "Pyramid - Northwest Door Sarcophagus"
     ]
+
+    local_hintable_items = [
+        "Franklin Badge",
+        "Key to the Shack",
+        "Key to the Cabin",
+        "Key to the Tower",
+        "Key to the Locker",
+        "Bad Key Machine",
+        "Pencil Eraser",
+        "Eraser Eraser",
+        "UFO Engine",
+        "Yogurt Dispenser",
+        "Zombie Paper",
+        "King Banana",
+        "Signed Banana",
+        "Tendakraut",
+        "Jar of Fly Honey",
+        "Wad of Bills",
+        "Tiny Ruby",
+        "Diamond",
+        "Meteorite Piece",
+        "Hieroglyph Copy",
+        "Piggy Nose",
+        "Carrot Key",
+        "Police Badge",
+        "Letter For Tony",
+        "Mining Permit",
+        "Contact Lens",
+        "Insignificant Item",
+        "Pak of Bubble Gum",
+        "Sea Pendant",
+        "Shyness Book",
+        "Hawk Eye",
+        "Paula",
+        "Jeff",
+        "Poo",
+        "Onett Teleport",
+        "Twoson Teleport",
+        "Happy-Happy Village Teleport",
+        "Threed Teleport",
+        "Saturn Valley",
+        "Dusty Dunes Teleport",
+        "Fourside Teleport",
+        "Winters Teleport",
+        "Summers Teleport",
+        "Scaraba Teleport"
+        "Dalaam Teleport",
+        "Deep Darkness Teleport",
+        "Tenda Village Teleport",
+        "Lost Underworld Teleport"
+    ]
+
+    if world.options.magicant_mode.value in [0, 3]:
+        local_hintable_items.append("Magicant Teleport")
 
     if world.options.giygas_required:
         local_hintable_locations.append("Cave of the Past - Present")
@@ -75,18 +130,23 @@ def setup_hints(world):
             text = f"PLAYER's ITEM can be found at {location}."
             world.hint_text[index] = text
             world.hinted_locations[index] = location
+        elif hint == "hint_for_good_item":
+            item = world.random.choice(local_hintable_items)
+            text = "your ITEM can be found by PLAYER at LOCATION." #delete by player if it's local?
 
-def parse_hint_data(world, location, text):
-    if world.player == location.item.player:
-        text = text.replace("PLAYER's", "your")
-    else:
-        text = text.replace("PLAYER", world.multiworld.get_player_name(location.item.player))
+def parse_hint_data(world, location, text, hint):
+    #Check hint types? yeah, I'll do it by hint type
+    if hint == "item_at_location":
+        if world.player == location.item.player:
+            text = text.replace("PLAYER's", "your")
+        else:
+            text = text.replace("PLAYER", world.multiworld.get_player_name(location.item.player))
 
-    if world.player == location.item.player and location.item.name in item_id_table:
-        text = text.replace("ITEM", f"{hex(0x1C05)}{item_id_table[location.item.name]}")
-    else:
-        text = text.replace("ITEM", location.item.name)
-    print(text)
+        if world.player == location.item.player and location.item.name in item_id_table:
+            text = text.replace("ITEM", f"{hex(0x1C05)}{item_id_table[location.item.name]}")
+        else:
+            text = text.replace("ITEM", location.item.name)
+        print(text)
 
 def write_hints(world, rom):
     print("hi")
@@ -94,9 +154,11 @@ def write_hints(world, rom):
 
 
     #Word on the street is that PLAYER's ITEM can be found at LOCATION
-    #Word on the street is that REGION may be hiding a critical item./may be hiding an import-sounding item./may have nothing of much conseuqence.
+    #Word on the street is that REGION may be hiding a critical item. in PLAYER's world.../may be hiding an import-sounding item./may have nothing of much conseuqence.
     #Word on the street is that your ITEM can be found by PLAYER at LOCATION
     #Word on the street is that ITEM can be found somewhere near REGION...
     #Word on the street is that your ITEM can be found somewhere near REGION...
     #char item hint?
     #That's all for today.
+    #I should delete this function. I can write and translate the hints in the second function instead. Instead of doing the whole replace bit, I can + add to the text or chain them together?
+    #Like text part 1, extend 0x1C 0x05 0xItem Item, extend (the rest of the string)

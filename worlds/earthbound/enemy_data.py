@@ -950,6 +950,7 @@ def scale_enemies(world, rom):
         for loc in all_locs:
             if loc.parent_region.name in combat_regions and loc.player == world.player:
                 world.last_combat_region = loc.parent_region.name
+
             if (loc.parent_region in [world.Paula_region, world.Jeff_region, world.Poo_region]) and world.options.auto_scale_party_members:
                 if loc.parent_region == world.Paula_region and world.Paula_scaled == False:
                     world.Paula_region = world.last_combat_region

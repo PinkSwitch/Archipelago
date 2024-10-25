@@ -307,3 +307,236 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         ]
 
     return location_table
+
+location_groups = {
+    "Poo's Inventory": {
+        "Poo Starting Item"
+    },
+
+    "Northern Onett": {
+        "Onett - Tracy Gift",
+        "Onett - Tracy's Room present",
+        "Onett - Meteor Item",
+        "Onett - Buzz Buzz",
+        "Onett - Mani Mani Statue"
+    },
+
+    "Onett": {
+        "Onett - Library Counter",
+        "Onett - Library Bookshelf",
+        "Onett - Burger Shop Trashcan",
+        "Onett - Treehouse Guy",
+        "Onett - South Road Present",
+        "Onett - Hotel Trashcan",
+        "Onett - Mayor Pirkle",
+        "Onett - Traveling Entertainer"
+    },
+
+    "Giant Step": {
+        "Giant Step - First Cave Present",
+        "Giant Step - Floor 2 Cave Present",
+        "Giant Step - Floor 3 Present"
+    },
+
+    "Twoson": {
+        "Twoson - Bike Shop Rental",
+        "Twoson - Antique Shop",
+        "Twoson - Paula's Room Present",
+        "Twoson - Apple Kid Trashcan",
+        "Twoson - South of Town Present",
+        "Twoson - Orange Kid Donation",
+        "Twoson - Apple Kid Invention",
+        "Twoson - Apple Kid's Mouse",
+        "Twoson - Paula's Mother",
+        "Twoson - Everdred Meeting",
+        "Twoson - Insignificant Location"
+    },
+
+    "Peaceful Rest Valley": {
+        "Peaceful Rest Valley - Split Hill Present",
+        "Peaceful Rest Valley - Hill Nook Present",
+        "Peaceful Rest Valley - South of Bridge Present",
+        "Peaceful Rest Valley - Dead End Present",
+        "Peaceful Rest Valley - River Overlook Present",
+        "Peaceful Rest Valley - North Side Present"
+    },
+
+    "Happy-Happy Village": {
+        "Happy-Happy Village - Donation Lady",
+        "Happy-Happy Village - Prisoner Item",
+        "Happy-Happy Village - Prisoner"
+    },
+
+    "the Happy-Happy HQ": {
+        "Happy-Happy Village - Right HQ Present",
+        "Happy-Happy Village - Left HQ Present",
+        "Happy-Happy Village - Defeat Carpainter"
+    },
+
+    "Lilliput Steps": {
+        "Lilliput Steps - Southwest Pool Present",
+        "Lilliput Steps - East Cliff Present",
+        "Lilliput Steps - North Stream Present"
+    },
+
+    "Threed": {
+        "Threed - Boogey Tent Trashcan",
+        "Threed - Cemetery Trashcan",
+        "Threed - Downtown Trashcan",
+        "Threed - East Side Trashcan",
+        "Threed - Northeast Shack Trashcan",
+        "Threed - Hospital Drawer",
+        "Threed - Zombie Prisoner"
+    },
+
+    "the Threed Underground Passage": {
+        "Threed Underground - Left Coffin",
+        "Threed Underground - Right Coffin"
+    },
+
+    "Grapefruit Falls": {
+        "Grapefruit Falls - South Present",
+        "Grapefruit Falls - North Present",
+        "Grapefruit Falls - Saturn Cave Present"
+    },
+
+    "Saturn Valley": {
+        "Saturn Valley - Ladder Present",
+        "Saturn Valley - Trashcan #1",
+        "Saturn Valley - Trashcan #2",
+        "Saturn Valley - Trashcan #3",
+        "Saturn Valley - Saturn Coffee",
+        "Saturn Valley - Post Belch Gift #1",
+        "Saturn Valley - Post Belch Gift #2",
+        "Saturn Valley - Post Belch Gift #3"
+    },
+
+    "Milky Well": {
+        "Milky Well - Cavern Present" #this is a very good location group :^)
+    },
+
+    "Belch's Factory": {
+        "Belch's Factory - Top Right Room Trashcan",
+        "Belch's Factory - Pit Room Trashcan #1",
+        "Belch's Factory - Pit Room Trashcan #2",
+        "Belch's Factory - Balcony Room Trashcan #1",
+        "Belch's Factory - Balcony Room Trashcan #2",
+        "Belch's Factory - Balcony Room Trashcan #3"
+    },
+
+    "Dusty Dunes Desert": {
+        "Dusty Dunes - Northwest Corner Present",
+        "Dusty Dunes - South Side Present",
+        "Dusty Dunes - Surrounding Rocks Present",
+        "Dusty Dunes - Black Sesame Present",
+        "Dusty Dunes - Oasis Present",
+        "Dusty Dunes - Northeast Corner Present",
+        "Dusty Dunes - North Central Present",
+        "Dusty Dunes - Shining Spot",
+        "Dusty Dunes - East Peninsula Present",
+        "Dusty Dunes - Mine Reward"
+    },
+
+    "Snow Wood but just the Lockers": {
+        "Snow Wood - Upper Right Locker",
+        "Snow Wood - Upper Left Locker",
+        "Snow Wood - Bottom Right Locker",
+        "Snow Wood - Bottom Left Locker"
+    },
+
+    "Snow Wood but not the Lockers": {
+        "Snow Wood - Many Present Room Present #1",
+        "Snow Wood - Many Present Room Present #2",
+        "Snow Wood - Many Present Room Present #3",
+        "Snow Wood - Many Present Room Present #4",
+        "Snow Wood - Many Present Room Present #5",
+        "Snow Wood - Many Present Room Present #6",
+        "Snow Wood - Many Present Room Present #7",
+        "Snow Wood - Maxwell Item",
+        "Snow Wood - Bedroom"
+    },
+
+    "Winters": {
+        "Winters - Drugstore Saleswoman",
+    },
+
+    "the Brick Road Maze": {
+        "Brick Road Maze - Top Path Present",
+        "Brick Road Maze - Guarded Present",
+        "Brick Road Maze - Out of the Way Present",
+        "Brick Road Maze - Alcove Present",
+        "Brick Road Maze - Near Exit Present"
+    },
+
+    "Rainy Circle": {
+        "Rainy Circle - Isolated Present",
+        "Rainy Circle - East Cliff Present",
+        "Rainy Circle - Near Ropes Present"
+    },
+
+    "Dr. Andonuts's Lab": {
+        "Andonuts Lab - Present",
+        "Andonuts Lab - Mouse"
+    },
+
+    "Stonehenge Maze Area": {
+        "Stonehenge - Purple Maze Present",
+        "Stonehenge - Dead End Present",
+        "Stonehenge - Near End of the Maze Present"
+    },
+
+    "Stonehenge Bridge Area": {
+        "Stonehenge - Bridge Room East Balcony Present",
+        "Stonehenge - Bridge Room Lower Present"
+    },
+
+    "Stonehenge Flashing Area": {
+        "Stonehenge - Flashing Room Right Path Present",
+        "Stonehenge - Flashing Room Center Present",
+        "Stonehenge - Flashing Room Upper Present"
+    },
+
+    "Stonehenge Tube Room": {
+        "Stonehenge - Kidnapped Mr. Saturn",
+        "Stonehenge - Tony Item"
+    },
+
+    "Gold Mine 1F": {
+        "Gold Mine - Mouse Crossroad Present #1",
+        "Gold Mine - Mouse Crossroad Present #2",
+        "Gold Mine - South Hall Present",
+        "Gold Mine - South Corner Present",
+        "Gold Mine - South Mole Present #1",
+        "Gold Mine - South Mole Present #2",
+        "Gold Mine - North Crossroad Detour Present",
+        "Gold Mine - North Mole Present",
+        "Gold Mine - West Mole Present",
+        "Gold Mine - West Crossroad Detour Present"
+
+    },
+
+    "Gold Mine B1F": {
+        "Gold Mine - B1F Lonely Mole Present",
+        "Gold Mine - B1F Isolated Present",
+        "Gold Mine - B1F Junction Present",
+        "Gold Mine - B1F Junction Mole Present"
+        
+    },
+
+    "Monkey Caves West Wing": {
+        "Monkey Caves - 1F Left Chest",
+        "Monkey Caves - West 2F Left Chest",
+        "Monkey Caves - West 2F Right Chest #1",
+        "Monkey Caves - West 2F Right Chest #2"
+        
+    },
+
+    "Scaraba": {
+        "Scaraba - Snake Bag Salesman",
+    },
+    
+
+    "Sea of Eden": {
+        "Magicant - Ness's Nightmare"
+    }
+}
