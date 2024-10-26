@@ -65,7 +65,8 @@ class EarthBoundWorld(World):
     required_client_version = (0, 5, 0)
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
-    location_name_to_id = location_ids
+    location_name_to_id = {location.name: location.code for
+                           location in get_locations(None)}
     item_name_groups = get_item_names_per_category()
     location_name_groups = location_groups
 
@@ -154,9 +155,6 @@ class EarthBoundWorld(World):
                                  f" Starman Junior => {self.boss_list[26]}\n" +
                                  f" Diamond Dog => {self.boss_list[27]}\n" +
                                  f" Giygas (Phase 2) => {self.boss_list[28]}\n")
-
-            
-
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

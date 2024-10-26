@@ -290,8 +290,8 @@ def patch_rom(world, rom, player: int, multiworld):
                             rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
     
     hintable_locations = [
-    location for location in world.multiworld.get_locations() 
-    if location.player == world.player or location.item.player == world.player
+        location for location in world.multiworld.get_locations()
+        if location.player == world.player or location.item.player == world.player
     ]
 
     for index, hint in enumerate(world.in_game_hint_types):
@@ -299,7 +299,6 @@ def patch_rom(world, rom, player: int, multiworld):
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index]:
                     parse_hint_data(world, location, world.hint_text[index], hint)
-        
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
@@ -419,21 +418,20 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.random_swirl_colors:
         if world.random.random() < 0.5:
-            rom.write_bytes(0x02E98A, bytearray([0x7F])) #Color math mode
+            rom.write_bytes(0x02E98A, bytearray([0x7F]))  # Color math mode
             rom.write_bytes(0x02E996, bytearray([0x3F]))
 
-        rom.write_bytes(0x300240, bytearray([world.random.randint(0x00,0x1F)])) #Normal swirls
-        rom.write_bytes(0x300245, bytearray([world.random.randint(0x00,0x1F)]))
-        rom.write_bytes(0x30024A, bytearray([world.random.randint(0x00,0x1F)]))
+        rom.write_bytes(0x300240, bytearray([world.random.randint(0x00, 0x1F)]))  #Normal swirls
+        rom.write_bytes(0x300245, bytearray([world.random.randint(0x00, 0x1F)]))
+        rom.write_bytes(0x30024A, bytearray([world.random.randint(0x00, 0x1F)]))
 
-        rom.write_bytes(0x300253, bytearray([world.random.randint(0x00,0x1F)])) #Green swirls
-        rom.write_bytes(0x300258, bytearray([world.random.randint(0x00,0x1F)]))
-        rom.write_bytes(0x30025D, bytearray([world.random.randint(0x00,0x1F)]))
+        rom.write_bytes(0x300253, bytearray([world.random.randint(0x00, 0x1F)]))  #Green swirls
+        rom.write_bytes(0x300258, bytearray([world.random.randint(0x00, 0x1F)]))
+        rom.write_bytes(0x30025D, bytearray([world.random.randint(0x00, 0x1F)]))
 
-        rom.write_bytes(0x300269, bytearray([world.random.randint(0x00,0x1F)])) #Red swirls
-        rom.write_bytes(0x30026E, bytearray([world.random.randint(0x00,0x1F)]))
-        rom.write_bytes(0x300273, bytearray([world.random.randint(0x00,0x1F)]))
-
+        rom.write_bytes(0x300269, bytearray([world.random.randint(0x00, 0x1F)]))  #Red swirls
+        rom.write_bytes(0x30026E, bytearray([world.random.randint(0x00, 0x1F)]))
+        rom.write_bytes(0x300273, bytearray([world.random.randint(0x00, 0x1F)]))
 
 
     if not world.options.prefixed_items:
@@ -577,18 +575,18 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x3C0D00, saturn_font_gfx)
 
         rom.write_bytes(0x2EF11F, rom.read_bytes(0x091D30, 0x17))
-        #---------------------------------------
-        #paula_level = rom.read_bytes(0x15f60f, 1)
-        #jeff_level = rom.read_bytes(0x15f623, 1)
-        #poo_level = rom.read_bytes(0x15f637, 1)
+        # ---------------------------------------
+        # paula_level = rom.read_bytes(0x15f60f, 1)
+        # jeff_level = rom.read_bytes(0x15f623, 1)
+        # poo_level = rom.read_bytes(0x15f637, 1)
 
-        #paula_start_exp = rom.read_bytes(0x?? + paula_level, ????)
-        #jeff_start_exp = rom.read_bytes(0x?? + jeff_level, ????)
-        #poo_start_exp = rom.read_bytes(0x?? + poo_level, ????)
+        # paula_start_exp = rom.read_bytes(0x?? + paula_level, ????)
+        # jeff_start_exp = rom.read_bytes(0x?? + jeff_level, ????)
+        # poo_start_exp = rom.read_bytes(0x?? + poo_level, ????)
 
-        #rom.write_bytes(0x??, paula_start_exp)
-        #rom.write_bytes(0x??, jeff_start_exp)
-        #rom.write_bytes(0x??, poo_start_exp)
+        # rom.write_bytes(0x??, paula_start_exp)
+        # rom.write_bytes(0x??, jeff_start_exp)
+        # rom.write_bytes(0x??, poo_start_exp)
         return rom.get_bytes()
 
 
