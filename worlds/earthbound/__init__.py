@@ -67,7 +67,6 @@ class EarthBoundWorld(World):
     location_name_to_id = {location.name: location.code for
                            location in get_locations(None)}
     item_name_groups = get_item_names_per_category()
-    #location_name_groups = location_groups
 
     web = EBWeb()
     settings: typing.ClassVar[EBSettings]
