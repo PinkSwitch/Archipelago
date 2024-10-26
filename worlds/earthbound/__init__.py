@@ -23,7 +23,6 @@ from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .local_data import world_version
-from .static_location_data import location_ids
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
@@ -155,6 +154,9 @@ class EarthBoundWorld(World):
                                  f" Starman Junior => {self.boss_list[26]}\n" +
                                  f" Diamond Dog => {self.boss_list[27]}\n" +
                                  f" Giygas (Phase 2) => {self.boss_list[28]}\n")
+
+            
+
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
