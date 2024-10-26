@@ -11,7 +11,7 @@ from worlds.AutoWorld import World, WebWorld
 from Options import OptionGroup
 import settings
 from .Items import get_item_names_per_category, item_table
-from .Locations import get_locations, location_groups
+from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions, eb_option_groups
 from .setup_game import setup_gamevars, place_static_items
@@ -23,7 +23,7 @@ from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .local_data import world_version
-from .static_location_data import location_ids
+from .static_location_data import location_ids, location_groups
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
