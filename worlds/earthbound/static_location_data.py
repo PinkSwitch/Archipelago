@@ -260,7 +260,7 @@ location_groups = {
 
     "Northern Onett": {
         "Onett - Tracy Gift",
-        "Onett - Tracy's Room present",
+        "Onett - Tracy's Room Present",
         "Onett - Meteor Item",
         "Onett - Buzz Buzz",
         "Onett - Mani Mani Statue"
