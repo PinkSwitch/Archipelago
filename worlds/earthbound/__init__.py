@@ -23,6 +23,7 @@ from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .local_data import world_version
+from .static_location_data import location_ids
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
@@ -64,10 +65,9 @@ class EarthBoundWorld(World):
     required_client_version = (0, 5, 0)
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
-    location_name_to_id = {location.name: location.code for
-                           location in get_locations(None)}
+    location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
-    #location_name_groups = location_groups
+    location_name_groups = location_groups
 
     web = EBWeb()
     settings: typing.ClassVar[EBSettings]

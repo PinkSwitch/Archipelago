@@ -271,28 +271,28 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Ness's Mind", "Sanctuary Goal", None),
     ]
 
-    if not world or world.options.giygas_required:
+    if world.options.giygas_required:
         location_table += [
             LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),
             LocationData("Endgame", "Giygas", None),
         ]
 
-    if not world or world.options.alternate_sanctuary_goal:
+    if world.options.alternate_sanctuary_goal:
         location_table += [
             LocationData("Ness's Mind", "+2 Sanctuaries", None)
         ]
 
-    if not world or world.options.magicant_mode > 0 and world.options.magicant_mode < 3:
+    if world.options.magicant_mode > 0 and world.options.magicant_mode < 3:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Nightmare", None),
         ]
 
-    if not world or not world.options.magicant_mode:
+    if not world.options.magicant_mode:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Nightmare", 0xEB00ED),
         ]
 
-    if not world or world.options.magicant_mode < 2:
+    if world.options.magicant_mode < 2:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Gift", 0xEB00E8),
             LocationData("Magicant", "Magicant - Present Near Ness", 0xEB00E9),
@@ -301,7 +301,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
             LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC),
             LocationData("Magicant", "Magicant - Town Present", 0xEB00FA)
         ]
-    if not world or world.options.magicant_mode == 2:
+    if world.options.magicant_mode == 2:
         location_table += [
             LocationData("Ness's Mind", "+1 Sanctuary", None)
         ]
