@@ -472,16 +472,209 @@ location_groups = {
         "Monkey Caves - 1F Left Chest",
         "Monkey Caves - West 2F Left Chest",
         "Monkey Caves - West 2F Right Chest #1",
-        "Monkey Caves - West 2F Right Chest #2"
+        "Monkey Caves - West 2F Right Chest #2",
+        "Monkey Caves - West End Chest",
+        "Monkey Caves - West End Trashcan",
+
         
+    },
+
+    "Monkey Caves East Wing": {
+        "Monkey Caves - 1F Right Chest",
+        "Monkey Caves - East 2F Left Chest",
+        "Monkey Caves - East 2F Right Chest",
+        "Monkey Caves - East West 3F Right Chest #1",
+        "Monkey Caves - East West 3F Right Chest #2",
+        "Monkey Caves - East End Chest",
+        "Monkey Caves - East End Trashcan",
+        "Monkey Caves - Bow Monkey Gift"
+        
+    },
+
+    "Monkey Caves Talah Rama Room": {
+        "Monkey Caves - Talah Rama Chest #1",
+        "Monkey Caves - Talah Rama Chest #2",
+        "Monkey Caves - Talah Rama Gift",
+        "Monkey Caves - Monkey Power"
+        
+    },
+
+    "Fourside": {
+        "Fourside - Venus Gift",
+        "Fourside - Bakery 2F Gift",
+        "Fourside - Department Store Blackout",
+        "Fourside - Magnet Hill Chest"
+        
+    },
+
+    "Moonside": {
+        "Moonside - Two Trees Present",
+        "Moonside - East Island Present",
+        "Moonside - Businessman Present",
+        "Moonside - West Island Present",
+        "Moonside - Hospital Present",
+        "Fourside - Post-Moonside Delivery"
+        
+    },
+
+    "Magnet Hill": {
+        "Magnet Hill - West Entrance Trashcan",
+        "Magnet Hill - First Room Free Door Trashcan",
+        "Magnet Hill - First Room Barrel Door Trashcan",
+        "Magnet Hill - Second Room Dead End Trashcan",
+        "Magnet Hill - Final Room Door Trashcan"
+        
+    },
+
+    "Monotoli Building": {
+        "Monotoli Building - One Table Present",
+        "Monotoli Building - Two Table Present",
+        "Monotoli Building - Electra Gift",
+        "Monotoli Building - Monotoli Gift",
+        "Monotoli Building - Monotoli Character"
+        
+    },
+
+    "Summers": {
+        "Summers - Museum Item",
+        "Summers - Magic Cake"
+        
+    },
+
+    "Dalaam": {
+        "Dalaam - Throne Room Chest #1",
+        "Dalaam - Throne Room Chest #2",
+        "Dalaam - Throne Room Chest #3",
+        "Dalaam - Trial of Mu",
+        "Dalaam - Restaurant Chest #1",
+        "Dalaam - Restaurant Chest #2",
+        "Dalaam - Do Do Guy's House Chest",
+        "Dalaam - Upper House Chest",
+        "Dalaam - Throne Character"
+        
+    },
+
+    "Pink Cloud": {
+        "Pink Cloud - Three Holes Present",
+        "Pink Cloud - Left Hole Present",
+        "Pink Cloud - Ground Floor Present"
     },
 
     "Scaraba": {
         "Scaraba - Snake Bag Salesman",
+        "Scaraba - Star Master",
+        "Scaraba - Key Holder"
+    },
+
+    "the Pyramid": {
+        "Pyramid - Anteroom Sarcophagus",
+        "Pyramid - Northwest Door Sarcophagus",
+        "Pyramid - Hallway Sarcophagus #1",
+        "Pyramid - Hallway Sarcophagus #2",
+        "Pyramid - Switch Room Sarcophagus",
+        "Pyramid - Pedestal Item",
+        "Pyramid - Way Out Sarcophagus"
+    },
+
+    "Dungeon Man 1F": {
+        "Dungeon Man - 1F Dead End Present",
+        "Dungeon Man - 1F Long Walk Present",
+        "Dungeon Man - 1F Disappointing Present",
+        "Dungeon Man - 1F Opinion Present",
+        "Dungeon Man - 1F No Sign Present",
+        "Dungeon Man - 1F Exit Ledge Present"
+    },
+
+    "Dungeon Man 2F": {
+        "Dungeon Man - 2F Unnecessary Billboard Present",
+        "Dungeon Man - 2F Dungeon Exploration Present",
+        "Dungeon Man - 2F South Ledge Present",
+        "Dungeon Man - 2F North Alcove Present",
+        "Dungeon Man - 2F Hole Present"
+    },
+
+    "Dungeon Man 3F": {
+        "Dungeon Man - 3F Present"
+    },
+
+    "Deep Darkness": {
+        "Deep Darkness - Teleporting Monkey",
+        "Deep Darkness - Crest of Darkness Present",
+        "Deep Darkness - Helicopter Present",
+        "Deep Darkness - Yellow Bird Present",
+        "Deep Darkness - Swamp Present",
+        "Deep Darkness - Corner Present",
+        "Deep Darkness - Alcove Present",
+        "Deep Darkness - Barf Character"
+    },
+
+    "Deep Darkness Truffles": {
+        "Deep Darkness - North Alcove Truffle",
+        "Deep Darkness - Near Land Truffle",
+        "Deep Darkness - Present Truffle",
+        "Deep Darkness - Village Truffle",
+        "Deep Darkness - Entrance Truffle"
+    },
+
+    "Tenda Village": {
+        "Tenda Village - Trashcan",
+        "Tenda Village - Tenda Tea",
+        "Tenda Village - Tenda Gift",
+        "Tenda Village - Tenda Gift #2"
+    },
+
+    "Lumine Hall 1F": {
+        "Lumine Hall - 1F North Path Present",
+        "Lumine Hall - 1F Above Belly Button Present",
+        "Lumine Hall - 1F Near Exit Present",
+        "Lumine Hall - 1F Dead End Present"
+    },
+
+    "Lumine Hall B1F": {
+        "Lumine Hall - B1F Non-Talkative Rock Present",
+        "Lumine Hall - B1F Thankful Rock Corner Present",
+        "Lumine Hall - B1F Thankful Rock Junction Present",
+        "Lumine Hall - B1F Belly Button Present",
+        "Lumine Hall - B1F West Alcove Present"
+    },
+    
+    "Lost Underworld": {
+        "Lost Underworld - Talking Rock",
+        "Lost Underworld - East Present",
+        "Lost Underworld - Northeast Present",
+        "Lost Underworld - Northeast of Tenda Tribe Present",
+        "Lost Underworld - Southwest of Tenda Tribe Present",
+        "Lost Underworld - Evacuation Present"
+    },
+
+    "Fire Spring": {
+        "Fire Spring - 1st Cave Present",
+        "Fire Spring - East Corner Present",
+        "Fire Spring - Volcano Present",
+        "Fire Spring - Lone Cave Present",
+        "Fire Spring - Upper Volcano Present"
+    },
+
+    "Magicant": {
+        "Magicant - Ness's Gift",
+        "Magicant - Present Near Ness",
+        "Magicant - Lonely Present",
+        "Magicant - North Present",
+        "Magicant - Hills Present",
+        "Magicant - Town Present"
     },
     
 
     "Sea of Eden": {
         "Magicant - Ness's Nightmare"
+    },
+
+    "Cave of the Present": {
+        "Cave of the Present - Star Master",
+        "Cave of the Present - Broken Phase Distorter"
+    },
+
+    "Cave of the Past": {
+        "Cave of the Past - Present"
     }
 }
