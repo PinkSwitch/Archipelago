@@ -62,8 +62,8 @@ eb_text_table = {" ": ([0x50]), "!": ([0x51]), '"': ([0x52]), "■": ([0x53]), "
                  "o": ([0x9F]), "p": ([0xA0]), 'q': ([0xA1]), "r": ([0xA2]), 's': ([0xA3]), "t": ([0xA4]),
                  "u": ([0xA5]), "v": ([0xA6]), 'w': ([0xA7]), "x": ([0xA8]), 'y': ([0xA9]), "z": ([0xAA]),
                  "[": ([0xAB]), "♪": ([0xAC]), ']': ([0xAD]), "~": ([0xAE]), '◯': ([0xAF]), "_": ([0xB0]),
-                 "<": ([0xB1]), "»": ([0x90]), "&": ([0xB6]), "#": ([0xB7])}
-# 0x90 is a half-width space, should only be used for excessively long names in menus, not regular item/player text
+                 "<": ([0xB1]), " ": ([0x90]), "&": ([0xB6]), "#": ([0xB7])}
+# 0x90 is a half-width space
 
 
 lumine_hall_text = [

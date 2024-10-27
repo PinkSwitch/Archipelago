@@ -173,7 +173,7 @@ def shuffle_psi(world):
         "Thunder": ["Sparkler", "Big sparkler", "Mega sparkler"],
         "Starstorm": ["Meteor missile", "Star missile", "Nova missile"],
         "Blast": ["Firecracker", "Big firecracker", "Super firecracker"],
-        "Missile": ["Bottle rocket", "Big bottle rocket", "Multi»bottle rocket"]
+        "Missile": ["Bottle rocket", "Big bottle rocket", "Multi bottle rocket"]
     }
 
     world.spray_names = {

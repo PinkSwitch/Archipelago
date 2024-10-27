@@ -1,4 +1,5 @@
-from .local_data import item_id_table
+from .local_data import item_id_table, character_item_table, party_id_nums
+from .text_data import eb_text_table, text_encoder
 
 def setup_hints(world):
     hint_types = [
@@ -130,23 +131,33 @@ def setup_hints(world):
             text = f"PLAYER's ITEM can be found at {location}."
             world.hint_text[index] = text
             world.hinted_locations[index] = location
+
         elif hint == "hint_for_good_item":
             item = world.random.choice(local_hintable_items)
             text = "your ITEM can be found by PLAYER at LOCATION." #delete by player if it's local?
 
-def parse_hint_data(world, location, text, hint):
+def parse_hint_data(world, location, rom, hint):
     #Check hint types? yeah, I'll do it by hint type
     if hint == "item_at_location":
-        if world.player == location.item.player:
-            text = text.replace("PLAYER's", "your")
+        if world.player == location.item.player and location.item.name in character_item_table:
+            player_text = "your friend "
+            item_text = bytearray([0x1C, 0x02, party_id_nums[location.item.name]]) #In-game text command to display party member names
+        elif world.player == location.item.player:
+            player_text = "your "
+            if location.item.name in item_id_table:
+                item_text = bytearray([0x1C, 0x05, item_id_table[location.item.name]]) #In-game text command to display item names
+            else:
+                item_text = text_encoder(location.item.name, eb_text_table, 128) #if the item doesn't have a name (e.g it's PSI)
         else:
-            text = text.replace("PLAYER", world.multiworld.get_player_name(location.item.player))
+            player_text = f"{world.multiworld.get_player_name(location.item.player)}'s"
+            item_text = text_encoder(location.item.name, eb_text_table, 128)
 
-        if world.player == location.item.player and location.item.name in item_id_table:
-            text = text.replace("ITEM", f"{hex(0x1C05)}{item_id_table[location.item.name]}")
-        else:
-            text = text.replace("ITEM", location.item.name)
-        print(text)
+        player_text = text_encoder(player_text, eb_text_table, 255)
+        location_text = text_encoder(f"can be found at {location.name}", eb_text_table, 255)
+        text = player_text + item_text + location_text
+        text.append(0x02)
+    rom.write_bytes(0x310000 + world.hint_pointer, text)
+    world.hint_pointer = world.hint_pointer + len(text)
 
 def write_hints(world, rom):
     print("hi")

@@ -136,6 +136,7 @@ def patch_rom(world, rom, player: int, multiworld):
             item_name_loc = (((location.address - 0xEB0000) * 128) + 0x3F0000)
             item_text = bytearray(0)
             player_text = bytearray(0)
+            #todo; replace with the encoder function
             for char in location.item.name[:128]:
                 if char in eb_text_table:
                     item_text.extend(eb_text_table[char])
@@ -294,11 +295,12 @@ def patch_rom(world, rom, player: int, multiworld):
         if location.player == world.player or location.item.player == world.player
     ]
 
+    world.hint_pointer = 0x0000
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index]:
-                    parse_hint_data(world, location, world.hint_text[index], hint)
+                    parse_hint_data(world, location, rom, hint)
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))
