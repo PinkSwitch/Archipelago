@@ -301,6 +301,11 @@ def patch_rom(world, rom, player: int, multiworld):
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index]:
                     parse_hint_data(world, location, rom, hint)
+        elif hint =="hint_for_good_item":
+            for location in hintable_locations:
+                if location.item.name == world.hinted_items[index]:
+                    parse_hint_data(world, location, rom, hint)
+
 
     if world.options.skip_prayer_sequences:
         rom.write_bytes(0x07BC96, bytearray([0x02]))

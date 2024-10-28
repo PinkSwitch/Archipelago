@@ -1,5 +1,6 @@
 from .local_data import item_id_table, character_item_table, party_id_nums
 from .text_data import eb_text_table, text_encoder
+from .static_location_data import location_groups
 
 def setup_hints(world):
     hint_types = [
@@ -14,8 +15,8 @@ def setup_hints(world):
     ]
     world.in_game_hint_types = []
     world.hinted_locations = {}
+    world.hinted_items = {}
     world.hinted_regions = {}
-    world.hint_text = {}
 
     local_hintable_locations = [
         "Onett - Mayor Pirkle",
@@ -128,13 +129,25 @@ def setup_hints(world):
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
             location = world.random.choice(local_hintable_locations)
-            text = f"PLAYER's ITEM can be found at {location}."
-            world.hint_text[index] = text
+            #text = f"PLAYER's ITEM can be found at {location}."
             world.hinted_locations[index] = location
+        
+        elif hint == "region_progression_check":
+            print("sadge")
 
-        elif hint == "hint_for_good_item":
+        elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
             item = world.random.choice(local_hintable_items)
-            text = "your ITEM can be found by PLAYER at LOCATION." #delete by player if it's local?
+            world.hinted_items[index] = item
+
+        elif hint == "item_in_local_region":
+            key, value = world.random.choice(list(location_groups.items()))
+            group = key
+            location = world.random.choice(sorted(value))
+            world.hinted_regions[index] = group
+            world.hinted_locations[index] = location
+        else:
+            print("jonkler")
+
 
 def parse_hint_data(world, location, rom, hint):
     #Check hint types? yeah, I'll do it by hint type
@@ -149,14 +162,41 @@ def parse_hint_data(world, location, rom, hint):
             else:
                 item_text = text_encoder(location.item.name, eb_text_table, 128) #if the item doesn't have a name (e.g it's PSI)
         else:
-            player_text = f"{world.multiworld.get_player_name(location.item.player)}'s"
+            player_text = f"{world.multiworld.get_player_name(location.item.player)}'s "
             item_text = text_encoder(location.item.name, eb_text_table, 128)
 
         player_text = text_encoder(player_text, eb_text_table, 255)
-        location_text = text_encoder(f"can be found at {location.name}", eb_text_table, 255)
+        location_text = text_encoder(f"can be found at {location.name}.", eb_text_table, 255)
         text = player_text + item_text + location_text
+        #[player]'s [item] can be found at [location].
         text.append(0x02)
+
+    elif hint == "region_progression_check":
+        print("help sadge")
+    elif hint == "hint_for_good_item":
+        if location.item.name in character_item_table:
+            item_text = text_encoder("your friend ", eb_text_table, 255)
+            item_text.extend([0x1C, 0x02, party_id_nums[location.item.name]])
+        elif location.item.name in item_id_table:
+            item_text = text_encoder("your ", eb_text_table, 255)
+            item_text.extend([0x1C, 0x05, item_id_table[location.item.name]])
+        else:
+            item_text = text_encoder(f"your {location.item.name}", eb_text_table, 128)
+        item_text.extend(text_encoder(" can be found ", eb_text_table, 255))
+        if location.player != world.player:
+            player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)}", eb_text_table, 255)
+        else:
+            player_text = text_encoder("", eb_text_table, 255)
+        location_text = text_encoder(f"at {location.name}", eb_text_table, 255)
+        text = item_text + player_text + location_text
+        #your [item] can be found by [player] at [location]
+        text.append(0x02)
+    #add spaces? test all of these...
+
+        
     rom.write_bytes(0x310000 + world.hint_pointer, text)
+    #rom.write_bytes(0x310000 + world.hint_pointer, text) text call
+    # rom.write_bytes(0x310000 + world.hint_pointer, text) text call 2
     world.hint_pointer = world.hint_pointer + len(text)
 
 def write_hints(world, rom):
@@ -167,7 +207,7 @@ def write_hints(world, rom):
     #Word on the street is that PLAYER's ITEM can be found at LOCATION
     #Word on the street is that REGION may be hiding a critical item. in PLAYER's world.../may be hiding an import-sounding item./may have nothing of much conseuqence.
     #Word on the street is that your ITEM can be found by PLAYER at LOCATION
-    #Word on the street is that ITEM can be found somewhere near REGION...
+    #Word on the street is that PLAYER's ITEM can be found somewhere near REGION...
     #Word on the street is that your ITEM can be found somewhere near REGION...
     #char item hint?
     #That's all for today.
