@@ -115,7 +115,7 @@ def setup_hints(world):
         "Lost Underworld Teleport"
     ]
 
-    joke_hints = [
+    world.joke_hints = [
         "you can find 6 hint shops around the world.",
         "if you want to hint for an item, use !hint in your text client!",
         "the mouse at the Fourside Department Store knows what the Spook has.",
@@ -226,7 +226,7 @@ def parse_hint_data(world, location, rom, hint):
         if hint == "hint_for_good_item":
             location_text = text_encoder(f"at {location.name}", eb_text_table, 255)
              #your [item] can be found by [player] at [location]
-             
+
         else:
             location_name_groups = world.multiworld.worlds[location.player].location_name_groups
             possible_location_groups = [
@@ -247,7 +247,7 @@ def parse_hint_data(world, location, rom, hint):
         text.append(0x02)
 
     elif hint == "joke_hint":
-        text = world.random.choice(joke_hints)
+        text = world.random.choice(world.joke_hints)
         text = text_encoder(text, eb_text_table, 255)
         text.append(0x02)
 
