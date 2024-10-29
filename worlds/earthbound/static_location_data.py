@@ -502,8 +502,7 @@ location_groups = {
     "Fourside": {
         "Fourside - Venus Gift",
         "Fourside - Bakery 2F Gift",
-        "Fourside - Department Store Blackout",
-        "Fourside - Magnet Hill Chest"
+        "Fourside - Department Store Blackout"
         
     },
 
@@ -522,7 +521,8 @@ location_groups = {
         "Magnet Hill - First Room Free Door Trashcan",
         "Magnet Hill - First Room Barrel Door Trashcan",
         "Magnet Hill - Second Room Dead End Trashcan",
-        "Magnet Hill - Final Room Door Trashcan"
+        "Magnet Hill - Final Room Door Trashcan",
+        "Fourside - Magnet Hill Chest"
         
     },
 

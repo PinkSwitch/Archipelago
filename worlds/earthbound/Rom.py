@@ -13,9 +13,10 @@ from .battle_bg_data import battle_bg_bpp
 from .psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
 from .flavor_data import flavor_data
-from .hint_data import parse_hint_data, write_hints
+from .hint_data import parse_hint_data
 from .enemy_data import combat_regions, scale_enemies
 from .boss_shuffle import write_bosses
+from .static_location_data import location_groups
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING, Optional
@@ -268,11 +269,11 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
             if name in present_locations and "Lost Underworld" not in name and world.options.presents_match_contents:
-                if location.item.classification & ItemClassification.trap:
+                if location.item.classification in ItemClassification.trap:
                     world.present_type = "trap"
-                elif location.item.classification & ItemClassification.progression:
+                elif location.item.classification in ItemClassification.progression:
                     world.present_type = "progression"
-                elif location.item.classification & ItemClassification.useful:
+                elif location.item.classification in ItemClassification.useful:
                     world.present_type = "useful"
                 else:
                     world.present_type = "filler"
@@ -301,10 +302,33 @@ def patch_rom(world, rom, player: int, multiworld):
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index]:
                     parse_hint_data(world, location, rom, hint)
-        elif hint =="hint_for_good_item":
+                    
+        elif hint == "region_progression_check":
+            world.progression_count = 0
+            for location in hintable_locations:
+                if location.name in location_groups[world.hinted_regions[index]]:
+                    if ItemClassification.progression in location.item.classification:
+                        world.progression_count += 1
+            world.hinted_area = world.hinted_regions[index] #im doing a little sneaky
+            parse_hint_data(world, location, rom, hint)
+
+        elif hint == "hint_for_good_item":
             for location in hintable_locations:
                 if location.item.name == world.hinted_items[index]:
                     parse_hint_data(world, location, rom, hint)
+
+        elif hint == "prog_item_at_region":
+            for location in hintable_locations:
+                if location.item.name == world.hinted_items[index]:
+                    parse_hint_data(world, location, rom, hint)
+
+        elif hint == "item_in_local_region":
+            for location in hintable_locations:
+                if location.item.name == world.hinted_items[index]:
+                    parse_hint_data(world, location, rom, hint)
+        else:
+            location = "null"
+            parse_hint_data(world, location, rom, hint)
 
 
     if world.options.skip_prayer_sequences:
