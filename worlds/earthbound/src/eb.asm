@@ -132,7 +132,7 @@ ORG $C07960
 JML SetAnimSpeed
 
 ORG $C22A35
-JML SaveAPData
+;JML SaveAPData
 
 ORG $C14F56
 JML ExtraKeyItems
@@ -235,6 +235,9 @@ JML GetNewSwirlColorBad
 
 ORG $C2E94B
 JML PokeySwirl
+
+ORG $C0F67A
+JML GetSeedPlayer
 ;new jmls
 
 
@@ -3353,7 +3356,7 @@ TAY
 LDA #$000F
 LDX #$B570
 MVN $7E20
-
+;storage
 LDA #$0063
 LDX #$B590
 LDY #$7E40
@@ -4937,26 +4940,22 @@ pld
 rtl
 
 RepelEnemies:
-CMP #$04
-BEQ CheckEnemySuppression
-OtherFlag:
-AND $9C08,X
-REP #$20
-JML $C2164F
-CheckEnemySuppression:
-CPX #$0001
+REP #$31
+DEC
+TAY
+CMP #$000A
 BEQ CheckRepels
-BRA OtherFlag
+CheckNormal:
+JML ExitRepelCheck
 CheckRepels:
-REP #$20
 PHA
 LDA $9E3C
 BEQ RepelsEmpty
 PLA
-JML $C21654
+JML ExitRepelCheck_ForceFlagOn
 RepelsEmpty:
 PLA
-BRA OtherFlag
+BRA CheckNormal
 
 GetStartingData:
 PHB
@@ -7457,6 +7456,7 @@ db $0A, $24, $F2, $EE
 ;;;;;;;;;
 ORG $EFA455
 db $0A, $3A, $F1, $EE
+;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -7655,6 +7655,195 @@ db $0A, $9C, $F0, $EE
 ORG $C57F4A
 db $0A, $A7, $F0, $EE
 
+;;;;;;;;;;;;;;;
+;hint stuff
+
+ORG $CF8C25
+dl onett_hint_man ;Onett hint guy text pointer
+
+ORG $CF9C04
+dl twoson_hint_man
+
+ORG $CFAB6C
+dl threed_hint_man
+
+ORG $CFC9F8
+dl fourside_hint_man
+
+ORG $CFD0AD
+dl summers_hint_man
+
+ORG $CFD61F
+dl scaraba_hint_man
+
+ORG $C726D8
+db $02
+
+ORG $C701C6
+db $08
+dd display_hint_price
+db $0F
+
+ORG $C7032E
+db $70, $87, $9f, $a2, $94, $50, $9f, $9e, $50, $a4, $98, $95, $50, $a3, $a4, $a2
+db $95, $95, $a4, $50, $99, $a3, $50, $a4, $98, $91, $a4, $50
+
+db $06, $05, $04
+dd display_onett_hint
+
+db $06, $06, $04
+dd display_twoson_hint
+
+db $06, $07, $04
+dd display_threed_hint
+
+db $06, $08, $04
+dd display_fourside_hint
+
+db $06, $09, $04
+dd display_summers_hint
+
+db $06, $0A, $04
+dd display_scaraba_hint
+db $02
+
+display_onett_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_onett_hint; replace with a $02 if not pushable
+db $06, $F9, $03
+dd .onett_hint_twice
+db $08
+dd count_hints
+.onett_hint_twice:
+db $04, $F9, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $05, $04
+db $02
+
+display_twoson_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_twoson_hint; replace with a $02 if not pushable
+db $06, $FA, $03
+dd .twoson_hint_twice
+db $08
+dd count_hints
+.twoson_hint_twice:
+db $04, $FA, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $06, $04
+db $02
+
+display_threed_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_threed_hint; replace with a $02 if not pushable
+db $06, $FB, $03
+dd .threed_hint_twice
+db $08
+dd count_hints
+.threed_hint_twice:
+db $04, $FB, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $07, $04
+db $02
+
+display_fourside_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_fourside_hint; replace with a $02 if not pushable
+db $06, $FC, $03
+dd .fourside_hint_twice
+db $08
+dd count_hints
+.fourside_hint_twice:
+db $04, $FC, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $08, $04
+db $02
+
+display_summers_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_summers_hint; replace with a $02 if not pushable
+db $06, $FD, $03
+dd .summers_hint_twice
+db $08
+dd count_hints
+.summers_hint_twice:
+db $04, $FD, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $09, $04
+db $02
+
+display_scaraba_hint:
+db $08
+dd hint_error_message;replace with generated pointer
+db $03
+db $08
+dd push_scaraba_hint; replace with a $02 if not pushable
+db $06, $FE, $03
+dd .scaraba_hint_twice
+db $08
+dd count_hints
+.scaraba_hint_twice:
+db $04, $FE, $03
+db $01
+db $06, $04, $04
+dd $C72348 ;Direct here if we're out of hints
+dd $C726CC08
+db $FF
+db $03, $01
+db $08
+dd post_hint_text
+db $05, $0A, $04
+db $02
 
 
 ;;;;;;;;;;;;;boss names
@@ -7871,7 +8060,264 @@ db $9b, $99, $99, $99, $5e, $03, $00, $70, $58, $89, $95, $a0, $5c, $10, $0f, $5
 db $79, $50, $96, $9f, $a5, $9e, $94, $50, $0a, $22, $bc, $c6
 
 db $1f, $eb, $ff, $06, $04, $0B, $00, $0A, $5A, $1E, $C9
+;;;;;;;;;;;;;;
+;hint guy
+onett_hint_man:
+db $04, $05, $04
+db $06, $f9, $03
+dd $FFC726DA
+dd $C701440A
 
+twoson_hint_man:
+db $04, $06, $04
+db $06, $fA, $03
+dd $FFC726DA
+dd $C7014F0A
+
+threed_hint_man:
+db $04, $07, $04
+db $06, $fB, $03
+dd $FFC726DA
+dd $C7015A0A
+
+fourside_hint_man:
+db $04, $08, $04
+db $06, $fc, $03
+dd $FFC726DA
+dd $C701650A
+
+summers_hint_man:
+db $04, $09, $04
+db $06, $fD, $03
+dd $FFC726DA
+dd $C701760A
+
+scaraba_hint_man:
+db $04, $0A, $04
+db $06, $fe, $03
+dd $FFC726DA
+dd $C701870A
+
+
+
+
+
+display_hint_price:
+
+db $06, $03, $04
+dd bought_five_hints
+
+db $06, $02, $04
+dd bought_four_hints
+
+db $06, $01, $04
+dd bought_three_hints
+
+db $06, $00, $04
+dd bought_two_hints
+
+db $06, $FF, $03
+dd bought_one_hint
+
+db $61, $60, $60
+db $0E, $64
+db $0D, $01, $02
+
+bought_one_hint:
+db $62, $60, $60
+db $0E, $C8
+db $0D, $01, $02
+
+bought_two_hints:
+db $64, $60, $60
+db $08
+dd get_2bytenum_part1
+db $1D, $08, $90, $01
+db $1B, $00, $1D, $09, $90, $01
+db $08
+dd get_2bytenum_part2
+db $02
+
+bought_three_hints:
+db $68, $60, $60
+db $08
+dd get_2bytenum_part1
+db $1D, $08, $20, $03
+db $1B, $00, $1D, $09, $20, $03
+db $08
+dd get_2bytenum_part2
+db $02
+
+bought_four_hints:
+db $61, $66, $60, $60
+db $08
+dd get_2bytenum_part1
+db $1D, $08, $40, $06
+db $1B, $00, $1D, $09, $40, $06
+db $08
+dd get_2bytenum_part2
+db $02
+
+bought_five_hints:
+db $63, $62, $60, $60
+db $08
+dd get_2bytenum_part1
+db $1D, $08, $80, $0C
+db $1B, $00, $1D, $09, $80, $0C
+db $08
+dd get_2bytenum_part2
+db $02
+
+get_2bytenum_part1:
+db $19, $27, $06, $1b, $04, $1d, $09, $00, $00, $02
+
+get_2bytenum_part2:
+db $1d, $08, $00, $00, $1b, $01, $1b, $04, $02
+
+hint_error_message:
+db $a3, $9f, $9d, $95, $a4, $98, $99, $9e, $97, $50, $a7, $95, $9e, $a4, $50, $a4
+db $95, $a2, $a2, $99, $92, $9c, $a9, $50, $a7, $a2, $9f, $9e, $97, $50, $98, $95
+db $a2, $95, $5e, $02
+
+count_hints:
+db $06, $04, $04
+dd .end_hints
+db $06, 03, $04;if we have 5
+dd .set_sixth_hint
+db $06, $02, $04;if we have 4
+dd .set_fifth_hint
+db $06, $01, $04;if we have 3
+dd .set_fourth_hint
+db $06, $00, $04
+dd .set_third_hint; if we have 2
+db $06, $FF, $03
+dd .set_second_hint
+db $04, $FF, $03, $02
+
+
+.set_second_hint:
+db $04, $00, $04
+db $02
+.set_third_hint:
+db $04, $01, $04
+db $02
+.set_fourth_hint:
+db $04, $02, $04
+db $02
+.set_fifth_hint:
+db $04, $03, $04
+db $02
+.set_sixth_hint:
+db $04, $04, $04
+.end_hints:
+db $02
+
+push_onett_hint:
+db $06, $0B, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $0B, $04
+.skip_hint:
+db $02
+
+push_twoson_hint:
+db $06, $0C, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $0C, $04
+.skip_hint:
+db $02
+
+push_threed_hint:
+db $06, $0D, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $0D, $04
+.skip_hint:
+db $02
+
+push_fourside_hint:
+db $06, $0E, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $0E, $04
+.skip_hint:
+db $02
+
+push_summers_hint:
+db $06, $0F, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $0F, $04
+.skip_hint:
+db $02
+
+push_scaraba_hint:
+db $06, $10, $04
+dd .skip_hint
+db $08
+dd server_hint_text
+db $1B, $02
+dd .skip_hint
+db $04, $10, $04
+.skip_hint:
+db $02
+
+
+server_hint_text:
+db $01, $70, $76, $9f, $a2, $50, $91, $9e, $50, $95, $a8, $a4, $a2, $91, $50, $54
+db $65, $60, $60, $5c, $10, $03, $50, $79, $57, $9c, $9c, $50, $a4, $95, $9c, $9c
+db $50, $a4, $98, $95, $50, $a3, $95, $a2, $a6, $95, $a2, $50, $91, $92, $9f, $a5
+db $a4, $50, $a4, $98, $99, $a3, $50, $98, $99, $9e, $a4, $5e, $03, $01, $70, $87
+db $98, $91, $a4, $50, $94, $9f, $50, $a9, $9f, $a5, $50, $a3, $91, $a9, $6f, $01
+db $08, $4d, $dd, $c7, $ff, $11, $12
+
+db $09, $02
+dd pushhint_saidyes
+dd pushhint_no
+
+pushhint_no:
+db $1D, $19, $01
+db $02
+
+pushhint_saidyes:
+db $19, $27, $06, $1b, $04, $1d, $09, $00, $00, $1d, $08, $F4, $01, $1b, $00, $1d
+db $09, $F4, $01, $1d, $08, $00, $00, $1b, $01, $1b, $04
+db $1D, $14, $00, $00, $00, $00
+db $1B, $03
+dd pushhint_nomoney
+db $1D, $09, $00, $00
+db $18, $0A
+db $1F, $02, $78
+db $1D, $19, $FA
+db $02
+pushhint_nomoney:
+db $12, $70, $89, $9f, $a5, $50, $94, $9f, $9e, $57, $a4, $50, $98, $91, $a6, $95
+db $50, $95, $9e, $9f, $a5, $97, $98, $50, $9d, $9f, $9e, $95, $a9, $50, $96, $9f
+db $a2, $50, $a4, $98, $91, $a4, $50, $a0, $91, $93, $9b, $91, $97, $95, $5e, $03
+db $0A
+dd pushhint_no
+
+post_hint_text:
+db $70, $79, $96, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50, $91, $9e, $9f, $a4
+db $98, $95, $a2, $50, $98, $99, $9e, $a4, $5c, $10, $02, $50, $96, $99, $9e, $94
+db $50, $9d, $95, $50, $91, $a4, $50, $9f, $9e, $95, $50, $9f, $96, $50, $9d, $a9
+db $50, $9f, $a4, $98, $95, $a2, $50, $a3, $98, $9f, $a0, $a3, $5e, $13, $02
 
 
 
@@ -8228,6 +8674,21 @@ BCC .NormalSwirl
 JML $C2E953
 .NormalSwirl:
 JML $C2E964
+;;;;;;;;;;;;
+;new code go here
+
+GetSeedPlayer:
+PHY
+PHB
+LDA #$0010
+LDX #$FCE0
+LDY #$9801
+MVN $D77E
+PLB
+PLY
+LDX #$9801
+STX $15
+JML $C0F67F
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10336,10 +10797,330 @@ db $00, $00, $d4, $4b, $e5, $09, $ff, $7f; Missile omega
 ORG $F70000
 incbin psi_animations.bin ;this is specifically new animations i drew
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;expanded SRAM
+sramchunk0_pointer = $97F5
+sram_chunk0_size = $0493
+
+sramchunk1_pointer = $B570
+sramchunk1_size = $0010; ap related stuff
+
+sram_chunk2_pointer = $B590
+sramchunk2_size = $0080 ;Expanded storage space
+
+sram_chunk3_pointer = $B620
+sramchunk3_size = $01C0; Expanded flags
+
+sramchunk4_size = $0000
+
+!save_size = #$AA0
+!save_bytes = #$A80
+
+check_corruption = $7E9F79
+memcopy = $C08EED
+mult16 = $C09032
+erase_save = $EF05A9
+copy_save = $EF06A2
+validate_checksum = $EF07C0
+save_game = $EF088F
+save_checksum_1 = $EF0734
+save_checksum_2 = $EF077B
+
+save_chunk_sizes = $EF0A52
+save_chunk_pointers = $EF0A5C
+
+;delete save
+ORG $EF05B3
+LDY !save_size
+
+ORG $EF05DD
+LDX !save_size
+
+ORG $EF063D
+LDY !save_size
+
+ORG $EF069B
+CPX #$0003
+
+;copy save
+ORG $EF06B8
+LDY !save_size
+
+ORG $EF06E2
+LDY !save_size
+
+ORG $EF072B
+LDA !save_size
+;;;;;;;;;
+ORG $EF073E
+LDY !save_size
+
+ORG $EF0773
+CMP !save_bytes
+;;;;;;;;;;;;;;;;;;;
+ORG $EF0785
+LDY !save_size
+
+ORG $EF079F
+CalcChecksum:
+LDY #$0000
+STY $02
+  .Loop:
+  LDA [$06],y
+  EOR $02
+  STA $02
+  INY
+  INY
+  CPY !save_bytes
+  BCC .Loop
+PLD
+RTS
+;;;;;;;;;;;;;;;
+ORG $EF07DB
+LDY !save_size
+
+ORG $EF082F
+CheckCorruptedSave:
+STA $10
+JSR validate_checksum
+CMP #$0000
+BEQ .Return
+.SaveCorrupted:
+LDA $10
+JSR erase_save
+LDX $10
+SEP #$20
+LDA $EF05A6,X
+ORA.w check_corruption
+STA.w check_corruption
+REP #$20
+.Return:
+PLD
+RTS
+
+ORG $EF0899
+SaveGame:
+STA $20
+.RetrySave:
+LDX $00A7
+LDY $00A9
+STX $99C9
+STY $99CB
+LDY !save_size
+JSL mult16
+STA $16
+CLC
+ADC #$6020
+STA $0E
+LDA #$0030
+STA $10
+LDA #$007E
+STA $14
+LDX #$0000
+.ChunkCheck:
+LDA.l save_chunk_pointer_table,X
+BEQ .EndofChunk
+STA $12
+LDA.l save_chunk_size_table,x
+JSL memcopy
+LDA.l save_chunk_size_table,x
+ADC $0E
+STA $0E
+INX
+INX
+BRA .ChunkCheck
+.EndofChunk:
+LDA $20
+JSR save_checksum_1
+STA $1A
+LDA $20
+JSR save_checksum_1
+CMP $1A
+BEQ .Valid
+JMP .RetrySave
+.Valid:
+LDX $16
+STA $30601C,X
+
+LDA $20
+JSR save_checksum_2
+STA $1A
+LDA $20
+JSR save_checksum_2
+CMP $1A
+BEQ .Valid2
+JMP .RetrySave
+.Valid2:
+LDX $16
+STA $30601E,X
+PLD
+RTS
+
+ORG $EF0A4D
+JSR save_game
+RTL
+NOP
+save_chunk_size_table:
+dw sram_chunk0_size
+dw sramchunk1_size
+dw sramchunk2_size
+dw sramchunk3_size
+dw sramchunk4_size
+save_chunk_pointer_table:
+dw sramchunk0_pointer
+dw sramchunk1_pointer
+dw sram_chunk2_pointer
+dw sram_chunk3_pointer
+dw $0000
+dw $0000
+
+;;;;;;;;;;;;;;;;;;;;;
+ORG $EF0A72
+LoadGame:
+LDY !save_size
+JSL mult16
+CLC
+ADC #$6020
+STA $12
+LDA #$0030
+STA $14
+LDA #$007E
+STA $10
+LDX #$0000
+.ChunkCheck:
+LDA.l save_chunk_pointer_table,X
+BEQ .ChunkEnd
+STA $0E
+LDA.l save_chunk_size_table,X
+JSL memcopy
+LDA.l save_chunk_size_table,X
+ADC $12
+STA $12
+INX
+INX
+BRA .ChunkCheck
+.ChunkEnd:
+LDA $99C9
+STA $00A7
+LDA $99CB
+STA $00A9
+PLD
+RTL
+
+ORG $EF0BA6
+LDA !save_bytes
+
+ORG $EF0BB8
+CMP !save_bytes
+
+ORG $EF0BFA
+JSR erase_save
+RTL
+
+ORG $EF0C15
+JSR copy_save
+RTL
+;;;;;;;;;;;;;;;
+;expand event flags
+
+new_flag_table = $7EB620
+new_flag_pointer_0x80 = $7EB5A0
+flag_size = $01C0
+total_flag_bytes = $0240 
+
+
+ORG $C21628
+GetEventFlag:
+JML RepelEnemies
+ExitRepelCheck:
+AND #$0007
+TAX
+LDA $C4562F,X
+PHA
+TYA
+LSR
+LSR
+LSR
+TAX
+PLA
+CPX.w #total_flag_bytes
+BMI .outofrange
+JMP .GetFlagReturnZero
+.outofrange:
+CPX #$0080
+BPL .Inrange
+AND $9C08,X
+BRA .loadflag
+.Inrange:
+AND.w new_flag_pointer_0x80,x
+.loadflag:
+AND #$00FF
+BEQ .GetFlagReturnZero
+.ForceFlagOn:
+LDA #$0001
+RTL
+.GetFlagReturnZero:
+LDA #$0000
+RTL
+NOP
+
+SetFlag:
+REP #$31
+SetFlagProceed:
+DEC
+PHA
+LSR
+LSR
+LSR
+CMP.w #total_flag_bytes
+BMI .outofrange
+PLA
+JMP $1659
+.outofrange:
+CMP #$0080
+CLC
+BPL .addflags
+ADC #$9C08
+BRA .label
+.addflags:
+ADC.w #new_flag_pointer_0x80
+.label
+TAY
+PLA
+PHX
+AND #$0007
+TAX
+LDA $C4562F,x
+AND #$00FF
+PLX
+BEQ .WriteFlag
+ORA $0000,Y
+BRA .Store
+.WriteFlag
+EOR #$FFFF
+AND $0000,Y
+.Store:
+STA $0000,y
+AND #$00FF
+RTL
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+NOP
+RTL
 
 
 
-ORG $C93B60
+;ORG $C93B60
 ;db $B1, $63, $03;Font test, delete later. Also update the saturn font
 
 

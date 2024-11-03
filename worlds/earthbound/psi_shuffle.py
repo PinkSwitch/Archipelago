@@ -199,7 +199,7 @@ def shuffle_psi(world):
         "Drain": ["Broken hose", "Broken tube"],
         "Disable": ["Broken machine", "Broken device"],
         "Stop": ["Broken iron", "Broken steamer"],
-        "Neutralize": ["Broken pipe", "Broken motherboard"]
+        "Neutralize": ["Broken pipe", "Broken board"]
     }
 
     world.broken_desc = {

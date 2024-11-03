@@ -1,6 +1,7 @@
 from .local_data import item_id_table, character_item_table, party_id_nums
 from .text_data import eb_text_table, text_encoder
 from .static_location_data import location_groups
+import struct
 
 
 def setup_hints(world):
@@ -149,7 +150,7 @@ def setup_hints(world):
 
     for i in range(6):
         world.in_game_hint_types.append(world.random.choice(hint_types))
-    print(world.in_game_hint_types)
+    #print(world.in_game_hint_types)
 
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
@@ -246,10 +247,18 @@ def parse_hint_data(world, location, rom, hint):
         text = text_encoder(text, eb_text_table, 255)
         text.append(0x02)
 
+    hint_addresses = [
+        0x070376,
+        0x0703A8,
+        0x0703DA,
+        0x07040C,
+        0x07043E,
+        0x070470
+    ]
     rom.write_bytes(0x310000 + world.hint_pointer, text)
-    # rom.write_bytes(0x310000 + world.hint_pointer, text) text call
-    # rom.write_bytes(0x310000 + world.hint_pointer, text) text call 2
+    rom.write_bytes(hint_addresses[world.hint_number], struct.pack("I", 0x310000 + world.hint_pointer))
     world.hint_pointer = world.hint_pointer + len(text)
+    world.hint_number += 1
 
     # Word on the street is that PLAYER's ITEM can be found at LOCATION
     # Word on the street is that REGION may be hiding a critical item. in PLAYER's world.../may be hiding an import-sounding item./may have nothing of much conseuqence.

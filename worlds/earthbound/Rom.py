@@ -297,6 +297,7 @@ def patch_rom(world, rom, player: int, multiworld):
     ]
 
     world.hint_pointer = 0x0000
+    world.hint_number = 0
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
             for location in hintable_locations:
