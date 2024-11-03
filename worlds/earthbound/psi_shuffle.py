@@ -64,12 +64,6 @@ def shuffle_psi(world):
     if world.options.psi_shuffle:
         world.random.shuffle(world.offensive_psi_slots)
 
-        if not world.options.allow_flash_as_favorite_thing:
-            if world.offensive_psi_slots[0] == "Flash":
-                adjust_psi_list(world.offensive_psi_slots, "Flash", world.random.randint(1,5))
-
-        world.random.shuffle(world.assist_psi_slots)
-
         if world.options.psi_shuffle != 2:
             adjust_psi_list(world.offensive_psi_slots, "Blast", 7)
             adjust_psi_list(world.offensive_psi_slots, "Missile", 7)
@@ -79,6 +73,12 @@ def shuffle_psi(world):
             adjust_psi_list(world.assist_psi_slots, "Disable", 10)
             adjust_psi_list(world.assist_psi_slots, "Stop", 10)
             adjust_psi_list(world.assist_psi_slots, "Neutralize", 10)
+
+        if not world.options.allow_flash_as_favorite_thing:
+            if world.offensive_psi_slots[0] == "Flash":
+                adjust_psi_list(world.offensive_psi_slots, "Flash", world.random.randint(1,5))
+
+        world.random.shuffle(world.assist_psi_slots)
 
 
         world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])
@@ -217,10 +217,10 @@ def shuffle_psi(world):
     world.gadget_names = {
         "Hypnosis": ["Hypno pendulum", "Hypno screen"],
         "Paralysis": ["Nerve taser", "Nerve ray"],
-        "Offense Up": ["Offense mist", "Offense shower"],
-        "Defense Down": ["Weakness mist", "Weakness shower"],
+        "Offense Up": ["Offensalizer", "Offense shower"],
+        "Defense Down": ["Weakalizer", "Weakness shower"],
         "Brainshock": ["Mind jammer", "Mind fryer"],
-        "Defense up": ["Defense mist", "Defense shower"],
+        "Defense up": ["Defensalizer", "Defense shower"],
         "Drain": ["HP-sucker", "Hungry HP-sucker"],
         "Disable": ["Counter-PSI unit", "PSI-nullifier unit"],
         "Stop": ["Slime generator", "Slime blaster"],

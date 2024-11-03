@@ -175,7 +175,6 @@ def setup_hints(world):
 
 
 def parse_hint_data(world, location, rom, hint):
-    #Check hint types? yeah, I'll do it by hint type
     if hint == "item_at_location":
         if world.player == location.item.player and location.item.name in character_item_table:
             player_text = "your friend "
@@ -236,11 +235,7 @@ def parse_hint_data(world, location, rom, hint):
             if not possible_location_groups:
                 area = location.region.name
             else:
-                hintable_groups = []
-                for group in location_name_groups:
-                    if location.name in location_name_groups[group] and group != "Everywhere":
-                        hintable_groups += group
-                        area = world.random.choice(hintable_groups)
+                area = world.random.choice(possible_location_groups)
             location_text = text_encoder(f"somewhere near {area}.", eb_text_table, 255)
              #your [item] can be found by [player] somewhere near [location group]
         text = item_text + player_text + location_text
@@ -250,8 +245,6 @@ def parse_hint_data(world, location, rom, hint):
         text = world.random.choice(world.joke_hints)
         text = text_encoder(text, eb_text_table, 255)
         text.append(0x02)
-
-    #add spaces? test all of these...
 
     rom.write_bytes(0x310000 + world.hint_pointer, text)
     # rom.write_bytes(0x310000 + world.hint_pointer, text) text call
