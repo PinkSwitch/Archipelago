@@ -1,6 +1,6 @@
 import struct
 from .flavor_data import random_flavors
-from .text_data import lumine_hall_text, eb_text_table
+from .text_data import lumine_hall_text, eb_text_table, text_encoder
 from .local_data import item_id_table
 from .psi_shuffle import shuffle_psi
 from .boss_shuffle import initialize_bosses
@@ -407,13 +407,17 @@ def setup_gamevars(world):
     world.lumine_text.extend([0x00])
     world.starting_money = struct.pack('<I', world.options.starting_money.value)
 
-    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
+    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players)) #todo; move to text converter
     for char in prayer_player[:24]:
         if char in eb_text_table:
             world.prayer_player.extend(eb_text_table[char])
         else:
             world.prayer_player.extend([0x6F])
     world.prayer_player.extend([0x00])
+
+    world.credits_player = world.multiworld.get_player_name(world.player)
+    world.credits_player = text_encoder(world.credits_player, eb_text_table, 16)
+    world.credits_player.extend([0x00])
     shuffle_psi(world)
     initialize_bosses(world)
 

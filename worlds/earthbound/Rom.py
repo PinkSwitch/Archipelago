@@ -508,6 +508,7 @@ def patch_rom(world, rom, player: int, multiworld):
     world.badge_name.extend([0x00])
     rom.write_bytes(0x17FCD0, world.starting_money)
     rom.write_bytes(0x17FCE0, world.prayer_player)
+    rom.write_bytes(0x17FD00, world.credits_player)
     rom.write_bytes(0x155027, world.badge_name)
     rom.write_bytes(0x3FF0A0, world.world_version.encode("ascii"))
 

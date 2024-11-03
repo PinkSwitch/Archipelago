@@ -143,6 +143,7 @@ def shuffle_psi(world):
         [[0x00, 0x1D, 0x00], [0x00, 0x36, 0x00]],  # Defense Down
         [[0x00, 0x00, 0x18], [0x00, 0x00, 0x2C]],  # Brainshock
 
+        #Level-up data needs to be zeroed out for these slots
         [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Blast
         [[0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00], [0x00, 0x00, 0x00]],  # Missile
 
@@ -332,7 +333,7 @@ def shuffle_psi(world):
         "Freeze": [0x01B2, 0x01B3, 0x01D5, 0x01D6],
         "Thunder": [0x01B4, 0x01B5, 0x01D7, 0x01D8],
         "Starstorm": [0x01B6, 0x01B7, 0x01D9, 0x01DA],
-        "Blast": [0x00A7, 0x00A8, 0x00A8, 0x00A8],
+        "Blast": [0x00A7, 0x00A8, 0x0136, 0x0137],
         "Missile": [0x01B8, 0x01B9, 0x01DB, 0x01DC]
     }
 
@@ -423,7 +424,7 @@ def write_psi(world, rom):
                 #writes correctly during each loop
                 #come to think of it i might be able to clean this up with a manual lookup
                 #rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
-                #rom.write_bytes(0x2EAE2E + (0x0A * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts
+                #rom.write_bytes(0x2EAE2E + (0x0A * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]])) #Local texts one of these might still be worth keeping around
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if spell == "Special" and psi_num != 0:
@@ -438,6 +439,7 @@ def write_psi(world, rom):
     # todo; cleanup stuff
         psi_num += 1
 
+    #rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))
     rom.write_bytes(0x2EAE2E,  bytearray([world.starstorm_spell_id[world.offensive_psi_slots[5]][0]])) #Starstorm spell for the item locally
     rom.write_bytes(0x2EAE38,  bytearray([world.starstorm_spell_id[world.offensive_psi_slots[5]][1]]))
 
@@ -511,7 +513,7 @@ def write_psi(world, rom):
     rom.write_bytes(0x15C009, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
     rom.write_bytes(0x15C00B, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
     rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
-    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][3])))
+    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][1])))
 
     rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[1]][0]))) #todo, fix
 
