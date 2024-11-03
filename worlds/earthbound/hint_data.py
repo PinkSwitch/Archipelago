@@ -224,7 +224,7 @@ def parse_hint_data(world, location, rom, hint):
             player_text = text_encoder("", eb_text_table, 255)
         
         if hint == "hint_for_good_item":
-            location_text = text_encoder(f"at {location.name}", eb_text_table, 255)
+            location_text = text_encoder(f"at {location.name}.", eb_text_table, 255)
              #your [item] can be found by [player] at [location]
 
         else:
@@ -255,8 +255,24 @@ def parse_hint_data(world, location, rom, hint):
         0x07043E,
         0x070470
     ]
+
+    scoutable_hint_addresses = [
+        0x2EF3D5,
+        0x2EF3EB,
+        0x2EF401,
+        0x2EF417,
+        0x2EF42D,
+        0x2EF443
+    ]
     rom.write_bytes(0x310000 + world.hint_pointer, text)
-    rom.write_bytes(hint_addresses[world.hint_number], struct.pack("I", 0x310000 + world.hint_pointer))
+    rom.write_bytes(hint_addresses[world.hint_number], struct.pack("I", 0xF10000 + world.hint_pointer))
+
+    if hint in ["item_at_location", "hint_for_good_item"] and location.player == world.player:
+        rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xEEF451))
+    else:
+        rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xC70687))
+
+
     world.hint_pointer = world.hint_pointer + len(text)
     world.hint_number += 1
 
