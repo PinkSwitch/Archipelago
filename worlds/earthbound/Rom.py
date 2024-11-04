@@ -314,12 +314,15 @@ def patch_rom(world, rom, player: int, multiworld):
             parse_hint_data(world, location, rom, hint)
 
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
-            hintable_locations = []
+            hintable_locations_2 = []
             for location in hintable_locations:
                 if location.item.name == world.hinted_items[index]:
-                    hintable_locations.append(location.item.name)
-                location = world.random.choice(hintable_locations)
-                parse_hint_data(world, location, rom, hint)
+                    hintable_locations_2.append(location)
+            if hintable_locations_2 == []:
+                location = "null"
+            else:
+                location = world.random.choice(hintable_locations_2)
+            parse_hint_data(world, location, rom, hint)
 
         elif hint == "item_in_local_region":
             for location in hintable_locations:

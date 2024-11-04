@@ -22,7 +22,8 @@ def setup_hints(world):
     world.hinted_items = {}
     world.hinted_regions = {}
 
-    local_hintable_locations = [
+    # may not need to be world.
+    world.local_hintable_locations = [
         "Onett - Mayor Pirkle",
         "Onett - South Road Present",
         "Onett - Meteor Item",
@@ -67,7 +68,7 @@ def setup_hints(world):
         "Pyramid - Northwest Door Sarcophagus"
     ]
 
-    local_hintable_items = [
+    world.local_hintable_items = [
         "Franklin Badge",
         "Key to the Shack",
         "Key to the Cabin",
@@ -106,7 +107,7 @@ def setup_hints(world):
         "Twoson Teleport",
         "Happy-Happy Village Teleport",
         "Threed Teleport",
-        "Saturn Valley",
+        "Saturn Valley Teleport",
         "Dusty Dunes Teleport",
         "Fourside Teleport",
         "Winters Teleport",
@@ -144,13 +145,18 @@ def setup_hints(world):
     ]
 
     if world.options.magicant_mode.value in [0, 3]:
-        local_hintable_items.append("Magicant Teleport")
+        world.local_hintable_items.append("Magicant Teleport")
+
+    for item in world.removed_teleports:
+        if item.name in world.local_hintable_items:
+            #let's not hint an item that doesn't exist
+            world.local_hintable_items.remove(item.name)
 
     if world.options.giygas_required:
-        local_hintable_locations.append("Cave of the Past - Present")
+        world.local_hintable_locations.append("Cave of the Past - Present")
     
     if world.options.magicant_mode == 0:
-        local_hintable_locations.append("Magicant - Ness's Nightmare")
+        world.local_hintable_locations.append("Magicant - Ness's Nightmare")
 
     for i in range(6):
         world.in_game_hint_types.append(world.random.choice(hint_types))
@@ -158,7 +164,7 @@ def setup_hints(world):
 
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
-            location = world.random.choice(local_hintable_locations)
+            location = world.random.choice(world.local_hintable_locations)
             world.hinted_locations[index] = location
         
         elif hint == "region_progression_check":
@@ -167,7 +173,7 @@ def setup_hints(world):
             world.hinted_regions[index] = group
 
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
-            item = world.random.choice(local_hintable_items)
+            item = world.random.choice(world.local_hintable_items)
             world.hinted_items[index] = item
 
         elif hint == "item_in_local_region":
@@ -222,7 +228,7 @@ def parse_hint_data(world, location, rom, hint):
         else:
             item_text = f"{world.multiworld.get_player_name(location.item.player)}'s {location.item.name} "
             item_text = text_encoder(item_text, eb_text_table, 255)
-        item_text.extend(text_encoder("can be found ", eb_text_table, 255))
+        item_text.extend(text_encoder(" can be found ", eb_text_table, 255))
         
         if location.player != world.player:
             player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)}", eb_text_table, 255)

@@ -18,6 +18,7 @@ from .setup_game import setup_gamevars, place_static_items
 from .enemy_data import initialize_enemies
 from .flavor_data import create_flavors
 from .local_data import item_id_table
+from .hint_data import setup_hints
 from .text_data import spoiler_psi, spoiler_starts, spoiler_badges
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
@@ -87,6 +88,7 @@ class EarthBoundWorld(World):
         self.location_cache = []
         self.event_count = 8
         self.world_version = world_version
+        self.removed_teleports = []
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
@@ -316,6 +318,7 @@ class EarthBoundWorld(World):
 
             ])
             self.random.shuffle(prefill_items)
+            self.removed_teleports.extend(prefill_items[0:5])
             del prefill_items[0:5]
             prefill_items.extend([
                 self.create_item("Dalaam Teleport"),
@@ -369,6 +372,7 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Deep Darkness - Barf Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
+        setup_hints(self)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
         pool: List[Item] = []
