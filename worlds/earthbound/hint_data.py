@@ -224,9 +224,9 @@ def parse_hint_data(world, location, rom, hint):
             item_text = text_encoder("your ", eb_text_table, 255)
             item_text.extend([0x1C, 0x05, item_id_table[location.item.name]])
         elif location.item.player == world.player:
-            item_text = text_encoder(f"your {location.item.name} ", eb_text_table, 128)
+            item_text = text_encoder(f"your {location.item.name}", eb_text_table, 128)
         else:
-            item_text = f"{world.multiworld.get_player_name(location.item.player)}'s {location.item.name} "
+            item_text = f"{world.multiworld.get_player_name(location.item.player)}'s {location.item.name}"
             item_text = text_encoder(item_text, eb_text_table, 255)
         item_text.extend(text_encoder(" can be found ", eb_text_table, 255))
         
