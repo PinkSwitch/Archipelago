@@ -269,14 +269,15 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
             if name in present_locations and "Lost Underworld" not in name and world.options.presents_match_contents:
-                if location.item.classification in ItemClassification.trap:
+                if ItemClassification.trap in location.item.classification:
                     world.present_type = "trap"
-                elif location.item.classification in ItemClassification.progression:
+                elif ItemClassification.progression in location.item.classification:
                     world.present_type = "progression"
-                elif location.item.classification in ItemClassification.useful:
+                elif ItemClassification.useful in location.item.classification:
                     world.present_type = "useful"
                 else:
                     world.present_type = "filler"
+
                 if location.item.player == world.player:
                     rom.write_bytes(present_locations[name] - 12, bytearray(local_present_types[world.present_type]))
                     if name != "Threed - Boogey Tent Trashcan":
@@ -325,7 +326,7 @@ def patch_rom(world, rom, player: int, multiworld):
 
         elif hint == "item_in_local_region":
             for location in hintable_locations:
-                if location.item.name == world.hinted_items[index]:
+                if location.name == world.hinted_locations[index]:
                     parse_hint_data(world, location, rom, hint)
         else:
             location = "null"

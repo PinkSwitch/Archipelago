@@ -3,7 +3,7 @@ import struct
 import typing
 import time
 from struct import pack, unpack
-from .local_data import check_table, client_specials, world_version
+from .local_data import check_table, client_specials, world_version, hint_bits
 from .text_data import eb_text_table
 
 from NetUtils import ClientStatus, color
@@ -47,6 +47,8 @@ PLAYER_JUST_DIED_SEND_DEATHLINK = WRAM_START + 0xB584
 IS_ABLE_TO_RECEIVE_DEATHLINKS = WRAM_START + 0xB585
 CHAR_COUNT = WRAM_START + 0x98A4
 OSS_FLAG = WRAM_START + 0x5D98
+HINT_SCOUNT_IDS = ROM_START + 0x310250
+SCOUTED_HINT_FLAGS = WRAM_START + 0xB621
 already_tried_to_connect = False
 
 
@@ -55,6 +57,7 @@ class EarthBoundClient(SNIClient):
     patch_suffix = ".apeb"
     most_recent_connect: str = ""
     client_version = world_version
+    hint_list = []
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         import struct
@@ -146,6 +149,7 @@ class EarthBoundClient(SNIClient):
         earth_power_absorbed = await snes_read(ctx, EARTH_POWER_FLAG, 1)
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
+        scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -162,6 +166,17 @@ class EarthBoundClient(SNIClient):
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
+        
+        send_hint = 0
+        for i in range(6):
+            if scouted_hint_flags[0] & hint_bits[i]:
+                scoutable_hint = await snes_read(ctx, HINT_SCOUNT_IDS + (i * 2), 2)
+                scoutable_hint = scoutable_hint[0] + 0xEB0000
+
+                if i not in self.hint_list:
+                    self.hint_list.append(i)
+                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": [scoutable_hint], "create_as_hint": 1}])
+                    send_hint = 1
 
         await ctx.send_msgs([{
                     "cmd": "Set",

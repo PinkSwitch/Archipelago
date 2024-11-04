@@ -1096,6 +1096,15 @@ ap_text_pntrs = [
     #[0x8D, 0xCE, 0xEE] #trap text
 ]
 
+hint_bits = [
+    0x04,
+    0x08,
+    0x10,
+    0x20,
+    0x40,
+    0x80
+]
+
 #0: Action pointer, call the actual item being given
 #1: Sprite ID
 #2: Secondary routine pointer, used for items and psi

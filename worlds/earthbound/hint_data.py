@@ -269,8 +269,9 @@ def parse_hint_data(world, location, rom, hint):
 
     if hint in ["item_at_location", "hint_for_good_item"] and location.player == world.player:
         rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xEEF451))
+        rom.write_bytes(0x310250 + (world.hint_number * 2), struct.pack("H", location.address - 0xEB0000))
     else:
-        rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xC70687))
+        rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xEEF4B2))
 
 
     world.hint_pointer = world.hint_pointer + len(text)
