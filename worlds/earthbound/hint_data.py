@@ -6,8 +6,10 @@ import struct
 
 def setup_hints(world):
     hint_types = [
-        "item_at_location",  # gives a hint for a specific out of the way location in this player's world, regardless of what item it is
-        "region_progression_check",  # woth or foolish hint, checks specific location groups of this world so as to be more helpful.
+        # gives a hint for a specific out of the way location in this player's world, regardless of what item it is
+        "item_at_location",
+        # woth or foolish hint, checks specific location groups of this world so as to be more helpful.
+        "region_progression_check",
         "hint_for_good_item",  # gives the exact location and sender of a good item for the local player
         "item_in_local_region",  # Hints a random item that can be found in a specific local location group
         "prog_item_at_region",  # Hints the region that a good item can be found for this player
@@ -150,12 +152,11 @@ def setup_hints(world):
 
     for i in range(6):
         world.in_game_hint_types.append(world.random.choice(hint_types))
-    #print(world.in_game_hint_types)
+    # print(world.in_game_hint_types)
 
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
             location = world.random.choice(local_hintable_locations)
-            # text = f"PLAYER's ITEM can be found at {location}."
             world.hinted_locations[index] = location
         
         elif hint == "region_progression_check":
@@ -179,13 +180,16 @@ def parse_hint_data(world, location, rom, hint):
     if hint == "item_at_location":
         if world.player == location.item.player and location.item.name in character_item_table:
             player_text = "your friend "
-            item_text = bytearray([0x1C, 0x02, party_id_nums[location.item.name]])  # In-game text command to display party member names
+            # In-game text command to display party member names
+            item_text = bytearray([0x1C, 0x02, party_id_nums[location.item.name]])
         elif world.player == location.item.player:
             player_text = "your "
             if location.item.name in item_id_table:
-                item_text = bytearray([0x1C, 0x05, item_id_table[location.item.name]])  # In-game text command to display item names
+                # In-game text command to display item names
+                item_text = bytearray([0x1C, 0x05, item_id_table[location.item.name]])
             else:
-                item_text = text_encoder(location.item.name, eb_text_table, 128)  # if the item doesn't have a name (e.g it's PSI)
+                # if the item doesn't have a name (e.g it's PSI)
+                item_text = text_encoder(location.item.name, eb_text_table, 128)
         else:
             player_text = f"{world.multiworld.get_player_name(location.item.player)}'s "
             item_text = text_encoder(location.item.name, eb_text_table, 128)
@@ -193,7 +197,7 @@ def parse_hint_data(world, location, rom, hint):
         player_text = text_encoder(player_text, eb_text_table, 255)
         location_text = text_encoder(f"can be found at {location.name}.", eb_text_table, 255)
         text = player_text + item_text + location_text
-        #[player]'s [item] can be found at [location].
+        # [player]'s [item] can be found at [location].
         text.append(0x02)
 
     elif hint == "region_progression_check":
@@ -225,7 +229,7 @@ def parse_hint_data(world, location, rom, hint):
         
         if hint == "hint_for_good_item":
             location_text = text_encoder(f"at {location.name}.", eb_text_table, 255)
-             #your [item] can be found by [player] at [location]
+            # your [item] can be found by [player] at [location]
 
         else:
             location_name_groups = world.multiworld.worlds[location.player].location_name_groups
@@ -238,7 +242,7 @@ def parse_hint_data(world, location, rom, hint):
             else:
                 area = world.random.choice(possible_location_groups)
             location_text = text_encoder(f"somewhere near {area}.", eb_text_table, 255)
-             #your [item] can be found by [player] somewhere near [location group]
+            # your [item] can be found by [player] somewhere near [location group]
         text = item_text + player_text + location_text
         text.append(0x02)
 
@@ -273,16 +277,14 @@ def parse_hint_data(world, location, rom, hint):
     else:
         rom.write_bytes(scoutable_hint_addresses[world.hint_number], struct.pack("I", 0xEEF4B2))
 
-
     world.hint_pointer = world.hint_pointer + len(text)
     world.hint_number += 1
 
     # Word on the street is that PLAYER's ITEM can be found at LOCATION
-    # Word on the street is that REGION may be hiding a critical item. in PLAYER's world.../may be hiding an import-sounding item./may have nothing of much conseuqence.
+    # Word on the street is that REGION has X important items
     # Word on the street is that your ITEM can be found by PLAYER at LOCATION
     # Word on the street is that PLAYER's ITEM can be found somewhere near REGION...
     # Word on the street is that your ITEM can be found somewhere near REGION...
     # char item hint?
     # That's all for today.
-    # I should delete this function. I can write and translate the hints in the second function instead. Instead of doing the whole replace bit, I can + add to the text or chain them together?
     # Like text part 1, extend 0x1C 0x05 0xItem Item, extend (the rest of the string)

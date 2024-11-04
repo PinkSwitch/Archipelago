@@ -254,7 +254,7 @@ check_table = {
     0xEB00FA: [0x81, 3]
 }
 
-location_dialogue = { #Locations which just need to print the name of the item
+location_dialogue = {  # Locations which just need to print the name of the item
     "Onett - Tracy Gift": [0x07616B],
     "Onett - Meteor Item": [0x0862C3],
     "Onett - Library Counter": [0x05EC0C],
@@ -326,7 +326,7 @@ location_dialogue = { #Locations which just need to print the name of the item
     "Dungeon Man - 1F Exit Ledge Present": [0x057A55]
 }
 
-npc_locations = { #Locations given to you by an NPC
+npc_locations = {  # Locations given to you by an NPC
     "Onett - Tracy Gift": [0x07617B],
     "Onett - Meteor Item": [0x086304],
     "Onett - Library Counter": [0x07339C],
@@ -382,7 +382,7 @@ npc_locations = { #Locations given to you by an NPC
 }
 
 
-present_locations = {#Field presents
+present_locations = {  # Field presents
     "Onett - Tracy's Room Present": 0x0FE756,
     "Onett - Hilltop Present": 0x0FE701,
     "Onett - Burger Shop Trashcan": 0x0FE712,
@@ -564,7 +564,7 @@ present_locations = {#Field presents
 }
 
 psi_locations = {
-    "Onett - Mani Mani Statue": [0x2EA976, 0x90, 0xA9, 0xEE, 0x2EA9B9], #Question the last one, it's supposed to be the address of the new gotten item
+    "Onett - Mani Mani Statue": [0x2EA976, 0x90, 0xA9, 0xEE, 0x2EA9B9],
     "Onett - Buzz Buzz": [0x2EAA04, 0x12, 0xAA, 0xEE, 0x2EAA49],
     "Saturn Valley - Saturn Coffee": [0x2EAFE3, 0xF1, 0xAF, 0xEE, 0x2EB030],
     "Monkey Caves - Monkey Power": [0x2EB12E, 0x68, 0xB1, 0xEE, 0x2EB1B1],
@@ -806,7 +806,7 @@ item_id_table = {
     "Eraser Eraser": 0xD2,
     "Tendakraut": 0xD3,
     "T-Rex's Bat": 0xD4,
-    #"Big League Bat": 0xD5,
+    # "Big League Bat": 0xD5,
     "Ultimate Bat": 0xD6,
     "Double Beam": 0xD7,
     "Defense Ribbon": 0xDA,
@@ -984,7 +984,7 @@ item_space_checks = {
     "Monotoli Building - Monotoli Gift": [0x06EB35, 0x39, 0xEB, 0xC6],
     "Summers - Museum Item": [0x08ABEB, 0xEF, 0xAB, 0xC8],
     "Pyramid - Pedestal Item": [0x0931D8, 0xDC, 0x31, 0xC9],
-    "Scaraba - Key Holder": [0x0576B9, 0xBD, 0x76, 0xC5], #Extra break?
+    "Scaraba - Key Holder": [0x0576B9, 0xBD, 0x76, 0xC5],  # Extra break?
     "Deep Darkness - Teleporting Monkey": [0x09E508, 0x0C, 0xE5, 0xC9],
     "Deep Darkness - North Alcove Truffle": [0x2EB5B7, 0xBB, 0xB5, 0xEE],
     "Deep Darkness - Near Land Truffle": [0x2EB60F, 0x13, 0xB6, 0xEE],
@@ -1077,23 +1077,23 @@ present_text_pointers = {
 }
 
 ap_text_pntrs = [
-    [0xCD, 0xCD, 0xEE], #ce
-    [0xD9, 0xCD, 0xEE], #cf
-    [0xE5, 0xCD, 0xEE], #d0
-    [0xF1, 0xCD, 0xEE], #e7
-    [0xFD, 0xCD, 0xEE], #e8
-    [0x09, 0xCE, 0xEE], #e9
-    [0x15, 0xCE, 0xEE], #ea
-    [0x21, 0xCE, 0xEE], #eb
-    [0x2D, 0xCE, 0xEE], #ec
-    [0x39, 0xCE, 0xEE], #ed
-    [0x45, 0xCE, 0xEE], #ee
-    [0x51, 0xCE, 0xEE], #ef
-    [0x5D, 0xCE, 0xEE], #f0
-    [0x69, 0xCE, 0xEE], #f1
-    [0x75, 0xCE, 0xEE], #f2
-    [0x81, 0xCE, 0xEE], #f3
-    #[0x8D, 0xCE, 0xEE] #trap text
+    [0xCD, 0xCD, 0xEE],  # ce
+    [0xD9, 0xCD, 0xEE],  # cf
+    [0xE5, 0xCD, 0xEE],  # d0
+    [0xF1, 0xCD, 0xEE],  # e7
+    [0xFD, 0xCD, 0xEE],  # e8
+    [0x09, 0xCE, 0xEE],  # e9
+    [0x15, 0xCE, 0xEE],  # ea
+    [0x21, 0xCE, 0xEE],  # eb
+    [0x2D, 0xCE, 0xEE],  # ec
+    [0x39, 0xCE, 0xEE],  # ed
+    [0x45, 0xCE, 0xEE],  # ee
+    [0x51, 0xCE, 0xEE],  # ef
+    [0x5D, 0xCE, 0xEE],  # f0
+    [0x69, 0xCE, 0xEE],  # f1
+    [0x75, 0xCE, 0xEE],  # f2
+    [0x81, 0xCE, 0xEE],  # f3
+    # [0x8D, 0xCE, 0xEE] #trap text
 ]
 
 hint_bits = [
@@ -1105,9 +1105,9 @@ hint_bits = [
     0x80
 ]
 
-#0: Action pointer, call the actual item being given
-#1: Sprite ID
-#2: Secondary routine pointer, used for items and psi
-#3: Inventory item give
-#4: Standard item routine address
-#For characters
+# 0: Action pointer, call the actual item being given
+# 1: Sprite ID
+# 2: Secondary routine pointer, used for items and psi
+# 3: Inventory item give
+# 4: Standard item routine address
+# For characters
