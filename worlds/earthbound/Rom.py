@@ -74,7 +74,6 @@ def patch_rom(world, rom, player: int, multiworld):
     
     for item in world.multiworld.precollected_items[world.player]:
         world.start_items.append(item.name)
-        print(world.start_items)
 
     if world.options.random_start_location != 0:
         rom.write_bytes(0x0F96C2, bytearray([0x69, 0x00]))
