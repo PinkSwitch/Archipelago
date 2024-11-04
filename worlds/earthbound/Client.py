@@ -167,7 +167,6 @@ class EarthBoundClient(SNIClient):
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
         
-        send_hint = 0
         for i in range(6):
             if scouted_hint_flags[0] & hint_bits[i]:
                 scoutable_hint = await snes_read(ctx, HINT_SCOUNT_IDS + (i * 2), 2)
@@ -176,7 +175,6 @@ class EarthBoundClient(SNIClient):
                 if i not in self.hint_list:
                     self.hint_list.append(i)
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": [scoutable_hint], "create_as_hint": 1}])
-                    send_hint = 1
 
         await ctx.send_msgs([{
                     "cmd": "Set",

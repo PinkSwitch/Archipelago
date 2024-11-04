@@ -7655,6 +7655,23 @@ db $0A, $9C, $F0, $EE
 ORG $C57F4A
 db $0A, $A7, $F0, $EE
 
+
+ORG $C76186
+db $0A
+dl tracy_backpack_tex
+
+ORG $C64690
+dl tracy_backpack_twice_tex
+
+ORG $C6AE42
+db $0A
+dl winters_drugstore_space
+
+ORG $C6AEA3
+db $0A
+dl winters_drugstore_space2
+
+
 ;;;;;;;;;;;;;;;
 ;hint stuff
 
@@ -8319,10 +8336,44 @@ db $98, $95, $a2, $50, $98, $99, $9e, $a4, $5c, $10, $02, $50, $96, $99, $9e, $9
 db $50, $9d, $95, $50, $91, $a4, $50, $9f, $9e, $95, $50, $9f, $96, $50, $9d, $a9
 db $50, $9f, $a4, $98, $95, $a2, $50, $a3, $98, $9f, $a0, $a3, $5e, $13, $02
 
+tracy_backpack_tex:
+db $70, $89, $9f, $a5, $50, $93, $91, $9e, $50, $91, $9c, $a3, $9f, $50, $9c, $95
+db $91, $a6, $95, $50, $91, $9e, $a9, $a4, $98, $99, $9e, $97, $50, $a9, $9f, $a5
+db $50, $94, $9f, $9e, $57, $a4, $50, $9e, $95, $95, $94, $50, $99, $9e, $50, $a9
+db $9f, $a5, $a2, $50, $92, $91, $93, $9b, $a0, $91, $93, $9b, $5e, $03, $01, $70
+db $89, $9f, $a5, $50, $93, $91, $9e, $50, $9f, $a0, $95, $9e, $50, $99, $a4, $50
+db $a7, $99, $a4, $98, $50, $a4, $98, $95, $50, $82, $50, $92, $a5, $a4, $a4, $9f
+db $9e, $51, $13, $02
 
+tracy_backpack_twice_tex:
+db $70, $74, $99, $94, $50, $a9, $9f, $a5, $50, $96, $9f, $a2, $97, $95, $a4, $50
+db $91, $9c, $a2, $95, $91, $94, $a9, $5c, $50, $92, $99, $97, $50, $92, $a2, $9f
+db $6f, $03, $01, $70, $89, $9f, $a5, $50, $93, $91, $9e, $50, $a3, $a4, $9f, $a2
+db $95, $50, $99, $a4, $95, $9d, $a3, $50, $a7, $99, $a4, $98, $50, $a4, $98, $95
+db $50, $82, $50, $92, $a5, $a4, $a4, $9f, $9e, $51, $13, $02
 
+winters_drugstore_space:
+db $08
+dd drugstore_spacecheck
+db $1B, $02
+dd $FFC6AEE1
+dd $C6AE4B0A
 
+winters_drugstore_space2:
+db $08
+dd drugstore_spacecheck
+db $1B, $02
+dd $FFC6AEE1
+dd $C6AEAC0A
 
+drugstore_spacecheck:
+db $1D, $03, $FF, $1B, $02
+dd .no_space
+db $1D, $19, $FE
+db $02
+.no_space:
+db $1D, $19, $01
+db $02
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
