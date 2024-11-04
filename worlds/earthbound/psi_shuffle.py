@@ -68,17 +68,18 @@ def shuffle_psi(world):
             adjust_psi_list(world.offensive_psi_slots, "Blast", 7)
             adjust_psi_list(world.offensive_psi_slots, "Missile", 7)
 
-            adjust_psi_list(world.assist_psi_slots, "Defense up", 10)
-            adjust_psi_list(world.assist_psi_slots, "Drain", 10)
-            adjust_psi_list(world.assist_psi_slots, "Disable", 10)
-            adjust_psi_list(world.assist_psi_slots, "Stop", 10)
-            adjust_psi_list(world.assist_psi_slots, "Neutralize", 10)
-
         if not world.options.allow_flash_as_favorite_thing:
             if world.offensive_psi_slots[0] == "Flash":
                 adjust_psi_list(world.offensive_psi_slots, "Flash", world.random.randint(1,5))
 
         world.random.shuffle(world.assist_psi_slots)
+
+        if world.options.psi_shuffle != 2:
+            adjust_psi_list(world.assist_psi_slots, "Defense up", 10)
+            adjust_psi_list(world.assist_psi_slots, "Drain", 10)
+            adjust_psi_list(world.assist_psi_slots, "Disable", 10)
+            adjust_psi_list(world.assist_psi_slots, "Stop", 10)
+            adjust_psi_list(world.assist_psi_slots, "Neutralize", 10)
 
 
         world.jeff_offense_items.extend(world.offensive_psi_slots[-2:])

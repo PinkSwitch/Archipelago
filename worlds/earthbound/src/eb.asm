@@ -7696,6 +7696,9 @@ dl scaraba_hint_man
 ORG $C726D8
 db $02
 
+ORG $C701A0
+db $49
+
 ORG $C701C6
 db $08
 dd display_hint_price
