@@ -390,30 +390,30 @@ levels = [
     17,  # belch base
     18,  # milky well
     19,  # duty dunes
-    21, # fourside
-    23, # gold mine
-    24, # dept store
-    25, # monkey cabves
-    26, # monotoli building
-    28, # winters
-    29, # southern winters
-    31, # rainy circle
-    32, # summers
-    33, # museum
-    36, # magnet hill
-    38, # pink cloud
-    39, # scaraba
-    42, # pyramid
-    43, # scaraba south
-    45, # dungeon man
-    47, # deep darkness
-    49, # deep darkness swamp
-    52, # stonehenge
-    56, # lumine hall
-    59, # lost underworld
-    61, # fire spring
-    63, # magicant
-    65, # cave of the past
+    21,  # fourside
+    23,  # gold mine
+    24,  # dept store
+    25,  # monkey cabves
+    26,  # monotoli building
+    28,  # winters
+    29,  # southern winters
+    31,  # rainy circle
+    32,  # summers
+    33,  # museum
+    36,  # magnet hill
+    38,  # pink cloud
+    39,  # scaraba
+    42,  # pyramid
+    43,  # scaraba south
+    45,  # dungeon man
+    47,  # deep darkness
+    49,  # deep darkness swamp
+    52,  # stonehenge
+    56,  # lumine hall
+    59,  # lost underworld
+    61,  # fire spring
+    63,  # magicant
+    65,  # cave of the past
     70,
     73] # gigyas
 
@@ -455,17 +455,18 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "giygas_phase2_flash": {25: "alpha", 45: "beta", 100: "gamma"},
     "giygas_phase3_flash": {25: "alpha", 45: "beta", 100: "gamma"},
     "giygas_phase4_flash": {25: "alpha", 45: "beta", 100: "gamma"},
-    "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
-    "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 100: "beta"},
-    "flash_minus": {45: "alpha", 60: "beta", 100: "gamma", 100: "omega"},
+    "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
+    "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 200: "beta"},
+    "flash_minus": {45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
     "blast": {30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
     "missile": {20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
-    #Todo; blast/missile delta and lambda
-    #"blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
+    # Todo; blast/missile delta and lambda
+    # "blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
 
 
     # bombs and bottle rockets too? Also missile maybe? hmmm
 }
+
 
 def get_psi_levels(level: int, breaks: Dict[int, str]) -> str:
     for top_val, psi_level in breaks.items():
@@ -876,8 +877,10 @@ shield_table = {
     "psi_2": 0x02
 }
 
+
 def assumed_player_speed_for_level(level):
     return 2 + 58 * (level - 1) / 80
+
 
 def scale_enemy_speed(enemy, new_level):
     normal_dodge_chance = (2 * enemy.speed - assumed_player_speed_for_level(enemy.level)) / 500
@@ -893,7 +896,7 @@ def scale_exp_2(base_exp, base_level, new_level, world):
     base_scaled_exp = calculate_exp(base_level)
     scaled_exp = calculate_exp(new_level)
     new_exp = base_exp * scaled_exp / base_scaled_exp
-    new_exp  = max(new_exp, scaled_exp)#maybe remove? if early scaled
+    new_exp = max(new_exp, scaled_exp)  # maybe remove? if early scaled
     new_exp = math.ceil(new_exp * world.options.experience_modifier / 100)
     return new_exp
 
@@ -986,9 +989,9 @@ def scale_enemies(world, rom):
             world.Jeff_region = world.location_order[0]
         if "Poo" in world.start_items or world.Poo_region == None:
             world.Poo_region = world.location_order[0]
-        rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)])) # Paula starting level
-        rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)])) # Jeff starting level
-        rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)])) # Poo starting level
+        rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)]))  # Paula starting level
+        rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)]))  # Jeff starting level
+        rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
 
     for region, level in zip(world.location_order, levels):
         for enemy in world.regional_enemies[region]:
@@ -1006,7 +1009,7 @@ def scale_enemies(world, rom):
                 enemy_shield = scale_shield(level, enemy.shield)
 
                 # if world.multiworld.get_player_name(world.player) == "Pink":
-                    # print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
+                # print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
                 enemy_hp = struct.pack('<H', enemy_hp)
                 enemy_pp = struct.pack('<H', enemy_pp)
                 enemy_exp = struct.pack('<I', enemy_exp)
