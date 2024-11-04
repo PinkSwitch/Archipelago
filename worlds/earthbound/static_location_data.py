@@ -382,14 +382,14 @@ location_groups = {
         "Dusty Dunes - Mine Reward"
     },
 
-    "Snow Wood but just the Lockers": {
+    "the Snow Wood locker room": {
         "Snow Wood - Upper Right Locker",
         "Snow Wood - Upper Left Locker",
         "Snow Wood - Bottom Right Locker",
         "Snow Wood - Bottom Left Locker"
     },
 
-    "Snow Wood but not the Lockers": {
+    "Snow Wood Boarding School (not lockers)": {
         "Snow Wood - Many Present Room Present #1",
         "Snow Wood - Many Present Room Present #2",
         "Snow Wood - Many Present Room Present #3",
