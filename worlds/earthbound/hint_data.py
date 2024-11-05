@@ -112,7 +112,7 @@ def setup_hints(world):
         "Fourside Teleport",
         "Winters Teleport",
         "Summers Teleport",
-        "Scaraba Teleport"
+        "Scaraba Teleport",
         "Dalaam Teleport",
         "Deep Darkness Teleport",
         "Tenda Village Teleport",

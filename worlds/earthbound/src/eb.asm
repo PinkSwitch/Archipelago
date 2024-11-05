@@ -3213,10 +3213,10 @@ NormalEvent:
 REP #$20
 PLX
 REP #$31
-PHD
+DEC
 PHA
-JML $C21662
-
+LSR
+JML SetFlagProceed
 PocketStorage:
 LDA $0065
 AND #$00FF
@@ -7992,7 +7992,7 @@ dl .check_milky
 db $08
 dd .display_melody
 .check_milky
-db $07, $B8, $00, $1B, $03
+db $07, $B9, $00, $1B, $03
 dd .has_milky_well
 db $08
 dd .display_dot
@@ -8002,7 +8002,7 @@ dl .check_rainy_circle
 db $08
 dd .display_melody
 .check_rainy_circle:
-db $07, $b9, $00, $1B, $03
+db $07, $b8, $00, $1B, $03
 dd .has_rainy_circle
 db $08
 dd .display_dot
@@ -11119,11 +11119,8 @@ RTL
 NOP
 
 SetFlag:
-REP #$31
+JML SetMelodyCount
 SetFlagProceed:
-DEC
-PHA
-LSR
 LSR
 LSR
 CMP.w #total_flag_bytes

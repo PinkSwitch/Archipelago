@@ -1,4 +1,4 @@
-world_version = "2.3"
+world_version = "2.4"
 
 check_table = {
     0xEB0000: [0x11, 3],
@@ -332,7 +332,7 @@ npc_locations = {  # Locations given to you by an NPC
     "Onett - Library Counter": [0x07339C],
     "Onett - Library Bookshelf": [0x087E7B],
     "Onett - Treehouse Guy": [0x073F78],
-    "Onett - Mayor Pirkle": [0x072D61, 0x072BE9],
+    "Onett - Mayor Pirkle": [0x072D61],
     "Onett - Traveling Entertainer": [0x07477C],
     "Twoson - Bike Shop Rental": [0x0801A5, 0x08008F],
     "Twoson - Orange Kid Donation": [0x081362, 0x0813B9],

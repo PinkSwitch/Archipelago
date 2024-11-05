@@ -319,6 +319,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 if location.item.name == world.hinted_items[index]:
                     hintable_locations_2.append(location)
             if hintable_locations_2 == []:
+                #todo; make an error if this happens
                 location = "null"
             else:
                 location = world.random.choice(hintable_locations_2)
