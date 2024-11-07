@@ -127,7 +127,7 @@ def setup_hints(world):
         "there's a guy near Threed's hotel who saw the Zombies take someone away.",
         "you can use the Y button to run or mash through text.",
         "you can submit custom window flavors in the game's Archipelago thread.",
-        "you can buy a ruler at the Fourside Department Store",
+        "you can buy a ruler at the Fourside Department Store.",
         "you can store a lot of items in your backpack with the R button.",
         "Giygas's guard may actually be from another seed...",
         "if you have multiple of something important, you can throw away the extras.",
@@ -203,7 +203,7 @@ def parse_hint_data(world, location, rom, hint):
             item_text = text_encoder(location.item.name, eb_text_table, 128)
 
         player_text = text_encoder(player_text, eb_text_table, 255)
-        location_text = text_encoder(f"can be found at {location.name}.", eb_text_table, 255)
+        location_text = text_encoder(f" can be found at {location.name}.", eb_text_table, 255)
         text = player_text + item_text + location_text
         # [player]'s [item] can be found at [location].
         text.append(0x02)
