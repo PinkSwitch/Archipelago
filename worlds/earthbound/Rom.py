@@ -67,7 +67,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     11: [0xDD, 0x1B, 0xB7, 0x17],  # Deep Darkness
                     12: [0xD0, 0x25, 0x47, 0x18],  # Tenda Village
                     13: [0x9C, 0x00, 0x84, 0x17],  # Lost Underworld
-                    14: [0x4B, 0x11, 0xAD, 0x18]  # Magicant
+                    14: [0x4B, 0x11, 0xAD, 0x18],  # Magicant
     }
     world.start_items = []
     world.handled_locations = []

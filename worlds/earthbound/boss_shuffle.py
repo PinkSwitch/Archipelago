@@ -155,31 +155,36 @@ def write_bosses(world, rom):
     rom.write_bytes(0x15DD13, bytearray([0x00, 0x00]))  # Blank out barf's end battle script
     rom.write_bytes(0x15E69F, bytearray([0x00, 0x00]))  # Blank giygas
     if world.boss_list[25] == "Carbon Dog":  # Heavily armed Pokey
-        rom.write_bytes(0x15B451, bytearray([0x13, 0x01]))
-        rom.write_bytes(0x15DB9B, bytearray([0x13, 0x01]))
+        pokey_adjust = 27
     else:
-        rom.write_bytes(world.enemies[world.boss_list[25]].address + 78, bytearray([0x13, 0x01]))
-        for i in range(1, world.enemies[world.boss_list[25]].attack_extensions):
-            enemy_new = f"{world.enemies[world.boss_list[25]].name} ({i + 1})"
-            rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0x13, 0x01]))
+        pokey_adjust = 25
+        
+
+    rom.write_bytes(world.enemies[world.boss_list[pokey_adjust]].address + 78, bytearray([0x13, 0x01]))
+    for i in range(1, world.enemies[world.boss_list[pokey_adjust]].attack_extensions):
+        enemy_new = f"{world.enemies[world.boss_list[pokey_adjust]].name} ({i + 1})"
+        rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0x13, 0x01]))
 
     if world.boss_list[20] == "Carbon Dog":  # Master Barf
-        rom.write_bytes(0x15B451, bytearray([0xF4, 0x00]))
-        rom.write_bytes(0x15DB9B, bytearray([0xF4, 0x00]))
+        barf_adjust = 27
     else:
-        rom.write_bytes(world.enemies[world.boss_list[20]].address + 78, bytearray([0xF4, 0x00]))
-        for i in range(1, world.enemies[world.boss_list[20]].attack_extensions):
-            enemy_new = f"{world.enemies[world.boss_list[20]].name} ({i + 1})"
-            rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0xF4, 0x00]))
-
+        barf_adjust = 20
+        
+    rom.write_bytes(world.enemies[world.boss_list[barf_adjust]].address + 78, bytearray([0xF4, 0x00]))
+    for i in range(1, world.enemies[world.boss_list[barf_adjust]].attack_extensions):
+        enemy_new = f"{world.enemies[world.boss_list[barf_adjust]].name} ({i + 1})"
+        rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0xF4, 0x00]))
+            
     if world.boss_list[28] == "Carbon Dog":  # Giygas 2
-        rom.write_bytes(0x15B451, bytearray([0x16, 0x01]))
-        rom.write_bytes(0x15DB9B, bytearray([0x16, 0x01]))
+        #THIS IS NOT ACCOUNTING FOR SHUFFLED DOG
+        giygas_2_adjust = 27 #Set to the diamond dog slot
     else:
-        rom.write_bytes(world.enemies[world.boss_list[28]].address + 78, bytearray([0x16, 0x01]))
-        for i in range(1, world.enemies[world.boss_list[28]].attack_extensions):
-            enemy_new = f"{world.enemies[world.boss_list[28]].name} ({i + 1})"
-            rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0x16, 0x01]))
+        giygas_2_adjust = 28
+
+    rom.write_bytes(world.enemies[world.boss_list[giygas_2_adjust]].address + 78, bytearray([0x16, 0x01]))
+    for i in range(1, world.enemies[world.boss_list[giygas_2_adjust]].attack_extensions):
+        enemy_new = f"{world.enemies[world.boss_list[giygas_2_adjust]].name} ({i + 1})"
+        rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0x16, 0x01]))
 
     if world.boss_list[25] != "Heavily Armed Pokey":
         rom.write_bytes(0x15E50A, bytearray([0x19, 0x6E, 0xEF]))

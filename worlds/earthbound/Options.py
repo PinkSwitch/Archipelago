@@ -237,6 +237,19 @@ class PlandoLumineHallText(FreeText):
     display_name = "Lumine Hall Text Plando"
     visibility = Visibility.none
 
+class StartingCharacter(Choice):
+    """Changes the character you start as. If random start location is disabled, each character has their own starting location.
+       Ness: Ness's House
+       Paula: the Happy-Happy Villagr cabin
+       Jeff: The Threed zombie prison
+       Poo: Dalaam"""
+    display_name = "Starting Character"
+    option_ness = 0
+    option_paula = 1
+    option_jeff = 2
+    option_poo = 3
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -277,6 +290,7 @@ class EBOptions(PerGameCommonOptions):
     death_link: DeathLink
     death_link_mode: DeathLinkMode
     plando_lumine_hall_text: PlandoLumineHallText
+    starting_character: StartingCharacter
 
 
 eb_option_groups = [
@@ -299,6 +313,7 @@ eb_option_groups = [
     ]),
 
     OptionGroup("World Modes", [
+        StartingCharacter,
         RandomStartLocation,
         MagicantMode,
         MonkeyCavesMode
