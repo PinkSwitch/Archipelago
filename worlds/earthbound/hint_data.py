@@ -141,7 +141,8 @@ def setup_hints(world):
         "you can randomize EarthBound with Archipelago.",
         "hint prices double with each one bought.",
         "you probably should have kept your money.",
-        "there's a secret option to plando Lumine Hall's text."
+        "there's a secret option to plando Lumine Hall's text.",
+        "this isn't a very good hint."
     ]
 
     if world.options.magicant_mode.value in [0, 3]:
@@ -246,7 +247,7 @@ def parse_hint_data(world, location, rom, hint):
                 if location.name in group_locations and group_name != "Everywhere"
             ]
             if not possible_location_groups:
-                area = location.parent_region
+                area = location.parent_region.name
             else:
                 area = world.random.choice(possible_location_groups)
             location_text = text_encoder(f"somewhere near {area}.", eb_text_table, 255)

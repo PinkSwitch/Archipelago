@@ -175,7 +175,6 @@ def write_bosses(world, rom):
         enemy_new = f"{world.enemies[world.boss_list[barf_adjust]].name} ({i + 1})"
         rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0xF4, 0x00]))
 
-    print(world.boss_list[28])
     if world.boss_list[28] == "Carbon Dog":  # Giygas 2
         #I should probably just hard stop Carbon Dog from being here
         giygas_2_adjust = 27 #Set to the diamond dog slot
