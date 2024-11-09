@@ -514,6 +514,9 @@ def patch_rom(world, rom, player: int, multiworld):
     rom.write_bytes(0x17FD00, world.credits_player)
     rom.write_bytes(0x155027, world.badge_name)
     rom.write_bytes(0x3FF0A0, world.world_version.encode("ascii"))
+    display_version = text_encoder(world_version, eb_text_table, 15)
+    display_version.extend([0x02])
+    rom.write_bytes(0x3CFFBF, display_version)
 
     for element in world.franklinbadge_elements:
         for address in protection_checks[element]:

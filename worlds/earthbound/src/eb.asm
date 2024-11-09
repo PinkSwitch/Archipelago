@@ -238,6 +238,9 @@ JML PokeySwirl
 
 ORG $C0F67A
 JML GetSeedPlayer
+
+ORG $C1ED67
+JML DrawWorldVersion
 ;new jmls
 
 
@@ -3217,6 +3220,7 @@ DEC
 PHA
 LSR
 JML SetFlagProceed
+
 PocketStorage:
 LDA $0065
 AND #$00FF
@@ -4182,8 +4186,9 @@ ORG $CFB034
 db $d1, $af, $ee
 
 ORG $EEAFD1
-db $1b, $00, $0a, $cb, $da, $c7, $1b, $01, $08, $40, $a7, $ee, $ff, $04, $57, $00
-db $02
+db $1b, $00, $0a, $cb, $da, $c7, $1b, $01, $08, $40, $a7, $ee, $ff
+db $0A
+dl fix_boogey_tent
 
 ORG $C7DAEB
 db $0a, $d7, $af, $ee
@@ -7865,6 +7870,10 @@ dd post_hint_text
 db $05, $0A, $04
 db $02
 
+ORG $FCFFA0
+db $75, $91, $a2, $a4, $98, $72, $9f, $a5, $9e, $94, $50, $71, $a2, $93, $98, $99
+db $a0, $95, $9c, $91, $97, $9f, $50, $a6, $95, $a2, $a3, $99, $9f, $9e, $50, $02
+
 
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
@@ -8117,10 +8126,6 @@ db $04, $0A, $04
 db $06, $fe, $03
 dd $FFC726DA
 dd $C701870A
-
-
-
-
 
 display_hint_price:
 
@@ -8376,6 +8381,15 @@ db $1D, $19, $FE
 db $02
 .no_space:
 db $1D, $19, $01
+db $02
+
+fix_boogey_tent:
+db $1B, $02
+dd .no_space
+db $04, $57, $00
+db $02
+.no_space:
+db $04, $9D, $02
 db $02
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -8730,12 +8744,11 @@ JML $C2E953
 JML $C2E964
 ;;;;;;;;;;;;
 ;new code go here
-
 GetSeedPlayer:
 PHY
 PHB
 LDA #$0010
-LDX #$FCE0
+LDX #$FD00
 LDY #$9801
 MVN $D77E
 PLB
@@ -8743,6 +8756,34 @@ PLY
 LDX #$9801
 STX $15
 JML $C0F67F
+
+DrawWorldVersion:
+LDA #$0024
+JSL $C1DD47
+LDA #$FFA0
+STA $0E
+LDA #$00FC
+STA $10
+;FCFFE0 stores the world version
+JSL $C186B1
+
+LDA #$0013
+JSL $C1DD47;draw the file select box
+JML $C1ED6D
+
+
+goto_bank_c1:
+STA $00BC
+STY $00BE
+PEA $0002
+SEP #$20
+LDA #$C1
+PHA
+REP #$20
+PHY
+LDA $00BC
+LDY $00BE
+RTL
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
