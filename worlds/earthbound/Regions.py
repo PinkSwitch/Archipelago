@@ -104,7 +104,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                        "Threed": lambda state: state.has_any({"Threed Tunnels Clear", "Wad of Bills"}, player),
                                                        "Everdred's House": lambda state: state.has("Paula", player)})
 
-    multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village",],
+    multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village"],
                                                                     {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Franklin Badge"}, player)})  # Change to franklin badge
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", "Lilliput Steps"])
@@ -231,5 +231,7 @@ def connect_menu_region(world: "EarthBoundWorld") -> None:
         13: "Lost Underworld",
         14: "Magicant"
     }
-    world.multiworld.get_region("Menu", world.player).add_exits([starting_region_list[world.start_location], "Ness's Mind"])
+    #todo; change the coordinate dict to use names instead of numbers, change start_location instead of making a new var
+    world.starting_region = starting_region_list[world.start_location]
+    world.multiworld.get_region("Menu", world.player).add_exits([world.starting_region, "Ness's Mind"])
     
