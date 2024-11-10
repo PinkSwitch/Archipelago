@@ -206,10 +206,9 @@ def calculate_scaling(world):
                 if num not in inventory:
                     inventory[num] = []
                 inventory[num].append(location.item.name)
-            else:
-                inventory[num] = []
         if sphere == set():
-            inventory[num] = []
+                    inventory[num] = []
+        sphere_count = num
 
     for item in range(1, len(inventory)):
         inventory[item] = inventory[item - 1] + inventory[item]
@@ -248,3 +247,4 @@ def calculate_scaling(world):
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
+    print(world.scaled_area_order)
