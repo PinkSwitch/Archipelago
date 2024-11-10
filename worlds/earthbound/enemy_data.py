@@ -982,6 +982,8 @@ def scale_enemies(world, rom):
 
     # if world.scale_warning == True:
         # warning(f"{world.location_order}")
+    
+    #print(world.location_order)
     if world.options.auto_scale_party_members:
         if "Paula" in world.start_items or world.Paula_region == None:
             world.Paula_region = world.location_order[0]

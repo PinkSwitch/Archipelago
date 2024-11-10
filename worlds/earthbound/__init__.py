@@ -283,6 +283,11 @@ class EarthBoundWorld(World):
     def pre_fill(self) -> None:
         prefill_locations = []
         prefill_items = []
+        
+        if self.options.magicant_mode == 3:
+            removable_teleports = 6
+        else:
+            removable_teleports = 5
 
         if self.options.shuffle_teleports == 0:
             prefill_locations.extend([
@@ -318,8 +323,8 @@ class EarthBoundWorld(World):
 
             ])
             self.random.shuffle(prefill_items)
-            self.removed_teleports.extend(prefill_items[0:5])
-            del prefill_items[0:5]
+            self.removed_teleports.extend(prefill_items[0:removable_teleports])
+            del prefill_items[0:removable_teleports]
             prefill_items.extend([
                 self.create_item("Dalaam Teleport"),
                 self.create_item("Summers Teleport"),
@@ -334,7 +339,7 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Onett - Mani Mani Statue", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Monkey Caves - Monkey Power", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Summers - Magic Cake", self.player), lambda item: item.name in self.item_name_groups["PSI"])
+            add_item_rule(self.multiworld.get_location("Summers - Magic Cake", self.player), lambda item: item.name in self.item_name_groups["PSI"] and item.name != "Summers Teleport")
             add_item_rule(self.multiworld.get_location("Scaraba - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Tenda Village - Tenda Tea", self.player), lambda item: item.name in self.item_name_groups["PSI"])
             add_item_rule(self.multiworld.get_location("Lost Underworld - Talking Rock", self.player), lambda item: item.name in self.item_name_groups["PSI"])
