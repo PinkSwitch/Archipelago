@@ -72,9 +72,9 @@ area_rules = {
 
     "Northern Onett": {"Onett": [["Nothing"]]},
     "Onett": 
-            {"Northern Onett": [["Police Badge"]],
-            "Twoson": [["Police Badge"]],
-            "Giant Step": [["Key to the Shack"]]},
+             {"Northern Onett": [["Police Badge"]],
+              "Twoson": [["Police Badge"]],
+              "Giant Step": [["Key to the Shack"]]},
     
     "Giant Step": {"Giant Step": [["Nothing"]]},
 
@@ -89,7 +89,7 @@ area_rules = {
                              "Happy-Happy Village": [["Nothing"]]},
 
     "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
-                         "Lilliput Steps": [["Nothing"]]},
+                            "Lilliput Steps": [["Nothing"]]},
 
     "Lilliput Steps": {"Lilliput Steps": [["Nothing"]]},
 
@@ -193,8 +193,9 @@ area_rules = {
     "Endgame": {"Endgame": [["Nothing"]]}
 }
 
+
 def calculate_scaling(world):
-    inventory = {0: ["Nothing"]} # Nothing means no item needed for connection
+    inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     unconnected_regions = [world.starting_region, "Ness's Mind"]
     world.accessible_regions = ["Ness's Mind", world.starting_region]
     world.scaled_area_order = []
@@ -214,7 +215,7 @@ def calculate_scaling(world):
                 print(world.paula_region)
 
         if sphere == set():
-                    inventory[num] = []
+            inventory[num] = []
         sphere_count = num
 
     for item in range(1, len(inventory)):
@@ -253,8 +254,8 @@ def calculate_scaling(world):
         world.accessible_regions.append("Magicant")
     print(world.accessible_regions)
 
-    #calculate which areas need to have enemies scaled
+    # calculate which areas need to have enemies scaled
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
-    #print(world.scaled_area_order)
+    # print(world.scaled_area_order)
