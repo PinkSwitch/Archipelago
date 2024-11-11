@@ -202,16 +202,26 @@ def calculate_scaling(world):
     sphere_count = 0
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         for location in sphere:
-            if location.item.advancement and location.player == world.player:
+            if location.item.player == world.player:
                 if num not in inventory:
                     inventory[num] = []
                 inventory[num].append(location.item.name)
+            
+            if location.player == world.player and location.parent_region.name in combat_regions:
+                valid_level_region = location.parent_region.name
+
+            if location.item.player == world.player and location.item.name == "Paula":
+                print(world.paula_region)
+
         if sphere == set():
                     inventory[num] = []
         sphere_count = num
 
     for item in range(1, len(inventory)):
-        inventory[item] = inventory[item - 1] + inventory[item]
+        if item in inventory:
+            inventory[item] = inventory[item - 1] + inventory[item]
+        else:
+            inventory[item] = inventory[item - 1]
 
     for i in range(sphere_count):
         new_regions = []
@@ -231,7 +241,6 @@ def calculate_scaling(world):
     for region in world.multiworld.get_regions(world.player):
         if region.name not in world.accessible_regions and region.name != "Menu":
             world.accessible_regions.append(region.name)
-    #print(world.accessible_regions)
 
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         # If magicant is an alternate goal it should be scaled after Giygas
@@ -242,9 +251,10 @@ def calculate_scaling(world):
     elif world.options.magicant_mode == 3 and not world.options.giygas_required:
         # Just add it to the end of scaling
         world.accessible_regions.append("Magicant")
+    print(world.accessible_regions)
 
     #calculate which areas need to have enemies scaled
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
-    print(world.scaled_area_order)
+    #print(world.scaled_area_order)

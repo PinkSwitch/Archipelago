@@ -302,13 +302,13 @@ def patch_rom(world, rom, player: int, multiworld):
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
             for location in hintable_locations:
-                if location.name == world.hinted_locations[index]:
+                if location.name == world.hinted_locations[index] and location.player == world.player:
                     parse_hint_data(world, location, rom, hint)
                     
         elif hint == "region_progression_check":
             world.progression_count = 0
             for location in hintable_locations:
-                if location.name in location_groups[world.hinted_regions[index]]:
+                if location.name in location_groups[world.hinted_regions[index]] and location.player == world.player:
                     if ItemClassification.progression in location.item.classification:
                         world.progression_count += 1
             world.hinted_area = world.hinted_regions[index] #im doing a little sneaky
@@ -317,22 +317,32 @@ def patch_rom(world, rom, player: int, multiworld):
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
             hintable_locations_2 = []
             for location in hintable_locations:
-                if location.item.name == world.hinted_items[index]:
+                if location.item.name == world.hinted_items[index] and location.item.player == world.player:
                     hintable_locations_2.append(location)
             if hintable_locations_2 == []:
                 #todo; make an error if this happens
-                location = "null"
+                location = ("uh oh")
             else:
                 location = world.random.choice(hintable_locations_2)
             parse_hint_data(world, location, rom, hint)
 
         elif hint == "item_in_local_region":
             for location in hintable_locations:
-                if location.name == world.hinted_locations[index]:
+                if location.name == world.hinted_locations[index] and location.player == world.player:
                     parse_hint_data(world, location, rom, hint)
         else:
             location = "null"
             parse_hint_data(world, location, rom, hint)
+    
+    for location in hintable_locations:
+        if location.item.name == "Paula":
+            world.paula_region = location.parent_region
+        
+        if location.item.name == "Jeff":
+            world.jeff_region = location.parent_region
+
+        if location.item.name == "Poo":
+            world.poo_region = location.parent_region
 
 
     if world.options.skip_prayer_sequences:
