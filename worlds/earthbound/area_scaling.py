@@ -202,20 +202,17 @@ def calculate_scaling(world):
     passed_connections = []
     sphere_count = 0
     for num, sphere in enumerate(world.multiworld.get_spheres()):
+        if num not in inventory:
+            inventory[num] = []
         for location in sphere:
-            if location.item.player == world.player:
-                if num not in inventory:
-                    inventory[num] = []
+            if location.item.player == world.player and location.item.advancement:
                 inventory[num].append(location.item.name)
             
-            if location.player == world.player and location.parent_region.name in combat_regions:
-                valid_level_region = location.parent_region.name
+           # if location.player == world.player and location.parent_region.name in combat_regions:
+                #valid_level_region = location.parent_region.name
 
-            if location.item.player == world.player and location.item.name == "Paula":
-                print(world.paula_region)
-
-        if sphere == set():
-            inventory[num] = []
+            #if location.item.player == world.player and location.item.name == "Paula":
+                #print(world.paula_region)
         sphere_count = num
 
     for item in range(1, len(inventory)):
@@ -227,6 +224,8 @@ def calculate_scaling(world):
     for i in range(sphere_count):
         new_regions = []
         for region in unconnected_regions:
+            unconnected_regions.remove("Ness's Mind")
+            unconnected_regions.append("Ness's Mind")
             for connection in area_exits[region]:
                 if f"{region} -> {connection}" not in passed_connections:
                     for rule_set in area_rules[region][connection]:
@@ -252,10 +251,9 @@ def calculate_scaling(world):
     elif world.options.magicant_mode == 3 and not world.options.giygas_required:
         # Just add it to the end of scaling
         world.accessible_regions.append("Magicant")
-    print(world.accessible_regions)
+    #print(f"{world.multiworld.get_player_name(world.player)} order: {world.accessible_regions}\n")
 
     # calculate which areas need to have enemies scaled
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
-    # print(world.scaled_area_order)
