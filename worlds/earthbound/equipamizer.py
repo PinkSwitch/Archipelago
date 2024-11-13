@@ -103,7 +103,7 @@ def randomize_armor(world):
         if chance < 15:
             armor.freeze_res = world.random.randint(1,3)
         else:
-            armor-freeze_res = 0
+            armor.freeze_res = 0
 
         chance = world.random.randint(0,100)
         if chance < 15:

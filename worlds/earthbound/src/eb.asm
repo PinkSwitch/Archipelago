@@ -7874,6 +7874,90 @@ ORG $FCFFA0
 db $75, $91, $a2, $a4, $98, $72, $9f, $a5, $9e, $94, $50, $71, $a2, $93, $98, $99
 db $a0, $95, $9c, $91, $97, $9f, $50, $a6, $95, $a2, $a3, $99, $9f, $9e, $50, $02
 
+ORG $E1F4CA
+db $f9, $03; Onett hint shop flag
+
+ORG $E1F4F3
+db $fa, $03; Twoson hint shop flag
+
+ORG $E1F521
+db $fb, $03; Threed hint shop flag
+
+ORG $E1F545
+db $fc, $03; Fourside hint shop flag
+
+ORG $E1F57E
+db $fd, $03; Summers hint shop flag
+
+ORG $E1F55F
+db $fe, $03; Scaraba hint shop flag
+;New data table go here
+
+;Giant Step
+ORG $D6FC38
+db $08
+dd boost_speed_dynamic
+
+ORG $D6FC60
+db $08
+dd boost_vitality_dynamic
+;Lilliput Steps
+ORG $D6FCBB
+db $08
+dd boost_guts_dynamic
+
+ORG $D6FCE3
+db $08
+dd boost_vitality_dynamic
+;Milky Well
+ORG $D6FD3A
+db $08
+dd boost_speed_dynamic
+
+ORG $D6FD5C
+db $08
+dd boost_iq_dynamic
+;Magnet Hill
+ORG $D6FDB7
+db $08
+dd boost_vitality_dynamic
+
+ORG $D6FDDB
+db $08
+dd boost_luck_dynamic
+;Rainy Circle
+ORG $D6FE33
+db $08
+dd boost_guts_dynamic
+
+ORG $D6FE55
+db $08
+dd boost_iq_dynamic
+;Pink Cloud
+
+ORG $D6FEAC
+db $08
+dd boost_speed_dynamic
+
+ORG $D6FED0
+db $08
+dd boost_guts_dynamic
+;Lumine Hall
+ORG $D6FF27
+db $08
+dd boost_luck_dynamic
+
+ORG $D6FF49
+db $08
+dd boost_iq_dynamic
+;Fire Spring
+ORG $D6FFA1
+db $08
+dd boost_speed_dynamic
+
+ORG $D6FFC5
+db $08
+dd boost_luck_dynamic
 
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
@@ -8391,6 +8475,114 @@ db $02
 .no_space:
 db $04, $9D, $02
 db $02
+;Newtext
+
+boost_speed_dynamic:
+db $1B, $04
+db $1F, $C0, $04
+dd boost_ness_speed
+dd boost_paula_speed
+dd boost_jeff_speed
+dd boost_poo_speed
+db $1b, $04, $02
+
+
+boost_vitality_dynamic:
+db $1B, $04
+db $1F, $C0, $04
+dd boost_ness_vitality
+dd boost_paula_vitality
+dd boost_jeff_vitality
+dd boost_poo_vitality
+db $1b, $04, $02
+
+boost_guts_dynamic:
+db $1B, $04
+db $1F, $C0, $04
+dd boost_ness_guts
+dd boost_paula_guts
+dd boost_jeff_guts
+dd boost_poo_guts
+db $1b, $04, $02
+
+boost_iq_dynamic:
+db $1B, $04
+db $1F, $C0, $04
+dd boost_ness_iq
+dd boost_paula_iq
+dd boost_jeff_iq
+dd boost_poo_iq
+db $1b, $04, $02
+
+boost_luck_dynamic:
+db $1B, $04
+db $1F, $C0, $04
+dd boost_ness_luck
+dd boost_paula_luck
+dd boost_jeff_luck
+dd boost_poo_luck
+db $1b, $04, $02
+
+boost_ness_speed:
+db $1E, $0C, $01, $05, $03, $02
+
+boost_paula_speed:
+db $1E, $0C, $02, $05, $03, $02
+
+boost_jeff_speed:
+db $1E, $0C, $03, $05, $03, $02
+
+boost_poo_speed:
+db $1E, $0C, $04, $05, $03, $02
+;;;;;;;;;;
+boost_ness_vitality:
+db $1E, $0D, $01, $05, $03, $02
+
+boost_paula_vitality:
+db $1E, $0D, $02, $05, $03, $02
+
+boost_jeff_vitality:
+db $1E, $0D, $03, $05, $03, $02
+
+boost_poo_vitality:
+db $1E, $0D, $04, $05, $03, $02
+;;;;;;;;;;;;;;
+boost_ness_guts:
+db $1E, $0B, $01, $05, $03, $02
+
+boost_paula_guts:
+db $1E, $0B, $02, $05, $03, $02
+
+boost_jeff_guts:
+db $1E, $0B, $03, $05, $03, $02
+
+boost_poo_guts:
+db $1E, $0B, $04, $05, $03, $02
+;;;;;;;;
+boost_ness_iq:
+db $1E, $0A, $01, $05, $03, $02
+
+boost_paula_iq:
+db $1E, $0A, $02, $05, $03, $02
+
+boost_jeff_iq:
+db $1E, $0A, $03, $05, $03, $02
+
+boost_poo_iq:
+db $1E, $0A, $04, $05, $03, $02
+;;;;;;;;;;;;
+boost_ness_luck:
+db $1E, $0E, $01, $05, $03, $02
+
+boost_paula_luck:
+db $1E, $0E, $02, $05, $03, $02
+
+boost_jeff_luck:
+db $1E, $0E, $03, $05, $03, $02
+
+boost_poo_luck:
+db $1E, $0E, $04, $05, $03, $02
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A

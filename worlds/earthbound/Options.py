@@ -228,10 +228,6 @@ class RemoteItems(Toggle):
        However, you will not be able to play offline if this is enabled."""
     display_name = "Remote Items"
 
-class SoundStoneShuffle(Toggle):
-    """Randomizes the Sound Stone. It will need to be found before Sanctuary guardians can be challenged."""
-    display_name = "Sound Stone Shuffle"
-
 class PlandoLumineHallText(FreeText):
     """Set text to be displayed at Lumine Hall. If nothing is entered, random community-submitted text will be selected instead."""
     display_name = "Lumine Hall Text Plando"
@@ -290,7 +286,7 @@ class EBOptions(PerGameCommonOptions):
     death_link: DeathLink
     death_link_mode: DeathLinkMode
     plando_lumine_hall_text: PlandoLumineHallText
-    starting_character: StartingCharacter
+    #starting_character: StartingCharacter
 
 
 eb_option_groups = [
@@ -313,7 +309,6 @@ eb_option_groups = [
     ]),
 
     OptionGroup("World Modes", [
-        StartingCharacter,
         RandomStartLocation,
         MagicantMode,
         MonkeyCavesMode
