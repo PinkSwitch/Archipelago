@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Dict
 
 def randomize_armor(world):
     adjectives = [
