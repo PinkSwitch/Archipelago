@@ -1,6 +1,13 @@
 from dataclasses import dataclass
 from typing import Dict
 
+def roll_resistances(world, element, armor):
+    chance = world.random.randint(0, 100)
+    if chance < 15:
+        setattr(armor, element, world.random.randint(1, 3))
+    else:
+        setattr(armor, element, 0)
+
 def randomize_armor(world):
     adjectives = [
         "Hard",
@@ -94,29 +101,10 @@ def randomize_armor(world):
         armor.defense = world.random.randint(1,127)
 
         #make this a def? or a loop at least
-        chance = world.random.randint(0,100)
-        if chance < 15:
-            armor.flash_res = world.random.randint(1,3)
-        else:
-            armor.flash_res = 0
-
-        chance = world.random.randint(0,100)
-        if chance < 15:
-            armor.freeze_res = world.random.randint(1,3)
-        else:
-            armor.freeze_res = 0
-
-        chance = world.random.randint(0,100)
-        if chance < 15:
-            armor.fire_res = world.random.randint(1,3)
-        else:
-            armor.fire_res = 0
-
-        chance = world.random.randint(0,100)
-        if chance < 15:
-            armor.par_res = world.random.randint(1,3)
-        else:
-            armor.par_res = 0
+        roll_resistances(world, "flash_res", armor)
+        roll_resistances(world, "freeze_res", armor)
+        roll_resistances(world, "fire_res", armor)
+        roll_resistances(world, "par_res", armor)
 
         chance = world.random.randint(0,100)
         if chance < 20:
