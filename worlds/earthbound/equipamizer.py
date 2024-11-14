@@ -119,7 +119,7 @@ def randomize_armor(world):
 
         chance = world.random.randint(0,100)
         if chance < 20:
-            armor.only_char = world.random.choice("Ness", "Paula", "Jeff", "Poo")
+            armor.only_char = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
         else:
             armor.only_char = "None"
 
