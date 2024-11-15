@@ -71,7 +71,10 @@ def randomize_armor(world):
         "Ulitmate",
         "Charm",
         "Saturn",
-        "Tenda"
+        "Tenda",
+        "Sturdy",
+        "Sleek",
+        ""
     ]
 
     equalized_names = [
@@ -94,7 +97,7 @@ def randomize_armor(world):
         ],
         "Freeze": [
             "Puddle",
-            "???",
+            "Drizzle",
             "Rain"
         ],
 
@@ -102,6 +105,22 @@ def randomize_armor(world):
             "Smoke",
             "Ember",
             "Flame"
+        ],
+
+        "FreezeFire": [
+            "???",
+            "Frostburn",
+            "Antipode"
+        ],
+        "FreezeFlash": [
+            "???",
+            "???",
+            "???"
+        ],
+        "FireFlash": [
+            "???",
+            "???",
+            "Day"
         ]
     }
 
@@ -148,6 +167,7 @@ def randomize_armor(world):
         else:
             #If resistances are inequal, use the strongest as the name and pull a name from its strength
             #If 2 are equal pick a random of them
+            #Todo; If 2 are equal, combine them and make a combo name
             names = ("Flash", "Freeze", "Fire")
             strengths = (armor.flash_res, armor.freeze_res, armor.fire_res)
             best_elements = [(name, strength) for name, strength in zip(names, strengths, strict=True) if strength == max(strengths)]
@@ -183,3 +203,5 @@ def randomize_armor(world):
 #Paula-only Other: Ribbon 
 
 #All poo equipment should be "Of Kings"
+
+#todo: custom description bank and description stuff like "X defense", with an optional call of "Equipment for X character", and "It protects you from X element?"
