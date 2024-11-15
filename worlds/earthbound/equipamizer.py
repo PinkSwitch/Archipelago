@@ -73,8 +73,7 @@ def randomize_armor(world):
         "Saturn",
         "Tenda",
         "Sturdy",
-        "Sleek",
-        ""
+        "Sleek"
     ]
 
     equalized_names = [
@@ -125,7 +124,48 @@ def randomize_armor(world):
     }
 
     all_armor = [
-        "Cheap Bracelet"
+        "Travel Charm",
+        "Great Charm",
+        "Crystal Charm",
+        "Rabbit's Foot",
+        "Flame Pendant",
+        "Rain Pendant",
+        "Night Pendant",
+        "Sea Pendant",
+        "Star Pendant",
+        "Cloak of Kings",
+        "Cheap Bracelet",
+        "Copper Bracelet",
+        "Silver Bracelet",
+        "Gold Bracelet",
+        "Platinum Band",
+        "Diamond Band",
+        "Pixie's Bracelet",
+        "Cherub's Band",
+        "Goddess Band",
+        "Bracer of Kings",
+        "Baseball Cap",
+        "Holmes Hat",
+        "Mr. Baseball Cap",
+        "Hard Hat",
+        "Ribbon",
+        "Red Ribbon",
+        "Goddess Ribbon",
+        "Coin of Slumber",
+        "Coin of Defense",
+        "Lucky Coin",
+        "Talisman Coin",
+        "Shiny Coin",
+        "Souvenir Coin",
+        "Diadem of Kings",
+        "Earth Pendant",
+        "Defense Ribbon",
+        "Talisman Ribbon",
+        "Saturn Ribbon",
+        "Coin of Silence",
+        "Charm Coin",
+        "Mr. Saturn Coin"
+
     ]
 
     @dataclass
@@ -143,7 +183,47 @@ def randomize_armor(world):
         equip_type: str
 
     world.armor_list: Dict[str, EBArmor] = {
-        "Cheap Bracelet": EBArmor("Cheap bracelet", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Travel Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Great Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Crystal Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Rabbit's Foot": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Flame Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Rain Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Night Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Sea Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Star Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Cloak of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Cheap Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Copper Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Silver Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Gold Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Platinum Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Diamond Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Pixie's Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Cherub's Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Goddess Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Bracer of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Arm"),
+        "Baseball Cap": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Holmes Hat": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Mr. Baseball Cap": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Hard Hat": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Red Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Goddess Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Coin of Slumber": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Coin of Defense": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Lucky Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Talisman Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Shiny Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Souvenir Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Diadem of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Earth Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Body"),
+        "Defense Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Talisman Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Saturn Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Coin of Silence": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Charm Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other"),
+        "Mr. Saturn Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, "None", "Other")
     }
 
     for item in all_armor:
@@ -170,7 +250,7 @@ def randomize_armor(world):
             #Todo; If 2 are equal, combine them and make a combo name
             names = ("Flash", "Freeze", "Fire")
             strengths = (armor.flash_res, armor.freeze_res, armor.fire_res)
-            best_elements = [(name, strength) for name, strength in zip(names, strengths, strict=True) if strength == max(strengths)]
+            best_elements = [(name, strength) for name, strength in zip(names, strengths) if strength == max(strengths)]
             best_name, best_strength = world.random.choice(best_elements)
             front_name = elemental_names[best_name][best_strength - 1]
 
