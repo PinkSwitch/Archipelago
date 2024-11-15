@@ -3,7 +3,7 @@ from typing import Dict
 
 def roll_resistances(world, element, armor):
     chance = world.random.randint(0, 100)
-    if chance < 95:
+    if chance < 5:
         setattr(armor, element, world.random.randint(1, 3))
     else:
         setattr(armor, element, 0)
@@ -73,7 +73,22 @@ def randomize_armor(world):
         "Saturn",
         "Tenda",
         "Sturdy",
-        "Sleek"
+        "Sleek",
+        "Green",
+        "Blue",
+        "White",
+        "Yellow",
+        "Azure",
+        "Emerald",
+        "Handmade",
+        "Hank's",
+        "Real",
+        "Peace",
+        "Magic",
+        "Protect",
+        "Brass",
+        "Cursed",
+        "Rabbit's"
     ]
 
     equalized_names = [
@@ -168,6 +183,32 @@ def randomize_armor(world):
 
     ]
 
+    char_armor_names = {
+        "Ness": {
+            "Body": "???",
+            "Arm": "???",
+            "Other": "???"
+        },
+
+        "Paula": {
+            "Body": "dress",
+            "Arm": "???",
+            "Other": "ribbon"
+        },
+
+        "Jeff": {
+            "Body": "coat",
+            "Arm": "watch",
+            "Other": "glasses"
+        },
+    }
+
+    armor_names = {
+        "Body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak"],
+        "Arm": ["bracelet", "band", "bracer"],
+        "Other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig"]
+    }
+
     @dataclass
     class EBArmor:
         name: str
@@ -254,7 +295,6 @@ def randomize_armor(world):
             best_name, best_strength = world.random.choice(best_elements)
             front_name = elemental_names[best_name][best_strength - 1]
 
-
         chance = world.random.randint(0,100)
         if chance < 10:
             armor.only_char = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
@@ -265,6 +305,18 @@ def randomize_armor(world):
             armor.poo_def = 216 # defense is signed, all non-kings equipment has this value
         else:
            armor.poo_def = world.random.randint(1,127)
+
+        if armor.only_char == "Poo":
+            back_name = "of kings"
+            front_name = world.random.choice(armor_names[armor.equip_type]).capitalize()
+        elif armor.only_char in ["Ness", "Paula", "Jeff"]:
+            back_name = char_armor_names[armor.only_char][armor.equip_type]
+        else:
+            back_name = world.random.choice(armor_names[armor.equip_type])
+
+
+        armor.name = front_name + " " + back_name
+        #print(armor.name)
 
         #Roll a 15% chance to have an aux stat increase?
 
