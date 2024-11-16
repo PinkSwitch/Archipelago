@@ -17,6 +17,7 @@ from .hint_data import parse_hint_data
 from .enemy_data import combat_regions, scale_enemies
 from .area_scaling import calculate_scaling
 from .boss_shuffle import write_bosses
+from .equipamizer import randomize_armor
 from .static_location_data import location_groups
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
@@ -515,7 +516,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.psi_shuffle:
         write_psi(world, rom)
 
-
+    randomize_armor(world, rom)
     calculate_scaling(world)
     write_bosses(world, rom)
     scale_enemies(world, rom)

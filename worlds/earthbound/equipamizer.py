@@ -10,7 +10,7 @@ def roll_resistances(world, element, armor):
         setattr(armor, element, 0)
 
 
-def randomize_armor(world):
+def randomize_armor(world, rom):
     adjectives = [
         "Hard",
         "Wild",
@@ -102,6 +102,7 @@ def randomize_armor(world):
         "Chef's",
         "Cracked",
         "Plastic",
+        "Cotton"
     ]
 
     equalized_names = [
@@ -192,7 +193,7 @@ def randomize_armor(world):
         "Saturn Ribbon",
         "Coin of Silence",
         "Charm Coin",
-        "Mr. Saturn Coin"
+        "Mr. Saturn Coin",
 
     ]
 
@@ -210,7 +211,7 @@ def randomize_armor(world):
         },
 
         "Jeff": {
-            "body": "coat",
+            "body": "tie",
             "arm": "watch",
             "other": "glasses"
         },
@@ -223,7 +224,7 @@ def randomize_armor(world):
     }
 
     armor_names = {
-        "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate"],
+        "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat"],
         "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet"],
         "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants"]
     }
@@ -296,6 +297,13 @@ def randomize_armor(world):
     for item in all_armor:
         armor = world.armor_list[item]
         armor.defense = world.random.randint(1, 127)
+
+        chance = world.random.randint(0, 100)
+        if chance < 8:
+            armor.aux_stat = world.random.randint(1, 127)
+        else:
+            armor.aux_stat = 0
+
 
         if armor.equip_type != "arm":
             roll_resistances(world, "flash_res", armor)
@@ -377,7 +385,6 @@ def randomize_armor(world):
         print(description)
 
         # Roll a 15% chance to have an aux stat increase?
-        # Todo; Check if Flame can have a 1 or 2 or if that marks Sleep protection
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order
         # todo; change the last 03 to a 13 02 after compiling
