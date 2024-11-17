@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict
-from .text_data import text_encoder, eb_text_table
+from .text_data import text_encoder, eb_text_table, calc_pixel_width
 import struct
 
 
@@ -71,7 +71,7 @@ def randomize_armor(world, rom):
         "Shiny",
         "Souvenir",
         "Silence",
-        "Ulitmate",
+        "Ultimate",
         "Charm",
         "Saturn",
         "Tenda",
@@ -96,7 +96,7 @@ def randomize_armor(world, rom):
         "Cheese",
         "Casual",
         "Silk",
-        "Gusty",
+        "Gutsy",
         "Hyper",
         "Crusher",
         "Thick",
@@ -107,6 +107,16 @@ def randomize_armor(world, rom):
         "Cotton",
         "Mr. Baseball"
     ]
+
+    other_adjectives = adjectives.copy()
+    arm_adjectives = adjectives.copy()
+    body_adjectives = adjectives.copy()
+
+    armor_dict = {
+        "arm": arm_adjectives,
+        "body": body_adjectives,
+        "other": other_adjectives
+    }
 
     equalized_names = [
         "Mild",
@@ -308,7 +318,6 @@ def randomize_armor(world, rom):
         else:
             armor.aux_stat = 0
 
-
         if armor.equip_type != "arm":
             roll_resistances(world, "flash_res", armor)
             roll_resistances(world, "freeze_res", armor)
@@ -325,7 +334,8 @@ def randomize_armor(world, rom):
 
         if armor.flash_res + armor.freeze_res + armor.fire_res == 0:
             # If no resistances are active use a normal name
-            front_name = world.random.choice(adjectives)
+            front_name = world.random.choice(armor_dict[armor.equip_type])
+            armor_dict[armor.equip_type].remove(front_name)
         elif armor.flash_res == armor.freeze_res == armor.fire_res:
             # Get a combined name for the level
             front_name = equalized_names[armor.flash_res - 1]
@@ -362,9 +372,39 @@ def randomize_armor(world, rom):
             back_name = world.random.choice(armor_names[armor.equip_type])
 
         armor.name = front_name + " " + back_name
+
+        pixel_length = calc_pixel_width(armor.name)
+        first_armor = False
+        names_to_try = armor_names[armor.equip_type].copy()
+        while pixel_length > 70:
+            # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
+            if first_armor == False:
+                armor.name = armor.name.replace(" ", " ")
+                first_armor = True
+            else:
+                if names_to_try:
+                    #If it's still too long, change the second part of the name to try and roll a shorter name
+                    back_name = world.random.choice(names_to_try)
+                    names_to_try.remove(back_name)
+                else:
+                    #If it's *STILL* too long, chop a letter off the end of the front
+                    front_name = front_name[:-1]
+                    if front_name == "":
+                        # we ran out of letters rip
+                        front_name = "Long"
+                first_armor = False
+                armor.name = front_name + " " + back_name
+
+            pixel_length = calc_pixel_width(armor.name)
+        
         description = f"“{armor.name}”\n"
         if armor.only_char != "None":
             description += f"@{armor.only_char}'s {armor.equip_type} equipment.\n"
+        else:
+            if armor.equip_type == "other":
+                description += "@Must be equipped as “other”.\n"
+            else:
+                description += f"@Must be equipped on your {armor.equip_type}.\n"
 
         description += f"@+{armor.defense} Defense.\n"
         if armor.aux_stat > 0:
@@ -385,7 +425,6 @@ def randomize_armor(world, rom):
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
 
-        #print(description)
         description = text_encoder(description, eb_text_table, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
@@ -395,13 +434,8 @@ def randomize_armor(world, rom):
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + description_pointer)))
         rom.write_bytes(armor.address, item_name)
         description_pointer += len(description)
-        pixel_length = 255
-
 
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order
-        #todo; name truncation
-        #Idea. Run a calculation. Truncate the first word by X letters and appedn .
-        #Ex; Diam. Bracelet| Diamon Bracelet| D. bracelet
-        #Actually, run this check with each character until it's under 70 pixels.
-        #So if Diamon. Bracelet is still too long, truncate another letter
+        # Todo; write the armor properties in-game
+        # Todo; fix Ness being unable to equip body equipment, kind of?
