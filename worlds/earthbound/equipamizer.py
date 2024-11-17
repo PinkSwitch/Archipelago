@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict
+from .text_data import text_encoder, eb_text_table
+import struct
 
 
 def roll_resistances(world, element, armor):
@@ -251,48 +253,49 @@ def randomize_armor(world, rom):
         equip_type: str
 
     world.armor_list: Dict[str, EBArmor] = {
-        "Travel Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Great Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Crystal Charm": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Rabbit's Foot": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Flame Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Rain Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Night Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Sea Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Star Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Cloak of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Cheap Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Copper Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Silver Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Gold Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Platinum Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Diamond Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Pixie's Bracelet": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Cherub's Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Goddess Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Bracer of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Baseball Cap": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Holmes Hat": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Mr. Baseball Cap": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Hard Hat": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Red Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Goddess Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Slumber": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Defense": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Lucky Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Talisman Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Shiny Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Souvenir Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Diadem of Kings": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Earth Pendant": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Defense Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Talisman Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Saturn Ribbon": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Silence": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Charm Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Mr. Saturn Coin": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other")
+        "Travel Charm": EBArmor("None", 0x15583A, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Great Charm": EBArmor("None", 0x155861, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Crystal Charm": EBArmor("None", 0x155888, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Rabbit's Foot": EBArmor("None", 0x1558AF, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Flame Pendant": EBArmor("None", 0x1558D6, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Rain Pendant": EBArmor("None", 0x1558FD, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Night Pendant": EBArmor("None", 0x155924, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Sea Pendant": EBArmor("None", 0x15594B, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Star Pendant": EBArmor("None", 0x155972, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Cloak of Kings": EBArmor("None", 0x155999, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Cheap Bracelet": EBArmor("None", 0x1559C0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Silver Bracelet": EBArmor("None", 0x15590E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Platinum Band": EBArmor("None", 0x155A5C, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Diamond Band": EBArmor("None", 0x155A83, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Pixie's Bracelet": EBArmor("None", 0x155AAA, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Cherub's Band": EBArmor("None", 0x155AD1, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Goddess Band": EBArmor("None", 0x155AF8, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Bracer of Kings": EBArmor("None", 0x155B1F, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Baseball Cap": EBArmor("None", 0x155B46, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Holmes Hat": EBArmor("None", 0x155B6D, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Mr. Baseball Cap": EBArmor("None", 0x155B94, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Hard Hat": EBArmor("None", 0x155BBB, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Ribbon": EBArmor("None", 0x155BE2, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Red Ribbon": EBArmor("None", 0x155C09, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Goddess Ribbon": EBArmor("None", 0x155C30, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Coin of Slumber": EBArmor("None", 0x155C57, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Coin of Defense": EBArmor("None", 0x155C7E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Lucky Coin": EBArmor("None", 0x155CA5, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Talisman Coin": EBArmor("None", 0x155CCC, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Shiny Coin": EBArmor("None", 0x155CF3, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Souvenir Coin": EBArmor("None", 0x155D1A, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Diadem of Kings": EBArmor("None", 0x155D41, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Earth Pendant": EBArmor("None", 0x156D8E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
+        "Defense Ribbon": EBArmor("None", 0x157136, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Talisman Ribbon": EBArmor("None", 0x15715D, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Saturn Ribbon": EBArmor("None", 0x157184, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Coin of Silence": EBArmor("None", 0x1571AB, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Charm Coin": EBArmor("None", 0x1571D2, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
+        "Mr. Saturn Coin": EBArmor("None", 0x1575EF, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other")
     }
+    description_pointer = 0x1000
 
     for item in all_armor:
         armor = world.armor_list[item]
@@ -381,10 +384,23 @@ def randomize_armor(world, rom):
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
 
-        # print(armor.name)
-        print(description)
+        #print(description)
+        description = text_encoder(description, eb_text_table, 0x100)
+        description = description[:-2]
+        description.extend([0x13, 0x02])
+        item_name = text_encoder(armor.name, eb_text_table, 25)
+        item_name.extend([0x00])
+        rom.write_bytes((0x310000 + description_pointer), description)
+        rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + description_pointer)))
+        rom.write_bytes(armor.address, item_name)
+        description_pointer += len(description)
+        pixel_length = 255
+        
 
-        # Roll a 15% chance to have an aux stat increase?
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order
-        # todo; change the last 03 to a 13 02 after compiling
+        #todo; name truncation
+        #Idea. Run a calculation. Truncate the first word by X letters and appedn .
+        #Ex; Diam. Bracelet| Diamon Bracelet| D. bracelet
+        #Actually, run this check with each character until it's under 70 pixels.
+        #So if Diamon. Bracelet is still too long, truncate another letter
