@@ -104,7 +104,8 @@ def randomize_armor(world, rom):
         "Chef's",
         "Cracked",
         "Plastic",
-        "Cotton"
+        "Cotton",
+        "Mr. Baseball"
     ]
 
     equalized_names = [
@@ -227,7 +228,7 @@ def randomize_armor(world, rom):
 
     armor_names = {
         "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat"],
-        "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet"],
+        "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet", "sweatband"],
         "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants"]
     }
 
@@ -395,7 +396,7 @@ def randomize_armor(world, rom):
         rom.write_bytes(armor.address, item_name)
         description_pointer += len(description)
         pixel_length = 255
-        
+
 
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order
