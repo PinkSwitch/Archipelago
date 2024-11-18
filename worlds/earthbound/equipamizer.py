@@ -105,7 +105,20 @@ def randomize_armor(world, rom):
         "Cracked",
         "Plastic",
         "Cotton",
-        "Mr. Baseball"
+        "Mr. Baseball",
+        "Razor",
+        "Gilded",
+        "Master",
+        "Fighter's",
+        "Worn",
+        "Magicant",
+        "Happy",
+        "Well-Done",
+        "Rare",
+        "Gnarly",
+        "Wicked",
+        "Bionic",
+        "Combat"
     ]
 
     other_adjectives = adjectives.copy()
@@ -163,6 +176,39 @@ def randomize_armor(world, rom):
             "???",
             "Day"
         ]
+    }
+
+    plain_elemental_names = [
+        "Dark",
+        "Cloud",
+        "Night",
+        "Puddle",
+        "Drizzle",
+        "Rain",
+        "Smoke",
+        "Ember",
+        "Flame",
+        "Mild",
+        "Earth",
+        "Sea",
+        "???",
+        "???",
+        "Star"
+    ]
+
+    usage_bytes = {
+        "None": 0x0F,
+        "Ness": 0x01,
+        "Paula": 0x02,
+        "Jeff": 0x03,
+        "Poo": 0x04
+    }
+
+    resistance_bytes = {
+        "Flash": 16,
+        "Freeze": 4,
+        "Fire": 1,
+        "Paralysis": 64,
     }
 
     all_armor = [
@@ -239,7 +285,7 @@ def randomize_armor(world, rom):
     armor_names = {
         "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat"],
         "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet", "sweatband"],
-        "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants"]
+        "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants", "jeans", "grieves", "boot"]
     }
 
     res_strength = [
@@ -276,7 +322,7 @@ def randomize_armor(world, rom):
         "Cloak of Kings": EBArmor("None", 0x155999, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
         "Cheap Bracelet": EBArmor("None", 0x1559C0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
         "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Silver Bracelet": EBArmor("None", 0x15590E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
+        "Silver Bracelet": EBArmor("None", 0x155A0E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
         "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
         "Platinum Band": EBArmor("None", 0x155A5C, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
         "Diamond Band": EBArmor("None", 0x155A83, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
@@ -382,7 +428,7 @@ def randomize_armor(world, rom):
                 armor.name = armor.name.replace(" ", " ")
                 first_armor = True
             else:
-                if names_to_try:
+                if names_to_try and front_name not in plain_elemental_names:
                     #If it's still too long, change the second part of the name to try and roll a shorter name
                     back_name = world.random.choice(names_to_try)
                     names_to_try.remove(back_name)
@@ -433,9 +479,12 @@ def randomize_armor(world, rom):
         rom.write_bytes((0x310000 + description_pointer), description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + description_pointer)))
         rom.write_bytes(armor.address, item_name)
+        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.only_char]]))
+        resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
+        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         description_pointer += len(description)
 
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order
-        # Todo; write the armor properties in-game
-        # Todo; fix Ness being unable to equip body equipment, kind of?
+        # Todo; item prices
+        # Todo; Finish ??? names and apply combo elementals?
