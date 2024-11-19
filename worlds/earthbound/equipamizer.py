@@ -1,12 +1,14 @@
 from dataclasses import dataclass
+import dataclasses
 from typing import Dict
 from .text_data import text_encoder, eb_text_table, calc_pixel_width
+from operator import attrgetter
 import struct
 
 
 def roll_resistances(world, element, armor):
     chance = world.random.randint(0, 100)
-    if chance < 5:
+    if chance < 11:
         setattr(armor, element, world.random.randint(1, 3))
     else:
         setattr(armor, element, 0)
@@ -138,8 +140,8 @@ def randomize_armor(world, rom):
     ]
 
     ult_names = [
-        "???",
-        "???",
+        "Day",
+        "Sun",
         "Star"
     ]
 
@@ -159,22 +161,6 @@ def randomize_armor(world, rom):
             "Smoke",
             "Ember",
             "Flame"
-        ],
-
-        "FreezeFire": [
-            "???",
-            "Frostburn",
-            "Antipode"
-        ],
-        "FreezeFlash": [
-            "???",
-            "???",
-            "???"
-        ],
-        "FireFlash": [
-            "???",
-            "???",
-            "Day"
         ]
     }
 
@@ -191,24 +177,17 @@ def randomize_armor(world, rom):
         "Mild",
         "Earth",
         "Sea",
-        "???",
-        "???",
+        "Day",
+        "Sun",
         "Star"
     ]
 
     usage_bytes = {
-        "None": 0x0F,
+        "All": 0x0F,
         "Ness": 0x01,
         "Paula": 0x02,
         "Jeff": 0x03,
         "Poo": 0x04
-    }
-
-    resistance_bytes = {
-        "Flash": 16,
-        "Freeze": 4,
-        "Fire": 1,
-        "Paralysis": 64,
     }
 
     all_armor = [
@@ -253,6 +232,8 @@ def randomize_armor(world, rom):
         "Coin of Silence",
         "Charm Coin",
         "Mr. Saturn Coin",
+        "Summers Platinum Band",
+        "Summers Diamond Band"
 
     ]
 
@@ -306,55 +287,62 @@ def randomize_armor(world, rom):
         fire_res: int
         par_res: int
         sleep_res: int
-        only_char: str
+        can_equip: str
         equip_type: str
 
     world.armor_list: Dict[str, EBArmor] = {
-        "Travel Charm": EBArmor("None", 0x15583A, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Great Charm": EBArmor("None", 0x155861, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Crystal Charm": EBArmor("None", 0x155888, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Rabbit's Foot": EBArmor("None", 0x1558AF, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Flame Pendant": EBArmor("None", 0x1558D6, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Rain Pendant": EBArmor("None", 0x1558FD, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Night Pendant": EBArmor("None", 0x155924, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Sea Pendant": EBArmor("None", 0x15594B, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Star Pendant": EBArmor("None", 0x155972, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Cloak of Kings": EBArmor("None", 0x155999, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Cheap Bracelet": EBArmor("None", 0x1559C0, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Silver Bracelet": EBArmor("None", 0x155A0E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Platinum Band": EBArmor("None", 0x155A5C, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Diamond Band": EBArmor("None", 0x155A83, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Pixie's Bracelet": EBArmor("None", 0x155AAA, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Cherub's Band": EBArmor("None", 0x155AD1, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Goddess Band": EBArmor("None", 0x155AF8, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Bracer of Kings": EBArmor("None", 0x155B1F, 0, 0, 0, 0, 0, 0, 0, 0, "None", "arm"),
-        "Baseball Cap": EBArmor("None", 0x155B46, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Holmes Hat": EBArmor("None", 0x155B6D, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Mr. Baseball Cap": EBArmor("None", 0x155B94, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Hard Hat": EBArmor("None", 0x155BBB, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Ribbon": EBArmor("None", 0x155BE2, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Red Ribbon": EBArmor("None", 0x155C09, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Goddess Ribbon": EBArmor("None", 0x155C30, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Slumber": EBArmor("None", 0x155C57, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Defense": EBArmor("None", 0x155C7E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Lucky Coin": EBArmor("None", 0x155CA5, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Talisman Coin": EBArmor("None", 0x155CCC, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Shiny Coin": EBArmor("None", 0x155CF3, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Souvenir Coin": EBArmor("None", 0x155D1A, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Diadem of Kings": EBArmor("None", 0x155D41, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Earth Pendant": EBArmor("None", 0x156D8E, 0, 0, 0, 0, 0, 0, 0, 0, "None", "body"),
-        "Defense Ribbon": EBArmor("None", 0x157136, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Talisman Ribbon": EBArmor("None", 0x15715D, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Saturn Ribbon": EBArmor("None", 0x157184, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Coin of Silence": EBArmor("None", 0x1571AB, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Charm Coin": EBArmor("None", 0x1571D2, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other"),
-        "Mr. Saturn Coin": EBArmor("None", 0x1575EF, 0, 0, 0, 0, 0, 0, 0, 0, "None", "other")
+        "Travel Charm": EBArmor("None", 0x15583A, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Great Charm": EBArmor("None", 0x155861, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Crystal Charm": EBArmor("None", 0x155888, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Rabbit's Foot": EBArmor("None", 0x1558AF, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Flame Pendant": EBArmor("None", 0x1558D6, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Rain Pendant": EBArmor("None", 0x1558FD, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Night Pendant": EBArmor("None", 0x155924, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Sea Pendant": EBArmor("None", 0x15594B, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Star Pendant": EBArmor("None", 0x155972, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Cloak of Kings": EBArmor("None", 0x155999, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Cheap Bracelet": EBArmor("None", 0x1559C0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Silver Bracelet": EBArmor("None", 0x155A0E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Platinum Band": EBArmor("None", 0x155A5C, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Diamond Band": EBArmor("None", 0x155A83, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Pixie's Bracelet": EBArmor("None", 0x155AAA, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Cherub's Band": EBArmor("None", 0x155AD1, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Goddess Band": EBArmor("None", 0x155AF8, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Bracer of Kings": EBArmor("None", 0x155B1F, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Baseball Cap": EBArmor("None", 0x155B46, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Holmes Hat": EBArmor("None", 0x155B6D, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Mr. Baseball Cap": EBArmor("None", 0x155B94, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Hard Hat": EBArmor("None", 0x155BBB, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Ribbon": EBArmor("None", 0x155BE2, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Red Ribbon": EBArmor("None", 0x155C09, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Goddess Ribbon": EBArmor("None", 0x155C30, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Coin of Slumber": EBArmor("None", 0x155C57, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Coin of Defense": EBArmor("None", 0x155C7E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Lucky Coin": EBArmor("None", 0x155CA5, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Talisman Coin": EBArmor("None", 0x155CCC, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Shiny Coin": EBArmor("None", 0x155CF3, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Souvenir Coin": EBArmor("None", 0x155D1A, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Diadem of Kings": EBArmor("None", 0x155D41, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Earth Pendant": EBArmor("None", 0x156D8E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
+        "Defense Ribbon": EBArmor("None", 0x157136, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Talisman Ribbon": EBArmor("None", 0x15715D, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Saturn Ribbon": EBArmor("None", 0x157184, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Coin of Silence": EBArmor("None", 0x1571AB, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Charm Coin": EBArmor("None", 0x1571D2, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Mr. Saturn Coin": EBArmor("None", 0x1575EF, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Summers Platinum Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Summers Diamond Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
     }
     description_pointer = 0x1000
 
     for item in all_armor:
+        if "Summers" in item:
+            world.armor_list[item] = dataclasses.replace(world.armor_list["Platinum Band"])
+            armor.name += "Summers"
+            print(world.armor_list[item].name)
+            continue
         armor = world.armor_list[item]
         armor.defense = world.random.randint(1, 127)
 
@@ -400,20 +388,20 @@ def randomize_armor(world, rom):
 
         chance = world.random.randint(0, 100)
         if chance < 10:
-            armor.only_char = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
+            armor.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
         else:
-            armor.only_char = "None"
+            armor.can_equip = "All"
 
-        if armor.only_char != "Poo":
+        if armor.can_equip != "Poo":
             armor.poo_def = 216  # defense is signed, all non-kings equipment has this value
         else:
             armor.poo_def = armor.defense
 
-        if armor.only_char == "Poo":
+        if armor.can_equip == "Poo":
             back_name = "of kings"
             front_name = world.random.choice(armor_names[armor.equip_type]).capitalize()
-        elif armor.only_char in ["Ness", "Paula", "Jeff"]:
-            back_name = char_armor_names[armor.only_char][armor.equip_type]
+        elif armor.can_equip in ["Ness", "Paula", "Jeff"]:
+            back_name = char_armor_names[armor.can_equip][armor.equip_type]
         else:
             back_name = world.random.choice(armor_names[armor.equip_type])
 
@@ -424,16 +412,16 @@ def randomize_armor(world, rom):
         names_to_try = armor_names[armor.equip_type].copy()
         while pixel_length > 70:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
-            if first_armor == False:
+            if first_armor is False:
                 armor.name = armor.name.replace(" ", " ")
                 first_armor = True
             else:
                 if names_to_try and front_name not in plain_elemental_names:
-                    #If it's still too long, change the second part of the name to try and roll a shorter name
+                    # If it's still too long, change the second part of the name to try and roll a shorter name
                     back_name = world.random.choice(names_to_try)
                     names_to_try.remove(back_name)
                 else:
-                    #If it's *STILL* too long, chop a letter off the end of the front
+                    # If it's *STILL* too long, chop a letter off the end of the front
                     front_name = front_name[:-1]
                     if front_name == "":
                         # we ran out of letters rip
@@ -444,8 +432,8 @@ def randomize_armor(world, rom):
             pixel_length = calc_pixel_width(armor.name)
         
         description = f"“{armor.name}”\n"
-        if armor.only_char != "None":
-            description += f"@{armor.only_char}'s {armor.equip_type} equipment.\n"
+        if armor.can_equip != "All":
+            description += f"@{armor.can_equip}'s {armor.equip_type} equipment.\n"
         else:
             if armor.equip_type == "other":
                 description += "@Must be equipped as “other”.\n"
@@ -479,12 +467,45 @@ def randomize_armor(world, rom):
         rom.write_bytes((0x310000 + description_pointer), description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + description_pointer)))
         rom.write_bytes(armor.address, item_name)
-        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.only_char]]))
+        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         description_pointer += len(description)
+    
+    sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
+
+    sorted_arm_gear = [armor for armor in sorted_armor if armor.equip_type == "arm"]
+    sorted_body_gear = [armor for armor in sorted_armor if armor.equip_type == "body"]
+    sorted_other_gear = [armor for armor in sorted_armor if armor.equip_type == "other"]
+    price = 0
+    
+    # there's probably a better way to do this
+    for index, armor in enumerate(sorted_arm_gear):
+        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
+        if "Summers" in armor.name:
+            armor.name = armor.name.replace("Summers", "")
+            price = price *2
+        price = min(price, 50000)
+        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+
+    for index, armor in enumerate(sorted_body_gear):
+        price = (60 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
+        if "Summers" in armor.name:
+            armor.name = armor.name.replace("Summers", "")
+            price = price * 2
+        price = min(price, 50000)
+        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+
+    for index, armor in enumerate(sorted_other_gear):
+        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
+        if "Summers" in armor.name:
+            armor.name = armor.name.replace("Summers", "")
+            price = price * 2
+        price = min(price, 50000)
+        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+        #TODO: FIX SUMMERS PRICING IT'S TOO HIGH AND AFFECTING THE REST OF THE NUMBERS!!!!
 
         # Todo; Chaos setting that randomizes type.
-        # Todo; sort defense for all equipment in order by progressive armor order
-        # Todo; item prices
-        # Todo; Finish ??? names and apply combo elementals?
+        # Todo; sort defense for all equipment in order by progressive armor order. This works, do it for the other types
+        # Todo; Summers needs to copy the Diamond band and something else
+        # test capping armor defense (50, 100, 127 for body arm other)
