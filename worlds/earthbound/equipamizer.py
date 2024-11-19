@@ -274,6 +274,12 @@ def randomize_armor(world, rom):
         " somewhat",
         ""
     ]
+    
+    summers_addresses = {
+        #Make real
+        "Summers Platinum Band": 0x155A5C,
+        "Summers Diamond Band": 0x155A83
+    }
 
     @dataclass
     class EBArmor:
@@ -305,8 +311,8 @@ def randomize_armor(world, rom):
         "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
         "Silver Bracelet": EBArmor("None", 0x155A0E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
         "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Platinum Band": EBArmor("None", 0x155A5C, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Diamond Band": EBArmor("None", 0x155A83, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Platinum Band": EBArmor("None", 0x1570E8, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
+        "Diamond Band": EBArmor("None", 0x15710F, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
         "Pixie's Bracelet": EBArmor("None", 0x155AAA, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
         "Cherub's Band": EBArmor("None", 0x155AD1, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
         "Goddess Band": EBArmor("None", 0x155AF8, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
@@ -339,9 +345,10 @@ def randomize_armor(world, rom):
 
     for item in all_armor:
         if "Summers" in item:
-            world.armor_list[item] = dataclasses.replace(world.armor_list["Platinum Band"])
-            armor.name += "Summers"
-            print(world.armor_list[item].name)
+            world.armor_list[item] = dataclasses.replace(
+                world.armor_list[item.replace("Summers ", "")], address = summers_addresses[item]
+                )
+            world.armor_list[item].name += "Summers"
             continue
         armor = world.armor_list[item]
         armor.defense = world.random.randint(1, 127)
@@ -488,6 +495,8 @@ def randomize_armor(world, rom):
         price = min(price, 50000)
         rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
+    price = 0
+
     for index, armor in enumerate(sorted_body_gear):
         price = (60 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
         if "Summers" in armor.name:
@@ -495,6 +504,8 @@ def randomize_armor(world, rom):
             price = price * 2
         price = min(price, 50000)
         rom.write_bytes((armor.address + 26), struct.pack("H", price))
+
+    price = 0
 
     for index, armor in enumerate(sorted_other_gear):
         price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
@@ -509,3 +520,4 @@ def randomize_armor(world, rom):
         # Todo; sort defense for all equipment in order by progressive armor order. This works, do it for the other types
         # Todo; Summers needs to copy the Diamond band and something else
         # test capping armor defense (50, 100, 127 for body arm other)
+        #Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
