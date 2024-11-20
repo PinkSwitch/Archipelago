@@ -264,7 +264,7 @@ def randomize_armor(world, rom):
     }
 
     armor_names = {
-        "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat"],
+        "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat", "jersey"],
         "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet", "sweatband"],
         "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants", "jeans", "grieves", "boot"]
     }
@@ -562,7 +562,7 @@ def randomize_armor(world, rom):
         else:
             rom.write_bytes((armor.address + 26), struct.pack("H", price))
     
-    if not world.options.progressive_armor:
+    if world.options.progressive_armor:
         for index, item in enumerate(progressive_bracelets):
             world.armor_list[item].defense = sorted_arm_gear[index].defense
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
@@ -570,6 +570,96 @@ def randomize_armor(world, rom):
             world.armor_list[item].defense = sorted_other_gear[index].defense
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
-        # Todo; sort defense for all equipment in order by progressive armor order. This works, do it for the other types
+def randomize_weapons(world, rom):
+    @dataclass
+    class EBWeapon:
+        name: str
+        address: int
+        offense: int
+        aux_stat: int
+        poo_off: int
+        miss_rate: int
+        can_equip: str
+        equip_type: str
+
+    world.weapon_list: Dict[str, EBArmor] = {
+        "Cracked Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Tee Ball Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Sand Lot Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Minor League Bat": EBWeapon("None", 0x0, 0, 0, 0, "Ness", "Bash"),
+        "Mr. Baseball Bat": EBWeapon("None", 0x0, 0, 0, 0, "Ness", "Bash"),
+        "Big League Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Hall of Fame Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Magicant Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Legendary Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Gutsy Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Casey Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Thick Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Deluxe Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Chef's Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "French Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Magic Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Holy Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Sword of Kings": EBWeapon("None", 0x0, 0, 0, 0, 0, "Poo", "Bash"),
+        "Pop Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Stun Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Toy Air Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Magnum Air Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Zip Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Laser Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Hyper Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Crusher Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Crusher Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Spectrum Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Death Ray": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Baddest Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Moon Beam Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Gaia Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
+        "Slingshot": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
+        "Bionic Slingshot": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
+        "Trick Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
+        "Combat Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
+        "T-Rex's Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Ultimate Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Double Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
+        "Non-stick Frypan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
+        "Summers Big League Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+    }
+
+    for item in all_weapons:
+        weapon = world.weapon_list[item]
+        weapon.offense = world.random.randint(1, 127)
+
+        if weapon.can_equip == "Poo":
+            poo_off = world.random.randint(1, 127)
+            front_name = world.random.choice(weapon_names[weapon.can_equip])
+            back_name = "of Kings"
+        else:
+            poo_off = 250
+            front_name = world.random.choice(adjectives)
+            back_name = world.random.choice(weapon_names[weapon.can_equip])
+
+        chance = world.random.randint(0, 100)
+        if chance < 8:
+            weapon.aux_stat = world.random.randint(1, 127)
+        else:
+            weapon.aux_stat = 0
+
+        if weapon.can_equip in ["Jeff", "All"]:
+            weapon.equip_type = "Shoot"
+        else:
+            weapon.equip_type = "Bash"
+
+        #Todo; List all weapons
+        #Todo; Progressive Weapons
+        #Todo; Prices
+        #Todo; Cap name width
+        #Todo; Figure out hwat miss rate means
+        #TOdo; write to rom
+        #todo; weapon adjectives
+
+        #Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)
         # Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
