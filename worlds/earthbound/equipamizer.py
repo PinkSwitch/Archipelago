@@ -276,7 +276,6 @@ def randomize_armor(world, rom):
     ]
     
     summers_addresses = {
-        #Make real
         "Summers Platinum Band": 0x155A5C,
         "Summers Diamond Band": 0x155A83
     }
@@ -286,6 +285,36 @@ def randomize_armor(world, rom):
         "arm": 0x18,
         "other": 0x1C
     }
+
+    progressive_bracelets = [
+        "Cheap Bracelet",
+        "Copper Bracelet",
+        "Silver Bracelet",
+        "Gold Bracelet",
+        "Platinum Band",
+        "Diamond Band",
+        "Pixie's Bracelet",
+        "Cherub's Band",
+        "Goddess Band",
+        "Summers Platinum Band",
+        "Summers Diamond Band"
+    ]
+
+    progressive_others = [
+        "Baseball Cap",
+        "Mr. Baseball Cap",
+        "Holmes Hat",
+        "Hard Hat",
+        "Coin of Slumber",
+        "Coin of Defense",
+        "Coin of Silence",
+        "Mr. Saturn Coin",
+        "Charm Coin",
+        "Lucky Coin",
+        "Talisman Coin",
+        "Shiny Coin",
+        "Souvenir Coin"
+    ]
 
     @dataclass
     class EBArmor:
@@ -352,7 +381,7 @@ def randomize_armor(world, rom):
     for item in all_armor:
         if "Summers" in item:
             world.armor_list[item] = dataclasses.replace(
-                world.armor_list[item.replace("Summers ", "")], address = summers_addresses[item]
+                world.armor_list[item.replace("Summers ", "")], address=summers_addresses[item]
                 )
             world.armor_list[item].name += "Summers"
             continue
@@ -532,8 +561,15 @@ def randomize_armor(world, rom):
             rom.write_bytes(armor.address, item_name)
         else:
             rom.write_bytes((armor.address + 26), struct.pack("H", price))
+    
+    if not world.options.progressive_armor:
+        for index, item in enumerate(progressive_bracelets):
+            world.armor_list[item].defense = sorted_arm_gear[index].defense
+            rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
+        for index, item in enumerate(progressive_others):
+            world.armor_list[item].defense = sorted_other_gear[index].defense
+            rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
-        # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order. This works, do it for the other types
         # test capping armor defense (50, 100, 127 for body arm other)
-        #Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
+        # Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
