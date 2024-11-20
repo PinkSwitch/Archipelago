@@ -281,6 +281,12 @@ def randomize_armor(world, rom):
         "Summers Diamond Band": 0x155A83
     }
 
+    type_bytes = {
+        "body": 0x14,
+        "arm": 0x18,
+        "other": 0x1C
+    }
+
     @dataclass
     class EBArmor:
         name: str
@@ -351,6 +357,8 @@ def randomize_armor(world, rom):
             world.armor_list[item].name += "Summers"
             continue
         armor = world.armor_list[item]
+        if world.options.armorizer == 2:
+            armor.equip_type = world.random.choice(["arm", "body", "other"])
         armor.defense = world.random.randint(1, 127)
 
         chance = world.random.randint(0, 100)
@@ -477,6 +485,7 @@ def randomize_armor(world, rom):
         rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
+        rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
         description_pointer += len(description)
     
     sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
@@ -491,9 +500,12 @@ def randomize_armor(world, rom):
         price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
-            price = price *2
-        price = min(price, 50000)
-        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
+            item_name = text_encoder(armor.name, eb_text_table, 25)
+            item_name.extend([0x00])
+            rom.write_bytes(armor.address, item_name)
+        else:
+            rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
     price = 0
 
@@ -501,9 +513,12 @@ def randomize_armor(world, rom):
         price = (60 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
-            price = price * 2
-        price = min(price, 50000)
-        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
+            item_name = text_encoder(armor.name, eb_text_table, 25)
+            item_name.extend([0x00])
+            rom.write_bytes(armor.address, item_name)
+        else:
+            rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
     price = 0
 
@@ -511,13 +526,14 @@ def randomize_armor(world, rom):
         price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
-            price = price * 2
-        price = min(price, 50000)
-        rom.write_bytes((armor.address + 26), struct.pack("H", price))
-        #TODO: FIX SUMMERS PRICING IT'S TOO HIGH AND AFFECTING THE REST OF THE NUMBERS!!!!
+            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
+            item_name = text_encoder(armor.name, eb_text_table, 25)
+            item_name.extend([0x00])
+            rom.write_bytes(armor.address, item_name)
+        else:
+            rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
         # Todo; Chaos setting that randomizes type.
         # Todo; sort defense for all equipment in order by progressive armor order. This works, do it for the other types
-        # Todo; Summers needs to copy the Diamond band and something else
         # test capping armor defense (50, 100, 127 for body arm other)
         #Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items

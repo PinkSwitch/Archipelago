@@ -246,6 +246,30 @@ class StartingCharacter(Choice):
     option_poo = 3
     default = 0
 
+class Armorizer(Choice):
+    """All equippable armor will have randomly generated attributes. This includes who can equip it, elemental resistance (and how strong that resistance is),
+       and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
+       on that piece of equipment.
+       Keep Type: Equipment will keep its original equipment slot. If Progressive Armor is enabled, you will get armor with progressively higher defense. 
+       Chaos: Equipment will have a randomly selected slot. This may not respect the type of item received by Progressive Armor"""
+    display_name = "Armorizer"
+    option_off = 0
+    option_keep_type = 1
+    option_chaos = 2
+    default = 0
+
+class Weaponizer(Choice):
+    """Changes the character you start as. If random start location is disabled, each character has their own starting location.
+       Ness: Ness's House
+       Paula: the Happy-Happy Villagr cabin
+       Jeff: The Threed zombie prison
+       Poo: Dalaam"""
+    display_name = "Weaponizer"
+    option_off = 0
+    option_keep_type = 1
+    option_chaos = 2
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -269,6 +293,8 @@ class EBOptions(PerGameCommonOptions):
     easy_deaths: EasyDeaths
     progressive_weapons: ProgressiveWeapons
     progressive_armor: ProgressiveArmor
+    armorizer: Armorizer
+    weaponizer: Weaponizer
     auto_scale_party_members: AutoscaleParty
     remote_items: RemoteItems
     random_flavors: RandomFlavors
@@ -306,6 +332,11 @@ eb_option_groups = [
         UncommonWeight,
         RareWeight,
         PreFixItems
+    ]),
+
+    OptionGroup("Equipamizer", [
+        Armorizer,
+        Weaponizer
     ]),
 
     OptionGroup("World Modes", [
