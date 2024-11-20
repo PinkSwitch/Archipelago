@@ -604,6 +604,11 @@ def randomize_armor(world, rom):
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
 def randomize_weapons(world, rom):
+    weapon_names = {
+        "Ness": ["bat", "stick", "club", "board", "racket", "cue", "pole", "paddle"],
+        "Paula": ["fry pan", "frypan", "skillet", "whisk", "saucepan", "pin"],
+        "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver"]
+    }
     @dataclass
     class EBWeapon:
         name: str
