@@ -251,7 +251,7 @@ class Armorizer(Choice):
        and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
        on that piece of equipment.
        Keep Type: Equipment will keep its original equipment slot. If Progressive Armor is enabled, you will get armor with progressively higher defense. 
-       Chaos: Equipment will have a randomly selected slot. This may not respect the type of item received by Progressive Armor"""
+       Chaos: Equipment will have a randomly selected slot. This will ignore Progressive Armor in regards to defense per armor piece."""
     display_name = "Armorizer"
     option_off = 0
     option_keep_type = 1

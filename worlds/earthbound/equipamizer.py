@@ -150,8 +150,12 @@ adjectives = [
     "Alien",
     "T-rex's",
     "Double",
-    "Non-stick"
-
+    "Non-stick",
+    "Football",
+    "Tennis",
+    "Golf",
+    "Hockey",
+    "Burnt"
 ]
 
 
@@ -409,7 +413,7 @@ def randomize_armor(world, rom):
         "Summers Platinum Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
         "Summers Diamond Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
     }
-    description_pointer = 0x1000
+    world.description_pointer = 0x1000
 
     for item in all_armor:
         if "Summers" in item:
@@ -541,14 +545,14 @@ def randomize_armor(world, rom):
         description.extend([0x13, 0x02])
         item_name = text_encoder(armor.name, eb_text_table, 25)
         item_name.extend([0x00])
-        rom.write_bytes((0x310000 + description_pointer), description)
-        rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + description_pointer)))
+        rom.write_bytes((0x310000 + world.description_pointer), description)
+        rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         rom.write_bytes(armor.address, item_name)
         rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
-        description_pointer += len(description)
+        world.description_pointer += len(description)
     
     sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
 
@@ -595,7 +599,7 @@ def randomize_armor(world, rom):
         else:
             rom.write_bytes((armor.address + 26), struct.pack("H", price))
     
-    if world.options.progressive_armor:
+    if world.options.progressive_armor and world.options.armorizer != 2:
         for index, item in enumerate(progressive_bracelets):
             world.armor_list[item].defense = sorted_arm_gear[index].defense
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
@@ -607,8 +611,19 @@ def randomize_weapons(world, rom):
     weapon_names = {
         "Ness": ["bat", "stick", "club", "board", "racket", "cue", "pole", "paddle"],
         "Paula": ["fry pan", "frypan", "skillet", "whisk", "saucepan", "pin"],
-        "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver"]
+        "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver"],
+        "Poo": ["Sword", "Katana", "Knife", "Scisscors", "Cutter", "Blade", "Chisel", "Saw", "Axe"],
+        "All": ["Yo-yo", "Slingshot"]
     }
+
+    miss_rates = {
+        "Ness": 1,
+        "Paula": 1,
+        "Jeff": 0,
+        "Poo": 0,
+        "All": 3
+    }
+
     @dataclass
     class EBWeapon:
         name: str
@@ -648,7 +663,6 @@ def randomize_weapons(world, rom):
         "Laser Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
         "Hyper Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
         "Crusher Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Crusher Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
         "Spectrum Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
         "Death Ray": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
         "Baddest Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
@@ -676,10 +690,51 @@ def randomize_weapons(world, rom):
         "Hall of Fame Bat",
         "Magicant Bat",
         "Legendary Bat",
+        "Gutsy Bat",
+        "Casey Bat",
+        "Fry Pan",
+        "Thick Fry Pan",
+        "Deluxe Fry Pan",
+        "Chef's Fry Pan",
+        "French Fry Pan",
+        "Magic Fry Pan",
+        "Holy Fry Pan",
+        "Sword of Kings",
+        "Pop Gun",
+        "Stun Gun",
+        "Toy Air Gun",
+        "Magnum Air Gun",
+        "Zip Gun",
+        "Laser Gun",
+        "Hyper Beam",
+        "Crusher Beam",
+        "Spectrum Beam",
+        "Death Ray",
+        "Baddest Beam",
+        "Moon Beam Gun",
+        "Gaia Beam",
+        "Yo-yo",
+        "Slingshot",
+        "Bionic Slingshot",
+        "Trick Yo-yo",
+        "Combat Yo-yo",
+        "T-Rex's Bat",
+        "Ultimate Bat",
+        "Double Beam",
+        "Non-stick Frypan",
+        "Summers Big League Bat"
     ]
+
 
     for item in all_weapons:
         weapon = world.weapon_list[item]
+
+        if world.options.weaponizer == 2:
+            chance = world.random.randint(1, 100)
+            if chance < 8:
+                weapon.can_equip = "All"
+            else:
+                weapon.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
         weapon.offense = world.random.randint(1, 127)
 
         if weapon.can_equip == "Poo":
@@ -702,7 +757,30 @@ def randomize_weapons(world, rom):
         else:
             weapon.equip_type = "Bash"
 
-        #Todo; List all weapons
+        chance = world.random.randint(1, 100)
+        if chance < 4:
+            weapon.miss_rate = 12
+        else:
+            weapon.miss_rate = miss_rates[weapon.can_equip]
+
+        description = f"“{weapon.name}”\n"
+        if weapon.can_equip != "All":
+            description += f"@{weapon.can_equip} can equip this weapon.\n"
+
+        description += f"@+{weapon.offense} Offense.\n"
+        if weapon.aux_stat > 0:
+            description += f"@+{weapon.aux_stat} Guts.\n"
+        
+        if weapon.miss_rate == 12:
+            description+= "@If you use this, you might just whiff.\n"
+
+
+        world.description_pointer += len(description)
+
+        #Has a 0 in 16 chance of missing
+        
+        #All-type weapons need a higher miss rate
+
         #Todo; Progressive Weapons
         #Todo; Prices
         #Todo; Cap name width
