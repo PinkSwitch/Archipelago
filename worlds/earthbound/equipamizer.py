@@ -14,6 +14,33 @@ def roll_resistances(world, element, armor):
         setattr(armor, element, 0)
 
 
+def price_weapons(weapons, rom):
+    price = 0
+    for index, weapon in enumerate(weapons):
+        price = (99 * (index + 1) + price) + (2 * weapon.aux_stat) + weapon.offense
+        if "Summers" in weapon.name:
+            weapon.name = weapon.name.replace("Summers", "")
+            rom.write_bytes((weapon.address + 26), struct.pack("H", min((price * 2), 50000)))
+            item_name = text_encoder(weapon.name, eb_text_table, 25)
+            item_name.extend([0x00])
+            rom.write_bytes(weapon.address, item_name)
+        else:
+            rom.write_bytes((weapon.address + 26), struct.pack("H", price))
+
+def price_armors(armor_pricing_list, rom):
+    price = 0
+    for index, armor in enumerate(armor_pricing_list):
+        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
+        if "Summers" in armor.name:
+            armor.name = armor.name.replace("Summers", "")
+            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
+            item_name = text_encoder(armor.name, eb_text_table, 25)
+            item_name.extend([0x00])
+            rom.write_bytes(armor.address, item_name)
+        else:
+            rom.write_bytes((armor.address + 26), struct.pack("H", price))
+
+
 adjectives = [
     "Hard",
     "Wild",
@@ -557,45 +584,15 @@ def randomize_armor(world, rom):
     sorted_arm_gear = [armor for armor in sorted_armor if armor.equip_type == "arm"]
     sorted_body_gear = [armor for armor in sorted_armor if armor.equip_type == "body"]
     sorted_other_gear = [armor for armor in sorted_armor if armor.equip_type == "other"]
-    price = 0
-    
-    # there's probably a better way to do this
-    for index, armor in enumerate(sorted_arm_gear):
-        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
-        if "Summers" in armor.name:
-            armor.name = armor.name.replace("Summers", "")
-            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(armor.name, eb_text_table, 25)
-            item_name.extend([0x00])
-            rom.write_bytes(armor.address, item_name)
-        else:
-            rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
-    price = 0
+    sorts = [
+        sorted_arm_gear,
+        sorted_body_gear,
+        sorted_other_gear
+    ]
 
-    for index, armor in enumerate(sorted_body_gear):
-        price = (60 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
-        if "Summers" in armor.name:
-            armor.name = armor.name.replace("Summers", "")
-            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(armor.name, eb_text_table, 25)
-            item_name.extend([0x00])
-            rom.write_bytes(armor.address, item_name)
-        else:
-            rom.write_bytes((armor.address + 26), struct.pack("H", price))
-
-    price = 0
-
-    for index, armor in enumerate(sorted_other_gear):
-        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
-        if "Summers" in armor.name:
-            armor.name = armor.name.replace("Summers", "")
-            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(armor.name, eb_text_table, 25)
-            item_name.extend([0x00])
-            rom.write_bytes(armor.address, item_name)
-        else:
-            rom.write_bytes((armor.address + 26), struct.pack("H", price))
+    for i in range(3):
+        price_armors(sorts[i], rom)
     
     if world.options.progressive_armor:
         for index, item in enumerate(progressive_bracelets):
@@ -815,11 +812,30 @@ def randomize_weapons(world, rom):
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         rom.write_bytes(weapon.address + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
-
         world.description_pointer += len(description)
+
+    sorted_weapons = sorted(world.weapon_list.values(), key=attrgetter("offense"))
+
+    sorted_bats = [weapon for weapon in sorted_weapons if weapon.can_equip == "Ness"]
+    sorted_pans = [weapon for weapon in sorted_weapons if weapon.can_equip == "Paula"]
+    sorted_guns = [weapon for weapon in sorted_weapons if weapon.can_equip == "Jeff"]
+    sorted_swords = [weapon for weapon in sorted_weapons if weapon.can_equip == "Poo"]
+    sorted_alls = [weapon for weapon in sorted_weapons if weapon.can_equip == "All"]
+
+    sorts = [
+        sorted_bats,
+        sorted_pans,
+        sorted_guns,
+        sorted_swords,
+        sorted_alls
+    ]
+
+    for i in range(5):
+        price_weapons(sorts[i], rom)
 
         # Todo; Progressive Weapons
         # Todo; Prices
+        # Todo; summers
         # Todo; addresses
 
         # Give poo random back names? Like of Princes, of dukes, etc;
