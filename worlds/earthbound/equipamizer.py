@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import dataclasses
-from typing import Dict
 from .text_data import text_encoder, eb_text_table, calc_pixel_width
 from operator import attrgetter
 import struct
@@ -400,7 +399,7 @@ def randomize_armor(world, rom):
         name: str = "None"
         can_equip: str = "All"
 
-    world.armor_list: Dict[str, EBArmor] = {
+    world.armor_list = {
         "Travel Charm": EBArmor(0x15583A, "body"),
         "Great Charm": EBArmor(0x155861, "body"),
         "Crystal Charm": EBArmor(0x155888, "body"),
@@ -622,7 +621,7 @@ def randomize_armor(world, rom):
         armor = world.armor_list[item]
         rom.write_bytes((0x310000 + world.description_pointer), armor.description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
-        world.description_pointer += len(description)
+        world.description_pointer += len(armor.description)
 
 
 def randomize_weapons(world, rom):
@@ -667,7 +666,7 @@ def randomize_weapons(world, rom):
         description_pointer: int = 0
         description: str = ""
 
-    world.weapon_list: Dict[str, EBWeapon] = {
+    world.weapon_list = {
         "Cracked Bat": EBWeapon("Ness", "Bash", 0x155297),
         "Tee Ball Bat": EBWeapon("Ness", "Bash", 0x1552BE),
         "Sand Lot Bat": EBWeapon("Ness", "Bash", 0x1552E5),
@@ -898,10 +897,7 @@ def randomize_weapons(world, rom):
         rom.write_bytes((0x310000 + world.description_pointer), weapon.description)
         rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         weapon.description_pointer = world.description_pointer
-        world.description_pointer += len(description)
-
-        # Todo; Progressive Weapons
-        # Todo; addresses
+        world.description_pointer += len(weapon.description)
 
         # Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)

@@ -60,6 +60,8 @@ class EBWeb(WebWorld):
 class EarthBoundWorld(World):
     """EarthBound is a contemporary-themed JRPG. Take four psychically-endowed children
        across the world in search of 8 Melodies to defeat Giygas, the cosmic evil."""
+
+    
     game = "EarthBound"
     option_definitions = EBOptions
     data_version = 1
@@ -89,6 +91,8 @@ class EarthBoundWorld(World):
         self.event_count = 8
         self.world_version = world_version
         self.removed_teleports = []
+        self.armor_list: Dict[str, EBArmor]
+        self.weapon_list: Dict[str, EBWeapon]
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
