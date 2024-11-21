@@ -25,6 +25,7 @@ from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .local_data import world_version
 from .static_location_data import location_ids, location_groups
+from .equipamizer import EBArmor, EBWeapon
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
