@@ -56,6 +56,35 @@ def apply_progressive_armor(world, armors, progressives, rom):
         armor.defense = progressives[index].defense
         rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
+@dataclass
+class EBArmor:
+    address: int
+    equip_type: str
+    defense: int = 0
+    aux_stat: int = 0
+    poo_def: int = 0
+    flash_res: int = 0
+    freeze_res: int = 0
+    fire_res: int = 0
+    par_res: int = 0
+    sleep_res: int = 0
+    description: str = ""
+    name: str = "None"
+    can_equip: str = "All"
+
+@dataclass
+class EBWeapon:
+    can_equip: str
+    equip_type: str
+    address: int
+    name: str = "None"
+    offense: int = 0
+    aux_stat: int = 0
+    poo_off: int = 0
+    miss_rate: int = 0
+    description_pointer: int = 0
+    description: str = ""
+
 
 adjectives = [
     "Hard",
@@ -384,22 +413,6 @@ def randomize_armor(world, rom):
     progressive_others = [
     ]
 
-    @dataclass
-    class EBArmor:
-        address: int
-        equip_type: str
-        defense: int = 0
-        aux_stat: int = 0
-        poo_def: int = 0
-        flash_res: int = 0
-        freeze_res: int = 0
-        fire_res: int = 0
-        par_res: int = 0
-        sleep_res: int = 0
-        description: str = ""
-        name: str = "None"
-        can_equip: str = "All"
-
     world.armor_list = {
         "Travel Charm": EBArmor(0x15583A, "body"),
         "Great Charm": EBArmor(0x155861, "body"),
@@ -654,19 +667,6 @@ def randomize_weapons(world, rom):
 
     progressive_alls = [
     ]
-
-    @dataclass
-    class EBWeapon:
-        can_equip: str
-        equip_type: str
-        address: int
-        name: str = "None"
-        offense: int = 0
-        aux_stat: int = 0
-        poo_off: int = 0
-        miss_rate: int = 0
-        description_pointer: int = 0
-        description: str = ""
 
     world.weapon_list = {
         "Cracked Bat": EBWeapon("Ness", "Bash", 0x155297),
