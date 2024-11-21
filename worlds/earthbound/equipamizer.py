@@ -158,6 +158,13 @@ adjectives = [
     "Burnt"
 ]
 
+char_nums = {
+    "Ness": 0x01,
+    "Paula": 0x02,
+    "Jeff": 0x03,
+    "Poo": 0x04
+}
+
 
 def randomize_armor(world, rom):
     other_adjectives = adjectives.copy()
@@ -512,9 +519,9 @@ def randomize_armor(world, rom):
 
             pixel_length = calc_pixel_width(armor.name)
         
-        description = f"“{armor.name}”\n"
+        description = f" “{armor.name}”\n"
         if armor.can_equip != "All":
-            description += f"@{armor.can_equip}'s {armor.equip_type} equipment.\n"
+            description += f"@♪'s {armor.equip_type} equipment.\n"
         else:
             if armor.equip_type == "other":
                 description += "@Must be equipped as “other”.\n"
@@ -539,12 +546,16 @@ def randomize_armor(world, rom):
 
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
-
+            
         description = text_encoder(description, eb_text_table, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
         item_name = text_encoder(armor.name, eb_text_table, 25)
         item_name.extend([0x00])
+
+        if armor.can_equip != "All":
+            index = description.index(0xAC)
+            description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[armor.can_equip]])
         rom.write_bytes((0x310000 + world.description_pointer), description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         rom.write_bytes(armor.address, item_name)
@@ -763,7 +774,7 @@ def randomize_weapons(world, rom):
         else:
             weapon.miss_rate = miss_rates[weapon.can_equip]
 
-        description = f"“{weapon.name}”\n"
+        description = f" “{weapon.name}”\n"
         if weapon.can_equip != "All":
             description += f"@{weapon.can_equip} can equip this weapon.\n"
 
