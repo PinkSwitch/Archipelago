@@ -166,6 +166,22 @@ char_nums = {
     "Poo": 0x04
 }
 
+usage_bytes = {
+    "All": 0x0F,
+    "Ness": 0x01,
+    "Paula": 0x02,
+    "Jeff": 0x03,
+    "Poo": 0x04
+}
+
+type_bytes = {
+    "body": 0x14,
+    "arm": 0x18,
+    "other": 0x1C,
+    "Bash": 0x10,
+    "Shoot": 0x11
+}
+
 
 def randomize_armor(world, rom):
     other_adjectives = adjectives.copy()
@@ -226,14 +242,6 @@ def randomize_armor(world, rom):
         "Sun",
         "Star"
     ]
-
-    usage_bytes = {
-        "All": 0x0F,
-        "Ness": 0x01,
-        "Paula": 0x02,
-        "Jeff": 0x03,
-        "Poo": 0x04
-    }
 
     all_armor = [
         "Travel Charm",
@@ -326,40 +334,10 @@ def randomize_armor(world, rom):
         "Summers Diamond Band": 0x155A83
     }
 
-    type_bytes = {
-        "body": 0x14,
-        "arm": 0x18,
-        "other": 0x1C
-    }
-
     progressive_bracelets = [
-        "Cheap Bracelet",
-        "Copper Bracelet",
-        "Silver Bracelet",
-        "Gold Bracelet",
-        "Platinum Band",
-        "Diamond Band",
-        "Pixie's Bracelet",
-        "Cherub's Band",
-        "Goddess Band",
-        "Summers Platinum Band",
-        "Summers Diamond Band"
     ]
 
     progressive_others = [
-        "Baseball Cap",
-        "Mr. Baseball Cap",
-        "Holmes Hat",
-        "Hard Hat",
-        "Coin of Slumber",
-        "Coin of Defense",
-        "Coin of Silence",
-        "Mr. Saturn Coin",
-        "Charm Coin",
-        "Lucky Coin",
-        "Talisman Coin",
-        "Shiny Coin",
-        "Souvenir Coin"
     ]
 
     @dataclass
@@ -431,9 +409,16 @@ def randomize_armor(world, rom):
                 )
             world.armor_list[item].name += "Summers"
             continue
+
         armor = world.armor_list[item]
         if world.options.armorizer == 2:
             armor.equip_type = world.random.choice(["arm", "body", "other"])
+
+        if armor.equip_type == "arm":
+            progressive_bracelets.append(item)
+        elif armor.equip_type == "other" and "Ribbon" not in item:
+            progressive_others.append(item)
+
         armor.defense = world.random.randint(1, 127)
 
         chance = world.random.randint(0, 100)
@@ -612,7 +597,7 @@ def randomize_armor(world, rom):
         else:
             rom.write_bytes((armor.address + 26), struct.pack("H", price))
     
-    if world.options.progressive_armor and world.options.armorizer != 2:
+    if world.options.progressive_armor:
         for index, item in enumerate(progressive_bracelets):
             world.armor_list[item].defense = sorted_arm_gear[index].defense
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
@@ -813,16 +798,29 @@ def randomize_weapons(world, rom):
         
         if weapon.miss_rate == 12:
             description += "@If you use this, you might just whiff.\n"
-        print(description)
+
+        description = text_encoder(description, eb_text_table, 0x100)
+        description = description[:-2]
+        description.extend([0x13, 0x02])
+        item_name = text_encoder(weapon.name, eb_text_table, 25)
+        item_name.extend([0x00])
+
+        if weapon.can_equip != "All":
+            index = description.index(0xAC)
+            description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[weapon.can_equip]])
+
+        rom.write_bytes((0x310000 + world.description_pointer), description)
+        rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
+        rom.write_bytes(weapon.address, item_name)
+        rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
+        rom.write_bytes(weapon.address + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
+        rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
 
         world.description_pointer += len(description)
 
         # Todo; Progressive Weapons
         # Todo; Prices
-        # Todo; Cap name width
-        # TOdo; write to rom
         # Todo; addresses
-        # Todo; description dynamic name
 
         # Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)
