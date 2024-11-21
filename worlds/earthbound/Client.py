@@ -118,7 +118,6 @@ class EarthBoundClient(SNIClient):
         if rom_name is None or rom_name[:6] != b"MOM2AP":
             return False
 
-
         apworld_version = apworld_version.decode("utf-8").strip("\x00")
         if apworld_version != self.most_recent_connect and apworld_version != self.client_version:
             ctx.gui_error("Bad Version", f"EarthBound APWorld version {self.client_version} does not match generated version {apworld_version}")

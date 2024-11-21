@@ -157,9 +157,6 @@ class EarthBoundWorld(World):
                                  f" Diamond Dog => {self.boss_list[27]}\n" +
                                  f" Giygas (Phase 2) => {self.boss_list[28]}\n")
 
-            
-
-
     def create_item(self, name: str) -> Item:
         data = item_table[name]
         if data.category == "Jeff Weapons" and self.options.progressive_weapons:

@@ -312,7 +312,7 @@ def patch_rom(world, rom, player: int, multiworld):
                 if location.name in location_groups[world.hinted_regions[index]] and location.player == world.player:
                     if ItemClassification.progression in location.item.classification:
                         world.progression_count += 1
-            world.hinted_area = world.hinted_regions[index] #im doing a little sneaky
+            world.hinted_area = world.hinted_regions[index] # im doing a little sneaky
             parse_hint_data(world, location, rom, hint)
 
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
@@ -377,7 +377,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.alternate_sanctuary_goal and world.options.giygas_required:
         rom.write_bytes(0x02EC1E2, bytearray([0xFD, 0xC1, 0xEE]))
 
-    if world.options.magicant_mode == 1 and world.options.giygas_required: #Apple kid text
+    if world.options.magicant_mode == 1 and world.options.giygas_required:  # Apple kid text
         rom.write_bytes(0x2EC1D8, bytearray([0x33, 0xC2, 0xEE]))
     elif world.options.magicant_mode == 2:
         rom.write_bytes(0x2EC1D8, bytearray([0x6A, 0xC2, 0xEE]))
@@ -478,7 +478,6 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x300269, bytearray([world.random.randint(0x00, 0x1F)]))  #Red swirls
         rom.write_bytes(0x30026E, bytearray([world.random.randint(0x00, 0x1F)]))
         rom.write_bytes(0x300273, bytearray([world.random.randint(0x00, 0x1F)]))
-
 
     if not world.options.prefixed_items:
         rom.write_bytes(0x15F9DB, bytearray([0x06]))

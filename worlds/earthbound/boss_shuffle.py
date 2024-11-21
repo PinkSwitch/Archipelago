@@ -158,7 +158,6 @@ def write_bosses(world, rom):
         pokey_adjust = 27
     else:
         pokey_adjust = 25
-        
 
     rom.write_bytes(world.enemies[world.boss_list[pokey_adjust]].address + 78, bytearray([0x13, 0x01]))
     for i in range(1, world.enemies[world.boss_list[pokey_adjust]].attack_extensions):
@@ -176,8 +175,8 @@ def write_bosses(world, rom):
         rom.write_bytes(world.enemies[enemy_new].address + 78, bytearray([0xF4, 0x00]))
 
     if world.boss_list[28] == "Carbon Dog":  # Giygas 2
-        #I should probably just hard stop Carbon Dog from being here
-        giygas_2_adjust = 27 #Set to the diamond dog slot
+        # I should probably just hard stop Carbon Dog from being here
+        giygas_2_adjust = 27  # Set to the diamond dog slot
     else:
 
         giygas_2_adjust = 28

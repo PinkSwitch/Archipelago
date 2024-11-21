@@ -13,6 +13,7 @@ def roll_resistances(world, element, armor):
     else:
         setattr(armor, element, 0)
 
+
 adjectives = [
     "Hard",
     "Wild",
@@ -308,7 +309,8 @@ def randomize_armor(world, rom):
     }
 
     armor_names = {
-        "body": ["pendant", "charm", "foot", "brooch", "shirt", "amulet", "cloak", "suit", "plate", "vest", "coat", "jersey"],
+        "body": ["pendant", "charm", "foot", "brooch", "shirt",
+                 "amulet", "cloak", "suit", "plate", "vest", "coat", "jersey"],
         "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet", "sweatband"],
         "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants", "jeans", "grieves", "boot"]
     }
@@ -618,6 +620,7 @@ def randomize_armor(world, rom):
             world.armor_list[item].defense = sorted_other_gear[index].defense
             rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
+
 def randomize_weapons(world, rom):
     weapon_names = {
         "Ness": ["bat", "stick", "club", "board", "racket", "cue", "pole", "paddle"],
@@ -736,7 +739,6 @@ def randomize_weapons(world, rom):
         "Summers Big League Bat"
     ]
 
-
     for item in all_weapons:
         weapon = world.weapon_list[item]
 
@@ -744,6 +746,8 @@ def randomize_weapons(world, rom):
             chance = world.random.randint(1, 100)
             if chance < 8:
                 weapon.can_equip = "All"
+            elif item == "Tee Ball Bat":
+                world.can_equip = "Ness"
             else:
                 weapon.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
         weapon.offense = world.random.randint(1, 127)
@@ -751,7 +755,7 @@ def randomize_weapons(world, rom):
         if weapon.can_equip == "Poo":
             poo_off = world.random.randint(1, 127)
             front_name = world.random.choice(weapon_names[weapon.can_equip])
-            back_name = "of Kings"
+            back_name = "of kings"
         else:
             poo_off = 250
             front_name = world.random.choice(adjectives)
@@ -774,31 +778,52 @@ def randomize_weapons(world, rom):
         else:
             weapon.miss_rate = miss_rates[weapon.can_equip]
 
+        weapon.name = front_name + " " + back_name
+
+        pixel_length = calc_pixel_width(weapon.name)
+        half_space = False
+        names_to_try = weapon_names[weapon.can_equip].copy()
+        while pixel_length > 70:
+            # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
+            if half_space is False:
+                weapon.name = weapon.name.replace(" ", " ")
+                half_space = True
+            else:
+                if names_to_try:
+                    # If it's still too long, change the second part of the name to try and roll a shorter name
+                    back_name = world.random.choice(names_to_try)
+                    names_to_try.remove(back_name)
+                else:
+                    # If it's *STILL* too long, chop a letter off the end of the front
+                    front_name = front_name[:-1]
+                    if front_name == "":
+                        # we ran out of letters rip
+                        front_name = "Long"
+                half_space = False
+                weapon.name = front_name + " " + back_name
+            pixel_length = calc_pixel_width(weapon.name)
+
         description = f" “{weapon.name}”\n"
         if weapon.can_equip != "All":
-            description += f"@{weapon.can_equip} can equip this weapon.\n"
+            description += f"@♪ can equip this weapon.\n"
 
         description += f"@+{weapon.offense} Offense.\n"
         if weapon.aux_stat > 0:
             description += f"@+{weapon.aux_stat} Guts.\n"
         
         if weapon.miss_rate == 12:
-            description+= "@If you use this, you might just whiff.\n"
-
+            description += "@If you use this, you might just whiff.\n"
+        print(description)
 
         world.description_pointer += len(description)
 
-        #Has a 0 in 16 chance of missing
-        
-        #All-type weapons need a higher miss rate
+        # Todo; Progressive Weapons
+        # Todo; Prices
+        # Todo; Cap name width
+        # TOdo; write to rom
+        # Todo; addresses
+        # Todo; description dynamic name
 
-        #Todo; Progressive Weapons
-        #Todo; Prices
-        #Todo; Cap name width
-        #Todo; Figure out hwat miss rate means
-        #TOdo; write to rom
-        #todo; weapon adjectives
-
-        #Give poo random back names? Like of Princes, of dukes, etc;
+        # Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)
         # Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
