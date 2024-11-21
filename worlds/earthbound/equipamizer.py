@@ -41,6 +41,19 @@ def price_armors(armor_pricing_list, rom):
             rom.write_bytes((armor.address + 26), struct.pack("H", price))
 
 
+def apply_progressive_weapons(world, weapons, progressives, rom):
+    for index, item in enumerate(weapons):
+        weapon = world.weapon_list[item]
+        weapon.offense = progressives[index].offense
+        rom.write_bytes(weapon.address + 31, bytearray([weapon.offense]))
+
+def apply_progressive_armor(world, armors, progressives, rom):
+    for index, item in enumerate(armors):
+        weapon = world.armor_list[item]
+        weapon.offense = progressives[index].offense
+        rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
+
+
 adjectives = [
     "Hard",
     "Wild",
@@ -209,6 +222,12 @@ type_bytes = {
     "Shoot": 0x11
 }
 
+summers_addresses = {
+    "Summers Platinum Band": 0x155A5C,
+    "Summers Diamond Band": 0x155A83,
+    "Summers Big League Bat": 0x15535A
+}
+
 
 def randomize_armor(world, rom):
     other_adjectives = adjectives.copy()
@@ -355,11 +374,6 @@ def randomize_armor(world, rom):
         " somewhat",
         ""
     ]
-    
-    summers_addresses = {
-        "Summers Platinum Band": 0x155A5C,
-        "Summers Diamond Band": 0x155A83
-    }
 
     progressive_bracelets = [
     ]
@@ -369,63 +383,64 @@ def randomize_armor(world, rom):
 
     @dataclass
     class EBArmor:
-        name: str
         address: int
-        defense: int
-        aux_stat: int
-        poo_def: int
-        flash_res: int
-        freeze_res: int
-        fire_res: int
-        par_res: int
-        sleep_res: int
-        can_equip: str
         equip_type: str
+        defense: int = 0
+        aux_stat: int = 0
+        poo_def: int = 0
+        flash_res: int = 0
+        freeze_res: int = 0
+        fire_res: int = 0
+        par_res: int = 0
+        sleep_res: int = 0
+        description: str = ""
+        name: str = "None"
+        can_equip: str = "All"
 
     world.armor_list: Dict[str, EBArmor] = {
-        "Travel Charm": EBArmor("None", 0x15583A, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Great Charm": EBArmor("None", 0x155861, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Crystal Charm": EBArmor("None", 0x155888, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Rabbit's Foot": EBArmor("None", 0x1558AF, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Flame Pendant": EBArmor("None", 0x1558D6, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Rain Pendant": EBArmor("None", 0x1558FD, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Night Pendant": EBArmor("None", 0x155924, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Sea Pendant": EBArmor("None", 0x15594B, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Star Pendant": EBArmor("None", 0x155972, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Cloak of Kings": EBArmor("None", 0x155999, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Cheap Bracelet": EBArmor("None", 0x1559C0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Copper Bracelet": EBArmor("None", 0x1559E7, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Silver Bracelet": EBArmor("None", 0x155A0E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Gold Bracelet": EBArmor("None", 0x155A35, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Platinum Band": EBArmor("None", 0x1570E8, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Diamond Band": EBArmor("None", 0x15710F, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Pixie's Bracelet": EBArmor("None", 0x155AAA, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Cherub's Band": EBArmor("None", 0x155AD1, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Goddess Band": EBArmor("None", 0x155AF8, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Bracer of Kings": EBArmor("None", 0x155B1F, 0, 0, 0, 0, 0, 0, 0, 0, "All", "arm"),
-        "Baseball Cap": EBArmor("None", 0x155B46, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Holmes Hat": EBArmor("None", 0x155B6D, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Mr. Baseball Cap": EBArmor("None", 0x155B94, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Hard Hat": EBArmor("None", 0x155BBB, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Ribbon": EBArmor("None", 0x155BE2, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Red Ribbon": EBArmor("None", 0x155C09, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Goddess Ribbon": EBArmor("None", 0x155C30, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Coin of Slumber": EBArmor("None", 0x155C57, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Coin of Defense": EBArmor("None", 0x155C7E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Lucky Coin": EBArmor("None", 0x155CA5, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Talisman Coin": EBArmor("None", 0x155CCC, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Shiny Coin": EBArmor("None", 0x155CF3, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Souvenir Coin": EBArmor("None", 0x155D1A, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Diadem of Kings": EBArmor("None", 0x155D41, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Earth Pendant": EBArmor("None", 0x156D8E, 0, 0, 0, 0, 0, 0, 0, 0, "All", "body"),
-        "Defense Ribbon": EBArmor("None", 0x157136, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Talisman Ribbon": EBArmor("None", 0x15715D, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Saturn Ribbon": EBArmor("None", 0x157184, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Coin of Silence": EBArmor("None", 0x1571AB, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Charm Coin": EBArmor("None", 0x1571D2, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Mr. Saturn Coin": EBArmor("None", 0x1575EF, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Summers Platinum Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
-        "Summers Diamond Band": EBArmor("None", 0x0, 0, 0, 0, 0, 0, 0, 0, 0, "All", "other"),
+        "Travel Charm": EBArmor(0x15583A, "body"),
+        "Great Charm": EBArmor(0x155861, "body"),
+        "Crystal Charm": EBArmor(0x155888, "body"),
+        "Rabbit's Foot": EBArmor(0x1558AF, "body"),
+        "Flame Pendant": EBArmor(0x1558D6, "body"),
+        "Rain Pendant": EBArmor(0x1558FD, "body"),
+        "Night Pendant": EBArmor(0x155924, "body"),
+        "Sea Pendant": EBArmor(0x15594B, "body"),
+        "Star Pendant": EBArmor(0x155972, "body"),
+        "Cloak of Kings": EBArmor(0x155999, "body"),
+        "Cheap Bracelet": EBArmor(0x1559C0, "arm"),
+        "Copper Bracelet": EBArmor(0x1559E7, "arm"),
+        "Silver Bracelet": EBArmor(0x155A0E, "arm"),
+        "Gold Bracelet": EBArmor(0x155A35, "arm"),
+        "Platinum Band": EBArmor(0x1570E8, "arm"),
+        "Diamond Band": EBArmor(0x15710F, "arm"),
+        "Pixie's Bracelet": EBArmor(0x155AAA, "arm"),
+        "Cherub's Band": EBArmor(0x155AD1, "arm"),
+        "Goddess Band": EBArmor(0x155AF8, "arm"),
+        "Bracer of Kings": EBArmor(0x155B1F, "arm"),
+        "Baseball Cap": EBArmor(0x155B46, "other"),
+        "Holmes Hat": EBArmor(0x155B6D, "other"),
+        "Mr. Baseball Cap": EBArmor(0x155B94, "other"),
+        "Hard Hat": EBArmor(0x155BBB, "other"),
+        "Ribbon": EBArmor(0x155BE2, "other"),
+        "Red Ribbon": EBArmor(0x155C09, "other"),
+        "Goddess Ribbon": EBArmor(0x155C30, "other"),
+        "Coin of Slumber": EBArmor(0x155C57, "other"),
+        "Coin of Defense": EBArmor(0x155C7E, "other"),
+        "Lucky Coin": EBArmor(0x155CA5, "other"),
+        "Talisman Coin": EBArmor(0x155CCC, "other"),
+        "Shiny Coin": EBArmor(0x155CF3, "other"),
+        "Souvenir Coin": EBArmor(0x155D1A, "other"),
+        "Diadem of Kings": EBArmor(0x155D41, "other"),
+        "Earth Pendant": EBArmor(0x156D8E, "body"),
+        "Defense Ribbon": EBArmor(0x157136, "other"),
+        "Talisman Ribbon": EBArmor(0x15715D, "other"),
+        "Saturn Ribbon": EBArmor(0x157184, "other"),
+        "Coin of Silence": EBArmor(0x1571AB, "other"),
+        "Charm Coin": EBArmor(0x1571D2, "other"),
+        "Mr. Saturn Coin": EBArmor(0x1575EF, "other"),
+        "Summers Platinum Band": EBArmor(0x0, "other"),
+        "Summers Diamond Band": EBArmor(0x0, "other"),
     }
     world.description_pointer = 0x1000
 
@@ -481,7 +496,6 @@ def randomize_armor(world, rom):
         else:
             # If resistances are inequal, use the strongest as the name and pull a name from its strength
             # If 2 are equal pick a random of them
-            # Todo; If 2 are equal, combine them and make a combo name
             names = ("Flash", "Freeze", "Fire")
             strengths = (armor.flash_res, armor.freeze_res, armor.fire_res)
             best_elements = [(name, strength) for name, strength in zip(names, strengths) if strength == max(strengths)]
@@ -570,14 +584,12 @@ def randomize_armor(world, rom):
         if armor.can_equip != "All":
             index = description.index(0xAC)
             description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[armor.can_equip]])
-        rom.write_bytes((0x310000 + world.description_pointer), description)
-        rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         rom.write_bytes(armor.address, item_name)
         rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
-        world.description_pointer += len(description)
+        armor.description = description
     
     sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
 
@@ -597,10 +609,16 @@ def randomize_armor(world, rom):
     if world.options.progressive_armor:
         for index, item in enumerate(progressive_bracelets):
             world.armor_list[item].defense = sorted_arm_gear[index].defense
-            rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
+            rom.write_bytes(armor.address + 31, bytearray([world.armor_list[item].defense]))
         for index, item in enumerate(progressive_others):
             world.armor_list[item].defense = sorted_other_gear[index].defense
-            rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
+            rom.write_bytes(armor.address + 31, bytearray([world.armor_list[item].defense]))
+
+    for item in all_armor:
+        armor = world.armor_list[item]
+        rom.write_bytes((0x310000 + world.description_pointer), armor.description)
+        rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
+        world.description_pointer += len(description)
 
 
 def randomize_weapons(world, rom):
@@ -620,60 +638,77 @@ def randomize_weapons(world, rom):
         "All": 3
     }
 
+    progressive_bats = [
+    ]
+
+    progressive_pans = [
+    ]
+
+    progressive_guns = [
+    ]
+
+    progressive_swords = [
+    ]
+
+    progressive_alls = [
+    ]
+
     @dataclass
     class EBWeapon:
-        name: str
-        address: int
-        offense: int
-        aux_stat: int
-        poo_off: int
-        miss_rate: int
         can_equip: str
         equip_type: str
+        address: int
+        name: str = "None"
+        offense: int = 0
+        aux_stat: int = 0
+        poo_off: int = 0
+        miss_rate: int = 0
+        description_pointer: int = 0
+        description: str = ""
 
     world.weapon_list: Dict[str, EBWeapon] = {
-        "Cracked Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Tee Ball Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Sand Lot Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Minor League Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Mr. Baseball Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Big League Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Hall of Fame Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Magicant Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Legendary Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Gutsy Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Casey Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Thick Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Deluxe Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Chef's Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "French Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Magic Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Holy Fry Pan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Sword of Kings": EBWeapon("None", 0x0, 0, 0, 0, 0, "Poo", "Bash"),
-        "Pop Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Stun Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Toy Air Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Magnum Air Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Zip Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Laser Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Hyper Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Crusher Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Spectrum Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Death Ray": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Baddest Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Moon Beam Gun": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Gaia Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
-        "Slingshot": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
-        "Bionic Slingshot": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
-        "Trick Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
-        "Combat Yo-yo": EBWeapon("None", 0x0, 0, 0, 0, 0, "All", "Shoot"),
-        "T-Rex's Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Ultimate Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
-        "Double Beam": EBWeapon("None", 0x0, 0, 0, 0, 0, "Jeff", "Shoot"),
-        "Non-stick Frypan": EBWeapon("None", 0x0, 0, 0, 0, 0, "Paula", "Bash"),
-        "Summers Big League Bat": EBWeapon("None", 0x0, 0, 0, 0, 0, "Ness", "Bash"),
+        "Cracked Bat": EBWeapon("Ness", "Bash", 0x155297),
+        "Tee Ball Bat": EBWeapon("Ness", "Bash", 0x1552BE),
+        "Sand Lot Bat": EBWeapon("Ness", "Bash", 0x1552E5),
+        "Minor League Bat": EBWeapon("Ness", "Bash", 0x15530C),
+        "Mr. Baseball Bat": EBWeapon("Ness", "Bash", 0x155333),
+        "Big League Bat": EBWeapon("Ness", "Bash", 0x15535A),
+        "Hall of Fame Bat": EBWeapon("Ness", "Bash", 0x155381),
+        "Magicant Bat": EBWeapon("Ness", "Bash", 0x1553A8),
+        "Legendary Bat": EBWeapon("Ness", "Bash", 0x1553CF),
+        "Gutsy Bat": EBWeapon("Ness", "Bash", 0x1553F6),
+        "Casey Bat": EBWeapon("Ness", "Bash", 0x15541D),
+        "Fry Pan": EBWeapon("Paula", "Bash", 0x155444),
+        "Thick Fry Pan": EBWeapon("Paula", "Bash", 0x15546B),
+        "Deluxe Fry Pan": EBWeapon("Paula", "Bash", 0x155492),
+        "Chef's Fry Pan": EBWeapon("Paula", "Bash", 0x1554B9),
+        "French Fry Pan": EBWeapon("Paula", "Bash", 0x1554E0),
+        "Magic Fry Pan": EBWeapon("Paula", "Bash", 0x155507),
+        "Holy Fry Pan": EBWeapon("Paula", "Bash", 0x15552E),
+        "Sword of Kings": EBWeapon("Poo", "Bash", 0x155555),
+        "Pop Gun": EBWeapon("Jeff", "Shoot", 0x15557C),
+        "Stun Gun": EBWeapon("Jeff", "Shoot", 0x1555A3),
+        "Toy Air Gun": EBWeapon("Jeff", "Shoot", 0x1555CA),
+        "Magnum Air Gun": EBWeapon("Jeff", "Shoot", 0x1555F1),
+        "Zip Gun": EBWeapon("Jeff", "Shoot", 0x155618),
+        "Laser Gun": EBWeapon("Jeff", "Shoot", 0x15563F),
+        "Hyper Beam": EBWeapon("Jeff", "Shoot", 0x155666),
+        "Crusher Beam": EBWeapon("Jeff", "Shoot", 0x15568D),
+        "Spectrum Beam": EBWeapon("Jeff", "Shoot", 0x1556B4),
+        "Death Ray": EBWeapon("Jeff", "Shoot", 0x1556DB),
+        "Baddest Beam": EBWeapon("Jeff", "Shoot", 0x155702),
+        "Moon Beam Gun": EBWeapon("Jeff", "Shoot", 0x155729),
+        "Gaia Beam": EBWeapon("Jeff", "Shoot", 0x155750),
+        "Yo-yo": EBWeapon("All", "Shoot", 0x155777),
+        "Slingshot": EBWeapon("All", "Shoot", 0x15579E),
+        "Bionic Slingshot": EBWeapon("All", "Shoot", 0x1557C5),
+        "Trick Yo-yo": EBWeapon("All", "Shoot", 0x1557EC),
+        "Combat Yo-yo": EBWeapon("All", "Shoot", 0x155813),
+        "T-Rex's Bat": EBWeapon("Ness", "Bash", 0x15704C),
+        "Ultimate Bat": EBWeapon("Ness", "Bash", 0x15709A),
+        "Double Beam": EBWeapon("Jeff", "Shoot", 0x1570C1),
+        "Non-stick Frypan": EBWeapon("Paula", "Bash", 0x1575C8),
+        "Summers Big League Bat": EBWeapon("Ness", "Bash", 0x0),
     }
 
     all_weapons = [
@@ -722,6 +757,12 @@ def randomize_weapons(world, rom):
     ]
 
     for item in all_weapons:
+        if "Summers" in item:
+            world.weapon_list[item] = dataclasses.replace(
+                world.weapon_list[item.replace("Summers ", "")], address=summers_addresses[item]
+                )
+            world.weapon_list[item].name += "Summers"
+            continue
         weapon = world.weapon_list[item]
 
         if world.options.weaponizer == 2:
@@ -732,6 +773,14 @@ def randomize_weapons(world, rom):
                 world.can_equip = "Ness"
             else:
                 weapon.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
+
+        if weapon.can_equip == "Ness":
+            progressive_bats.append(item)
+        elif weapon.can_equip == "Paula":
+            progressive_pans.append(item)
+        elif weapon.can_equip == "Jeff":
+            progressive_guns.append(item)
+
         weapon.offense = world.random.randint(1, 127)
 
         if weapon.can_equip == "Poo":
@@ -806,13 +855,13 @@ def randomize_weapons(world, rom):
             index = description.index(0xAC)
             description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[weapon.can_equip]])
 
-        rom.write_bytes((0x310000 + world.description_pointer), description)
-        rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
+        #rom.write_bytes((0x310000 + world.description_pointer), description)
+        #rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         rom.write_bytes(weapon.address, item_name)
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         rom.write_bytes(weapon.address + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
-        world.description_pointer += len(description)
+        weapon.description = description
 
     sorted_weapons = sorted(world.weapon_list.values(), key=attrgetter("offense"))
 
@@ -826,16 +875,33 @@ def randomize_weapons(world, rom):
         sorted_bats,
         sorted_pans,
         sorted_guns,
-        sorted_swords,
-        sorted_alls
+        sorted_alls,
+        sorted_swords
+    ]
+
+    prog_weapons = [
+        progressive_bats,
+        progressive_pans,
+        progressive_guns,
+        progressive_alls
     ]
 
     for i in range(5):
         price_weapons(sorts[i], rom)
 
+    if not world.options.progressive_weapons:
+        for i in range(4):
+            apply_progressive_weapons(world, prog_weapons[i], sorts[i], rom)
+
+    for item in all_weapons:
+        weapon = world.weapon_list[item]
+        rom.write_bytes((0x310000 + world.description_pointer), weapon.description)
+        rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
+        weapon.description_pointer = world.description_pointer
+        world.description_pointer += len(description)
+
+
         # Todo; Progressive Weapons
-        # Todo; Prices
-        # Todo; summers
         # Todo; addresses
 
         # Give poo random back names? Like of Princes, of dukes, etc;

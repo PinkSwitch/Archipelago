@@ -33,7 +33,7 @@ item_table: Dict[str, ItemData] = {
     "Sand Lot Bat": ItemData("Ness Weapons", 0xEB0013, ItemClassification.filler, 0),
     "Minor League Bat": ItemData("Ness Weapons", 0xEB0014, ItemClassification.filler, 0),
     "Mr. Baseball Bat": ItemData("Ness Weapons", 0xEB0015, ItemClassification.useful, 0),
-    "Big League Bat": ItemData("Ness Weapons", 0xEB0016, ItemClassification.useful, 0),
+    "Big League Bat": ItemData("Ness Weapons", 0xEB00D5, ItemClassification.useful, 0),
     "Hall of Fame Bat": ItemData("Ness Weapons", 0xEB0017, ItemClassification.useful, 0),
     "Magicant Bat": ItemData("Ness Weapons", 0xEB0018, ItemClassification.useful),
     "Legendary Bat": ItemData("Ness Weapons", 0xEB0019, ItemClassification.useful),
@@ -242,7 +242,7 @@ item_table: Dict[str, ItemData] = {
     "Tendakraut": ItemData("Key Items", 0xEB00D3, ItemClassification.progression),
 
     "T-Rex's Bat": ItemData("Ness Weapons", 0xEB00D4, ItemClassification.useful, 0),
-    #"Big League Bat": ItemData("Ness Weapons", 0xEB00D5, ItemClassification.useful, 0), Summers copy
+    #"Big League Bat": ItemData("Ness Weapons", 0xEB0016, ItemClassification.useful, 0), Summers copy
     "Ultimate Bat": ItemData("Ness Weapons", 0xEB00D6, ItemClassification.useful, 0),
     "Double Beam": ItemData("Jeff Weapons", 0xEB00D7, ItemClassification.useful, 0),
     #"Platinum Band": ItemData("Arm Equipment", 0xEB00D8, ItemClassification.useful, 0), Summers copy
