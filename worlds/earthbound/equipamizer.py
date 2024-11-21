@@ -457,7 +457,6 @@ def randomize_armor(world, rom):
         "Summers Platinum Band": EBArmor(0x0, "other"),
         "Summers Diamond Band": EBArmor(0x0, "other"),
     }
-    world.description_pointer = 0x1000
 
     for item in all_armor:
         if "Summers" in item:

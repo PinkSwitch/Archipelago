@@ -515,6 +515,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.psi_shuffle:
         write_psi(world, rom)
 
+    world.description_pointer = 0x1000
     if world.options.armorizer:
         randomize_armor(world, rom)
 
