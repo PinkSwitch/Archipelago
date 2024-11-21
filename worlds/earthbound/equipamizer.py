@@ -50,7 +50,6 @@ def apply_progressive_weapons(world, weapons, progressives, rom):
 
 
 def apply_progressive_armor(world, armors, progressives, rom):
-    print(armors)
     for index, item in enumerate(armors):
         armor = world.armor_list[item]
         armor.defense = progressives[index].defense
@@ -615,8 +614,8 @@ def randomize_armor(world, rom):
 
     sorts = [
         sorted_arm_gear,
+        sorted_other_gear,
         sorted_body_gear,
-        sorted_other_gear
     ]
 
     prog_armors = [
@@ -629,7 +628,6 @@ def randomize_armor(world, rom):
     
     if world.options.progressive_armor:
         for i in range(2):
-            print(prog_armors[i])
             apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
 
     for item in all_armor:
