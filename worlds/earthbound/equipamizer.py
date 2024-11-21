@@ -27,10 +27,12 @@ def price_weapons(weapons, rom):
         else:
             rom.write_bytes((weapon.address + 26), struct.pack("H", price))
 
+
 def price_armors(armor_pricing_list, rom):
     price = 0
     for index, armor in enumerate(armor_pricing_list):
-        price = (99 * (index + 1) + price) + (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense
+        price = ((99 * (index + 1) + price) +
+                 (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense)
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
             rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
@@ -47,10 +49,11 @@ def apply_progressive_weapons(world, weapons, progressives, rom):
         weapon.offense = progressives[index].offense
         rom.write_bytes(weapon.address + 31, bytearray([weapon.offense]))
 
+
 def apply_progressive_armor(world, armors, progressives, rom):
     for index, item in enumerate(armors):
-        weapon = world.armor_list[item]
-        weapon.offense = progressives[index].offense
+        armor = world.armor_list[item]
+        armor.defense = progressives[index].defense
         rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
 
@@ -603,16 +606,17 @@ def randomize_armor(world, rom):
         sorted_other_gear
     ]
 
+    prog_armors = [
+        progressive_bracelets,
+        progressive_others
+    ]
+
     for i in range(3):
         price_armors(sorts[i], rom)
     
     if world.options.progressive_armor:
-        for index, item in enumerate(progressive_bracelets):
-            world.armor_list[item].defense = sorted_arm_gear[index].defense
-            rom.write_bytes(armor.address + 31, bytearray([world.armor_list[item].defense]))
-        for index, item in enumerate(progressive_others):
-            world.armor_list[item].defense = sorted_other_gear[index].defense
-            rom.write_bytes(armor.address + 31, bytearray([world.armor_list[item].defense]))
+        for i in range(2):
+            apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
 
     for item in all_armor:
         armor = world.armor_list[item]
@@ -645,9 +649,6 @@ def randomize_weapons(world, rom):
     ]
 
     progressive_guns = [
-    ]
-
-    progressive_swords = [
     ]
 
     progressive_alls = [
@@ -784,11 +785,11 @@ def randomize_weapons(world, rom):
         weapon.offense = world.random.randint(1, 127)
 
         if weapon.can_equip == "Poo":
-            poo_off = world.random.randint(1, 127)
+            weapon.poo_off = world.random.randint(1, 127)
             front_name = world.random.choice(weapon_names[weapon.can_equip])
             back_name = "of kings"
         else:
-            poo_off = 250
+            weapon.poo_off = 250
             front_name = world.random.choice(adjectives)
             back_name = world.random.choice(weapon_names[weapon.can_equip])
 
@@ -855,11 +856,10 @@ def randomize_weapons(world, rom):
             index = description.index(0xAC)
             description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[weapon.can_equip]])
 
-        #rom.write_bytes((0x310000 + world.description_pointer), description)
-        #rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         rom.write_bytes(weapon.address, item_name)
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
-        rom.write_bytes(weapon.address + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
+        rom.write_bytes(weapon.address + 31, bytearray([
+            weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
         weapon.description = description
 
@@ -889,7 +889,7 @@ def randomize_weapons(world, rom):
     for i in range(5):
         price_weapons(sorts[i], rom)
 
-    if not world.options.progressive_weapons:
+    if world.options.progressive_weapons:
         for i in range(4):
             apply_progressive_weapons(world, prog_weapons[i], sorts[i], rom)
 
@@ -900,10 +900,10 @@ def randomize_weapons(world, rom):
         weapon.description_pointer = world.description_pointer
         world.description_pointer += len(description)
 
-
         # Todo; Progressive Weapons
         # Todo; addresses
 
         # Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)
-        # Todo; consider swapping the summers band/test in-game stuff which one it gives me. Change the Item ID and local table in local_items
+        # Todo; consider swapping the summers band/test in-game stuff which one it gives me.
+        # Change the Item ID and local table in local_items
