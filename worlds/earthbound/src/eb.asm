@@ -243,6 +243,9 @@ ORG $C1ED67
 JML DrawWorldVersion
 ;new jmls
 
+ORG $C071D1
+;JSL FixStairsBug
+
 
 ORG $C1FEBC
 LDA #$0000
@@ -2920,6 +2923,7 @@ ORG $00F8D0
 GetItemRemote:
 SEP #$20
 STZ $B582
+STZ $B583
 LDA #$01
 STA $B585
 REP #$20
@@ -5709,10 +5713,11 @@ PlayerJustDied:
 SEP #$20
 LDA $B582; If the player just died in battle, dont send any more deaths 
 BNE SkipSendingDeath
+;In this case, we died on the overworld
 INC $B582;Player is currently dead
 LDA $B583;Did the player just get killed by a deathlink death?
 BNE SkipSendingDeath
-INC $B584;Is the player sending a death
+INC $B584;Tell the serveer we died
 SkipSendingDeath:
 STZ $B583
 REP #$20
@@ -7959,6 +7964,12 @@ ORG $D6FFC5
 db $08
 dd boost_luck_dynamic
 
+ORG $C99A9D
+db $a1, $9a, $c9
+
+ORG $C769A8
+db $0A, $3C, $F7, $EE
+
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
 db $76, $a2, $91, $9e, $9b, $02; Frank
@@ -8583,6 +8594,13 @@ db $1E, $0E, $03, $05, $03, $02
 boost_poo_luck:
 db $1E, $0E, $04, $05, $03, $02
 
+db $06, $69, $00
+dd $00C74207
+db $70, $58, $1c, $02, $01
+db $0A, $A9, $69, $C7
+
+;new text go here
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
@@ -8962,21 +8980,6 @@ JSL $C186B1
 LDA #$0013
 JSL $C1DD47;draw the file select box
 JML $C1ED6D
-
-
-goto_bank_c1:
-STA $00BC
-STY $00BE
-PEA $0002
-SEP #$20
-LDA #$C1
-PHA
-REP #$20
-PHY
-LDA $00BC
-LDY $00BE
-RTL
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
