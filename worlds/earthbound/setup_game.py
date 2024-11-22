@@ -62,15 +62,8 @@ def setup_gamevars(world):
         "Slingshot",
         "Travel Charm",
         "Great Charm",
-        "Cheap Bracelet",
-        "Copper Bracelet",
-        "Baseball Cap",
-        "Mr. Baseball Cap",
-        "Holmes Hat",
-        "Hard Hat",
         "Ribbon",
-        "Red Ribbon",
-        "Coin of Defense"
+        "Red Ribbon"
     ]
 
     world.uncommon_items = [
@@ -110,18 +103,11 @@ def setup_gamevars(world):
         "Trick Yo-yo",
         "Bionic Slingshot",
         "Crystal Charm",
-        "Platinum Band",
-        "Diamond Band",
         "Defense Ribbon",
         "Earth Pendant",
         "Flame Pendant",
         "Rain Pendant",
-        "Night Pendant",
-        "Lucky Coin",
-        "Silver Bracelet",
-        "Gold Bracelet",
-        "Coin of Slumber",
-        "Coin of Silence",
+        "Night Pendant"
     ]
 
     world.rare_items = [
@@ -152,10 +138,7 @@ def setup_gamevars(world):
         "Sword of Kings",
         "Sea Pendant",
         "Star Pendant",
-        "Goddess Ribbon",
-        "Talisman Coin",
-        "Shiny Coin",
-        "Charm Coin"
+        "Goddess Ribbon"
     ]
 
     if world.options.progressive_weapons:
@@ -201,6 +184,42 @@ def setup_gamevars(world):
         "Casey Bat",
         "Holy Fry Pan",
         "Magic Fry Pan"
+        ])
+
+    if world.options.progressive_armor:
+        for i in range(3):
+            world.common_gear.append("Progressive Bracelet")
+            world.common_gear.append("Progressive Other")
+        for i in range(3):
+            world.uncommon_gear.append("Progressive Bracelet")
+            world.uncommon_gear.append("Progressive Other")
+        world.rare_gear.append("Progressive Bracelet")
+        world.rare_gear.append("Progressive Other")
+    else:
+        world.common_gear.extend([
+        "Cheap Bracelet",
+        "Copper Bracelet",
+        "Baseball Cap",
+        "Mr. Baseball Cap",
+        "Holmes Hat",
+        "Hard Hat",
+        "Coin of Defense"
+        ])
+
+        world.uncommon_gear.extend([
+        "Platinum Band",
+        "Diamond Band",
+        "Lucky Coin",
+        "Silver Bracelet",
+        "Gold Bracelet",
+        "Coin of Slumber",
+        "Coin of Silence"
+        ])
+
+        world.rare_gear.extend([
+        "Talisman Coin",
+        "Shiny Coin",
+        "Charm Coin"
         ])
 
     valid_starts = 14

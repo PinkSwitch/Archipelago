@@ -250,19 +250,21 @@ class EarthBoundWorld(World):
             excluded_items.add("Stun Gun")
             excluded_items.add("Death Ray")
             excluded_items.add("Moon Beam Gun")
+
+        if self.options.progressive_armor:
+            excluded_items.add("Platinum Band")
+            excluded_items.add("Diamond Band")
+            excluded_items.add("Pixie's Bracelet")
+            excluded_items.add("Cherub's Band")
+            excluded_items.add("Goddess Band")
+            excluded_items.add("Coin of Slumber")
+            excluded_items.add("Souvenir Coin")
+            excluded_items.add("Mr. Saturn Coin")
+
         return excluded_items
 
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
-
-        if data.category == "Arm Equipment" and self.options.progressive_armor:
-            name = "Progressive Bracelet"
-            data = item_table[name]
-        item = Item(name, data.classification, data.code, self.player)
-
-        if data.category == "Other Equipment" and self.options.progressive_armor:
-            name = "Progressive Other"
-            data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
 
         if name == "Magicant Teleport" and self.options.magicant_mode == 3:
@@ -391,6 +393,12 @@ class EarthBoundWorld(World):
                 pool.append(self.set_classifications("Progressive Bat"))
             for i in range(4):
                 pool.append(self.set_classifications("Progressive Gun"))
+
+        if self.options.progressive_armor:
+            for i in range(5):
+                pool.append(self.set_classifications("Progressive Bracelet"))
+            for i in range(3):
+                pool.append(self.set_classifications("Progressive Other"))
 
         return pool
 
