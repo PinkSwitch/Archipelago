@@ -163,9 +163,6 @@ class EarthBoundWorld(World):
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
-        if data.category == "Jeff Weapons" and self.options.progressive_weapons:
-            name = "Progressive Gun"
-            data = item_table[name]
         return Item(name, data.classification, data.code, self.player)
 
     def create_regions(self) -> None:
@@ -245,22 +242,18 @@ class EarthBoundWorld(World):
             excluded_items.add("Jeff")
             excluded_items.add("Poo")
             excluded_items.add("Flying Man")
+
+        if self.options.progressive_weapons:
+            excluded_items.add("Magicant Bat")
+            excluded_items.add("Legendary Bat")
+            excluded_items.add("Pop Gun")
+            excluded_items.add("Stun Gun")
+            excluded_items.add("Death Ray")
+            excluded_items.add("Moon Beam Gun")
         return excluded_items
 
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
-        if data.category == "Ness Weapons" and self.options.progressive_weapons:
-            name = "Progressive Bat"
-            data = item_table[name]
-            
-        if data.category == "Paula Weapons" and self.options.progressive_weapons:
-            name = "Progressive Fry Pan"
-            data = item_table[name]
-
-        if data.category == "Jeff Weapons" and self.options.progressive_weapons:
-            name = "Progressive Gun"
-            data = item_table[name]
-        item = Item(name, data.classification, data.code, self.player)
 
         if data.category == "Arm Equipment" and self.options.progressive_armor:
             name = "Progressive Bracelet"
@@ -392,6 +385,12 @@ class EarthBoundWorld(World):
                 for _ in range(data.amount):
                     item = self.set_classifications(name)
                     pool.append(item)
+        
+        if self.options.progressive_weapons:
+            for i in range(2):
+                pool.append(self.set_classifications("Progressive Bat"))
+            for i in range(4):
+                pool.append(self.set_classifications("Progressive Gun"))
 
         return pool
 

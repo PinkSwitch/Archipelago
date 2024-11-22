@@ -58,15 +58,6 @@ def setup_gamevars(world):
     ]
 
     world.common_gear = [
-        "Cracked Bat",
-        "Tee Ball Bat",
-        "Sand Lot Bat",
-        "Minor League Bat",
-        "Fry Pan",
-        "Thick Fry Pan",
-        "Deluxe Fry Pan",
-        "Toy Air Gun",
-        "Zip Gun",
         "Yo-yo",
         "Slingshot",
         "Travel Charm",
@@ -116,14 +107,6 @@ def setup_gamevars(world):
     ]
 
     world.uncommon_gear = [
-        "Mr. Baseball Bat",
-        "T-Rex's Bat",
-        "Big League Bat",
-        "Chef's Fry Pan",
-        "Non-Stick Frypan",
-        "French Fry Pan",
-        "Hyper Beam",
-        "Crusher Beam",
         "Trick Yo-yo",
         "Bionic Slingshot",
         "Crystal Charm",
@@ -165,12 +148,6 @@ def setup_gamevars(world):
     ]
 
     world.rare_gear = [
-        "Hall of Fame Bat",
-        "Ultimate Bat",
-        "Gutsy Bat",
-        "Casey Bat",
-        "Holy Fry Pan",
-        "Magic Fry Pan",
         "Combat Yo-yo",
         "Sword of Kings",
         "Sea Pendant",
@@ -180,6 +157,51 @@ def setup_gamevars(world):
         "Shiny Coin",
         "Charm Coin"
     ]
+
+    if world.options.progressive_weapons:
+        for i in range(3):
+            world.common_gear.append("Progressive Bat")
+            world.common_gear.append("Progressive Gun")
+            world.common_gear.append("Progressive Fry Pan")
+        for i in range(3):
+            world.uncommon_gear.append("Progressive Bat")
+            world.uncommon_gear.append("Progressive Gun")
+            world.uncommon_gear.append("Progressive Fry Pan")
+        world.rare_gear.append("Progressive Bat")
+        world.rare_gear.append("Progressive Gun")
+        world.rare_gear.append("Progressive Fry Pan")
+    else:
+        world.common_gear.extend([
+        "Cracked Bat",
+        "Tee Ball Bat",
+        "Sand Lot Bat",
+        "Minor League Bat",
+        "Fry Pan",
+        "Thick Fry Pan",
+        "Deluxe Fry Pan",
+        "Toy Air Gun",
+        "Zip Gun"
+        ])
+
+        world.uncommon_gear.extend([
+        "Mr. Baseball Bat",
+        "T-Rex's Bat",
+        "Big League Bat",
+        "Chef's Fry Pan",
+        "Non-Stick Frypan",
+        "French Fry Pan",
+        "Hyper Beam",
+        "Crusher Beam"
+        ])
+
+        world.rare_gear.extend([
+        "Hall of Fame Bat",
+        "Ultimate Bat",
+        "Gutsy Bat",
+        "Casey Bat",
+        "Holy Fry Pan",
+        "Magic Fry Pan"
+        ])
 
     valid_starts = 14
     if world.options.magicant_mode != 00:
@@ -192,32 +214,47 @@ def setup_gamevars(world):
 
     if world.options.prefixed_items:
         world.multiworld.itempool.append(world.create_item("Counter-PSI Unit"))
-        world.multiworld.itempool.append(world.create_item("Magnum Air Gun"))
-        world.multiworld.itempool.append(world.create_item("Laser Gun"))
         world.multiworld.itempool.append(world.create_item("Shield Killer"))
         world.multiworld.itempool.append(world.create_item("Hungry HP-Sucker"))
         world.multiworld.itempool.append(world.create_item("Defense Shower"))
-        world.multiworld.itempool.append(world.create_item("Baddest Beam"))
         world.multiworld.itempool.append(world.create_item("Heavy Bazooka"))
         world.common_items.append("Defense Spray")
-        world.common_gear.append("Double Beam")
         world.uncommon_items.append("Slime Generator")
-        world.uncommon_gear.append("Spectrum Beam")
-        world.rare_gear.append("Gaia Beam")
+        if world.options.progressive_weapons:
+            for i in range(3):
+                world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+                world.common_gear.append("Progressive Gun")
+                world.uncommon_gear.append("Progressive Gun")
+                world.rare_gear.append("Progressive Gun")
+        else:
+            world.multiworld.itempool.append(world.create_item("Magnum Air Gun"))
+            world.multiworld.itempool.append(world.create_item("Laser Gun"))
+            world.multiworld.itempool.append(world.create_item("Baddest Beam"))
+            world.uncommon_gear.append("Spectrum Beam")
+            world.rare_gear.append("Gaia Beam")
+            world.common_gear.append("Double Beam")
     else:
         world.multiworld.itempool.append(world.create_item("Broken Machine"))
-        world.multiworld.itempool.append(world.create_item("Broken Air Gun"))
-        world.multiworld.itempool.append(world.create_item("Broken Laser"))
         world.multiworld.itempool.append(world.create_item("Broken Pipe"))
         world.multiworld.itempool.append(world.create_item("Broken Tube"))
         world.multiworld.itempool.append(world.create_item("Broken Trumpet"))
-        world.multiworld.itempool.append(world.create_item("Broken Harmonica"))
         world.multiworld.itempool.append(world.create_item("Broken Bazooka"))
         world.common_items.append("Broken Spray Can")
-        world.common_gear.append("Broken Gadget")
         world.uncommon_items.append("Broken Iron")
-        world.uncommon_gear.append("Broken Cannon")
-        world.rare_gear.append("Broken Antenna")
+
+        if world.options.progressive_weapons:
+            for i in range(3):
+                world.multiworld.itempool.append(world.create_item("Progressive Gun"))
+            world.common_gear.append("Progressive Gun")
+            world.uncommon_gear.append("Progressive Gun")
+            world.rare_gear.append("Progressive Gun")
+        else:
+            world.multiworld.itempool.append(world.create_item("Broken Air Gun"))
+            world.multiworld.itempool.append(world.create_item("Broken Laser"))
+            world.multiworld.itempool.append(world.create_item("Broken Harmonica"))
+            world.common_gear.append("Broken Gadget")
+            world.uncommon_gear.append("Broken Cannon")
+            world.rare_gear.append("Broken Antenna")
 
     world.franklinbadge_elements = [
         "thunder",
@@ -422,7 +459,6 @@ def setup_gamevars(world):
 
 
 def place_static_items(world):
-    world.get_location("Onett Police Station").place_locked_item(world.create_item("Onett Roadblocks Removed"))
     world.get_location("Belch Defeated").place_locked_item(world.create_item("Threed Tunnels Clear"))
     world.get_location("Dungeon Man Submarine").place_locked_item(world.create_item("Submarine to Deep Darkness"))
 

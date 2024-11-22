@@ -309,8 +309,6 @@ item_table: Dict[str, ItemData] = {
     "Poo": ItemData("Characters", 0xEB0110, ItemClassification.progression),
     "Flying Man": ItemData("Characters", 0xEB0111, ItemClassification.useful),
 
-    # todo: remove onett roadblocks removed
-    'Onett Roadblocks Removed': ItemData('Events', None, ItemClassification.progression, 0),
     'Threed Tunnels Clear': ItemData('Events', None, ItemClassification.progression, 0),
     'Submarine to Deep Darkness': ItemData('Events', None, ItemClassification.progression, 0),
     'Melody': ItemData('Events', None, ItemClassification.progression, 0),

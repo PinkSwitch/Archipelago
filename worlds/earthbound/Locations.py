@@ -257,7 +257,6 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Cave of the Present", "Cave of the Present - Star Master", 0xEB00EE),
         LocationData("Cave of the Present", "Cave of the Present - Broken Phase Distorter", 0xEB00EF),
 
-        LocationData("Onett", "Onett Police Station", None),
         LocationData("Belch's Factory", "Belch Defeated", None),
         LocationData("Dungeon Man", "Dungeon Man Submarine", None),
         LocationData("Giant Step", "Giant Step Sanctuary", None),
