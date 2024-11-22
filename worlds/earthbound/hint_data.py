@@ -142,7 +142,8 @@ def setup_hints(world):
         "hint prices double with each one bought.",
         "you probably should have kept your money.",
         "there's a secret option to plando Lumine Hall's text.",
-        "this isn't a very good hint."
+        "this isn't a very good hint.",
+        "some hints are good hints.\n@But not this one."
     ]
 
     if world.options.magicant_mode.value in [0, 3]:

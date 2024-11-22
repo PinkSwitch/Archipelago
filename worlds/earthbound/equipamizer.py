@@ -55,6 +55,7 @@ def apply_progressive_armor(world, armors, progressives, rom):
         armor.defense = progressives[index].defense
         rom.write_bytes(armor.address + 31, bytearray([armor.defense]))
 
+
 @dataclass
 class EBArmor:
     address: int
@@ -70,6 +71,7 @@ class EBArmor:
     description: str = ""
     name: str = "None"
     can_equip: str = "All"
+
 
 @dataclass
 class EBWeapon:

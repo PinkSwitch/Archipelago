@@ -61,7 +61,6 @@ class EBWeb(WebWorld):
 class EarthBoundWorld(World):
     """EarthBound is a contemporary-themed JRPG. Take four psychically-endowed children
        across the world in search of 8 Melodies to defeat Giygas, the cosmic evil."""
-
     
     game = "EarthBound"
     option_definitions = EBOptions
@@ -377,6 +376,10 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Monotoli Building - Monotoli Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
             add_item_rule(self.multiworld.get_location("Dalaam - Throne Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
             add_item_rule(self.multiworld.get_location("Deep Darkness - Barf Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
+
+            if (self.start_location == 9 and self.starting_teleport == "Winters Teleport") or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport"):
+                forced_poo = self.random.choice(["Dalaam - Throne Character", "Snow Wood - Bedroom"])
+                add_item_rule(self.multiworld.get_location(forced_poo, self.player), lambda item: item.name == "Poo")
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
