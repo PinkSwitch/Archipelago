@@ -7970,6 +7970,9 @@ db $a1, $9a, $c9
 ORG $C769A8
 db $0A, $3C, $F7, $EE
 
+ORG $C10E16
+LDA #$0098
+
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
 db $76, $a2, $91, $9e, $9b, $02; Frank
