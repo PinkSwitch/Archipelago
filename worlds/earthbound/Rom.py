@@ -444,7 +444,7 @@ def patch_rom(world, rom, player: int, multiworld):
     if world.options.random_battle_backgrounds:
         bpp2_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 2]
         bpp4_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 4]
-        for i in range(484):
+        for i in range(483):
             world.flipped_bg = world.random.randint(0, 100)
             if i == 480:
                 drawn_background = struct.pack("H", 0x00E3)
@@ -455,22 +455,14 @@ def patch_rom(world, rom, player: int, multiworld):
                 drawn_background_2 = struct.pack("H",  0x0000)
             else:
                 drawn_background_2 = struct.pack("H", world.random.choice(bpp2_bgs))
-
-            if i == 484:
-                if world.flipped_bg > 33 or drawn_background not in bpp2_bgs:
-                    rom.write_bytes(0x00B5F1 + (i * 4), drawn_background)
-                    rom.write_bytes(0x00B5EC + (i * 4), drawn_background_2)
-                else:
-                    rom.write_bytes(0x00B5F1 + (i * 4), drawn_background_2)
-                    rom.write_bytes(0x00B5EC + (i * 4), drawn_background)
+            if world.flipped_bg > 33 or drawn_background not in bpp2_bgs:
+                rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
+                rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
             else:
-                if world.flipped_bg > 33 or drawn_background not in bpp2_bgs:
-                    rom.write_bytes(0x0BD89A + (i * 4), drawn_background)
-                    rom.write_bytes(0x0BD89C + (i * 4), drawn_background_2)
-                else:
-                    rom.write_bytes(0x0BD89A + (i * 4), drawn_background_2)
-                    rom.write_bytes(0x0BD89C + (i * 4), drawn_background)
+                rom.write_bytes(0x0BD89A + (i * 4), drawn_background_2)
+                rom.write_bytes(0x0BD89C + (i * 4), drawn_background)
 
+            rom.write_bytes(0x00B5F1, struct.pack("H", world.random.choice(bpp4_bgs)))
 
     if world.options.random_swirl_colors:
         if world.random.random() < 0.5:
