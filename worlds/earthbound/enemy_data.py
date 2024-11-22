@@ -927,75 +927,12 @@ def scale_shield(level, shield):
 
 
 def scale_enemies(world, rom):
-    world.Paula_scaled = False
-    world.Jeff_scaled = False
-    world.Poo_scaled = False
-    world.last_combat_region = None
-    state = world.multiworld.get_all_state(True)
-    distances: Dict[str, int] = {}
-    for region in world.multiworld.get_regions(world.player):
-        if region.name != "Menu":
-            if region in state.path:
-                connected, connection = state.path[region]
-                distance = 0
-                while connection is not None:
-                    if not any(connected == entrance.name for entrance in world.multiworld.get_entrances(world.player)):
-                        distance += 1
-                    connected, connection = connection
-                distances[region.name] = distance
-
-    paths = state.path
-    world.location_order = []
-    location_test = []
-    world.scale_warning = False
-    for i, sphere in enumerate(world.multiworld.get_spheres()):
-        all_locs = [loc for loc in sphere]
-        for loc in all_locs:
-            if loc.parent_region.name in combat_regions and loc.player == world.player:
-                world.last_combat_region = loc.parent_region.name
-            if (loc.parent_region in [world.Paula_region, world.Jeff_region, world.Poo_region]) and world.options.auto_scale_party_members:
-                if loc.parent_region == world.Paula_region and world.Paula_scaled == False:
-                    world.Paula_region = world.last_combat_region
-                    world.Paula_scaled = True
-                elif loc.parent_region == world.Jeff_region and world.Jeff_scaled == False:
-                    world.Jeff_region = world.last_combat_region
-                    world.Jeff_scaled = True
-                if loc.parent_region == world.Poo_region and world.Poo_scaled == False:
-                    world.Poo_region = world.last_combat_region
-                    world.Poo_scaled = True
-        locs = [loc for loc in sphere if loc.player == world.player and loc.parent_region.name in combat_regions and loc.parent_region.name not in world.location_order]
-        regions = {loc.parent_region.name for loc in locs}
-        for region in sorted(regions, key=lambda x: distances.get(x, float('inf'))):
-            if region not in distances:
-                warning(f"Warning: {region} is not in distances. for player {world.player}")
-                if world.scale_warning == False:
-                    warning(f"{distances}")
-                    world.scale_warning = True
-            world.location_order.append(region)
-    if world.options.magicant_mode == 2 and world.options.giygas_required:
-        world.location_order.remove("Magicant")
-        world.location_order.insert(world.location_order.index("Endgame") + 1, "Magicant")
-    elif world.options.magicant_mode == 3 and world.options.giygas_required:
-        world.location_order.insert(world.location_order.index("Endgame") - 1, "Magicant")
-    elif world.options.magicant_mode == 3 and not world.options.giygas_required:
-        world.location_order.append("Magicant")
-
-    # if world.scale_warning == True:
-        # warning(f"{world.location_order}")
-    
-    #print(world.location_order)
     if world.options.auto_scale_party_members:
-        if "Paula" in world.start_items or world.Paula_region == None:
-            world.Paula_region = world.location_order[0]
-        if "Jeff" in world.start_items or world.Jeff_region == None:
-            world.Jeff_region = world.location_order[0]
-        if "Poo" in world.start_items or world.Poo_region == None:
-            world.Poo_region = world.location_order[0]
-        rom.write_bytes(0x15F60F, bytearray([max(levels[world.location_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)]))  # Paula starting level
-        rom.write_bytes(0x15F623, bytearray([max(levels[world.location_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)]))  # Jeff starting level
-        rom.write_bytes(0x15F637, bytearray([max(levels[world.location_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
+        rom.write_bytes(0x15F60F, bytearray([max(levels[world.scaled_area_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)]))  # Paula starting level
+        rom.write_bytes(0x15F623, bytearray([max(levels[world.scaled_area_order.index(world.Jeff_region)] + world.random.randint(-3, 3), 1)]))  # Jeff starting level
+        rom.write_bytes(0x15F637, bytearray([max(levels[world.scaled_area_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
 
-    for region, level in zip(world.location_order, levels):
+    for region, level in zip(world.scaled_area_order, levels):
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 # gprint(f"{enemy.name} {level}")

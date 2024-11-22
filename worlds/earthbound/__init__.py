@@ -175,7 +175,7 @@ class EarthBoundWorld(World):
 
         self.multiworld.itempool += pool
 
-    def roll_filler(self) -> str:  # Todo: make this suck less
+    def get_filler_item_name(self) -> str:  # Todo: make this suck less
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
@@ -273,7 +273,7 @@ class EarthBoundWorld(World):
 
     def generate_filler(self, pool: List[Item]) -> None:
         for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count):  # Change to fix event count
-            item = self.set_classifications(self.roll_filler())
+            item = self.set_classifications(self.get_filler_item_name())
             pool.append(item)
 
     def pre_fill(self) -> None:
@@ -375,6 +375,8 @@ class EarthBoundWorld(World):
             if (self.start_location == 9 and self.starting_teleport == "Winters Teleport") or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport"):
                 forced_poo = self.random.choice(["Dalaam - Throne Character", "Snow Wood - Bedroom"])
                 add_item_rule(self.multiworld.get_location(forced_poo, self.player), lambda item: item.name == "Poo")
+                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Winters Teleport"}, self.player)
+                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Progressive Poo PSI"}, self.player)
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)

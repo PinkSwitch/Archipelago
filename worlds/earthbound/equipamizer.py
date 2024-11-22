@@ -904,3 +904,5 @@ def randomize_weapons(world, rom):
         # test capping armor defense (50, 100, 127 for body arm other)
         # Todo; consider swapping the summers band/test in-game stuff which one it gives me.
         # Change the Item ID and local table in local_items
+
+        #Rom.write_bytes(progressive_waepon address + index, weapon.id)

@@ -490,30 +490,6 @@ def patch_rom(world, rom, player: int, multiworld):
         rom.write_bytes(0x15F9E4, bytearray([0x10]))
         # change if necessary
 
-    world.Paula_placed = False
-    world.Jeff_placed = False
-    world.Poo_placed = False
-    for sphere_number, sphere in enumerate(world.multiworld.get_spheres(), start=1):
-        for location in sphere:
-            if location.item.name == "Paula" and location.item.player == world.player and world.Paula_placed == False:
-               world.Paula_region = location.parent_region
-               world.Paula_placed = True
-            elif location.item.name == "Jeff" and location.item.player == world.player and world.Jeff_placed == False:
-               world.Jeff_region = location.parent_region
-               world.Jeff_placed = True
-            elif location.item.name == "Poo" and location.item.player == world.player and world.Poo_placed == False:
-               world.Poo_region = location.parent_region
-               world.Poo_placed = True
-    
-    if "Paula" in world.start_items:
-        world.Paula_region = "Ness's Mind"
-
-    if "Jeff" in world.start_items:
-        world.Jeff_region = "Ness's Mind"
-
-    if "Poo" in world.start_items:
-        world.Poo_region = "Ness's Mind"
-
     if world.options.psi_shuffle:
         write_psi(world, rom)
 

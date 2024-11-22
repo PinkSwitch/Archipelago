@@ -424,6 +424,9 @@ def setup_gamevars(world):
 
         world.starting_teleport = world.random.choice(world.valid_teleports)
 
+        world.start_location = 9
+        world.starting_teleport = "Winters Teleport"
+
     filler_items = world.common_items + world.uncommon_items + world.rare_items + world.common_gear + world.uncommon_gear + world.rare_gear
     world.filler_drops = [item_id_table[i] for i in filler_items if i in item_id_table]
     world.filler_drops.append(0x00)

@@ -201,18 +201,37 @@ def calculate_scaling(world):
     world.scaled_area_order = []
     passed_connections = []
     sphere_count = 0
+    last_region = "Ness's Mind"
+    world.Paula_region = "Ness's Mind"
+    world.Jeff_region = "Ness's Mind"
+    world.Poo_region = "Ness's Mind"
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         if num not in inventory:
             inventory[num] = []
         for location in sphere:
             if location.item.player == world.player and location.item.advancement:
                 inventory[num].append(location.item.name)
-            
-           # if location.player == world.player and location.parent_region.name in combat_regions:
-                #valid_level_region = location.parent_region.name
 
-            #if location.item.player == world.player and location.item.name == "Paula":
-                #print(world.paula_region)
+            if location.player == world.player and location.parent_region.name in combat_regions:
+                last_region = location.parent_region.name
+
+            if location.item.player == world.player and location.item.name == "Paula":
+                if location.parent_region.name in combat_regions:
+                    world.Paula_region = location.parent_region.name
+                else:
+                    world.Paula_region = last_region
+
+            if location.item.player == world.player and location.item.name == "Jeff":
+                if location.parent_region.name in combat_regions:
+                    world.Jeff_region = location.parent_region.name
+                else:
+                    world.Jeff_region = last_region
+
+            if location.item.player == world.player and location.item.name == "Poo":
+                if location.parent_region.name in combat_regions:
+                    world.Poo_region = location.parent_region.name
+                else:
+                    world.Poo_region = last_region
         sphere_count = num
 
     for item in range(1, len(inventory)):
@@ -257,3 +276,12 @@ def calculate_scaling(world):
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
+
+    if world.Paula_region == "Ness's Mind":
+        world.Paula_region = world.scaled_area_order[0]
+
+    if world.Jeff_region == "Ness's Mind":
+        world.Jeff_region = world.scaled_area_order[0]
+
+    if world.Poo_region == "Ness's Mind":
+        world.Poo_region = world.scaled_area_order[0]
