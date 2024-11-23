@@ -241,10 +241,11 @@ JML GetSeedPlayer
 
 ORG $C1ED67
 JML DrawWorldVersion
-;new jmls
 
-ORG $C071D1
-;JSL FixStairsBug
+ORG $C1FD57
+JML Set24BitStartingEXP
+
+;new jmls
 
 
 ORG $C1FEBC
@@ -3866,7 +3867,7 @@ STY $94
 RTL
 
 ORG $D5F5FB
-db $03, $00, $11; Starting level
+db $03, $00; Starting level
 
 ORG $D5F600
 db $12
@@ -7973,6 +7974,19 @@ db $0A, $3C, $F7, $EE
 ORG $C10E16
 LDA #$0098
 
+ORG $EF79F3
+db $4C, $F7, $EE
+
+ORG $D7FD30
+ExpPointers:
+dw $FFFF
+dw $FD40
+dw $FD44
+dw $FD48
+
+ORG $D7FD40
+dd $00000011
+
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
 db $76, $a2, $91, $9e, $9b, $02; Frank
@@ -8603,6 +8617,14 @@ db $70, $58, $1c, $02, $01
 db $0A, $A9, $69, $C7
 
 ;new text go here
+db $19, $10, $01
+db $1B, $04
+db $0E, $00
+db $08
+db $7F, $DC, $C7, $00
+db $1b, $02
+dd $00C7E6D7
+db $7E, $9F, $92, $9F, $94, $A9, $02
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -8983,6 +9005,44 @@ JSL $C186B1
 LDA #$0013
 JSL $C1DD47;draw the file select box
 JML $C1ED6D
+
+Set24BitStartingEXP:
+PHX
+LDA $24
+AND #$00FF
+ASL
+TAX
+LDA ExpPointers,X
+STA $06
+LDA #$00D7
+STA $08
+LDA [$06]
+BEQ .ZeroCheck
+.HasExp:
+TAX
+INC $06
+INC $06
+LDA [$06]
+STA $08
+STX $06
+PLX
+JML $C1FD61
+.ZeroCheck:
+PHA
+INC $06
+INC $06
+LDA [$06]
+BEQ .NoEXP
+PLA
+DEC $06
+DEC $06
+BRA .HasExp
+.NoEXP:
+PLA
+PLX
+DEC $06
+DEC $06
+JML $C1FD72
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO

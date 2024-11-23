@@ -292,6 +292,14 @@ def patch_rom(world, rom, player: int, multiworld):
                             rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xce, 0xee]))
                         else:
                             rom.write_bytes(present_locations[name] - 4, bytearray([0xc1, 0xcd, 0xee]))
+
+    location = world.multiworld.get_location("Twoson - Bike Shop Rental", world.player)
+    if location.item.name in item_id_table:
+        item_id = item_id_table[location.item.name]
+    else:
+        item_id = 0xAD
+
+    rom.write_bytes(0x0800C4 bytearray([item_id])) # Bike shop
     
     hintable_locations = [
         location for location in world.multiworld.get_locations()
