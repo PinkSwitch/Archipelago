@@ -248,10 +248,10 @@ class StartingCharacter(Choice):
 
 class Armorizer(Choice):
     """All equippable armor will have randomly generated attributes. This includes who can equip it, elemental resistance (and how strong that resistance is),
-       and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
+       defense, and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
        on that piece of equipment.
        Keep Type: Equipment will keep its original equipment slot. If Progressive Armor is enabled, you will get armor with progressively higher defense. 
-       Chaos: Equipment will have a randomly selected slot. This will ignore Progressive Armor in regards to defense per armor piece."""
+       Chaos: Equipment will have a randomly selected slot. It will try to respect the defense progressively, but the type may not match the type received."""
     display_name = "Armorizer"
     option_off = 0
     option_keep_type = 1
@@ -259,11 +259,10 @@ class Armorizer(Choice):
     default = 0
 
 class Weaponizer(Choice):
-    """Changes the character you start as. If random start location is disabled, each character has their own starting location.
-       Ness: Ness's House
-       Paula: the Happy-Happy Villagr cabin
-       Jeff: The Threed zombie prison
-       Poo: Dalaam"""
+    """All weapons will have randomly generated attributes. This includes offense, guts boost, and miss rate.
+       Keep Type: Equipment will keep the character that was originally able to use it. If Progressive Weapons is enabled, you will get weapons with progressively higher offense.
+       Chaos: Equipment will be able to be equipped by a randomly selected character. It will try to respect the offense progresively, but the type may not match the type recieved.
+       The Tee Ball Bat will always be a weapon for Ness."""
     display_name = "Weaponizer"
     option_off = 0
     option_keep_type = 1

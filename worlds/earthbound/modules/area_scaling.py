@@ -193,22 +193,55 @@ area_rules = {
     "Endgame": {"Endgame": [["Nothing"]]}
 }
 
+teleports = {
+    "Onett Teleport": "Onett",
+    "Twoson Teleport": "Twoson",
+    "Happy-Happy Village Teleport": "Happy-Happy Village",
+    "Threed Teleport": "Threed",
+    "Saturn Valley Teleport": "Saturn Valley",
+    "Dusty Dunes Teleport": "Dusty Dunes Desert",
+    "Fourside Teleport": "Fourside",
+    "Winters Teleport": "Winters",
+    "Summers Teleport": "Summers",
+    "Scaraba Teleport": "Scaraba",
+    "Dalaam Teleport": "Dalaam",
+    "Deep Darkness Teleport": "Deep Darkness",
+    "Tenda Village Teleport": "Tenda Village",
+    "Lost Underworld Teleport": "Lost Underworld",
+    "Magicant Teleport": "Magicant"
+}
 
 def calculate_scaling(world):
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
+
+    for item in world.multiworld.precollected_items[world.player]:
+        inventory[0].append([item.name])
+
     unconnected_regions = [world.starting_region, "Ness's Mind"]
-    world.accessible_regions = ["Ness's Mind", world.starting_region]
+    world.accessible_regions = [world.starting_region, "Ness's Mind"]
+    if world.options.random_start_location:
+        unconnected_regions.append(teleports[world.starting_teleport])
+        world.accessible_regions.append(teleports[world.starting_teleport])
+
     world.scaled_area_order = []
     passed_connections = []
     sphere_count = 0
     last_region = "Ness's Mind"
+    early_regions = []
     world.Paula_region = "Ness's Mind"
     world.Jeff_region = "Ness's Mind"
     world.Poo_region = "Ness's Mind"
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         if num not in inventory:
             inventory[num] = []
+
         for location in sphere:
+            if num == 0:
+                if location.parent_region.name not in world.accessible_regions:
+                    early_regions.append(location.parent_region.name)
+                    world.accessible_regions.append(location.parent_region.name)
+                    unconnected_regions.append(location.parent_region.name)
+
             if location.item.player == world.player and location.item.advancement:
                 inventory[num].append(location.item.name)
 
@@ -233,6 +266,7 @@ def calculate_scaling(world):
                 else:
                     world.Poo_region = last_region
         sphere_count = num
+    #early_regions = sorted(early_regions, key = teleports)
 
     for item in range(1, len(inventory)):
         if item in inventory:
