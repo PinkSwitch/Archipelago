@@ -1,4 +1,4 @@
-from .text_data import eb_text_table
+from ..text_data import eb_text_table
 
 
 random_flavors = [

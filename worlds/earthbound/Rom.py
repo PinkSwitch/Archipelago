@@ -10,14 +10,14 @@ from .local_data import (item_id_table, location_dialogue, present_locations, ps
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
                          present_text_pointers, ap_text_pntrs, party_id_nums, world_version)
 from .battle_bg_data import battle_bg_bpp
-from .psi_shuffle import write_psi
+from .modules.psi_shuffle import write_psi
 from .text_data import barf_text, eb_text_table, text_encoder
-from .flavor_data import flavor_data
-from .hint_data import parse_hint_data
+from .modules.flavor_data import flavor_data
+from .modules.hint_data import parse_hint_data
 from .enemy_data import combat_regions, scale_enemies
-from .area_scaling import calculate_scaling
-from .boss_shuffle import write_bosses
-from .equipamizer import randomize_armor, randomize_weapons
+from .modules.area_scaling import calculate_scaling
+from .modules.boss_shuffle import write_bosses
+from .modules.equipamizer import randomize_armor, randomize_weapons
 from .static_location_data import location_groups
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
