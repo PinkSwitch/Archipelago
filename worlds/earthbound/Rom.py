@@ -299,7 +299,7 @@ def patch_rom(world, rom, player: int, multiworld):
     else:
         item_id = 0xAD
 
-    rom.write_bytes(0x0800C4 bytearray([item_id])) # Bike shop
+    rom.write_bytes(0x0800C4, bytearray([item_id])) # Bike shop
     
     hintable_locations = [
         location for location in world.multiworld.get_locations()
@@ -619,17 +619,17 @@ class EBPatchExtensions(APPatchExtension):
 
         rom.write_bytes(0x2EF11F, rom.read_bytes(0x091D30, 0x17))
         # ---------------------------------------
-        # paula_level = rom.read_bytes(0x15f60f, 1)
-        # jeff_level = rom.read_bytes(0x15f623, 1)
-        # poo_level = rom.read_bytes(0x15f637, 1)
+        paula_level = rom.read_bytes(0x15f60f, 1)
+        jeff_level = rom.read_bytes(0x15f623, 1)
+        poo_level = rom.read_bytes(0x15f637, 1)
 
-        # paula_start_exp = rom.read_bytes(0x?? + paula_level, ????)
-        # jeff_start_exp = rom.read_bytes(0x?? + jeff_level, ????)
-        # poo_start_exp = rom.read_bytes(0x?? + poo_level, ????)
+        paula_start_exp = rom.read_bytes(0x1590D9 + (paula_level[0] * 4), 4)
+        jeff_start_exp = rom.read_bytes(0x159269 + (jeff_level[0] * 4), 4)
+        poo_start_exp = rom.read_bytes(0x1593F9 + (poo_level[0] * 4), 4)
 
-        # rom.write_bytes(0x??, paula_start_exp)
-        # rom.write_bytes(0x??, jeff_start_exp)
-        # rom.write_bytes(0x??, poo_start_exp)
+        rom.write_bytes(0x17FD44, paula_start_exp)
+        rom.write_bytes(0x17FD48, jeff_start_exp)
+        rom.write_bytes(0x17FD4C, poo_start_exp)
         return rom.get_bytes()
 
 
