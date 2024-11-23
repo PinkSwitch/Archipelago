@@ -859,8 +859,6 @@ def randomize_weapons(world, rom):
         rom.write_bytes(weapon.address, item_name)
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         if weapon.can_equip == "Jeff":
-            print(usage_bytes[weapon.can_equip])
-            print(weapon.name)
         rom.write_bytes(weapon.address + 31, bytearray([
             weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
