@@ -7983,9 +7983,13 @@ dw $FFFF
 dw $FD40
 dw $FD44
 dw $FD48
+dw $FD4C
 
 ORG $D7FD40
 dd $00000011
+dd $00000000
+dd $00000000
+dd $000016EF
 
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC

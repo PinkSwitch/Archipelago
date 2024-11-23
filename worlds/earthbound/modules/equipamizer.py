@@ -243,8 +243,8 @@ usage_bytes = {
     "All": 0x0F,
     "Ness": 0x01,
     "Paula": 0x02,
-    "Jeff": 0x03,
-    "Poo": 0x04
+    "Jeff": 0x04,
+    "Poo": 0x08
 }
 
 type_bytes = {
