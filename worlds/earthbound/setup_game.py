@@ -1,7 +1,7 @@
 import struct
 from .modules.flavor_data import random_flavors
-from .text_data import lumine_hall_text, eb_text_table, text_encoder
-from .local_data import item_id_table
+from .game_data.text_data import lumine_hall_text, eb_text_table, text_encoder
+from .game_data.local_data import item_id_table
 from .modules.psi_shuffle import shuffle_psi
 from .modules.boss_shuffle import initialize_bosses
 

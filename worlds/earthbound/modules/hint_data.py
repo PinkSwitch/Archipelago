@@ -1,6 +1,6 @@
-from ..local_data import item_id_table, character_item_table, party_id_nums
-from ..text_data import eb_text_table, text_encoder
-from ..static_location_data import location_groups
+from ..game_data.local_data import item_id_table, character_item_table, party_id_nums
+from ..game_data.text_data import eb_text_table, text_encoder
+from ..game_data.static_location_data import location_groups
 import struct
 
 
@@ -34,7 +34,7 @@ def setup_hints(world):
         "Fourside - Post-Moonside Delivery",
         "Lost Underworld - Talking Rock",
         "Dungeon Man - 2F Hole Present",
-        "Poo Starting Item",
+        "Poo - Starting Item",
         "Summers - Magic Cake",
         "Deep Darkness - Teleporting Monkey",
         "Twoson - Insignificant Location",

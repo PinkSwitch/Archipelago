@@ -178,7 +178,7 @@ location_ids = {
     "Dalaam - Do Do Guy's House Chest": 0xEB00A7,
     "Dalaam - Upper House Chest": 0xEB00A8,
     "Dalaam - Throne Character": 0xEB00A9,
-    "Poo Starting Item": 0xEB00AA,
+    "Poo - Starting Item": 0xEB00AA,
     "Pink Cloud - Three Holes Present": 0xEB00AB,
     "Pink Cloud - Left Hole Present": 0xEB00AC,
     "Pink Cloud - Ground Floor Present": 0xEB00AD,
@@ -255,7 +255,7 @@ location_ids = {
 
 location_groups = {
     "Poo's Inventory": {
-        "Poo Starting Item"
+        "Poo - Starting Item"
     },
 
     "Northern Onett": {

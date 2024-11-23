@@ -5,20 +5,20 @@ import typing
 import bsdiff4
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
-from .local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
+from .game_data.local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
                          special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
                          special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
                          present_text_pointers, ap_text_pntrs, party_id_nums, world_version)
-from .battle_bg_data import battle_bg_bpp
+from .game_data.battle_bg_data import battle_bg_bpp
 from .modules.psi_shuffle import write_psi
-from .text_data import barf_text, eb_text_table, text_encoder
+from .game_data.text_data import barf_text, eb_text_table, text_encoder
 from .modules.flavor_data import flavor_data
 from .modules.hint_data import parse_hint_data
-from .enemy_data import combat_regions, scale_enemies
+from .modules.enemy_data import combat_regions, scale_enemies
 from .modules.area_scaling import calculate_scaling
 from .modules.boss_shuffle import write_bosses
 from .modules.equipamizer import randomize_armor, randomize_weapons
-from .static_location_data import location_groups
+from .game_data.static_location_data import location_groups
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
 from typing import TYPE_CHECKING, Optional
@@ -241,7 +241,7 @@ def patch_rom(world, rom, player: int, multiworld):
                     rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
                     rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
 
-            if name == "Poo Starting Item":
+            if name == "Poo - Starting Item":
                 world.handled_locations.append(name)
                 if item in item_id_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(0x15F63C, bytearray([item_id]))
@@ -419,8 +419,8 @@ def patch_rom(world, rom, player: int, multiworld):
         if world.options.remote_items:
             continue
 
-        if item.name == "Poo" and world.multiworld.get_location("Poo Starting Item", world.player).item.name in special_name_table:
-            world.multiworld.push_precollected(world.multiworld.get_location("Poo Starting Item", world.player).item)
+        if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table:
+            world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)
 
         if item.name in ["Progressive Bat", "Progressive Fry Pan", "Progressive Gun", "Progressive Bracelet",
                          "Progressive Other"]:

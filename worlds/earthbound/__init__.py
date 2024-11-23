@@ -15,16 +15,15 @@ from .Locations import get_locations
 from .Regions import init_areas
 from .Options import EBOptions, eb_option_groups
 from .setup_game import setup_gamevars, place_static_items
-from .enemy_data import initialize_enemies
+from .modules.enemy_data import initialize_enemies
 from .modules.flavor_data import create_flavors
-from .local_data import item_id_table
+from .game_data.local_data import item_id_table, world_version
 from .modules.hint_data import setup_hints
-from .text_data import spoiler_psi, spoiler_starts, spoiler_badges
+from .game_data.text_data import spoiler_psi, spoiler_starts, spoiler_badges
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
-from .local_data import world_version
-from .static_location_data import location_ids, location_groups
+from .game_data.static_location_data import location_ids, location_groups
 from .modules.equipamizer import EBArmor, EBWeapon
 from worlds.generic.Rules import add_item_rule, forbid_items_for_player
 from Options import OptionError

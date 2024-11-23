@@ -3,8 +3,8 @@ import struct
 import typing
 import time
 from struct import pack, unpack
-from .local_data import check_table, client_specials, world_version, hint_bits
-from .text_data import eb_text_table
+from .game_data.local_data import check_table, client_specials, world_version, hint_bits
+from .game_data.text_data import eb_text_table
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -203,7 +203,7 @@ class EarthBoundClient(SNIClient):
             return
 
         new_checks = []
-        from .local_data import check_table
+        from .game_data.local_data import check_table
 
         location_ram_data = await snes_read(ctx, WRAM_START + 0x9C00, 0x88)
         for loc_id, loc_data in check_table.items():

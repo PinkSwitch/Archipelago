@@ -35,7 +35,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Fourside - Venus Gift", player), lambda state: state.has("Diamond", player))
     set_rule(world.multiworld.get_location("Summers - Museum Item", player), lambda state: state.has("Tiny Ruby", player))
     set_rule(world.multiworld.get_location("Dalaam - Trial of Mu", player), lambda state: state.has("Poo", player))
-    set_rule(world.multiworld.get_location("Poo Starting Item", player), lambda state: state.has("Poo", player))
+    set_rule(world.multiworld.get_location("Poo - Starting Item", player), lambda state: state.has("Poo", player))
     set_rule(world.multiworld.get_location("Deep Darkness - North Alcove Truffle", player), lambda state: state.has("Piggy Nose", player))
     set_rule(world.multiworld.get_location("Deep Darkness - Near Land Truffle", player), lambda state: state.has("Piggy Nose", player))
     set_rule(world.multiworld.get_location("Deep Darkness - Present Truffle", player), lambda state: state.has("Piggy Nose", player))
@@ -46,7 +46,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Tenda Village - Tenda Gift #2", player), lambda state: state.has("Shyness Book", player))
     set_rule(world.multiworld.get_location("Lost Underworld - Talking Rock", player), lambda state: state.has("Tendakraut", player))
     set_rule(world.multiworld.get_location("Sanctuary Goal", player), lambda state: state.has("Melody", player, world.options.sanctuaries_required.value))
-    forbid_items_for_player(world.multiworld.get_location("Poo Starting Item", player), {"Poo"}, player)
+    forbid_items_for_player(world.multiworld.get_location("Poo - Starting Item", player), {"Poo"}, player)
 
     if world.options.giygas_required:
         set_rule(world.multiworld.get_location("Giygas", player), lambda state: state.has("Paula", player))

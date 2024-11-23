@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import dataclasses
-from ..text_data import text_encoder, eb_text_table, calc_pixel_width
+from ..game_data.text_data import text_encoder, eb_text_table, calc_pixel_width
 from operator import attrgetter
 import struct
 

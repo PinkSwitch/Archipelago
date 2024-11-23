@@ -1,4 +1,4 @@
-from ..enemy_data import combat_regions
+from ..modules.enemy_data import combat_regions
 
 area_exits = {
     "Ness's Mind": ["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert",

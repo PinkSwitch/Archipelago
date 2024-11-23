@@ -192,7 +192,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Dalaam", "Dalaam - Do Do Guy's House Chest", 0xEB00A7),
         LocationData("Dalaam", "Dalaam - Upper House Chest", 0xEB00A8),
         LocationData("Dalaam", "Dalaam - Throne Character", 0xEB00A9),
-        LocationData("Ness's Mind", "Poo Starting Item", 0xEB00AA),
+        LocationData("Ness's Mind", "Poo - Starting Item", 0xEB00AA),
         LocationData("Pink Cloud", "Pink Cloud - Three Holes Present", 0xEB00AB),
         LocationData("Pink Cloud", "Pink Cloud - Left Hole Present", 0xEB00AC),
         LocationData("Pink Cloud", "Pink Cloud - Ground Floor Present", 0xEB00AD),
