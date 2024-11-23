@@ -26,7 +26,7 @@ from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hash
 from .local_data import world_version
 from .static_location_data import location_ids, location_groups
 from .equipamizer import EBArmor, EBWeapon
-from worlds.generic.Rules import add_item_rule
+from worlds.generic.Rules import add_item_rule, forbid_items_for_player
 from Options import OptionError
 
 
@@ -204,11 +204,13 @@ class EarthBoundWorld(World):
         create_flavors(self)
         initialize_enemies(self)
         if self.options.shuffle_teleports == 0:
+            self.options.local_items.value |= self.item_name_groups["PSI"]
             self.event_count += 12
             if self.options.magicant_mode != 0:
                 self.event_count -= 1
 
         if self.options.character_shuffle == 0:
+            self.options.local_items.value.update(["Paula", "Jeff", "Poo", "Flying Man"])
             self.event_count += 6
             
     def set_rules(self) -> None:
