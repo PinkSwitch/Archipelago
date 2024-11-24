@@ -261,6 +261,16 @@ summers_addresses = {
     "Summers Big League Bat": 0x15535A
 }
 
+royal_names = [
+    "of kings",
+    "of dukes",
+    "of princes",
+    "of barons",
+    "of lords",
+    "of sultans",
+    "of counts"
+]
+
 
 def randomize_armor(world, rom):
     other_adjectives = adjectives.copy()
@@ -530,7 +540,7 @@ def randomize_armor(world, rom):
             armor.poo_def = armor.defense
 
         if armor.can_equip == "Poo":
-            back_name = "of kings"
+            back_name = world.random.choice(royal_names)
             front_name = world.random.choice(armor_names[armor.equip_type]).capitalize()
         elif armor.can_equip in ["Ness", "Paula", "Jeff"]:
             back_name = char_armor_names[armor.can_equip][armor.equip_type]
@@ -541,6 +551,8 @@ def randomize_armor(world, rom):
 
         pixel_length = calc_pixel_width(armor.name)
         first_armor = False
+        if armor.can_equip == "Poo":
+            names_to_try = royal_names.copy()
         names_to_try = armor_names[armor.equip_type].copy()
         while pixel_length > 70:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
@@ -790,7 +802,7 @@ def randomize_weapons(world, rom):
         if weapon.can_equip == "Poo":
             weapon.poo_off = world.random.randint(1, 127)
             front_name = world.random.choice(weapon_names[weapon.can_equip])
-            back_name = "of kings"
+            back_name = world.random.choice(royal_names)
         else:
             weapon.poo_off = 250
             front_name = world.random.choice(adjectives)
@@ -817,7 +829,11 @@ def randomize_weapons(world, rom):
 
         pixel_length = calc_pixel_width(weapon.name)
         half_space = False
-        names_to_try = weapon_names[weapon.can_equip].copy()
+
+        if weapon.can_equip == "Poo":
+            names_to_try = royal_names.copy()
+        else:
+            names_to_try = weapon_names[weapon.can_equip].copy()
         while pixel_length > 70:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if half_space is False:
