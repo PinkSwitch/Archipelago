@@ -782,10 +782,11 @@ def randomize_weapons(world, rom):
             chance = world.random.randint(1, 100)
             if chance < 8:
                 weapon.can_equip = "All"
-            elif item == "Tee Ball Bat":
-                world.can_equip = "Ness"
             else:
                 weapon.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
+
+            if item == "Tee Ball Bat":
+                weapon.can_equip = "Ness"
 
         if weapon.can_equip == "Ness":
             progressive_bats.append(item)
@@ -919,9 +920,6 @@ def randomize_weapons(world, rom):
         weapon.description_pointer = world.description_pointer
         world.description_pointer += len(weapon.description)
 
-        # Give poo random back names? Like of Princes, of dukes, etc;
         # test capping armor defense (50, 100, 127 for body arm other)
-        # Todo; consider swapping the summers band/test in-game stuff which one it gives me.
-        # Change the Item ID and local table in local_items
 
         #Rom.write_bytes(progressive_waepon address + index, weapon.id)
