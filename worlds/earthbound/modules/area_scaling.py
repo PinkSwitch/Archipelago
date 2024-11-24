@@ -237,7 +237,7 @@ def calculate_scaling(world):
 
         for location in sphere:
             if num == 0:
-                if location.parent_region.name not in world.accessible_regions:
+                if location.parent_region.name not in world.accessible_regions and location.player == world.player:
                     early_regions.append(location.parent_region.name)
                     world.accessible_regions.append(location.parent_region.name)
                     unconnected_regions.append(location.parent_region.name)

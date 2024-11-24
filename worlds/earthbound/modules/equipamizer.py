@@ -808,7 +808,7 @@ def randomize_weapons(world, rom):
             weapon.equip_type = "Bash"
 
         chance = world.random.randint(1, 100)
-        if chance < 4:
+        if chance < 4 and item != "Tee Ball Bat":
             weapon.miss_rate = 12
         else:
             weapon.miss_rate = miss_rates[weapon.can_equip]
