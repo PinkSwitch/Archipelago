@@ -782,7 +782,10 @@ def randomize_weapons(world, rom):
         elif weapon.can_equip == "Jeff":
             progressive_guns.append(item)
 
-        weapon.offense = world.random.randint(1, 127)
+        if item == "Tee Ball Bat" and not world.options.progressive_weapons:
+            weapon.offense = world.random.randint(3, 10)
+        else:
+            weapon.offense = world.random.randint(1, 127)
 
         if weapon.can_equip == "Poo":
             weapon.poo_off = world.random.randint(1, 127)
