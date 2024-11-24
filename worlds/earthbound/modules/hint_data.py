@@ -234,7 +234,7 @@ def parse_hint_data(world, location, rom, hint):
         item_text.extend(text_encoder(" can be found ", eb_text_table, 255))
         
         if location.player != world.player:
-            player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)} ", eb_text_table, 255)
+            player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)}", eb_text_table, 255)
         else:
             player_text = text_encoder(" ", eb_text_table, 255)
         
@@ -252,9 +252,9 @@ def parse_hint_data(world, location, rom, hint):
                 if location.parent_region.name == "Menu":
                     area = ""
                 else:
-                    area = f" near {location.parent_region.name}"
+                    area = f"near {location.parent_region.name}"
             else:
-                area = f" near {world.random.choice(possible_location_groups)}"
+                area = f"near {world.random.choice(possible_location_groups)}"
             location_text = text_encoder(f"somewhere {area}.", eb_text_table, 255)
             # your [item] can be found by [player] somewhere near [location group]
         text = item_text + player_text + location_text

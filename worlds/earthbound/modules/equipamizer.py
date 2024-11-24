@@ -509,6 +509,9 @@ def randomize_armor(world, rom):
             # Only Arm gear can have sleep resistance; arm gear cannot have elemental resistance
             roll_resistances(world, "sleep_res", armor)
 
+        # if "Pendant" in item and world.options.retain_resistances:
+            # print(item)
+
         if armor.flash_res + armor.freeze_res + armor.fire_res == 0:
             # If no resistances are active use a normal name
             front_name = world.random.choice(armor_dict[armor.equip_type])
@@ -553,7 +556,8 @@ def randomize_armor(world, rom):
         first_armor = False
         if armor.can_equip == "Poo":
             names_to_try = royal_names.copy()
-        names_to_try = armor_names[armor.equip_type].copy()
+        else:
+            names_to_try = armor_names[armor.equip_type].copy()
         while pixel_length > 70:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if first_armor is False:
@@ -796,7 +800,7 @@ def randomize_weapons(world, rom):
             progressive_guns.append(item)
 
         if item == "Tee Ball Bat" and not world.options.progressive_weapons:
-            weapon.offense = world.random.randint(3, 10)
+            weapon.offense = 10
         else:
             weapon.offense = world.random.randint(1, 127)
 
@@ -922,4 +926,4 @@ def randomize_weapons(world, rom):
 
         # test capping armor defense (50, 100, 127 for body arm other)
 
-        #Rom.write_bytes(progressive_waepon address + index, weapon.id)
+        # Rom.write_bytes(progressive_waepon address + index, weapon.id)

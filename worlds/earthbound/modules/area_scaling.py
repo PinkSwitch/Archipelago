@@ -213,6 +213,7 @@ teleports = {
 
 def calculate_scaling(world):
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
+    item_regions = {}
 
     for item in world.multiworld.precollected_items[world.player]:
         inventory[0].append([item.name])
@@ -232,8 +233,8 @@ def calculate_scaling(world):
     world.Jeff_region = "Ness's Mind"
     world.Poo_region = "Ness's Mind"
     for num, sphere in enumerate(world.multiworld.get_spheres()):
-        if num not in inventory:
-            inventory[num] = []
+        if num + 1 not in inventory:
+            inventory[num + 1] = []
 
         for location in sphere:
             if num == 0:
@@ -243,7 +244,10 @@ def calculate_scaling(world):
                     unconnected_regions.append(location.parent_region.name)
 
             if location.item.player == world.player and location.item.advancement:
-                inventory[num].append(location.item.name)
+                inventory[num + 1].append(location.item.name)
+                if location.item.name not in item_regions:
+                    item_regions[location.item.name] = []
+                item_regions[location.item.name].append(location.parent_region.name)
 
             if location.player == world.player and location.parent_region.name in combat_regions:
                 last_region = location.parent_region.name
@@ -283,13 +287,19 @@ def calculate_scaling(world):
                 if f"{region} -> {connection}" not in passed_connections:
                     for rule_set in area_rules[region][connection]:
                         # check if this sphere has the items needed to make this connection
-                        can_pass = all(item in inventory[i] for item in rule_set)
+                        can_pass = all(
+                            item in inventory[i] and all(region in world.accessible_regions for region in item_regions.get(item, []))
+                            for item in rule_set
+                            )
                         if can_pass:
                             passed_connections.append(f"{region} -> {connection}")
                             if connection not in world.accessible_regions:
                                 world.accessible_regions.append(connection)
                                 new_regions.append(connection)
         unconnected_regions.extend(new_regions)
+        if "Endgame" in unconnected_regions:
+            unconnected_regions.remove("Endgame")
+            unconnected_regions.insert(0, "Endgame")
 
     for region in world.multiworld.get_regions(world.player):
         if region.name not in world.accessible_regions and region.name != "Menu":
@@ -304,7 +314,6 @@ def calculate_scaling(world):
     elif world.options.magicant_mode == 3 and not world.options.giygas_required:
         # Just add it to the end of scaling
         world.accessible_regions.append("Magicant")
-    #print(f"{world.multiworld.get_player_name(world.player)} order: {world.accessible_regions}\n")
 
     # calculate which areas need to have enemies scaled
     for region in world.accessible_regions:
@@ -319,3 +328,4 @@ def calculate_scaling(world):
 
     if world.Poo_region == "Ness's Mind":
         world.Poo_region = world.scaled_area_order[0]
+    #print(world.scaled_area_order)
