@@ -512,14 +512,14 @@ def patch_rom(world, rom, player: int, multiworld):
     write_bosses(world, rom)
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
-    world.badge_name = text_encoder(world.badge_name, eb_text_table, 23)
+    world.badge_name = text_encoder(world.badge_name, 23)
     world.badge_name.extend([0x00])
     rom.write_bytes(0x17FCD0, world.starting_money)
     rom.write_bytes(0x17FCE0, world.prayer_player)
     rom.write_bytes(0x17FD00, world.credits_player)
     rom.write_bytes(0x155027, world.badge_name)
     rom.write_bytes(0x3FF0A0, world.world_version.encode("ascii"))
-    display_version = text_encoder(world_version, eb_text_table, 15)
+    display_version = text_encoder(world_version, 15)
     display_version.extend([0x02])
     rom.write_bytes(0x3CFFBF, display_version)
 

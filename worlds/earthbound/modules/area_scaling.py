@@ -211,6 +211,7 @@ teleports = {
     "Magicant Teleport": "Magicant"
 }
 
+
 def calculate_scaling(world):
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     item_regions = {}
@@ -270,7 +271,6 @@ def calculate_scaling(world):
                 else:
                     world.Poo_region = last_region
         sphere_count = num
-    #early_regions = sorted(early_regions, key = teleports)
 
     for item in range(1, len(inventory)):
         if item in inventory:
@@ -288,7 +288,8 @@ def calculate_scaling(world):
                     for rule_set in area_rules[region][connection]:
                         # check if this sphere has the items needed to make this connection
                         can_pass = all(
-                            item in inventory[i] and all(region in world.accessible_regions for region in item_regions.get(item, []))
+                            item in inventory[i] and all(
+                                region in world.accessible_regions for region in item_regions.get(item, []))
                             for item in rule_set
                             )
                         if can_pass:
@@ -328,4 +329,3 @@ def calculate_scaling(world):
 
     if world.Poo_region == "Ness's Mind":
         world.Poo_region = world.scaled_area_order[0]
-    #print(world.scaled_area_order)

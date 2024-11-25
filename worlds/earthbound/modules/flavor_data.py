@@ -27,7 +27,7 @@ random_flavors = [
     "Choco Cream flavor",
     "Doomed flavor",
     "Farm flavor",
-    #"Inverted flavor",
+    # "Inverted flavor",
     "Negative flavor",
     "Astral flavor",
     "Sunflower flavor",

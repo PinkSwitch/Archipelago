@@ -471,7 +471,7 @@ def setup_gamevars(world):
     world.prayer_player.extend([0x00])
 
     world.credits_player = world.multiworld.get_player_name(world.player)
-    world.credits_player = text_encoder(world.credits_player, eb_text_table, 16)
+    world.credits_player = text_encoder(world.credits_player, 16)
     world.credits_player.extend([0x00])
     shuffle_psi(world)
     initialize_bosses(world)

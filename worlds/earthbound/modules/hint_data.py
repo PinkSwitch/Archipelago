@@ -151,7 +151,7 @@ def setup_hints(world):
 
     for item in world.removed_teleports:
         if item.name in world.local_hintable_items:
-            #let's not hint an item that doesn't exist
+            # let's not hint an item that doesn't exist
             world.local_hintable_items.remove(item.name)
 
     if world.options.giygas_required:
@@ -199,14 +199,14 @@ def parse_hint_data(world, location, rom, hint):
                 item_text = bytearray([0x1C, 0x05, item_id_table[location.item.name]])
             else:
                 # if the item doesn't have a name (e.g it's PSI)
-                item_text = text_encoder(location.item.name, eb_text_table, 128)
+                item_text = text_encoder(location.item.name, 128)
         else:
             player_text = f"{world.multiworld.get_player_name(location.item.player)}'s "
-            item_text = text_encoder(location.item.name, eb_text_table, 128)
+            item_text = text_encoder(location.item.name, 128)
             item_text.extend([0x50])
 
-        player_text = text_encoder(player_text, eb_text_table, 255)
-        location_text = text_encoder(f" can be found at {location.name}.", eb_text_table, 255)
+        player_text = text_encoder(player_text, 255)
+        location_text = text_encoder(f" can be found at {location.name}.", 255)
         text = player_text + item_text + location_text
         # [player]'s [item] can be found at [location].
         text.append(0x02)
@@ -216,30 +216,30 @@ def parse_hint_data(world, location, rom, hint):
             text = f"you can find {world.progression_count} important item at {world.hinted_area}."
         else:
             text = f"you can find {world.progression_count} important items at {world.hinted_area}."
-        text = text_encoder(text, eb_text_table, 255)
+        text = text_encoder(text, 255)
         text.append(0x02)
         
     elif hint == "hint_for_good_item" or hint == "prog_item_at_region" or hint == "item_in_local_region":
         if location.item.name in character_item_table and location.item.player == world.player:
-            item_text = text_encoder("your friend ", eb_text_table, 255)
+            item_text = text_encoder("your friend ", 255)
             item_text.extend([0x1C, 0x02, party_id_nums[location.item.name]])
         elif location.item.name in item_id_table and location.item.player == world.player:
-            item_text = text_encoder("your ", eb_text_table, 255)
+            item_text = text_encoder("your ", 255)
             item_text.extend([0x1C, 0x05, item_id_table[location.item.name]])
         elif location.item.player == world.player:
-            item_text = text_encoder(f"your {location.item.name}", eb_text_table, 128)
+            item_text = text_encoder(f"your {location.item.name}", 128)
         else:
             item_text = f"{world.multiworld.get_player_name(location.item.player)}'s {location.item.name}"
-            item_text = text_encoder(item_text, eb_text_table, 255)
-        item_text.extend(text_encoder(" can be found ", eb_text_table, 255))
+            item_text = text_encoder(item_text, 255)
+        item_text.extend(text_encoder(" can be found ", 255))
         
         if location.player != world.player:
-            player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)}", eb_text_table, 255)
+            player_text = text_encoder(f"by {world.multiworld.get_player_name(location.player)}", 255)
         else:
-            player_text = text_encoder(" ", eb_text_table, 255)
+            player_text = text_encoder(" ", 255)
         
         if hint == "hint_for_good_item":
-            location_text = text_encoder(f"at {location.name}.", eb_text_table, 255)
+            location_text = text_encoder(f"at {location.name}.", 255)
             # your [item] can be found by [player] at [location]
 
         else:
@@ -255,15 +255,18 @@ def parse_hint_data(world, location, rom, hint):
                     area = f"near {location.parent_region.name}"
             else:
                 area = f"near {world.random.choice(possible_location_groups)}"
-            location_text = text_encoder(f"somewhere {area}.", eb_text_table, 255)
+            location_text = text_encoder(f"somewhere {area}.", 255)
             # your [item] can be found by [player] somewhere near [location group]
         text = item_text + player_text + location_text
         text.append(0x02)
 
     elif hint == "joke_hint":
         text = world.random.choice(world.joke_hints)
-        text = text_encoder(text, eb_text_table, 255)
+        text = text_encoder(text, 255)
         text.append(0x02)
+
+    else:
+        text = 0x00
 
     hint_addresses = [
         0x070376,

@@ -20,7 +20,7 @@ def price_weapons(weapons, rom):
         if "Summers" in weapon.name:
             weapon.name = weapon.name.replace("Summers", "")
             rom.write_bytes((weapon.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(weapon.name, eb_text_table, 25)
+            item_name = text_encoder(weapon.name, 25)
             item_name.extend([0x00])
             rom.write_bytes(weapon.address, item_name)
         else:
@@ -35,7 +35,7 @@ def price_armors(armor_pricing_list, rom):
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
             rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(armor.name, eb_text_table, 25)
+            item_name = text_encoder(armor.name, 25)
             item_name.extend([0x00])
             rom.write_bytes(armor.address, item_name)
         else:
@@ -607,10 +607,10 @@ def randomize_armor(world, rom):
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
             
-        description = text_encoder(description, eb_text_table, 0x100)
+        description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
-        item_name = text_encoder(armor.name, eb_text_table, 25)
+        item_name = text_encoder(armor.name, 25)
         item_name.extend([0x00])
 
         if armor.can_equip != "All":
@@ -870,10 +870,10 @@ def randomize_weapons(world, rom):
         if weapon.miss_rate == 12:
             description += "@If you use this, you might just whiff.\n"
 
-        description = text_encoder(description, eb_text_table, 0x100)
+        description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
-        item_name = text_encoder(weapon.name, eb_text_table, 25)
+        item_name = text_encoder(weapon.name, 25)
         item_name.extend([0x00])
 
         if weapon.can_equip != "All":
