@@ -149,7 +149,8 @@ class EarthBoundClient(SNIClient):
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
-        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E7, 1)
+        gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 1)
+        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E9, 1)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -163,15 +164,26 @@ class EarthBoundClient(SNIClient):
         if ctx.slot is None:
             return
 
-        if gift_recipient[0] != 0x00: #Are we sending a gift
-            recip_name = ctx.player_names[gift_recipient[0]]
+        #We're in the Gift selection menu. This should write the selected player's name into RAM
+        #for parsing.
+        if gift_target[0] != 0x00:
+            recip_name = ctx.player_names[gift_target[0]]
             recip_name = text_encoder(recip_name, 20)
+            recip_name.append(0x00)
             await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
             await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00]))])
             
             name_flag_clear = await snes_read(ctx, WRAM_START + 0xB622, 1)
             name_flag_clear = name_flag_clear[0] | 0x04
             await snes_write(ctx, [(WRAM_START + 0xB622, bytes([name_flag_clear]))])
+
+        if gift_recipient[0] != 0x00:
+            #self.giftbox_key = f"Giftbox;{ctx.team};{ctx.slot}"
+            motherbox = f"GiftBoxes;{ctx.team}"
+            test = motherbox[gift_recipient[0]]
+            if test[isOpen]:
+                print("success")
+
 
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
