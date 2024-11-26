@@ -3533,7 +3533,7 @@ CMP #$0017
 BEQ PullAPName
 CMP #$00B7
 BEQ SilentAPName
-JML $C17DDC
+JML CheckMoreSpecialCommands
 GetSpecialName:
 JSR PrintSpecialName
 LDA #$0000
@@ -6266,7 +6266,7 @@ ORG $C8255E
 db $00, $00
 
 ORG $C636E5
-db $0a, $29, $59, $c7; Disables Escargo phone call
+db $0a, $00, $00, $F2; Disables Escargo phone call
 
 ORG $C8A01F
 db $02
@@ -7991,6 +7991,9 @@ dd $00000000
 dd $00000000
 dd $000016EF
 
+PlayerCount: ;Write this value during generation
+dw $0001
+
 ORG $C9B132
 db $11, $04; Tony phone call flag
 
@@ -8633,6 +8636,16 @@ db $1b, $02
 dd $00C7E6D7
 db $7E, $9F, $92, $9F, $94, $A9, $02
 
+PrintPlayerNum:
+db $1C, $0A, $00, $00, $00, $00, $5E, $50, $02
+
+PlayerNameText:
+db $06, $13, $04
+dd .PrintPlayerName
+db $80, $9C, $91, $A9, $95, $A2, $1C, $0A, $00, $00, $00, $00, $50, $50, $B8, $02
+.PrintPlayerName:
+db $1C, $05, $AD, $50, $50, $B8, $02
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C1C84A
@@ -9050,6 +9063,137 @@ PLX
 DEC $06
 DEC $06
 JML $C1FD72
+
+CheckMoreSpecialCommands:
+CMP #$0018
+BEQ .PrintPlayerMenu
+JML $C17DDC
+.PrintPlayerMenu:
+JSL $C3E4D4
+LDA #$0014
+JSL $C1DD47 ;open_window
+
+LDA #$0002
+LDY #$0EB3
+JSL goto_bank_c1
+
+LDA #$0082
+LDY #$0EB3
+JSL goto_bank_c1
+LDA #$0001
+STA $870F
+.ResetText:
+LDA $870F
+STA $B5E7
+LDA #$00EE
+STA $10
+LDA.w #PrintPlayerNum
+STA $0E
+JSL $C186B1
+LDA #$0000
+.CheckServerLoop:
+STA $B58E
+LDA $B58E
+CMP #$0032
+BEQ .ExitServerLoop
+LDA $B622
+AND #$00FF
+AND #$0004
+BNE .ExitServerLoop
+LDA $B58E
+INC
+PHA
+JSL $C08756
+PLA
+BRA .CheckServerLoop
+.ExitServerLoop:
+LDA #$00EE
+STA $10
+LDA.w #PlayerNameText
+STA $0E
+JSL $C3E4CA
+JSL $C186B1
+.LoopWin:
+JSL $C12DD5
+
+LDA $0066
+AND #$0008
+BNE .PressedUp
+LDA $0066
+AND #$0004
+BNE .PressedDown
+LDA $0066
+AND #$0001
+BNE .PressedRight
+
+LDA $0066
+AND #$0002
+BNE .PressedLeft
+JMP .SpecialInput
+.PressedUp:
+LDA #$0014
+JSL $C1DD47
+LDA $870F
+CMP PlayerCount
+BCS .MaxPlayers
+INC
+.MaxPlayers:
+DEC
+CMP PlayerCount
+BCS .OverCap
+INC
+STA $870F
+.OverCap:
+JMP .ResetText
+.PressedDown:
+LDA #$0014
+JSL $C1DD47
+LDA $870F
+CMP #$0001
+BEQ .MaxPlayers
+DEC
+BRA .MaxPlayers
+.PressedRight:
+LDA #$0014
+JSL $C1DD47
+LDA $870F
+CMP PlayerCount
+BCS .MaxPlayers
+CLC
+ADC #$000A
+JMP .MaxPlayers
+.PressedLeft:
+LDA #$0014
+JSL $C1DD47
+LDA $870F
+CMP #$000B
+BCC .MaxPlayers
+SEC
+SBC #$000A
+BRA .MaxPlayers
+.SpecialInput:
+LDA $0069
+AND #$00A0
+BNE .Confirm
+LDA $006A
+AND #$00A0
+BNE .Decline
+JMP .LoopWin
+.Confirm:
+LDA #$0001
+STA $97CC
+JSL $C1DD59
+
+LDA $970F
+STA $B5E9
+LDA #$0000
+JML $C17F0F
+
+.Decline:
+JSL $C1DD59
+STZ $97CC
+LDA #$0000
+JML $C17F0F
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
@@ -10501,6 +10645,19 @@ LDA $00BC
 LDY $00BE
 RTL
 
+goto_bank_c1:
+STA $00BC
+STY $00BE
+PEA $0034
+SEP #$20
+LDA #$C1
+PHA
+REP #$20
+PHY
+LDA $00BC
+LDY $00BE
+RTL
+
 missile_common:
 REP #$31
 PHD
@@ -11034,6 +11191,7 @@ db $04 ;δ
 db $05 ;λ
 db $06 ;&
 db $06 ;#
+db $05 ;arrows
 
 ORG $FA0100
 SaturnFontTable:
@@ -11474,6 +11632,80 @@ NOP
 NOP
 NOP
 RTL
+
+ORG $F20000
+;Escargo express intro text
+ExpressText:
+db $70, $84, $98, $91, $9e, $9b, $50, $a9, $9f, $a5, $50, $96, $9f, $a2, $50, $93
+db $91, $9c, $9c, $99, $9e, $97, $50, $75, $a3, $93, $91, $a2, $97, $9f, $50, $75
+db $a8, $a0, $a2, $95, $a3, $a3, $51, $03, $00, $70, $85, $9e, $96, $9f, $a2, $a4
+db $a5, $9e, $91, $a4, $95, $9c, $a9, $5c, $10, $04, $50, $9f, $a5, $a2, $50, $99
+db $a4, $95, $9d, $50, $a3, $a4, $9f, $a2, $91, $97, $95, $50, $a3, $95, $a2, $a6
+db $99, $93, $95, $a3, $50, $98, $91, $a6, $95, $50, $92, $95, $95, $9e, $50, $a3
+db $a5, $a3, $a0, $95, $9e, $94, $95, $94, $5e, $03, $00, $70, $79, $96, $50, $a9
+db $9f, $a5, $50, $9e, $95, $95, $94, $50, $a4, $9f, $50, $a3, $a4, $9f, $a2, $95
+db $50, $91, $9e, $50, $99, $a4, $95, $9d, $5c, $50, $a0, $9c, $95, $91, $a3, $95
+db $50, $98, $91, $9e, $97, $50, $a5, $a0, $50, $91, $9e, $94, $50, $a0, $a2, $95
+db $a3, $a3, $50, $a4, $98, $95, $50, $82, $50, $92, $a5, $a4, $a4, $9f, $9e, $5e
+db $03, $00
+
+escg_mainmen:
+db $70, $76, $9f, $a2, $50, $9f, $9e, $95, $50, $9f, $96, $50, $9f, $a5
+db $a2, $50, $9f, $96, $96, $5d, $a7, $9f, $a2, $9c, $94, $50, $94, $95, $9c, $99
+db $a6, $95, $a2, $a9, $50, $a3, $95, $a2, $a6, $99, $93, $95, $a3, $5c, $10, $04
+db $50, $a0, $9c, $95, $91, $a3, $95, $50, $a3, $a0, $95, $93, $99, $96, $a9, $50
+db $a9, $9f, $a5, $a2, $50, $a2, $95, $a1, $a5, $95, $a3, $a4, $50, $9E, $9F, $A7
+db $5E, $03, $00, $01
+
+db $19, $02
+db $77, $99, $96, $a4, $99, $9e, $97, $02
+db $19, $02
+db $83, $95, $a2, $a6, $95, $a2, $50, $a3, $a4, $9f, $a2, $91, $97, $95, $02
+db $1C, $07, $02, $11
+db $09, $02
+dd Gift_menu
+dd Server_Storage
+db $12
+db $0A
+dl $C75929
+Gift_menu:
+  db $12
+  db $08
+  dd escg_inquire
+  db $01
+  db $19, $02
+  db $83, $95, $9E, $94, $50, $97, $99, $96, $A4, $02
+  db $19, $02
+  db $82, $95, $93, $95, $99, $a6, $95, $50, $97, $99, $96, $a4, $02
+  db $1C, $07, $02, $11
+  db $09, $02
+  dd .SendGiftText
+  dd .GetGiftText
+  db $12
+  db $01
+  db $0A
+  dl escg_mainmen
+  .SendGiftText:
+  db $01
+  db $70, $87, $98, $9f, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c
+  db $99, $9b, $95, $50, $a4, $9f, $50, $a3, $95, $9e, $94, $50, $91, $50, $97, $99
+  db $96, $a4, $50, $a4, $9f, $6f
+  db $1C, $18, $00
+  db $18, $03, $01, $01
+  db $1B, $06
+  db $1b, $02
+  dd Gift_menu
+  db $02
+  .GetGiftText:
+  db $02
+
+
+Server_Storage:
+db $02
+
+escg_inquire:
+db $70, $87, $98, $91, $a4, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50
+db $9c, $99, $9b, $95, $50, $a4, $9f, $50, $94, $9f, $6f, $02
 
 
 

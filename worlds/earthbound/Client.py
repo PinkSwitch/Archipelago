@@ -4,7 +4,7 @@ import typing
 import time
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits
-from .game_data.text_data import eb_text_table
+from .game_data.text_data import eb_text_table, text_encoder
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -61,7 +61,7 @@ class EarthBoundClient(SNIClient):
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         import struct
-        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
+        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read, snes_write
         battle_hp = {
             1: WRAM_START + 0x9FBF,
             2: WRAM_START + 0xA00D,
@@ -137,7 +137,7 @@ class EarthBoundClient(SNIClient):
         return True
 
     async def game_watcher(self, ctx):
-        from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
+        from SNIClient import snes_buffered_write, snes_flush_writes, snes_read, snes_write
         giygas_clear = await snes_read(ctx, GIYGAS_CLEAR, 0x1)
         game_clear = await snes_read(ctx, GAME_CLEAR, 0x1)
         item_received = await snes_read(ctx, ITEM_RECEIVED, 0x1)
@@ -149,6 +149,7 @@ class EarthBoundClient(SNIClient):
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
+        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E7, 1)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -161,6 +162,17 @@ class EarthBoundClient(SNIClient):
 
         if ctx.slot is None:
             return
+
+        if gift_recipient[0] != 0x00: #Are we sending a gift
+            recip_name = ctx.player_names[gift_recipient[0]]
+            recip_name = text_encoder(recip_name, 20)
+            await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
+            await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00]))])
+            
+            name_flag_clear = await snes_read(ctx, WRAM_START + 0xB622, 1)
+            name_flag_clear = name_flag_clear[0] | 0x04
+            await snes_write(ctx, [(WRAM_START + 0xB622, bytes([name_flag_clear]))])
+
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
