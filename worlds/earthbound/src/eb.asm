@@ -2925,6 +2925,7 @@ GetItemRemote:
 SEP #$20
 STZ $B582
 STZ $B583
+STZ $B5E9
 LDA #$01
 STA $B585
 REP #$20
@@ -9067,7 +9068,12 @@ JML $C1FD72
 CheckMoreSpecialCommands:
 CMP #$0018
 BEQ .PrintPlayerMenu
+CMP #$0019
+BEQ .GetItemForGifting
 JML $C17DDC
+.GetItemForGifting:
+JMP .GetGetitemforGifting
+
 .PrintPlayerMenu:
 JSL $C3E4D4
 LDA #$0014
@@ -9083,6 +9089,11 @@ JSL goto_bank_c1
 LDA #$0001
 STA $870F
 .ResetText:
+STZ $B5EB
+
+LDA $B622
+AND #$00FB
+STA $B622
 LDA $870F
 STA $B5E7
 LDA #$00EE
@@ -9090,12 +9101,15 @@ STA $10
 LDA.w #PrintPlayerNum
 STA $0E
 JSL $C186B1
+
+.PressNothing:
 LDA #$0000
 .CheckServerLoop:
 STA $B58E
 LDA $B58E
 CMP #$0032
 BEQ .ExitServerLoop
+
 LDA $B622
 AND #$00FF
 AND #$0004
@@ -9180,11 +9194,18 @@ AND #$00A0
 BNE .Decline
 JMP .LoopWin
 .Confirm:
+LDA $B5EB
+BEQ .CanGetGifts
+LDA #$0005
+JSL $C0ABE0
+JMP .LoopWin
+
+.CanGetGifts:
 LDA #$0001
 STA $97CC
 JSL $C1DD59
 
-LDA $970F
+LDA $870F
 STA $B5E9
 LDA #$0000
 JML $C17F0F
@@ -9192,6 +9213,13 @@ JML $C17F0F
 .Decline:
 JSL $C1DD59
 STZ $97CC
+LDA #$0000
+JML $C17F0F
+
+.GetGetitemforGifting:
+LDA $97D0
+AND #$00FF
+STA $B5ED
 LDA #$0000
 JML $C17F0F
 
@@ -11695,7 +11723,54 @@ Gift_menu:
   db $1B, $06
   db $1b, $02
   dd Gift_menu
+  ;;;;;;;;;;;;;
+  db $70, $7f, $9b, $91, $a9, $5e, $10, $10, $50, $87, $98, $91, $a4, $50, $a7, $9f
+  db $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95, $50, $a4, $9f, $50
+  db $a3, $95, $9e, $94, $6f, $03
+  .gift_item_picker:
+  db $08, $56, $e4, $c5, $ff
+  db $1B, $02
+  dd .SendGiftText ; The player pressed b
+  db $19, $19, $00, $00
+  db $1B, $05
+  db $1C, $19, $01
+  db $70
+  db $10, $40
+  db $06, $14, $04
+  dd .banned_item
+  db $06, $15, $04
+  dd .rejected_gift
+
+  db $06, $16, $04
+  dd .gift_okay
+  db $1D, $0B, $00
+  db $1B, $02
+  dd .banned_item
+  .gift_okay:
   db $02
+
+
+  .banned_item:
+  db $05, $14, $04
+  db $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $06, $50, $92, $a5, $a4
+  db $50, $a4, $98, $99, $a3, $50, $99, $a4, $95, $9d, $50, $93, $91, $9e, $9e, $9f
+  db $a4, $50, $a0, $9f, $a3, $a3, $99, $92, $9c, $a9, $50, $92, $95, $50, $97, $99
+  db $a6, $95, $9e, $50, $91, $a7, $91, $a9, $5e, $03, $00, $70, $80, $9c, $95, $91
+  db $a3, $95, $50, $93, $98, $9f, $9f, $a3, $95, $50, $a3, $9f, $9d, $95, $a4, $98
+  db $99, $9e, $97, $50, $95, $9c, $a3, $95, $5e, $03
+  db $0A
+  dl .gift_item_picker
+  .rejected_gift:
+  db $05, $15, $04
+  db $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $06, $50, $92, $a5, $a4
+  db $50, $a4, $98, $99, $a3, $50, $a0, $9c, $91, $a9, $95, $a2, $50, $93, $91, $9e
+  db $9e, $9f, $a4, $50, $93, $a5, $a2, $a2, $95, $9e, $a4, $9c, $a9, $50, $91, $93
+  db $93, $95, $a0, $a4, $50, $a4, $98, $99, $a3, $50, $99, $a4, $95, $9d, $5e, $03
+  db $00, $70, $80, $9c, $95, $91, $a3, $95, $50, $93, $98, $9f, $9f, $a3, $95, $50
+  db $a3, $9f, $9d, $95, $a4, $98, $99, $9e, $97, $50, $95, $9c, $a3, $95, $5e, $03
+  db $0A
+  dl .gift_item_picker
+
   .GetGiftText:
   db $02
 
