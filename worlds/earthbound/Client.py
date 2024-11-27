@@ -149,8 +149,8 @@ class EarthBoundClient(SNIClient):
         cur_script = await snes_read(ctx, CUR_SCENE, 1)
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
-        gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 1)
-        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E9, 1)
+        gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 2)
+        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E9, 2)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -164,11 +164,25 @@ class EarthBoundClient(SNIClient):
         if ctx.slot is None:
             return
 
+        if f"GiftBoxes;{ctx.team}" not in ctx.stored_data:
+            await ctx.send_msgs([{
+            "cmd": "Get",
+            "keys": [f"GiftBoxes;{ctx.team}"]
+            }])
+
+        motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
+
         #We're in the Gift selection menu. This should write the selected player's name into RAM
         #for parsing.
         if gift_target[0] != 0x00:
+            gift_recipient = str(gift_target[0])
             recip_name = ctx.player_names[gift_target[0]]
             recip_name = text_encoder(recip_name, 20)
+            if gift_recipient in motherbox:
+                recip_name.extend(text_encoder(" (OK)", 20))
+            else:
+                recip_name.extend(text_encoder(" (NOT ELIGIBILE)", 20))
+
             recip_name.append(0x00)
             await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
             await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00]))])
@@ -178,12 +192,12 @@ class EarthBoundClient(SNIClient):
             await snes_write(ctx, [(WRAM_START + 0xB622, bytes([name_flag_clear]))])
 
         if gift_recipient[0] != 0x00:
-            #self.giftbox_key = f"Giftbox;{ctx.team};{ctx.slot}"
-            motherbox = f"GiftBoxes;{ctx.team}"
-            test = motherbox[gift_recipient[0]]
-            if test[isOpen]:
-                print("success")
-
+            gift_recipient = str(gift_recipient[0])
+            if motherbox: # Prevent crashing if we first connect while doing this
+                if gift_recipient in motherbox:
+                    print(motherbox[gift_recipient])
+                else:
+                    print("this player cannot gift")
 
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
