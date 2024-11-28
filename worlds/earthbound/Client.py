@@ -5,7 +5,7 @@ import time
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits
 from .game_data.text_data import eb_text_table, text_encoder
-from .gifting.gift_tags import banned_items
+from .gifting.gift_tags import banned_items, id_item_table, traits_list
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -183,28 +183,15 @@ class EarthBoundClient(SNIClient):
                 recip_name.extend(text_encoder(" (OK)", 20))
             else:
                 recip_name.extend(text_encoder(" (NOT ELIGIBILE)", 20))
-                await snes_write(ctx, [(WRAM_START + 0xB5EB, bytes([0x01]))])
-
             recip_name.append(0x00)
             await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
             await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00, 0x00]))])
             
-            name_flag_clear = await snes_read(ctx, WRAM_START + 0xB622, 1)
-            name_flag_clear = name_flag_clear[0] | 0x04
-            await snes_write(ctx, [(WRAM_START + 0xB622, bytes([name_flag_clear]))])
+            gift_flag_byte = await snes_read(ctx, WRAM_START + 0xB622, 1)
+            gift_flag_byte = gift_flag_byte[0] | 0x04
+            await snes_write(ctx, [(WRAM_START + 0xB622, bytes([gift_flag_byte]))])
 
-        if gift_recipient[0] != 0x00:
-            # We confirmed this player can get a gift, so we don't need to run this check anymore. 
-            await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00, 0x00]))])
-            # Get rid of the dynamic name flag so we can print items again
-            await snes_write(ctx, [(WRAM_START + 0xB57E, bytes([0x00]))])
-            await snes_write(ctx, [(WRAM_START + 0xB579, bytes([0x00]))])
-
-            gift_recipient = str(gift_recipient[0])
-            if motherbox: # Prevent crashing if we first connect while doing this
-                item_to_send = await snes_read(ctx, WRAM_START + 0xB5ED, 1)
-                if item_to_send[0] != 0x00:
-                    print("We have an item!")
+        #if gift_recipient[0] != 0x00:
 
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
