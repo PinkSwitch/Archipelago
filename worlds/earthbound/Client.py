@@ -194,13 +194,14 @@ class EarthBoundClient(SNIClient):
 
         if outbound_gifts[0] != 0x00:
             for i in range(outbound_gifts[0]):
-                gift = gift_properties[item]
+                gift_id = gift_buffer[0] #Todo; isolate only the first byte
+                gift = gift_properties[gift]
                 await ctx.send_msgs([{
                             "ID": "test",
                             "ItemName": gift.name,
                             "Amount": 1,
                             "ItemValue": gift.value,
-                            "Traits": [{"operation": "replace", "value": int.from_bytes(earth_power_absorbed, "little")}]
+                            "Traits": gift.traits
                         }])
 
 
