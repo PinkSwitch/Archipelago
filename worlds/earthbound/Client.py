@@ -5,7 +5,7 @@ import time
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits
 from .game_data.text_data import eb_text_table, text_encoder
-from .gifting.gift_tags import banned_items, id_item_table, traits_list
+from .gifting.gift_tags import gift_properties, traits_list
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -151,7 +151,8 @@ class EarthBoundClient(SNIClient):
         rom = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
         gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 2)
-        gift_recipient = await snes_read(ctx, WRAM_START + 0xB5E9, 2)
+        outbound_gifts = await snes_read(ctx, WRAM_START + 0x31D0, 1)
+        gift_buffer = await snes_read(ctx, WRAM_START + 0x31D1, 3)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -191,7 +192,16 @@ class EarthBoundClient(SNIClient):
             gift_flag_byte = gift_flag_byte[0] | 0x04
             await snes_write(ctx, [(WRAM_START + 0xB622, bytes([gift_flag_byte]))])
 
-        #if gift_recipient[0] != 0x00:
+        if outbound_gifts[0] != 0x00:
+            for i in range(outbound_gifts[0]):
+                gift = gift_properties[item]
+                await ctx.send_msgs([{
+                            "ID": "test",
+                            "ItemName": gift.name,
+                            "Amount": 1,
+                            "ItemValue": gift.value,
+                            "Traits": [{"operation": "replace", "value": int.from_bytes(earth_power_absorbed, "little")}]
+                        }])
 
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
