@@ -8005,6 +8005,12 @@ db $FD
 ORG $C9B132
 db $11, $04; Tony phone call flag
 
+ORG $C37A90
+db $90;Dept. Store starts farther right. Used for Escargo Express
+
+ORG $C37AB1
+db $30
+
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
 db $76, $a2, $91, $9e, $9b, $02; Frank
@@ -9235,7 +9241,7 @@ LDX #$0000
 CMP BannedItemList,X
 BEQ .BannedItem
 INX
-CPX #$0028
+CPX #$002B
 BCC .check_banlist
 REP #$20
 LDA #$0001
@@ -9251,11 +9257,35 @@ JSL goto_bank_c1
 LDA #$0000
 PLD
 JML $C17F0F
+
+
 .LongSendGiftPacket:
-;LDA $97CC
+LDA $31D0
+AND #$00FF
+CMP #$0009
+BCC .GiftBufferNotFull
+LDA $B622
+ORA #$0008
+STA $B622
+
+;Set flag here
+.GiftBufferNotFull:
+INC $31D0
 LDX #$0000
+.CheckBuffer:
+LDA $31D1,X
+BEQ .InsertGiftToBuffer
+INX #3
+BRA .CheckBuffer
 
 
+.InsertGiftToBuffer:
+SEP #$20
+LDA $97D0
+STA $31D1,X
+REP #$20
+LDA $B5E9
+STA $31D2,X
 LDA #$0000
 JML $C17F0F
 
@@ -11394,7 +11424,8 @@ sramchunk2_size = $0080 ;Expanded storage space
 sram_chunk3_pointer = $B620
 sramchunk3_size = $01C0; Expanded flags
 
-sramchunk4_size = $0000
+sramchunk4_pointer = $31D0
+sramchunk4_size = $0064
 
 !save_size = #$AA0
 !save_bytes = #$A80
@@ -11554,7 +11585,7 @@ dw sramchunk0_pointer
 dw sramchunk1_pointer
 dw sram_chunk2_pointer
 dw sram_chunk3_pointer
-dw $0000
+dw sramchunk4_pointer
 dw $0000
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -11751,6 +11782,9 @@ Gift_menu:
   db $0A
   dl escg_mainmen
   .SendGiftText:
+  db $06, $14, $04
+  dd .GiftOutboxFull
+
   ;Todo; write a way here to check whether or not our Gift Buffer is full
   ;Todo; write some code to get Rejected gifts
   db $01
@@ -11776,7 +11810,7 @@ Gift_menu:
   db $1B, $00 ;Store all current memory values
   db $1C, $19, $01
   db $70
-  db $10, $20
+  db $10, $0A
   db $1B, $02
   dd .banned_item
   .gift_okay:
@@ -11798,6 +11832,15 @@ Gift_menu:
   db $0A
   dl .declined_to_send_gift
   .send_gift_to_gift_buffer:
+  db $18, $04
+  db $1F, $00, $01, $59
+  db $1f, $15, $87, $00, $99, $02, $01 
+  db $10, $05
+  db $1F, $13, $FF, $03
+  db $10, $20
+  db $1F, $03
+  db $18, $01, $01
+  db $1F, $13, $FF, $01
   db $1b, $06
   db $1F, $02, $76
   db $10, $15
@@ -11836,10 +11879,9 @@ Gift_menu:
   db $0A
   dl escg_mainmen
 
-
   db $02
   .declined_to_send_gift:
-  db $70, $10, $30, $84, $98, $95, $9e, $5c, $10, $05, $50, $a7, $9f, $a5, $9c, $94
+  db $70, $10, $0, $84, $98, $95, $9e, $5c, $10, $05, $50, $a7, $9f, $a5, $9c, $94
   db $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95, $50, $a4, $9f, $50, $a3, $95, $9e
   db $94, $50, $a3, $9f, $9d, $95, $a4, $98, $99, $9e, $97, $50, $95, $9c, $a3, $95
   db $6f
@@ -11862,8 +11904,6 @@ Gift_menu:
   db $0A
   dl .gift_okay
 
-
-
   .banned_item:
   db $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $06, $50, $92, $a5, $a4
   db $50, $a4, $98, $99, $a3, $50, $99, $a4, $95, $9d, $50, $93, $91, $9e, $9e, $9f
@@ -11875,6 +11915,20 @@ Gift_menu:
   dl .gift_item_picker
   .GetGiftText:
   db $02
+
+  .GiftOutboxFull:
+  db $12
+  db $70, $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $04, $50, $92, $a5
+  db $a4, $50, $a9, $9f, $a5, $a2, $50, $97, $99, $96, $a4, $50, $a1, $a5, $95, $a5
+  db $95, $50, $99, $a3, $50, $96, $a5, $9c, $9c, $5e, $03, $01, $70, $80, $9c, $95
+  db $91, $a3, $95, $50, $93, $9f, $9e, $9e, $95, $93, $a4, $50, $a4, $9f, $50, $91
+  db $9e, $50, $71, $a2, $93, $98, $99, $a0, $95, $9c, $91, $97, $9f, $50, $a3, $95
+  db $a2, $a6, $95, $a2, $50, $a3, $9f, $50, $a9, $9f, $a5, $a2, $50, $97, $99, $96
+  db $a4, $a3, $50, $93, $91, $9e, $50, $92, $95, $50, $a0, $a2, $9f, $93, $95, $a3
+  db $a3, $95, $94, $5e, $03
+  db $01
+  db $0A
+  dl Gift_menu
 
 
 Server_Storage:
