@@ -2,10 +2,11 @@ import logging
 import struct
 import typing
 import time
+import uuid
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits
 from .game_data.text_data import eb_text_table, text_encoder
-from .gifting.gift_tags import gift_properties, traits_list
+from .gifting.gift_tags import gift_properties
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -194,10 +195,11 @@ class EarthBoundClient(SNIClient):
 
         if outbound_gifts[0] != 0x00:
             for i in range(outbound_gifts[0]):
-                gift_id = gift_buffer[0] #Todo; isolate only the first byte
-                gift = gift_properties[gift]
+                gift_item_id = gift_buffer[0] #Todo; isolate only the first byte
+                gift = gift_properties[gift_item_id]
+                guid = str(uuid.uuid4())
                 await ctx.send_msgs([{
-                            "ID": "test",
+                            "ID": guid,
                             "ItemName": gift.name,
                             "Amount": 1,
                             "ItemValue": gift.value,
