@@ -175,8 +175,8 @@ class EarthBoundClient(SNIClient):
 
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
 
-        #We're in the Gift selection menu. This should write the selected player's name into RAM
-        #for parsing.
+        # We're in the Gift selection menu. This should write the selected player's name into RAM
+        # for parsing.
         if gift_target[0] != 0x00:
             gift_recipient = str(gift_target[0])
             recip_name = ctx.player_names[gift_target[0]]
@@ -195,7 +195,7 @@ class EarthBoundClient(SNIClient):
 
         if outbound_gifts[0] != 0x00:
             for i in range(outbound_gifts[0]):
-                gift_item_id = gift_buffer[0] #Todo; isolate only the first byte
+                gift_item_id = gift_buffer[0] # Todo; isolate only the first byte
                 gift = gift_properties[gift_item_id]
                 guid = str(uuid.uuid4())
                 await ctx.send_msgs([{
@@ -205,7 +205,6 @@ class EarthBoundClient(SNIClient):
                             "ItemValue": gift.value,
                             "Traits": gift.traits
                         }])
-
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])

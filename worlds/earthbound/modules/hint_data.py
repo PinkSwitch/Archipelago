@@ -1,5 +1,5 @@
 from ..game_data.local_data import item_id_table, character_item_table, party_id_nums
-from ..game_data.text_data import eb_text_table, text_encoder
+from ..game_data.text_data import text_encoder
 from ..game_data.static_location_data import location_groups
 import struct
 

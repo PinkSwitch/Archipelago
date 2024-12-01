@@ -6,6 +6,7 @@ gift_qualities = {
     "Boiled Egg": ["Boiled", "Cooked", "Heal", "Consumable", "Egg", "White", "Food", "AnimalProduct"],
 }
 
+
 @dataclass
 class EarthBoundGift:
     name: str
@@ -13,15 +14,17 @@ class EarthBoundGift:
     traits: list
 
 
-def make_trait(trait: str, name, quality = 1, duration: float = 1):
+def make_trait(trait: str, name, duration: float = 1):
     if name in gift_qualities and trait in gift_qualities[name]:
         quality = gift_qualities[name][trait]
     else:
         quality = 1
     return {"Trait": trait, "Quality": quality, "Duration": duration}
 
+
 def make_default_traits(traits: List[str], name: str):
     return [make_trait(trait, name) for trait in traits]
+
 
 def create_gift(name, value, traits):
     return EarthBoundGift(name, value, make_default_traits(traits, name))
@@ -50,9 +53,31 @@ gift_properties = {
 
     0x0C: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource"]),
 
-    0x0D: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource"]),
+    0x0D: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon"]),
 
-    0x0E: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource"]),
+    0x0E: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument"]),
+
+    0x0F: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument"]),
+
+    0x10: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource"]),
+
+    0x11: create_gift("Cracked Bat", 18, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x12: create_gift("Tee Ball Bat", 48, ["MeleeWeapon", "Metal", "Toy", "Weapon"]),
+
+    0x13: create_gift("Sand Lot Bat", 98, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x14: create_gift("Minor League Bat", 399, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x15: create_gift("Mr. Baseball Bat", 498, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x16: create_gift("Big League Bat", 3080, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x17: create_gift("Hall of Fame Bat", 1880, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x18: create_gift("Magicant Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Dreamlike"]),
+
+    0x19: create_gift("Legendary Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Legendary"]),
 
     0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
