@@ -3,6 +3,18 @@ from typing import List
 
 gift_qualities = {
     "Super Plush Bear": {"Stuffed": 2, "MeatShield": 3},
+    "Cracked Bat": {"Weapon": 0.07},
+    "Tee Ball Bat": {"Weapon": 0.14},
+    "Sand Lot Bat": {"Weapon": 0.27},
+    "Minor League Bat": {"Weapon": 0.48},
+    "Mr. Baseball Bat": {"Weapon": 0.70},
+    "Hall of Fame Bat": {"Weapon": 1.14},
+    "Magicant Bat": {"Weapon": 1.48},
+    "Legendary Bat": {"Weapon": 2.03},
+    "Gutsy Bat": {"Weapon": 4.0},
+    "Casey Bat": {"Weapon": 0.1},
+    "T-rex's Bat": {"Weapon": 0.88},
+    "Ultimate Bat": {"Weapon": 1.25},
     "Boiled Egg": ["Boiled", "Cooked", "Heal", "Consumable", "Egg", "White", "Food", "AnimalProduct"],
 }
 
