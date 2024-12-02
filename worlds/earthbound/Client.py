@@ -197,6 +197,7 @@ class EarthBoundClient(SNIClient):
             gift = gift_properties[gift_item_id]
             recipient = struct.unpack("H", gift_buffer[-2:])
             # Check if the player's box is open, refund if not
+
             if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["IsOpen"] and any(
                         trait["Trait"] in motherbox[str(recipient[0])]["DesiredTraits"] for trait in gift.traits):
                 was_refunded = False
@@ -227,8 +228,12 @@ class EarthBoundClient(SNIClient):
             
             gift_queue = await snes_read(ctx, WRAM_START + 0x31D4, 0x21)
             #shuffle the entire queue down 3 bytes
+            outbox_full_byte = await snes_read(ctx, WRAM_START + 0xB622, 1)
+
             await snes_write(ctx, [(WRAM_START + 0x31D1, gift_queue)])
             await snes_write(ctx, [(WRAM_START + 0x31D0, bytes([outbound_gifts[0] - 1]))])
+            outbox_full_byte = outbox_full_byte[0] & ~0x08
+            await snes_write(ctx, [(WRAM_START + 0xB622, bytes([outbox_full_byte]))])
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])

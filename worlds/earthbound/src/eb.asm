@@ -9232,6 +9232,7 @@ PHD
 TDC
 ADC #$FFEE
 TCD
+STZ $B573
 LDY #$03DB
 JSL goto_bank_c1
 LDA $06
@@ -11787,7 +11788,7 @@ Gift_menu:
 
   ;Todo; write a way here to check whether or not our Gift Buffer is full
   ;Todo; write some code to get Rejected gifts
-  db $01
+  db $12
   db $70, $87, $98, $9f, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c
   db $99, $9b, $95, $50, $a4, $9f, $50, $a3, $95, $9e, $94, $50, $91, $50, $97, $99
   db $96, $a4, $50, $a4, $9f, $6f
