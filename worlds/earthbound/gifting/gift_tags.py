@@ -104,3 +104,7 @@ gift_properties = {
     0x5D: create_gift("Picnic Lunch", 24, ["ArtisanGood", "Comsumable", "Heal", "Food"]),
     #Todo; separate traits for GoodWeapon and BadWeapon
 }
+
+acceptable_gifts = [
+    "Confectionary"
+]

@@ -8651,11 +8651,13 @@ dd $00C7E6D7
 db $7E, $9F, $92, $9F, $94, $A9, $02
 
 PrintPlayerNum:
+db $1B, $06
 db $1C, $0A, $00, $00, $00, $00, $5E, $50, $02
 
 PlayerNameText:
 db $06, $13, $04
 dd .PrintPlayerName
+db $1B, $06
 db $80, $9C, $91, $A9, $95, $A2, $1C, $0A, $00, $00, $00, $00, $50, $50, $B8, $02
 .PrintPlayerName:
 db $1C, $05, $AD, $50, $50, $B8, $02
@@ -9105,13 +9107,13 @@ LDA #$0082
 LDY #$0EB3
 JSL goto_bank_c1
 LDA #$0001
-STA $870F
+STA $97D0
 .ResetText:
 STZ $B5E9
 LDA $B622
 AND #$00FB
 STA $B622
-LDA $870F
+LDA $97D0
 STA $B5E7
 LDA #$00EE
 STA $10
@@ -9164,7 +9166,7 @@ JMP .SpecialInput
 .PressedUp:
 LDA #$0014
 JSL $C1DD47
-LDA $870F
+LDA $97D0
 CMP PlayerCount
 BCS .MaxPlayers
 INC
@@ -9173,13 +9175,13 @@ DEC
 CMP PlayerCount
 BCS .OverCap
 INC
-STA $870F
+STA $97D0
 .OverCap:
 JMP .ResetText
 .PressedDown:
 LDA #$0014
 JSL $C1DD47
-LDA $870F
+LDA $97D0
 CMP #$0001
 BEQ .MaxPlayers
 DEC
@@ -9187,7 +9189,7 @@ BRA .MaxPlayers
 .PressedRight:
 LDA #$0014
 JSL $C1DD47
-LDA $870F
+LDA $97D0
 CMP PlayerCount
 BCS .MaxPlayers
 CLC
@@ -9196,7 +9198,7 @@ JMP .MaxPlayers
 .PressedLeft:
 LDA #$0014
 JSL $C1DD47
-LDA $870F
+LDA $97D0
 CMP #$000B
 BCC .MaxPlayers
 SEC
@@ -9215,7 +9217,7 @@ LDA #$0001
 STA $97CC
 JSL $C1DD59
 
-LDA $870F
+LDA $97D0
 STA $B5E9
 LDA #$0000
 JML $C17F0F
@@ -11787,7 +11789,9 @@ Gift_menu:
   dd .GiftOutboxFull
 
   ;Todo; write a way here to check whether or not our Gift Buffer is full
-  ;Todo; write some code to get Rejected gifts
+  db $0E, $01
+  db $0D, $01
+  db $1B, $05
   db $12
   db $70, $87, $98, $9f, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c
   db $99, $9b, $95, $50, $a4, $9f, $50, $a3, $95, $9e, $94, $50, $91, $50, $97, $99

@@ -6,7 +6,7 @@ import uuid
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits, item_id_table
 from .game_data.text_data import eb_text_table, text_encoder
-from .gifting.gift_tags import gift_properties
+from .gifting.gift_tags import gift_properties, acceptable_gifts
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -177,7 +177,7 @@ class EarthBoundClient(SNIClient):
                             "IsOpen": True,
                             # Todo; change this to all tags I'm using? I don't have that yet but I will
                             "AcceptsAnyGift": False,
-                            "DesiredTraits": ["Confectionary"], # Todo, write a var here so this isnt too long
+                            "DesiredTraits": acceptable_gifts, # Todo, write a var here so this isnt too long
                             "MinimumGiftDataVersion": 2,
                             "MaximumGiftDataVersion": 2}}
         await ctx.send_msgs([{
@@ -195,12 +195,13 @@ class EarthBoundClient(SNIClient):
 
         await ctx.send_msgs([{
                     "cmd": "SetNotify",
-                    "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
+                    "keys": [f"GiftBox;{ctx.team};{ctx.slot}", f"GiftBoxes;{ctx.team}"]
                 }])
 
         inbox = ctx.stored_data.get(f"GiftBox;{ctx.team};{ctx.slot}")
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
         if inbox:
+            print(inbox)
             key, gift = next(iter(inbox.items()))
             if gift["ItemName"] in item_id_table:
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
@@ -210,9 +211,16 @@ class EarthBoundClient(SNIClient):
 
             inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
             # Pause if the receiver queue is full
-            if inbox_queue[0]:
-                await snes_write(ctx, [(WRAM_START + 0x3201, bytes([item]))])
+            if not inbox_queue[0]:
+                await snes_write(ctx, [(WRAM_START + 0x3200, bytes([item]))])
                 inbox.pop(key)
+                await ctx.send_msgs([{
+                            "cmd": "Set",
+                            "key": f"GiftBox;{ctx.team};{ctx.slot}",
+                            "want_reply": False,
+                            "default": {},
+                            "operations": [{"operation": "update", "value": inbox}]
+                        }])
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
         # for parsing.
