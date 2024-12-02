@@ -16,7 +16,7 @@ gift_qualities = {
     "T-rex's Bat": {"Weapon": 0.88},
     "Ultimate Bat": {"Weapon": 1.25},
     "Boiled Egg": ["Boiled", "Cooked", "Heal", "Consumable", "Egg", "White", "Food", "AnimalProduct"],
-}
+} 
 
 
 @dataclass
@@ -91,11 +91,16 @@ gift_properties = {
 
     0x19: create_gift("Legendary Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Legendary"]),
 
+    0x1A: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Gutsy"]),
+
+    0x1A: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
     0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
-    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted"]),
+    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
 
-    0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed"]),
+    0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
 
     0x5D: create_gift("Picnic Lunch", 24, ["ArtisanGood", "Comsumable", "Heal", "Food"]),
+    #Todo; separate traits for GoodWeapon and BadWeapon
 }

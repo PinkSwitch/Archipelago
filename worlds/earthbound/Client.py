@@ -153,7 +153,6 @@ class EarthBoundClient(SNIClient):
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
         gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 2)
         outbound_gifts = await snes_read(ctx, WRAM_START + 0x31D0, 1)
-        gift_buffer = await snes_read(ctx, WRAM_START + 0x31D1, 3)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -167,17 +166,16 @@ class EarthBoundClient(SNIClient):
         if ctx.slot is None:
             return
 
-        if f"GiftBoxes;{ctx.team}" not in ctx.stored_data:
-            await ctx.send_msgs([{
-            "cmd": "Get",
-            "keys": [f"GiftBoxes;{ctx.team}"]
-            }])
+        await ctx.send_msgs([{
+        "cmd": "Get",
+        "keys": [f"GiftBoxes;{ctx.team}"]
+        }])
 
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
         # for parsing.
-        if gift_target[0] != 0x00:
+        if gift_target[0] != 0x00 and motherbox is not None:
             gift_recipient = str(gift_target[0])
             recip_name = ctx.player_names[gift_target[0]]
             recip_name = text_encoder(recip_name, 20)
@@ -193,18 +191,44 @@ class EarthBoundClient(SNIClient):
             gift_flag_byte = gift_flag_byte[0] | 0x04
             await snes_write(ctx, [(WRAM_START + 0xB622, bytes([gift_flag_byte]))])
 
-        if outbound_gifts[0] != 0x00:
-            for i in range(outbound_gifts[0]):
-                gift_item_id = gift_buffer[0] # Todo; isolate only the first byte
-                gift = gift_properties[gift_item_id]
-                guid = str(uuid.uuid4())
-                await ctx.send_msgs([{
-                            "ID": guid,
-                            "ItemName": gift.name,
-                            "Amount": 1,
-                            "ItemValue": gift.value,
-                            "Traits": gift.traits
-                        }])
+        if outbound_gifts[0] != 0x00 and motherbox is not None:
+            gift_buffer = await snes_read(ctx, WRAM_START + 0x31D1, 3)
+            gift_item_id = gift_buffer[0]
+            gift = gift_properties[gift_item_id]
+            recipient = struct.unpack("H", gift_buffer[-2:])
+            # Check if the player's box is open, refund if not
+            if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["IsOpen"] and any(
+                        trait["Trait"] in motherbox[str(recipient[0])]["DesiredTraits"] for trait in gift.traits):
+                was_refunded = False
+                recipient = recipient[0]
+            else:
+                was_refunded = True
+                recipient = ctx.slot
+            guid = str(uuid.uuid4())
+            outgoing_gift = {
+                            guid: {
+                                "ID": guid,
+                                "ItemName": gift.name,
+                                "Amount": 1,
+                                "ItemValue": gift.value,
+                                "Traits": gift.traits,
+                                "SenderSlot": ctx.slot,
+                                "ReceiverSlot": recipient,
+                                "SenderTeam": ctx.team,
+                                "ReceiverTeam": ctx.team, #??? Should be Receive slot team?
+                                "IsRefund": False}}
+
+            await ctx.send_msgs([{
+                        "cmd": "Set",
+                        "key": f"GiftBox;{ctx.team};{recipient}",
+                        "want_reply": True,
+                        "operations": [{"operation": "update", "value": outgoing_gift}]
+                    }])
+            
+            gift_queue = await snes_read(ctx, WRAM_START + 0x31D4, 0x21)
+            #shuffle the entire queue down 3 bytes
+            await snes_write(ctx, [(WRAM_START + 0x31D1, gift_queue)])
+            await snes_write(ctx, [(WRAM_START + 0x31D0, bytes([outbound_gifts[0] - 1]))])
 
         if game_clear[0] & 0x01 == 0x01:  # Goal should ignore the item queue and textbox check
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
