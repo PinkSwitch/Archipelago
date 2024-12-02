@@ -4,7 +4,7 @@ import typing
 import time
 import uuid
 from struct import pack, unpack
-from .game_data.local_data import check_table, client_specials, world_version, hint_bits
+from .game_data.local_data import check_table, client_specials, world_version, hint_bits, item_id_table
 from .game_data.text_data import eb_text_table, text_encoder
 from .gifting.gift_tags import gift_properties
 
@@ -176,17 +176,43 @@ class EarthBoundClient(SNIClient):
                         str(ctx.slot): {
                             "IsOpen": True,
                             # Todo; change this to all tags I'm using? I don't have that yet but I will
-                            "AcceptsAnyGift": True,
+                            "AcceptsAnyGift": False,
+                            "DesiredTraits": ["Confectionary"], # Todo, write a var here so this isnt too long
                             "MinimumGiftDataVersion": 2,
                             "MaximumGiftDataVersion": 2}}
         await ctx.send_msgs([{
                     "cmd": "Set",
                     "key": f"GiftBoxes;{ctx.team}",
-                    "want_reply": False,
+                    "want_reply": True,
                     "operations": [{"operation": "update", "value": local_giftbox}]
                 }])
+        
+        if f"GiftBox;{ctx.team};{ctx.slot}" not in ctx.stored_data:
+            await ctx.send_msgs([{
+                        "cmd": "Get",
+                        "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
+                    }])
 
+        await ctx.send_msgs([{
+                    "cmd": "SetNotify",
+                    "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
+                }])
+
+        inbox = ctx.stored_data.get(f"GiftBox;{ctx.team};{ctx.slot}")
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
+        if inbox:
+            key, gift = next(iter(inbox.items()))
+            if gift["ItemName"] in item_id_table:
+                # If the name matches an EB item, convert it to one (even if not coming from EB)
+                item = item_id_table[gift["ItemName"]]
+            else:
+                print("sadge") # Trait handling goes here
+
+            inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
+            # Pause if the receiver queue is full
+            if inbox_queue[0]:
+                await snes_write(ctx, [(WRAM_START + 0x3201, bytes([item]))])
+                inbox.pop(key)
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
         # for parsing.
@@ -213,8 +239,9 @@ class EarthBoundClient(SNIClient):
             recipient = struct.unpack("H", gift_buffer[-2:])
             # Check if the player's box is open, refund if not
 
-            if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["IsOpen"] and any(
-                        trait["Trait"] in motherbox[str(recipient[0])]["DesiredTraits"] for trait in gift.traits):
+            if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["IsOpen"] and (any(
+                        motherbox[str(recipient[0])]["AcceptsAnyGift"] or
+                        trait["Trait"] in motherbox[str(recipient[0])]["DesiredTraits"] for trait in gift.traits)):
                 was_refunded = False
                 recipient = recipient[0]
             else:
@@ -238,6 +265,7 @@ class EarthBoundClient(SNIClient):
                         "cmd": "Set",
                         "key": f"GiftBox;{ctx.team};{recipient}",
                         "want_reply": True,
+                        "default": {},
                         "operations": [{"operation": "update", "value": outgoing_gift}]
                     }])
             
