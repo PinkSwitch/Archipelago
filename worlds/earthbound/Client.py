@@ -171,6 +171,21 @@ class EarthBoundClient(SNIClient):
         "keys": [f"GiftBoxes;{ctx.team}"]
         }])
 
+        # Some sort of If goes here
+        local_giftbox = {
+                        str(ctx.slot): {
+                            "IsOpen": True,
+                            # Todo; change this to all tags I'm using? I don't have that yet but I will
+                            "AcceptsAnyGift": True,
+                            "MinimumGiftDataVersion": 2,
+                            "MaximumGiftDataVersion": 2}}
+        await ctx.send_msgs([{
+                    "cmd": "Set",
+                    "key": f"GiftBoxes;{ctx.team}",
+                    "want_reply": False,
+                    "operations": [{"operation": "update", "value": local_giftbox}]
+                }])
+
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
