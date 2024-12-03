@@ -6151,7 +6151,7 @@ ORG $C191BE
 JML CheckGiftBox4
 
 ORG $C191C9
-STA $B590,X
+JML CheckGiftBox6
 
 ORG $C19152
 ADC #$B590
@@ -9335,8 +9335,14 @@ PLA
 JML $809470
 
 SwapToGiftInventory:
+LDA $3272
+BEQ .SetSwapInv
+STZ $3272
+BRA .ClearSwapInv
+.SetSwapInv:
 LDA #$0001
 STA $3272
+.ClearSwapInv:
 LDA #$0000
 JML $C17F0F
 
@@ -9431,6 +9437,18 @@ STZ $B590,X
 .Giftbox:
 REP #$20
 JML $C191F1
+
+CheckGiftBox6:
+LDA $3272
+BEQ .Storage
+LDA $3201,X
+BRA .GiftBox
+.Storage:
+STA $B590,X
+.GiftBox:
+REP #$20
+JML $C191CE
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
@@ -12091,6 +12109,8 @@ Gift_menu:
 
   db $19, $1A, $00
   db $1B, $05
+  .GetGiftChar:
+  db $0E, $00
   db $1B, $04
   db $70, $87, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95, $50
   db $a4, $98, $95, $50, $1c, $05, $00, $6f
@@ -12109,7 +12129,6 @@ Gift_menu:
   dd .return_from_get
   db $0A
   dl .return_from_get
-  .AcceptGift:
   
   db $02
 
@@ -12138,7 +12157,7 @@ Gift_menu:
   db $0A
   dl Gift_menu
 
-  .SingularGiftText
+  .SingularGiftText:
   db $1B, $01
   db $70
   db $84, $98, $95, $a2, $95, $50, $99, $a3, $50, $93, $a5, $a2, $a2, $95, $9e, $a4
@@ -12155,8 +12174,39 @@ Gift_menu:
   db $a3, $50, $97, $9f, $9e, $95, $5e
   db $1B, $06
   db $19, $1C, $FF, $00
-
   db $03, $01
+  db $0A
+  dl .return_from_get
+
+  .AcceptGift:
+  db $12
+  db $1D, $03, $FF
+  db $1B, $02
+  dd .InventoryFull
+  db $70, $87, $98, $9f, $50, $a3, $98, $9f, $a5, $9c, $94, $50, $a4, $91, $9b, $95
+  db $50, $a4, $98, $99, $a3, $6f, $03
+  db $08
+  dd $FFC5E52E
+  db $1B, $02
+  dd .ClearGetGiftChar
+  db $1B, $04
+  db $1D, $03, $00
+  db $1B, $02
+  dd .SelectedCharFull
+  db $18, $04
+  db $1F, $00, $01, $59
+  db $1f, $15, $87, $00, $99, $02, $01 
+  db $10, $05
+  db $1F, $13, $FF, $03
+  db $10, $20
+  db $1F, $03
+  db $18, $01, $01
+  db $1B, $04
+  db $0D, $01
+  db $1D, $13, $00, $00
+  db $70, $84, $91, $9b, $95, $50, $97, $9f, $9f, $94, $50, $93, $91, $a2, $95, $50
+  db $9f, $96, $50, $99, $a4, $5e, $03
+  db $01
   db $0A
   dl .return_from_get
 
@@ -12165,6 +12215,29 @@ Gift_menu:
   db $1C, $1B, $01
   db $0A
   dl Gift_menu
+
+  .InventoryFull:
+  db $70, $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $05, $50, $92, $a5
+  db $a4, $50, $a9, $9f, $a5, $50, $93, $91, $9e, $9e, $9f, $a4, $50, $93, $91, $a2
+  db $a2, $a9, $50, $91, $9e, $a9, $50, $9d, $9f, $a2, $95, $50, $99, $a4, $95, $9d
+  db $a3, $5e, $03, $01
+  db $0A
+  dl .return_from_get
+
+  .SelectedCharFull:
+  db $70, $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $04, $50, $92, $a5
+  db $a4, $50, $a4, $98, $95, $a9, $50, $93, $91, $9e, $9e, $9f, $a4, $50, $93, $91
+  db $a2, $a2, $a9, $50, $91, $9e, $a9, $a4, $98, $99, $9e, $97, $50, $95, $9c, $a3
+  db $95, $5e, $03
+  db $01
+  db $1B, $06
+  db $0A
+  dl .GetGiftChar
+
+  .ClearGetGiftChar:
+  db $1B, $06
+  db $0A
+  dl .GetGiftChar
 
 
 Server_Storage:
