@@ -245,6 +245,12 @@ JML DrawWorldVersion
 ORG $C1FD57
 JML Set24BitStartingEXP
 
+ORG $C0946C
+JML TransferGiftToInv
+
+ORG $C19A62
+JML GetGiftInboxName
+
 ;new jmls
 
 
@@ -6139,10 +6145,10 @@ ORG $C1911B
 LDA $B590,X
 
 ORG $C19AB9
-LDA $B590,X
+JML CheckGiftBox1
 
 ORG $C191BE
-LDA $B590,X
+JML CheckGiftBox4
 
 ORG $C191C9
 STA $B590,X
@@ -6151,7 +6157,7 @@ ORG $C19152
 ADC #$B590
 
 ORG $C191D3
-LDA $B591,X
+JML CheckGiftBox3
 
 ORG $C191E5
 CMP #$0045
@@ -6169,10 +6175,10 @@ ORG $C19B3B
 JSL ClearStorageMenu
 
 ORG $C191EC
-STZ $B590,X
+JML CheckGiftBox5
 
 ORG $C15B29
-LDA $B590,X
+JML CheckGiftBox2
 
 ORG $C11E25
 ;JSL ClearStoragePage
@@ -8011,6 +8017,9 @@ db $90;Dept. Store starts farther right. Used for Escargo Express
 ORG $C37AB1
 db $30
 
+ORG $FCFF90
+db $77, $99, $96, $A4, $50, $79, $9E, $92, $9F, $A8
+
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
 db $76, $a2, $91, $9e, $9b, $02; Frank
@@ -9087,12 +9096,20 @@ CMP #$0019
 BEQ .CheckIfIsBanned
 CMP #$001A
 BEQ .SendGiftPacket
+CMP #$001B
+BEQ .PrintGiftInbox
+CMP #$001C
+BEQ .CountGifts
 
 JML $C17DDC
 .CheckIfIsBanned:
 JMP .CompareBannedItemList
 .SendGiftPacket:
 JMP .LongSendGiftPacket
+.PrintGiftInbox:
+JMP SwapToGiftInventory
+.CountGifts:
+JMP CountGifts
 
 .PrintPlayerMenu:
 JSL $C3E4D4
@@ -9281,7 +9298,6 @@ BEQ .InsertGiftToBuffer
 INX #3
 BRA .CheckBuffer
 
-
 .InsertGiftToBuffer:
 SEP #$20
 LDA $97D0
@@ -9292,6 +9308,129 @@ STA $31D2,X
 LDA #$0000
 JML $C17F0F
 
+TransferGiftToInv:
+PHA
+PHX
+SEP #$20
+LDA $3270;Set this byte if we opened the Receiving menu
+BNE .NoGift
+LDA $3200
+BEQ .NoGift
+LDX #$0000
+.CheckGiftSlots:
+LDA $3201,X
+BEQ .EmptySlot
+INX
+CPX #$0047
+BEQ .NoGift
+BRA .CheckGiftSlots
+.EmptySlot:
+LDA $3200
+STA $3201,X
+STZ $3200
+.NoGift:
+REP #$20
+PLX
+PLA
+JML $809470
+
+SwapToGiftInventory:
+LDA #$0001
+STA $3272
+LDA #$0000
+JML $C17F0F
+
+CountGifts:
+STZ $97D0
+STZ $97CC
+SEP #$20
+LDA $3201
+BEQ .Exit
+LDA #$01
+STA $97D0
+LDX #$0000
+.CheckGiftCount:
+LDA $3201,X
+BEQ .Exit
+INC $97CC
+INX
+BRA .CheckGiftCount
+
+.Exit:
+REP #$20
+LDA #$0000
+JML $C17F0F
+
+
+GetGiftInboxName:
+LDA $3272
+BEQ .GetStorage
+LDA #$FF90
+STA $0E
+LDA #$00FC
+STA $10
+LDX #$000C
+LDA #$9C9F
+JML $C19A6D
+.GetStorage:
+LDA #$00C4
+STA $10
+JML $C19A67
+
+CheckGiftBox1:;
+LDA $3272
+BEQ .Storage
+LDA $3201,X
+BRA .GiftBox
+.Storage:
+LDA $B590,X
+.GiftBox:
+AND #$00FF
+JML $C19ABF
+
+CheckGiftBox2:
+LDA $3272
+BEQ .Storage
+LDA $3201,X
+BRA .GiftBox
+.Storage:
+LDA $B590,X
+.GiftBox:
+STA $06
+JML $C15B2E
+
+CheckGiftBox3:
+LDA $3272
+BEQ .Storage
+LDA $3202,X
+BRA .GiftBox
+.Storage:
+LDA $B591,X
+.GiftBox:
+STA $00
+JML $C191D8
+
+CheckGiftBox4:
+LDA $3272
+BEQ .Storage
+LDA $3201,X
+BRA .Giftbox
+.Storage:
+LDA $B590,X
+.Giftbox
+STA $01
+JML $C191C3
+
+CheckGiftBox5:
+LDA $3272
+BEQ .Storage
+STZ $3201,X
+BRA .Giftbox
+.Storage:
+STZ $B590,X
+.Giftbox:
+REP #$20
+JML $C191F1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;BATTLE ACTION STUFF WEE-WOO WEE-WOO
@@ -11919,10 +12058,64 @@ Gift_menu:
   db $0A
   dl .gift_item_picker
   .GetGiftText:
+  db $12
+  db $1C, $1C, $01  
+  db $1B, $06
+  db $1B, $02
+  dd .NoGiftsToReceive
+  db $01
+  db $1B, $00
+  db $0B, $01
+  db $1b, $03
+  dd .SingularGiftText
+  db $1B, $01
+  db $1B, $04
+  db $70
+  db $84, $98, $95, $a2, $95, $50, $91, $a2, $95, $50, $93, $a5, $a2, $a2, $95, $9e
+  db $a4, $9c, $a9, $50, $1c, $0a, $00, $00, $00, $00, $50, $97, $99, $96, $a4, $a3
+  db $50, $99, $9e, $50, $a9, $9f, $a5, $a2, $50, $99, $9e, $92, $9f, $a8, $5e, $03
+  db $01, $70, $87, $98, $91, $a4, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5
+  db $50, $9c, $99, $9b, $95, $6f
+  .GiftUnionizer:
+  db $03
+  db $1C, $1B, $01
+  db $1A, $07
+  db $1B, $05
+  db $18, $03, $0D
+  db $18, $00
+  db $18, $03, $01
+  db $1B, $06
+  db $1B, $02
+  dd Gift_menu
+  db $1B, $04
+
+  db $19, $1A, $00
+  db $1B, $05
+  db $1B, $04
+  db $70, $87, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95, $50
+  db $a4, $98, $95, $50, $1c, $05, $00, $6f
+  db $01
+  db $19, $02
+  db $7B, $95, $95, $A0, $02
+  db $19, $02
+  db $84, $9F, $A3, $A3, $02
+  db $19, 02
+  db $72, $91, $93, $9B, $02
+  db $1C, $07, $03
+  db $11
+  db $09, $03
+  dd .AcceptGift
+  dd .TossGift
+  dd .return_from_get
+  db $0A
+  dl .return_from_get
+  .AcceptGift:
+  
   db $02
 
   .GiftOutboxFull:
   db $12
+  db $01
   db $70, $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $04, $50, $92, $a5
   db $a4, $50, $a9, $9f, $a5, $a2, $50, $97, $99, $96, $a4, $50, $a1, $a5, $95, $a5
   db $95, $50, $99, $a3, $50, $96, $a5, $9c, $9c, $5e, $03, $01, $70, $80, $9c, $95
@@ -11932,6 +12125,44 @@ Gift_menu:
   db $a4, $a3, $50, $93, $91, $9e, $50, $92, $95, $50, $a0, $a2, $9f, $93, $95, $a3
   db $a3, $95, $94, $5e, $03
   db $01
+  db $0A
+  dl Gift_menu
+
+  .NoGiftsToReceive:
+  db $70, $79, $57, $9d, $50, $a3, $9f, $a2, $a2, $a9, $5c, $10, $05, $50, $92, $a5
+  db $a4, $50, $a9, $9f, $a5, $50, $94, $9f, $50, $9e, $9f, $a4, $50, $93, $a5, $a2
+  db $a2, $95, $9e, $a4, $9c, $a9, $50, $98, $91, $a6, $95, $50, $91, $9e, $a9, $50
+  db $97, $99, $96, $a4, $a3, $50, $99, $9e, $50, $a9, $9f, $a5, $a2, $50, $99, $9e
+  db $92, $9f, $a8, $5e, $03
+  db $01
+  db $0A
+  dl Gift_menu
+
+  .SingularGiftText
+  db $1B, $01
+  db $70
+  db $84, $98, $95, $a2, $95, $50, $99, $a3, $50, $93, $a5, $a2, $a2, $95, $9e, $a4
+  db $9c, $a9, $50, $9f, $9e, $95, $50, $97, $99, $96, $a4, $50, $99, $9e, $50, $a9
+  db $9f, $a5, $a2, $50, $99, $9e, $92, $9f, $a8, $5e
+  db $0A
+  dl .GiftUnionizer
+
+  .TossGift:
+  db $12
+  db $1F, $02, $76
+  db $10, $10
+  db $70, $79, $a4, $57, $9c, $9c, $50, $92, $95, $50, $97, $9f, $9f, $94, $50, $91
+  db $a3, $50, $97, $9f, $9e, $95, $5e
+  db $1B, $06
+  db $19, $1C, $FF, $00
+
+  db $03, $01
+  db $0A
+  dl .return_from_get
+
+  .return_from_get:
+  db $12
+  db $1C, $1B, $01
   db $0A
   dl Gift_menu
 

@@ -183,7 +183,8 @@ class EarthBoundClient(SNIClient):
         await ctx.send_msgs([{
                     "cmd": "Set",
                     "key": f"GiftBoxes;{ctx.team}",
-                    "want_reply": True,
+                    "want_reply": False,
+                    "default": {},
                     "operations": [{"operation": "update", "value": local_giftbox}]
                 }])
         
@@ -201,7 +202,6 @@ class EarthBoundClient(SNIClient):
         inbox = ctx.stored_data.get(f"GiftBox;{ctx.team};{ctx.slot}")
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
         if inbox:
-            print(inbox)
             key, gift = next(iter(inbox.items()))
             if gift["ItemName"] in item_id_table:
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
@@ -219,7 +219,7 @@ class EarthBoundClient(SNIClient):
                             "key": f"GiftBox;{ctx.team};{ctx.slot}",
                             "want_reply": False,
                             "default": {},
-                            "operations": [{"operation": "update", "value": inbox}]
+                            "operations": [{"operation": "pop", "value": key}]
                         }])
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
