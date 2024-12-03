@@ -235,6 +235,7 @@ class EarthBoundClient(SNIClient):
             recip_name.append(0x00)
             await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
             await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00, 0x00]))])
+            await snes_write(ctx, [(WRAM_START + 0xB573, bytes([0x00, 0x00]))])
             
             gift_flag_byte = await snes_read(ctx, WRAM_START + 0xB622, 1)
             gift_flag_byte = gift_flag_byte[0] | 0x04
