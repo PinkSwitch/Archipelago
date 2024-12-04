@@ -217,7 +217,7 @@ def calculate_scaling(world):
     item_regions = {}
 
     for item in world.multiworld.precollected_items[world.player]:
-        inventory[0].append([item.name])
+        inventory[0].append(item.name)
 
     unconnected_regions = [world.starting_region, "Ness's Mind"]
     world.accessible_regions = [world.starting_region, "Ness's Mind"]
@@ -227,6 +227,7 @@ def calculate_scaling(world):
 
     world.scaled_area_order = []
     passed_connections = []
+    local_prog = []
     sphere_count = 0
     last_region = "Ness's Mind"
     early_regions = []
@@ -246,6 +247,8 @@ def calculate_scaling(world):
 
             if location.item.player == world.player and location.item.advancement:
                 inventory[num + 1].append(location.item.name)
+                if location.player == world.player:
+                    local_prog.append(location.item.name)
                 if location.item.name not in item_regions:
                     item_regions[location.item.name] = []
                 item_regions[location.item.name].append(location.parent_region.name)
@@ -279,6 +282,7 @@ def calculate_scaling(world):
             inventory[item] = inventory[item - 1]
 
     for i in range(sphere_count):
+        print(inventory[i])
         new_regions = []
         for region in unconnected_regions:
             unconnected_regions.remove("Ness's Mind")
@@ -287,11 +291,11 @@ def calculate_scaling(world):
                 if f"{region} -> {connection}" not in passed_connections:
                     for rule_set in area_rules[region][connection]:
                         # check if this sphere has the items needed to make this connection
-                        can_pass = all(
-                            item in inventory[i] and all(
-                                region in world.accessible_regions for region in item_regions.get(item, []))
-                            for item in rule_set
-                            )
+                        if all(item in inventory[i] for item in rule_set):
+                            can_pass = True
+                        else:
+                            can_pass = False
+
                         if can_pass:
                             passed_connections.append(f"{region} -> {connection}")
                             if connection not in world.accessible_regions:
