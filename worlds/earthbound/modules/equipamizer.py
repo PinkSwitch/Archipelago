@@ -7,7 +7,7 @@ import struct
 
 def roll_resistances(world, element, armor):
     chance = world.random.randint(0, 100)
-    if chance < 11:
+    if chance < world.options.armorizer_resistance_chance.value:
         setattr(armor, element, world.random.randint(1, 3))
     else:
         setattr(armor, element, 0)

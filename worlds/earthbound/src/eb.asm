@@ -9439,11 +9439,14 @@ REP #$20
 JML $C191F1
 
 CheckGiftBox6:
+PHA
 LDA $3272
 BEQ .Storage
-LDA $3201,X
+PLA
+STA $3201,X
 BRA .GiftBox
 .Storage:
+PLA
 STA $B590,X
 .GiftBox:
 REP #$20
@@ -12104,7 +12107,7 @@ Gift_menu:
   db $18, $03, $01
   db $1B, $06
   db $1B, $02
-  dd Gift_menu
+  dd .return_from_get
   db $1B, $04
 
   db $19, $1A, $00
@@ -12206,6 +12209,8 @@ Gift_menu:
 
   db $1B, $04
   db $0D, $01
+  db $1B, $04
+
   db $1D, $13, $00, $00
   db $70, $84, $91, $9b, $95, $50, $97, $9f, $9f, $94, $50, $93, $91, $a2, $95, $50
   db $9f, $96, $50, $99, $a4, $5e, $03

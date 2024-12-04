@@ -269,17 +269,13 @@ class Weaponizer(Choice):
     option_chaos = 2
     default = 0
 
-class RetainResistance(Choice):
-    """If the Equipamizer is enabled, this forces the original Pendant items to retain their original elemental resistances.
-       They will also be forced to be non-Arm equipment. Pendants will still be able to roll additional resistances,
-       and this does not affect resistance rolls on other equipment pieces.
-       Random Level: The resistance type will be retained with a random strength.
-       Same Level: The amount of resistance is the same as in the original"""
-    display_name = "Retain Equipment Resistances"
-    option_off = 0
-    option_random_level = 1
-    option_same_level = 2
-    default = 1
+class ElementChance(Range):
+    """Percent chance for any given Body/Other equipment to have elemental protection.
+       Affects Armorizer only."""
+    display_name = "Elemental Resistance Chance"
+    range_start = 1
+    range_end = 50
+    default = 15
 
 
 @dataclass
@@ -323,8 +319,8 @@ class EBOptions(PerGameCommonOptions):
     death_link: DeathLink
     death_link_mode: DeathLinkMode
     plando_lumine_hall_text: PlandoLumineHallText
+    armorizer_resistance_chance: ElementChance
     #starting_character: StartingCharacter
-    #retain_resistances: RetainResistance
 
 
 eb_option_groups = [
@@ -349,7 +345,7 @@ eb_option_groups = [
     OptionGroup("Equipamizer", [
         Armorizer,
         Weaponizer,
-        #RetainResistance
+        ElementChance
     ]),
 
     OptionGroup("World Modes", [
