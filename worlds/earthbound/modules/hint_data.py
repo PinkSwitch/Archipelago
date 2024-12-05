@@ -158,7 +158,7 @@ def setup_hints(world):
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
 
-    if world.local_hintable_items = []:
+    if world.local_hintable_items == []:
         hint_types.remove("hint_for_good_item", "prog_item_at_region")
 
     if world.options.giygas_required:

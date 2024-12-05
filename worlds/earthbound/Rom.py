@@ -329,7 +329,9 @@ def patch_rom(world, rom, player: int, multiworld):
                     hintable_locations_2.append(location)
             if hintable_locations_2 == []:
                 # This is just failsafe behavior
-                warning(f"Warning: Unable to create local hint for {world.hinted_items[index]}. Please report this.")
+                warning(f"Warning: Unable to create local hint for {world.hinted_items[index]} for "
+                + f"{world.multiworld.get_player_name(world.player)}'s EarthBound world."
+                + " Please report this.")
                 location = world.random.choice(hintable_locations)
             else:
                 location = world.random.choice(hintable_locations_2)
