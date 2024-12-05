@@ -305,7 +305,6 @@ def patch_rom(world, rom, player: int, multiworld):
         location for location in world.multiworld.get_locations()
         if location.player == world.player or location.item.player == world.player
     ]
-
     world.hint_pointer = 0x0000
     world.hint_number = 0
     for index, hint in enumerate(world.in_game_hint_types):
@@ -329,8 +328,9 @@ def patch_rom(world, rom, player: int, multiworld):
                 if location.item.name == world.hinted_items[index] and location.item.player == world.player:
                     hintable_locations_2.append(location)
             if hintable_locations_2 == []:
-                #todo; make an error if this happens
-                location = ("uh oh")
+                # This is just failsafe behavior
+                warning(f"Warning: Unable to create local hint for {world.hinted_items[index]}. Please report this.")
+                location = world.random.choice(hintable_locations)
             else:
                 location = world.random.choice(hintable_locations_2)
             parse_hint_data(world, location, rom, hint)

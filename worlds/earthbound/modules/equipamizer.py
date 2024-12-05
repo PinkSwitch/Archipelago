@@ -911,8 +911,7 @@ def randomize_weapons(world, rom):
         
         if weapon.miss_rate == 12:
             description += "@If you use this, you might just whiff.\n"
-        
-        #print(description)
+
         description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])

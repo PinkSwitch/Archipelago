@@ -154,6 +154,13 @@ def setup_hints(world):
             # let's not hint an item that doesn't exist
             world.local_hintable_items.remove(item.name)
 
+    for item in world.options.start_inventory_from_pool:
+        if item in world.local_hintable_items:
+            world.local_hintable_items.remove(item)
+
+    if world.local_hintable_items = []:
+        hint_types.remove("hint_for_good_item", "prog_item_at_region")
+
     if world.options.giygas_required:
         world.local_hintable_locations.append("Cave of the Past - Present")
     
@@ -162,7 +169,6 @@ def setup_hints(world):
 
     for i in range(6):
         world.in_game_hint_types.append(world.random.choice(hint_types))
-    # print(world.in_game_hint_types)
 
     for index, hint in enumerate(world.in_game_hint_types):
         if hint == "item_at_location":
@@ -220,6 +226,7 @@ def parse_hint_data(world, location, rom, hint):
         text.append(0x02)
         
     elif hint == "hint_for_good_item" or hint == "prog_item_at_region" or hint == "item_in_local_region":
+
         if location.item.name in character_item_table and location.item.player == world.player:
             item_text = text_encoder("your friend ", 255)
             item_text.extend([0x1C, 0x02, party_id_nums[location.item.name]])

@@ -290,9 +290,6 @@ def calculate_scaling(world):
             unconnected_regions.remove("Ness's Mind")
             unconnected_regions.append("Ness's Mind")  # probably do this differently earlier
         for region in unconnected_regions:
-            #if not area_exits[region]:
-             #   unconnected_regions.remove(region)
-              #  continue
             for connection in area_exits[region]:
                 if f"{region} -> {connection}" not in passed_connections:
                     for rule_set in area_rules[region][connection]:
