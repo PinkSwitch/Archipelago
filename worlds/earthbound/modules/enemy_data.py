@@ -933,7 +933,6 @@ def scale_enemies(world, rom):
         rom.write_bytes(0x15F637, bytearray([max(levels[world.scaled_area_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
 
     melody_number = 1
-    print(world.scaled_area_order)
     for region, level in zip(world.scaled_area_order, levels):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
