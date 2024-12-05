@@ -578,7 +578,42 @@ def randomize_armor(world, rom):
                 armor.name = front_name + " " + back_name
 
             pixel_length = calc_pixel_width(armor.name)
-        
+            
+        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
+        resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
+        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
+        rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
+    
+    sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
+
+    sorted_arm_gear = [armor for armor in sorted_armor if armor.equip_type == "arm"]
+    sorted_body_gear = [armor for armor in sorted_armor if armor.equip_type == "body"]
+    sorted_other_gear = [armor for armor in sorted_armor if armor.equip_type == "other"]
+
+    sorts = [
+        sorted_arm_gear,
+        sorted_other_gear,
+        sorted_body_gear,
+    ]
+
+    prog_armors = [
+        progressive_bracelets,
+        progressive_others
+    ]
+
+    for i in range(3):
+        price_armors(sorts[i], rom)
+    
+    if world.options.progressive_armor:
+        for i in range(2):
+            apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
+
+    for item in all_armor:
+        armor = world.armor_list[item]
+
+        item_name = text_encoder(armor.name, 25)
+        item_name.extend([0x00])
+
         description = f" “{armor.name}”\n"
         if armor.can_equip != "All":
             description += f"@♪'s {armor.equip_type} equipment.\n"
@@ -610,48 +645,15 @@ def randomize_armor(world, rom):
         description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
-        item_name = text_encoder(armor.name, 25)
-        item_name.extend([0x00])
 
         if armor.can_equip != "All":
             index = description.index(0xAC)
             description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[armor.can_equip]])
+
         rom.write_bytes(armor.address, item_name)
-        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
-        resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
-        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
-        rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
-        armor.description = description
-    
-    sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
-
-    sorted_arm_gear = [armor for armor in sorted_armor if armor.equip_type == "arm"]
-    sorted_body_gear = [armor for armor in sorted_armor if armor.equip_type == "body"]
-    sorted_other_gear = [armor for armor in sorted_armor if armor.equip_type == "other"]
-
-    sorts = [
-        sorted_arm_gear,
-        sorted_other_gear,
-        sorted_body_gear,
-    ]
-
-    prog_armors = [
-        progressive_bracelets,
-        progressive_others
-    ]
-
-    for i in range(3):
-        price_armors(sorts[i], rom)
-    
-    if world.options.progressive_armor:
-        for i in range(2):
-            apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
-
-    for item in all_armor:
-        armor = world.armor_list[item]
-        rom.write_bytes((0x310000 + world.description_pointer), armor.description)
+        rom.write_bytes((0x310000 + world.description_pointer), description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
-        world.description_pointer += len(armor.description)
+        world.description_pointer += len(description)
 
 
 def randomize_weapons(world, rom):
@@ -859,33 +861,10 @@ def randomize_weapons(world, rom):
                 weapon.name = front_name + " " + back_name
             pixel_length = calc_pixel_width(weapon.name)
 
-        description = f" “{weapon.name}”\n"
-        if weapon.can_equip != "All":
-            description += f"@♪ can equip this weapon.\n"
-
-        description += f"@+{weapon.offense} Offense.\n"
-        if weapon.aux_stat > 0:
-            description += f"@+{weapon.aux_stat} Guts.\n"
-        
-        if weapon.miss_rate == 12:
-            description += "@If you use this, you might just whiff.\n"
-
-        description = text_encoder(description, 0x100)
-        description = description[:-2]
-        description.extend([0x13, 0x02])
-        item_name = text_encoder(weapon.name, 25)
-        item_name.extend([0x00])
-
-        if weapon.can_equip != "All":
-            index = description.index(0xAC)
-            description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[weapon.can_equip]])
-
-        rom.write_bytes(weapon.address, item_name)
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         rom.write_bytes(weapon.address + 31, bytearray([
             weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
-        weapon.description = description
 
     sorted_weapons = sorted(world.weapon_list.values(), key=attrgetter("offense"))
 
@@ -919,10 +898,34 @@ def randomize_weapons(world, rom):
 
     for item in all_weapons:
         weapon = world.weapon_list[item]
-        rom.write_bytes((0x310000 + world.description_pointer), weapon.description)
+        item_name = text_encoder(weapon.name, 25)
+        item_name.extend([0x00])
+        
+        description = f" “{weapon.name}”\n"
+        if weapon.can_equip != "All":
+            description += f"@♪ can equip this weapon.\n"
+
+        description += f"@+{weapon.offense} Offense.\n"
+        if weapon.aux_stat > 0:
+            description += f"@+{weapon.aux_stat} Guts.\n"
+        
+        if weapon.miss_rate == 12:
+            description += "@If you use this, you might just whiff.\n"
+        
+        #print(description)
+        description = text_encoder(description, 0x100)
+        description = description[:-2]
+        description.extend([0x13, 0x02])
+
+        if weapon.can_equip != "All":
+            index = description.index(0xAC)
+            description[index:index + 1] = bytearray([0x1C, 0x02, char_nums[weapon.can_equip]])
+
+        rom.write_bytes(weapon.address, item_name)
+        rom.write_bytes((0x310000 + world.description_pointer), description)
         rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         weapon.description_pointer = world.description_pointer
-        world.description_pointer += len(weapon.description)
+        world.description_pointer += len(description)
 
         # test capping armor defense (50, 100, 127 for body arm other)
 
