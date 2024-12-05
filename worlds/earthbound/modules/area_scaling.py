@@ -282,26 +282,28 @@ def calculate_scaling(world):
             inventory[item] = inventory[item - 1]
 
     for i in range(sphere_count):
-        print(inventory[i])
-        new_regions = []
-        for region in unconnected_regions:
+        # Ness's mind needs to be calculated last, always. (Players are more likely to walk around
+        # and explore areas than suddenly leave with a teleport)
+        # Shuffle it to the end of the list on each loop so it gets deprioritized
+        # Is there a better way to do this?
+        if "Ness's Mind" in unconnected_regions:
             unconnected_regions.remove("Ness's Mind")
-            unconnected_regions.append("Ness's Mind")
+            unconnected_regions.append("Ness's Mind")  # probably do this differently earlier
+        for region in unconnected_regions:
+            if not area_exits[region]:
+                unconnected_regions.remove(region)
+                continue
             for connection in area_exits[region]:
                 if f"{region} -> {connection}" not in passed_connections:
                     for rule_set in area_rules[region][connection]:
                         # check if this sphere has the items needed to make this connection
                         if all(item in inventory[i] for item in rule_set):
-                            can_pass = True
-                        else:
-                            can_pass = False
-
-                        if can_pass:
                             passed_connections.append(f"{region} -> {connection}")
                             if connection not in world.accessible_regions:
                                 world.accessible_regions.append(connection)
-                                new_regions.append(connection)
-        unconnected_regions.extend(new_regions)
+                                unconnected_regions.append(connection)
+                else:
+                    area_exits[region].remove(connection)
         if "Endgame" in unconnected_regions:
             unconnected_regions.remove("Endgame")
             unconnected_regions.insert(0, "Endgame")

@@ -943,10 +943,10 @@ def scale_enemies(world, rom):
 
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
-                # gprint(f"{enemy.name} {level}")
+                # print(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
-                k = 2.258
+                # k = 2.258
                 enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
                 enemy_money = int(enemy.money * level / enemy.level)
                 enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
