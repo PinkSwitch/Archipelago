@@ -93,11 +93,25 @@ gift_properties = {
 
     0x1A: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Gutsy"]),
 
-    0x1A: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    0x1B: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    0x1C: create_gift("Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+
+    0x1D: create_gift("Thick Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Thick"]),
+
+    0x1E: create_gift("Deluxe Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+
+    0x1F: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+
+    0x20: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "French"]),
+
+    0x21: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+
+    0x22: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
 
     0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
-    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
+    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable", "French"]),
 
     0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
 
@@ -106,5 +120,18 @@ gift_properties = {
 }
 
 acceptable_gifts = [
-    "Confectionary"
+    "Confectionary",
+    "Vegetable",
+    "Food"
+]
+
+parent_trait_list = [
+    "Broken",
+    "Machine",
+    "Gun",
+    "Heal",
+    "Mana",
+    "Food",
+    "Baseball",
+    "Egg"
 ]

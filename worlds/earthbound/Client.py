@@ -6,7 +6,7 @@ import uuid
 from struct import pack, unpack
 from .game_data.local_data import check_table, client_specials, world_version, hint_bits, item_id_table
 from .game_data.text_data import eb_text_table, text_encoder
-from .gifting.gift_tags import gift_properties, acceptable_gifts
+from .gifting.gift_tags import gift_properties, acceptable_gifts, parent_trait_list
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -207,7 +207,12 @@ class EarthBoundClient(SNIClient):
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
                 item = item_id_table[gift["ItemName"]]
             else:
-                print("sadge") # Trait handling goes here
+                traits = []
+                qualities = []
+                for trait in gift["Traits"]:
+                    if trait["Trait"] in parent_trait_list:
+                        parent_trait = trait["Trait"]
+                        break
 
             inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
             # Pause if the receiver queue is full
