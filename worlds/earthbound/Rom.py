@@ -125,6 +125,13 @@ def patch_rom(world, rom, player: int, multiworld):
     elif world.options.monkey_caves_mode == 3:
         rom.write_bytes(0x0F1388, bytearray([0x03, 0xCA, 0xEE]))
 
+    if world.options.no_free_sanctuaries:
+        rom.write_bytes(0x0F09F2, bytearray([0x15, 0x84])) # Lock Lilliput steps with flag $0415
+        rom.write_bytes(0x0F09EE, struct.pack("I", 0xEEF790)) # Lilliput door script
+
+        rom.write_bytes(0x0F23D2, bytearray([0x16, 0x84])) # Lock Fire Spring with flag $0146
+        rom.write_bytes(0x0F23CE, struct.pack("I", 0xEEF946)) # Fire Spring door script
+
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
 
     for location in world.multiworld.get_locations(player):

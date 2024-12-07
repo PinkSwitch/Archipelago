@@ -268,6 +268,7 @@ class EarthBoundWorld(World):
         spoiler_handle.write(f"\nStarting Location:    {spoiler_starts[self.start_location]}\n")
         spoiler_handle.write(f"Franklin Badge Protection:    {spoiler_badges[self.franklin_protection]}\n")
         if self.options.psi_shuffle:
+            spoiler_handle.write("\nPSI Shuffle:\n")
             spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_psi[self.offensive_psi_slots[0]]}\n")
             spoiler_handle.write(f"Ness Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[1]]}\n")
             spoiler_handle.write(f"Paula Offensive PSI Top Slot:    {spoiler_psi[self.offensive_psi_slots[2]]}\n")
@@ -390,6 +391,10 @@ class EarthBoundWorld(World):
             excluded_items.add("Coin of Slumber")
             excluded_items.add("Souvenir Coin")
             excluded_items.add("Mr. Saturn Coin")
+
+        if not self.options.no_free_sanctuaries:
+            excluded_items.add("Tiny Key")
+            excluded_items.add("Tenda Lavapants")
 
         return excluded_items
 

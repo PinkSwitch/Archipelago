@@ -277,6 +277,11 @@ class ElementChance(Range):
     range_end = 50
     default = 15
 
+class NoFreeSancs(Toggle):
+    """If enabled, the entrance to Lilliput Steps and Fire Spring will be locked and require extra key items to access.
+       These items are the Tiny Key and Lavaproof Underpants, respectively."""
+    display_name = "No Free Sanctuaries"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -320,6 +325,7 @@ class EBOptions(PerGameCommonOptions):
     death_link_mode: DeathLinkMode
     plando_lumine_hall_text: PlandoLumineHallText
     armorizer_resistance_chance: ElementChance
+    no_free_sanctuaries: NoFreeSancs
     #starting_character: StartingCharacter
 
 
@@ -351,7 +357,8 @@ eb_option_groups = [
     OptionGroup("World Modes", [
         RandomStartLocation,
         MagicantMode,
-        MonkeyCavesMode
+        MonkeyCavesMode,
+        NoFreeSancs
     ]),
 
     OptionGroup("PSI Randomization", [

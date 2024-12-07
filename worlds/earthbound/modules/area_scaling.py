@@ -191,6 +191,7 @@ area_rules = {
     "Cave of the Past": {"Endgame": [["Paula"]]},
 
     "Endgame": {"Endgame": [["Nothing"]]}
+    
 }
 
 teleports = {
@@ -213,6 +214,11 @@ teleports = {
 
 
 def calculate_scaling(world):
+    if world.options.no_free_sanctuaries:
+        area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Tiny Key"]]
+        area_rules["Lost Underworld"]["Fire Spring"] = [["Tenda Lavapants"]]
+
+
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     item_regions = {}
 

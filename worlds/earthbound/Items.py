@@ -146,7 +146,7 @@ item_table: Dict[str, ItemData] = {
     "Sprig of Parsley": ItemData("Food", 0xEB007A, ItemClassification.filler, 0),
     "Jar of Hot Sauce": ItemData("Food", 0xEB007B, ItemClassification.filler, 0),
     "Salt Packet": ItemData("Food", 0xEB007C, ItemClassification.filler, 0),
-    "Backstage Pass": ItemData("Key Items", 0xEB007D, ItemClassification.filler, 0), #Progressive Gun
+    "Tiny Key": ItemData("Key Items", 0xEB007D, ItemClassification.progression), #Progressive Gun
     "Jar of Delisauce": ItemData("Food", 0xEB007E, ItemClassification.useful, 0),
     "Wet Towel": ItemData("Food", 0xEB007F, ItemClassification.filler, 0),
     "Refreshing Herb": ItemData("Food", 0xEB0080, ItemClassification.useful, 0),
@@ -204,7 +204,7 @@ item_table: Dict[str, ItemData] = {
     "Bicycle": ItemData("Key Items", 0xEB00B0, ItemClassification.useful),
     "ATM Card": ItemData("Key Items", 0xEB00B1, ItemClassification.progression, 0),
     "Show Ticket": ItemData("Key Items", 0xEB00B2, ItemClassification.filler, 0),
-    "Letter from Kids": ItemData("Key Items", 0xEB00B3, ItemClassification.filler, 0), #Progressive Bat
+    "Tenda Lavapants": ItemData("Key Items", 0xEB00B3, ItemClassification.progression), #Progressive Bat
     "Wad of Bills": ItemData("Key Items", 0xEB00B4, ItemClassification.progression),
     "Receiver Phone": ItemData("Key Items", 0xEB00B5, ItemClassification.filler, 0), #Progressive Fry Pan
     "Diamond": ItemData("Key Items", 0xEB00B6, ItemClassification.progression),
