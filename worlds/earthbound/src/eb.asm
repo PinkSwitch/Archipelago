@@ -8024,6 +8024,16 @@ db $84, $99, $9e, $a9, $50, $9b, $95, $a9, $00; Tiny key
 
 ORG $D5632E
 dd TinyKeyDesc
+
+ORG $D56B45
+db $84, $95, $9E, $94, $91, $50, $9C, $91, $A6, $91, $A0, $91, $9E, $A4, $A3, $00
+
+ORG $D56B68
+dd LavapantsDesc
+
+ORG $C6FED6
+db $0A
+dl LavaPantsUseTxt
 ;New data table go here
 
 ;;;;;;;;;;;;;boss names
@@ -8737,22 +8747,47 @@ dd .FireSpringUnlocked
 db $18, $01, $01
 db $70, $87, $98, $9f, $91, $98, $51, $03, $01, $70, $79, $a4, $57, $a3, $50, $a3
 db $9f, $50, $98, $9f, $a4, $5c, $10, $05, $50, $a9, $9f, $a5, $50, $93, $9f, $a5
-db $9c, $94, $50, $9d, $95, $9c, $a4, $51, $03, $01, $70, $72, $95, $a4, $a4, $95
+db $9c, $94, $50, $9d, $95, $9c, $a4, $51
+db $1D, $05, $FF, $B3, $03
+db $1B, $03
+dd .UnlockDoor
+
+db $01, $70, $72, $95, $a4, $a4, $95
 db $a2, $50, $93, $9f, $9d, $95, $50, $92, $91, $93, $9b, $50, $a7, $99, $a4, $98
 db $50, $a3, $9f, $9d, $95, $50, $9c, $91, $a6, $91, $5d, $a0, $a2, $9f, $9f, $96
 db $50, $a0, $91, $9e, $a4, $a3, $5e, $5e, $5e
-db $1D, $05, $FF, $B3
-db $1B, $03
-dd .UnlockDoor
+;Todo; Somewhere in this, place the jump to UnlockDoor after "It's so hot you could melt"
 db $13
 db $18, $04
 db $02
 .UnlockDoor:
 db $08
 dd LavaPantsUseTxt
+db $1D, $01, $FF, $B3
 db $18, $04
 .FireSpringUnlocked
 db $0A, $0B, $B1, $C9
+
+LavaPantsUseTxt:
+db $01, $70
+db $1C, $0D
+db $1B, $04, $50
+db $a5, $a3, $95, $94, $50, $a4, $98, $95, $50, $1c, $05, $b3, $51
+db $1F, $02, $73
+db $14
+db $01, $70, $7E, $9F, $A7, $5C, $50
+db $08
+dd $00C7E602
+db $50
+db $93, $91, $9e, $50, $95, $91, $a3, $99, $9c, $a9, $50, $a7, $99, $a4, $98, $a3
+db $a4, $91, $9e, $94, $50, $a4, $98, $95, $50, $9c, $91, $a6, $91, $50, $99, $9e
+db $50, $76, $99, $a2, $95, $50, $83, $a0, $a2, $99, $9e, $97, $5e
+db $14
+db $18, $04
+db $04, $16, $04
+db $02
+;Todo; make the item not have the infinite use flag
+
 
 
 ;FOR TESTING!!!!
@@ -8760,13 +8795,14 @@ db $0A, $0B, $B1, $C9
 ;dl $EEf790
 
 ;ORG $CF09F2
-;db $15, $84 ;FOR TESTING ONLY, DELETE THIS
+;db $15, $84
 
 ORG $CF23D2
 db $16, $84
 
 ORG $CF23CE
 dd FireSpringDoor
+;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
