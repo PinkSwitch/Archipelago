@@ -8797,11 +8797,11 @@ db $02
 ;ORG $CF09F2
 ;db $15, $84
 
-ORG $CF23D2
-db $16, $84
+;ORG $CF23D2
+;db $16, $84
 
-ORG $CF23CE
-dd FireSpringDoor
+;ORG $CF23CE
+;dd FireSpringDoor
 ;;;;;;;;;;;;;;;;;
 
 
