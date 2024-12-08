@@ -925,6 +925,28 @@ def scale_shield(level, shield):
                 enemy_shield = "psi_2"
         return enemy_shield
 
+guardian_text = [
+    0xEEFAA0,
+    0xEEFAA6,
+    0xEEFAAD,
+    0xEEFAB3,
+    0xEEFABA,
+    0xEEFAC0,
+    0xEEFAC6,
+    0xEEFACE
+]
+
+guardian_intro = [
+    0xC66699,
+    0x2F97CB,
+    0x2F67C3,
+    0x2EFAD6,
+    0x083D4D,
+    0x09D2E3,
+    0x09E2A4,
+    0x2EFADF
+]
+
 
 def scale_enemies(world, rom):
     if world.options.auto_scale_party_members:
@@ -937,7 +959,7 @@ def scale_enemies(world, rom):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
                       "Lumine Hall", "Fire Spring"]:
-            print(f"I am a placeholder test. I am Melody {melody_number}. I am {region}")
+            rom.write_bytes(guardian_intro[melody_number - 1], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
 
         for enemy in world.regional_enemies[region]:
@@ -945,7 +967,6 @@ def scale_enemies(world, rom):
                 # print(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_pp = int(enemy.pp * level / enemy.level)
-                # k = 2.258
                 enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
                 enemy_money = int(enemy.money * level / enemy.level)
                 enemy_speed = max(2, int(scale_enemy_speed(enemy, level)))
@@ -953,9 +974,6 @@ def scale_enemies(world, rom):
                 enemy_defense = int(enemy.defense * level / enemy.level)
                 enemy_level = int(enemy.level * level / enemy.level)
                 enemy_shield = scale_shield(level, enemy.shield)
-
-                # if world.multiworld.get_player_name(world.player) == "Pink":
-                # print(f"\nEnemy: {enemy.name}\nLevel: {enemy_level}\nHP: {enemy_hp}\nPP: {enemy_pp}\nEXP: {enemy_exp}\n${enemy_money}\nSpeed: {enemy_speed}\nOffense: {enemy_offense}\nDefense: {enemy_defense}\nSpeed: {enemy_speed} {enemy.shield}")
                 enemy_hp = struct.pack('<H', enemy_hp)
                 enemy_pp = struct.pack('<H', enemy_pp)
                 enemy_exp = struct.pack('<I', enemy_exp)
