@@ -2969,7 +2969,7 @@ CPY $98A4
 BEQ CharacterInvalid
 BRA CheckNextChar
 CharacterInvalid:
-LDA $B5D4
+JSL KeyItemBlocker
 BEQ SendItemToStorage
 LDA #$69
 RTS
@@ -2978,6 +2978,7 @@ LDA $B570
 ;KEY ITEM CHECK GOES HERE
 JSL CheckIfKeyItem
 JSL StoreItem
+REP #$20
 STZ $3272
 LDA #$0074
 JSL $C0ABE0
@@ -9780,15 +9781,19 @@ BRA .GiftBox
 
 CheckIfKeyItem:
 PHX
-LDX #$0000
+LDX #$00
+.Check:
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$002B
+CPX #$2B
 BEQ .NormalItem
+BRA .Check
 .IsKeyItem:
+PHA
 LDA #$02
 STA $3272
+PLA
 .NormalItem:
 PLX
 RTL
@@ -9884,6 +9889,25 @@ BRA .Done
 REP #$20
 LDA #$0000
 JML $C17F0F
+
+KeyItemBlocker:
+PHX
+LDA $B570
+LDX #$00
+.Check:
+CMP BannedItemList,X
+BEQ .IsKeyItem
+INX
+CPX #$002B
+BEQ .Done
+BRA .Check
+.Done:
+LDA $B5D4
+RTL
+.IsKeyItem:
+PLX
+LDA $32C4
+RTL
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
