@@ -8034,6 +8034,75 @@ dd LavapantsDesc
 ORG $C6FED6
 db $0A
 dl LavaPantsUseTxt
+
+ORG $D56B61
+db $8F
+
+ORG $C7BF60
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7BF71
+
+ORG $C7C02B
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C03C
+
+ORG $C7C0FD
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C10E
+
+ORG $C7C1CE
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C1DF
+
+ORG $C7C299
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C2AA
+
+ORG $C7C360
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C371
+
+ORG $C7C44F
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C460
+
+ORG $C7C511
+db $08
+dl RememberedTex
+db $FF
+
+db $0A
+dl $C7C522
+
+
 ;New data table go here
 
 ;;;;;;;;;;;;;boss names
@@ -8786,7 +8855,11 @@ db $14
 db $18, $04
 db $04, $16, $04
 db $02
-;Todo; make the item not have the infinite use flag
+
+
+RememberedTex:
+db $50, $A2, $95, $9D, $95, $9D, $92, $95, $A2, $95, $94, $50
+db $A4, $98, $95, $50, $02
 
 
 

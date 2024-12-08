@@ -217,6 +217,9 @@ def calculate_scaling(world):
     if world.options.no_free_sanctuaries:
         area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Tiny Key"]]
         area_rules["Lost Underworld"]["Fire Spring"] = [["Tenda Lavapants"]]
+    else:
+        area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Nothing"]]
+        area_rules["Lost Underworld"]["Fire Spring"] = [["Nothing"]]
 
 
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
