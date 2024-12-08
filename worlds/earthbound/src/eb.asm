@@ -249,7 +249,7 @@ ORG $C0946C
 JML TransferGiftToInv
 
 ORG $C19A62
-JML GetGiftInboxName
+JML GetDynamicWindowTitle
 
 ;new jmls
 
@@ -2975,7 +2975,10 @@ LDA #$69
 RTS
 SendItemToStorage:
 LDA $B570
+;KEY ITEM CHECK GOES HERE
+JSL CheckIfKeyItem
 JSL StoreItem
+STZ $3272
 LDA #$0074
 JSL $C0ABE0
 SEP #$20
@@ -6139,10 +6142,10 @@ db $47, $80
 ;;;;;;;;;;;;;;;;;;;;;
 ;New storage
 ORG $C17A9D
-LDA $B590,X
+JML CheckGiftBox7
 
 ORG $C1911B
-LDA $B590,X
+JML CheckGiftBox8
 
 ORG $C19AB9
 JML CheckGiftBox1
@@ -6153,8 +6156,8 @@ JML CheckGiftBox4
 ORG $C191C9
 JML CheckGiftBox6
 
-ORG $C19152
-ADC #$B590
+ORG $C19151
+JML CheckGiftBox9
 
 ORG $C191D3
 JML CheckGiftBox3
@@ -8007,6 +8010,15 @@ db $AF, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BB, $C0, $C1, $C4
 db $C5, $CA, $CB, $CC, $CD, $CE, $D0, $D2, $D3, $E3, $E4, $E5, $E6, $E7
 db $FD
 
+StorageTitlePointers:
+dw $FF90, $FF70
+
+StorageTitleLength:
+dw $000C, $0010
+
+StorageNumberStart:
+dw $9CA9, $9CAE
+
 ORG $C9B132
 db $11, $04; Tony phone call flag
 
@@ -8102,6 +8114,22 @@ db $FF
 db $0A
 dl $C7C522
 
+ORG $FCFF70
+db $79, $9D, $A0, $9F, $A2, $A4, $91, $9E, $A4, $50, $77, $9F, $9F, $94, $A3
+
+ORG $EE9645
+dd SetupStorageTakeMenu
+
+ORG $EE96D6
+db $0A
+dl InitStorageMen
+
+ORG $EE969F
+dl InitStorageMen
+
+ORG $EE968C
+db $0A
+dl CheckItemOnStore
 
 ;New data table go here
 
@@ -8856,10 +8884,50 @@ db $18, $04
 db $04, $16, $04
 db $02
 
-
 RememberedTex:
 db $50, $A2, $95, $9D, $95, $9D, $92, $95, $A2, $95, $94, $50
 db $A4, $98, $95, $50, $02
+
+SetupStorageTakeMenu:
+db $18, $01, $29
+db $19, $02
+db $83, $a4, $9f, $a2, $91, $97, $95, $02
+db $19, $02
+db $7b, $95, $a9, $50, $79, $a4, $95, $9d, $a3, $02
+db $1C, $07, $02
+db $11
+db $09, $02
+dd .Storage
+dd .KeyStorage
+db $0A
+dl $EEC6AB
+.Storage:
+;db $18, $00
+db $18, $03, $01
+db $0A
+dl $EE9699
+.KeyStorage:
+db $1C, $1D, $01
+db $0A
+dl .Storage
+
+InitStorageMen:
+db $18, $03, $0D
+db $18, $00
+db $1C, $1E, $01
+db $0A
+dl SetupStorageTakeMenu
+
+CheckItemOnStore:
+db $1B, $00
+db $19, $19, $00, $00
+db $1B, $05
+db $1C, $1F, $01
+db $1B, $01
+db $1d, $12, $00, $00
+db $1C, $1E, $01
+db $0A
+dl $EE9690
 
 
 
@@ -9306,6 +9374,12 @@ CMP #$001B
 BEQ .PrintGiftInbox
 CMP #$001C
 BEQ .CountGifts
+CMP #$001D
+BEQ .SwaptoKeyStorage
+CMP #$001E
+BEQ .ClearKeyStorage
+CMP #$001F
+BEQ .StoreKeyItem
 
 JML $C17DDC
 .CheckIfIsBanned:
@@ -9316,6 +9390,12 @@ JMP .LongSendGiftPacket
 JMP SwapToGiftInventory
 .CountGifts:
 JMP CountGifts
+.SwaptoKeyStorage:
+JMP SwapKeyStorage
+.StoreKeyItem:
+JMP StoreKeyItem
+.ClearKeyStorage:
+JMP ClearKeyStorage
 
 .PrintPlayerMenu:
 JSL $C3E4D4
@@ -9574,14 +9654,21 @@ LDA #$0000
 JML $C17F0F
 
 
-GetGiftInboxName:
+GetDynamicWindowTitle:
 LDA $3272
 BEQ .GetStorage
-LDA #$FF90
+DEC
+ASL
+TAX
+LDA StorageTitlePointers,X
 STA $0E
 LDA #$00FC
 STA $10
-LDX #$000C
+LDA StorageNumberStart,X
+STA $18
+LDA StorageTitleLength,X
+AND #$00FF
+TAX
 LDA #$9C9F
 JML $C19A6D
 .GetStorage:
@@ -9592,6 +9679,8 @@ JML $C19A67
 CheckGiftBox1:;
 LDA $3272
 BEQ .Storage
+CMP #$0002
+BEQ .KeyStorage
 LDA $3201,X
 BRA .GiftBox
 .Storage:
@@ -9599,10 +9688,16 @@ LDA $B590,X
 .GiftBox:
 AND #$00FF
 JML $C19ABF
+.KeyStorage:
+LDA $3280,X
+BRA .GiftBox
+
 
 CheckGiftBox2:
 LDA $3272
 BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
 LDA $3201,X
 BRA .GiftBox
 .Storage:
@@ -9610,10 +9705,15 @@ LDA $B590,X
 .GiftBox:
 STA $06
 JML $C15B2E
+.KeyStorage:
+LDA $3280,X
+BRA .GiftBox
 
 CheckGiftBox3:
 LDA $3272
 BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
 LDA $3202,X
 BRA .GiftBox
 .Storage:
@@ -9621,10 +9721,15 @@ LDA $B591,X
 .GiftBox:
 STA $00
 JML $C191D8
+.KeyStorage:
+LDA $0731,X
+BRA .GiftBox
 
 CheckGiftBox4:
 LDA $3272
 BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
 LDA $3201,X
 BRA .Giftbox
 .Storage:
@@ -9632,10 +9737,16 @@ LDA $B590,X
 .Giftbox
 STA $01
 JML $C191C3
+.KeyStorage:
+LDA $3280,X
+BRA .Giftbox
+
 
 CheckGiftBox5:
 LDA $3272
 BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
 STZ $3201,X
 BRA .Giftbox
 .Storage:
@@ -9643,11 +9754,16 @@ STZ $B590,X
 .Giftbox:
 REP #$20
 JML $C191F1
+.KeyStorage:
+STZ $3280,X
+BRA .Giftbox
 
 CheckGiftBox6:
 PHA
 LDA $3272
 BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
 PLA
 STA $3201,X
 BRA .GiftBox
@@ -9657,6 +9773,117 @@ STA $B590,X
 .GiftBox:
 REP #$20
 JML $C191CE
+.KeyStorage:
+PLA
+STA $3280,X
+BRA .GiftBox
+
+CheckIfKeyItem:
+PHX
+LDX #$0000
+CMP BannedItemList,X
+BEQ .IsKeyItem
+INX
+CPX #$002B
+BEQ .NormalItem
+.IsKeyItem:
+LDA #$02
+STA $3272
+.NormalItem:
+PLX
+RTL
+
+CheckGiftBox7:
+LDA $3272
+BEQ .Storage
+CMP #$02
+BEQ .KeyStorage
+LDA $3201,X
+BRA .GiftBox
+.Storage:
+LDA $B590,X
+.GiftBox:
+STA $06
+JML $C17AA2
+.KeyStorage:
+LDA $3280,X
+BRA .GiftBox
+
+CheckGiftBox8:
+LDA $3272
+BEQ .Storage
+CMP #$0002
+BEQ .KeyStorage
+LDA $3201,X
+BRA .GiftBox
+.Storage:
+LDA $B590,X
+.GiftBox:
+AND #$00FF
+JML $C19121
+.KeyStorage:
+LDA $3280,X
+BRA .GiftBox
+
+CheckGiftBox9:
+PHA
+LDA $3272
+BEQ .Storage
+CMP #$0002
+BEQ .KeyStorage
+PLA
+CLC
+ADC #$3201
+BRA .GiftBox
+.Storage:
+PLA
+CLC
+ADC #$B590
+.GiftBox:
+TAX
+JML $C19156
+.KeyStorage:
+PLA
+CLC
+ADC #$3280
+BRA .GiftBox
+
+SwapKeyStorage:
+LDA $3272
+BNE .ClearStorage
+LDA #$0002
+STA $3272
+.Cleared:
+LDA #$0000
+JML $C17F0F
+.ClearStorage
+STZ $3272
+BRA .Cleared
+
+ClearKeyStorage:
+STZ $3272
+LDA #$0000
+JML $C17F0F
+
+StoreKeyItem:
+LDA $97D0
+SEP #$20
+LDX #$0000
+.CheckBans:
+CMP BannedItemList,X
+BEQ .IsKeyItem
+INX
+CPX #$002B
+BEQ .Done
+BRA .CheckBans
+.IsKeyItem:
+LDA #$02
+STA $3272
+BRA .Done
+.Done:
+REP #$20
+LDA #$0000
+JML $C17F0F
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -11794,7 +12021,10 @@ sram_chunk3_pointer = $B620
 sramchunk3_size = $01C0; Expanded flags
 
 sramchunk4_pointer = $31D0
-sramchunk4_size = $0064
+sramchunk4_size = $0100
+
+sramchunk5_pointer = $0720
+sramchunk5_size = $0070
 
 !save_size = #$AA0
 !save_bytes = #$A80
@@ -11949,12 +12179,14 @@ dw sramchunk1_size
 dw sramchunk2_size
 dw sramchunk3_size
 dw sramchunk4_size
+;dw sramchunk5_size
 save_chunk_pointer_table:
 dw sramchunk0_pointer
 dw sramchunk1_pointer
 dw sram_chunk2_pointer
 dw sram_chunk3_pointer
 dw sramchunk4_pointer
+;dw sramchunk5_pointer
 dw $0000
 
 ;;;;;;;;;;;;;;;;;;;;;
