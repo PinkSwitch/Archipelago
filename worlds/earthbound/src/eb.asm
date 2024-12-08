@@ -8132,6 +8132,38 @@ ORG $EE968C
 db $0A
 dl CheckItemOnStore
 
+ORG $C66698
+db $08
+dd SancFirst
+
+ORG $C6BEA7
+db $0A
+dl RainyCircleIntro
+
+ORG $C83D4C
+db $08
+dd SancFifth
+
+ORG $C9D2E2
+db $08
+dd SancSixth
+
+ORG $C9E2A3
+db $08
+dd SancSeventh
+
+ORG $EF5813
+db $0A
+dl FireSpringIntro
+
+ORG $EF67C2
+db $08
+dd SancThird
+
+ORG $EF97CA
+db $08
+dd SancSecond
+
 ;New data table go here
 
 ;;;;;;;;;;;;;boss names
@@ -8929,6 +8961,45 @@ db $1d, $12, $00, $00
 db $1C, $1E, $01
 db $0A
 dl $EE9690
+
+ORG $EEFAA0
+SancFirst:
+db $96, $99, $A2, $A3, $A4, $02
+
+SancSecond:
+db $A3, $95, $93, $9F, $9E, $94, $02
+
+SancThird:
+db $A4, $98, $99, $A2, $94, $02
+
+SancFourth:
+db $96, $9F, $A5, $A2, $A4, $98, $02
+
+SancFifth:
+db $96, $99, $96, $A4, $98, $02
+
+SancSixth:
+db $A3, $99, $A8, $A4, $98, $02
+
+SancSeventh:
+db $A3, $95, $A6, $95, $9E, $A4, $98, $02
+
+SancEighth:
+db $95, $99, $97, $98, $A4, $98, $02
+
+RainyCircleIntro:
+db $08
+dd SancFourth
+db $0A
+dl $C6BEAC
+
+FireSpringIntro:
+db $08
+dd SancEighth
+db $0A
+dl $EF5817
+
+
 
 
 
@@ -11907,6 +11978,7 @@ db $05 ;λ
 db $06 ;&
 db $06 ;#
 db $05 ;arrows
+db $06
 
 ORG $FA0100
 SaturnFontTable:
@@ -11921,6 +11993,8 @@ db $0B
 db $0B
 db $0D
 db $0B
+db $0B
+db $09
 
 ORG $FC0000
 FontGFXTable:

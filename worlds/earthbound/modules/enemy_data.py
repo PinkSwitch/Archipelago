@@ -937,7 +937,7 @@ guardian_text = [
 ]
 
 guardian_intro = [
-    0xC66699,
+    0x066699,
     0x2F97CB,
     0x2F67C3,
     0x2EFAD6,
