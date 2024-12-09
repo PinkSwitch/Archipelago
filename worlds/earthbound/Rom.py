@@ -629,12 +629,12 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x3C0000, main_font_gfx)
 
         rom.write_bytes(0x3A0100, saturn_font_data)
-        rom.write_bytes(0x3C0D00, saturn_font_gfx)
+        rom.write_bytes(0x3C1000, saturn_font_gfx)
         rom.write_bytes(0x3C0D25, letter_n) #Setup n
         rom.write_bytes(0x3C0D22, accent_tilde)
 
-        rom.write_bytes(0x3C1A25, saturn_n) #Setup n
-        rom.write_bytes(0x3C1A23, saturn_tilde)
+        rom.write_bytes(0x3C1D25, saturn_n) #Setup n
+        rom.write_bytes(0x3C1D22, saturn_tilde)
 
         rom.write_bytes(0x2EF11F, rom.read_bytes(0x091D30, 0x17))
         # ---------------------------------------
