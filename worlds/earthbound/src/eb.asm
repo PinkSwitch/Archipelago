@@ -8164,6 +8164,10 @@ ORG $EF97CA
 db $08
 dd SancSecond
 
+ORG $EE96B7
+db $0A
+dl CheckAbsoluteStorage
+
 ;New data table go here
 
 ;;;;;;;;;;;;;boss names
@@ -8936,7 +8940,7 @@ db $0A
 dl $EEC6AB
 .Storage:
 ;db $18, $00
-db $18, $03, $01
+db $18, $03, $29
 db $0A
 dl $EE9699
 .KeyStorage:
@@ -8998,6 +9002,14 @@ db $08
 dd SancEighth
 db $0A
 dl $EF5817
+
+CheckAbsoluteStorage:
+db $1B, $06
+db $18, $03, $01
+db $1B, $02
+dd $00EE9699
+db $0A
+dl $EE96BD
 
 
 
@@ -9452,7 +9464,8 @@ CMP #$001E
 BEQ .ClearKeyStorage
 CMP #$001F
 BEQ .StoreKeyItem
-
+CMP #$0020
+BEQ .GigaCheckStorage
 JML $C17DDC
 .CheckIfIsBanned:
 JMP .CompareBannedItemList
@@ -9468,6 +9481,8 @@ JMP SwapKeyStorage
 JMP StoreKeyItem
 .ClearKeyStorage:
 JMP ClearKeyStorage
+.GigaCheckStorage
+JMP GigaCheckStorage
 
 .PrintPlayerMenu:
 JSL $C3E4D4
@@ -9794,7 +9809,7 @@ LDA $B591,X
 STA $00
 JML $C191D8
 .KeyStorage:
-LDA $0731,X
+LDA $3281,X
 BRA .GiftBox
 
 CheckGiftBox4:
@@ -9979,6 +9994,25 @@ RTL
 PLX
 LDA $32C4
 RTL
+
+GigaCheckStorage:
+LDA $3272
+BEQ .Storage
+LDA $3280
+BRA .Transfer
+.Storage:
+LDA $B590
+.Transfer:
+BEQ .Nothing
+LDA #$0001
+STA $97CC
+BRA .Done
+.Nothing:
+STZ $97CC
+.Done:
+LDA #$0000
+JML $C17F0F
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -12003,10 +12037,10 @@ ORG $FC0C00
 incbin main_font_extended.bin
 
 
-ORG $FC0D00
+ORG $FC1000
 SaturnFontGFX:
 
-ORG $FC1900
+ORG $FC1C00
 incbin saturn_font_extended.bin
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;PSI Animations
