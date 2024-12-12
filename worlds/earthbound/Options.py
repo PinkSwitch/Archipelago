@@ -282,6 +282,25 @@ class NoFreeSancs(Toggle):
        These items are the Tiny Key and Lavaproof Underpants, respectively."""
     display_name = "No Free Sanctuaries"
 
+class RandomizeFanfares(Toggle):
+    """Randomizes fanfares."""
+    display_name = "Randomize Fanfares"
+
+class RandomizeBattleMusic(Toggle):
+    """Randomizes in-battle songs."""
+    display_name = "Randomize Battle Music"
+
+class RandomizeOverworldMusic(Choice):
+    """Randomizes music on the overworld. Some sound effects might sound weird.
+       Normal: Does not randomize music.
+       Match Type: Music will be randomized with similar song categories (Town, dungeon, etc.)
+       Full: Overworld music will be randomized disregarding categories."""
+    display_name = "Overworld Music Randomizer"
+    option_normal = 0
+    option_match_type = 1
+    option_full = 2
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -326,6 +345,9 @@ class EBOptions(PerGameCommonOptions):
     plando_lumine_hall_text: PlandoLumineHallText
     armorizer_resistance_chance: ElementChance
     no_free_sanctuaries: NoFreeSancs
+    randomize_overworld_music: RandomizeOverworldMusic
+    randomize_battle_music: RandomizeBattleMusic
+    randomize_fanfares: RandomizeFanfares
     #starting_character: StartingCharacter
 
 
@@ -388,6 +410,12 @@ eb_option_groups = [
         RandomBattleBG,
         PresentSprites,
         PlandoLumineHallText
+    ]),
+
+    OptionGroup("Music Randomizer", [
+        RandomizeOverworldMusic,
+        RandomizeBattleMusic,
+        RandomizeFanfares
     ]),
 
     OptionGroup("Deathlink", [

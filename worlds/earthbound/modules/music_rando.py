@@ -14,6 +14,7 @@ town_songs = [
     0x81,
     0x82
 ]
+
 overworld_songs = [
     0x1D,
     0x2C,
@@ -33,10 +34,9 @@ overworld_songs = [
     0x97,
     0x99,
     0x9A,
-    0x9F,
-
-
+    0x9F
     ]
+
 dungeon_songs = [
     0x28,
     0x29,
@@ -54,9 +54,7 @@ dungeon_songs = [
     0x6C,
     0x75,
     0x84,
-    0x85,
-
-
+    0x85
 ]
 
 interior_songs = [
@@ -78,10 +76,9 @@ interior_songs = [
     0x7D,
     0x83,
     0x8C,
-    0x98,
-    
-
+    0x98
     ]
+
 cutscene_songs = [
     0x3A,
     0x3C,
@@ -108,7 +105,6 @@ cutscene_songs = [
     0xAB,
     0xAC,
     0xBB
-
 ]
 
 wakeup_songs = [
@@ -232,14 +228,70 @@ battle_songs = [
     0xBA
 ]
 
+
 def music_randomizer(world, rom):
     # Todo; options here
-    global_tracklist = list(range(0xBF)) # Initialize the list; this ideally should be vanilla
-    shuffled_town_songs = town_songs.copy()
-    world.random.shuffle(shuffled_town_songs)
+    global_tracklist = list(range(0xC0))  # Initialize the list; this ideally should be vanilla
 
-
-    for id, song in enumerate(town_songs):
-        global_tracklist[song] = shuffled_town_songs[id]
+    if world.options.randomize_fanfares:
+        shuffled_fanfares = fanfares.copy()
+        world.random.shuffle(shuffled_fanfares)
+        for track_id, song in enumerate(fanfares):
+            global_tracklist[song] = shuffled_fanfares[track_id]
     
-    print(global_tracklist)
+    if world.options.randomize_battle_music:
+        shuffled_battle_songs = battle_songs.copy()
+        world.random.shuffle(shuffled_battle_songs)
+        for track_id, song in enumerate(battle_songs):
+            global_tracklist[song] = battle_songs[track_id]
+
+    if world.options.randomize_overworld_music == 1:
+        shuffled_town_songs = town_songs.copy()
+        shuffled_overworld_songs = overworld_songs.copy()
+        shuffled_interior_songs = interior_songs.copy()
+        shuffled_dungeon_songs = dungeon_songs.copy()
+        shuffled_cutscene_songs = cutscene_songs.copy()
+        shuffled_rare_songs = rare_songs.copy()
+        shuffled_wakeup_songs = wakeup_songs.copy()
+
+        world.random.shuffle(shuffled_town_songs)
+        world.random.shuffle(shuffled_overworld_songs)
+        world.random.shuffle(shuffled_interior_songs)
+        world.random.shuffle(shuffled_dungeon_songs)
+        world.random.shuffle(shuffled_cutscene_songs)
+        world.random.shuffle(shuffled_rare_songs)
+        world.random.shuffle(shuffled_wakeup_songs)
+
+        for track_id, song in enumerate(town_songs):
+            global_tracklist[song] = shuffled_town_songs[track_id]
+
+        for track_id, song in enumerate(overworld_songs):
+            global_tracklist[song] = shuffled_overworld_songs[track_id]
+
+        for track_id, song in enumerate(interior_songs):
+            global_tracklist[song] = shuffled_interior_songs[track_id]
+
+        for track_id, song in enumerate(dungeon_songs):
+            global_tracklist[song] = shuffled_dungeon_songs[track_id]
+
+        for track_id, song in enumerate(cutscene_songs):
+            global_tracklist[song] = shuffled_cutscene_songs[track_id]
+
+        for track_id, song in enumerate(rare_songs):
+            global_tracklist[song] = shuffled_rare_songs[track_id]
+
+        for track_id, song in enumerate(wakeup_songs):
+            global_tracklist[song] = shuffled_wakeup_songs[track_id]
+
+    elif world.options.randomize_overworld_music == 2:
+        all_overworld_songs = (town_songs + overworld_songs + interior_songs +
+        dungeon_songs + cutscene_songs + rare_songs + wakeup_songs)
+
+        shuffled_overworld_songs = all_overworld_songs.copy()
+        world.random.shuffle(shuffled_overworld_songs)
+
+        for track_id, song in enumerate(all_overworld_songs):
+            global_tracklist[song] = shuffled_overworld_songs[track_id]
+
+            
+    rom.write_bytes(0x17FDA0, bytearray(global_tracklist))
