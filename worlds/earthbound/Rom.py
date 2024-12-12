@@ -18,6 +18,7 @@ from .modules.enemy_data import combat_regions, scale_enemies
 from .modules.area_scaling import calculate_scaling
 from .modules.boss_shuffle import write_bosses
 from .modules.equipamizer import randomize_armor, randomize_weapons
+from .modules.music_rando import music_randomizer
 from .game_data.static_location_data import location_groups
 from BaseClasses import ItemClassification, CollectionState
 from settings import get_settings
@@ -516,6 +517,8 @@ def patch_rom(world, rom, player: int, multiworld):
 
     if world.options.weaponizer:
         randomize_weapons(world, rom)
+    
+    music_randomizer(world, rom)
 
     calculate_scaling(world)
     write_bosses(world, rom)
