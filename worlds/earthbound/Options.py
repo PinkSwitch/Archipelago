@@ -301,6 +301,17 @@ class RandomizeOverworldMusic(Choice):
     option_full = 2
     default = 0
 
+class RandomizePSIPalettes(Choice):
+    """Randomizes the colors of PSI spells.
+       Normal: Doesn't randomize PSI colors.
+       Shuffled: PSI spell palettes are swapped around with each other.
+       Randomized: PSI spells use completely random colors."""
+    display_name = "Random PSI Palettes"
+    option_normal = 0
+    option_shuffled = 1
+    option_randomized = 2
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -348,6 +359,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_overworld_music: RandomizeOverworldMusic
     randomize_battle_music: RandomizeBattleMusic
     randomize_fanfares: RandomizeFanfares
+    randomize_psi_palettes: RandomizePSIPalettes
     #starting_character: StartingCharacter
 
 
@@ -409,6 +421,7 @@ eb_option_groups = [
         RandomSwirlColors,
         RandomBattleBG,
         PresentSprites,
+        RandomizePSIPalettes,
         PlandoLumineHallText
     ]),
 

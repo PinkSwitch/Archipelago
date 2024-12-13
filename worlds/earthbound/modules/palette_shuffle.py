@@ -118,14 +118,6 @@ palette_list = [
     0x5F #Cafe backroom
 ]
 
-
-
-
-
-
-
-
-
 good_palettes = {
     "Onett": [0x04, 0x05, 0x07, 0x09, 0x0B, 0x0C, 0x0D, 0x0E, 0x2A, 0x3E],
     "Giant Step": [],
@@ -142,3 +134,26 @@ good_palettes_plus = {
     "Onett": [0x01, 0x02, 0x06, 0x08, 0x0A, 0x13, 0x15, 0x16, 0x1A, 0x1B, 0x27, 0x5B],
 
 }
+
+def randomize_psi_palettes(world, rom):
+    spell_palettes = []
+    for i in range(34):
+        spell_palettes.append(0x0CF47F + (i * 8))
+    
+    for i in range(7):
+        spell_palettes.append(0x360710 + (i * 8))
+        
+    shuffled_palettes = spell_palettes.copy()
+
+    if world.options.randomize_psi_palettes == 1:
+        world.random.shuffle(shuffled_palettes)
+
+    elif world.options.randomize_psi_palettes == 2:
+        for i in range(0x010E):
+            rom.write_bytes(0x0CF47F + i, bytearray([world.random.randint(0x00, 0xFF)]))
+
+        for i in range(0x50):
+            rom.write_bytes(0x36F710 + i, bytearray([world.random.randint(0x00, 0xFF)]))
+
+    for index, pointer in enumerate(spell_palettes):
+        rom.copy_bytes(pointer, 8, shuffled_palettes[index])

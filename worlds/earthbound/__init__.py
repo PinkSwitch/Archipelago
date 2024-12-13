@@ -22,7 +22,7 @@ from .modules.hint_data import setup_hints
 from .game_data.text_data import spoiler_psi, spoiler_starts, spoiler_badges
 from .Client import EarthBoundClient
 from .Rules import set_location_rules
-from .Rom import LocalRom, patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
+from .Rom import patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .game_data.static_location_data import location_ids, location_groups
 from .modules.equipamizer import EBArmor, EBWeapon
 from worlds.generic.Rules import add_item_rule, forbid_items_for_player
@@ -238,7 +238,7 @@ class EarthBoundWorld(World):
         try:
             patch = EBProcPatch()
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
-            patch_rom(self, patch, self.player, self.multiworld)
+            patch_rom(self, patch, self.player)
 
             self.rom_name = patch.name
 

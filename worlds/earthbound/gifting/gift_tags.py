@@ -111,7 +111,7 @@ gift_properties = {
 
     0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
-    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable", "French"]),
+    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
 
     0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
 

@@ -241,7 +241,7 @@ def music_randomizer(world, rom):
         shuffled_battle_songs = battle_songs.copy()
         world.random.shuffle(shuffled_battle_songs)
         for track_id, song in enumerate(battle_songs):
-            global_tracklist[song] = battle_songs[track_id]
+            global_tracklist[song] = shuffled_battle_songs[track_id]
 
     if world.options.randomize_overworld_music == 1:
         shuffled_town_songs = town_songs.copy()
@@ -293,3 +293,6 @@ def music_randomizer(world, rom):
 
             
     rom.write_bytes(0x17FDA0, bytearray(global_tracklist))
+
+
+# Should the Melodies be fanfares?
