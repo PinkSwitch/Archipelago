@@ -229,7 +229,8 @@ adjectives = [
     "Tennis",
     "Golf",
     "Hockey",
-    "Burnt"
+    "Burnt",
+    "Boiled"
 ]
 
 char_nums = {
