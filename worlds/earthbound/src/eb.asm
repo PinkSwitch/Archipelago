@@ -8186,7 +8186,93 @@ db $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $9a, $9b, $9c, $9d, $9e, $9
 db $a0, $a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af
 db $b0, $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf
 
+ORG $D56F2F
+db $00
+
+ORG $D56B93
+db $83, $7f, $7c, $74, $50, $7f, $85, $84, $00; Change the Receiver phone to Sold Out
+
+
+ORG $F41000
+ShopItemNames:
+.OnettTeleport:
+db $7F, $9E, $95, $A4, $A4, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
+.TwosonTeleport:
+db $84, $A7, $9F, $A3, $9F, $9E, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
+.HappyTeleport:
+db $78, $5e, $78, $5e, $50, $86, $99, $9c, $9c, $91, $97, $95, $50, $84, $95, $9c
+db $95, $a0, $9f, $a2, $a4, $00
+.ThreedTeleport:
+db $84, $98, $A2, $95, $95, $94, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
+.SaturnTeleport:
+db $83, $91, $a4, $a5, $a2, $9e, $50, $86, $91, $9c, $9c, $95, $a9, $50, $84, $95
+db $9c, $95, $a0, $9f, $a2, $a4, $00
+.DesertTeleport:
+db $74, $A5, $A3, $A4, $A9, $50, $74, $A5, $9E, $95, $A3, $50, $84, $95, $9C, $95
+db $A0, $9F, $A2, $A4, $00
+.FoursideTeleport:
+db $76, $9F, $A5, $A2, $A3, $99, $94, $95, $50, $84, $95, $9C, $95, $A0, $9F, $A2
+db $A4, $00
+.WintersTeleport:
+db $87, $99, $9E, $A4, $95, $A2, $A3, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4
+db $00
+.SummersTeleport:
+db $83, $A5, $9D, $9D, $95, $A2, $A3, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4
+db $00
+.ScarabaTeleport:
+db $83, $93, $91, $A2, $91, $92, $91, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4
+db $00
+.DalaamTeleport:
+db $74, $91, $9C, $91, $91, $9D, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
+.DarkTeleport:
+db $74, $5e, $50, $74, $91, $a2, $9b, $9e, $95, $a3, $a3, $50, $84, $95, $9c, $95
+db $a0, $9f, $a2, $a4, $00
+.TendaTeleport:
+db $84, $95, $9e, $94, $91, $50, $86, $99, $9c, $9c, $91, $97, $95, $50, $84, $95
+db $9c, $95, $a0, $9f, $a2, $a4, $00
+.UnderworldTeleport:
+db $85, $9e, $94, $95, $a2, $a7, $9f, $a2, $9c, $94, $50, $84, $95, $9c, $95, $a0
+db $9f, $a2, $a4, $00
+.MgntTeleport:
+db $7d, $91, $97, $99, $93, $91, $9e, $a4, $50, $84, $95, $9c, $95, $a0, $9f, $a2
+db $a4, $00
+.PooPSI:
+db $80, $9F, $9F, $50, $80, $83, $79, $00
+.Paula:
+db $80, $91, $A5, $9C, $91, $00
+.Jeff:
+db $7A, $95, $96, $96, $00
+.Poo:
+db $80, $9F, $9F, $00
+.FlnMn:
+db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $00
+
+.TeleportNames:
+dw $0000
+dw .OnettTeleport
+dw .TwosonTeleport
+dw .HappyTeleport
+dw .ThreedTeleport
+dw .SaturnTeleport
+dw .DesertTeleport
+dw .FoursideTeleport
+dw .WintersTeleport
+dw .SummersTeleport
+dw .ScarabaTeleport
+dw .DalaamTeleport
+dw .DarkTeleport
+dw .TendaTeleport
+dw .UnderworldTeleport
+dw .MgntTeleport
+.CharNames:
+dw $0000
+dw .PooPSI
+dw .Paula
+dw .Jeff
+dw .Poo
+dw .FlnMn
 ;New data table go here
+
 
 ;;;;;;;;;;;;;boss names
 ORG $EEEEBC
@@ -10038,6 +10124,120 @@ STZ $97CC
 LDA #$0000
 JML $C17F0F
 
+APShopHandler:
+LDA $1E
+TAX
+LDA #$0000
+.CheckShop:
+CPX #$0000
+BEQ .GotShopNum
+CLC
+ADC #$0030
+DEX
+BRA .CheckShop
+.GotShopNum:
+PHA
+LDX $04
+LDA #$0000
+.CheckSlot:
+CPX #$0000
+BEQ .AddSlotVal
+DEX
+CLC
+ADC #$0006
+BRA .CheckSlot
+.AddSlotVal:
+STA $3274
+PLA
+CLC
+ADC $3274
+;At this point we should know what item we're looking at
+TAX
+LDA $F40000,X
+AND #$00FF
+TAY
+STY $1A
+BNE .ValidShopItem
+JML $C19E93
+.ValidShopItem:
+PHA
+LDA $F40003,X
+AND #$00FF
+STA $3274
+LDA $F40000,X
+AND #$00FF
+STA $0732
+LDA $F40001,X
+STA $0730
+PLA
+JML $C19E06
+
+GetAPShopName:
+PHA
+LDA $3274
+BEQ .NormalItemName
+CMP #$0001
+BEQ .GetTeleportName
+CMP #$0002
+BEQ .GetCharacterName
+.NormalItemName:
+PLA
+ADC $06
+STA $06
+STA $0E
+JML $C19E29
+.GetTeleportName:
+LDA $3272
+ASL
+TAX
+LDA ShopItemNames_TeleportNames,X
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+.GetCharacterName:
+LDA $3272
+ASL
+TAX
+LDA ShopItemNames_CharacterNames,X
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+ORG $C19DE5
+JML APShopHandler;This JML is only in AP patch
+
+ORG $C19E23
+JML GetAPShopName
+
+
+
+ORG $F40030
+db $01, $ff, $ff, $00, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01
+db $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff
+db $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01
+;Todo; check prices for local items
+;Per-player handling
+;set flags
+;give the item
+;check the price of non-regular items
+
+
+
+;First we should probably check if it's a special item? 
+;also oh god how do i assign flags to this
+;Shops can be bits outside the flag table
+
+
+
+
+;1E is the shop ID
+;04 is thre slot number
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -11801,6 +12001,7 @@ db $02, $E6, $01, $00, $00, $00, $09, $00, $FA, $E5, $EE, $FF
 ;;;;;;;;;;;;;;;
 ;PSI ANIMATIONS
 ORG $F50000
+;Table of all PSI attacks
 AllocPsiTable:
 
 ORG $EF8580
@@ -11892,7 +12093,7 @@ db $7E, $95, $A5, $A4, $A2, $91, $9C, $99, $AA, $95, $50;Neutralize
 
 ORG $FB0771
 
-
+;These are the *script commands* that play the new PSI animations.
 blast_alpha_anim:
 db $1f, $02, $34, $1c, $13, $00, $37, $10, $17, $1f, $02, $5b, $10, $10, $1f, $02
 db $33, $10, $14, $1c, $13, $25, $00, $10, $01, $10, $01, $02
@@ -12849,6 +13050,14 @@ db $02
 escg_inquire:
 db $70, $87, $98, $91, $a4, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50
 db $9c, $99, $9b, $95, $50, $a4, $9f, $50, $94, $9f, $6f, $02
+;;;;;;;;;;;;;;;;;;;;;;
+;SHOPSANITY HANDLING! THIS IS PATCHED BY THE ROM ONLY!
+;USE THIS FOR TESTING!
+
+;$04 seems to contain the number of processed shop-slots
+
+
+
 
 
 

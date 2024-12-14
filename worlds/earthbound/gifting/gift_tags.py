@@ -109,14 +109,25 @@ gift_properties = {
 
     0x22: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
 
+    35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon", "Artifact"]),
+
     0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
     0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
 
     0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
 
-    0x5D: create_gift("Picnic Lunch", 24, ["ArtisanGood", "Comsumable", "Heal", "Food"]),
+    91: create_gift("Boiled Egg", 0, ["Egg", "Comsumable", "Heal", "Food", "White"]),
+
+    92: create_gift("Fresh Egg", 0, ["Egg", "Comsumable", "Heal", "Food", "White"]),
+
+    93: create_gift("Picnic Lunch", 24, ["ArtisanGood", "Comsumable", "Heal", "Food"]),
+
+    94: create_gift("Pasta di Summers", 0, ["Pasta", "Comsumable", "Heal", "Food", "ArtisanGood"]),
+
+    95: create_gift("Pizza", 0, ["Comsumable", "Heal", "Food"]),
     #Todo; separate traits for GoodWeapon and BadWeapon
+    # Todo; Satus heals should be Medicine, Cure
 }
 
 acceptable_gifts = [

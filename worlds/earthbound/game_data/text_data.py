@@ -151,8 +151,8 @@ lumine_hall_text = [
     "Sorry Ness, Pokey died of ligma",
     "A horrible chill goes down your spine...",
     "You feel an evil presence watching you...",
-    "Going to Burger King, BRB.",
-    "My favorite Rapidash... It... cute... lovely... smart... plus... amazing... you think so? Hug it... when... sleeping... warm and cuddly... spectacular... ravishing... Oops! Look at the time! I kept you too long!",
+    "Going to BK, BRB.",
+    "My favorite Mr. Saturn... It... cute... lovely... smart... plus... amazing... you think so? Hug it... when... sleeping... warm and cuddly... spectacular... ravishing... Oops! Look at the time! I kept you too long!",
     "THE CLUMSY ROBOT IN NAME ONLY, FOR IT IS NEITHER.",
     "The Arcana is the means by which all is revealed.",
     "Say the password!                                                                                                                                                                                  ",
@@ -196,8 +196,12 @@ lumine_hall_text = [
     "gottem",
     "Dear Ness,      please come to the house. I've baked a steak for you.       Yours truly,       mom.",
     "Phar why",
-    "Tell Figment to check POD!"
-
+    "Tell Figment to check POD!",
+    "Congratulations, you're the Lumine Hall's 100th visitor! Click here for $2 off your next order at the Onett Burger Shop!",
+    "Well, that's never happened before...",
+    "99 bottles of DXWater on the wall, 99 bottles of DXWater. Take one down, pass it around, 98 bottles of DXWater on the wall!",
+    "After all these years. Finally, I have them all.",
+    "If there were two guys on the moon and one killed the other with a rock would that be screwed up or what"
 ]
 
 spoiler_psi = {
