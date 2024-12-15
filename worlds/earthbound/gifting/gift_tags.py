@@ -15,7 +15,6 @@ gift_qualities = {
     "Casey Bat": {"Weapon": 0.1},
     "T-rex's Bat": {"Weapon": 0.88},
     "Ultimate Bat": {"Weapon": 1.25},
-    "Boiled Egg": ["Boiled", "Cooked", "Heal", "Consumable", "Egg", "White", "Food", "AnimalProduct"],
 } 
 
 
