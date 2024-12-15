@@ -266,19 +266,19 @@ def calculate_scaling(world):
                 last_region = location.parent_region.name
 
             if location.item.player == world.player and location.item.name == "Paula":
-                if location.parent_region.name in combat_regions:
+                if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Paula_region = location.parent_region.name
                 else:
                     world.Paula_region = last_region
 
             if location.item.player == world.player and location.item.name == "Jeff":
-                if location.parent_region.name in combat_regions:
+                if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Jeff_region = location.parent_region.name
                 else:
                     world.Jeff_region = last_region
 
             if location.item.player == world.player and location.item.name == "Poo":
-                if location.parent_region.name in combat_regions:
+                if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Poo_region = location.parent_region.name
                 else:
                     world.Poo_region = last_region
