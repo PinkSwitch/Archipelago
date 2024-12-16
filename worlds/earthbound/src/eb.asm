@@ -8246,7 +8246,8 @@ db $7A, $95, $96, $96, $00
 db $80, $9F, $9F, $00
 .FlnMn:
 db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $00
-
+.SoldOut:
+db $83, $7F, $7C, $74, $50, $7F, $85, $84, $00
 .TeleportNames:
 dw $0000
 dw .OnettTeleport
@@ -8264,13 +8265,24 @@ dw .DarkTeleport
 dw .TendaTeleport
 dw .UnderworldTeleport
 dw .MgntTeleport
+dw .PooPSI
 .CharNames:
 dw $0000
-dw .PooPSI
 dw .Paula
 dw .Jeff
 dw .Poo
 dw .FlnMn
+
+ShopFlagBits:
+db $01
+db $02
+db $04
+db $08
+db $10
+db $20
+db $40
+db $80
+
 ;New data table go here
 
 
@@ -10132,7 +10144,7 @@ LDA #$0000
 CPX #$0000
 BEQ .GotShopNum
 CLC
-ADC #$0030
+ADC #$0028
 DEX
 BRA .CheckShop
 .GotShopNum:
@@ -10164,13 +10176,55 @@ PHA
 LDA $F40003,X
 AND #$00FF
 STA $3274
+CMP #$0004
+BCS .GrabOffWorldItemName
 LDA $F40000,X
+.APItemReturn:
 AND #$00FF
 STA $0732
 LDA $F40001,X
 STA $0730
 PLA
+JSL CheckItemBoughtFlag
+CMP #$0000
+BEQ .ItemNotBought
+JSR HandleBoughtItem
+.ItemNotBought:
 JML $C19E06
+.GrabOffWorldItemName:
+PHB
+PHX
+PHY
+LDA $F40004,X
+AND #$00FF
+TAX
+LDA #$1190
+..CompareID:
+CPX #$0000
+BEQ ..GotName
+DEX
+CLC
+ADC #$0030
+BRA ..CompareID
+..GotName:
+TAX
+LDA #$002F
+LDY #$FF80
+MVN $F47E
+PLY
+PLX
+PLB
+LDA $F40003,X
+AND #$00FF
+CMP #$0005
+BEQ .Remote
+LDA #$00AD
+JMP .APItemReturn
+.Remote:
+LDA $F40000,X
+AND #$00FF
+JMP .APItemReturn
+
 
 GetAPShopName:
 PHA
@@ -10180,6 +10234,12 @@ CMP #$0001
 BEQ .GetTeleportName
 CMP #$0002
 BEQ .GetCharacterName
+CMP #$0003
+BEQ .GetSoldOutName
+CMP #$0004
+BEQ .GetArchipelagoName
+CMP #$0005
+BEQ .GetArchipelagoName
 .NormalItemName:
 PLA
 ADC $06
@@ -10187,7 +10247,8 @@ STA $06
 STA $0E
 JML $C19E29
 .GetTeleportName:
-LDA $3272
+PLA
+LDA $0732
 ASL
 TAX
 LDA ShopItemNames_TeleportNames,X
@@ -10197,15 +10258,75 @@ LDA #$00F4
 STA $08
 JML $C19E29
 .GetCharacterName:
-LDA $3272
+PLA
+LDA $0732
 ASL
 TAX
-LDA ShopItemNames_CharacterNames,X
+LDA ShopItemNames_CharNames,X
 STA $06
 STA $0E
 LDA #$00F4
 STA $08
 JML $C19E29
+.GetArchipelagoName:
+PLA
+LDA #$FF80
+STA $06
+STA $0E
+LDA #$007E
+STA $08
+JML $C19E29
+.GetSoldOutName:
+PLA
+LDA #ShopItemNames_SoldOut
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+
+CheckItemBoughtFlag:
+PHX
+LDA $04
+SEP #$20
+TAX
+LDA ShopFlagBits,X
+REP #$20
+PHA
+LDA $1E
+TAX
+PLA
+AND $B720,X
+PLX
+RTL
+
+HandleBoughtItem:
+LDA $3274
+BEQ .LocalItemChecker
+CMP #$0005
+BEQ .LocalItemChecker
+;This is a teleport/char/nonlocal item. Can never buy this again.
+.BannedItem:
+REP #$20
+LDA #$0003
+STA $3274
+RTS
+.LocalItemChecker:
+LDA $0732
+LDX #$0000
+SEP #$20
+.CheckItem:
+CMP BannedItemList,X
+BEQ .BannedItem
+INX
+CPX #$002B
+BEQ .NotBanned
+BRA .CheckItem
+.NotBanned:
+REP #$20
+STZ $3274
+RTS
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C19DE5
@@ -10216,10 +10337,31 @@ JML GetAPShopName
 
 
 
-ORG $F40030
-db $01, $ff, $ff, $00, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01
-db $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff
-db $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01
+ORG $F40028
+;Item ID, 2-byte price, Item Type, location ID/flag number, item player
+db $01, $ff, $ff, $00, $00, $01; Non-remote local item. Franklin Badge.
+db $01, $ff, $ff, $01, $01, $01; Non-remote local Teleport.
+db $96, $ff, $ff, $05, $02, $01; A remote regular item
+db $01, $ff, $ff, $02, $03, $01; Non-remote local Character
+db $ad, $ff, $ff, $04, $04, $01; Item that the player already bought and got the flag for
+db $ad, $ff, $ff, $04, $05, $01; Item for another player 
+db $01, $ff, $ff, $05, $06, $01; A remote Key Item
+;Type 0- Normal local item
+;Type 1- Teleport/PSI
+;type 2- Character
+;type 3- item that's already been bought- SOLD OUT
+;type 4; Item for another player
+;type 5- Remote local item
+
+ORG $F41280
+db $73, $9F, $9F, $9C, $50, $79, $A4, $95, $9D, $00
+
+ORG $F411F0
+db $82, $a5, $a3, $a4, $50, $80, $a2, $9f, $9d, $9f, $a4, $95, $a2, $00
+
+ORG $F412B0
+db $76, $A2, $91, $9E, $9B, $9C, $99, $9E, $50, $72, $91, $94, $97, $95, $00
+
 ;Todo; check prices for local items
 ;Per-player handling
 ;set flags
@@ -10231,10 +10373,6 @@ db $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $01, $ad, $ff, $ff, $01, $02, $0
 ;First we should probably check if it's a special item? 
 ;also oh god how do i assign flags to this
 ;Shops can be bits outside the flag table
-
-
-
-
 ;1E is the shop ID
 ;04 is thre slot number
 
