@@ -10408,19 +10408,13 @@ STA $08
 LDA $0000,Y
 STA $06
 PHX
-TXA
-LDX #$0000
-SEC
-SBC #$8AE2
-.CheckSlot:
-CMP #$0000
-BEQ .GotSlot
-INX
-SEC
-SBC #$002D
-BRA .CheckSlot
+LDA $1DD4
+AND #$00FF
+TAX
 .GotSlot:
 LDA $0740,X
+AND #$00FF
+STA $3274
 AND #$00FF
 CMP #$0003
 BEQ .SoldOutVar
@@ -10492,6 +10486,8 @@ RTS
 TransferOutOfMenu:
 JSL $C3E4CA
 ;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
+LDA $3274
+STA $97CC
 LDA #$0024
 STA $8958
 PHX
