@@ -10242,6 +10242,8 @@ ASL
 TAX
 LDA $0734
 STA $0748,X
+LDA $0730
+STA $0756,X
 LDA $3274
 BEQ .NormalItemName
 CMP #$0001
@@ -10415,6 +10417,11 @@ TAX
 LDA $0740,X
 AND #$00FF
 STA $3274
+
+LDA $0756,X
+AND #$00FF
+STA $0730
+LDA $3274
 AND #$00FF
 CMP #$0003
 BEQ .SoldOutVar
@@ -10488,6 +10495,8 @@ JSL $C3E4CA
 ;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
 LDA $3274
 STA $97CC
+lda $0730
+STA $97D0
 LDA #$0024
 STA $8958
 PHX
