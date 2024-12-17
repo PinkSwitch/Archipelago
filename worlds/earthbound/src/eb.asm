@@ -2761,7 +2761,7 @@ db $1f, $15, $6a, $00, $7a, $02, $01, $1f, $61, $1f, $41, $0b, $08, $6b, $dd, $c
 db $00, $1f, $eb, $ff, $06, $1f, $21, $e1, $1f, $00, $00, $5f, $1f, $15, $8f, $00
 db $f8, $02, $01, $1f, $61, $1f, $15, $58, $01, $f9, $02, $01, $1f, $61, $1f, $15
 db $c1, $01, $fa, $02, $01, $1f, $61, $1f, $41, $0c, $1f, $50, $1F, $EB, $FF, $00
-db $0a, $bc, $a5, $ee, $1F, $21, $51, $0A, $81, $C9, $C9; Ending
+db $0a, $c9, $a5, $ee, $1F, $21, $51, $0A, $81, $C9, $C9; Ending
 
 
 ORG $C39F17
@@ -8273,6 +8273,9 @@ dw .Jeff
 dw .Poo
 dw .FlnMn
 
+.PlayerText:
+db $18, $01, $24, $1c, $02, $01, $02
+
 ShopFlagBits:
 db $01
 db $02
@@ -10184,6 +10187,8 @@ AND #$00FF
 STA $0732
 LDA $F40001,X
 STA $0730
+LDA $F40004,X
+STA $0734
 PLA
 JSL CheckItemBoughtFlag
 CMP #$0000
@@ -10196,7 +10201,8 @@ PHB
 PHX
 PHY
 LDA $F40004,X
-AND #$00FF
+STA $0734
+;AND #$00FF
 TAX
 LDA #$1190
 ..CompareID:
@@ -10228,6 +10234,14 @@ JMP .APItemReturn
 
 GetAPShopName:
 PHA
+LDA $3274
+LDX $04
+STA $0740,X
+TXA
+ASL
+TAX
+LDA $0734
+STA $0748,X
 LDA $3274
 BEQ .NormalItemName
 CMP #$0001
@@ -10327,25 +10341,224 @@ REP #$20
 STZ $3274
 RTS
 
+GetAPShopPrice:
+LDA $3274
+CMP #$0003
+BEQ .SoldOut
+CMP #$0000
+BEQ .NormalItem
+CMP #$0005
+BEQ .NormalItem
+.DisplaySpecialPrice:
+LDA $0730
+STA $06
+STA $0E
+.DisplayPrice:
+JSL $C4507A
+.SoldOut:
+JML $C19E93
+
+.NormalItem:
+LDA $0732
+JSR CheckBanlist
+BEQ .DisplaySpecialPrice
+BRA .DisplayPrice
+
+CheckBanlist:
+SEP #$20
+LDX #$0000
+.Check:
+CMP BannedItemList,X
+BEQ .Ban
+CPX #$002B
+BEQ .Done
+INX
+BRA .Check
+.Done:
+REP #$20
+LDA #$0001
+RTS
+.Ban:
+REP #$20
+LDA #$0000
+RTS
+
+DisplayAPPlayer:
+LDA $0724
+BEQ .DontCloseNameWin
+LDA $06
+STA $0720
+LDA $08
+STA $0722
+LDA #$0024
+STA $8958
+PHX
+PHY
+JSL $C1DD59 ;Switch to textbox first...
+PLY
+PLX
+STZ $0724
+LDA #$000C
+STA $8958
+LDA $0720
+STA $06
+LDA $0722
+STA $08
+.DontCloseNameWin:
+LDA $0000,Y
+STA $06
+PHX
+TXA
+LDX #$0000
+SEC
+SBC #$8AE2
+.CheckSlot:
+CMP #$0000
+BEQ .GotSlot
+INX
+SEC
+SBC #$002D
+BRA .CheckSlot
+.GotSlot:
+LDA $0740,X
+AND #$00FF
+CMP #$0003
+BEQ .SoldOutVar
+STZ $0736
+CMP #$0004
+BCC .DontDisplayPlayerName
+LDA #$0001
+STA $B573
+STA $0724
+LDA $06
+STA $0720
+LDA $08
+STA $0722
+LDA #ShopItemNames_PlayerText
+STA $0E
+LDA #$00F4
+STA $10
+PHY
+JSR MoveShopPlayerName
+JSL $C3E4D4 ; Instant print on
+JSL $C186B1 ;Overworld text
+JSL $C3E4CA
+PLY
+STZ $B573
+LDA $0720
+STA $06
+LDA $0722
+STA $08
+;LDA #$000B
+;JSL $C1DD47
+.DontDisplayPlayerName:
+PLX
+JML $C11ACB
+.SoldOutVar:
+LDA #$0001
+STA $0736
+JMP .DontDisplayPlayerName
+
+MoveShopPlayerName:
+PHB
+PHX
+PHY
+PHA
+TXA
+ASL
+TAX
+LDA $0748,X
+TAX
+LDA #$5000
+.CheckNameSlot:
+CPX #$0000
+BEQ .MoveName
+DEX
+CLC
+ADC #$0011
+BRA .CheckNameSlot
+
+.MoveName:
+TAX
+LDA #$0010
+LDY #$FF50
+MVN $F47E
+PLA
+PLY
+PLX
+PLB
+RTS
+
+TransferOutOfMenu:
+JSL $C3E4CA
+;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
+LDA #$0024
+STA $8958
+PHX
+PHY
+JSL $C1DD59
+PLY
+PLX
+LDA #$0001
+STA $8958
+LDX $1A
+JML $C19EE3
+
+CheckIfBuyable:
+LDA $1A
+BEQ .done
+LDA $0736
+BEQ .done
+LDA $1A
+JSL $EF016F
+LDA #$00FF
+TSB $5E79
+LDA #$0005
+JSL $C0ABE0
+JML $C19EC7
+.done:
+STZ $0736
+JSL $C1DD59
+LDA #$9C8A
+JML $C19ED9
+
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
 JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
 JML GetAPShopName
 
+ORG $C19E8F
+JML GetAPShopPrice
+
+ORG $C11AC6
+JML DisplayAPPlayer
+
+ORG $C19EDD
+JML TransferOutOfMenu
+
+org $C19ED3
+JML CheckIfBuyable
+NOP
+NOP
+
 
 
 ORG $F40028
-;Item ID, 2-byte price, Item Type, location ID/flag number, item player
-db $01, $ff, $ff, $00, $00, $01; Non-remote local item. Franklin Badge.
-db $01, $ff, $ff, $01, $01, $01; Non-remote local Teleport.
-db $96, $ff, $ff, $05, $02, $01; A remote regular item
-db $01, $ff, $ff, $02, $03, $01; Non-remote local Character
-db $ad, $ff, $ff, $04, $04, $01; Item that the player already bought and got the flag for
-db $ad, $ff, $ff, $04, $05, $01; Item for another player 
-db $01, $ff, $ff, $05, $06, $01; A remote Key Item
+;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
+db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+db $96, $ff, $ff, $05, $02, $00; A remote regular item
+db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 ;Type 0- Normal local item
 ;Type 1- Teleport/PSI
 ;type 2- Character
@@ -10361,6 +10574,13 @@ db $82, $a5, $a3, $a4, $50, $80, $a2, $9f, $9d, $9f, $a4, $95, $a2, $00
 
 ORG $F412B0
 db $76, $A2, $91, $9E, $9B, $9C, $99, $9E, $50, $72, $91, $94, $97, $95, $00
+
+ORG $F45022
+db $80, $9C, $91, $A9, $95, $A2, $50, $61, $00
+
+ORG $F45055
+db $80, $9C, $91, $A9, $95, $A2, $50, $62, $00
+;Player names should be 16 bytes, followed by a zero
 
 ;Todo; check prices for local items
 ;Per-player handling
