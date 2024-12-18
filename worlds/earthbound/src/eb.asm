@@ -10410,17 +10410,20 @@ STA $08
 LDA $0000,Y
 STA $06
 PHX
-LDA $1DD4
+LDA $20
 AND #$00FF
 TAX
 .GotSlot:
 LDA $0740,X
 AND #$00FF
 STA $3274
-
-LDA $0756,X
-AND #$00FF
-STA $0730
+PHX
+  TXA
+  ASL
+  TAX
+  LDA $0756,X
+  STA $0730
+PLX
 LDA $3274
 AND #$00FF
 CMP #$0003
@@ -10491,6 +10494,7 @@ PLB
 RTS
 
 TransferOutOfMenu:
+STZ $B573
 JSL $C3E4CA
 ;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
 LDA $3274
@@ -10553,6 +10557,10 @@ JML CheckIfBuyable
 NOP
 NOP
 
+ORG $C5E0A9
+db $08
+dd CheckShopsanityPrice
+
 
 
 ORG $F40028
@@ -10587,17 +10595,61 @@ ORG $F45055
 db $80, $9C, $91, $A9, $95, $A2, $50, $62, $00
 ;Player names should be 16 bytes, followed by a zero
 
-;Todo; check prices for local items
-;Per-player handling
+ORG $F49000
+CheckShopsanityPrice:
+db $1B, $00
+db $1B, $06
+db $1B, $02
+dd .NormalItem
+.SpecialPrice:
+db $0B, $05
+db $1B, $03
+dd .RemoteItem
+.CheckRemotePrice:
+db $1D, $14, $00, $00, $00, $00
+db $1B, $03
+dd .CantAffordSpecial
+db $0A
+dl .RegularPrice
+
+.NormalItem:
+;Write a code here that checks if the item is in the banlist
+db $1B, $01
+db $1B, $04
+db $1C, $19, $01
+db $1B, $04
+db $1B, $02
+dd .RegularPrice
+db $1B, $06
+db $0A
+dl .SpecialPrice
+.RegularPrice:
+db $1B, $01
+db $0A
+dl $C5E24B
+.CantAffordSpecial:
+db $02
+.RemoteItem:
+db $1B, $01
+db $1B, $04
+db $1C, $19, $01
+db $1B, $02
+dd .SpecialPriceRemote
+db $0A
+dl .RegularPrice
+.SpecialPriceRemote:
+db $1B, $06
+db $0A
+dl .CheckRemotePrice
+
+
+
 ;set flags
 ;give the item
-;check the price of non-regular items
 
 
 
 ;First we should probably check if it's a special item? 
-;also oh god how do i assign flags to this
-;Shops can be bits outside the flag table
 ;1E is the shop ID
 ;04 is thre slot number
 
