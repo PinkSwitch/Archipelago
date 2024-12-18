@@ -10576,6 +10576,10 @@ ORG $C5E0B6
 db $08
 dd BoughtShopsanityItemScript
 
+ORG $C5E0CE
+db $0A
+dl ShopsanityPurchaseHandler
+
 
 
 ORG $F40028
@@ -10609,7 +10613,7 @@ db $80, $9C, $91, $A9, $95, $A2, $50, $61, $00
 ORG $F45055
 db $80, $9C, $91, $A9, $95, $A2, $50, $62, $00
 ;Player names should be 16 bytes, followed by a zero
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $F49000
 CheckShopsanityPrice:
 db $1B, $00
@@ -10663,7 +10667,7 @@ db $1B, $00
 db $1B, $06
 db $1B, $02
 dd .NormalItem
-db $70, $83, $9f, $5c, $10, $04, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
+db $70, $83, $9f, $5c, $10, $02, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
 db $09, $05
 dd .Teleport
 dd .Character
@@ -10804,17 +10808,60 @@ db $1C, $02, $04, $02
 .FlnMn:
 db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $02
 
+ShopsanityPurchaseHandler:
+;Set the flag here, probably?
+db $1B, $06
+db $1B, $02
+dd .NormalItem
+db $01
+db $19, $02
+db $89, $95, $A3, $02
+db $19, $02
+db $7E, $9F, $02
+db $1C, $07, $02, $11
+db $12
+db $09, $02
+dd .Purchase
+dd .Cancel
+.Cancel:
+db $0A
+dl $C50C36
+.Purchase:
+db $1D, $09
+dw $0000
+db $18, $0A
+db $08
+dd $C5D835
+db $1B, $06
+db $08
+dd .BoughtSpecialItemGiveToPlayer
+;;;;;;
+;Set flag here
+;;;;
 
-;db $09, $05
-;dd .Teleport
-;dd .Character
-;dd .Error
-;dd .OffWorld
-;dd .RemoteLocal
+db $0A
+dl $C50198
+db $02
+.NormalItem:
+db $08
+dd $C507F8
+db $08
+dd $C5E0D3
+db $02
+.BoughtSpecialItemGiveToPlayer:
+db $09, $05
+dd ..Teleport
+dd ..Character
+dd ..Error
+dd ..OffWorld
+dd ..RemoteLocal
 
 
 
-
+..Error:
+..OffWorld:
+..RemoteLocal:
+db $02
 ;set flags
 ;give the item
 
