@@ -8200,16 +8200,14 @@ db $7F, $9E, $95, $A4, $A4, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .TwosonTeleport:
 db $84, $A7, $9F, $A3, $9F, $9E, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .HappyTeleport:
-db $78, $5e, $78, $5e, $50, $86, $99, $9c, $9c, $91, $97, $95, $50, $84, $95, $9c
-db $95, $a0, $9f, $a2, $a4, $00
+db $78, $78, $86, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .ThreedTeleport:
 db $84, $98, $A2, $95, $95, $94, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .SaturnTeleport:
 db $83, $91, $a4, $a5, $a2, $9e, $50, $86, $91, $9c, $9c, $95, $a9, $50, $84, $95
 db $9c, $95, $a0, $9f, $a2, $a4, $00
 .DesertTeleport:
-db $74, $A5, $A3, $A4, $A9, $50, $74, $A5, $9E, $95, $A3, $50, $84, $95, $9C, $95
-db $A0, $9F, $A2, $A4, $00
+db $74, $A5, $9E, $95, $A3, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .FoursideTeleport:
 db $76, $9F, $A5, $A2, $A3, $99, $94, $95, $50, $84, $95, $9C, $95, $A0, $9F, $A2
 db $A4, $00
@@ -8225,14 +8223,12 @@ db $00
 .DalaamTeleport:
 db $74, $91, $9C, $91, $91, $9D, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .DarkTeleport:
-db $74, $5e, $50, $74, $91, $a2, $9b, $9e, $95, $a3, $a3, $50, $84, $95, $9c, $95
-db $a0, $9f, $a2, $a4, $00
+db $74, $91, $a2, $9b, $9e, $95, $a3, $a3, $50, $84, $95, $9c, $95, $a0, $9f, $a2
+db $a4, $00
 .TendaTeleport:
-db $84, $95, $9e, $94, $91, $50, $86, $99, $9c, $9c, $91, $97, $95, $50, $84, $95
-db $9c, $95, $a0, $9f, $a2, $a4, $00
+db $84, $95, $9e, $94, $91, $50, $84, $95, $9c, $95, $a0, $9f, $a2, $a4, $00
 .UnderworldTeleport:
-db $85, $9e, $94, $95, $a2, $a7, $9f, $a2, $9c, $94, $50, $84, $95, $9c, $95, $a0
-db $9f, $a2, $a4, $00
+db $7c, $5e, $50, $85, $87, $50, $84, $95, $9c, $95, $a0, $9f, $a2, $a4, $00
 .MgntTeleport:
 db $7d, $91, $97, $99, $93, $91, $9e, $a4, $50, $84, $95, $9c, $95, $a0, $9f, $a2
 db $a4, $00
@@ -10473,6 +10469,7 @@ ASL
 TAX
 LDA $0748,X
 TAX
+PHX
 LDA #$5000
 .CheckNameSlot:
 CPX #$0000
@@ -10486,6 +10483,20 @@ BRA .CheckNameSlot
 TAX
 LDA #$0010
 LDY #$FF50
+MVN $F47E
+PLX
+LDA #$1190
+.CheckSlotName:
+CPX #$0000
+BEQ .MoveItem
+DEX
+CLC
+ADC #$0030
+BRA .CheckSlotName
+.MoveItem:
+TAX
+LDA #$002F
+LDY #$FF80
 MVN $F47E
 PLA
 PLY
@@ -10560,6 +10571,10 @@ NOP
 ORG $C5E0A9
 db $08
 dd CheckShopsanityPrice
+
+ORG $C5E0B6
+db $08
+dd BoughtShopsanityItemScript
 
 
 
@@ -10641,6 +10656,162 @@ dl .RegularPrice
 db $1B, $06
 db $0A
 dl .CheckRemotePrice
+
+
+BoughtShopsanityItemScript:
+db $1B, $00
+db $1B, $06
+db $1B, $02
+dd .NormalItem
+db $70, $83, $9f, $5c, $10, $04, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
+db $09, $05
+dd .Teleport
+dd .Character
+dd .Error
+dd .OffWorld
+dd .RemoteLocal
+db $02
+.NormalItem:
+db $1B, $01
+db $0A
+dl $C50660
+
+.Teleport:
+  db $1B, $01
+  db $1B, $04
+  db $0B, $10
+  db $1B, $03
+  dd ..PooPsi
+  db $1B, $01
+  db $a4, $98, $95, $50, $91, $92, $99, $9c, $99, $a4, $a9, $50, $a4, $9f, $50, $a4
+  db $95, $9c, $95, $a0, $9f, $a2, $a4, $50, $a4, $9f, $50
+  db $08
+  dd ..TeleportShopNameTable
+  db $6F
+  db $02
+
+  ..PooPsi:
+  db $a4, $9f, $50, $9c, $95, $91, $a2, $9e, $50, $91, $50, $9e, $95, $a7, $50, $80
+  db $83, $79, $50, $91, $92, $99, $9c, $99, $a4, $a9, $6f, $02
+
+  ..TeleportShopNameTable:
+  db $1B, $04
+  db $09, $0F
+  dd .ShopOnett
+  dd .ShopTwoson
+  dd .ShopHHV
+  dd .ShopThreed
+  dd .ShopSaturn
+  dd .ShopDes
+  dd .ShopFours
+  dd .ShopWinter
+  dd .ShopSummer
+  dd .ShopScar
+  dd .ShopDalam
+  dd .ShopDark
+  dd .ShopTen
+  dd .ShopUnder
+  dd .ShopMagic
+  db $02
+
+.Character:
+  db $1B, $01
+  db $1B, $04
+  db $a4, $9f, $50, $98, $99, $a2, $95, $50, $9d, $a9, $50, $91, $a0, $a0, $a2, $95
+  db $9e, $a4, $99, $93, $95, $5c, $50
+  db $08
+  dd ..CharShopNameTable
+  db $6F
+  db $02
+
+  ..CharShopNameTable:
+  db $09, $04
+  dd .Paula
+  dd .Jeff
+  dd .Poo
+  dd .FlnMn
+  db $02
+
+.Error:
+db $07, $a5, $98, $50, $9f, $98, $51, $50, $79, $96, $50, $a9, $9f, $a5, $57, $a2
+db $95, $50, $a3, $95, $95, $99, $9e, $97, $50, $a4, $98, $99, $a3, $50, $a4, $95
+db $a8, $a4, $5c, $03, $00, $70, $50, $99, $a4, $50, $9d, $95, $91, $9e, $a3, $50
+db $a3, $9f, $9d, $95, $92, $9f, $94, $a9, $50, $a3, $93, $a2, $95, $a7, $95, $94
+db $50, $a5, $a0, $50, $a4, $98, $99, $a3, $50, $a3, $93, $a2, $99, $a0, $a4, $51
+db $50, $80, $9c, $95, $91, $a3, $95, $50, $a2, $95, $a0, $9f, $a2, $a4, $50, $a4
+db $98, $99, $a3, $50, $91, $a3, $50, $91, $50, $92, $a5, $97, $51, $51, $02
+
+.OffWorld:
+db $1B, $01
+db $A4, $98, $95, $50
+db $1C, $05, $00, $50
+db $96, $9F, $A2, $50
+db $1C, $02, $00
+db $6F, $02
+
+.RemoteLocal:
+db $1B, $01
+db $A4, $98, $95, $50
+db $1C, $05, $AD, $50
+db $96, $9F, $A2, $50
+db $1C, $02, $00
+db $6F, $02
+
+
+.ShopOnett:
+db $7F, $9E, $95, $A4, $A4, $02
+.ShopTwoson:
+db $84, $A7, $9F, $A3, $9F, $9E, $02
+.ShopHHV:
+db $78, $91, $a0, $a0, $a9, $5d, $78, $91, $a0, $a0, $a9, $50, $86, $99, $9c, $9c
+db $91, $97, $95, $02
+.ShopThreed:
+db $84, $98, $A2, $95, $95, $94, $02
+.ShopSaturn:
+db $83, $91, $A4, $A5, $A2, $9E, $50, $86, $91, $9C, $9C, $95, $A9, $02
+db $91, $97, $95, $02
+.ShopDes:
+db $a4, $98, $95, $50, $74, $a5, $a3, $a4, $a9, $50, $74, $a5, $9e, $95, $a3, $50
+db $74, $95, $a3, $95, $a2, $a4, $02
+.ShopFours:
+db $76, $9F, $A5, $A2, $A3, $99, $94, $95, $02
+.ShopWinter:
+db $87, $99, $9E, $A4, $95, $A2, $A3, $02
+.ShopSummer:
+db $83, $A5, $9D, $9D, $95, $A2, $A3, $02
+.ShopScar:
+db $83, $93, $91, $A2, $91, $92, $91, $02
+.ShopDalam:
+db $74, $91, $9C, $91, $91, $9D, $02
+.ShopDark:
+db $a4, $98, $95, $50, $74, $95, $95, $a0, $50, $74, $91, $a2, $9b, $9e, $95, $a3
+db $a3, $02
+.ShopTen:
+db $a4, $98, $95, $50, $84, $95, $9e, $94, $91, $50, $86, $99, $9c, $9c, $91, $97
+db $95, $02
+.ShopUnder:
+db $a4, $98, $95, $50, $7c, $9f, $a3, $a4, $50, $85, $9e, $94, $95, $a2, $a7, $9f
+db $a2, $9c, $94, $02
+.ShopMagic:
+db $7D, $91, $97, $99, $93, $91, $9E, $A4, $02
+
+.Paula:
+db $1C, $02, $02, $02
+.Jeff:
+db $1C, $02, $03, $02
+.Poo:
+db $1C, $02, $04, $02
+.FlnMn:
+db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $02
+
+
+;db $09, $05
+;dd .Teleport
+;dd .Character
+;dd .Error
+;dd .OffWorld
+;dd .RemoteLocal
+
 
 
 
