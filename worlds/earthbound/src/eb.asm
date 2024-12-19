@@ -10599,6 +10599,10 @@ dl ShopsanityPurchaseHandler
 ORG $C5E0C8
 dl ShopsanityPurchaseHandler
 
+ORG $C5DF1E
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
+
 
 
 ORG $F40028
@@ -11011,6 +11015,19 @@ dl .ConfirmRemotePurchase
 db $1B, $06
 db $0A
 dl .ConfirmRemotePurchase
+
+OverrideSpaceCheckOnSpecialItem:
+db $1B, $06
+db $1B, $02
+dd .CheckSpace
+db $0A
+dl $C5DF27
+.CheckSpace:
+db $1d, $03, $ff
+db $1b, $02
+dd $C5Df89
+db $0A
+dl $C5DF27
 
 
 
