@@ -10871,18 +10871,58 @@ db $02
 db $1B, $01
 db $1C, $19, $01
 db $1B, $03
-dd ..NotSpecial
+dd .NotSpecial
+db $08
+dd $C507F8
+db $08
+dd $C5E52E
+db $1B, $02
+dd $C50C36
+
+db $1B, $04
+db $1D, $03, $00
+db $1B, $02
+dd $C5E1B7
+db $09, $04
+dd .GiveNess
+dd .GivePaula
+dd .GiveJeff
+dd .GivePoo
+.GiveNess:
+db $1B, $01
+db $1D, $0E, $01, $00
+db $0A
+dl .FinishGive
+.GivePaula:
+db $1B, $01
+db $1D, $0E, $02, $00
+db $0A
+dl .FinishGive
+.GiveJeff:
+db $1B, $01
+db $1D, $0E, $03, $00
+db $0A
+dl .FinishGive
+.GivePoo:
+db $1B, $01
+db $1D, $0E, $03, $00
+db $0A
+dl .FinishGive
+.FinishGive:
+db $04, $91, $02
 db $1B, $06
 db $1D, $09
 dw $0000
 db $18, $0A
 db $08
 dd $C5D835
-db $1B, $01
+db $08
+dd $C50198
+db $02
 
 
 
-..NotSpecial:
+.NotSpecial:
 db $1B, $01
 db $08
 dd $C507F8
