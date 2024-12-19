@@ -10558,8 +10558,19 @@ JSL $C1DD59
 LDA #$9C8A
 JML $C19ED9
 
-
-
+OverrideShopWindowFX:
+PHA
+LDA $3274
+BEQ .NormalItem
+CMP #$0005
+BEQ .NormalItem
+PLA
+LDA #$0001
+JML $C19B6A
+.NormalItem:
+PLA
+JSL $C3EE14
+JML $C19B6A
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10583,6 +10594,9 @@ org $C19ED3
 JML CheckIfBuyable
 NOP
 NOP
+
+ORG $C19B66
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
 db $08
