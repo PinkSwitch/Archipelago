@@ -10889,7 +10889,7 @@ dd .Purchase
 dd .Cancel
 .Cancel:
 db $0A
-dl $C50C36
+dl $C5E1AD
 .Purchase:
 db $1B, $06
 db $0B, $05
@@ -10924,7 +10924,7 @@ dd $C507F8
 db $08
 dd $C5E52E
 db $1B, $02
-dd $C50C36
+dd $C5E1AD
 
 db $1B, $04
 db $1D, $03, $00
