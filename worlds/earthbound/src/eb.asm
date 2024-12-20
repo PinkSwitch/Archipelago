@@ -10214,6 +10214,8 @@ AND #$00FF
 STA $3274
 CMP #$0004
 BCS .GrabOffWorldItemName
+LDA $F40004,X
+STA $0734
 LDA $F40000,X
 .APItemReturn:
 AND #$00FF
@@ -10901,7 +10903,6 @@ db $1B, $06
 db $08
 dd .BoughtSpecialItemGiveToPlayer
 ;Set flag here!!!!
-db $1C, $20, $01
 db $0A
 dl $C50198
 db $02
@@ -10926,6 +10927,7 @@ db $1B, $04
 db $1D, $03, $00
 db $1B, $02
 dd $C5E1B7
+db $1C, $20, $01
 db $09, $04
 dd .GiveNess
 dd .GivePaula
@@ -10962,9 +10964,6 @@ dd $C5D835
 db $08
 dd $C50198
 db $02
-
-
-
 .NotSpecial:
 db $19, $20
 db $0B, $01
@@ -10976,12 +10975,18 @@ db $08
 dd $C507F8
 db $08
 dd $C5E0D3
+db $1B, $02
+dd .skipflag
+db $1C, $20, $01
+.skipflag:
 db $02
 .GiveLeader:
+db $1C, $20, $01
 db $19, $10, $01
 db $0A
 dl $C5E0DE
 .BoughtSpecialItemGiveToPlayer:
+db $1C, $20, $01
 db $04, $91, $02
 db $09, $05
 dd ..Teleport
