@@ -10642,6 +10642,9 @@ ORG $C5DF1E
 db $0A
 dl OverrideSpaceCheckOnSpecialItem
 
+ORG $C5E1AE
+dd CancelBuyRemoveName
+
 
 
 ORG $F40028
@@ -11081,6 +11084,11 @@ db $1b, $02
 dd $C5Df89
 db $0A
 dl $C5DF27
+
+CancelBuyRemoveName:
+db $1C, $21, $01
+db $0A
+dl $C50C36
 
 
 
