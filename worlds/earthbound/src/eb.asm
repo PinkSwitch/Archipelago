@@ -9603,7 +9603,9 @@ BEQ .ClearKeyStorage
 CMP #$001F
 BEQ .StoreKeyItem
 CMP #$0020
-BEQ .GigaCheckStorage
+BEQ .SetShopFlag
+CMP #$0021
+BEQ .ClearAPName
 JML $C17DDC
 .CheckIfIsBanned:
 JMP .CompareBannedItemList
@@ -9619,8 +9621,10 @@ JMP SwapKeyStorage
 JMP StoreKeyItem
 .ClearKeyStorage:
 JMP ClearKeyStorage
-.GigaCheckStorage
-JMP GigaCheckStorage
+.SetShopFlag:
+JMP SetShopFlag
+.ClearAPName:
+JMP ClearAPNameFlag
 
 .PrintPlayerMenu:
 JSL $C3E4D4
@@ -10133,21 +10137,38 @@ PLX
 LDA $32C4
 RTL
 
-GigaCheckStorage:
-LDA $3272
-BEQ .Storage
-LDA $3280
-BRA .Transfer
-.Storage:
-LDA $B590
-.Transfer:
-BEQ .Nothing
-LDA #$0001
-STA $97CC
-BRA .Done
-.Nothing:
-STZ $97CC
-.Done:
+SetShopFlag:
+STZ $B573
+LDA $97D4
+LDX #$0000
+.CheckShopID:
+CMP #$0007
+BCC .GotShopID
+SEC
+SBC #$0007
+INX
+BRA .CheckShopID
+.GotShopID:
+PHX
+LDX #$0000
+.CheckBit:
+CMP #$0000
+BEQ .GotBit
+DEC
+INX
+BRA .CheckBit
+.GotBit:
+SEP #$20
+LDA ShopFlagBits,X
+PLX
+ORA $B721,X
+STA $B721,X
+REP #$20
+LDA #$0000
+JML $C17F0F
+
+ClearAPNameFlag:
+STZ $B573
 LDA #$0000
 JML $C17F0F
 
@@ -10199,8 +10220,6 @@ AND #$00FF
 STA $0732
 LDA $F40001,X
 STA $0730
-LDA $F40004,X
-STA $0734
 PLA
 JSL CheckItemBoughtFlag
 CMP #$0000
@@ -10435,6 +10454,8 @@ PHX
   TAX
   LDA $0756,X
   STA $0730
+  LDA $0748,X
+  STA $0734
 PLX
 LDA $3274
 AND #$00FF
@@ -10528,6 +10549,8 @@ LDA $3274
 STA $97CC
 lda $0730
 STA $97D0
+LDA $0734
+STA $97D4
 LDA #$0024
 STA $8958
 PHX
@@ -10673,8 +10696,7 @@ dl .RegularPrice
 db $1B, $01
 db $1B, $04
 db $1C, $19, $01
-db $1B, $04
-db $1B, $02
+db $1B, $03
 dd .RegularPrice
 db $1B, $06
 db $0A
@@ -10878,10 +10900,8 @@ dd $C5D835
 db $1B, $06
 db $08
 dd .BoughtSpecialItemGiveToPlayer
-;;;;;;
-;Set flag here
-;;;;
-
+;Set flag here!!!!
+db $1C, $20, $01
 db $0A
 dl $C50198
 db $02
@@ -10890,6 +10910,11 @@ db $1B, $01
 db $1C, $19, $01
 db $1B, $03
 dd .NotSpecial
+db $19, $20
+db $0B, $01
+db $1B, $03
+dd .GiveLeader
+db $1B, $01
 db $08
 dd $C507F8
 db $08
@@ -10941,12 +10966,21 @@ db $02
 
 
 .NotSpecial:
+db $19, $20
+db $0B, $01
+db $1B, $03
+dd .GiveLeader
+
 db $1B, $01
 db $08
 dd $C507F8
 db $08
 dd $C5E0D3
 db $02
+.GiveLeader:
+db $19, $10, $01
+db $0A
+dl $C5E0DE
 .BoughtSpecialItemGiveToPlayer:
 db $04, $91, $02
 db $09, $05
