@@ -278,7 +278,7 @@ location_ids = {
     "Twoson Department Store Burger Shop - Slot 3": 0xEB1025,
     "Twoson Department Store Burger Shop - Slot 4": 0xEB1026,
 
-    "Twoson Department Store Bakery - Slot 1": 0xEB102A,
+    "Twoson Department Store Bakery - Slot 1": 0xEB102A, # Force This slot needs to always be a local food item
     "Twoson Department Store Bakery - Slot 2": 0xEB102B,
     "Twoson Department Store Bakery - Slot 3": 0xEB102C,
     "Twoson Department Store Bakery - Slot 4": 0xEB102D,
@@ -310,6 +310,201 @@ location_ids = {
     "Burglin Park Bread Stand - Slot 6": 0xEB1060,
 
     "Burglin Park - Banana Stand": 0xEB1062,
+
+    "Happy-Happy Village Drugstore - Right Counter Slot 1": 0xEB1069,
+    "Happy-Happy Village Drugstore - Right Counter Slot 2": 0xEB106A,
+    "Happy-Happy Village Drugstore - Right Counter Slot 3": 0xEB106B,
+    "Happy-Happy Village Drugstore - Right Counter Slot 4": 0xEB106C,
+    "Happy-Happy Village Drugstore - Right Counter Slot 5": 0xEB106D,
+
+    "Threed Drugstore - Right Counter Slot 1": 0xEB1070,
+    "Threed Drugstore - Right Counter Slot 2": 0xEB1071,
+    "Threed Drugstore - Right Counter Slot 3": 0xEB1072,
+    "Threed Drugstore - Right Counter Slot 4": 0xEB1073,
+    "Threed Drugstore - Right Counter Slot 5": 0xEB1074,
+
+    "Threed Drugstore - Left Counter Slot 1": 0xEB1077,
+    "Threed Drugstore - Left Counter Slot 2": 0xEB1078,
+    "Threed Drugstore - Left Counter Slot 3": 0xEB1079,
+    "Threed Drugstore - Left Counter Slot 4": 0xEB107A,
+    "Threed Drugstore - Left Counter Slot 5": 0xEB107B,
+
+    "Threed - Arms Dealer Slot 1": 0xEB107E,
+    "Threed - Arms Dealer Slot 2": 0xEB107F,
+    "Threed - Arms Dealer Slot 3": 0xEB1080,
+    "Threed - Arms Dealer Slot 4": 0xEB1081,
+
+    "Threed Bakery - Slot 1": 0xEB1085,
+    "Threed Bakery - Slot 2": 0xEB1086,
+    "Threed Bakery - Slot 3": 0xEB1087,
+    "Threed Bakery - Slot 4": 0xEB1088,
+    "Threed Bakery - Slot 5": 0xEB1089,
+    "Threed Bakery - Slot 6": 0xEB108A,
+    "Threed Bakery - Slot 7": 0xEB108B,
+
+    "Scaraba - Expensive Water Guy": 0xEB108C,
+
+    "Winters Drugstore - Slot 1": 0xEB1093,
+    "Winters Drugstore - Slot 2": 0xEB1094,
+    "Winters Drugstore - Slot 3": 0xEB1095,
+    "Winters Drugstore - Slot 4": 0xEB1096,
+    "Winters Drugstore - Slot 5": 0xEB1097,
+    "Winters Drugstore - Slot 6": 0xEB1098,
+    "Winters Drugstore - Slot 7": 0xEB1099,
+
+    "Saturn Valley Shop - Center Saturn Slot 1": 0xEB109A,
+    "Saturn Valley Shop - Center Saturn Slot 2": 0xEB109B,
+    "Saturn Valley Shop - Center Saturn Slot 3": 0xEB109C,
+    "Saturn Valley Shop - Center Saturn Slot 4": 0xEB109D,
+    "Saturn Valley Shop - Center Saturn Slot 5": 0xEB109E,
+
+    "Dusty Dunes Drugstore - Counter Slot 1": 0xEB10A1,
+    "Dusty Dunes Drugstore - Counter Slot 2": 0xEB10A2,
+    "Dusty Dunes Drugstore - Counter Slot 3": 0xEB10A3,
+    "Dusty Dunes Drugstore - Counter Slot 4": 0xEB10A4,
+    "Dusty Dunes Drugstore - Counter Slot 5": 0xEB10A5,
+
+    "Dusty Dunes - Arms Dealer Slot 1": 0xEB10A8,
+    "Dusty Dunes - Arms Dealer Slot 2": 0xEB10A9,
+    "Dusty Dunes - Arms Dealer Slot 3": 0xEB10AA,
+    "Dusty Dunes - Arms Dealer Slot 4": 0xEB10AB,
+
+    "Fourside Bakery - Slot 1": 0xEB10AF,
+    "Fourside Bakery - Slot 2": 0xEB10B0,
+    "Fourside Bakery - Slot 3": 0xEB10B1,
+    "Fourside Bakery - Slot 4": 0xEB10B2, # Force this slot to be repel sandwich in monkey caves mode
+    "Fourside Bakery - Slot 5": 0xEB10B3,
+    "Fourside Bakery - Slot 6": 0xEB10B4,
+
+    "Fourside Department Store - Tool Shop Slot 1": 0xEB10B6,
+    "Fourside Department Store - Tool Shop Slot 2": 0xEB10B7,
+    "Fourside Department Store - Tool Shop Slot 3": 0xEB10B8,
+    "Fourside Department Store - Tool Shop Slot 4": 0xEB10B9,
+    "Fourside Department Store - Tool Shop Slot 5": 0xEB10BA,
+    "Fourside Department Store - Tool Shop Slot 6": 0xEB10BB,
+    "Fourside Department Store - Tool Shop Slot 7": 0xEB10BC, # Force this slot to be ruler in monkey caves mode
+
+    "Fourside Department Store - Shop Shop Slot 1": 0xEB10BD,
+    "Fourside Department Store - Shop Shop Slot 2": 0xEB10BE,
+    "Fourside Department Store - Shop Shop Slot 3": 0xEB10BF, # Force this slot to be Protein drink in monkey caves mode
+    "Fourside Department Store - Shop Shop Slot 4": 0xEB10C0,
+
+    "Fourside Department Store - Food Shop Slot 1": 0xEB10C4,
+    "Fourside Department Store - Food Shop Slot 2": 0xEB10C5,
+    "Fourside Department Store - Food Shop Slot 3": 0xEB10C6,
+    "Fourside Department Store - Food Shop Slot 4": 0xEB10C7,
+    "Fourside Department Store - Food Shop Slot 5": 0xEB10C8, # Force this slot to be Picnic lunch in monkey caves mode
+
+    "Fourside Department Store - 2F Cart Slot 1": 0xEB10CB,
+    "Fourside Department Store - 2F Cart Slot 2": 0xEB10CC,
+    "Fourside Department Store - 2F Cart Slot 3": 0xEB10CD,
+    "Fourside Department Store - 2F Cart Slot 4": 0xEB10CE,
+    "Fourside Department Store - 2F Cart Slot 5": 0xEB10CF,
+    "Fourside Department Store - 2F Cart Slot 6": 0xEB10D0,
+    "Fourside Department Store - 2F Cart Slot 7": 0xEB10D1,
+
+    "Fourside Department Store - Toys Shop Slot 1": 0xEB10D2,
+    "Fourside Department Store - Toys Shop Slot 2": 0xEB10D3,
+    "Fourside Department Store - Toys Shop Slot 3": 0xEB10D4,
+    "Fourside Department Store - Toys Shop Slot 4": 0xEB10D5,
+    "Fourside Department Store - Toys Shop Slot 5": 0xEB10D6,
+    "Fourside Department Store - Toys Shop Slot 6": 0xEB10D7,
+
+    "Fourside Department Store - Sports Shop Slot 1": 0xEB10D9,
+    "Fourside Department Store - Sports Shop Slot 2": 0xEB10DA,
+    "Fourside Department Store - Sports Shop Slot 3": 0xEB10DB,
+    "Fourside Department Store - Sports Shop Slot 4": 0xEB10DC,
+
+    "Fourside Department Store - Burger Shop Slot 1": 0xEB10E0,
+    "Fourside Department Store - Burger Shop Slot 2": 0xEB10E1,
+    "Fourside Department Store - Burger Shop Slot 3": 0xEB10E2,
+    "Fourside Department Store - Burger Shop Slot 4": 0xEB10E3, # Force this slot to be Hamburger in monkey caves mode
+    "Fourside Department Store - Burger Shop Slot 5": 0xEB10E4,
+
+    "Fourside Department Store - Arms Dealer Slot 1": 0xEB10E7,
+    "Fourside Department Store - Arms Dealer Slot 2": 0xEB10E8,
+    "Fourside Department Store - Arms Dealer Slot 3": 0xEB10E9,
+    "Fourside Department Store - Arms Dealer Slot 4": 0xEB10EA,
+    "Fourside Department Store - Arms Dealer Slot 5": 0xEB10EB,
+
+    "Fourside - Northeast Alley Junk Shop Slot 1": 0xEB10EE, # Force this slot to be some local junk item (has to have a buy price!)
+    "Fourside - Northeast Alley Junk Shop Slot 2": 0xEB10EF,
+    "Fourside - Northeast Alley Junk Shop Slot 3": 0xEB10F0,
+    "Fourside - Northeast Alley Junk Shop Slot 4": 0xEB10F1,
+
+    "Magicant - Shop Slot 1": 0xEB10F5,
+    "Magicant - Shop Slot 2": 0xEB10F6,
+
+    "Summers - Scam Shop Slot 1": 0xEB1103,
+    "Summers - Scam Shop Slot 2": 0xEB1104,
+    "Summers - Scam Shop Slot 3": 0xEB1105,
+    "Summers - Scam Shop Slot 4": 0xEB1106,
+    "Summers - Scam Shop Slot 5": 0xEB1107,
+    "Summers - Scam Shop Slot 6": 0xEB1108,
+    "Summers - Scam Shop Slot 7": 0xEB1109,
+
+    "Summers - Harbor Shop Slot 1": 0xEB110A,
+    "Summers - Harbor Shop Slot 2": 0xEB110B,
+    "Summers - Harbor Shop Slot 3": 0xEB110C,
+    "Summers - Harbor Shop Slot 4": 0xEB110D,
+    "Summers - Harbor Shop Slot 5": 0xEB110E,
+    "Summers - Harbor Shop Slot 6": 0xEB110F,
+    "Summers - Harbor Shop Slot 7": 0xEB1110,
+
+    "Summers - Restaurant Slot 1": 0xEB1111,
+    "Summers - Restaurant Slot 2": 0xEB1112,
+    "Summers - Restaurant Slot 3": 0xEB1113,
+    "Summers - Restaurant Slot 4": 0xEB1114,
+    "Summers - Restaurant Slot 5": 0xEB1115,
+    "Summers - Restaurant Slot 6": 0xEB1116,
+
+    "Scaraba - Indoors Shop Slot 1": 0xEB1118,
+    "Scaraba - Indoors Shop Slot 2": 0xEB1119,
+    "Scaraba - Indoors Shop Slot 3": 0xEB111A,
+    "Scaraba - Indoors Shop Slot 4": 0xEB111B,
+    "Scaraba - Indoors Shop Slot 5": 0xEB111C,
+    "Scaraba - Indoors Shop Slot 6": 0xEB111D,
+
+    "Scaraba Bazaar - Red Snake Carpet Slot 1": 0xEB1126,
+    "Scaraba Bazaar - Red Snake Carpet Slot 2": 0xEB1127,
+    "Scaraba Bazaar - Red Snake Carpet Slot 3": 0xEB1128,
+
+    "Scaraba Bazaar - Bottom Left Carpet Slot 1": 0xEB112D,
+    "Scaraba Bazaar - Bottom Left Carpet Slot 2": 0xEB112E,
+    "Scaraba Bazaar - Bottom Left Carpet Slot 3": 0xEB112F,
+    "Scaraba Bazaar - Bottom Left Carpet Slot 4": 0xEB1130,
+    "Scaraba Bazaar - Bottom Left Carpet Slot 5": 0xEB1131,
+    "Scaraba Bazaar - Bottom Left Carpet Slot 6": 0xEB1132,
+
+    "Scaraba Hotel - Arms Dealer Slot 1": 0xEB1134,
+    "Scaraba Hotel - Arms Dealer Slot 2": 0xEB1135,
+    "Scaraba Hotel - Arms Dealer Slot 3": 0xEB1136,
+    "Scaraba Hotel - Arms Dealer Slot 4": 0xEB1137,
+
+    "Deep Darkness - Businessman Slot 1": 0xEB113B,
+    "Deep Darkness - Businessman Slot 2": 0xEB113C,
+    "Deep Darkness - Businessman Slot 3": 0xEB113D,
+    "Deep Darkness - Businessman Slot 4": 0xEB113E,
+    "Deep Darkness - Businessman Slot 5": 0xEB113F,
+    "Deep Darkness - Businessman Slot 6": 0xEB1140,
+    "Deep Darkness - Businessman Slot 7": 0xEB1141,
+
+    "Happy-Happy Village - Trust Shop Slot 1": 0xEB1149, # Make these 2 not end after Carpainter? ALso make sure this shop actually functions with shopsanity
+    "Happy-Happy Village - Trust Shop Slot 2": 0xEB114A, # REMOVE IF NECESSARY
+
+    "Deep Darkness - Businessman Slot 1": 0xEB1150,
+    "Deep Darkness - Businessman Slot 2": 0xEB1151,
+    "Deep Darkness - Businessman Slot 3": 0xEB1152,
+    "Deep Darkness - Businessman Slot 4": 0xEB1153,
+    "Deep Darkness - Businessman Slot 5": 0xEB1154,
+    "Deep Darkness - Businessman Slot 6": 0xEB1155,
+    "Deep Darkness - Businessman Slot 7": 0xEB1156,
+
+    "Saturn Valley Shop - Post-Belch Saturn Slot 1": 0xEB1157,
+    "Saturn Valley Shop - Post-Belch Saturn Slot 2": 0xEB1158,
+    "Saturn Valley Shop - Post-Belch Saturn Slot 3": 0xEB1159,
+    "Saturn Valley Shop - Post-Belch Saturn Slot 4": 0xEB115A,
+    
 }
 
 
