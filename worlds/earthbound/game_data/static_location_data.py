@@ -249,7 +249,67 @@ location_ids = {
     "Magicant - Ness's Nightmare": 0xEB00ED,
     "Cave of the Present - Star Master": 0xEB00EE,
     "Cave of the Present - Broken Phase Distorter": 0xEB00EF,
-    "Cave of the Past - Present": 0xEB00F0
+    "Cave of the Past - Present": 0xEB00F0,
+    ##########################################
+    # Shop checks are denoted by an ID of
+    # 0x1000 | Each shop has 7 allocated ID spaces in memory
+    "Onett Drugstore - Right Counter Slot 1": 0xEB1000,
+    "Onett Drugstore - Right Counter Slot 2": 0xEB1001,
+    "Onett Drugstore - Right Counter Slot 3": 0xEB1002,
+    "Onett Drugstore - Right Counter Slot 4": 0xEB1003,
+    "Onett Drugstore - Right Counter Slot 5": 0xEB1004,
+
+    "Onett Drugstore - Left Counter": 0xEB1007,
+
+    "Summers - Beach Cart": 0xEB100E,
+
+    "Onett Burger Shop - Slot 1": 0xEB1015,
+    "Onett Burger Shop - Slot 2": 0xEB1016,
+    "Onett Burger Shop - Slot 3": 0xEB1017,
+    "Onett Burger Shop - Slot 4": 0xEB1018,
+
+    "Onett Bakery - Slot 1": 0xEB101C,
+    "Onett Bakery - Slot 2": 0xEB101D,
+    "Onett Bakery - Slot 3": 0xEB101E,
+    "Onett Bakery - Slot 4": 0xEB101F,
+
+    "Twoson Department Store Burger Shop - Slot 1": 0xEB1023,
+    "Twoson Department Store Burger Shop - Slot 2": 0xEB1024,
+    "Twoson Department Store Burger Shop - Slot 3": 0xEB1025,
+    "Twoson Department Store Burger Shop - Slot 4": 0xEB1026,
+
+    "Twoson Department Store Bakery - Slot 1": 0xEB102A,
+    "Twoson Department Store Bakery - Slot 2": 0xEB102B,
+    "Twoson Department Store Bakery - Slot 3": 0xEB102C,
+    "Twoson Department Store Bakery - Slot 4": 0xEB102D,
+
+    "Twoson Department Store Top Floor - Right Counter Slot 1": 0xEB1031,
+    "Twoson Department Store Top Floor - Right Counter Slot 2": 0xEB1032,
+    "Twoson Department Store Top Floor - Right Counter Slot 3": 0xEB1033,
+    "Twoson Department Store Top Floor - Right Counter Slot 4": 0xEB1034,
+    "Twoson Department Store Top Floor - Right Counter Slot 5": 0xEB1035,
+    "Twoson Department Store Top Floor - Right Counter Slot 6": 0xEB1036,
+
+    "Twoson Department Store Top Floor - Left Counter Slot 1": 0xEB1038,
+    "Twoson Department Store Top Floor - Right Counter Slot 2": 0xEB1039,
+
+    "Summers - Magic Cake Cart Shop Slot": 0xEB103F,
+
+    "Burglin Park Junk Shop - Slot 1": 0xEB1046,
+    "Burglin Park Junk Shop - Slot 2": 0xEB1047,
+    "Burglin Park Junk Shop - Slot 3": 0xEB1048,
+    "Burglin Park Junk Shop - Slot 4": 0xEB1049,
+    "Burglin Park Junk Shop - Slot 5": 0xEB104A,
+    "Burglin Park Junk Shop - Slot 6": 0xEB104B,
+
+    "Burglin Park Bread Stand - Slot 1": 0xEB105B,
+    "Burglin Park Bread Stand - Slot 2": 0xEB105C,
+    "Burglin Park Bread Stand - Slot 3": 0xEB105D,
+    "Burglin Park Bread Stand - Slot 4": 0xEB105E,
+    "Burglin Park Bread Stand - Slot 5": 0xEB105F,
+    "Burglin Park Bread Stand - Slot 6": 0xEB1060,
+
+    "Burglin Park - Banana Stand": 0xEB1062,
 }
 
 
