@@ -443,20 +443,20 @@ location_ids = {
     "Summers - Scam Shop Slot 6": 0xEB1108,
     "Summers - Scam Shop Slot 7": 0xEB1109,
 
-    "Summers - Harbor Shop Slot 1": 0xEB110A,
-    "Summers - Harbor Shop Slot 2": 0xEB110B,
-    "Summers - Harbor Shop Slot 3": 0xEB110C,
-    "Summers - Harbor Shop Slot 4": 0xEB110D,
-    "Summers - Harbor Shop Slot 5": 0xEB110E,
-    "Summers - Harbor Shop Slot 6": 0xEB110F,
-    "Summers - Harbor Shop Slot 7": 0xEB1110,
+    "Summers Harbor - Shop Slot 1": 0xEB110A,
+    "Summers Harbor - Shop Slot 2": 0xEB110B,
+    "Summers Harbor - Shop Slot 3": 0xEB110C,
+    "Summers Harbor - Shop Slot 4": 0xEB110D,
+    "Summers Harbor - Shop Slot 5": 0xEB110E,
+    "Summers Harbor - Shop Slot 6": 0xEB110F,
+    "Summers Harbor - Shop Slot 7": 0xEB1110,
 
-    "Summers - Restaurant Slot 1": 0xEB1111,
-    "Summers - Restaurant Slot 2": 0xEB1112,
-    "Summers - Restaurant Slot 3": 0xEB1113,
-    "Summers - Restaurant Slot 4": 0xEB1114,
-    "Summers - Restaurant Slot 5": 0xEB1115,
-    "Summers - Restaurant Slot 6": 0xEB1116,
+    "Summers Restaurant - Slot 1": 0xEB1111,
+    "Summers Restaurant - Slot 2": 0xEB1112,
+    "Summers Restaurant - Slot 3": 0xEB1113,
+    "Summers Restaurant - Slot 4": 0xEB1114,
+    "Summers Restaurant - Slot 5": 0xEB1115,
+    "Summers Restaurant - Slot 6": 0xEB1116,
 
     "Scaraba - Indoors Shop Slot 1": 0xEB1118,
     "Scaraba - Indoors Shop Slot 2": 0xEB1119,
@@ -492,19 +492,101 @@ location_ids = {
     "Happy-Happy Village - Trust Shop Slot 1": 0xEB1149, # Make these 2 not end after Carpainter? ALso make sure this shop actually functions with shopsanity
     "Happy-Happy Village - Trust Shop Slot 2": 0xEB114A, # REMOVE IF NECESSARY
 
-    "Deep Darkness - Businessman Slot 1": 0xEB1150,
-    "Deep Darkness - Businessman Slot 2": 0xEB1151,
-    "Deep Darkness - Businessman Slot 3": 0xEB1152,
-    "Deep Darkness - Businessman Slot 4": 0xEB1153,
-    "Deep Darkness - Businessman Slot 5": 0xEB1154,
-    "Deep Darkness - Businessman Slot 6": 0xEB1155,
-    "Deep Darkness - Businessman Slot 7": 0xEB1156,
-
     "Saturn Valley Shop - Post-Belch Saturn Slot 1": 0xEB1157,
     "Saturn Valley Shop - Post-Belch Saturn Slot 2": 0xEB1158,
     "Saturn Valley Shop - Post-Belch Saturn Slot 3": 0xEB1159,
     "Saturn Valley Shop - Post-Belch Saturn Slot 4": 0xEB115A,
-    
+
+    "Scaraba - Southern Camel Shop Slot 1": 0xEB115E,
+    "Scaraba - Southern Camel Shop Slot 2": 0xEB115F,
+    "Scaraba - Southern Camel Shop Slot 3": 0xEB1160,
+    "Scaraba - Southern Camel Shop Slot 4": 0xEB1161,
+    "Scaraba - Southern Camel Shop Slot 5": 0xEB1162,
+    "Scaraba - Southern Camel Shop Slot 6": 0xEB1163,
+    "Scaraba - Southern Camel Shop Slot 7": 0xEB1164,
+
+    "Deep Darkness - Arms Dealer Slot 1": 0xEB1165,
+    "Deep Darkness - Arms Dealer Slot 2": 0xEB1166,
+    "Deep Darkness - Arms Dealer Slot 3": 0xEB1167,
+    "Deep Darkness - Arms Dealer Slot 4": 0xEB1168,
+
+    "Lost Underworld - Tenda Camp Shop Slot 1": 0xEB116C,
+    "Lost Underworld - Tenda Camp Shop Slot 2": 0xEB116D,
+    "Lost Underworld - Tenda Camp Shop Slot 3": 0xEB116E,
+    "Lost Underworld - Tenda Camp Shop Slot 4": 0xEB116F,
+    "Lost Underworld - Tenda Camp Shop Slot 5": 0xEB1170,
+    "Lost Underworld - Tenda Camp Shop Slot 6": 0xEB1171,
+    "Lost Underworld - Tenda Camp Shop Slot 7": 0xEB1172,
+
+    "Happy-Happy Village Drugstore - Left Counter Slot 1": 0xEB117A,
+    "Happy-Happy Village Drugstore - Left Counter Slot 2": 0xEB117B,
+    "Happy-Happy Village Drugstore - Left Counter Slot 3": 0xEB117C,
+    "Happy-Happy Village Drugstore - Left Counter Slot 4": 0xEB117D,
+    "Happy-Happy Village Drugstore - Left Counter Slot 5": 0xEB117E,
+    "Happy-Happy Village Drugstore - Left Counter Slot 6": 0xEB117F,
+    "Happy-Happy Village Drugstore - Left Counter Slot 7": 0xEB1180,
+
+    "Grapefruit Falls - Hiker Shop Slot 1": 0xEB1181,
+    "Grapefruit Falls - Hiker Shop Slot 2": 0xEB1182,
+    "Grapefruit Falls - Hiker Shop Slot 3": 0xEB1183,
+
+    "Saturn Valley Shop - Top Saturn Slot 1": 0xEB1188,
+    "Saturn Valley Shop - Top Saturn Slot 2": 0xEB1189,
+    "Saturn Valley Shop - Top Saturn Slot 3": 0xEB118A,
+    "Saturn Valley Shop - Top Saturn Slot 4": 0xEB118B,
+    "Saturn Valley Shop - Top Saturn Slot 5": 0xEB118C,
+    "Saturn Valley Shop - Top Saturn Slot 6": 0xEB118D,
+    "Saturn Valley Shop - Top Saturn Slot 7": 0xEB118E,
+
+    "Dusty Dunes Drugstore - Left Shop Slot 1": 0xEB118F, # Force this slot to be a wet towel in monkey caves
+    "Dusty Dunes Drugstore - Left Shop Slot 2": 0xEB1190,
+    "Dusty Dunes Drugstore - Left Shop Slot 3": 0xEB1191,
+    "Dusty Dunes Drugstore - Left Shop Slot 4": 0xEB1192,
+    "Dusty Dunes Drugstore - Left Shop Slot 5": 0xEB1193,
+    "Dusty Dunes Drugstore - Left Shop Slot 6": 0xEB1194,
+    "Dusty Dunes Drugstore - Left Shop Slot 7": 0xEB1195,
+
+    "Dusty Dunes - Mine Food Cart Slot 1": 0xEB1196,
+    "Dusty Dunes - Mine Food Cart Slot 2": 0xEB1197,
+    "Dusty Dunes - Mine Food Cart Slot 3": 0xEB1198,
+    "Dusty Dunes - Mine Food Cart Slot 4": 0xEB1199,
+    "Dusty Dunes - Mine Food Cart Slot 5": 0xEB119A,
+    "Dusty Dunes - Mine Food Cart Slot 6": 0xEB119B,
+    "Dusty Dunes - Mine Food Cart Slot 7": 0xEB119C,
+
+    "Moonside Hotel - Shop Slot 1": 0xEB119D,
+    "Moonside Hotel - Shop Slot 2": 0xEB119E,
+    "Moonside Hotel - Shop Slot 3": 0xEB119F,
+    "Moonside Hotel - Shop Slot 4": 0xEB11A0,
+    "Moonside Hotel - Shop Slot 5": 0xEB11A1,
+
+    "Dalaam Restaurant - Slot 1": 0xEB11A4,
+    "Dalaam Restaurant - Slot 2": 0xEB11A5,
+    "Dalaam Restaurant - Slot 3": 0xEB11A6,
+    "Dalaam Restaurant - Slot 4": 0xEB11A7,
+
+    "Scaraba Bazaar - Delicacy Shop Slot 1": 0xEB11AB,
+    "Scaraba Bazaar - Delicacy Shop Slot 2": 0xEB11AC,
+    "Scaraba Bazaar - Delicacy Shop Slot 3": 0xEB11AD,
+    "Scaraba Bazaar - Delicacy Shop Slot 4": 0xEB11AE,
+    "Scaraba Bazaar - Delicacy Shop Slot 5": 0xEB11AF,
+    "Scaraba Bazaar - Delicacy Shop Slot 6": 0xEB11B0,
+    "Scaraba Bazaar - Delicacy Shop Slot 7": 0xEB11B1,
+
+    "Twoson/Scaraba - Shared Condiment Shop Slot 1": 0xEB11B2,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 2": 0xEB11B3,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 3": 0xEB11B4,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 4": 0xEB11B5,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 5": 0xEB11B6,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 6": 0xEB11B7,
+    "Twoson/Scaraba - Shared Condiment Shop Slot 7": 0xEB11B8,
+
+    # Make sure this shop uses the earlier one
+    "Andonuts Lab - Caveman Shop Slot 1": 0xEB11C0,
+    "Andonuts Lab - Caveman Shop Slot 2": 0xEB11C1,
+    "Andonuts Lab - Caveman Shop Slot 3": 0xEB11C2,
+    "Andonuts Lab - Caveman Shop Slot 4": 0xEB11C3,
+    "Andonuts Lab - Caveman Shop Slot 5": 0xEB11C4
 }
 
 
