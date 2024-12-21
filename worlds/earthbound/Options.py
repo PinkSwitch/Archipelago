@@ -312,6 +312,16 @@ class RandomizePSIPalettes(Choice):
     option_randomized = 2
     default = 0
 
+class ShopRandomizer(Choice):
+    """Randomizes items in shops.
+       Local Filler: Shops contain only random items for yourself and are not checks.
+       Shopsanity. Every shop slot in the game contains a Multiworld location. ONLY ENABLE SHOPSANITY IF YOU KNOW WHAT YOU ARE DOING."""
+    display_name = "Shop Randomizer"
+    option_off = 0
+    option_local_filler = 1
+    option_shopsanity = 2
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -360,6 +370,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_battle_music: RandomizeBattleMusic
     randomize_fanfares: RandomizeFanfares
     randomize_psi_palettes: RandomizePSIPalettes
+    shop_randomizer: ShopRandomizer
     #starting_character: StartingCharacter
 
 
@@ -392,7 +403,8 @@ eb_option_groups = [
         RandomStartLocation,
         MagicantMode,
         MonkeyCavesMode,
-        NoFreeSancs
+        NoFreeSancs,
+        ShopRandomizer
     ]),
 
     OptionGroup("PSI Randomization", [
