@@ -480,6 +480,7 @@ def setup_gamevars(world):
 def place_static_items(world):
     world.get_location("Belch Defeated").place_locked_item(world.create_item("Threed Tunnels Clear"))
     world.get_location("Dungeon Man Submarine").place_locked_item(world.create_item("Submarine to Deep Darkness"))
+    world.get_location("Any ATM").place_locked_item(world.create_item("ATM Access"))
 
     world.get_location("Giant Step Sanctuary").place_locked_item(world.create_item("Melody"))
     world.get_location("Lilliput Steps Sanctuary").place_locked_item(world.create_item("Melody"))
@@ -514,11 +515,6 @@ def place_static_items(world):
     if world.options.random_start_location:
         world.multiworld.push_precollected(world.create_item(world.starting_teleport))
 
-    # if not world.options.shuffle_sound_stone:
-     #   world.multiworld.push_precollected(world.create_item("Sound Stone"))
-    # else:
-     #   world.multiworld.itempool.append(world.create_item("Sound Stone"))
-
     if not world.options.monkey_caves_mode:
         world.get_location("Monkey Caves - 1F Right Chest").place_locked_item(world.create_item("Wet Towel"))
         world.get_location("Monkey Caves - 1F Left Chest").place_locked_item(world.create_item("Pizza"))
@@ -529,3 +525,6 @@ def place_static_items(world):
         world.get_location("Monkey Caves - East 2F Right Chest").place_locked_item(world.create_item("Hamburger"))
         world.get_location("Monkey Caves - East West 3F Right Chest #1").place_locked_item(world.create_item("Hamburger"))
         world.get_location("Monkey Caves - East West 3F Right Chest #2").place_locked_item(world.create_item("Picnic Lunch"))
+
+    if world.options.shop_randomizer == 2:
+        print("test")

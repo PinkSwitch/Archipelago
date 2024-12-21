@@ -316,7 +316,8 @@ item_table: Dict[str, ItemData] = {
     "Power of the Earth": ItemData("Events", None, ItemClassification.progression, 0),
     "Alternate Goal": ItemData("Events", None, ItemClassification.useful, 0),
     #"Magicant Boost": ItemData("Events", None, ItemClassification.useful, 0),
-    "Magicant Unlock": ItemData("Events", None, ItemClassification.progression, 0)
+    "Magicant Unlock": ItemData("Events", None, ItemClassification.progression, 0),
+    "ATM Access": ItemData("Events", None, ItemClassification.progression, 0)
 }
 
 

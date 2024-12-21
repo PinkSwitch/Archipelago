@@ -49,7 +49,9 @@ area_exits = {
     "Magicant": ["Magicant"],
     "Cave of the Present": ["Cave of the Past"],
     "Cave of the Past": ["Endgame"],
-    "Endgame": ["Endgame"]
+    "Endgame": ["Endgame"],
+    "Global ATM Access": ["Global ATM Access"],
+    "Common Condiment Shop": ["Common Condiment Shop"]
 }
 
 area_rules = {
@@ -190,7 +192,11 @@ area_rules = {
 
     "Cave of the Past": {"Endgame": [["Paula"]]},
 
-    "Endgame": {"Endgame": [["Nothing"]]}
+    "Endgame": {"Endgame": [["Nothing"]]},
+
+    "Common Condiment Shop": {"Common Condiment Shop": [["Nothing"]]},
+
+    "Global ATM Access": {"Global ATM Access": [["Nothing"]]}
     
 }
 

@@ -268,6 +268,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Lumine Hall", "Lumine Hall Sanctuary", None),
         LocationData("Fire Spring", "Fire Spring Sanctuary", None),
         LocationData("Ness's Mind", "Sanctuary Goal", None),
+        LocationData("Global ATM Access", "Any ATM", None)
     ]
 
     if world.options.giygas_required:
