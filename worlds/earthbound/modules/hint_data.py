@@ -1,6 +1,7 @@
 from ..game_data.local_data import item_id_table, character_item_table, party_id_nums
 from ..game_data.text_data import text_encoder
 from ..game_data.static_location_data import location_groups
+from ..modules.shopsanity import shop_locations
 import struct
 
 
@@ -147,6 +148,33 @@ def setup_hints(world):
     ]
 
     hintable_location_groups = location_groups.copy()
+
+    #if not world.options.shopsanity:
+    hintable_location_groups["Onett"] = hintable_location_groups["Onett"] - shop_locations
+    hintable_location_groups["Twoson"] = hintable_location_groups["Twoson"] - shop_locations
+    hintable_location_groups["Happy-Happy Village"] = hintable_location_groups["Happy-Happy Village"] - shop_locations
+    hintable_location_groups["Threed"] = hintable_location_groups["Threed"] - shop_locations
+    hintable_location_groups["Grapefruit Falls"] = hintable_location_groups["Grapefruit Falls"] - shop_locations
+    hintable_location_groups["Saturn Valley"] = hintable_location_groups["Saturn Valley"] - shop_locations
+    hintable_location_groups["Dusty Dunes Desert"] = hintable_location_groups["Dusty Dunes Desert"] - shop_locations
+    hintable_location_groups["Winters"] = hintable_location_groups["Winters"] - shop_locations
+    hintable_location_groups["Dr. Andonuts's Lab"] = hintable_location_groups["Dr. Andonuts's Lab"] - shop_locations
+    hintable_location_groups["Fourside"] = hintable_location_groups["Fourside"] - shop_locations
+    hintable_location_groups["Moonside"] = hintable_location_groups["Moonside"] - shop_locations
+    hintable_location_groups["Summers"] = hintable_location_groups["Summers"] - shop_locations
+    hintable_location_groups["Dalaam"] = hintable_location_groups["Dalaam"] - shop_locations
+    hintable_location_groups["Scaraba"] = hintable_location_groups["Scaraba"] - shop_locations
+    hintable_location_groups["Deep Darkness"] = hintable_location_groups["Deep Darkness"] - shop_locations
+    hintable_location_groups["Lost Underworld"] = hintable_location_groups["Lost Underworld"] - shop_locations
+    hintable_location_groups["Magicant"] = hintable_location_groups["Magicant"] - shop_locations
+
+    del hintable_location_groups["Burglin Park"]
+    del hintable_location_groups["the Scaraba Bazaar"]
+    del hintable_location_groups["the Twoson Department Store"]
+    del hintable_location_groups["the Fourside Department Store"]
+    del hintable_location_groups["the Saturn Valley Shop"]
+    
+
     if world.options.magicant_mode > 1:
         del hintable_location_groups["Magicant"]
 
