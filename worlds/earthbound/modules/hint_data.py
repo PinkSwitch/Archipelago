@@ -146,6 +146,13 @@ def setup_hints(world):
         "some hints are good hints.\n@But not this one."
     ]
 
+    hintable_location_groups = location_groups.copy()
+    if world.options.magicant_mode > 1:
+        del hintable_location_groups["Magicant"]
+
+    if not world.options.giygas_required:
+        del hintable_location_groups["Cave of the Past"]
+
     if world.options.magicant_mode.value in [0, 3]:
         world.local_hintable_items.append("Magicant Teleport")
 
@@ -159,7 +166,8 @@ def setup_hints(world):
             world.local_hintable_items.remove(item)
 
     if world.local_hintable_items == []:
-        hint_types.remove("hint_for_good_item", "prog_item_at_region")
+        hint_types.remove("hint_for_good_item")
+        hint_types.remove("prog_item_at_region")
 
     if world.options.giygas_required:
         world.local_hintable_locations.append("Cave of the Past - Present")
@@ -176,8 +184,7 @@ def setup_hints(world):
             world.hinted_locations[index] = location
         
         elif hint == "region_progression_check":
-            key, value = world.random.choice(list(location_groups.items()))
-            group = key
+            group, group_locs = world.random.choice(list(hintable_location_groups.items()))
             world.hinted_regions[index] = group
 
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
@@ -185,9 +192,8 @@ def setup_hints(world):
             world.hinted_items[index] = item
 
         elif hint == "item_in_local_region":
-            key, value = world.random.choice(list(location_groups.items()))
-            group = key
-            location = world.random.choice(sorted(value))
+            group, group_locs = world.random.choice(list(hintable_location_groups.items()))
+            location = world.random.choice(sorted(group_locs))
             world.hinted_regions[index] = group
             world.hinted_locations[index] = location
 
@@ -195,11 +201,11 @@ def setup_hints(world):
 def parse_hint_data(world, location, rom, hint):
     if hint == "item_at_location":
         if world.player == location.item.player and location.item.name in character_item_table:
-            player_text = "your friend"
+            player_text = "your friend "
             # In-game text command to display party member names
             item_text = bytearray([0x1C, 0x02, party_id_nums[location.item.name]])
         elif world.player == location.item.player:
-            player_text = "your"
+            player_text = "your "
             if location.item.name in item_id_table:
                 # In-game text command to display item names
                 item_text = bytearray([0x1C, 0x05, item_id_table[location.item.name]])
@@ -225,7 +231,6 @@ def parse_hint_data(world, location, rom, hint):
         text.append(0x02)
         
     elif hint == "hint_for_good_item" or hint == "prog_item_at_region" or hint == "item_in_local_region":
-
         if location.item.name in character_item_table and location.item.player == world.player:
             item_text = text_encoder("your friend ", 255)
             item_text.extend([0x1C, 0x02, party_id_nums[location.item.name]])
