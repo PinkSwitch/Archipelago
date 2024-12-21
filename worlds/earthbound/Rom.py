@@ -19,6 +19,7 @@ from .modules.boss_shuffle import write_bosses
 from .modules.equipamizer import randomize_armor, randomize_weapons
 from .modules.music_rando import music_randomizer
 from .modules.palette_shuffle import randomize_psi_palettes
+from .modules.shopsanity import write_shop_checks
 from .game_data.static_location_data import location_groups
 from BaseClasses import ItemClassification
 from typing import TYPE_CHECKING, Optional
@@ -133,6 +134,7 @@ def patch_rom(world, rom, player: int):
         rom.write_bytes(0x0F23CE, struct.pack("I", 0xEEF946)) # Fire Spring door script
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
+    shop_checks = []
 
     for location in world.multiworld.get_locations(player):
         if location.address:
@@ -259,6 +261,11 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x15F7F6, bytearray(special_name_table[item][1:4]))
                     rom.write_bytes(0x2EC618, bytearray([special_name_table[item][4]]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
+
+            if location.address >= 0xEB1000:
+                world.handled_locations.append(name)
+                shop_checks.append(location)
+
             if name not in world.handled_locations:
                 warning(f"{name} not placed in {world.multiworld.get_player_name(world.player)}'s EarthBound world. Something went wrong here.")
             
@@ -519,8 +526,11 @@ def patch_rom(world, rom, player: int):
     if world.options.randomize_psi_palettes:
         randomize_psi_palettes(world, rom)
 
-    calculate_scaling(world)
     write_bosses(world, rom)
+    calculate_scaling(world)
+    if world.options.shop_randomizer == 2:
+        write_shop_checks(world, rom, shop_checks)
+
     scale_enemies(world, rom)
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, 23)

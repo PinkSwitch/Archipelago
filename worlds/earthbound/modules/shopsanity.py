@@ -1,3 +1,6 @@
+from ..game_data.local_data import psi_item_table, character_item_table, special_name_table, item_id_table
+from struct import pack
+
 shop_locations = {
 "Onett Drugstore - Right Counter Slot 1",
 "Onett Drugstore - Right Counter Slot 2",
@@ -276,3 +279,33 @@ shop_locations = {
 "Andonuts Lab - Caveman Shop Slot 4",
 "Andonuts Lab - Caveman Shop Slot 5"
 }
+
+def write_shop_checks(world, rom, shop_checks):
+    for location in shop_checks:
+        flag = location.address - 0xEB1000
+        if location.item.player == world.player:
+            if world.options.remote_items:
+                if location.item.name in special_name_table:
+                    item_type = 0x04
+                    item_id = 0xAD
+                else:
+                    item_type = 0x05
+                    item_id = item_id_table[location.item.name]
+            else:
+                if location.item.name in psi_item_table:
+                    item_type = 0x01
+                    item_id = psi_item_table[location.item.name]
+                elif location.item.name in character_item_table:
+                    item_type = 0x02
+                    item_id = character_item_table[location.item.name][0]
+                else:
+                    item_type = 0x00
+                    item_id = item_id_table[location.item.name] 
+
+        else:
+            item_type = 0x04
+            item_id = 0xAD
+        
+        price = int((world.random.randint(1, 100) * (world.accessible_regions.index(location.parent_region.name) + 1)))
+        item_struct = pack('BHBH', item_id, price, item_type, flag)
+        
