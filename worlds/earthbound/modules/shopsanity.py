@@ -1,5 +1,5 @@
 from ..game_data.local_data import psi_item_table, character_item_table, special_name_table, item_id_table
-from struct import pack
+import struct
 
 shop_locations = {
 "Onett Drugstore - Right Counter Slot 1",
@@ -307,5 +307,22 @@ def write_shop_checks(world, rom, shop_checks):
             item_id = 0xAD
         
         price = int((world.random.randint(1, 100) * (world.accessible_regions.index(location.parent_region.name) + 1)))
-        item_struct = pack('BHBH', item_id, price, item_type, flag)
-        
+        item_struct = struct.pack('BHBH', item_id, price, item_type, flag)
+        rom.write_bytes(0x34002A + (0x06 * flag), item_struct)
+        rom.write_bytes(0x019DE5, struct.pack("Q", 0xF0077C5C))  # Build the shop menus
+        rom.write_bytes(0x019E23, struct.pack("Q", 0xF008355C))  # Display the item name
+        rom.write_bytes(0x019E8F, struct.pack("Q", 0xF0090B5C))  # Display the item price
+        rom.write_bytes(0x011AC6, struct.pack("Q", 0xF009555C))  # Pop up a textbox displaying the player the item goes to
+        rom.write_bytes(0x019EDD, struct.pack("Q", 0xF00A4B5C))  # Transfer the used data and player selection into a script for processing
+        rom.write_bytes(0x019ED3, struct.pack("Q", 0xF00A7E5C))  # Display SOLD OUT for items which have been flagged as bought
+        rom.write_bytes(0x019B66, struct.pack("Q", 0xF00AAC5C))  # Prevent items for other players flashing the "you can equip this"
+
+        rom.write_bytes(0x05E0A9, struct.pack("Q", 0xF4900008))  # Compare the price of the item with money on hand
+        rom.write_bytes(0x05E0B6, struct.pack("Q", 0xF4905308))  # Display the item we bought and ask to confirm
+        rom.write_bytes(0x05E0CE, struct.pack("Q", 0xF492B20A))  # The player bought the item; set a flag and give it to them
+        rom.write_bytes(0x05E0C8, struct.pack("Q", 0xF492B20A))  # The player bought the item; set a flag and give it to them
+        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494620A))  # Prevent the game from checking inventory space if not needed
+        rom.write_bytes(0x05E029, struct.pack("I", 0xF494820A))
+        rom.write_bytes(0x05E1AE, struct.pack("I", 0xF4947B))  # Post-shop cleanup
+
+#Grapefruit falls

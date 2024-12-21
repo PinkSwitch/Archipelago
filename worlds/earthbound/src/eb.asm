@@ -8298,6 +8298,12 @@ db $20
 db $40
 db $80
 
+ORG $CFB891
+db $00
+
+ORG $CFB8F5
+db $47
+
 ;New data table go here
 
 
@@ -10180,7 +10186,7 @@ LDA #$0000
 CPX #$0000
 BEQ .GotShopNum
 CLC
-ADC #$0028
+ADC #$002A
 DEX
 BRA .CheckShop
 .GotShopNum:
@@ -10642,20 +10648,24 @@ ORG $C5DF1E
 db $0A
 dl OverrideSpaceCheckOnSpecialItem
 
+ORG $C5E029
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
+
 ORG $C5E1AE
 dd CancelBuyRemoveName
 
 
 
-ORG $F40028
+;ORG $F40028
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
-db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
-db $96, $ff, $ff, $05, $02, $00; A remote regular item
-db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+;db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+;db $96, $ff, $ff, $05, $02, $00; A remote regular item
+;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 ;Type 0- Normal local item
 ;Type 1- Teleport/PSI
 ;type 2- Character
@@ -10663,20 +10673,20 @@ db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 ;type 4; Item for another player
 ;type 5- Remote local item
 
-ORG $F41280
-db $73, $9F, $9F, $9C, $50, $79, $A4, $95, $9D, $00
+;ORG $F41280
+;db $73, $9F, $9F, $9C, $50, $79, $A4, $95, $9D, $00
 
-ORG $F411F0
-db $82, $a5, $a3, $a4, $50, $80, $a2, $9f, $9d, $9f, $a4, $95, $a2, $00
+;ORG $F411F0
+;db $82, $a5, $a3, $a4, $50, $80, $a2, $9f, $9d, $9f, $a4, $95, $a2, $00
 
-ORG $F412B0
-db $76, $A2, $91, $9E, $9B, $9C, $99, $9E, $50, $72, $91, $94, $97, $95, $00
+;ORG $F412B0
+;db $76, $A2, $91, $9E, $9B, $9C, $99, $9E, $50, $72, $91, $94, $97, $95, $00
 
-ORG $F45022
-db $80, $9C, $91, $A9, $95, $A2, $50, $61, $00
+;ORG $F45022
+;db $80, $9C, $91, $A9, $95, $A2, $50, $61, $00
 
-ORG $F45055
-db $80, $9C, $91, $A9, $95, $A2, $50, $62, $00
+;ORG $F45055
+;db $80, $9C, $91, $A9, $95, $A2, $50, $62, $00
 ;Player names should be 16 bytes, followed by a zero
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $F49000
@@ -11089,6 +11099,22 @@ CancelBuyRemoveName:
 db $1C, $21, $01
 db $0A
 dl $C50C36
+
+OverrideSpaceCheckOnSpecialItem_nosell:
+db $1B, $06
+db $1B, $02
+dd .CheckSpace
+db $0A
+dl $C5E05C
+.CheckSpace:
+db $1d, $03, $ff
+db $1b, $02
+dd $C50F66
+db $0A
+dl $C5DF27
+
+ORG $f40930
+db $01, $00, $01, $01, $00, $00, $01, $00, $01
 
 
 
