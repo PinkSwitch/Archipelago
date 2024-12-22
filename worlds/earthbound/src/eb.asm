@@ -10515,7 +10515,7 @@ TAX
 LDA $0748,X
 TAX
 PHX
-LDA #$5000
+LDA #$6440
 .CheckNameSlot:
 CPX #$0000
 BEQ .MoveName
@@ -10530,19 +10530,19 @@ LDA #$0010
 LDY #$FF50
 MVN $F47E
 PLX
-LDA #$1190
+LDA #$1100
 .CheckSlotName:
 CPX #$0000
 BEQ .MoveItem
 DEX
 CLC
-ADC #$0030
+ADC #$007F
 BRA .CheckSlotName
 .MoveItem:
 TAX
 LDA #$002F
 LDY #$FF80
-MVN $F47E
+MVN $F57E
 PLA
 PLY
 PLX
@@ -10607,53 +10607,53 @@ JML $C19B6A
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-JML APShopHandler;This JML is only in AP patch
+;JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-JML GetAPShopName
+;JML GetAPShopName
 
 ORG $C19E8F
-JML GetAPShopPrice
+;JML GetAPShopPrice
 
 ORG $C11AC6
-JML DisplayAPPlayer
+;JML DisplayAPPlayer
 
 ORG $C19EDD
-JML TransferOutOfMenu
+;JML TransferOutOfMenu
 
 org $C19ED3
-JML CheckIfBuyable
-NOP
-NOP
+;JML CheckIfBuyable
+;NOP
+;NOP
 
 ORG $C19B66
-JML OverrideShopWindowFX
+;JML OverrideShopWindowFX
 
 ORG $C5E0A9
-db $08
-dd CheckShopsanityPrice
+;db $08
+;dd CheckShopsanityPrice
 
 ORG $C5E0B6
-db $08
-dd BoughtShopsanityItemScript
+;db $08
+;dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-db $0A
-dl ShopsanityPurchaseHandler
+;db $0A
+;dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-dl ShopsanityPurchaseHandler
+;dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-db $0A
-dl OverrideSpaceCheckOnSpecialItem
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_nosell
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-dd CancelBuyRemoveName
+;dd CancelBuyRemoveName
 
 
 
@@ -10941,6 +10941,7 @@ db $1D, $03, $00
 db $1B, $02
 dd $C5E1B7
 db $1C, $20, $01
+.LeaderGiven:
 db $09, $04
 dd .GiveNess
 dd .GivePaula
@@ -10997,7 +10998,7 @@ db $02
 db $1C, $20, $01
 db $19, $10, $01
 db $0A
-dl $C5E0DE
+dl .LeaderGiven
 .BoughtSpecialItemGiveToPlayer:
 db $1C, $20, $01
 db $04, $91, $02

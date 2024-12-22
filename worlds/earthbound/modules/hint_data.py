@@ -173,7 +173,6 @@ def setup_hints(world):
         del hintable_location_groups["the Twoson Department Store"]
         del hintable_location_groups["the Fourside Department Store"]
         del hintable_location_groups["the Saturn Valley Shop"]
-    
 
     if world.options.magicant_mode > 1:
         del hintable_location_groups["Magicant"]

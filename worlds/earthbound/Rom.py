@@ -161,8 +161,9 @@ def patch_rom(world, rom, player: int):
                 else:
                     player_text.extend([0x6F])
             player_text.extend([0x00])
-            rom.write_bytes(item_name_loc, bytearray(item_text))
-            rom.write_bytes(player_name_loc, bytearray(player_text))
+            if location.address < 0xEB1000:
+                rom.write_bytes(item_name_loc, bytearray(item_text))
+                rom.write_bytes(player_name_loc, bytearray(player_text))
 
             if item not in item_id_table or location.item.player != location.player:
                 item_id = 0xAD
