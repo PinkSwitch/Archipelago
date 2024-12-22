@@ -6151,7 +6151,7 @@ db $1e, $00, $ff, $64, $1e, $04, $ff, $64, $02
 ORG $D56FCC
 db $2F;Store tiny ruby
 
-ORG $D5528C
+ORG $D5528A
 db $84, $0e ;broken antenna price
 
 ORG $D5576A
@@ -8031,7 +8031,7 @@ BannedItemList:
 db $01, $68, $69, $7D, $8B, $9E, $A2, $A6, $A7, $AA, $AB, $AC, $AD, $AE
 db $AF, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BB, $C0, $C1, $C4
 db $C5, $CA, $CB, $CC, $CD, $CE, $D0, $D2, $D3, $E3, $E4, $E5, $E6, $E7
-db $FD
+db $FD, $B0, $A3, $C5
 
 StorageTitlePointers:
 dw $FF90, $FF70
@@ -8289,7 +8289,7 @@ dw .Poo
 dw .FlnMn
 
 .PlayerText:
-db $18, $01, $35, $1c, $02, $01, $02
+db $18, $01, $0B, $1c, $02, $01, $02
 
 ShopFlagBits:
 db $01
@@ -8309,6 +8309,9 @@ db $47
 
 ORG $D7FE70
 ExtraWindowData:
+dw $000C, $0011, $0013, $0004
+
+ORG $C3E2A8
 dw $000C, $0011, $0013, $0004
 
 ;New data table go here
@@ -9810,7 +9813,7 @@ LDX #$0000
 CMP BannedItemList,X
 BEQ .BannedItem
 INX
-CPX #$002B
+CPX #$002E
 BCC .check_banlist
 REP #$20
 LDA #$0001
@@ -10048,7 +10051,7 @@ LDX #$00
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$2B
+CPX #$2E
 BEQ .NormalItem
 BRA .Check
 .IsKeyItem:
@@ -10140,7 +10143,7 @@ LDX #$0000
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$002B
+CPX #$002E
 BEQ .Done
 BRA .CheckBans
 .IsKeyItem:
@@ -10160,7 +10163,7 @@ LDX #$00
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$002B
+CPX #$002E
 BEQ .Done
 BRA .Check
 .Done:
@@ -10402,7 +10405,7 @@ SEP #$20
 CMP BannedItemList,X
 BEQ .BannedItem
 INX
-CPX #$002B
+CPX #$002E
 BEQ .NotBanned
 BRA .CheckItem
 .NotBanned:
@@ -10439,7 +10442,7 @@ LDX #$0000
 .Check:
 CMP BannedItemList,X
 BEQ .Ban
-CPX #$002B
+CPX #$002E
 BEQ .Done
 INX
 BRA .Check
@@ -10459,7 +10462,7 @@ LDA $06
 STA $0720
 LDA $08
 STA $0722
-LDA #$0035
+LDA #$000B
 STA $8958
 PHX
 PHY
@@ -10587,7 +10590,7 @@ lda $0730
 STA $97D0
 LDA $0734
 STA $97D4
-LDA #$0035
+LDA #$000B
 STA $8958
 PHX
 PHY

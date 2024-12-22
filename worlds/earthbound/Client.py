@@ -336,14 +336,20 @@ class EarthBoundClient(SNIClient):
         from .game_data.local_data import check_table
 
         location_ram_data = await snes_read(ctx, WRAM_START + 0x9C00, 0x88)
+        shop_location_flags = await snes_read(ctx, WRAM_START + 0xB721, 0x41)
         for loc_id, loc_data in check_table.items():
             if loc_id not in ctx.locations_checked:
-                data = location_ram_data[loc_data[0]]
+                if loc_id >= 0xEB1000:
+                    data = shop_location_flags[loc_data[0]]
+                else:
+                    data = location_ram_data[loc_data[0]]
                 masked_data = data & (1 << loc_data[1])
                 bit_set = masked_data != 0
                 invert_bit = ((len(loc_data) >= 3) and loc_data[2])
                 if bit_set != invert_bit and loc_id in ctx.server_locations:
                     new_checks.append(loc_id)
+
+
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
             location = ctx.location_names.lookup_in_slot(new_check_id)
