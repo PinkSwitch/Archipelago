@@ -488,12 +488,7 @@ location_ids = {
     "Deep Darkness - Businessman Slot 5": 0xEB113F,
     "Deep Darkness - Businessman Slot 6": 0xEB1140,
     "Deep Darkness - Businessman Slot 7": 0xEB1141,
-
-    # Make these 2 not end after Carpainter? ALso make sure this shop actually functions with shopsanity
-    # REMOVE IF NECESSARY
-    "Happy-Happy Village - Trust Shop Slot 1": 0xEB1149,
-    "Happy-Happy Village - Trust Shop Slot 2": 0xEB114A,
-
+    
     "Saturn Valley Shop - Post-Belch Saturn Slot 1": 0xEB1157,
     "Saturn Valley Shop - Post-Belch Saturn Slot 2": 0xEB1158,
     "Saturn Valley Shop - Post-Belch Saturn Slot 3": 0xEB1159,
@@ -690,8 +685,6 @@ location_groups = {
         "Happy-Happy Village Drugstore - Right Counter Slot 3",
         "Happy-Happy Village Drugstore - Right Counter Slot 4",
         "Happy-Happy Village Drugstore - Right Counter Slot 5",
-        "Happy-Happy Village - Trust Shop Slot 1",
-        "Happy-Happy Village - Trust Shop Slot 2",
         "Happy-Happy Village Drugstore - Left Counter Slot 1",
         "Happy-Happy Village Drugstore - Left Counter Slot 2",
         "Happy-Happy Village Drugstore - Left Counter Slot 3",

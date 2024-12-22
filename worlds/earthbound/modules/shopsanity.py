@@ -320,8 +320,9 @@ def write_shop_checks(world, rom, shop_checks):
             pixel_length = calc_pixel_width(menu_item_name)
         menu_item_name = text_encoder(menu_item_name, 0x30)
         player_name = text_encoder(world.multiworld.get_player_name(location.item.player), 16)
+        player_name.append(0x00)
         rom.write_bytes(0x341190 + (flag * 0x30), menu_item_name)
-        rom.write_bytes(0x346440 + (flag * 0x10), player_name)
+        rom.write_bytes(0x346440 + (flag * 0x11), player_name)
         rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
 
 

@@ -499,8 +499,6 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
             LocationData("Deep Darkness", "Deep Darkness - Businessman Slot 5", 0xeb113f),
             LocationData("Deep Darkness", "Deep Darkness - Businessman Slot 6", 0xeb1140),
             LocationData("Deep Darkness", "Deep Darkness - Businessman Slot 7", 0xeb1141),
-            LocationData("Happy-Happy Village", "Happy-Happy Village - Trust Shop Slot 1", 0xeb1149),
-            LocationData("Happy-Happy Village", "Happy-Happy Village - Trust Shop Slot 2", 0xeb114a),
             LocationData("Saturn Valley", "Saturn Valley Shop - Post-Belch Saturn Slot 1", 0xeb1157),
             LocationData("Saturn Valley", "Saturn Valley Shop - Post-Belch Saturn Slot 2", 0xeb1158),
             LocationData("Saturn Valley", "Saturn Valley Shop - Post-Belch Saturn Slot 3", 0xeb1159),

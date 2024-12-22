@@ -254,6 +254,9 @@ JML GetDynamicWindowTitle
 ORG $C4FBBD
 JML GetRandomizedTrack
 
+ORG $C105E6
+JML ExpandedWindows
+
 ;new jmls
 
 
@@ -8286,7 +8289,7 @@ dw .Poo
 dw .FlnMn
 
 .PlayerText:
-db $18, $01, $24, $1c, $02, $01, $02
+db $18, $01, $35, $1c, $02, $01, $02
 
 ShopFlagBits:
 db $01
@@ -8303,6 +8306,10 @@ db $00
 
 ORG $CFB8F5
 db $47
+
+ORG $D7FE70
+ExtraWindowData:
+dw $000C, $0011, $0013, $0004
 
 ;New data table go here
 
@@ -9155,7 +9162,28 @@ LDA MusicTrackList,X
 AND #$00FF
 JML $C4FBC7
 
+ExpandedWindows:
+PHY
+LDY $14
+CPY #$0035
+BEQ .ExtraWindows
+.DrawWin
+PLY
+LDA [$0A]
+LDX $10
+STA $0006,X
+JML $C105ED
+.ExtraWindows:
+LDA #$00D7
+STA $08
+STA $0C
+LDA #ExtraWindowData
+STA $0A
+STA $06
+LDA #$0000
+STA $02
 
+BRA .DrawWin
 
 
 
@@ -10431,7 +10459,7 @@ LDA $06
 STA $0720
 LDA $08
 STA $0722
-LDA #$0024
+LDA #$0035
 STA $8958
 PHX
 PHY
@@ -10559,7 +10587,7 @@ lda $0730
 STA $97D0
 LDA $0734
 STA $97D4
-LDA #$0024
+LDA #$0035
 STA $8958
 PHX
 PHY
@@ -11114,8 +11142,8 @@ dd $C50F66
 db $0A
 dl $C5DF27
 
-ORG $f40930
-db $01, $00, $01, $01, $00, $00, $01, $00, $01
+;ORG $f40930
+;db $01, $00, $01, $01, $00, $00, $01, $00, $01
 
 
 
