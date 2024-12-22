@@ -10479,6 +10479,9 @@ STA $08
 .DontCloseNameWin:
 LDA $0000,Y
 STA $06
+LDA $8958
+CMP #$000C
+BNE .End
 PHX
 LDA $20
 AND #$00FF
@@ -10534,6 +10537,8 @@ JML $C11ACB
 LDA #$0001
 STA $0736
 JMP .DontDisplayPlayerName
+.End:
+JML $C11ACB
 
 MoveShopPlayerName:
 PHB
@@ -10586,6 +10591,7 @@ JSL $C3E4CA
 ;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
 LDA $3274
 STA $97CC
+STZ $0724
 lda $0730
 STA $97D0
 LDA $0734

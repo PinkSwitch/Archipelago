@@ -367,13 +367,13 @@ def write_shop_checks(world, rom, shop_checks):
         rom.write_bytes(0x019E23, struct.pack("I", 0xF008355C))  # Display the item name
         rom.write_bytes(0x019E8F, struct.pack("I", 0xF0090B5C))  # Display the item price
         # Pop up a textbox displaying the player the item goes to
-        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009555C))  # ?????
+        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009555C))
         # Transfer the used data and player selection into a script for processing
-        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A4B5C))
+        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A575C))
         # Display SOLD OUT for items which have been flagged as bought
-        rom.write_bytes(0x019ED3, struct.pack("I", 0xF00A7E5C))
+        rom.write_bytes(0x019ED3, struct.pack("I", 0xF00A8D5C))
         # Prevent items for other players flashing the "you can equip this"
-        rom.write_bytes(0x019B66, struct.pack("I", 0xF00AAC5C))
+        rom.write_bytes(0x019B66, struct.pack("I", 0xF00ABB5C))
 
         rom.write_bytes(0x05E0A9, struct.pack("I", 0xF4900008))  # Compare the price of the item with money on hand
         rom.write_bytes(0x05E0B6, struct.pack("I", 0xF4905308))  # Display the item we bought and ask to confirm
