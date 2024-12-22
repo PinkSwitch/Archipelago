@@ -229,7 +229,7 @@ item_table: Dict[str, ItemData] = {
     "Gelato de Resort": ItemData("Food", 0xEB00C6, ItemClassification.filler, 0),
     "Snake": ItemData("Battle Items", 0xEB00C7, ItemClassification.filler, 0),
     "Viper": ItemData("Battle Items", 0xEB00C8, ItemClassification.filler, 0),
-    "Brain Stone": ItemData("Battle Items", 0xEB00C9, ItemClassification.filler, 0),
+    "Brain Stone": ItemData("Battle Items", 0xEB00C9, ItemClassification.filler),
     "Police Badge": ItemData("Key Items", 0xEB00CA, ItemClassification.progression),
     "Mining Permit": ItemData("Key Items", 0xEB00CB, ItemClassification.progression),
     "Suporma": ItemData("Key Items", 0xEB00CC, ItemClassification.trap),
@@ -237,7 +237,7 @@ item_table: Dict[str, ItemData] = {
     "Insignificant Item": ItemData("Key Items", 0xEB00CE, ItemClassification.progression),
     "Magic Tart": ItemData("Food", 0xEB00CF, ItemClassification.useful, 0),
     "Tiny Ruby": ItemData("Key Items", 0xEB00D0, ItemClassification.progression),
-    "Monkey's Love": ItemData("Battle Items", 0xEB00D1, ItemClassification.filler, 0),
+    "Monkey's Love": ItemData("Battle Items", 0xEB00D1, ItemClassification.filler),
     "Eraser Eraser": ItemData("Key Items", 0xEB00D2, ItemClassification.progression),
     "Tendakraut": ItemData("Key Items", 0xEB00D3, ItemClassification.progression),
 

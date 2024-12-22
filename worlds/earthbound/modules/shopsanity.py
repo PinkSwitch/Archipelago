@@ -281,6 +281,25 @@ shop_locations = {
     "Andonuts Lab - Caveman Shop Slot 5"
 }
 
+unsellable_filler_prices = {
+    "Broken Machine": 150,
+    "Broken Air Gun": 110,
+    "Broken Laser": 250,
+    "Broken Pipe": 250,
+    "Broken Tube": 800,
+    "Broken Bazooka": 900,
+    "Broken Trumpet": 500,
+    "Broken Harmonica": 1500,
+    "Counter-PSI Unit": 300,
+    "Shield Killer": 500,
+    "Heavy Bazooka": 1800,
+    "Hungry HP-Sucker": 1600,
+    "Defense Shower": 1000,
+    "Neutralizer": 5000,
+    "Brain Stone": 1,
+    "Monkey's Love": 1
+}
+
 
 def write_shop_checks(world, rom, shop_checks):
     for location in shop_checks:
@@ -303,6 +322,25 @@ def write_shop_checks(world, rom, shop_checks):
                 else:
                     item_type = 0x00
                     item_id = item_id_table[location.item.name] 
+
+            # Unique non-progression items that have no price by default. If they're on a shop,
+            # give them a base price. (prog items are handled by the "price" variable)
+            # Equipamizer already assigns prices to Equipment with no price, so they can be exempt.
+            if not world.options.armorizer:
+                unsellable_filler_prices["Cloak of Kings"] = 2000
+                unsellable_filler_prices["Diadem of Kings"] = 1500
+                unsellable_filler_prices["Bracer of Kings"] = 3500
+
+            if not world.options.weaponizer:
+                unsellable_filler_prices["Magicant Bat"] = 3000
+                unsellable_filler_prices["Legendary Bat"] = 5000
+                unsellable_filler_prices["Magnum Air Gun"] = 220
+                unsellable_filler_prices["Laser Gun"] = 500
+                unsellable_filler_prices["Baddest Beam"] = 3000
+
+            if location.item.name in unsellable_filler_prices and location.item.player == world.player:
+                rom.write_bytes(0x15501A + (item_id_table[location.item.name] * 39),
+                                struct.pack("H", unsellable_filler_prices[location.item.name]))
 
         else:
             item_type = 0x04
