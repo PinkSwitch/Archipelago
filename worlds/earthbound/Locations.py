@@ -583,7 +583,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         ]
 
         if world.options.magicant_mode < 2:
-            LocationData("test", "Magicant - Shop Slot 1", 0xeb10f5),
-            LocationData("test", "Magicant - Shop Slot 2", 0xeb10f6)
+            LocationData("Magicant", "Magicant - Shop Slot 1", 0xeb10f5),
+            LocationData("Magicant", "Magicant - Shop Slot 2", 0xeb10f6)
 
     return location_table
