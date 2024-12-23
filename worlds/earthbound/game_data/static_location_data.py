@@ -418,7 +418,7 @@ location_ids = {
     "Fourside Department Store - Burger Shop Slot 1": 0xEB10E0,
     "Fourside Department Store - Burger Shop Slot 2": 0xEB10E1,
     "Fourside Department Store - Burger Shop Slot 3": 0xEB10E2,
-    "Fourside Department Store - Burger Shop Slot 4": 0xEB10E3,  # Force this slot to be Hamburger in monkey caves mode
+    "Fourside Department Store - Burger Shop Slot 4": 0xEB10E3,  # Force this slot to be Hamburger
     "Fourside Department Store - Burger Shop Slot 5": 0xEB10E4,
 
     "Fourside Department Store - Arms Dealer Slot 1": 0xEB10E7,
@@ -427,7 +427,7 @@ location_ids = {
     "Fourside Department Store - Arms Dealer Slot 4": 0xEB10EA,
     "Fourside Department Store - Arms Dealer Slot 5": 0xEB10EB,
 
-    "Fourside - Northeast Alley Junk Shop Slot 1": 0xEB10EE,  # Force this slot to be some local junk item
+    "Fourside - Northeast Alley Junk Shop Slot 1": 0xEB10EE,
     "Fourside - Northeast Alley Junk Shop Slot 2": 0xEB10EF,
     "Fourside - Northeast Alley Junk Shop Slot 3": 0xEB10F0,
     "Fourside - Northeast Alley Junk Shop Slot 4": 0xEB10F1,
