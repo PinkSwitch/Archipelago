@@ -531,11 +531,10 @@ def place_static_items(world):
 
     if world.options.shop_randomizer == 2:
         world.get_location("Twoson Department Store Bakery - Slot 1").place_locked_item(world.create_item("Plain Roll"))
+        world.get_location("Fourside Department Store - Burger Shop Slot 4").place_locked_item(world.create_item("Hamburger"))
 
         if world.options.monkey_caves_mode < 2:
             world.get_location("Fourside Bakery - Slot 4").place_locked_item(world.create_item("Repel Sandwich"))
             world.get_location("Fourside Department Store - Tool Shop Slot 7").place_locked_item(world.create_item("Ruler"))
             world.get_location("Fourside Department Store - Shop Shop Slot 3").place_locked_item(world.create_item("Protein Drink"))
             world.get_location("Fourside Department Store - Food Shop Slot 5").place_locked_item(world.create_item("Picnic Lunch"))
-
-        world.get_location("Fourside Department Store - Burger Shop Slot 4").place_locked_item(world.create_item("Hamburger"))

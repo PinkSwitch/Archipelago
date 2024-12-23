@@ -529,7 +529,7 @@ def patch_rom(world, rom, player: int):
 
     write_bosses(world, rom)
     calculate_scaling(world)
-    if world.options.shop_randomizer == 2:
+    if world.options.shop_randomizer:
         write_shop_checks(world, rom, shop_checks)
 
     scale_enemies(world, rom)
