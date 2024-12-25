@@ -396,10 +396,13 @@ def write_shop_checks(world, rom, shop_checks):
                 rom.write_bytes(0x3405E8, bytearray([item_id_table[world.magicant_junk[6]], 0x00, 0x00, 0x00, 0xF5, 0x00]))
                 rom.write_bytes(0x3405EE, bytearray([item_id_table[world.magicant_junk[7]], 0x00, 0x00, 0x00, 0xF6, 0x00]))
     else:
+        filler_shop_items = world.filler_drops.copy()
+        filler_shop_items.remove(0)
+        print(filler_shop_items)
         for location in location_ids:
             if location_ids[location] >= 0xEB1000:
                 slot = location_ids[location] - 0xEB1000
-                rom.write_bytes(0x1576B9 + (slot), bytearray([world.random.choice(world.filler_drops)]))
+                rom.write_bytes(0x1576B9 + (slot), bytearray([world.random.choice(filler_shop_items)]))
                 rom.write_bytes(0x1576e3, bytearray([0xEF]))
                 rom.write_bytes(0x15779c, bytearray([0x5A]))
                 if world.options.monkey_caves_mode < 2:
