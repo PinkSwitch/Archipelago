@@ -42,79 +42,183 @@ def create_gift(name, value, traits):
 
 
 gift_properties = {
-    0x02: create_gift("Teddy Bear", 178, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal"]),
+    2: create_gift("Teddy Bear", 178, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal"]),
 
-    0x03: create_gift("Super Plush Bear", 1198, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal"]),
+    3: create_gift("Super Plush Bear", 1198, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal"]),
 
-    0x04: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    4: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x05: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    5: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x06: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    6: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x07: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    7: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x08: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    8: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x09: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    9: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x0A: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Pipe", "Junk"]),
+    10: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Pipe", "Junk"]),
 
-    0x0B: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    11: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x0C: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    12: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x0D: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon", "Junk"]),
+    13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon", "Junk"]),
 
-    0x0E: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
+    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
 
-    0x0F: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
+    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
 
-    0x10: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
 
-    0x11: create_gift("Cracked Bat", 18, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    17: create_gift("Cracked Bat", 18, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x12: create_gift("Tee Ball Bat", 48, ["MeleeWeapon", "Metal", "Toy", "Weapon"]),
+    18: create_gift("Tee Ball Bat", 48, ["MeleeWeapon", "Metal", "Toy", "Weapon"]),
 
-    0x13: create_gift("Sand Lot Bat", 98, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    19: create_gift("Sand Lot Bat", 98, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x14: create_gift("Minor League Bat", 399, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    20: create_gift("Minor League Bat", 399, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x15: create_gift("Mr. Baseball Bat", 498, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    21: create_gift("Mr. Baseball Bat", 498, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x16: create_gift("Big League Bat", 3080, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    22: create_gift("Big League Bat", 3080, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x17: create_gift("Hall of Fame Bat", 1880, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    23: create_gift("Hall of Fame Bat", 1880, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x18: create_gift("Magicant Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Dreamlike"]),
+    24: create_gift("Magicant Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Dreamlike"]),
 
-    0x19: create_gift("Legendary Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Legendary"]),
+    25: create_gift("Legendary Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Legendary"]),
 
-    0x1A: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Gutsy"]),
+    26: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Gutsy"]),
 
-    0x1B: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+    27: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    0x1C: create_gift("Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    28: create_gift("Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    0x1D: create_gift("Thick Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Thick"]),
+    29: create_gift("Thick Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Thick"]),
 
-    0x1E: create_gift("Deluxe Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    30: create_gift("Deluxe Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    0x1F: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    31: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    0x20: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "French"]),
+    32: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "French"]),
 
-    0x21: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    33: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    0x22: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
+    34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
 
     35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon", "Artifact"]),
 
-    0x58: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
+    36: create_gift("Pop Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
 
-    0x59: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
+    37: create_gift("Stun Gun", 0, ["RangedWeapon", "Weapon"]),
 
-    0x5A: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+    38: create_gift("Toy Air Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    39: create_gift("Magnum Air Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    40: create_gift("Zip Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    41: create_gift("Laser Gun", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    42: create_gift("Hyper Beam", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    43: create_gift("Crusher Beam", 0, ["RangedWeapon", "Beam", "Weapon"]),
+    
+    44: create_gift("Spectrum Beam", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    45: create_gift("Death Ray", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    46: create_gift("Baddest Beam", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    47: create_gift("Moon Beam Gun", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    48: create_gift("Gaia Beam", 0, ["RangedWeapon", "Beam", "Weapon"]),
+
+    49: create_gift("Yo-yo", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    50: create_gift("Slingshot", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    51: create_gift("Bionic Slingshot", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    52: create_gift("Trick Yo-yo", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    53: create_gift("Combat Yo-yo", 0, ["RangedWeapon", "Toy", "Weapon"]),
+
+    54: create_gift("Travel Charm", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    55: create_gift("Great Charm", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    56: create_gift("Crystal Charm", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    57: create_gift("Rabbit's Foot", 0, ["Wearable", "Jewelry", "Defense", "Speed"]),
+
+    58: create_gift("Flame Pendant", 0, ["Wearable", "Jewelry", "Defense", "FireProof"]),
+
+    59: create_gift("Rain Pendant", 0, ["Wearable", "Jewelry", "Defense", "WaterProof"]),
+
+    60: create_gift("Night Pendant", 0, ["Wearable", "Jewelry", "Defense", "LightProof"]),
+
+    61: create_gift("Sea Pendant", 0, ["Wearable", "Jewelry", "Defense", "LightProof", "FireProof", "WaterProof"]),
+
+    62: create_gift("Star Pendant", 0, ["Wearable", "Jewelry", "Defense", "LightProof", "FireProof", "WaterProof"]),
+
+    63: create_gift("Cloak of Kings", 0, ["Wearable", "Jewelry", "Defense", "Artifact"]),
+
+    64: create_gift("Cheap Bracelet", 0, ["Wearable", "Jewelry", "Defense", "Plastic"]),
+
+    65: create_gift("Copper Bracelet", 0, ["Wearable", "Jewelry", "Defense", "Copper"]),
+
+    66: create_gift("Silver Bracelet", 0, ["Wearable", "Jewelry", "Defense", "Silver"]),
+
+    67: create_gift("Gold Bracelet", 0, ["Wearable", "Jewelry", "Defense", "Gold"]),
+
+    68: create_gift("Platinum Band", 0, ["Wearable", "Jewelry", "Defense", "Platinum"]),
+
+    69: create_gift("Diamond Band", 0, ["Wearable", "Jewelry", "Defense", "Diamond"]),
+
+    70: create_gift("Pixie's Bracelet", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    71: create_gift("Cherub's Band", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    72: create_gift("Goddess Band", 0, ["Wearable", "Jewelry", "Defense"]),
+
+    73: create_gift("Bracer of Kings", 0, ["Wearable", "Jewelry", "Defense", "Artifact", "FireProof"]),
+
+    74: create_gift("Baseball Cap", 0, ["Wearable", "Baseball", "Defense", "Hat"]),
+
+    75: create_gift("Holmes Hat", 0, ["Wearable", "Defense", "Hat"]),
+
+    76: create_gift("Mr. Baseball Cap", 0, ["Wearable", "Defense", "Hat", "Baseball"]),
+
+    77: create_gift("Hard Hat", 0, ["Wearable", "Defense", "Hat"]),
+
+    78: create_gift("Ribbon", 0, ["Wearable", "Cloth", "Defense"]),
+
+    79: create_gift("Red Ribbon", 0, ["Wearable", "Cloth", "Defense", "Red"]),
+
+    80: create_gift("Goddess Ribbon", 0, ["Wearable", "Cloth", "Defense"]),
+
+    81: create_gift("Coin of Slumber", 0, ["Wearable", "Defense", "Charm"]),
+
+    82: create_gift("Coin of Defense", 0, ["Wearable", "Defense", "Charm"]),
+
+    83: create_gift("Lucky Coin", 0, ["Wearable", "Defense", "Charm", "Lucky", "Luck"]),
+
+    84: create_gift("Talisman Coin", 0, ["Wearable", "Defense", "Charm"]),
+
+    85: create_gift("Shiny Coin", 0, ["Wearable", "Defense", "Charm"]),
+
+    86: create_gift("Souvenir Coin", 0, ["Wearable", "Defense", "Charm"]),
+
+    87: create_gift("Diadem of Kings", 0, ["Wearable", "Jewelry", "Defense", "Artifact", "FireProof", "WaterProof","LightProof"]),
+
+    88: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
+
+    89: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
+
+    90: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
 
     91: create_gift("Boiled Egg", 0, ["Egg", "Comsumable", "Heal", "Food", "White"]),
 
@@ -302,7 +406,7 @@ gift_properties = {
 
     222: create_gift("Charm Coin", 0, ["Wearable", "Defense", "Charm"]),
 
-    223: create_gift("Cup of Noodles", 0, ["Food", "Consumable", "Heal", "FastFood", "Noodles", "Sandwich"]),
+    223: create_gift("Cup of Noodles", 0, ["Food", "Consumable", "Heal", "FastFood", "Pasta"]),
 
     224: create_gift("Repel Sandwich", 0, ["Food", "Consumable", "Heal", "ArtisanGood", "Repellant", "Sandwich"]),
 
@@ -339,6 +443,18 @@ gift_properties = {
     245: create_gift("Luxury Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky"]),
 
     246: create_gift("Bottle of DXWater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI"]),
+
+    247: create_gift("Magic Pudding", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
+
+    248: create_gift("Non-Stick Frypan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+
+    249: create_gift("Mr. Saturn Coin", 0, ["Wearable", "Defense", "Charm"]),
+
+    250: create_gift("Meteornium", 0, ["Mineral", "SellFodder", "Artifact", "Brown", "SpaceMineral"]),
+
+    251: create_gift("Popsicle", 0, ["Consumable", "Food", "Heal", "Candy", "FrozenFood"]),
+
+    252: create_gift("Cup of Lifenoodles", 0, ["Consumable", "Food", "Cure", "Revive", "Pasta"])
     #Todo; separate traits for GoodWeapon and BadWeapon
     # Todo; Satus heals should be Medicine, Cure
 }
