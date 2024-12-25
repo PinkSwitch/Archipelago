@@ -262,7 +262,7 @@ gift_properties = {
 
     190: create_gift("Banana", 0, ["Consumable", "Heal", "Food", "Fruit", "Yellow"]),
 
-    191: create_gift("Calorie Stick", 0, ["Consumable", "Heal", "Food", "Jerky"]),
+    191: create_gift("Calorie Stick", 0, ["Consumable", "Heal", "Food", "Jerky", "Processed"]),
 
     194: create_gift("Earth Pendant", 0, ["Wearable", "Jewelry", "FireProof", "WaterProof", "LightProof"]),
 
@@ -280,7 +280,65 @@ gift_properties = {
 
     209: create_gift("Monkey's Love", 0, ["Weapon", "Animal"]),
 
-    212: create_gift("T-Rex's Bat", 0, ["Weapon", "Animal"]),
+    212: create_gift("T-Rex's Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    213: create_gift("Big League Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]), # Todo? Figure out which one is in game
+
+    214: create_gift("Ultimate Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
+
+    215: create_gift("Double Beam", 0, ["RangedWeapon", "Gun", "Beam", "Weapon"]),
+
+    216: create_gift("Platinum Band", 0, ["Wearable", "Defense", "Platinum", "Jewelry"]),
+
+    217: create_gift("Diamond Band", 0, ["Wearable", "Defense", "Diamond", "Jewelry"]),
+
+    218: create_gift("Defense Ribbon", 0, ["Wearable", "Cloth", "Defense"]),
+
+    219: create_gift("Talisman Ribbon", 0, ["Wearable", "Cloth", "Defense"]),
+
+    220: create_gift("Saturn Ribbon", 0, ["Wearable", "Cloth", "Defense"]),
+
+    221: create_gift("Coin of Silence", 0, ["Wearable", "Defense", "Charm"]),
+
+    222: create_gift("Charm Coin", 0, ["Wearable", "Defense", "Charm"]),
+
+    223: create_gift("Cup of Noodles", 0, ["Food", "Consumable", "Heal", "FastFood", "Noodles", "Sandwich"]),
+
+    224: create_gift("Repel Sandwich", 0, ["Food", "Consumable", "Heal", "ArtisanGood", "Repellant", "Sandwich"]),
+
+    225: create_gift("Repel Superwich", 0, ["Food", "Consumable", "Heal", "ArtisanGood", "Repellant", "Sandwich"]),
+
+    226: create_gift("Lucky Sandwich", 0, ["Food", "Consumable", "Heal", "Lucky", "Luck", "Mana", "Sandwich"]),
+
+    232: create_gift("Cup of Coffee", 0, ["Drink", "Consumable", "Heal", "Liquid", "Coffee"]),
+
+    233: create_gift("Double Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+
+    234: create_gift("Peanut Cheese Bar", 0, ["Comsumable", "Heal", "Food", "Candy", "ExoticFood"]),
+
+    235: create_gift("Piggy Jelly", 0, ["Comsumable", "Heal", "Food", "Candy", "ExoticFood", "Gelatin", "Jelly"]),
+
+    236: create_gift("Bowl of Rice Gruel", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "ExoticFood", "Liquid"]),
+
+    237: create_gift("Bean Croquette", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "ExoticFood"]),
+
+    238: create_gift("Molokheiya Soup", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "ExoticFood", "Vegetable", "Liquid"]),
+
+    239: create_gift("Plain Roll", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Bread"]),
+
+    240: create_gift("Kabob", 0, ["Comsumable", "Heal", "Food", "ExoticFood", "Meat", "Lamb"]),
+
+    241: create_gift("Plain Yogurt", 0, ["Comsumable", "Heal", "Food", "Slime", "Dairy"]),
+
+    242: create_gift("Beef Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky"]),
+
+    243: create_gift("Mammoth Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+
+    244: create_gift("Spicy Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky", "Spicy"]),
+
+    245: create_gift("Luxury Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky"]),
+
+    246: create_gift("Bottle of DXWater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI"]),
     #Todo; separate traits for GoodWeapon and BadWeapon
     # Todo; Satus heals should be Medicine, Cure
 }
