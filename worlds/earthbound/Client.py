@@ -172,6 +172,7 @@ class EarthBoundClient(SNIClient):
         }])
 
         # Some sort of If goes here
+        # I forgor...
         local_giftbox = {
                         str(ctx.slot): {
                             "IsOpen": True,
@@ -194,6 +195,7 @@ class EarthBoundClient(SNIClient):
                         "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
                     }])
 
+        # ???? Figure this out?
         await ctx.send_msgs([{
                     "cmd": "SetNotify",
                     "keys": [f"GiftBox;{ctx.team};{ctx.slot}", f"GiftBoxes;{ctx.team}"]
@@ -229,6 +231,7 @@ class EarthBoundClient(SNIClient):
 
         # We're in the Gift selection menu. This should write the selected player's name into RAM
         # for parsing.
+        # TODO; CHECK A SETNOTIFY HERE
         if gift_target[0] != 0x00 and motherbox is not None:
             gift_recipient = str(gift_target[0])
             recip_name = ctx.player_names[gift_target[0]]

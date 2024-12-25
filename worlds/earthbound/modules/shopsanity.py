@@ -397,8 +397,7 @@ def write_shop_checks(world, rom, shop_checks):
                 rom.write_bytes(0x3405EE, bytearray([item_id_table[world.magicant_junk[7]], 0x00, 0x00, 0x00, 0xF6, 0x00]))
     else:
         filler_shop_items = world.filler_drops.copy()
-        filler_shop_items.remove(0)
-        print(filler_shop_items)
+        filler_shop_items = [x for x in filler_shop_items if x not in [227, 228, 229, 230, 231, 0]]
         for location in location_ids:
             if location_ids[location] >= 0xEB1000:
                 slot = location_ids[location] - 0xEB1000
