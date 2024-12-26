@@ -556,7 +556,7 @@ location_dialogue = {  # Locations which just need to print the name of the item
     "Dusty Dunes - Shining Spot": [0x060D8D],
     "Dusty Dunes - Mine Reward": [0x06038A, 0x06123A, 0x06053F],
     "Snow Wood - Maxwell Item": [0x06AB89],
-    "Scaraba - Snake Bag Salesman": [0x2EA713],
+    "Scaraba - Snake Bag Salesman": [0x2EA713, 0x057116],
     "Winters - Drugstore Saleswoman": [0x07A223, 0x06AEB8],
     "Andonuts Lab - Mouse": [0x06C840],
     "Stonehenge - Tony Item": [0x2FFA0C],
@@ -599,7 +599,11 @@ location_dialogue = {  # Locations which just need to print the name of the item
     "Lost Underworld - Talking Rock": [0x2EB751],
     "Cave of the Present - Star Master": [0x2EB8DF],
     "Magicant - Ness's Nightmare": [0x2EB803, 0x2EB87C],
-    "Dungeon Man - 1F Exit Ledge Present": [0x057A55]
+    "Dungeon Man - 1F Exit Ledge Present": [0x057A55],
+    "Snow Wood - Upper Right Locker": [0x2EFB11],
+    "Snow Wood - Upper Left Locker": [0x2EFB50],
+    "Snow Wood - Bottom Right Locker": [0x2EFB8F],
+    "Snow Wood - Bottom Left Locker": [0x2EFBCE]
 }
 
 npc_locations = {  # Locations given to you by an NPC
@@ -628,7 +632,7 @@ npc_locations = {  # Locations given to you by an NPC
     "Dusty Dunes - Shining Spot": [0x060DAD],
     "Dusty Dunes - Mine Reward": [0x06058F],
     "Snow Wood - Maxwell Item": [0x06AC73],
-    "Scaraba - Snake Bag Salesman": [0x0570AC, 0x057116],
+    "Scaraba - Snake Bag Salesman": [0x0570AC],
     "Winters - Drugstore Saleswoman": [0x06AEC7],
     "Andonuts Lab - Mouse": [0x06C898],
     "Stonehenge - Kidnapped Mr. Saturn": [0x06C076],
@@ -653,8 +657,11 @@ npc_locations = {  # Locations given to you by an NPC
     "Tenda Village - Tenda Gift #2": [0x09D814],
     "Magicant - Ness's Gift": [0x077629],
     "Cave of the Present - Broken Phase Distorter": [0x2F590C],
-    "Dungeon Man - 1F Exit Ledge Present": [0x057A6B]
-
+    "Dungeon Man - 1F Exit Ledge Present": [0x057A6B],
+    "Snow Wood - Upper Right Locker": [0x2EFB2A],
+    "Snow Wood - Upper Left Locker": [0x2EFB69],
+    "Snow Wood - Bottom Right Locker": [0x2EFBA8],
+    "Snow Wood - Bottom Left Locker": [0x2EFBE7]
 }
 
 
@@ -861,13 +868,6 @@ character_locations = {
     "Monotoli Building - Monotoli Character": [0x2EB2B2, 0x0FC37F, 0x2EB2AD, 0x2EB2D2, 0xC1, 0xB2, 0xEE],
     "Dalaam - Throne Character": [0x2EB4D1, 0x0FD20A, 0x2EB4CC, 0x2EB4F1, 0xE0, 0xB4, 0xEE],
     "Deep Darkness - Barf Character": [0x2EB654, 0x0FE0C8, 0x2EB64F, 0x2EB673, 0x62, 0xB6, 0xEE]
-}
-
-locker_locations = {
-    "Snow Wood - Upper Right Locker": [0x2EB079, 0x2EB07F],
-    "Snow Wood - Upper Left Locker": [0x2EB093, 0x2EB099],
-    "Snow Wood - Bottom Right Locker": [0x2EB0AD, 0x2EB0B3],
-    "Snow Wood - Bottom Left Locker": [0x2EB0C7, 0x2EB0CD]
 }
 
 item_id_table = {
@@ -1286,14 +1286,12 @@ item_space_checks = {
     "Snow Wood - Bedroom": [0x2EB115, 0x19, 0xB1, 0xEE],
     "Monotoli Building - Monotoli Character": [0x2EB2CB, 0xCF, 0xB2, 0xEE],
     "Dalaam - Throne Character": [0x2EB4EA, 0xEE, 0xB4, 0xEE],
-    "Deep Darkness - Barf Character": [0x2EB66C, 0x70, 0xB6, 0xEE]
-}
+    "Deep Darkness - Barf Character": [0x2EB66C, 0x70, 0xB6, 0xEE],
 
-special_name_overrides = {
-    "Snow Wood - Upper Right Locker": 0x2EBFBE,
-    "Snow Wood - Upper Left Locker": 0x2EBFC5,
-    "Snow Wood - Bottom Right Locker": 0x2EBFCC,
-    "Snow Wood - Bottom Left Locker": 0x2EBFD3
+    "Snow Wood - Upper Right Locker": [0x2EFB23, 0x27, 0xFB, 0xEE],
+    "Snow Wood - Upper Left Locker": [0x2EFB62, 0x66, 0xFB, 0xEE],
+    "Snow Wood - Bottom Right Locker": [0x2EFBA1, 0xA5, 0xFB, 0xEE],
+    "Snow Wood - Bottom Left Locker": [0x2EFBE0, 0xE4, 0xFB, 0xEE]
 }
 
 protection_checks = {

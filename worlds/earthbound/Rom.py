@@ -5,8 +5,8 @@ import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from .game_data.local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
-                         special_name_table, character_item_table, character_locations, locker_locations, starting_psi_table, item_space_checks,
-                         special_name_overrides, protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
+                         special_name_table, character_item_table, character_locations, starting_psi_table, item_space_checks,
+                         protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
                          present_text_pointers, ap_text_pntrs, party_id_nums, world_version)
 from .game_data.battle_bg_data import battle_bg_bpp
 from .modules.psi_shuffle import write_psi
@@ -238,18 +238,6 @@ def patch_rom(world, rom, player: int):
                     else:
                         rom.write_bytes(0x2EA0E2, bytearray([0x6A, 0xC3, 0xEE]))
                         rom.write_bytes(0x2EA0E8, bytearray([0xB4, 0xC4, 0xEE]))
-            
-            if name in locker_locations:
-                world.handled_locations.append(name)
-                if item in item_id_table or location.item.player != location.player or item == "Remote Item":
-                    rom.write_bytes(locker_locations[name][0], bytearray([0xFF]))
-                    rom.write_bytes(locker_locations[name][1], bytearray([item_id]))
-                elif item in psi_item_table:
-                    rom.write_bytes(locker_locations[name][0], bytearray([0x02]))
-                    rom.write_bytes(locker_locations[name][1], bytearray([psi_item_table[item]]))
-                elif item in character_item_table:
-                    rom.write_bytes(locker_locations[name][0], bytearray([0x03]))
-                    rom.write_bytes(locker_locations[name][1], bytearray(character_item_table[item]))
 
             if name == "Poo - Starting Item":
                 world.handled_locations.append(name)
@@ -277,12 +265,6 @@ def patch_rom(world, rom, player: int):
                     else:
                         rom.write_bytes(item_space_checks[name][0], bytearray(item_space_checks[name][1:4]))
                         rom.write_bytes(item_space_checks[name][4], bytearray(item_space_checks[name][5:8]))
-
-            if name in special_name_overrides:
-                if location.item.player != location.player:
-                    rom.write_bytes(special_name_overrides[name], bytearray([0x1C, 0xB7, location.address - 0xEB0000]))
-                else:
-                    rom.write_bytes(special_name_overrides[name], bytearray([0x01, 0x01, 0x01]))
 
             if name in present_locations and "Lost Underworld" not in name and world.options.presents_match_contents:
                 if ItemClassification.trap in location.item.classification:

@@ -254,9 +254,6 @@ JML GetDynamicWindowTitle
 ORG $C4FBBD
 JML GetRandomizedTrack
 
-ORG $C105E6
-JML ExpandedWindows
-
 ;new jmls
 
 
@@ -3752,9 +3749,6 @@ Table_FramesPerChar:
     ; $C1FEF4
 
 WaitTextOneTick:
-    ; In all cases, the function we're coming from doesn't use
-    ; any of its stack variables any more, so we use $00
-
     ; Load leftover portion of # of frames to wait
     ; $C1FEF4
     LDA $962B
@@ -8309,10 +8303,25 @@ db $47
 
 ORG $D7FE70
 ExtraWindowData:
-dw $000C, $0011, $0013, $0004
+dw $000C, $0010, $0013, $0004
 
 ORG $C3E2A8
-dw $000C, $0011, $0013, $0004
+dw $000C, $0010, $0013, $0004
+
+ORG $CFB115
+DD OpenLockers_TopRightLocker
+
+ORG $CFB126
+DD OpenLockers_TopLeftLocker
+
+ORG $CFB137
+DD OpenLockers_BottomRightLocker
+
+ORG $CFB159
+DD OpenLockers_BottomLeftLocker
+
+ORG $CFB148
+DD OpenLockers_MiddleLocker
 
 ;New data table go here
 
@@ -9158,36 +9167,142 @@ dd $00EE9699
 db $0A
 dl $EE96BD
 
-GetRandomizedTrack:
-%FUNCTION_PROLOGUE(18)
-TAX
-LDA MusicTrackList,X
-AND #$00FF
-JML $C4FBC7
+OpenLockers:
+.TopRightLocker:
+db $1B, $00
+db $08
+dd .CheckIfUseKeytoLocker
+db $1B, $02
+dd $C6FB5D
+db $06, $58, $00
+dd $C7D9FD
+db $08
+dd .LockerItemAwaitsText
+db $1C, $05, $01
+db $50
+db $99, $9E, $A3, $99, $94, $95, $51, $03, $01
+db $08
+dd .CheckForLockerItemSpace
+db $1B, $02
+dd $C685BB
+db $1D, $0E, $FF, $11
+db $08
+dd .LockerGetItemText
+db $03
+db $04, $58, $00
+db $02
 
-ExpandedWindows:
-PHY
-LDY $14
-CPY #$0035
-BEQ .ExtraWindows
-.DrawWin
-PLY
-LDA [$0A]
-LDX $10
-STA $0006,X
-JML $C105ED
-.ExtraWindows:
-LDA #$00D7
-STA $08
-STA $0C
-LDA #ExtraWindowData
-STA $0A
-STA $06
-LDA #$0000
-STA $02
+.TopLeftLocker:
+db $1B, $00
+db $08
+dd .CheckIfUseKeytoLocker
+db $1B, $02
+dd $C6FB5D
+db $06, $F8, $03
+dd $C7D9FD
+db $08
+dd .LockerItemAwaitsText
+db $1C, $05, $01
+db $50
+db $99, $9E, $A3, $99, $94, $95, $51, $03, $01
+db $08
+dd .CheckForLockerItemSpace
+db $1B, $02
+dd $C685BB
+db $1D, $0E, $FF, $11
+db $08
+dd .LockerGetItemText
+db $03
+db $04, $F8, $03
+db $02
 
-BRA .DrawWin
+.BottomRightLocker:
+db $1B, $00
+db $08
+dd .CheckIfUseKeytoLocker
+db $1B, $02
+dd $C6FB5D
+db $06, $17, $00
+dd $C7D9FD
+db $08
+dd .LockerItemAwaitsText
+db $1C, $05, $01
+db $50
+db $99, $9E, $A3, $99, $94, $95, $51, $03, $01
+db $08
+dd .CheckForLockerItemSpace
+db $1B, $02
+dd $C685BB
+db $1D, $0E, $FF, $11
+db $08
+dd .LockerGetItemText
+db $03
+db $04, $17, $00
+db $02
 
+.BottomLeftLocker:
+db $1B, $00
+db $08
+dd .CheckIfUseKeytoLocker
+db $1B, $02
+dd $C6FB5D
+db $06, $4E, $01
+dd $C7D9FD
+db $08
+dd .LockerItemAwaitsText
+db $1C, $05, $01
+db $50
+db $99, $9E, $A3, $99, $94, $95, $51, $03, $01
+db $08
+dd .CheckForLockerItemSpace
+db $1B, $02
+dd $C685BB
+db $1D, $0E, $FF, $11
+db $08
+dd .LockerGetItemText
+db $03
+db $04, $4E, $01
+db $02
+
+.CheckIfUseKeytoLocker:
+db $08
+dd .CheckItemUsage
+db $0B, $CD
+db $08
+dd .OpenLockerText
+db $02
+
+.CheckItemUsage:
+db $19, $19, $00, $00
+db $1B, $04
+db $02
+
+.OpenLockerText:
+db $70, $19, $10, $01
+db $1C, $02, $00
+db $50, $9f, $a0, $95, $9e, $95, $94, $50, $a4, $98, $95, $50, $9c, $9f, $93, $9b
+db $95, $a2, $50, $a5, $a3, $99, $9e, $97, $50, $99, $a4, $a3, $50, $9b, $95, $a9
+db $51
+db $1f, $02, $75, $03, $02
+
+.CheckForLockerItemSpace:
+db $1D, $03, $FF
+db $02
+
+.LockerGetItemText:
+db $08
+dd $C7DCCF
+db $02
+
+.MiddleLocker:
+db $70, $84, $98, $95, $50, $9c, $9f, $93, $9b, $50, $99, $a3, $50, $92, $a5, $a3
+db $a4, $95, $94, $5e, $13, $02
+
+.LockerItemAwaitsText:
+db $01
+db $70
+db $78, $95, $a9, $51, $10, $10, $50, $84, $98, $95, $a2, $95, $50, $99, $a3, $50
+db $91, $50, $02
 
 
 ;FOR TESTING!!!!
@@ -10640,6 +10755,24 @@ PLA
 JSL $C3EE14
 JML $C19B6A
 
+PreserveWindowPalette:
+PHA
+LDA $0736
+BNE .SoldOut
+PLA
+JSL $C08ED2
+JML $C19DA4
+.SoldOut:
+PLA
+JML $C19DA4
+
+GetRandomizedTrack:
+%FUNCTION_PROLOGUE(18)
+TAX
+LDA MusicTrackList,X
+AND #$00FF
+JML $C4FBC7
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
@@ -10670,6 +10803,9 @@ ORG $C5E0A9
 ;db $08
 ;dd CheckShopsanityPrice
 
+ORG $C19DA0
+;JML PreserveWindowPalette
+
 ORG $C5E0B6
 ;db $08
 ;dd BoughtShopsanityItemScript
@@ -10682,27 +10818,27 @@ ORG $C5E0C8
 ;dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+dd CancelBuyRemoveName
 
 
 
-;ORG $F40028
+ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
-;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
-;db $96, $ff, $ff, $05, $02, $00; A remote regular item
-;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+db $96, $ff, $ff, $05, $02, $00; A remote regular item
+db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 ;Type 0- Normal local item
 ;Type 1- Teleport/PSI
 ;type 2- Character
