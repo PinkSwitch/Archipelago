@@ -173,6 +173,9 @@ JSL CopyAPData
 ORG $C1F3B3
 JSL DeleteAPData
 
+ORG $C07902
+JMP MagicantSoloAnimSpeedFix
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Franklin badge checks
 ORG $C29549
@@ -3356,23 +3359,25 @@ SkipArchiWrite:
 JML $C18B65
 
 SetAnimSpeed:
+PHX
 LDA $0066
 LDX #$0000
 AND #$00FF
 BIT #$0040
 BEQ NotRunning
-LDA #$0005
+LDA #$0003
 BRA SetRunSpeed
 NotRunning:
 LDA #$0008
 SetRunSpeed:
-STA $0F42,X
+STA $0E
 CPX #$000A
 BEQ EndRun
 INX #2
 BRA SetRunSpeed
 EndRun:
-JML $C079C1
+PLX
+JML $C07966
 
 SaveAPData:
 PHA
@@ -3709,6 +3714,14 @@ lda $10
 sta $96ac,x
 pld
 rts
+
+
+ORG $C0FE80
+MagicantSoloAnimSpeedFix:
+PHA
+JSL SetMagicantAnimSpeeds
+PLA
+JMP $79EA
 
 
 
@@ -10772,6 +10785,24 @@ TAX
 LDA MusicTrackList,X
 AND #$00FF
 JML $C4FBC7
+
+SetMagicantAnimSpeeds:
+LDA $99DC
+CMP #$0003
+BEQ .Paralysis
+LDA $0066
+AND #$0040
+BEQ .Walking
+LDA #$0005
+BRA .SetSpeed
+.Walking:
+LDA #$0008
+.SetSpeed:
+STA $0F42
+RTL
+.Paralysis:
+LDA #$0038
+BRA .SetSpeed
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
