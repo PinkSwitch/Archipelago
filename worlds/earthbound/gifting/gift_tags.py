@@ -8,13 +8,39 @@ gift_qualities = {
     "Sand Lot Bat": {"Weapon": 0.27},
     "Minor League Bat": {"Weapon": 0.48},
     "Mr. Baseball Bat": {"Weapon": 0.70},
+    "Big League Bat": {"Weapon": 0.90},
     "Hall of Fame Bat": {"Weapon": 1.14},
     "Magicant Bat": {"Weapon": 1.48},
     "Legendary Bat": {"Weapon": 2.03},
     "Gutsy Bat": {"Weapon": 4.0},
     "Casey Bat": {"Weapon": 0.1},
-    "T-rex's Bat": {"Weapon": 0.88},
+    "T-Rex's Bat": {"Weapon": 0.88},
     "Ultimate Bat": {"Weapon": 1.25},
+
+    "Fry Pan": {"Weapon": 0.24},
+    "Thick Fry Pan": {"Weapon": 0.48},
+    "Deluxe Fry Pan": {"Weapon": 0.73},
+    "Chef's Fry Pan": {"Weapon": 0.97},
+    "Non-Stick Frypan": {"Weapon": 1.19},
+    "French Fry Pan": {"Weapon": 1.46},
+    "Holy Fry Pan": {"Weapon": 1.90},
+    "Magic Frypan": {"Weapon": 2.5},
+
+    "Pop Gun": {"Weapon": 0.25},
+    "Stun Gun": {"Weapon": 0.34},
+    "Toy Air Gun": {"Weapon": 0.50},
+    "Magnum Air Gun": {"Weapon": 0.57},
+    "Zip Gun": {"Weapon": 0.63},
+    "Laser Gun": {"Weapon": 0.76},
+    "Hyper Beam": {"Weapon": 0.92},
+    "Double Beam": {"Weapon": 1.04},
+    "Crusher Beam": {"Weapon": 1.14},
+    "Spectrum Beam": {"Weapon": 1.24},
+    "Death Ray": {"Weapon": 1.42},
+    "Baddest Beam": {"Weapon": 1.55},
+    "Moon Beam Gun": {"Weapon": 1.74},
+    "Gaia Beam": {"Weapon": 1.98},
+    "Sword of Kings": {"Weapon": 2.00},
 
     "Bag of Fries": {"Heal": 0.24},
     "Banana": {"Heal": 0.22},
@@ -83,7 +109,7 @@ gift_qualities = {
     "Cherub's Band": {"Armor": 1.75},
     "Goddess Band": {"Armor": 2.00},
     "Bracer of Kings": {"Armor": 0.87, "FireProof": 0.50},
-    #other armor and weapons go here
+    #other armor and weapons go here  
 } 
 
 
