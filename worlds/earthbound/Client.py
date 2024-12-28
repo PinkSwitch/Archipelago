@@ -153,6 +153,8 @@ class EarthBoundClient(SNIClient):
         scouted_hint_flags = await snes_read(ctx, SCOUTED_HINT_FLAGS, 1)
         gift_target = await snes_read(ctx, WRAM_START + 0xB5E7, 2)
         outbound_gifts = await snes_read(ctx, WRAM_START + 0x31D0, 1)
+        shop_scout = await snes_read(ctx, WRAM_START + 0x0770, 1)
+        shop_scouts_enabled = await snes_read(ctx, ROM_START + 0x04FD77, 1)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -307,6 +309,16 @@ class EarthBoundClient(SNIClient):
                 if i not in self.hint_list:
                     self.hint_list.append(i)
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": [scoutable_hint], "create_as_hint": 1}])
+        
+        if shop_scout[0] and shop_scouts_enabled[0]:
+            shop_slots = []
+            for i in range(7):
+                slot_id = (0xEB0FF9 + (shop_scout[0] * 7) + i)
+                if slot_id in ctx.server_locations:
+                    shop_slots.append(slot_id)
+            await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 1}])
+            await snes_write(ctx, [(WRAM_START + 0x0770, bytes([0]))])
+
 
         await ctx.send_msgs([{
                     "cmd": "Set",
@@ -384,11 +396,3 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
                     
         await snes_flush_writes(ctx)
-
-
-def test_bits(value, bit):
-    byte_index = bit // 8
-    bit_pos = bit % 8
-    byte_val = value[byte_index]
-    bitmask = 1 << (7 - bit_pos)
-    return (byte_val & bitmask) != 0

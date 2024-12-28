@@ -10339,6 +10339,7 @@ JML $C17F0F
 
 APShopHandler:
 LDA $1E
+STA $0770
 TAX
 LDA #$0000
 .CheckShop:

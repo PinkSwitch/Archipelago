@@ -322,6 +322,9 @@ class ShopRandomizer(Choice):
     option_shopsanity = 2
     default = 0
 
+class ScoutShopChecks(Toggle):
+    """Scouts Shop checks when you open a shop. Only affects shops in Shopsanity mode."""
+    display_name = "Scout Shop Checks"
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -371,6 +374,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_fanfares: RandomizeFanfares
     randomize_psi_palettes: RandomizePSIPalettes
     shop_randomizer: ShopRandomizer
+    scout_shop_checks: ScoutShopChecks
     #starting_character: StartingCharacter
 
 
@@ -403,8 +407,7 @@ eb_option_groups = [
         RandomStartLocation,
         MagicantMode,
         MonkeyCavesMode,
-        NoFreeSancs,
-        ShopRandomizer
+        NoFreeSancs
     ]),
 
     OptionGroup("PSI Randomization", [
@@ -418,6 +421,11 @@ eb_option_groups = [
         ShuffleGiygas,
         ExperienceModifier,
         ShuffleDrops
+    ]),
+
+    OptionGroup("Shop Randomization", [
+        ShopRandomizer,
+        ScoutShopChecks
     ]),
 
     OptionGroup("Convenience Settings", [
