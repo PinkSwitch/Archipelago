@@ -4,8 +4,8 @@ import typing
 import time
 import uuid
 from struct import pack, unpack
-from .game_data.local_data import check_table, client_specials, world_version, hint_bits, item_id_table
-from .game_data.text_data import eb_text_table, text_encoder
+from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table
+from .game_data.text_data import text_encoder
 from .gifting.gift_tags import gift_properties, acceptable_gifts, parent_trait_list
 
 from NetUtils import ClientStatus, color
@@ -180,7 +180,7 @@ class EarthBoundClient(SNIClient):
                             "IsOpen": True,
                             # Todo; change this to all tags I'm using? I don't have that yet but I will
                             "AcceptsAnyGift": False,
-                            "DesiredTraits": acceptable_gifts, # Todo, write a var here so this isnt too long
+                            "DesiredTraits": acceptable_gifts,  # Todo, write a var here so this isnt too long
                             "MinimumGiftDataVersion": 2,
                             "MaximumGiftDataVersion": 2}}
         await ctx.send_msgs([{
@@ -289,7 +289,7 @@ class EarthBoundClient(SNIClient):
                     }])
             
             gift_queue = await snes_read(ctx, WRAM_START + 0x31D4, 0x21)
-            #shuffle the entire queue down 3 bytes
+            # shuffle the entire queue down 3 bytes
             outbox_full_byte = await snes_read(ctx, WRAM_START + 0xB622, 1)
 
             await snes_write(ctx, [(WRAM_START + 0x31D1, gift_queue)])
@@ -308,7 +308,7 @@ class EarthBoundClient(SNIClient):
 
                 if i not in self.hint_list:
                     self.hint_list.append(i)
-                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": [scoutable_hint], "create_as_hint": 1}])
+                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": [scoutable_hint], "create_as_hint": 2}])
         
         if shop_scout[0] and shop_scouts_enabled[0]:
             shop_slots = []
@@ -316,9 +316,7 @@ class EarthBoundClient(SNIClient):
                 slot_id = (0xEB0FF9 + (shop_scout[0] * 7) + i)
                 if slot_id in ctx.server_locations:
                     shop_slots.append(slot_id)
-            await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 1}])
-            await snes_write(ctx, [(WRAM_START + 0x0770, bytes([0]))])
-
+            await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
 
         await ctx.send_msgs([{
                     "cmd": "Set",
@@ -344,9 +342,6 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, bytes([0x00]))
             await ctx.handle_deathlink_state(currently_dead)
 
-        if text_open[0] != 0xFF:  # Don't check locations or items while text is printing, but scouting is fine
-            return
-
         new_checks = []
         from .game_data.local_data import check_table
 
@@ -362,15 +357,16 @@ class EarthBoundClient(SNIClient):
                 bit_set = masked_data != 0
                 invert_bit = ((len(loc_data) >= 3) and loc_data[2])
                 if bit_set != invert_bit and loc_id in ctx.server_locations:
-                    new_checks.append(loc_id)
-
-
+                    if text_open[0] == 0xFF or shop_scout[0]:  # Don't check locations while in a textbox
+                        new_checks.append(loc_id)
+                        
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
             location = ctx.location_names.lookup_in_slot(new_check_id)
             snes_logger.info(
                 f'New Check: {location} ({len(ctx.locations_checked)}/{len(ctx.missing_locations) + len(ctx.checked_locations)})')
             await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
+            await snes_write(ctx, [(WRAM_START + 0x0770, bytes([0]))])
 
         if item_received[0] or special_received[0] != 0x00:  # If processing any item from the server
             return

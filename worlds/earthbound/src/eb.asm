@@ -2951,6 +2951,7 @@ db $7D,$91,$97,$99,$93,$91,$9E,$A4,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$
 ORG $00F8D0
 GetItemRemote:
 SEP #$20
+STZ $0770
 STZ $B582
 STZ $B583
 STZ $B5E7
@@ -3716,7 +3717,7 @@ pld
 rts
 
 
-ORG $C0FE80
+ORG $C0FF00
 MagicantSoloAnimSpeedFix:
 PHA
 JSL SetMagicantAnimSpeeds

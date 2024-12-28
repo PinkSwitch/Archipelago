@@ -317,7 +317,6 @@ def write_shop_checks(world, rom, shop_checks):
         unsellable_filler_prices["Laser Gun"] = 500
         unsellable_filler_prices["Baddest Beam"] = 3000
 
-    
     if world.options.shop_randomizer == 2:
         rom.write_bytes(0x04FD77, bytearray([world.options.scout_shop_checks]))
         for location in shop_checks:
@@ -402,7 +401,7 @@ def write_shop_checks(world, rom, shop_checks):
         for location in location_ids:
             if location_ids[location] >= 0xEB1000:
                 slot = location_ids[location] - 0xEB1000
-                rom.write_bytes(0x1576B9 + (slot), bytearray([world.random.choice(filler_shop_items)]))
+                rom.write_bytes(0x1576B9 + slot, bytearray([world.random.choice(filler_shop_items)]))
                 rom.write_bytes(0x1576e3, bytearray([0xEF]))
                 rom.write_bytes(0x15779c, bytearray([0x5A]))
                 if world.options.monkey_caves_mode < 2:
