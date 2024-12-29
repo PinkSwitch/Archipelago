@@ -109,6 +109,32 @@ gift_qualities = {
     "Cherub's Band": {"Armor": 1.75},
     "Goddess Band": {"Armor": 2.00},
     "Bracer of Kings": {"Armor": 0.87, "FireProof": 0.50},
+
+    "Ribbon": {"Armor": 0.35},
+    "Red Ribbon": {"Armor": 0.43},
+    "Defense Ribbon": {"Armor": 0.70},
+    "Talisman Ribbon": {"Armor": 1.05},
+    "Saturn Ribbon": {"Armor": 1.57},
+    "Goddess Ribbon": {"Armor": 1.92},
+
+    "Yo-yo": {"Weapon": 0.06},
+    "Slingshot": {"Weapon": 0.12},
+    "Bionic Slingshot": {"Weapon": 0.32},
+    "Trick Yo-yo": {"Weapon": 0.46},
+    "Combat Yo-yo": {"Weapon": 0.54},
+
+    "Travel Charm": {"AntiNumb": 0.25},
+    "Great Charm": {"Armor": 0.01, "AntiNumb": 0.50},
+    "Crystal Charm": {"Armor": 0.02, "AntiNumb": 1.00},
+    "Rabbit's Foot": {"Armor": 0.03, "AntiNumb": 1.00, "Speed": 2.00},
+
+    "Flame Pendant": {"Armor": 1.00, "FireProof": 1.00},
+    "Rain Pendant": {"Armor": 1.00, "WaterProof": 1.00},
+    "Night Pendant": {"Armor": 1.00, "LightProof": 1.00},
+    "Sea Pendant": {"Armor": 2.00, "FireProof": 1.00, "WaterProof": 1.00, "LightProof": 1.00},
+    "Star Pendant": {"Armor": 3.00, "FireProof": 1.00, "WaterProof": 1.00, "LightProof": 1.00, "AntiNumb": 1.00},
+    "Earth Pendant": {"Armor": 1.50, "FireProof": 0.50, "WaterProof": 0.50, "LightProof": 0.50},
+    "Cloak of Kings": {"Armor": 0.50},
     #other armor and weapons go here  
 } 
 
@@ -241,7 +267,7 @@ gift_properties = {
 
     53: create_gift("Combat Yo-yo", 0, ["RangedWeapon", "Toy", "Weapon"]),
 
-    54: create_gift("Travel Charm", 0, ["Wearable", "Jewelry", "Defense", "Armor"]),
+    54: create_gift("Travel Charm", 0, ["Wearable", "Jewelry"]),
 
     55: create_gift("Great Charm", 0, ["Wearable", "Jewelry", "Defense", "Armor"]),
 

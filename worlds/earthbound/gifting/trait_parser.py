@@ -12,5 +12,15 @@ parent_traits = {
     "Food": {},
 }
 
-# What should happen; If there are multiple traits in this table, we use the one with the highest quality.
-# If multiple have the same quality, prioritize whichever one was first.
+special_traits = {
+    ("Beef"): ["Hamburger", "Double Burger", "Mammoth Burger"],
+    ("Jerky"): ["Beef Jerky", "Spicy Jerky", "Luxury Jerky"],
+    ("Rock", "Candy"): ["Rock Candy"],
+    ("Pasta", "Life"): ["Cup of Lifenoodles"],
+    ("Chicken"): ["Chicken"],
+    ("Spicy"): ["Jar of Hot Sauce", "Spicy Jerky"]
+}
+
+
+# IF trait is in special traits, give that item.
+# Else if the trait is in a Scaled trait (Food, Armor, etc., then break them up by scaling)

@@ -7,7 +7,7 @@ area_exits = {
     "Northern Onett": ["Onett"],
     "Onett": ["Northern Onett", "Twoson", "Giant Step"],
     "Giant Step": ["Giant Step"],
-    "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House"],
+    "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop"],
     "Everdred's House": ["Everdred's House"],
     "Peaceful Rest Valley": ["Twoson", "Happy-Happy Village"],
     "Happy-Happy Village": ["Peaceful Rest Valley", "Lilliput Steps"],
@@ -36,7 +36,7 @@ area_exits = {
     "Summers Museum": ["Summers Museum"],
     "Dalaam": ["Pink Cloud"],
     "Pink Cloud": ["Pink Cloud"],
-    "Scaraba": ["Pyramid"],
+    "Scaraba": ["Pyramid", "Common Condiment Shop"],
     "Pyramid": ["Southern Scaraba"],
     "Southern Scaraba": ["Dungeon Man"],
     "Dungeon Man": ["Deep Darkness"],
@@ -83,7 +83,8 @@ area_rules = {
     "Twoson": {"Onett": [["Police Badge"]],
                "Peaceful Rest Valley": [["Pencil Eraser"]],
                "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
-               "Everdred's House": [["Paula"]]},
+               "Everdred's House": [["Paula"]],
+               "Common Condiment Shop": [["Nothing"]]},
 
     "Everdred's House": {"Everdred's House": [["Nothing"]]},
 
@@ -164,7 +165,8 @@ area_rules = {
 
     "Pink Cloud": {"Pink Cloud": [["Nothing"]]},
 
-    "Scaraba": {"Pyramid": [["Hieroglyph Copy"]]},
+    "Scaraba": {"Pyramid": [["Hieroglyph Copy"]],
+                "Common Condiment Shop": [["Nothing"]]},
 
     "Pyramid": {"Southern Scaraba": [["Nothing"]]},
     
