@@ -8320,6 +8320,7 @@ ExtraWindowData:
 dw $000C, $0010, $0013, $0004
 
 ORG $C3E2A8
+;contemplate switching to 1
 dw $000C, $0010, $0013, $0004
 
 ORG $CFB115
@@ -10851,27 +10852,27 @@ ORG $C5E0C8
 ;dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-db $0A
-dl OverrideSpaceCheckOnSpecialItem
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_nosell
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-dd CancelBuyRemoveName
+;dd CancelBuyRemoveName
 
 
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
-db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
-db $96, $ff, $ff, $05, $02, $00; A remote regular item
-db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+;db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+;db $96, $ff, $ff, $05, $02, $00; A remote regular item
+;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 ;Type 0- Normal local item
 ;Type 1- Teleport/PSI
 ;type 2- Character
@@ -11188,7 +11189,7 @@ db $02
 db $19, $20
 db $0B, $01
 db $1B, $03
-dd .GiveLeader
+dd $C5E0DE
 
 db $1B, $01
 db $08
@@ -13801,13 +13802,14 @@ db $a3, $a3, $50, $a4, $98, $95, $50, $82, $50, $92, $a5, $a4, $a4, $9f, $9e, $5
 db $03, $00
 
 escg_mainmen:
-db $70, $76, $9f, $a2, $50, $9f, $9e, $95, $50, $9f, $96, $50, $9f, $a5
-db $a2, $50, $9f, $96, $96, $5d, $a7, $9f, $a2, $9c, $94, $50, $94, $95, $9c, $99
-db $a6, $95, $a2, $a9, $50, $a3, $95, $a2, $a6, $99, $93, $95, $a3, $5c, $10, $04
-db $50, $a0, $9c, $95, $91, $a3, $95, $50, $a3, $a0, $95, $93, $99, $96, $a9, $50
-db $a9, $9f, $a5, $a2, $50, $a2, $95, $a1, $a5, $95, $a3, $a4, $50, $9E, $9F, $A7
-db $5E, $03, $00, $01
-
+db $70, $79, $96, $50, $a9, $9f, $a5, $50, $91, $a2, $95, $50, $93, $91, $9c, $9c
+db $99, $9e, $97, $50, $91, $92, $9f, $a5, $a4, $50, $9f, $a5, $a2, $50, $9f, $96
+db $96, $5d, $a7, $9f, $a2, $9c, $94, $50, $99, $a4, $95, $9d, $50, $94, $95, $9c
+db $99, $a6, $95, $a2, $a9, $50, $a3, $95, $a2, $a6, $99, $93, $95, $5c, $03, $00
+db $70, $a3, $a0, $95, $93, $99, $96, $a9, $50, $a9, $9f, $a5, $a2, $50, $a2, $95
+db $a1, $a5, $95, $a3, $a4, $50, $9e, $9f, $a7, $5e, $03, $00
+db $0A
+dl Gift_menu_Gift_menu_init
 db $19, $02
 db $77, $99, $96, $a4, $99, $9e, $97, $02
 db $19, $02
@@ -13823,6 +13825,7 @@ Gift_menu:
   db $12
   db $08
   dd escg_inquire
+  .Gift_menu_init:
   db $01
   db $19, $02
   db $83, $95, $9E, $94, $50, $97, $99, $96, $A4, $02
@@ -13835,7 +13838,7 @@ Gift_menu:
   db $12
   db $01
   db $0A
-  dl escg_mainmen
+  dl $C75929
   .SendGiftText:
   db $06, $14, $04
   dd .GiftOutboxFull
@@ -13971,6 +13974,7 @@ Gift_menu:
   db $0A
   dl .gift_item_picker
   .GetGiftText:
+  db $1C, $21, $01
   db $12
   db $1C, $1C, $01  
   db $1B, $06

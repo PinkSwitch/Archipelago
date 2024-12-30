@@ -170,8 +170,8 @@ class EarthBoundClient(SNIClient):
             return
 
         await ctx.send_msgs([{
-        "cmd": "Get",
-        "keys": [f"GiftBoxes;{ctx.team}"]
+            "cmd": "Get",
+            "keys": [f"GiftBoxes;{ctx.team}"]
         }])
 
         # Some sort of If goes here
@@ -273,7 +273,7 @@ class EarthBoundClient(SNIClient):
                                 "SenderSlot": ctx.slot,
                                 "ReceiverSlot": recipient,
                                 "SenderTeam": ctx.team,
-                                "ReceiverTeam": ctx.team, #??? Should be Receive slot team?
+                                "ReceiverTeam": ctx.team,  # ??? Should be Receive slot team?
                                 "IsRefund": False}}
 
             await ctx.send_msgs([{

@@ -102,7 +102,6 @@ gift_qualities = {
     "Copper Bracelet": {"Armor": 0.25},
     "Silver Bracelet": {"Armor": 0.37},
     "Gold Bracelet": {"Armor": 0.75},
-    "Silver Bracelet": {"Armor": 0.37},
     "Platinum Band": {"Armor": 1.00},
     "Diamond Band": {"Armor": 1.25},
     "Pixie's Bracelet": {"Armor": 1.50},
@@ -140,7 +139,7 @@ gift_qualities = {
     "Neutralizer": {"Neutralizing": 1.00},
     "HP-Sucker": {"Draining": 0.50},
     "Hungry HP-Sucker": {"Draining": 1.00},
-    #other armor and weapons go here  
+    # other armor and weapons go here
 } 
 
 
@@ -581,6 +580,6 @@ gift_properties = {
     251: create_gift("Popsicle", 0, ["Consumable", "Food", "Heal", "Candy", "FrozenFood"]),
 
     252: create_gift("Cup of Lifenoodles", 0, ["Consumable", "Food", "Cure", "Life", "Pasta"])
-    #Todo; separate traits for GoodWeapon and BadWeapon
+    # Todo; separate traits for GoodWeapon and BadWeapon
     # Todo; Satus heals should be Medicine, Cure
 }

@@ -395,11 +395,14 @@ def patch_rom(world, rom, player: int):
     
     flavor_address = 0x3FAF10
     for i in range(4):
-        rom.write_bytes(flavor_address, bytearray(world.flavor_text[i]))
-        flavor_addr = flavor_address - 0x3F0000
-        flavor_addr = struct.pack("H", flavor_addr)
-        rom.write_bytes(world.flavor_pointer[i], flavor_addr)
-        flavor_address += len(world.flavor_text[i])
+        if world.available_flavors[i] not in ["Mint Flavor", "Strawberry Flavor", "Banana Flavor", "Peanut Flavor"]:
+            rom.write_bytes(flavor_address, bytearray(world.flavor_text[i]))
+            flavor_addr = flavor_address - 0x3F0000
+            flavor_addr = struct.pack("H", flavor_addr)
+            rom.write_bytes(world.flavor_pointer[i], flavor_addr)
+            flavor_address += len(world.flavor_text[i])
+        else:
+            print("uh oh")
 
     rom.write_bytes(0x202008, bytearray(flavor_data[world.available_flavors[0]]))
     rom.write_bytes(0x202048, bytearray(flavor_data[world.available_flavors[1]]))
