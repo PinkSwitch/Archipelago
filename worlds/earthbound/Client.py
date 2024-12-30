@@ -6,7 +6,8 @@ import uuid
 from struct import pack, unpack
 from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table
 from .game_data.text_data import text_encoder
-from .gifting.gift_tags import gift_properties, acceptable_gifts, parent_trait_list
+from .gifting.gift_tags import gift_properties
+from .gifting.trait_parser import wanted_traits, scaled_traits, trait_interpreter
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
@@ -180,7 +181,7 @@ class EarthBoundClient(SNIClient):
                             "IsOpen": True,
                             # Todo; change this to all tags I'm using? I don't have that yet but I will
                             "AcceptsAnyGift": False,
-                            "DesiredTraits": acceptable_gifts,  # Todo, write a var here so this isnt too long
+                            "DesiredTraits": wanted_traits,  # Todo, write a var here so this isnt too long
                             "MinimumGiftDataVersion": 2,
                             "MaximumGiftDataVersion": 2}}
         await ctx.send_msgs([{
@@ -211,12 +212,7 @@ class EarthBoundClient(SNIClient):
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
                 item = item_id_table[gift["ItemName"]]
             else:
-                traits = []
-                qualities = []
-                for trait in gift["Traits"]:
-                    if trait["Trait"] in parent_trait_list:
-                        parent_trait = trait["Trait"]
-                        break
+                item = trait_interpreter(gift)
 
             inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
             # Pause if the receiver queue is full

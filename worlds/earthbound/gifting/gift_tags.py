@@ -135,6 +135,11 @@ gift_qualities = {
     "Star Pendant": {"Armor": 3.00, "FireProof": 1.00, "WaterProof": 1.00, "LightProof": 1.00, "AntiNumb": 1.00},
     "Earth Pendant": {"Armor": 1.50, "FireProof": 0.50, "WaterProof": 0.50, "LightProof": 0.50},
     "Cloak of Kings": {"Armor": 0.50},
+
+    "Shield Killer": {"Neutralizing": 0.50},
+    "Neutralizer": {"Neutralizing": 1.00},
+    "HP-Sucker": {"Draining": 0.50},
+    "Hungry HP-Sucker": {"Draining": 1.00},
     #other armor and weapons go here  
 } 
 
@@ -579,20 +584,3 @@ gift_properties = {
     #Todo; separate traits for GoodWeapon and BadWeapon
     # Todo; Satus heals should be Medicine, Cure
 }
-
-acceptable_gifts = [
-    "Confectionary",
-    "Vegetable",
-    "Food"
-]
-
-parent_trait_list = [
-    "Broken",
-    "Machine",
-    "Gun",
-    "Heal",
-    "Mana",
-    "Food",
-    "Baseball",
-    "Egg"
-]
