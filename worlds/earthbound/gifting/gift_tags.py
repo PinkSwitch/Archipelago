@@ -87,12 +87,12 @@ gift_qualities = {
     "Vial of Serum": {"Cure": 0.25},
     "Wet Towel": {"Cure": 0.50},
     "Refreshing Herb": {"Cure": 1.00},
-    "Secret Herb": {"Cure": 2.00},
-    "Horn of Life": {"Cure": 3.00},
-    "Cup of Lifenoodles": {"Cure": 3.00},
+    "Secret Herb": {"Cure": 2.00, "Life": 0.50},
+    "Horn of Life": {"Cure": 3.00, "Life": 1.00},
+    "Cup of Lifenoodles": {"Cure": 3.00, "Life": 1.00},
 
     "Bottle of Water": {"Mana": 0.28},
-    "Bottle of DXWater": {"Mana": 1.14},
+    "Bottle of DXwater": {"Mana": 1.14},
     "Magic Pudding": {"Mana": 1.14},
     "Magic Tart": {"Mana": 0.57},
     "Magic Truffle": {"Mana": 2.28},
@@ -567,7 +567,7 @@ gift_properties = {
 
     245: create_gift("Luxury Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky", "Luxury"]),
 
-    246: create_gift("Bottle of DXWater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI", "Water"]),
+    246: create_gift("Bottle of DXwater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI", "Water"]),
 
     247: create_gift("Magic Pudding", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
 

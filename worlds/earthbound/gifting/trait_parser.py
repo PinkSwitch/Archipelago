@@ -11,7 +11,13 @@ wanted_traits = [
     "Mana",
     "Heal",
     "Draining",
-    "Consumable"
+    "Consumable",
+    "Neutralizing",
+    "Beef",
+    "Jerky",
+    "Egg",
+    "Herb",
+    "Water"
 ]
 
 # If these traits are in the item, then pick randomly from the results
@@ -42,20 +48,25 @@ special_traits = {
     ("Animal"): ["Chicken", "Chick", "Snake", "Viper"],
     ("Juice"): ["Can of Fruit Juice"],
     ("Meat"): ["Hamburger", "Double Burger", "Mammoth Burger", "Beef Jerky",
-               "Spicy Jerky", "Luxury Jerky", "Kabob"]
+               "Spicy Jerky", "Luxury Jerky", "Kabob"],
+    ("Water"): ["Bottle of Water", "Bottle of DXwater"],
+    ("Drink"): ["Bottle of Water", "Bottle of DXwater", "Cup of Coffee", "Can of Fruit Juice", "Protein Drink",
+                "Royal Iced Tea"],
+    ("FastFood"): ["Hamburger", "Ketchup Packet", "Double Burger", "Bag of Fries"],
+    ("Bread"): ["Plain Roll", "Bread Roll", "Croissant"],
+    ("FrozenFood"): ["Popsicle", "Gelato de Resort"],
+    ("Fruit"): ["Banana", "Can of Fruit Juice"]
+
+
 
 }
 
 scaled_traits = [
     "Armor",
     "Weapon",
-    "Medicine",
+    # "Medicine",
     "Cure",
     "Bomb",
-    "AntiNumb",
-    "FireProof",
-    "WaterProof",
-    "LightProof",
     "Mana",
     "Heal",
     "Life",
@@ -145,8 +156,37 @@ gift_by_quality = {
         2.00: "Souvenir Coin",
         2.19: "Saturn Ribbon",
         2.68: "Goddess Ribbon"
+    },
 
+    "Draining": {
+        0.50: "HP-Sucker",
+        1.00: "Hungry HP-Sucker"
+    },
+    
+    "Bomb": {
+        0.50: "Bomb",
+        1.00: "Super Bomb"
+    },
 
+    "Neutralizing": {
+        0.50: "Shield Killer",
+        1.00: "Neutralizer"
+    },
+
+    "Cure": {
+        0.10: "Cold Remedy",
+        0.25: "Vial of Serum",
+        0.50: "Wet Towel",
+        1.00: "Refreshing Herb",
+        2.00: "Secret Herb",
+        3.00: "Horn of Life",
+        3.01: "Cup of Lifenoodles"
+    },
+
+    "Life": {
+        0.50: "Secret Herb",
+        1.00: "Cup of Lifenoodles",
+        1.01: "Horn of Life",
     }
 }
 
