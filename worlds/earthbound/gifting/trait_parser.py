@@ -55,16 +55,16 @@ special_traits = {
     ("FastFood"): ["Hamburger", "Ketchup Packet", "Double Burger", "Bag of Fries"],
     ("Bread"): ["Plain Roll", "Bread Roll", "Croissant"],
     ("FrozenFood"): ["Popsicle", "Gelato de Resort"],
-    ("Fruit"): ["Banana", "Can of Fruit Juice"]
-
-
-
+    ("Fruit"): ["Banana", "Can of Fruit Juice"],
+    ("Toy"): ["Toy Air Gun", "Teddy Bear", "Super Plush Bear", "Yo-yo", "Slingshot"],
+    ("Salted"): ["Salt Packet"],
+    ("Speed"): ["Speed Capsule"],
+    ("Guts"): ["Guts Capsule", "Sudden Guts Pill"],
 }
 
 scaled_traits = [
     "Armor",
     "Weapon",
-    # "Medicine",
     "Cure",
     "Bomb",
     "Mana",
@@ -74,7 +74,7 @@ scaled_traits = [
     "Draining"
 ]
 
-backup_traits = [
+tertiary_traits = [
     "Confectionary",
     "Food",
     "Consumable",
@@ -187,6 +187,59 @@ gift_by_quality = {
         0.50: "Secret Herb",
         1.00: "Cup of Lifenoodles",
         1.01: "Horn of Life",
+    },
+
+    "Weapon": {
+        0.01: "Casey Bat",
+        0.04: "Cracked Bat",
+        0.11: "Yo-yo",
+        0.15: "Tee Ball Bat",
+        0.19: "Fy Pan",
+        0.23: "Slingshot",
+        0.28: "Sand Lot Bat",
+        0.30: "Pop Gun",
+        0.38: "Thick Fry Pan",
+        0.40: "Bionic Slingshot",
+        0.46: "Stun Gun",
+        0.50: "Minor League Bat",
+        0.57: "Deluxe Fry Pan",
+        0.61: "Toy Air Gun",
+        0.69: "Magnum Air Gun",
+        0.73: "Mr. Baseball Bat",
+        0.76: "Chef's Fry Pan",
+        0.78: "Zip Gun",
+        0.88: "Trick Yo-yo",
+        0.92: "Laser Gun",
+        0.95: "T-Rex's Bat",
+        0.96: "Non-Stick Frypan",
+        1.00: "Big League Bat",
+        1.03: "Combat Yo-yo",
+        1.11: "Hyper Beam",
+        1.15: "French Fry Pan",
+        1.19: "Hall of Fame Bat",
+        1.26: "Double Beam",
+        1.32: "Ultimate Bat",
+        1.38: "Crusher Beam",
+        1.50: "Spectrum Beam",
+        1.53: "Magicant Bat",
+        1.73: "Death Ray",
+        1.80: "Sword of Kings",
+        1.88: "Baddest Beam",
+        2.00: "Magic Fry Pan",
+        2.11: "Legendary Bat",
+        2.15: "Moon Beam Gun",
+        2.40: "Holy Fry Pan",
+        2.45: "Gaia Beam",
+        2.55: "Gutsy Bat",
+    },
+
+    "Mana": {
+        0.28: "Bottle of Water",
+        0.50: "PSI Caramel",
+        0.51: "Magic Tart",
+        1.14: "Bottle of Dxwater",
+        1.20: "Magic Pudding",
+        2.28: "Magic Truffle"
     }
 }
 

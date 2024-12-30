@@ -411,13 +411,13 @@ gift_properties = {
 
     126: create_gift("Jar of Delisauce", 0, ["Comsumable", "Heal", "Food", "Condiment", "Green"]),
 
-    127: create_gift("Wet Towel", 0, ["Comsumable", "Medicine", "Cure"]),
+    127: create_gift("Wet Towel", 0, ["Comsumable", "Cure"]),
 
-    128: create_gift("Refreshing Herb", 0, ["Comsumable", "Medicine", "Cure", "Food", "Herb"]),
+    128: create_gift("Refreshing Herb", 0, ["Comsumable", "Cure", "Food", "Herb"]),
 
-    129: create_gift("Secret Herb", 0, ["Comsumable", "Medicine", "Cure", "Food", "Life", "Herb"]),
+    129: create_gift("Secret Herb", 0, ["Comsumable", "Cure", "Food", "Life", "Herb"]),
 
-    130: create_gift("Horn of Life", 0, ["Comsumable", "Medicine", "Cure", "Life"]),
+    130: create_gift("Horn of Life", 0, ["Comsumable", "Cure", "Life"]),
 
     131: create_gift("Counter-PSI Unit", 0, ["Machine", "PSI", "Electronics", "Metal"]),
 
