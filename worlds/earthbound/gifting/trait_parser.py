@@ -1,29 +1,21 @@
 from ..game_data.local_data import item_id_table
 
 wanted_traits = [
-    "Confectionary",
-    "Food",
     "Armor",
     "Weapon",
-    "Medicine",
     "Cure",
     "Bomb",
     "Mana",
     "Heal",
-    "Draining",
-    "Consumable",
+    "Life",
     "Neutralizing",
-    "Beef",
-    "Jerky",
-    "Egg",
-    "Herb",
-    "Water"
+    "Draining"
 ]
 
 # If these traits are in the item, then pick randomly from the results
 # If multiple fit, pick the combined highest quality.
 special_traits = {
-    ("Beef"): ["Hamburger", "Double Burger", "Mammoth Burger"],
+    ("Beef"): ["Hamburger", "Double Burger", "Mammoth Burger", "Beef Jerky"],
     ("Jerky"): ["Beef Jerky", "Spicy Jerky", "Luxury Jerky"],
     ("Egg"): ["Fresh Egg", "Boiled Egg"],
     ("Rock", "Candy"): ["Rock Candy"],
@@ -42,6 +34,7 @@ special_traits = {
     ("Silver"): ["Silver Bracelet"],
     ("Gold"): ["Gold Bracelet"],
     ("Diamond"): ["Diamond Bracelet"],
+    ("Plastic"): ["Cheap Bracelet"]
     ("Herb"): ["Refreshing Herb", "Secret Herb"],
     ("Repellant"): ["Repel Sandwich", "Repel Superwich"],
     ("Slime"): ["Slime Generator"],
@@ -58,8 +51,66 @@ special_traits = {
     ("Fruit"): ["Banana", "Can of Fruit Juice"],
     ("Toy"): ["Toy Air Gun", "Teddy Bear", "Super Plush Bear", "Yo-yo", "Slingshot"],
     ("Salted"): ["Salt Packet"],
-    ("Speed"): ["Speed Capsule"],
+    ("Speed"): ["Speed Capsule", "Rabbit's Foot"],
     ("Guts"): ["Guts Capsule", "Sudden Guts Pill"],
+    ("Luck"): ["Lucky Coin", "Luck Capsule", "Lucky Sandwich"],
+    ("Doll"): ["Teddy Bear", "Super Plush Bear"],
+    ("Legendary"): ["Legendary Bat"],
+    ("Buff"): ["Sudden Guts Pill", "Guts Capsule", "Speed Capsule", "IQ Capsule", "Luck Capsule", "Vital Capsule"],
+    ("Pipe"): ["HP-Sucker", "Hungry HP-Sucker", "Broken Pipe"],
+    ("Hat"): ["Holmes Hat", "Hard Hat", "Baseball Cap", "Mr. Baseball Cap"],
+    ("Trash"): ["Broken Machine", "Broken Gadget", "Broken Air Gun", "Broken Spray Can",
+                 "Broken Laser", "Broken Iron", "Broken Pipe", "Broken Cannon", "Broken Tube",
+                 "Broken Bazooka", "Broken Trumpet", "Broken Harmonica", "Broken Antenna",
+                 "Ruler", "Pair of Dirty Socks", "Protractor"],
+    ("ExoticFood"): ["Piggy Jelly", "Peanut Cheese Bar", "Bowl of Rice Gruel",
+                     "Molokheiya Soup", "Kabob", "Bean Croquette", "Brain Food Lunch"],
+    ("Insecticide"): ["Insecticde Spray", "Xterminator Spray"],
+    ("Fire"): ["Flame Pendant"],
+    ("Ice"): ["Rain Pendant"],
+    ("Light"): ["Night Pendant"],
+    ("Food"): ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
+               "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
+               "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
+               "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
+               "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
+               "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
+               "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
+               "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
+               "Popsicle"],
+    ("Consumable"): ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
+               "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
+               "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
+               "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
+               "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
+               "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
+               "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
+               "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
+               "Popsicle", "Can of Fruit Juice", "Royal Iced Tea", "Protein Drink",
+               "Bottle of Water", "Cold Remedy", "Vial of Serum", "IQ Capsule",
+               "Guts Capsule", "Speed Capsule", "Vital Capsule", "Luck Capsule",
+               "Ketchup Packet", "Sugar Packet", "Tin of Cocoa", "Carton of Cream", "Sprig of Parsley",
+               "Jar of Hot Sauce", "Salt Packet", "Jar of Delisauce", "Wet Towel", "Refreshing Herb",
+               "Secret Herb", "Horn of Life", "Mummy Wrap", "Bottle Rocket", "Big Bottle Rocket",
+               "Multi Bottle Rocket", "Bomb", "Super Bomb", "Insecticide Spray", "Rust Promoter",
+               "Rust Promoter DX", "Pair of Dirty Socks", "Stag Beetle", "Toothbrush",
+               "Handbag Strap", "Pharaoh's Curse", "Sudden Guts Pill", "Bag of Dragonite",
+               "Defense Spray", "Chick", "Chicken", "Hand-Aid", "Snake", "Viper",
+               "Cup of Coffee", "Bottle of DXwater", "Cup of Lifenoodles"],
+    "Electronic": [""],
+    "Machine": [""],
+    "Candy": ["PSI Caramel", "Magic Truffle", "Rock Candy", "Magic Pudding", "Peanut Cheese Bar"],
+    "Medicine": [""],
+    "Coffee": ["Cup of Coffee"],
+    "Artifact": ["Metotite", "Meteornium"],
+    "Fireworks": ["Bottle Rocket", "Big Bottle Rocket", "Multi Bottle Rocket"],
+    "Confectionary": ["Cookie", "Magic Tart"],
+    "Metal": [""],
+    "Explosive": ["Bottle Rocket", "Big Bottle Rocket", "Multi Bottle Rocket", "Heavy Bazooka", "Bazooka", "Bomb", "Super Bomb"],
+    "Jewelry": [""],
+    "Rock": ["Rock Candy", "Brain Stone"]
+
+
 }
 
 scaled_traits = [
@@ -72,15 +123,6 @@ scaled_traits = [
     "Life",
     "Neutralizing",
     "Draining"
-]
-
-tertiary_traits = [
-    "Confectionary",
-    "Food",
-    "Consumable",
-    "Jewelry",
-    "Baseball",
-    "Tool"
 ]
 
 gift_by_quality = {

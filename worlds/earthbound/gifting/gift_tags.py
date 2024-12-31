@@ -107,7 +107,7 @@ gift_qualities = {
     "Pixie's Bracelet": {"Armor": 1.50},
     "Cherub's Band": {"Armor": 1.75},
     "Goddess Band": {"Armor": 2.00},
-    "Bracer of Kings": {"Armor": 0.87, "FireProof": 0.50},
+    "Bracer of Kings": {"Armor": 0.87, "Fire": 0.50},
 
     "Ribbon": {"Armor": 0.35},
     "Red Ribbon": {"Armor": 0.43},
@@ -127,19 +127,32 @@ gift_qualities = {
     "Crystal Charm": {"Armor": 0.02, "AntiNumb": 1.00},
     "Rabbit's Foot": {"Armor": 0.03, "AntiNumb": 1.00, "Speed": 2.00},
 
-    "Flame Pendant": {"Armor": 1.00, "FireProof": 1.00},
-    "Rain Pendant": {"Armor": 1.00, "WaterProof": 1.00},
-    "Night Pendant": {"Armor": 1.00, "LightProof": 1.00},
-    "Sea Pendant": {"Armor": 2.00, "FireProof": 1.00, "WaterProof": 1.00, "LightProof": 1.00},
-    "Star Pendant": {"Armor": 3.00, "FireProof": 1.00, "WaterProof": 1.00, "LightProof": 1.00, "AntiNumb": 1.00},
-    "Earth Pendant": {"Armor": 1.50, "FireProof": 0.50, "WaterProof": 0.50, "LightProof": 0.50},
+    "Flame Pendant": {"Armor": 1.00, "Fire": 1.00},
+    "Rain Pendant": {"Armor": 1.00, "Ice": 1.00},
+    "Night Pendant": {"Armor": 1.00, "Light": 1.00},
+    "Sea Pendant": {"Armor": 2.00, "Fire": 1.00, "Ice": 1.00, "Light": 1.00},
+    "Star Pendant": {"Armor": 3.00, "Fire": 1.00, "Ice": 1.00, "Light": 1.00, "AntiNumb": 1.00},
+    "Earth Pendant": {"Armor": 1.50, "Fire": 0.50, "Ice": 0.50, "Light": 0.50},
     "Cloak of Kings": {"Armor": 0.50},
 
     "Shield Killer": {"Neutralizing": 0.50},
     "Neutralizer": {"Neutralizing": 1.00},
     "HP-Sucker": {"Draining": 0.50},
     "Hungry HP-Sucker": {"Draining": 1.00},
-    # other armor and weapons go here
+
+    "Baseball Cap": {"Armor": 0.13},
+    "Holmes Hat": {"Armor": 0.27},
+    "Mr. Baseball Cap": {"Armor": 0.16},
+    "Hard Hat": {"Armor": 0.41},
+    "Coin of Slumber": {"Armor": 0.83},
+    "Coin of Defense": {"Armor": 1.11},
+    "Lucky Coin": {"Armor": 1.38},
+    "Talisman Coin": {"Armor": 1.66},
+    "Shiny Coin": {"Armor": 1.94},
+    "Souvenir Coin": {"Armor": 2.22},
+    "Coin of Silence": {"Armor": 1.25},
+    "Mr. Saturn Coin": {"Armor": 1.30}
+    "Diadem of Kngs": {"Armor": 0.50, "Fire": 0.25, "Ice": 0.25, "Light": 0.25, "AntiNumb": 0.25}
 } 
 
 
@@ -167,35 +180,35 @@ def create_gift(name, value, traits):
 
 
 gift_properties = {
-    2: create_gift("Teddy Bear", 178, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal", "Doll"]),
+    2: create_gift("Teddy Bear", 178, ["Bear", "Toy", "MeatShield", "Animal", "Doll"]),
 
-    3: create_gift("Super Plush Bear", 1198, ["Bear", "Toy", "Stuffed", "Brown", "MeatShield", "Animal", "Doll"]),
+    3: create_gift("Super Plush Bear", 1198, ["Bear", "Toy", "MeatShield", "Animal", "Doll"]),
 
-    4: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    4: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    5: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    5: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    6: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    6: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    7: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    7: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    8: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    8: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    9: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    9: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    10: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Pipe", "Junk"]),
+    10: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Pipe", "Trash"]),
 
-    11: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    11: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    12: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    12: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
-    13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon", "Junk"]),
+    13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon", "Trash"]),
 
-    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
+    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Trash"]),
 
-    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Junk"]),
+    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Trash"]),
 
-    16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Junk"]),
+    16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
 
     17: create_gift("Cracked Bat", 18, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
@@ -233,7 +246,7 @@ gift_properties = {
 
     34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
 
-    35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon", "Artifact"]),
+    35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon"]),
 
     36: create_gift("Pop Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
 
@@ -271,73 +284,73 @@ gift_properties = {
 
     53: create_gift("Combat Yo-yo", 0, ["RangedWeapon", "Toy", "Weapon"]),
 
-    54: create_gift("Travel Charm", 0, ["Wearable", "Jewelry"]),
+    54: create_gift("Travel Charm", 0, ["Jewelry"]),
 
-    55: create_gift("Great Charm", 0, ["Wearable", "Jewelry", "Defense", "Armor"]),
+    55: create_gift("Great Charm", 0, ["Jewelry", "Defense", "Armor"]),
 
-    56: create_gift("Crystal Charm", 0, ["Wearable", "Jewelry", "Defense", "Armor", "Crystal"]),
+    56: create_gift("Crystal Charm", 0, ["Jewelry", "Defense", "Armor", "Crystal"]),
 
-    57: create_gift("Rabbit's Foot", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Speed"]),
+    57: create_gift("Rabbit's Foot", 0, ["Armor", "Jewelry", "Defense", "Speed"]),
 
-    58: create_gift("Flame Pendant", 0, ["Wearable", "Armor", "Jewelry", "Defense", "FireProof"]),
+    58: create_gift("Flame Pendant", 0, ["Armor", "Jewelry", "Defense", "Fire"]),
 
-    59: create_gift("Rain Pendant", 0, ["Wearable", "Armor", "Jewelry", "Defense", "WaterProof"]),
+    59: create_gift("Rain Pendant", 0, ["Armor", "Jewelry", "Defense", "Water"]),
 
-    60: create_gift("Night Pendant", 0, ["Wearable", "Armor", "Jewelry", "Defense", "LightProof"]),
+    60: create_gift("Night Pendant", 0, ["Armor", "Jewelry", "Defense", "Light"]),
 
-    61: create_gift("Sea Pendant", 0, ["Wearable", "Armor", "Jewelry", "Defense", "LightProof", "FireProof", "WaterProof"]),
+    61: create_gift("Sea Pendant", 0, ["Armor", "Jewelry", "Defense", "Light", "Fire", "Water"]),
 
-    62: create_gift("Star Pendant", 0, ["Wearable", "Armor", "Jewelry", "Defense", "LightProof", "FireProof", "WaterProof"]),
+    62: create_gift("Star Pendant", 0, ["Armor", "Jewelry", "Defense", "Light", "Fire", "Water"]),
 
-    63: create_gift("Cloak of Kings", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Artifact"]),
+    63: create_gift("Cloak of Kings", 0, ["Armor", "Jewelry", "Defense"]),
 
-    64: create_gift("Cheap Bracelet", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Plastic"]),
+    64: create_gift("Cheap Bracelet", 0, ["Armor", "Jewelry", "Defense", "Plastic"]),
 
-    65: create_gift("Copper Bracelet", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Copper"]),
+    65: create_gift("Copper Bracelet", 0, ["Armor", "Jewelry", "Defense", "Copper"]),
 
-    66: create_gift("Silver Bracelet", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Silver"]),
+    66: create_gift("Silver Bracelet", 0, ["Armor", "Jewelry", "Defense", "Silver"]),
 
-    67: create_gift("Gold Bracelet", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Gold"]),
+    67: create_gift("Gold Bracelet", 0, ["Armor", "Jewelry", "Defense", "Gold"]),
 
-    68: create_gift("Platinum Band", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Platinum"]),
+    68: create_gift("Platinum Band", 0, ["Armor", "Jewelry", "Defense", "Platinum"]),
 
-    69: create_gift("Diamond Band", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Diamond"]),
+    69: create_gift("Diamond Band", 0, ["Armor", "Jewelry", "Defense", "Diamond"]),
 
-    70: create_gift("Pixie's Bracelet", 0, ["Wearable", "Armor", "Jewelry", "Defense"]),
+    70: create_gift("Pixie's Bracelet", 0, ["Armor", "Jewelry", "Defense"]),
 
-    71: create_gift("Cherub's Band", 0, ["Wearable", "Armor", "Jewelry", "Defense"]),
+    71: create_gift("Cherub's Band", 0, ["Armor", "Jewelry", "Defense"]),
 
-    72: create_gift("Goddess Band", 0, ["Wearable", "Armor", "Jewelry", "Defense"]),
+    72: create_gift("Goddess Band", 0, ["Armor", "Jewelry", "Defense"]),
 
-    73: create_gift("Bracer of Kings", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Artifact", "FireProof"]),
+    73: create_gift("Bracer of Kings", 0, ["Armor", "Jewelry", "Defense", "Fire"]),
 
-    74: create_gift("Baseball Cap", 0, ["Wearable", "Armor", "Baseball", "Defense", "Hat"]),
+    74: create_gift("Baseball Cap", 0, ["Armor", "Baseball", "Defense", "Hat"]),
 
-    75: create_gift("Holmes Hat", 0, ["Wearable", "Armor", "Defense", "Hat"]),
+    75: create_gift("Holmes Hat", 0, ["Armor", "Defense", "Hat"]),
 
-    76: create_gift("Mr. Baseball Cap", 0, ["Wearable", "Armor", "Defense", "Hat", "Baseball"]),
+    76: create_gift("Mr. Baseball Cap", 0, ["Armor", "Defense", "Hat", "Baseball"]),
 
-    77: create_gift("Hard Hat", 0, ["Wearable", "Armor", "Defense", "Hat"]),
+    77: create_gift("Hard Hat", 0, ["Armor", "Defense", "Hat"]),
 
-    78: create_gift("Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense"]),
+    78: create_gift("Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    79: create_gift("Red Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense", "Red"]),
+    79: create_gift("Red Ribbon", 0, ["Armor", "Cloth", "Defense", "Red"]),
 
-    80: create_gift("Goddess Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense"]),
+    80: create_gift("Goddess Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    81: create_gift("Coin of Slumber", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    81: create_gift("Coin of Slumber", 0, ["Armor", "Defense", "Charm"]),
 
-    82: create_gift("Coin of Defense", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    82: create_gift("Coin of Defense", 0, ["Armor", "Defense", "Charm"]),
 
-    83: create_gift("Lucky Coin", 0, ["Wearable", "Armor", "Defense", "Charm", "Luck"]),
+    83: create_gift("Lucky Coin", 0, ["Armor", "Defense", "Charm", "Luck"]),
 
-    84: create_gift("Talisman Coin", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    84: create_gift("Talisman Coin", 0, ["Armor", "Defense", "Charm"]),
 
-    85: create_gift("Shiny Coin", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    85: create_gift("Shiny Coin", 0, ["Armor", "Defense", "Charm"]),
 
-    86: create_gift("Souvenir Coin", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    86: create_gift("Souvenir Coin", 0, ["Armor", "Defense", "Charm"]),
 
-    87: create_gift("Diadem of Kings", 0, ["Wearable", "Armor", "Jewelry", "Defense", "Artifact", "FireProof", "WaterProof", "LightProof"]),
+    87: create_gift("Diadem of Kings", 0, ["Armor", "Jewelry", "Defense", "Fire", "Water", "Light"]),
 
     88: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
@@ -363,7 +376,7 @@ gift_properties = {
 
     99: create_gift("Magic Truffle", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
 
-    100: create_gift("Brain Food Lunch", 0, ["Comsumable", "Mana", "Food", "Confectionary", "PSI", "Heal", "ExoticFood"]),
+    100: create_gift("Brain Food Lunch", 0, ["Comsumable", "Mana", "Food", "PSI", "Heal", "ExoticFood"]),
 
     101: create_gift("Rock Candy", 0, ["Comsumable", "Candy", "Food", "StatBoost"]),
 
@@ -435,13 +448,13 @@ gift_properties = {
 
     138: create_gift("Slime Generator", 0, ["Machine", "Slime", "Electronics"]),
 
-    140: create_gift("Ruler", 0, ["Long", "Wood", "Junk", "Trash", "IQ"]),
+    140: create_gift("Ruler", 0, ["Long", "Wood", "Trash", "IQ"]),
 
     141: create_gift("Snake Bag", 0, ["Animal", "Container", "Many", "Throwing"]),
 
     142: create_gift("Mummy Wrap", 0, ["Ancient", "Paper", "Weapon", "Throwing", "Consumable"]),
 
-    143: create_gift("Protractor", 0, ["Angular", "Metal", "Junk", "Trash", "IQ"]),
+    143: create_gift("Protractor", 0, ["Angular", "Metal", "Trash", "IQ"]),
 
     144: create_gift("Bottle Rocket", 0, ["Weapon", "Explosive", "Rocket", "Fireworks", "Consumable"]),
 
@@ -477,7 +490,7 @@ gift_properties = {
 
     161: create_gift("Defense Spray", 0, ["Can", "Consumable", "Chemicals", "StatBoost", "Defense", "Liquid"]),
 
-    165: create_gift("Picture Postcard", 0, ["Paper", "Photograph", "Sad", "Junk", "Trash"]),
+    165: create_gift("Picture Postcard", 0, ["Paper", "Photograph", "Sad", "Trash"]),
 
     168: create_gift("Chick", 0, ["Animal", "Happy", "Yellow", "Bird", "Chicken"]),
 
@@ -493,7 +506,7 @@ gift_properties = {
 
     191: create_gift("Calorie Stick", 0, ["Consumable", "Heal", "Food", "Jerky", "Processed"]),
 
-    194: create_gift("Earth Pendant", 0, ["Wearable", "Armor", "Jewelry", "FireProof", "WaterProof", "LightProof"]),
+    194: create_gift("Earth Pendant", 0, ["Armor", "Jewelry", "Fire", "Ice", "Light"]),
 
     195: create_gift("Neutralizer", 0, ["Machine", "PSI", "Electronics", "Metal", "Neutralizing"]),
 
@@ -503,7 +516,7 @@ gift_properties = {
 
     200: create_gift("Viper", 0, ["Animal", "Weapon", "Throwing", "Poison", "Consumable"]),
 
-    201: create_gift("Brain Stone", 0, ["Stone", "Mineral", "PSI", "Junk", "Trash"]),
+    201: create_gift("Brain Stone", 0, ["Stone", "Mineral", "PSI", "Trash"]),
 
     207: create_gift("Magic Tart", 0, ["Food", "Consumable", "PSI", "Mana", "Confectionary"]),
 
@@ -517,19 +530,19 @@ gift_properties = {
 
     215: create_gift("Double Beam", 0, ["RangedWeapon", "Gun", "Beam", "Weapon"]),
 
-    216: create_gift("Platinum Band", 0, ["Wearable", "Armor", "Defense", "Platinum", "Jewelry"]),
+    216: create_gift("Platinum Band", 0, ["Armor", "Defense", "Platinum", "Jewelry"]),
 
-    217: create_gift("Diamond Band", 0, ["Wearable", "Armor", "Defense", "Diamond", "Jewelry"]),
+    217: create_gift("Diamond Band", 0, ["Armor", "Defense", "Diamond", "Jewelry"]),
 
-    218: create_gift("Defense Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense"]),
+    218: create_gift("Defense Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    219: create_gift("Talisman Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense"]),
+    219: create_gift("Talisman Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    220: create_gift("Saturn Ribbon", 0, ["Wearable", "Armor", "Cloth", "Defense"]),
+    220: create_gift("Saturn Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    221: create_gift("Coin of Silence", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    221: create_gift("Coin of Silence", 0, ["Armor", "Defense", "Charm"]),
 
-    222: create_gift("Charm Coin", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    222: create_gift("Charm Coin", 0, ["Armor", "Defense", "Charm"]),
 
     223: create_gift("Cup of Noodles", 0, ["Food", "Consumable", "Heal", "FastFood", "Pasta"]),
 
@@ -545,7 +558,7 @@ gift_properties = {
 
     234: create_gift("Peanut Cheese Bar", 0, ["Comsumable", "Heal", "Food", "Candy", "ExoticFood"]),
 
-    235: create_gift("Piggy Jelly", 0, ["Comsumable", "Heal", "Food", "Candy", "ExoticFood", "Gelatin", "Jelly"]),
+    235: create_gift("Piggy Jelly", 0, ["Comsumable", "Heal", "Food", "ExoticFood", "Gelatin", "Jelly"]),
 
     236: create_gift("Bowl of Rice Gruel", 0, ["Comsumable", "Heal", "Food", "Cooking", "ExoticFood", "Liquid"]),
 
@@ -573,11 +586,11 @@ gift_properties = {
 
     248: create_gift("Non-Stick Frypan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    249: create_gift("Mr. Saturn Coin", 0, ["Wearable", "Armor", "Defense", "Charm"]),
+    249: create_gift("Mr. Saturn Coin", 0, ["Armor", "Defense", "Charm"]),
 
     250: create_gift("Meteornium", 0, ["Mineral", "SellFodder", "Artifact", "Brown", "SpaceMineral"]),
 
-    251: create_gift("Popsicle", 0, ["Consumable", "Food", "Heal", "Candy", "FrozenFood"]),
+    251: create_gift("Popsicle", 0, ["Consumable", "Food", "Heal", "FrozenFood"]),
 
     252: create_gift("Cup of Lifenoodles", 0, ["Consumable", "Food", "Cure", "Life", "Pasta"])
     # Todo; separate traits for GoodWeapon and BadWeapon
