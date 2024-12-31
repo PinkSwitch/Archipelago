@@ -10862,17 +10862,32 @@ ORG $C5E029
 ORG $C5E1AE
 ;dd CancelBuyRemoveName
 
+ORG $C50A6A
+;db $0A
+;dl BackupShopEquipText
+
+ORG $C50B4C
+;db $0A
+;dl BackupShopSellText
+
+ORG $C50C2E
+;db $0A
+;dl BackupShopCantEquip
+
 
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $01, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $02, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
 ;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
 ;db $96, $ff, $ff, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
 ;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
 ;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
 ;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+
+ORG $F400D2
+;db $11
 ;Type 0- Normal local item
 ;Type 1- Teleport/PSI
 ;type 2- Character
@@ -11189,7 +11204,7 @@ db $02
 db $19, $20
 db $0B, $01
 db $1B, $03
-dd $C5E0DE
+dd .HandleSoloNonSpecialBuy
 
 db $1B, $01
 db $08
@@ -11206,6 +11221,13 @@ db $1C, $20, $01
 db $19, $10, $01
 db $0A
 dl .LeaderGiven
+.HandleSoloNonSpecialBuy:
+db $1D, $03, $FF
+db $1B, $02
+dd $C5DF89
+db $1C, $20, $01
+db $0A
+dl $C5E0DE
 .BoughtSpecialItemGiveToPlayer:
 db $1C, $20, $01
 db $04, $91, $02
@@ -11226,11 +11248,12 @@ db $02
 ..Teleport:
 db $1B, $01
 db $1B, $04
-db $09, $0F
+db $09, $10
 dd OnettTeleTex+$1
 dd TwosonTeleTex+$1
 dd HappyTeleTex+$1
 dd ThreedTeleTex+$1
+dd SaturnTeleTex+$1
 dd DunesTeleTex+$1
 dd FoursTeleTex+$1
 dd WintersTeleTex+$1
@@ -11320,6 +11343,19 @@ db $1b, $02
 dd $C50F66
 db $0A
 dl $C5DF27
+
+BackupShopEquipText:
+db $0A
+dl $C5B910
+
+BackupShopSellText:
+db $0A
+dl $C52189
+
+BackupShopCantEquip:
+db $0A
+dl $C5B94D
+
 
 ;ORG $f40930
 ;db $01, $00, $01, $01, $00, $00, $01, $00, $01
@@ -14105,7 +14141,6 @@ Gift_menu:
 
   db $1B, $04
   db $0D, $01
-  db $1B, $04
 
   db $1D, $13, $00, $00
   db $70, $84, $91, $9b, $95, $50, $97, $9f, $9f, $94, $50, $93, $91, $a2, $95, $50

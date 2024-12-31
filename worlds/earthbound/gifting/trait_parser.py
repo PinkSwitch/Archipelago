@@ -147,6 +147,16 @@ secondary_trait_list = {
               "Fry Pan", "Magic Fry Pan", "Thick Fry Pan", "Deluxe Fry Pan", "Chef's Fry Pan",
               "French Fry Pan", "Holy Fry Pan", "Non-Stick Frypan"],
 
+    "Food": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
+             "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
+             "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
+             "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
+             "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
+             "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
+             "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
+             "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
+             "Popsicle"]
+
 }
 
 tertiary_trait_list = {
@@ -168,17 +178,7 @@ tertiary_trait_list = {
                    "Rust Promoter DX", "Pair of Dirty Socks", "Stag Beetle", "Toothbrush",
                    "Handbag Strap", "Pharaoh's Curse", "Sudden Guts Pill", "Bag of Dragonite",
                    "Defense Spray", "Chick", "Chicken", "Hand-Aid", "Snake", "Viper",
-                   "Cup of Coffee", "Bottle of DXwater", "Cup of Lifenoodles"],
-
-    "Food": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
-             "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
-             "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
-             "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
-             "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
-             "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
-             "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
-             "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
-             "Popsicle"],
+                   "Cup of Coffee", "Bottle of DXwater", "Cup of Lifenoodles"]
 }
 
 scaled_traits = [
