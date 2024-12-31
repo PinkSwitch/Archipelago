@@ -228,25 +228,25 @@ gift_properties = {
 
     25: create_gift("Legendary Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Legendary"]),
 
-    26: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Gutsy"]),
+    26: create_gift("Gutsy Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon", "Guts"]),
 
     27: create_gift("Casey Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    28: create_gift("Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    28: create_gift("Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    29: create_gift("Thick Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Thick"]),
+    29: create_gift("Thick Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    30: create_gift("Deluxe Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    30: create_gift("Deluxe Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    31: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    31: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    32: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    32: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    33: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    33: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
-    35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon"]),
+    35: create_gift("Sword of Kings", 0, ["Weapon"]),
 
     36: create_gift("Pop Gun", 0, ["RangedWeapon", "Toy", "Weapon"]),
 
@@ -584,7 +584,7 @@ gift_properties = {
 
     247: create_gift("Magic Pudding", 0, ["Comsumable", "Mana", "Food", "Candy"]),
 
-    248: create_gift("Non-Stick Frypan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
+    248: create_gift("Non-Stick Frypan", 0, ["MeleeWeapon", "Metal", "Tool", "Weapon"]),
 
     249: create_gift("Mr. Saturn Coin", 0, ["Armor", "Defense"]),
 

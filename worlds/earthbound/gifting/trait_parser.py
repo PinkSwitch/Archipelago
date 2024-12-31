@@ -10,7 +10,64 @@ wanted_traits = [
     "Heal",
     "Life",
     "Neutralizing",
-    "Draining"
+    "Draining",
+    "Beef",
+    "Jerky",
+    "Egg",
+    "Chicken",
+    "Spicy",
+    "Broken",
+    "Pasta",
+    "Pizza",
+    "Condiment",
+    "Dairy",
+    "AnimalProduct",
+    "Copper",
+    "Silver",
+    "Gold",
+    "Diamond",
+    "Plastic",
+    "Herb",
+    "Repellant",
+    "Slime",
+    "Animal",
+    "Juice",
+    "Meat",
+    "Water",
+    "Drink",
+    "FastFood",
+    "Bread",
+    "FrozenFood",
+    "Fruit",
+    "Toy",
+    "Salted",
+    "Speed",
+    "Guts",
+    "Luck",
+    "Doll",
+    "Legendary",
+    "Buff",
+    "Pipe",
+    "Hat",
+    "Trash",
+    "ExoticFood",
+    "Insect",
+    "Fire",
+    "Ice",
+    "Light",
+    "Food",
+    "Consumable",
+    "Electronics",
+    "Candy",
+    "Medicine",
+    "Coffee",
+    "Artifact",
+    "Fireworks",
+    "Confectionary",
+    "Explosive",
+    "Jewelry",
+    "Rock",
+    "Metal"
 ]
 
 # If these traits are in the item, then pick randomly from the results
@@ -70,34 +127,6 @@ secondary_trait_list = {
     "Fire": ["Flame Pendant"],
     "Ice": ["Rain Pendant"],
     "Light": ["Night Pendant"],
-    "Food": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
-             "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
-             "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
-             "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
-             "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
-             "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
-             "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
-             "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
-             "Popsicle"],
-    "Consumable": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
-                   "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
-                   "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
-                   "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
-                   "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
-                   "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
-                   "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
-                   "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
-                   "Popsicle", "Can of Fruit Juice", "Royal Iced Tea", "Protein Drink",
-                   "Bottle of Water", "Cold Remedy", "Vial of Serum", "IQ Capsule",
-                   "Guts Capsule", "Speed Capsule", "Vital Capsule", "Luck Capsule",
-                   "Ketchup Packet", "Sugar Packet", "Tin of Cocoa", "Carton of Cream", "Sprig of Parsley",
-                   "Jar of Hot Sauce", "Salt Packet", "Jar of Delisauce", "Wet Towel", "Refreshing Herb",
-                   "Secret Herb", "Horn of Life", "Mummy Wrap", "Bottle Rocket", "Big Bottle Rocket",
-                   "Multi Bottle Rocket", "Bomb", "Super Bomb", "Insecticide Spray", "Rust Promoter",
-                   "Rust Promoter DX", "Pair of Dirty Socks", "Stag Beetle", "Toothbrush",
-                   "Handbag Strap", "Pharaoh's Curse", "Sudden Guts Pill", "Bag of Dragonite",
-                   "Defense Spray", "Chick", "Chicken", "Hand-Aid", "Snake", "Viper",
-                   "Cup of Coffee", "Bottle of DXwater", "Cup of Lifenoodles"],
     "Electronics": ["Slime Generator", "Shield Killer", "Neutralizer", "Defense Shower", "Counter-PSI Unit",
                     "HP-Sucker", "Hungry HP-Sucker"],
     "Candy": ["PSI Caramel", "Magic Truffle", "Rock Candy", "Magic Pudding", "Peanut Cheese Bar"],
@@ -118,6 +147,38 @@ secondary_trait_list = {
               "Fry Pan", "Magic Fry Pan", "Thick Fry Pan", "Deluxe Fry Pan", "Chef's Fry Pan",
               "French Fry Pan", "Holy Fry Pan", "Non-Stick Frypan"],
 
+}
+
+tertiary_trait_list = {
+    "Consumable": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
+                   "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
+                   "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
+                   "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
+                   "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
+                   "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
+                   "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
+                   "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
+                   "Popsicle", "Can of Fruit Juice", "Royal Iced Tea", "Protein Drink",
+                   "Bottle of Water", "Cold Remedy", "Vial of Serum", "IQ Capsule",
+                   "Guts Capsule", "Speed Capsule", "Vital Capsule", "Luck Capsule",
+                   "Ketchup Packet", "Sugar Packet", "Tin of Cocoa", "Carton of Cream", "Sprig of Parsley",
+                   "Jar of Hot Sauce", "Salt Packet", "Jar of Delisauce", "Wet Towel", "Refreshing Herb",
+                   "Secret Herb", "Horn of Life", "Mummy Wrap", "Bottle Rocket", "Big Bottle Rocket",
+                   "Multi Bottle Rocket", "Bomb", "Super Bomb", "Insecticide Spray", "Rust Promoter",
+                   "Rust Promoter DX", "Pair of Dirty Socks", "Stag Beetle", "Toothbrush",
+                   "Handbag Strap", "Pharaoh's Curse", "Sudden Guts Pill", "Bag of Dragonite",
+                   "Defense Spray", "Chick", "Chicken", "Hand-Aid", "Snake", "Viper",
+                   "Cup of Coffee", "Bottle of DXwater", "Cup of Lifenoodles"],
+
+    "Food": ["Cookie", "Bag of Fries", "Hamburger", "Boiled Egg", "Fresh Egg", "Picnic Lunch",
+             "Pasta di Summers", "Pizza", "Chef's Special", "Large Pizza", "PSI Caramel", "Magic Truffle",
+             "Brain Food Lunch", "Rock Candy", "Croissant", "Bread Roll", "Kraken Soup",
+             "Trout Yogurt", "Banana", "Calorie Stick", "Gelato de Resort", "Magic Tart",
+             "Cup of Noodles", "Repel Sandwich", "Repel Superwich", "Lucky Sandwich", "Double Burger",
+             "Peanut Cheese Bar", "Piggy Jelly", "Bowl of Rice Gruel", "Bean Croquette",
+             "Molokheiya Soup", "Plain Roll", "Kabob", "Plain Yogurt", "Beef Jerky",
+             "Mammoth Burger", "Spicy Jerky", "Luxury Jerky", "Magic Pudding",
+             "Popsicle"],
 }
 
 scaled_traits = [
@@ -296,20 +357,28 @@ gift_by_quality = {
 def trait_interpreter(gift):
     item = None
     trait_list = []
-    scaled_trait = False
+    got_trait = False
     for trait in gift["Traits"]:
         trait_list.append(trait["Trait"])
         if trait["Trait"] in scaled_traits:
             item_quality_table = gift_by_quality[trait["Trait"]]
             quality = min(item_quality_table.keys(), key=lambda x: abs(x - trait["Quality"]))
             item = item_quality_table[quality]
-            scaled_trait = True
+            got_trait = True
             break
 
-    if not scaled_trait:
+    if not got_trait:
         for trait in trait_list:
             if trait in secondary_trait_list:
                 item = random.choice(secondary_trait_list[trait])
+                got_trait = True
+                break
+
+    if not got_trait:
+        for trait in trait_list:
+            if trait in tertiary_trait_list:
+                item = random.choice(tertiary_trait_list[trait])
+                break
                 
     if item is not None:
         item = item_id_table[item]
