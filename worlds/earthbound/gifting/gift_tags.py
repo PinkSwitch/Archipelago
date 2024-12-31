@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 
 gift_qualities = {
-    "Super Plush Bear": {"Stuffed": 2, "MeatShield": 3},
+    "Super Plush Bear": {"MeatShield": 3},
     "Cracked Bat": {"Weapon": 0.07},
     "Tee Ball Bat": {"Weapon": 0.14},
     "Sand Lot Bat": {"Weapon": 0.27},
@@ -180,35 +180,35 @@ def create_gift(name, value, traits):
 
 
 gift_properties = {
-    2: create_gift("Teddy Bear", 178, ["Bear", "Toy", "MeatShield", "Animal", "Doll"]),
+    2: create_gift("Teddy Bear", 178, ["Toy", "Doll"]),
 
-    3: create_gift("Super Plush Bear", 1198, ["Bear", "Toy", "MeatShield", "Animal", "Doll"]),
+    3: create_gift("Super Plush Bear", 1198, ["Toy", "Doll"]),
 
-    4: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    4: create_gift("Broken Machine", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    5: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    5: create_gift("Broken Gadget", 109, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    6: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    6: create_gift("Broken Air Gun", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    7: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    7: create_gift("Broken Spray Can", 189, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    8: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    8: create_gift("Broken Laser", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    9: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    9: create_gift("Broken Iron", 149, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    10: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Pipe", "Trash"]),
+    10: create_gift("Broken Pipe", 149, ["Broken", "Machine", "Metal", "Material", "Resource", "Pipe", "Trash"]),
 
-    11: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    11: create_gift("Broken Cannon", 218, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    12: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    12: create_gift("Broken Tube", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
-    13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Weapon", "Trash"]),
+    13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Weapon", "Trash"]),
 
-    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Trash"]),
+    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument", "Trash"]),
 
-    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Instrument", "Trash"]),
+    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument", "Trash"]),
 
-    16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Electronics", "Resource", "Trash"]),
+    16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
     17: create_gift("Cracked Bat", 18, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
@@ -240,11 +240,11 @@ gift_properties = {
 
     31: create_gift("Chef's Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    32: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "French"]),
+    32: create_gift("French Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
     33: create_gift("Magic Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon", "Holy"]),
+    34: create_gift("Holy Fry Pan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
     35: create_gift("Sword of Kings", 0, ["MeleeWeapon", "Metal", "Sword", "Weapon"]),
 
@@ -338,45 +338,45 @@ gift_properties = {
 
     80: create_gift("Goddess Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    81: create_gift("Coin of Slumber", 0, ["Armor", "Defense", "Charm"]),
+    81: create_gift("Coin of Slumber", 0, ["Armor", "Defense"]),
 
-    82: create_gift("Coin of Defense", 0, ["Armor", "Defense", "Charm"]),
+    82: create_gift("Coin of Defense", 0, ["Armor", "Defense"]),
 
-    83: create_gift("Lucky Coin", 0, ["Armor", "Defense", "Charm", "Luck"]),
+    83: create_gift("Lucky Coin", 0, ["Armor", "Defense", "Luck"]),
 
-    84: create_gift("Talisman Coin", 0, ["Armor", "Defense", "Charm"]),
+    84: create_gift("Talisman Coin", 0, ["Armor", "Defense"]),
 
-    85: create_gift("Shiny Coin", 0, ["Armor", "Defense", "Charm"]),
+    85: create_gift("Shiny Coin", 0, ["Armor", "Defense"]),
 
-    86: create_gift("Souvenir Coin", 0, ["Armor", "Defense", "Charm"]),
+    86: create_gift("Souvenir Coin", 0, ["Armor", "Defense"]),
 
     87: create_gift("Diadem of Kings", 0, ["Armor", "Jewelry", "Defense", "Fire", "Water", "Light"]),
 
     88: create_gift("Cookie", 7, ["Confectionary", "Comsumable", "Heal", "Food"]),
 
-    89: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food", "Potato", "Processed", "Salted", "Vegetable"]),
+    89: create_gift("Bag of Fries", 8, ["FastFood", "Comsumable", "Heal", "Food"]),
 
-    90: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+    90: create_gift("Hamburger", 14, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Meat"]),
 
     91: create_gift("Boiled Egg", 0, ["Egg", "Comsumable", "Heal", "Food", "White"]),
 
     92: create_gift("Fresh Egg", 0, ["Egg", "Comsumable", "Heal", "Food", "White"]),
 
-    93: create_gift("Picnic Lunch", 24, ["ArtisanGood", "Comsumable", "Heal", "Food"]),
+    93: create_gift("Picnic Lunch", 24, ["Comsumable", "Heal", "Food"]),
 
     94: create_gift("Pasta di Summers", 0, ["Pasta", "Comsumable", "Heal", "Food", "Cooking"]),
 
-    95: create_gift("Pizza", 0, ["Comsumable", "Heal", "Food", "Italian"]),
+    95: create_gift("Pizza", 0, ["Comsumable", "Heal", "Food"]),
 
     96: create_gift("Chef's Special", 0, ["Comsumable", "Heal", "Food"]),
 
-    97: create_gift("Large Pizza", 0, ["Comsumable", "Heal", "Food", "Italian", "Large"]),
+    97: create_gift("Large Pizza", 0, ["Comsumable", "Heal", "Food"]),
 
-    98: create_gift("PSI Caramel", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
+    98: create_gift("PSI Caramel", 0, ["Comsumable", "Mana", "Food", "Candy"]),
 
-    99: create_gift("Magic Truffle", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
+    99: create_gift("Magic Truffle", 0, ["Comsumable", "Mana", "Food", "Candy"]),
 
-    100: create_gift("Brain Food Lunch", 0, ["Comsumable", "Mana", "Food", "PSI", "Heal", "ExoticFood"]),
+    100: create_gift("Brain Food Lunch", 0, ["Comsumable", "Mana", "Food", "Heal", "ExoticFood"]),
 
     101: create_gift("Rock Candy", 0, ["Comsumable", "Candy", "Food", "Buff"]),
 
@@ -392,7 +392,7 @@ gift_properties = {
 
     109: create_gift("Kraken Soup", 0, ["Comsumable", "Heal", "Food", "Liquid", "Cooking"]),
 
-    110: create_gift("Bottle of Water", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI", "Water"]),
+    110: create_gift("Bottle of Water", 0, ["Comsumable", "Mana", "Drink", "Liquid", "Water"]),
 
     111: create_gift("Cold Remedy", 0, ["Comsumable", "Medicine", "Drink", "Liquid", "Cure"]),
 
@@ -432,7 +432,7 @@ gift_properties = {
 
     130: create_gift("Horn of Life", 0, ["Comsumable", "Cure", "Life"]),
 
-    131: create_gift("Counter-PSI Unit", 0, ["Machine", "PSI", "Electronics", "Metal"]),
+    131: create_gift("Counter-PSI Unit", 0, ["Machine", "Electronics", "Metal"]),
 
     132: create_gift("Shield Killer", 0, ["Machine", "Electronics", "Metal", "Neutralizing"]),
 
@@ -450,11 +450,11 @@ gift_properties = {
 
     140: create_gift("Ruler", 0, ["Long", "Wood", "Trash", "IQ"]),
 
-    141: create_gift("Snake Bag", 0, ["Animal", "Container", "Many", "Throwing"]),
+    141: create_gift("Snake Bag", 0, ["Animal", "Container", "Throwing"]),
 
     142: create_gift("Mummy Wrap", 0, ["Ancient", "Paper", "Weapon", "Throwing", "Consumable"]),
 
-    143: create_gift("Protractor", 0, ["Angular", "Metal", "Trash", "IQ"]),
+    143: create_gift("Protractor", 0, ["Metal", "Trash", "IQ"]),
 
     144: create_gift("Bottle Rocket", 0, ["Weapon", "Explosive", "Rocket", "Fireworks", "Consumable"]),
 
@@ -490,13 +490,13 @@ gift_properties = {
 
     161: create_gift("Defense Spray", 0, ["Can", "Consumable", "Chemicals", "Buff", "Defense", "Liquid"]),
 
-    165: create_gift("Picture Postcard", 0, ["Paper", "Photograph", "Sad", "Trash"]),
+    165: create_gift("Picture Postcard", 0, ["Paper", "Trash"]),
 
-    168: create_gift("Chick", 0, ["Animal", "Happy", "Yellow", "Bird", "Chicken"]),
+    168: create_gift("Chick", 0, ["Animal", "Yellow", "Chicken"]),
 
-    169: create_gift("Chicken", 0, ["Animal", "SellFodder", "White", "Bird", "Chicken"]),
+    169: create_gift("Chicken", 0, ["Animal", "White", "Chicken"]),
 
-    186: create_gift("Meteotite", 0, ["Mineral", "SellFodder", "Artifact", "Brown", "Gem"]),
+    186: create_gift("Meteotite", 0, ["Mineral", "Artifact", "Brown", "Gem"]),
 
     188: create_gift("Hand-Aid", 0, ["Consumable", "Heal", "Cloth"]),
 
@@ -504,11 +504,11 @@ gift_properties = {
 
     190: create_gift("Banana", 0, ["Consumable", "Heal", "Food", "Fruit", "Yellow"]),
 
-    191: create_gift("Calorie Stick", 0, ["Consumable", "Heal", "Food", "Jerky", "Processed"]),
+    191: create_gift("Calorie Stick", 0, ["Consumable", "Heal", "Food", "Jerky"]),
 
     194: create_gift("Earth Pendant", 0, ["Armor", "Jewelry", "Fire", "Ice", "Light"]),
 
-    195: create_gift("Neutralizer", 0, ["Machine", "PSI", "Electronics", "Metal", "Neutralizing"]),
+    195: create_gift("Neutralizer", 0, ["Machine", "Electronics", "Metal", "Neutralizing"]),
 
     198: create_gift("Gelato de Resort", 0, ["Consumable", "Food", "Heal", "Dairy", "FrozenFood"]),
 
@@ -516,9 +516,9 @@ gift_properties = {
 
     200: create_gift("Viper", 0, ["Animal", "Weapon", "Throwing", "Poison", "Consumable"]),
 
-    201: create_gift("Brain Stone", 0, ["Stone", "Mineral", "PSI", "Trash"]),
+    201: create_gift("Brain Stone", 0, ["Stone", "Mineral", "Trash"]),
 
-    207: create_gift("Magic Tart", 0, ["Food", "Consumable", "PSI", "Mana", "Confectionary"]),
+    207: create_gift("Magic Tart", 0, ["Food", "Consumable", "Mana", "Confectionary"]),
 
     209: create_gift("Monkey's Love", 0, ["Weapon", "Animal"]),
 
@@ -540,21 +540,21 @@ gift_properties = {
 
     220: create_gift("Saturn Ribbon", 0, ["Armor", "Cloth", "Defense"]),
 
-    221: create_gift("Coin of Silence", 0, ["Armor", "Defense", "Charm"]),
+    221: create_gift("Coin of Silence", 0, ["Armor", "Defense"]),
 
-    222: create_gift("Charm Coin", 0, ["Armor", "Defense", "Charm"]),
+    222: create_gift("Charm Coin", 0, ["Armor", "Defense"]),
 
     223: create_gift("Cup of Noodles", 0, ["Food", "Consumable", "Heal", "FastFood", "Pasta"]),
 
-    224: create_gift("Repel Sandwich", 0, ["Food", "Consumable", "Heal", "ArtisanGood", "Repellant", "Sandwich"]),
+    224: create_gift("Repel Sandwich", 0, ["Food", "Consumable", "Heal", "Repellant", "Sandwich"]),
 
-    225: create_gift("Repel Superwich", 0, ["Food", "Consumable", "Heal", "ArtisanGood", "Repellant", "Sandwich"]),
+    225: create_gift("Repel Superwich", 0, ["Food", "Consumable", "Heal", "Repellant", "Sandwich"]),
 
     226: create_gift("Lucky Sandwich", 0, ["Food", "Consumable", "Heal", "Luck", "Mana", "Sandwich"]),
 
     232: create_gift("Cup of Coffee", 0, ["Drink", "Consumable", "Heal", "Liquid", "Coffee"]),
 
-    233: create_gift("Double Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+    233: create_gift("Double Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Meat"]),
 
     234: create_gift("Peanut Cheese Bar", 0, ["Comsumable", "Heal", "Food", "Candy", "ExoticFood"]),
 
@@ -566,29 +566,29 @@ gift_properties = {
 
     238: create_gift("Molokheiya Soup", 0, ["Comsumable", "Heal", "Food", "Cooking", "ExoticFood", "Vegetable", "Liquid"]),
 
-    239: create_gift("Plain Roll", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Bread"]),
+    239: create_gift("Plain Roll", 0, ["Comsumable", "Heal", "Food", "Bread"]),
 
-    240: create_gift("Kabob", 0, ["Comsumable", "Heal", "Food", "ExoticFood", "Meat", "Lamb"]),
+    240: create_gift("Kabob", 0, ["Comsumable", "Heal", "Food", "ExoticFood", "Meat"]),
 
     241: create_gift("Plain Yogurt", 0, ["Comsumable", "Heal", "Food", "Slime", "Dairy"]),
 
-    242: create_gift("Beef Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky"]),
+    242: create_gift("Beef Jerky", 0, ["Comsumable", "Heal", "Food", "Meat", "Dried", "Jerky"]),
 
-    243: create_gift("Mammoth Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Processed", "Meat"]),
+    243: create_gift("Mammoth Burger", 0, ["FastFood", "Comsumable", "Heal", "Food", "Beef", "Meat"]),
 
-    244: create_gift("Spicy Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky", "Spicy"]),
+    244: create_gift("Spicy Jerky", 0, ["Comsumable", "Heal", "Food", "Meat", "Dried", "Jerky", "Spicy"]),
 
-    245: create_gift("Luxury Jerky", 0, ["Comsumable", "Heal", "Food", "ArtisanGood", "Meat", "Dried", "Jerky", "Luxury"]),
+    245: create_gift("Luxury Jerky", 0, ["Comsumable", "Heal", "Food", "Meat", "Dried", "Jerky", "Luxury"]),
 
-    246: create_gift("Bottle of DXwater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "PSI", "Water"]),
+    246: create_gift("Bottle of DXwater", 0, ["Comsumable", "Mana", "Drink", "Liquid", "Water"]),
 
-    247: create_gift("Magic Pudding", 0, ["Comsumable", "Mana", "Food", "Candy", "PSI"]),
+    247: create_gift("Magic Pudding", 0, ["Comsumable", "Mana", "Food", "Candy"]),
 
     248: create_gift("Non-Stick Frypan", 0, ["MeleeWeapon", "Metal", "Cooking", "Tool", "Weapon"]),
 
-    249: create_gift("Mr. Saturn Coin", 0, ["Armor", "Defense", "Charm"]),
+    249: create_gift("Mr. Saturn Coin", 0, ["Armor", "Defense"]),
 
-    250: create_gift("Meteornium", 0, ["Mineral", "SellFodder", "Artifact", "Brown", "SpaceMineral"]),
+    250: create_gift("Meteornium", 0, ["Mineral", "Artifact", "SpaceMineral"]),
 
     251: create_gift("Popsicle", 0, ["Consumable", "Food", "Heal", "FrozenFood"]),
 

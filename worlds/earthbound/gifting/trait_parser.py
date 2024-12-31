@@ -294,6 +294,7 @@ gift_by_quality = {
 
 
 def trait_interpreter(gift):
+    item = None
     trait_list = []
     scaled_trait = False
     for trait in gift["Traits"]:
@@ -309,7 +310,12 @@ def trait_interpreter(gift):
         for trait in trait_list:
             if trait in secondary_trait_list:
                 item = random.choice(secondary_trait_list[trait])
-    item = item_id_table[item]
+                
+    if item is not None:
+        item = item_id_table[item]
+    else:
+        item = random.choice(secondary_trait_list["Consumable"])
+        item = item_id_table[item]
     return item
 
 
