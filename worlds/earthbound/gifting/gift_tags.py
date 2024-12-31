@@ -151,7 +151,7 @@ gift_qualities = {
     "Shiny Coin": {"Armor": 1.94},
     "Souvenir Coin": {"Armor": 2.22},
     "Coin of Silence": {"Armor": 1.25},
-    "Mr. Saturn Coin": {"Armor": 1.30}
+    "Mr. Saturn Coin": {"Armor": 1.30},
     "Diadem of Kngs": {"Armor": 0.50, "Fire": 0.25, "Ice": 0.25, "Light": 0.25, "AntiNumb": 0.25}
 } 
 
@@ -378,7 +378,7 @@ gift_properties = {
 
     100: create_gift("Brain Food Lunch", 0, ["Comsumable", "Mana", "Food", "PSI", "Heal", "ExoticFood"]),
 
-    101: create_gift("Rock Candy", 0, ["Comsumable", "Candy", "Food", "StatBoost"]),
+    101: create_gift("Rock Candy", 0, ["Comsumable", "Candy", "Food", "Buff"]),
 
     102: create_gift("Croissant", 0, ["Comsumable", "Food", "Heal", "Bread"]),
 
@@ -398,15 +398,15 @@ gift_properties = {
 
     112: create_gift("Vial of Serum", 0, ["Comsumable", "Medicine", "Drink", "Liquid", "Cure"]),
 
-    113: create_gift("IQ Capsule", 0, ["Comsumable", "Medicine", "IQ", "StatBoost"]),
+    113: create_gift("IQ Capsule", 0, ["Comsumable", "Medicine", "IQ", "Buff"]),
 
-    114: create_gift("Guts Capsule", 0, ["Comsumable", "Medicine", "Guts", "StatBoost"]),
+    114: create_gift("Guts Capsule", 0, ["Comsumable", "Medicine", "Guts", "Buff"]),
 
-    115: create_gift("Speed Capsule", 0, ["Comsumable", "Medicine", "Speed", "StatBoost"]),
+    115: create_gift("Speed Capsule", 0, ["Comsumable", "Medicine", "Speed", "Buff"]),
 
-    116: create_gift("Vital Capsule", 0, ["Comsumable", "Medicine", "HP", "StatBoost"]),
+    116: create_gift("Vital Capsule", 0, ["Comsumable", "Medicine", "HP", "Buff"]),
 
-    117: create_gift("Luck Capsule", 0, ["Comsumable", "Medicine", "StatBoost", "Luck"]),
+    117: create_gift("Luck Capsule", 0, ["Comsumable", "Medicine", "Buff", "Luck"]),
 
     118: create_gift("Ketchup Packet", 0, ["Comsumable", "Heal", "Food", "Condiment", "Red", "Tomato"]),
 
@@ -466,11 +466,11 @@ gift_properties = {
 
     148: create_gift("Super Bomb", 0, ["Weapon", "Explosive", "Throwing", "Consumable", "Bomb"]),
 
-    149: create_gift("Insecticide Spray", 0, ["Can", "Metal", "Insecticide", "Weapon", "Consumable", "Chemicals"]),
+    149: create_gift("Insecticide Spray", 0, ["Can", "Metal", "Insect", "Weapon", "Consumable", "Chemicals"]),
 
     150: create_gift("Rust Promoter", 0, ["Can", "Metal", "Rusting", "Weapon", "Consumable", "Chemicals"]),
 
-    151: create_gift("Rust Promoter DX", 0, ["Can", "Metal", "Rusting", "Weapon", "Consumable", "Chemicals"]),
+    151: create_gift("Rust Promoter DX", 0, ["Can", "Metal", "Rusting", "Weapon", "Consumable", "Chemicals", "Insect"]),
 
     152: create_gift("Pair of Dirty Socks", 0, ["Consumable", "Throwing", "Stinky", "Clothing"]),
 
@@ -482,13 +482,13 @@ gift_properties = {
 
     156: create_gift("Pharaoh's Curse", 0, ["Consumable", "Weapon", "Throwing", "Goo", "Slime", "Poison", "Chemicals"]),
 
-    157: create_gift("Defense Shower", 0, ["Can", "Machine", "Chemicals", "StatBoost", "Defense", "Liquid"]),
+    157: create_gift("Defense Shower", 0, ["Can", "Machine", "Chemicals", "Buff", "Defense", "Liquid"]),
 
-    159: create_gift("Sudden Guts Pill", 0, ["Consumable", "Medicine", "Guts", "Buff"]),
+    159: create_gift("Sudden Guts Pill", 0, ["Consumable", "Guts", "Buff"]),
 
-    160: create_gift("Bag of Dragonite", 0, ["Consumable", "Medicine", "Weapon", "Powder"]),
+    160: create_gift("Bag of Dragonite", 0, ["Consumable", "Weapon", "Powder"]),
 
-    161: create_gift("Defense Spray", 0, ["Can", "Consumable", "Chemicals", "StatBoost", "Defense", "Liquid"]),
+    161: create_gift("Defense Spray", 0, ["Can", "Consumable", "Chemicals", "Buff", "Defense", "Liquid"]),
 
     165: create_gift("Picture Postcard", 0, ["Paper", "Photograph", "Sad", "Trash"]),
 
@@ -524,7 +524,7 @@ gift_properties = {
 
     212: create_gift("T-Rex's Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
-    213: create_gift("Big League Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]), # Todo? Figure out which one is in game
+    213: create_gift("Big League Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
     214: create_gift("Ultimate Bat", 0, ["MeleeWeapon", "Wood", "Baseball", "Toy", "Weapon"]),
 
