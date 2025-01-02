@@ -176,23 +176,22 @@ class EarthBoundClient(SNIClient):
 
         # Some sort of If goes here
         # I forgor...
-        local_giftbox = {
-                        str(ctx.slot): {
-                            "IsOpen": True,
-                            # Todo; change this to all tags I'm using? I don't have that yet but I will
-                            "AcceptsAnyGift": False,
-                            "DesiredTraits": wanted_traits,  # Todo, write a var here so this isnt too long
-                            "MinimumGiftDataVersion": 2,
-                            "MaximumGiftDataVersion": 2}}
-        await ctx.send_msgs([{
-                    "cmd": "Set",
-                    "key": f"GiftBoxes;{ctx.team}",
-                    "want_reply": False,
-                    "default": {},
-                    "operations": [{"operation": "update", "value": local_giftbox}]
-                }])
-        
         if f"GiftBox;{ctx.team};{ctx.slot}" not in ctx.stored_data:
+            local_giftbox = {
+                            str(ctx.slot): {
+                                "IsOpen": True,
+                                "AcceptsAnyGift": False,
+                                "DesiredTraits": wanted_traits,
+                                "MinimumGiftDataVersion": 2,
+                                "MaximumGiftDataVersion": 2}}
+            await ctx.send_msgs([{
+                        "cmd": "Set",
+                        "key": f"GiftBoxes;{ctx.team}",
+                        "want_reply": False,
+                        "default": {},
+                        "operations": [{"operation": "update", "value": local_giftbox}]
+                    }])
+        
             await ctx.send_msgs([{
                         "cmd": "Get",
                         "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
@@ -210,6 +209,7 @@ class EarthBoundClient(SNIClient):
             key, gift = next(iter(inbox.items()))
             if gift["ItemName"] in item_id_table:
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
+                # Maybe a key item override here
                 item = item_id_table[gift["ItemName"]]
             else:
                 item = trait_interpreter(gift)
@@ -233,6 +233,7 @@ class EarthBoundClient(SNIClient):
         if gift_target[0] != 0x00 and motherbox is not None:
             gift_recipient = str(gift_target[0])
             recip_name = ctx.player_names[gift_target[0]]
+            recip_name = get_alias(recip_name, ctx.slot_info[gift_target[0]].name)
             recip_name = text_encoder(recip_name, 20)
             if gift_recipient in motherbox and motherbox[gift_recipient]["IsOpen"]:
                 recip_name.extend(text_encoder(" (OK)", 20))
@@ -278,7 +279,7 @@ class EarthBoundClient(SNIClient):
 
             await ctx.send_msgs([{
                         "cmd": "Set",
-                        "key": f"GiftBox;{ctx.team};{recipient}",
+                        "key": f"GiftBox;{ctx.team};{recipient}", # Receiver team here too
                         "want_reply": True,
                         "default": {},
                         "operations": [{"operation": "update", "value": outgoing_gift}]
@@ -388,3 +389,11 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
                     
         await snes_flush_writes(ctx)
+
+
+def get_alias(alias: str, slot_name: str):
+    try:
+        index = alias.index(f" ({slot_name}")
+    except ValueError:
+        return alias
+    return alias[:index]

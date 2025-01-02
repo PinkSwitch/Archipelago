@@ -257,6 +257,9 @@ JML GetDynamicWindowTitle
 ORG $C4FBBD
 JML GetRandomizedTrack
 
+ORG $C105C9
+JML LoadExpandedWindowTable
+
 ;new jmls
 
 
@@ -5133,19 +5136,19 @@ db $7e, $9f, $5c, $50, $79, $50, $91, $9d, $50, $9e, $9f, $a4, $10, $10, $50, $5
 db $84, $98, $95, $50, $7a, $9f, $98, $9e, $52, $5e, $0a, $f8, $00, $61
 
 ORG $C1F72F
-LDA #$00FF
+;LDA #$00FF
 
 ORG $C1F74A
-LDA #$00FF
+;LDA #$00FF
 
 ORG $C1F765
-LDA #$00FF
+;LDA #$00FF
 
 ORG $C1F780
-LDA #$00FF
+;LDA #$00FF
 
-ORG $C1F72A
-LDA #$AF10;Flavor pointer
+;ORG $C1F72A
+;LDA #$AF10;Flavor pointer
 
 ORG $C1FE8A
 LDA #$1FB8
@@ -8317,7 +8320,7 @@ db $47
 
 ORG $D7FE70
 ExtraWindowData:
-dw $000C, $0010, $0013, $0004
+dw $0005, $0009, $001A, $0004
 
 ORG $C3E2A8
 ;contemplate switching to 1
@@ -9795,7 +9798,7 @@ JMP ClearAPNameFlag
 
 .PrintPlayerMenu:
 JSL $C3E4D4
-LDA #$0014
+LDA #$0035
 JSL $C1DD47 ;open_window
 
 LDA #$0002
@@ -9863,7 +9866,7 @@ AND #$0002
 BNE .PressedLeft
 JMP .SpecialInput
 .PressedUp:
-LDA #$0014
+LDA #$0035
 JSL $C1DD47
 LDA $97D0
 CMP PlayerCount
@@ -9878,7 +9881,7 @@ STA $97D0
 .OverCap:
 JMP .ResetText
 .PressedDown:
-LDA #$0014
+LDA #$0035
 JSL $C1DD47
 LDA $97D0
 CMP #$0001
@@ -9886,7 +9889,7 @@ BEQ .MaxPlayers
 DEC
 BRA .MaxPlayers
 .PressedRight:
-LDA #$0014
+LDA #$0035
 JSL $C1DD47
 LDA $97D0
 CMP PlayerCount
@@ -9895,7 +9898,7 @@ CLC
 ADC #$000A
 JMP .MaxPlayers
 .PressedLeft:
-LDA #$0014
+LDA #$0035
 JSL $C1DD47
 LDA $97D0
 CMP #$000B
@@ -10806,6 +10809,24 @@ RTL
 .Paralysis:
 LDA #$0038
 BRA .SetSpeed
+
+LoadExpandedWindowTable:
+TYA
+CMP #$0035
+BCS .ExpandedWindow
+LDA #$E250
+STA $06
+.Done:
+JML $C105CE
+.ExpandedWindow:
+SEC
+SBC #$0035
+TAY
+LDA #ExtraWindowData
+STA $06
+LDA #$00D7
+STA $08
+JML $C105D3
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;

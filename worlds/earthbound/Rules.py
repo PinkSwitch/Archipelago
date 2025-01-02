@@ -116,4 +116,3 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
         set_rule(world.multiworld.get_location("Dalaam Restaurant - Slot 2", player), lambda state: state.has("ATM Access", player))
         set_rule(world.multiworld.get_location("Dalaam Restaurant - Slot 3", player), lambda state: state.has("ATM Access", player))
         set_rule(world.multiworld.get_location("Dalaam Restaurant - Slot 4", player), lambda state: state.has("ATM Access", player))
-

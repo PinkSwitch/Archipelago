@@ -279,7 +279,7 @@ class ElementChance(Range):
 
 class NoFreeSancs(Toggle):
     """If enabled, the entrance to Lilliput Steps and Fire Spring will be locked and require extra key items to access.
-       These items are the Tiny Key and Lavaproof Underpants, respectively."""
+       These items are the Tiny Key and Tenda Lavapants, respectively."""
     display_name = "No Free Sanctuaries"
 
 class RandomizeFanfares(Toggle):
