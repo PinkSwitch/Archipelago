@@ -204,9 +204,11 @@ gift_properties = {
 
     13: create_gift("Broken Bazooka", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Weapon", "Trash"]),
 
-    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument", "Trash"]),
+    14: create_gift("Broken Trumpet", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument",
+                                          "Trash"]),
 
-    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument", "Trash"]),
+    15: create_gift("Broken Harmonica", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Instrument",
+                                            "Trash"]),
 
     16: create_gift("Broken Antenna", 0, ["Broken", "Machine", "Metal", "Material", "Resource", "Trash"]),
 
@@ -564,7 +566,8 @@ gift_properties = {
 
     237: create_gift("Bean Croquette", 0, ["Comsumable", "Heal", "Food", "Cooking", "ExoticFood"]),
 
-    238: create_gift("Molokheiya Soup", 0, ["Comsumable", "Heal", "Food", "Cooking", "ExoticFood", "Vegetable", "Liquid"]),
+    238: create_gift("Molokheiya Soup", 0, ["Comsumable", "Heal", "Food", "Cooking", "ExoticFood", "Vegetable",
+                                            "Liquid"]),
 
     239: create_gift("Plain Roll", 0, ["Comsumable", "Heal", "Food", "Bread"]),
 

@@ -155,35 +155,35 @@ def setup_gamevars(world):
         world.rare_gear.append("Progressive Fry Pan")
     else:
         world.common_gear.extend([
-        "Cracked Bat",
-        "Tee Ball Bat",
-        "Sand Lot Bat",
-        "Minor League Bat",
-        "Fry Pan",
-        "Thick Fry Pan",
-        "Deluxe Fry Pan",
-        "Toy Air Gun",
-        "Zip Gun"
+            "Cracked Bat",
+            "Tee Ball Bat",
+            "Sand Lot Bat",
+            "Minor League Bat",
+            "Fry Pan",
+            "Thick Fry Pan",
+            "Deluxe Fry Pan",
+            "Toy Air Gun",
+            "Zip Gun"
         ])
 
         world.uncommon_gear.extend([
-        "Mr. Baseball Bat",
-        "T-Rex's Bat",
-        "Big League Bat",
-        "Chef's Fry Pan",
-        "Non-Stick Frypan",
-        "French Fry Pan",
-        "Hyper Beam",
-        "Crusher Beam"
+            "Mr. Baseball Bat",
+            "T-Rex's Bat",
+            "Big League Bat",
+            "Chef's Fry Pan",
+            "Non-Stick Frypan",
+            "French Fry Pan",
+            "Hyper Beam",
+            "Crusher Beam"
         ])
 
         world.rare_gear.extend([
-        "Hall of Fame Bat",
-        "Ultimate Bat",
-        "Gutsy Bat",
-        "Casey Bat",
-        "Holy Fry Pan",
-        "Magic Fry Pan"
+            "Hall of Fame Bat",
+            "Ultimate Bat",
+            "Gutsy Bat",
+            "Casey Bat",
+            "Holy Fry Pan",
+            "Magic Fry Pan"
         ])
 
     if world.options.progressive_armor:
@@ -197,29 +197,29 @@ def setup_gamevars(world):
         world.rare_gear.append("Progressive Other")
     else:
         world.common_gear.extend([
-        "Cheap Bracelet",
-        "Copper Bracelet",
-        "Baseball Cap",
-        "Mr. Baseball Cap",
-        "Holmes Hat",
-        "Hard Hat",
-        "Coin of Defense"
+            "Cheap Bracelet",
+            "Copper Bracelet",
+            "Baseball Cap",
+            "Mr. Baseball Cap",
+            "Holmes Hat",
+            "Hard Hat",
+            "Coin of Defense"
         ])
 
         world.uncommon_gear.extend([
-        "Platinum Band",
-        "Diamond Band",
-        "Lucky Coin",
-        "Silver Bracelet",
-        "Gold Bracelet",
-        "Coin of Slumber",
-        "Coin of Silence"
+            "Platinum Band",
+            "Diamond Band",
+            "Lucky Coin",
+            "Silver Bracelet",
+            "Gold Bracelet",
+            "Coin of Slumber",
+            "Coin of Silence"
         ])
 
         world.rare_gear.extend([
-        "Talisman Coin",
-        "Shiny Coin",
-        "Charm Coin"
+            "Talisman Coin",
+            "Shiny Coin",
+            "Charm Coin"
         ])
 
     valid_starts = 14
@@ -424,7 +424,8 @@ def setup_gamevars(world):
 
         world.starting_teleport = world.random.choice(world.valid_teleports)
 
-    filler_items = world.common_items + world.uncommon_items + world.rare_items + world.common_gear + world.uncommon_gear + world.rare_gear
+    filler_items = (world.common_items + world.uncommon_items + world.rare_items + world.common_gear +
+                    world.uncommon_gear + world.rare_gear)
     world.filler_drops = [item_id_table[i] for i in filler_items if i in item_id_table]
     world.filler_drops.append(0x00)
     if world.options.prefixed_items:
@@ -465,7 +466,7 @@ def setup_gamevars(world):
     world.lumine_text.extend([0x00])
     world.starting_money = struct.pack('<I', world.options.starting_money.value)
 
-    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players)) #todo; move to text converter
+    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))  # todo; move to text converter
     for char in prayer_player[:24]:
         if char in eb_text_table:
             world.prayer_player.extend(eb_text_table[char])

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from Options import Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool, OptionGroup, FreeText, Visibility
+from Options import (Toggle, DefaultOnToggle, DeathLink, Choice, Range, PerGameCommonOptions, StartInventoryPool,
+                     OptionGroup, FreeText, Visibility)
 
 
 class GiygasRequired(DefaultOnToggle):
@@ -93,14 +94,17 @@ class PSIShuffle(Choice):
     option_basic = 1
     option_extended = 2
 
+
 class BossShuffle(Toggle):
     """Shuffles boss encounters amongst each other."""
     display_name = "Boss Shuffle"
+
 
 class DecoupleDiamondDog(Toggle):
     """Shuffles Diamond Dog as a boss separate from Carbon Dog. Carbon Dog will transform into a random boss.
        Does nothing if Boss Shuffle is disabled."""
     display_name = "Decouple Diamond Dog"
+
 
 class ShuffleGiygas(Toggle):
     """Adds the standalone Giygas fight to the shuffled boss pool.
@@ -124,6 +128,7 @@ class PreFixItems(Toggle):
 class AutoscaleParty(Toggle):
     """If enabled, joining party members will be scaled to roughly the level of the sphere they were obtained in."""
     display_name = "Autoscale Party Members"
+
 
 class ProgressiveWeapons(Toggle):
     """If enabled, Bats, Fry Pans, and Guns will be progressive. Does not apply to items dropped by enemies or found in shops."""
@@ -214,13 +219,16 @@ class DeathLinkMode(Choice):
     option_mortal_mercy = 2
     default = 1
 
+
 class RandomBattleBG(Toggle):
     """Generates random battle backgrounds."""
     display_name = "Randomize Battle Backgrounds"
 
+
 class RandomSwirlColors(Toggle):
     """Generates random colors for pre-battle swirls."""
     display_name = "Randomize Swirl Colors"
+
 
 class RemoteItems(Toggle):
     """If enabled, you will receive your own items from the server upon collecting them, rather than locally.
@@ -228,10 +236,12 @@ class RemoteItems(Toggle):
        However, you will not be able to play offline if this is enabled."""
     display_name = "Remote Items"
 
+
 class PlandoLumineHallText(FreeText):
     """Set text to be displayed at Lumine Hall. If nothing is entered, random community-submitted text will be selected instead."""
     display_name = "Lumine Hall Text Plando"
     visibility = Visibility.none
+
 
 class StartingCharacter(Choice):
     """Changes the character you start as. If random start location is disabled, each character has their own starting location.
@@ -246,6 +256,7 @@ class StartingCharacter(Choice):
     option_poo = 3
     default = 0
 
+
 class Armorizer(Choice):
     """All equippable armor will have randomly generated attributes. This includes who can equip it, elemental resistance (and how strong that resistance is),
        defense, and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
@@ -258,6 +269,7 @@ class Armorizer(Choice):
     option_chaos = 2
     default = 0
 
+
 class Weaponizer(Choice):
     """All weapons will have randomly generated attributes. This includes offense, guts boost, and miss rate.
        Keep Type: Equipment will keep the character that was originally able to use it. If Progressive Weapons is enabled, you will get weapons with progressively higher offense.
@@ -269,6 +281,7 @@ class Weaponizer(Choice):
     option_chaos = 2
     default = 0
 
+
 class ElementChance(Range):
     """Percent chance for any given Body/Other equipment to have elemental protection.
        Affects Armorizer only."""
@@ -277,18 +290,22 @@ class ElementChance(Range):
     range_end = 50
     default = 15
 
+
 class NoFreeSancs(Toggle):
     """If enabled, the entrance to Lilliput Steps and Fire Spring will be locked and require extra key items to access.
        These items are the Tiny Key and Tenda Lavapants, respectively."""
     display_name = "No Free Sanctuaries"
 
+
 class RandomizeFanfares(Toggle):
     """Randomizes fanfares."""
     display_name = "Randomize Fanfares"
 
+
 class RandomizeBattleMusic(Toggle):
     """Randomizes in-battle songs."""
     display_name = "Randomize Battle Music"
+
 
 class RandomizeOverworldMusic(Choice):
     """Randomizes music on the overworld. Some sound effects might sound weird.
@@ -301,6 +318,7 @@ class RandomizeOverworldMusic(Choice):
     option_full = 2
     default = 0
 
+
 class RandomizePSIPalettes(Choice):
     """Randomizes the colors of PSI spells.
        Normal: Doesn't randomize PSI colors.
@@ -312,6 +330,7 @@ class RandomizePSIPalettes(Choice):
     option_randomized = 2
     default = 0
 
+
 class ShopRandomizer(Choice):
     """Randomizes items in shops.
        Local Filler: Shops contain only random items for yourself and are not checks.
@@ -322,9 +341,11 @@ class ShopRandomizer(Choice):
     option_shopsanity = 2
     default = 0
 
+
 class ScoutShopChecks(DefaultOnToggle):
     """Scouts Shop checks when you open a shop. Only affects shops in Shopsanity mode."""
     display_name = "Scout Shop Checks"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -335,14 +356,13 @@ class EBOptions(PerGameCommonOptions):
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
     monkey_caves_mode: MonkeyCavesMode
-    shuffle_teleports: TeleportShuffle# Better name?
+    shuffle_teleports: TeleportShuffle  # Better name?
     character_shuffle: CharacterShuffle
     psi_shuffle: PSIShuffle
     allow_flash_as_favorite_thing: BanFlashFavorite
     boss_shuffle: BossShuffle
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
-    #shuffle_sound_stone: SoundStoneShuffle
     experience_modifier: ExperienceModifier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
@@ -357,7 +377,7 @@ class EBOptions(PerGameCommonOptions):
     random_swirl_colors: RandomSwirlColors
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
-    #excluded_teleports: ExcludedTeleports
+    # excluded_teleports: ExcludedTeleports
     randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
     common_filler_weight: CommonWeight
@@ -375,7 +395,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_psi_palettes: RandomizePSIPalettes
     shop_randomizer: ShopRandomizer
     scout_shop_checks: ScoutShopChecks
-    #starting_character: StartingCharacter
+    # starting_character: StartingCharacter
 
 
 eb_option_groups = [

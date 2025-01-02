@@ -407,7 +407,7 @@ def shuffle_psi(world):
 
 
 def write_psi(world, rom):
-    from ..game_data.text_data import text_encoder, eb_text_table
+    from ..game_data.text_data import text_encoder
     psi_num = 0
     for spell, (address, levels) in world.psi_address.items():
         for i in range(levels):

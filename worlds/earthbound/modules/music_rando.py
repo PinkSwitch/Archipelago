@@ -283,7 +283,7 @@ def music_randomizer(world, rom):
 
     elif world.options.randomize_overworld_music == 2:
         all_overworld_songs = (town_songs + overworld_songs + interior_songs +
-        dungeon_songs + cutscene_songs + rare_songs + wakeup_songs)
+                               dungeon_songs + cutscene_songs + rare_songs + wakeup_songs)
 
         shuffled_overworld_songs = all_overworld_songs.copy()
         world.random.shuffle(shuffled_overworld_songs)
@@ -291,7 +291,6 @@ def music_randomizer(world, rom):
         for track_id, song in enumerate(all_overworld_songs):
             global_tracklist[song] = shuffled_overworld_songs[track_id]
 
-            
     rom.write_bytes(0x17FDA0, bytearray(global_tracklist))
 
 

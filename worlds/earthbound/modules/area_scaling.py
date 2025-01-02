@@ -229,7 +229,6 @@ def calculate_scaling(world):
         area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Nothing"]]
         area_rules["Lost Underworld"]["Fire Spring"] = [["Nothing"]]
 
-
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     item_regions = {}
 

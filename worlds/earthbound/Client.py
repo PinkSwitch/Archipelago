@@ -3,15 +3,14 @@ import struct
 import typing
 import time
 import uuid
-from struct import pack, unpack
+from struct import pack
 from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table
 from .game_data.text_data import text_encoder
 from .gifting.gift_tags import gift_properties
-from .gifting.trait_parser import wanted_traits, scaled_traits, trait_interpreter
+from .gifting.trait_parser import wanted_traits, trait_interpreter
 
 from NetUtils import ClientStatus, color
 from worlds.AutoSNIClient import SNIClient
-import Utils
 
 if typing.TYPE_CHECKING:
     from SNIClient import SNIContext
@@ -63,8 +62,7 @@ class EarthBoundClient(SNIClient):
     hint_list = []
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
-        import struct
-        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read, snes_write
+        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
         battle_hp = {
             1: WRAM_START + 0x9FBF,
             2: WRAM_START + 0xA00D,
@@ -97,7 +95,8 @@ class EarthBoundClient(SNIClient):
         if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
             return
 
-        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00:  # If suppression is set and we're not in a battle dont do deathlinks
+        # If suppression is set and we're not in a battle dont do deathlinks
+        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00:
             return
 
         for i in range(char_count[0]):
@@ -106,13 +105,14 @@ class EarthBoundClient(SNIClient):
             snes_buffered_write(ctx, active_hp[current_char[0]], bytes([0x00, 0x00]))
             snes_buffered_write(ctx, battle_hp[i + 1], bytes([0x00, 0x00]))
             if deathlink_mode[0] == 0 or is_in_battle[0] == 0:
-                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))  # This should be the check for instant or mercy. Write the value, call it here
+                # This should be the check for instant or mercy. Write the value, call it here
+                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))
         await snes_flush_writes(ctx)
         ctx.death_state = DeathState.dead
         ctx.last_death_link = time.time()
 
     async def validate_rom(self, ctx):
-        from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
+        from SNIClient import snes_read
 
         rom_name = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
         apworld_version = await snes_read(ctx, WORLD_VERSION, 16)
@@ -197,7 +197,6 @@ class EarthBoundClient(SNIClient):
                         "keys": [f"GiftBox;{ctx.team};{ctx.slot}"]
                     }])
 
-        # ???? Figure this out?
         await ctx.send_msgs([{
                     "cmd": "SetNotify",
                     "keys": [f"GiftBox;{ctx.team};{ctx.slot}", f"GiftBoxes;{ctx.team}"]
@@ -236,9 +235,9 @@ class EarthBoundClient(SNIClient):
             recip_name = get_alias(recip_name, ctx.slot_info[gift_target[0]].name)
             recip_name = text_encoder(recip_name, 20)
             if gift_recipient in motherbox and motherbox[gift_recipient]["IsOpen"]:
-                recip_name.extend(text_encoder(" (OK)", 20))
+                recip_name.extend(text_encoder(" (Open)", 20))
             else:
-                recip_name.extend(text_encoder(" (NOT ELIGIBILE)", 20))
+                recip_name.extend(text_encoder(" (Closed)", 20))
             recip_name.append(0x00)
             await snes_write(ctx, [(WRAM_START + 0xFF80, recip_name)])
             await snes_write(ctx, [(WRAM_START + 0xB5E7, bytes([0x00, 0x00]))])
@@ -275,11 +274,11 @@ class EarthBoundClient(SNIClient):
                                 "ReceiverSlot": recipient,
                                 "SenderTeam": ctx.team,
                                 "ReceiverTeam": ctx.team,  # ??? Should be Receive slot team?
-                                "IsRefund": False}}
+                                "IsRefund": was_refunded}}
 
             await ctx.send_msgs([{
                         "cmd": "Set",
-                        "key": f"GiftBox;{ctx.team};{recipient}", # Receiver team here too
+                        "key": f"GiftBox;{ctx.team};{recipient}",  # Receiver team here too
                         "want_reply": True,
                         "default": {},
                         "operations": [{"operation": "update", "value": outgoing_gift}]

@@ -1,5 +1,4 @@
 from typing import Dict
-from logging import warning
 import struct
 import math
 
@@ -56,7 +55,7 @@ def initialize_enemies(world):
         "Thunder Mite": EarthBoundEnemy("Thunder Mite", 0x15a0eb, 293, 200, 10798, 430, 20, 85, 83, 43, False),
         "Cranky Lady": EarthBoundEnemy("Cranky Lady", 0x15a149, 95, 0, 200, 17, 6, 16, 18, 8, False),
         "Extra Cranky Lady": EarthBoundEnemy("Extra Cranky Lady", 0x15a1a7, 277, 0, 3651, 134, 17, 48, 70, 27, False),
-        #F"Giygas (Unused)": EarthBoundEnemy("Giygas (Unused)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
+        # F"Giygas (Unused)": EarthBoundEnemy("Giygas (Unused)", 0x15a205, 3600, 0, 0, 0, 52, 203, 300, 73, False),
         "Wetnosaur": EarthBoundEnemy("Wetnosaur", 0x15a263, 1030, 0, 33098, 745, 17, 126, 172, 59, False),
         "Chomposaur": EarthBoundEnemy("Chomposaur", 0x15a2c1, 1288, 320, 44378, 896, 17, 139, 183, 62, False, "phys_2"),
         "Titanic Ant": EarthBoundEnemy("Titanic Ant", 0x15a31f, 235, 102, 685, 150, 6, 19, 23, 13, False, None, 2),
@@ -317,7 +316,7 @@ def initialize_enemies(world):
                 updated_list.add(world.enemies[world.boss_list[27]])
                 for i in range(1, world.enemies[world.boss_list[27]].attack_extensions):
                     updated_list.add(world.enemies[f"{world.enemies[world.boss_list[27]].name} ({i + 1})"])
-                #todo; option to not have in Giygas/Mine
+                # todo; option to not have in Giygas/Mine
 
             if enemy.name in flunkies:
                 if enemy.name == "Starman Deluxe":
@@ -415,7 +414,7 @@ levels = [
     63,  # magicant
     65,  # cave of the past
     70,
-    73] # gigyas
+    73]  # gigyas
 
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 40: "alpha", 65: "beta", 70: "gamma", 100: "omega"},
@@ -885,12 +884,14 @@ def assumed_player_speed_for_level(level):
 def scale_enemy_speed(enemy, new_level):
     normal_dodge_chance = (2 * enemy.speed - assumed_player_speed_for_level(enemy.level)) / 500
 
-    enemy_scaled_speed  = (normal_dodge_chance * 500 + assumed_player_speed_for_level(new_level)) / 2
+    enemy_scaled_speed = (normal_dodge_chance * 500 + assumed_player_speed_for_level(new_level)) / 2
     return enemy_scaled_speed
+
 
 def scale_exp(base_exp, base_level, new_level, k):
     new_exp = base_exp * (new_level / base_level) ** k
     return new_exp
+
 
 def scale_exp_2(base_exp, base_level, new_level, world):
     base_scaled_exp = calculate_exp(base_level)
@@ -900,17 +901,17 @@ def scale_exp_2(base_exp, base_level, new_level, world):
     new_exp = math.ceil(new_exp * world.options.experience_modifier / 100)
     return new_exp
 
+
 def calculate_exp(level):
     if level > 30:
         return 1000 * math.exp(0.05 * level)
     else:
         return 50 * math.exp(0.15 * level)
-        #return 10 * math.exp(0.2 * level) if not boosted
+        # return 10 * math.exp(0.2 * level) if not boosted
 
-    
 
 def scale_shield(level, shield):
-    if shield != None:
+    if shield is not None:
         if level < 10:
             enemy_shield = "disabled"
         elif shield in ["phys_1", "phys_2"]:
@@ -924,6 +925,7 @@ def scale_shield(level, shield):
             else:
                 enemy_shield = "psi_2"
         return enemy_shield
+
 
 guardian_text = [
     0xEEFAA0,
