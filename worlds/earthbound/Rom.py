@@ -11,7 +11,7 @@ from .game_data.local_data import (item_id_table, location_dialogue, present_loc
 from .game_data.battle_bg_data import battle_bg_bpp
 from .modules.psi_shuffle import write_psi
 from .game_data.text_data import barf_text, eb_text_table, text_encoder
-from .modules.flavor_data import flavor_data
+from .modules.flavor_data import flavor_data, vanilla_flavor_pointers
 from .modules.hint_data import parse_hint_data
 from .modules.enemy_data import scale_enemies
 from .modules.area_scaling import calculate_scaling
@@ -395,19 +395,21 @@ def patch_rom(world, rom, player: int):
     
     flavor_address = 0x3FAF10
     for i in range(4):
-        if world.available_flavors[i] not in ["Mint Flavor", "Strawberry Flavor", "Banana Flavor", "Peanut Flavor"]:
+        rom.copy_bytes(world.flavor_pointer[i], 2, 0x34B110 + (2 * i))
+
+    rom.copy_bytes(0x202008, 0x100, 0x34B000)
+    for i in range(4):
+        if world.available_flavors[i] not in ["Mint flavor", "Strawberry flavor", "Banana flavor", "Peanut flavor"]:
             rom.write_bytes(flavor_address, bytearray(world.flavor_text[i]))
             flavor_addr = flavor_address - 0x3F0000
             flavor_addr = struct.pack("H", flavor_addr)
             rom.write_bytes(world.flavor_pointer[i], flavor_addr)
+            rom.write_bytes(world.flavor_pointer[i] + 5, bytearray([0xFF]))
             flavor_address += len(world.flavor_text[i])
+            rom.write_bytes(0x202008 + (0x40 * i), bytearray(flavor_data[world.available_flavors[i]]))
         else:
-            print("uh oh")
-
-    rom.write_bytes(0x202008, bytearray(flavor_data[world.available_flavors[0]]))
-    rom.write_bytes(0x202048, bytearray(flavor_data[world.available_flavors[1]]))
-    rom.write_bytes(0x202088, bytearray(flavor_data[world.available_flavors[2]]))
-    rom.write_bytes(0x2020C8, bytearray(flavor_data[world.available_flavors[3]]))
+            rom.copy_bytes(vanilla_flavor_pointers[world.available_flavors[i]][1], 0x40, 0x202008 + (0x40 * i))
+            rom.copy_bytes(vanilla_flavor_pointers[world.available_flavors[i]][2], 2, world.flavor_pointer[i])
 
     rom.write_bytes(0x048037, bytearray(world.lumine_text))
     starting_item_address = 0

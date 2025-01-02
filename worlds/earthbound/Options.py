@@ -322,7 +322,7 @@ class ShopRandomizer(Choice):
     option_shopsanity = 2
     default = 0
 
-class ScoutShopChecks(Toggle):
+class ScoutShopChecks(DefaultOnToggle):
     """Scouts Shop checks when you open a shop. Only affects shops in Shopsanity mode."""
     display_name = "Scout Shop Checks"
 
