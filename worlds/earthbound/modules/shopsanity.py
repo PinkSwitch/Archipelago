@@ -368,19 +368,14 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x346440 + (flag * 0x11), player_name)
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
 
-            rom.write_bytes(0x019DE5, struct.pack("I", 0xF0077C5C))  # Build the shop menus
-            rom.write_bytes(0x019E23, struct.pack("I", 0xF008385C))  # Display the item name
-            rom.write_bytes(0x019E8F, struct.pack("I", 0xF0090E5C))  # Display the item price
-            # Pop up a textbox displaying the player the item goes to
-            rom.write_bytes(0x011AC6, struct.pack("I", 0xF009585C))
-            # Transfer the used data and player selection into a script for processing
-            rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A5A5C))
-            # Display SOLD OUT for items which have been flagged as bought
-            rom.write_bytes(0x019ED3, struct.pack("I", 0xF00A905C))
-            # Prevent items for other players flashing the "you can equip this"
-            rom.write_bytes(0x019B66, struct.pack("I", 0xF00ABE5C))
-            # Preserve the greyed out HP/PP palette
-            rom.write_bytes(0x019DA0, struct.pack("I", 0xF00ADA5C))
+            rom.write_bytes(0x019DE5, struct.pack("I", 0xF4B5005C))  # Build the shop menus
+            rom.write_bytes(0x019E23, struct.pack("I", 0xF4B5BC5C))  # Display the item name
+            rom.write_bytes(0x019E8F, struct.pack("I", 0xF4B68F5C))  # Display the item price
+            rom.write_bytes(0x011AC6, struct.pack("I", 0xF4B6D95C)) # display the player name
+            rom.write_bytes(0x019EDD, struct.pack("I", 0xF4B7DB5C))  # Transfer the used data and player selection into a script for processing
+            rom.write_bytes(0x019ED3, struct.pack("I", 0xF4B8115C)) # Display SOLD OUT
+            rom.write_bytes(0x019B66, struct.pack("I", 0xF4B83F5C)) # Prevent items for other players flashing the "you can equip this"
+            rom.write_bytes(0x019DA0, struct.pack("I", 0xF4B85B5C)) # Preserve the greyed out HP/PP palette
 
             rom.write_bytes(0x05E0A9, struct.pack("I", 0xF4900008))  # Compare the price of the item with money on hand
             rom.write_bytes(0x05E0B6, struct.pack("I", 0xF4905308))  # Display the item we bought and ask to confirm
