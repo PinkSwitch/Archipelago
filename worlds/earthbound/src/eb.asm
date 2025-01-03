@@ -10343,6 +10343,449 @@ STZ $B573
 LDA #$0000
 JML $C17F0F
 
+APShopHandler:
+LDA $1E
+STA $0770
+TAX
+LDA #$0000
+.CheckShop:
+CPX #$0000
+BEQ .GotShopNum
+CLC
+ADC #$002A
+DEX
+BRA .CheckShop
+.GotShopNum:
+PHA
+LDX $04
+LDA #$0000
+.CheckSlot:
+CPX #$0000
+BEQ .AddSlotVal
+DEX
+CLC
+ADC #$0006
+BRA .CheckSlot
+.AddSlotVal:
+STA $3274
+PLA
+CLC
+ADC $3274
+;At this point we should know what item we're looking at
+TAX
+LDA $F40000,X
+AND #$00FF
+TAY
+STY $1A
+BNE .ValidShopItem
+JML $C19E93
+.ValidShopItem:
+PHA
+LDA $F40003,X
+AND #$00FF
+STA $3274
+CMP #$0004
+BCS .GrabOffWorldItemName
+LDA $F40004,X
+STA $0734
+LDA $F40000,X
+.APItemReturn:
+AND #$00FF
+STA $0732
+LDA $F40001,X
+STA $0730
+PLA
+JSL CheckItemBoughtFlag
+CMP #$0000
+BEQ .ItemNotBought
+JSR HandleBoughtItem
+.ItemNotBought:
+JML $C19E06
+.GrabOffWorldItemName:
+PHB
+PHX
+PHY
+LDA $F40004,X
+STA $0734
+;AND #$00FF
+TAX
+LDA #$1190
+..CompareID:
+CPX #$0000
+BEQ ..GotName
+DEX
+CLC
+ADC #$0030
+BRA ..CompareID
+..GotName:
+TAX
+LDA #$002F
+LDY #$FF80
+MVN $F47E
+PLY
+PLX
+PLB
+LDA $F40003,X
+AND #$00FF
+CMP #$0005
+BEQ .Remote
+LDA #$00AD
+JMP .APItemReturn
+.Remote:
+LDA $F40000,X
+AND #$00FF
+JMP .APItemReturn
+
+
+GetAPShopName:
+PHA
+LDA $3274
+LDX $04
+STA $0740,X
+TXA
+ASL
+TAX
+LDA $0734
+STA $0748,X
+LDA $0730
+STA $0756,X
+LDA $3274
+BEQ .NormalItemName
+CMP #$0001
+BEQ .GetTeleportName
+CMP #$0002
+BEQ .GetCharacterName
+CMP #$0003
+BEQ .GetSoldOutName
+CMP #$0004
+BEQ .GetArchipelagoName
+CMP #$0005
+BEQ .GetArchipelagoName
+.NormalItemName:
+PLA
+ADC $06
+STA $06
+STA $0E
+JML $C19E29
+.GetTeleportName:
+PLA
+LDA $0732
+ASL
+TAX
+LDA ShopItemNames_TeleportNames,X
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+.GetCharacterName:
+PLA
+LDA $0732
+ASL
+TAX
+LDA ShopItemNames_CharNames,X
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+.GetArchipelagoName:
+PLA
+LDA #$FF80
+STA $06
+STA $0E
+LDA #$007E
+STA $08
+JML $C19E29
+.GetSoldOutName:
+PLA
+LDA #ShopItemNames_SoldOut
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+
+CheckItemBoughtFlag:
+PHX
+LDA $04
+SEP #$20
+TAX
+LDA ShopFlagBits,X
+REP #$20
+PHA
+LDA $1E
+TAX
+PLA
+AND $B720,X
+PLX
+RTL
+
+HandleBoughtItem:
+LDA $3274
+BEQ .LocalItemChecker
+CMP #$0005
+BEQ .LocalItemChecker
+;This is a teleport/char/nonlocal item. Can never buy this again.
+.BannedItem:
+REP #$20
+LDA #$0003
+STA $3274
+RTS
+.LocalItemChecker:
+LDA $0732
+LDX #$0000
+SEP #$20
+.CheckItem:
+CMP BannedItemList,X
+BEQ .BannedItem
+INX
+CPX #$002E
+BEQ .NotBanned
+BRA .CheckItem
+.NotBanned:
+REP #$20
+STZ $3274
+RTS
+
+GetAPShopPrice:
+LDA $3274
+CMP #$0003
+BEQ .SoldOut
+CMP #$0000
+BEQ .NormalItem
+CMP #$0005
+BEQ .NormalItem
+.DisplaySpecialPrice:
+LDA $0730
+STA $06
+STA $0E
+.DisplayPrice:
+JSL $C4507A
+.SoldOut:
+JML $C19E93
+
+.NormalItem:
+LDA $0732
+JSR CheckBanlist
+BEQ .DisplaySpecialPrice
+BRA .DisplayPrice
+
+CheckBanlist:
+SEP #$20
+LDX #$0000
+.Check:
+CMP BannedItemList,X
+BEQ .Ban
+CPX #$002E
+BEQ .Done
+INX
+BRA .Check
+.Done:
+REP #$20
+LDA #$0001
+RTS
+.Ban:
+REP #$20
+LDA #$0000
+RTS
+
+DisplayAPPlayer:
+LDA $0724
+BEQ .DontCloseNameWin
+LDA $06
+STA $0720
+LDA $08
+STA $0722
+LDA #$000B
+STA $8958
+PHX
+PHY
+JSL $C1DD59 ;Switch to textbox first...
+PLY
+PLX
+STZ $0724
+LDA #$000C
+STA $8958
+LDA $0720
+STA $06
+LDA $0722
+STA $08
+.DontCloseNameWin:
+LDA $0000,Y
+STA $06
+LDA $8958
+CMP #$000C
+BNE .End
+PHX
+LDA $20
+AND #$00FF
+TAX
+.GotSlot:
+LDA $0740,X
+AND #$00FF
+STA $3274
+PHX
+  TXA
+  ASL
+  TAX
+  LDA $0756,X
+  STA $0730
+  LDA $0748,X
+  STA $0734
+PLX
+LDA $3274
+AND #$00FF
+CMP #$0003
+BEQ .SoldOutVar
+STZ $0736
+CMP #$0004
+BCC .DontDisplayPlayerName
+LDA #$0001
+STA $B573
+STA $0724
+LDA $06
+STA $0720
+LDA $08
+STA $0722
+LDA #ShopItemNames_PlayerText
+STA $0E
+LDA #$00F4
+STA $10
+PHY
+JSR MoveShopPlayerName
+JSL $C3E4D4 ; Instant print on
+JSL $C186B1 ;Overworld text
+JSL $C3E4CA
+PLY
+STZ $B573
+LDA $0720
+STA $06
+LDA $0722
+STA $08
+;LDA #$000B
+;JSL $C1DD47
+.DontDisplayPlayerName:
+PLX
+JML $C11ACB
+.SoldOutVar:
+LDA #$0001
+STA $0736
+JMP .DontDisplayPlayerName
+.End:
+JML $C11ACB
+
+MoveShopPlayerName:
+PHB
+PHX
+PHY
+PHA
+TXA
+ASL
+TAX
+LDA $0748,X
+TAX
+PHX
+LDA #$6440
+.CheckNameSlot:
+CPX #$0000
+BEQ .MoveName
+DEX
+CLC
+ADC #$0011
+BRA .CheckNameSlot
+
+.MoveName:
+TAX
+LDA #$0010
+LDY #$FF50
+MVN $F47E
+PLX
+LDA #$1100
+.CheckSlotName:
+CPX #$0000
+BEQ .MoveItem
+DEX
+CLC
+ADC #$007F
+BRA .CheckSlotName
+.MoveItem:
+TAX
+LDA #$002F
+LDY #$FF80
+MVN $F57E
+PLA
+PLY
+PLX
+PLB
+RTS
+
+TransferOutOfMenu:
+STZ $B573
+JSL $C3E4CA
+;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
+LDA $3274
+STA $97CC
+STZ $0724
+lda $0730
+STA $97D0
+LDA $0734
+STA $97D4
+LDA #$000B
+STA $8958
+PHX
+PHY
+JSL $C1DD59
+PLY
+PLX
+LDA #$0001
+STA $8958
+LDX $1A
+JML $C19EE3
+
+CheckIfBuyable:
+LDA $1A
+BEQ .done
+LDA $0736
+BEQ .done
+LDA $1A
+JSL $EF016F
+LDA #$00FF
+TSB $5E79
+LDA #$0005
+JSL $C0ABE0
+JML $C19EC7
+.done:
+STZ $0736
+JSL $C1DD59
+LDA #$9C8A
+JML $C19ED9
+
+OverrideShopWindowFX:
+PHA
+LDA $3274
+BEQ .NormalItem
+CMP #$0005
+BEQ .NormalItem
+PLA
+LDA #$0001
+JML $C19B6A
+.NormalItem:
+PLA
+JSL $C3EE14
+JML $C19B6A
+
+PreserveWindowPalette:
+PHA
+LDA $0736
+BNE .SoldOut
+PLA
+JSL $C08ED2
+JML $C19DA4
+.SoldOut:
+PLA
+JML $C19DA4
+
 GetRandomizedTrack:
 %FUNCTION_PROLOGUE(18)
 TAX
@@ -10390,68 +10833,68 @@ JML $C105D3
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-;JML APShopHandler;This JML is only in AP patch
+JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-;JML GetAPShopName
+JML GetAPShopName
 
 ORG $C19E8F
-;JML GetAPShopPrice
+JML GetAPShopPrice
 
 ORG $C11AC6
-;JML DisplayAPPlayer
+JML DisplayAPPlayer
 
 ORG $C19EDD
-;JML TransferOutOfMenu
+JML TransferOutOfMenu
 
 org $C19ED3
-;JML CheckIfBuyable
-;NOP
-;NOP
+JML CheckIfBuyable
+NOP
+NOP
 
 ORG $C19B66
-;JML OverrideShopWindowFX
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
-;db $08
-;dd CheckShopsanityPrice
+db $08
+dd CheckShopsanityPrice
 
 ORG $C19DA0
-;JML PreserveWindowPalette
+JML PreserveWindowPalette
 
 ORG $C5E0B6
-;db $08
-;dd BoughtShopsanityItemScript
+db $08
+dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-;db $0A
-;dl ShopsanityPurchaseHandler
+db $0A
+dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-;dl ShopsanityPurchaseHandler
+dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+dd CancelBuyRemoveName
 
 ORG $C50A6A
-;db $0A
-;dl BackupShopEquipText
+db $0A
+dl BackupShopEquipText
 
 ORG $C50B4C
-;db $0A
-;dl BackupShopSellText
+db $0A
+dl BackupShopSellText
 
 ORG $C50C2E
-;db $0A
-;dl BackupShopCantEquip
+db $0A
+dl BackupShopCantEquip
 
 
 
@@ -13764,452 +14207,6 @@ db $02
 escg_inquire:
 db $70, $87, $98, $91, $a4, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50
 db $9c, $99, $9b, $95, $50, $a4, $9f, $50, $94, $9f, $6f, $02
-
-
-;SHOPSANITY CODE, DO NOT MODIFY
-ORG $F4B500
-APShopHandler:
-LDA $1E
-STA $0770
-TAX
-LDA #$0000
-.CheckShop:
-CPX #$0000
-BEQ .GotShopNum
-CLC
-ADC #$002A
-DEX
-BRA .CheckShop
-.GotShopNum:
-PHA
-LDX $04
-LDA #$0000
-.CheckSlot:
-CPX #$0000
-BEQ .AddSlotVal
-DEX
-CLC
-ADC #$0006
-BRA .CheckSlot
-.AddSlotVal:
-STA $3274
-PLA
-CLC
-ADC $3274
-;At this point we should know what item we're looking at
-TAX
-LDA $F40000,X
-AND #$00FF
-TAY
-STY $1A
-BNE .ValidShopItem
-JML $C19E93
-.ValidShopItem:
-PHA
-LDA $F40003,X
-AND #$00FF
-STA $3274
-CMP #$0004
-BCS .GrabOffWorldItemName
-LDA $F40004,X
-STA $0734
-LDA $F40000,X
-.APItemReturn:
-AND #$00FF
-STA $0732
-LDA $F40001,X
-STA $0730
-PLA
-JSL CheckItemBoughtFlag
-CMP #$0000
-BEQ .ItemNotBought
-JSR HandleBoughtItem
-.ItemNotBought:
-JML $C19E06
-.GrabOffWorldItemName:
-PHB
-PHX
-PHY
-LDA $F40004,X
-STA $0734
-;AND #$00FF
-TAX
-LDA #$1190
-..CompareID:
-CPX #$0000
-BEQ ..GotName
-DEX
-CLC
-ADC #$0030
-BRA ..CompareID
-..GotName:
-TAX
-LDA #$002F
-LDY #$FF80
-MVN $F47E
-PLY
-PLX
-PLB
-LDA $F40003,X
-AND #$00FF
-CMP #$0005
-BEQ .Remote
-LDA #$00AD
-JMP .APItemReturn
-.Remote:
-LDA $F40000,X
-AND #$00FF
-JMP .APItemReturn
-
-
-GetAPShopName:
-PHA
-LDA $3274
-LDX $04
-STA $0740,X
-TXA
-ASL
-TAX
-LDA $0734
-STA $0748,X
-LDA $0730
-STA $0756,X
-LDA $3274
-BEQ .NormalItemName
-CMP #$0001
-BEQ .GetTeleportName
-CMP #$0002
-BEQ .GetCharacterName
-CMP #$0003
-BEQ .GetSoldOutName
-CMP #$0004
-BEQ .GetArchipelagoName
-CMP #$0005
-BEQ .GetArchipelagoName
-.NormalItemName:
-PLA
-ADC $06
-STA $06
-STA $0E
-JML $C19E29
-.GetTeleportName:
-PLA
-LDA $0732
-ASL
-TAX
-LDA ShopItemNames_TeleportNames,X
-STA $06
-STA $0E
-LDA #$00F4
-STA $08
-JML $C19E29
-.GetCharacterName:
-PLA
-LDA $0732
-ASL
-TAX
-LDA ShopItemNames_CharNames,X
-STA $06
-STA $0E
-LDA #$00F4
-STA $08
-JML $C19E29
-.GetArchipelagoName:
-PLA
-LDA #$FF80
-STA $06
-STA $0E
-LDA #$007E
-STA $08
-JML $C19E29
-.GetSoldOutName:
-PLA
-LDA #ShopItemNames_SoldOut
-STA $06
-STA $0E
-LDA #$00F4
-STA $08
-JML $C19E29
-
-CheckItemBoughtFlag:
-PHX
-LDA $04
-SEP #$20
-TAX
-LDA ShopFlagBits,X
-REP #$20
-PHA
-LDA $1E
-TAX
-PLA
-AND $B720,X
-PLX
-RTL
-
-HandleBoughtItem:
-LDA $3274
-BEQ .LocalItemChecker
-CMP #$0005
-BEQ .LocalItemChecker
-;This is a teleport/char/nonlocal item. Can never buy this again.
-.BannedItem:
-REP #$20
-LDA #$0003
-STA $3274
-RTS
-.LocalItemChecker:
-LDA $0732
-LDX #$0000
-SEP #$20
-.CheckItem:
-CMP BannedItemList,X
-BEQ .BannedItem
-INX
-CPX #$002E
-BEQ .NotBanned
-BRA .CheckItem
-.NotBanned:
-REP #$20
-STZ $3274
-RTS
-
-GetAPShopPrice:
-LDA $3274
-CMP #$0003
-BEQ .SoldOut
-CMP #$0000
-BEQ .NormalItem
-CMP #$0005
-BEQ .NormalItem
-.DisplaySpecialPrice:
-LDA $0730
-STA $06
-STA $0E
-.DisplayPrice:
-JSL $C4507A
-.SoldOut:
-JML $C19E93
-
-.NormalItem:
-LDA $0732
-JSR CheckBanlist
-BEQ .DisplaySpecialPrice
-BRA .DisplayPrice
-
-CheckBanlist:
-SEP #$20
-LDX #$0000
-.Check:
-CMP BannedItemList,X
-BEQ .Ban
-CPX #$002E
-BEQ .Done
-INX
-BRA .Check
-.Done:
-REP #$20
-LDA #$0001
-RTS
-.Ban:
-REP #$20
-LDA #$0000
-RTS
-
-DisplayAPPlayer:
-LDA $0724
-BEQ .DontCloseNameWin
-LDA $06
-STA $0720
-LDA $08
-STA $0722
-LDA #$000B
-STA $8958
-PHX
-PHY
-JSL $C1DD59 ;Switch to textbox first...
-PLY
-PLX
-STZ $0724
-LDA #$000C
-STA $8958
-LDA $0720
-STA $06
-LDA $0722
-STA $08
-.DontCloseNameWin:
-LDA $0000,Y
-STA $06
-LDA $8958
-CMP #$000C
-BNE .End
-PHX
-LDA $20
-AND #$00FF
-TAX
-.GotSlot:
-LDA $0740,X
-AND #$00FF
-STA $3274
-PHX
-  TXA
-  ASL
-  TAX
-  LDA $0756,X
-  STA $0730
-  LDA $0748,X
-  STA $0734
-PLX
-LDA $3274
-AND #$00FF
-CMP #$0003
-BEQ .SoldOutVar
-STZ $0736
-CMP #$0004
-BCC .DontDisplayPlayerName
-LDA #$0001
-STA $B573
-STA $0724
-LDA $06
-STA $0720
-LDA $08
-STA $0722
-LDA #ShopItemNames_PlayerText
-STA $0E
-LDA #$00F4
-STA $10
-PHY
-JSR MoveShopPlayerName
-JSL $C3E4D4 ; Instant print on
-JSL $C186B1 ;Overworld text
-JSL $C3E4CA
-PLY
-STZ $B573
-LDA $0720
-STA $06
-LDA $0722
-STA $08
-;LDA #$000B
-;JSL $C1DD47
-.DontDisplayPlayerName:
-PLX
-JML $C11ACB
-.SoldOutVar:
-LDA #$0001
-STA $0736
-JMP .DontDisplayPlayerName
-.End:
-JML $C11ACB
-
-MoveShopPlayerName:
-PHB
-PHX
-PHY
-PHA
-TXA
-ASL
-TAX
-LDA $0748,X
-TAX
-PHX
-LDA #$6440
-.CheckNameSlot:
-CPX #$0000
-BEQ .MoveName
-DEX
-CLC
-ADC #$0011
-BRA .CheckNameSlot
-
-.MoveName:
-TAX
-LDA #$0010
-LDY #$FF50
-MVN $F47E
-PLX
-LDA #$1100
-.CheckSlotName:
-CPX #$0000
-BEQ .MoveItem
-DEX
-CLC
-ADC #$007F
-BRA .CheckSlotName
-.MoveItem:
-TAX
-LDA #$002F
-LDY #$FF80
-MVN $F57E
-PLA
-PLY
-PLX
-PLB
-RTS
-
-TransferOutOfMenu:
-STZ $B573
-JSL $C3E4CA
-;Todo; we need to transfer the item Type and item Price out of here. Also the item Flag. Store these in globals.
-LDA $3274
-STA $97CC
-STZ $0724
-lda $0730
-STA $97D0
-LDA $0734
-STA $97D4
-LDA #$000B
-STA $8958
-PHX
-PHY
-JSL $C1DD59
-PLY
-PLX
-LDA #$0001
-STA $8958
-LDX $1A
-JML $C19EE3
-
-CheckIfBuyable:
-LDA $1A
-BEQ .done
-LDA $0736
-BEQ .done
-LDA $1A
-JSL $EF016F
-LDA #$00FF
-TSB $5E79
-LDA #$0005
-JSL $C0ABE0
-JML $C19EC7
-.done:
-STZ $0736
-JSL $C1DD59
-LDA #$9C8A
-JML $C19ED9
-
-OverrideShopWindowFX:
-PHA
-LDA $3274
-BEQ .NormalItem
-CMP #$0005
-BEQ .NormalItem
-PLA
-LDA #$0001
-JML $C19B6A
-.NormalItem:
-PLA
-JSL $C3EE14
-JML $C19B6A
-
-PreserveWindowPalette:
-PHA
-LDA $0736
-BNE .SoldOut
-PLA
-JSL $C08ED2
-JML $C19DA4
-.SoldOut:
-PLA
-JML $C19DA4
 ;;;;;;;;;;;;;;;;;;;;;;
 ;SHOPSANITY HANDLING! THIS IS PATCHED BY THE ROM ONLY!
 ;USE THIS FOR TESTING!

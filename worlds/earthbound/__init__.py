@@ -252,7 +252,9 @@ class EarthBoundWorld(World):
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
             "starting_area": self.start_location,
-            "pizza_logic": self.options.monkey_caves_mode.value
+            "pizza_logic": self.options.monkey_caves_mode.value,
+            "free_sancs": self.options.no_free_sanctuaries.value,
+            "shopsanity": self.options.shop_randomizer.value
         }
 
     def modify_multidata(self, multidata: dict):
