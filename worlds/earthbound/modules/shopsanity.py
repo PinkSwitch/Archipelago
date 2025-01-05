@@ -320,6 +320,7 @@ def write_shop_checks(world, rom, shop_checks):
     if world.options.shop_randomizer == 2:
         rom.write_bytes(0x04FD77, bytearray([world.options.scout_shop_checks]))
         for location in shop_checks:
+
             flag = location.address - 0xEB1000
             if location.item.player == world.player:
                 if world.options.remote_items:
@@ -368,7 +369,7 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x346440 + (flag * 0x11), player_name)
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
 
-            rom.write_bytes(0x019DE5, struct.pack("I", 0xF0070C5C))  # Build the shop menus
+            rom.write_bytes(0x019DE5, struct.pack("I", 0xF0077C5C))  # Build the shop menus
             rom.write_bytes(0x019E23, struct.pack("I", 0xF008385C))  # Display the item name
             rom.write_bytes(0x019E8F, struct.pack("I", 0xF0090E5C))  # Display the item price
             rom.write_bytes(0x011AC6, struct.pack("I", 0xF009585C)) # display the player name
