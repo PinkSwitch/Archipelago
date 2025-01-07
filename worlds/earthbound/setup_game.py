@@ -433,13 +433,13 @@ def setup_gamevars(world):
     else:
         world.filler_drops.extend([0x07, 0x05, 0x09, 0x0B, 0x10])
 
+    world.filler_shop = []
     if world.options.magicant_mode.value >= 2:
         world.magicant_junk = []
-        world.filler_shop = []
         for i in range(8):
             world.magicant_junk.append(world.random.choice(filler_items))
-        for i in range(2):
-            world.filler_shop.append(world.random.choice(filler_items))
+    for i in range(2):
+        world.filler_shop.append(world.random.choice(filler_items))
 
     world.available_flavors = []
     if world.options.random_flavors:
