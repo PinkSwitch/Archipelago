@@ -353,7 +353,7 @@ def write_shop_checks(world, rom, shop_checks):
             if not world.accessible_regions.index(location.parent_region.name):
                 price = int(price / 2)
             elif location.parent_region.name == "Onett" and not world.options.random_start_location:
-                price = int(price / 2)
+                price = int(price / 3)
 
             item_struct = struct.pack('<BHBH', item_id, price, item_type, flag)
             rom.write_bytes(0x34002A + (0x06 * flag), item_struct)
@@ -370,9 +370,9 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x341190 + (flag * 0x30), menu_item_name)
             rom.write_bytes(0x346440 + (flag * 0x11), player_name)
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
-            #if location.parent_region.name == "Onett":
-             #   print(f"{hex(0x341190 + (flag * 0x30))} writing menu item for {location.name}")
-              #  print(f"{hex(0x346440 + (flag * 0x11))} writing player for {location.name}")
+            if location.parent_region.name == "Threed":
+                print(f"{hex(0x341190 + (flag * 0x30))} writing menu item for {location.name}")
+                print(f"{hex(0x346440 + (flag * 0x11))} writing player for {location.name}")
                # print(f"{hex(0x351100 + (flag * 127))} writing long item for {location.name}")
 
             rom.write_bytes(0x019DE5, struct.pack("I", 0xF0077C5C))  # Build the shop menus

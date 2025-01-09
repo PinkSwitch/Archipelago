@@ -635,7 +635,7 @@ db $50, $93, $A2, $91, $9d, $9d, $95, $94, $50, $a4, $98, $95, $50, $95, $9e, $9
 db $99, $9e, $95, $50, $99, $9e, $a4, $9f, $50, $a0, $9c, $91, $93, $95, $51, $1D
 db $01, $FF, $9E, $03, $0A, $1D, $F1, $EE, $9f, $50, $94, $9f, $5e, $59, $13, $02
 db $08, $7f, $dc, $c7, $00, $1b, $03, $20, $5e, $c7, $00, $1d, $05, $ff, $9e, $1b
-db $03, $f2, $5e, $c7, $00, $18, $01, $01, $01, $70, $58, $79, $a4, $50, $91, $a0
+db $02, $f2, $5e, $c7, $00, $18, $01, $01, $01, $70, $58, $79, $a4, $50, $91, $a0
 db $a0, $95, $91, $a2, $a3, $50, $a4, $9f, $50, $92, $95, $50, $9d, $99, $a3, $a3
 db $99, $9e, $97, $50, $91, $9e, $50, $95, $9e, $97, $99, $9e, $95, $5e, $5e, $5e
 db $03, $00, $70, $79, $96, $50, $a4, $98, $95, $50, $95, $9e, $97, $99, $9e, $95
@@ -8042,7 +8042,7 @@ BannedItemList:
 db $01, $68, $69, $7D, $8B, $9E, $A2, $A6, $A7, $AA, $AB, $AC, $AD, $AE
 db $AF, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BB, $C0, $C1, $C4
 db $C5, $CA, $CB, $CC, $CD, $CE, $D0, $D2, $D3, $E3, $E4, $E5, $E6, $E7
-db $FD, $B0, $A3, $C5
+db $FD, $B0, $A3, $C5, $A4
 
 StorageTitlePointers:
 dw $FF90, $FF70
@@ -8340,6 +8340,9 @@ DD OpenLockers_BottomLeftLocker
 
 ORG $CFB148
 DD OpenLockers_MiddleLocker
+
+ORG $CFA990
+dd fixed_skyrunner_redirect
 
 ;New data table go here
 
@@ -9322,6 +9325,15 @@ db $70
 db $78, $95, $a9, $51, $10, $10, $50, $84, $98, $95, $a2, $95, $50, $99, $a3, $50
 db $91, $50, $02
 
+fixed_skyrunner_redirect:
+db $18, $04
+db $1D, $05, $FF, $9E
+db $1B, $02
+dd $C75E78
+db $1D, $01, $FF, $9E
+db $0A
+dl $C75E03
+
 
 ;FOR TESTING!!!!
 ;ORG $CF09EE
@@ -9946,7 +9958,7 @@ LDX #$0000
 CMP BannedItemList,X
 BEQ .BannedItem
 INX
-CPX #$002E
+CPX #$002F
 BCC .check_banlist
 REP #$20
 LDA #$0001
@@ -10184,7 +10196,7 @@ LDX #$00
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$2E
+CPX #$2F
 BEQ .NormalItem
 BRA .Check
 .IsKeyItem:
@@ -10276,7 +10288,7 @@ LDX #$0000
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$002E
+CPX #$002F
 BEQ .Done
 BRA .CheckBans
 .IsKeyItem:
@@ -10296,7 +10308,7 @@ LDX #$00
 CMP BannedItemList,X
 BEQ .IsKeyItem
 INX
-CPX #$2E
+CPX #$2F
 BEQ .Done
 BRA .Check
 .Done:
@@ -10540,7 +10552,7 @@ SEP #$20
 CMP BannedItemList,X
 BEQ .BannedItem
 INX
-CPX #$002E
+CPX #$002F
 BEQ .NotBanned
 BRA .CheckItem
 .NotBanned:
@@ -10577,7 +10589,7 @@ LDX #$0000
 .Check:
 CMP BannedItemList,X
 BEQ .Ban
-CPX #$002E
+CPX #$002F
 BEQ .Done
 INX
 BRA .Check
@@ -10935,7 +10947,7 @@ ORG $F400D2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $F49000
 CheckShopsanityPrice:
-db $1B, $00
+db $01, $01
 db $1B, $06
 db $1B, $02
 dd .NormalItem
