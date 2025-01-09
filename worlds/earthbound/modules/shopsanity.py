@@ -368,12 +368,8 @@ def write_shop_checks(world, rom, shop_checks):
             player_name = text_encoder(world.multiworld.get_player_name(location.item.player), 16)
             player_name.append(0x00)
             rom.write_bytes(0x341190 + (flag * 0x30), menu_item_name)
-            rom.write_bytes(0x346440 + (flag * 0x11), player_name)
+            rom.write_bytes(0x3466D0 + (flag * 0x11), player_name)
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
-            if location.parent_region.name == "Threed":
-                print(f"{hex(0x341190 + (flag * 0x30))} writing menu item for {location.name}")
-                print(f"{hex(0x346440 + (flag * 0x11))} writing player for {location.name}")
-               # print(f"{hex(0x351100 + (flag * 127))} writing long item for {location.name}")
 
             rom.write_bytes(0x019DE5, struct.pack("I", 0xF0077C5C))  # Build the shop menus
             rom.write_bytes(0x019E23, struct.pack("I", 0xF008385C))  # Display the item name
