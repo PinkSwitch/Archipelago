@@ -938,16 +938,16 @@ guardian_text = [
     0xEEFACE
 ]
 
-guardian_intro = [
-    0x066699,
-    0x2F97CB,
-    0x2F67C3,
-    0x2EFAD6,
-    0x083D4D,
-    0x09D2E3,
-    0x09E2A4,
-    0x2EFADF
-]
+guardian_intro = {
+    "Giant Step": 0x066699,
+    "Lilliput Steps": 0x2F97CB,
+    "Milky Well": 0x2F67C3,
+    "Rainy Circle": 0x2EFAD6,
+    "Magnet Hill": 0x083D4D,
+    "Pink Cloud": 0x09D2E3,
+    "Lumine Hall": 0x09E2A4,
+    "Fire Spring": 0x2EFADF
+}
 
 
 def scale_enemies(world, rom):
@@ -961,9 +961,8 @@ def scale_enemies(world, rom):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
                       "Lumine Hall", "Fire Spring"]:
-            rom.write_bytes(guardian_intro[melody_number - 1], struct.pack("I", guardian_text[melody_number - 1]))
+            rom.write_bytes(guardian_intro[region], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
-
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 # print(f"{enemy.name} {level}")

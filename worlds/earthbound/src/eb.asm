@@ -8216,7 +8216,13 @@ db $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $9a, $9b, $9c, $9d, $9e, $9
 db $a0, $a1, $a2, $a3, $a4, $a5, $a6, $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af
 db $b0, $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf
 
-ORG $D56F2F
+ShopBannedItemList:
+db $01, $68, $69, $7D, $8B, $9E, $A2, $A6, $A7, $AA, $AB, $AC, $AD, $AE
+db $AF, $B1, $B2, $B3, $B4, $B5, $B6, $B7, $B8, $B9, $BB, $C0, $C1, $C4
+db $C5, $CA, $CB, $CC, $CD, $CE, $D0, $D2, $D3, $E3, $E4, $E5, $E6, $E7
+db $FD, $B0, $A3, $C5, $A4
+
+ORG $D56F2E
 db $00
 
 ORG $D56B93
@@ -8343,6 +8349,12 @@ DD OpenLockers_MiddleLocker
 
 ORG $CFA990
 dd fixed_skyrunner_redirect
+
+ORG $C5D793
+db $F6
+
+ORG $C64FA5
+db $FF
 
 ;New data table go here
 
@@ -10789,14 +10801,27 @@ JML $C19B6A
 
 PreserveWindowPalette:
 PHA
+TDC
+PHA
+LDA #$1DDE
+TCD
+LDA $1A
+BEQ .CancelMenu
+PLA
+TCD
 LDA $0736
 BNE .SoldOut
+.Done:
 PLA
 JSL $C08ED2
 JML $C19DA4
 .SoldOut:
 PLA
 JML $C19DA4
+.CancelMenu:
+PLA
+TCD
+BRA .Done
 
 GetRandomizedTrack:
 %FUNCTION_PROLOGUE(18)
@@ -10845,80 +10870,84 @@ JML $C105D3
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-;JML APShopHandler;This JML is only in AP patch
+JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-;JML GetAPShopName
+JML GetAPShopName
 
 ORG $C19E8F
-;JML GetAPShopPrice
+JML GetAPShopPrice
 
 ORG $C11AC6
-;JML DisplayAPPlayer
+JML DisplayAPPlayer
 
 ORG $C19EDD
-;JML TransferOutOfMenu
+JML TransferOutOfMenu
 
 org $C19ED3
-;JML CheckIfBuyable
-;NOP
-;NOP
+JML CheckIfBuyable
+NOP
+NOP
 
 ORG $C19B66
-;JML OverrideShopWindowFX
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
-;db $08
-;dd CheckShopsanityPrice
+db $08
+dd CheckShopsanityPrice
 
 ORG $C19DA0
-;JML PreserveWindowPalette
+JML PreserveWindowPalette
 
 ORG $C5E0B6
-;db $08
-;dd BoughtShopsanityItemScript
+db $08
+dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-;db $0A
-;dl ShopsanityPurchaseHandler
+db $0A
+dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-;dl ShopsanityPurchaseHandler
+dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+dd CancelBuyRemoveName
 
 ORG $C50A6A
-;db $0A
-;dl BackupShopEquipText
+db $0A
+dl BackupShopEquipText
 
 ORG $C50B4C
-;db $0A
-;dl BackupShopSellText
+db $0A
+dl BackupShopSellText
 
 ORG $C50C2E
-;db $0A
-;dl BackupShopCantEquip
+db $0A
+dl BackupShopCantEquip
+
+ORG $C5E04C
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $02, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
-;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
-;db $96, $ff, $ff, $05, $02, $00; A remote regular item
-;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+db $02, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+db $96, $ff, $ff, $05, $02, $00; A remote regular item
+db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 
 ORG $F400D2
 ;db $11
@@ -11389,6 +11418,19 @@ dl $C52189
 BackupShopCantEquip:
 db $0A
 dl $C5B94D
+
+OverrideSpaceCheckOnSpecialItem_oneslot:
+db $1B, $06
+db $1B, $02
+dd .CheckSpace
+db $0A
+dl $C5E05C
+.CheckSpace:
+db $1d, $03, $ff
+db $1b, $02
+dd $C5E0A3
+db $0A
+dl $C5E05C
 
 
 ;ORG $f40930

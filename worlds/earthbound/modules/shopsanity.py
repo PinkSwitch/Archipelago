@@ -388,6 +388,7 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494760A))
             # Prevent the game from checking inventory space if not needed
             rom.write_bytes(0x05E029, struct.pack("I", 0xF494960A))
+            rom.write_bytes(0x05E04C, struct.pack("I", 0xF494BB0A))
             rom.write_bytes(0x05E1AE, struct.pack("I", 0xF4948F))  # Post-shop cleanup
 
             rom.write_bytes(0x050A6A, struct.pack("I", 0xF494AF0A))
