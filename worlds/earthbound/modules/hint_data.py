@@ -149,7 +149,7 @@ def setup_hints(world):
 
     hintable_location_groups = location_groups.copy()
 
-    if not world.options.shop_randomizer:
+    if world.options.shop_randomizer != 2:
         hintable_location_groups["Onett"] = hintable_location_groups["Onett"] - shop_locations
         hintable_location_groups["Twoson"] = hintable_location_groups["Twoson"] - shop_locations
         hintable_location_groups["Happy-Happy Village"] = hintable_location_groups["Happy-Happy Village"] - shop_locations
@@ -174,7 +174,7 @@ def setup_hints(world):
         del hintable_location_groups["the Fourside Department Store"]
         del hintable_location_groups["the Saturn Valley Shop"]
 
-    if world.options.magicant_mode > 1:
+    if world.options.magicant_mode >= 2:
         del hintable_location_groups["Magicant"]
 
     if not world.options.giygas_required:

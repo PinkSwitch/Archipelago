@@ -54,7 +54,8 @@ dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0,$FEEA
 
 ORG $D5F880
 SpecialNameTable:
-dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, $C659
+dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, #SpecialTexMagicant
+dw #SpecialTexNess
 
 
 
@@ -9344,6 +9345,13 @@ dd $C75E78
 db $1D, $01, $FF, $9E
 db $0A
 dl $C75E03
+
+SpecialTexMagicant:
+db $7D, $91, $97, $99, $93, $91, $9E, $A4, $50, $84, $95, $9C, $95, $A0, $9F, $A2
+db $A4, $00
+
+SpecialTexNess:
+db $7E, $95, $A3, $A3, $00
 
 
 ;FOR TESTING!!!!
