@@ -406,11 +406,11 @@ gift_properties = {
 
     115: create_gift("Speed Capsule", 0, ["Comsumable", "Medicine", "Speed", "Buff"]),
 
-    116: create_gift("Vital Capsule", 0, ["Comsumable", "Medicine", "HP", "Buff"]),
+    116: create_gift("Vital Capsule", 0, ["Comsumable", "Medicine", "Buff", "Life"]),
 
     117: create_gift("Luck Capsule", 0, ["Comsumable", "Medicine", "Buff", "Luck"]),
 
-    118: create_gift("Ketchup Packet", 0, ["Comsumable", "Heal", "Food", "Condiment", "Red", "Tomato"]),
+    118: create_gift("Ketchup Packet", 0, ["Comsumable", "Heal", "Food", "Condiment", "Red"]),
 
     119: create_gift("Sugar Packet", 0, ["Comsumable", "Heal", "Food", "Condiment", "White"]),
 
@@ -438,15 +438,15 @@ gift_properties = {
 
     132: create_gift("Shield Killer", 0, ["Machine", "Electronics", "Metal", "Neutralizing"]),
 
-    133: create_gift("Bazooka", 0, ["Machine", "Weapon", "Electronics", "Explosive", "RangedWeapon", "Heavy"]),
+    133: create_gift("Bazooka", 0, ["Machine", "Weapon", "Electronics", "Explosive", "RangedWeapon"]),
 
-    134: create_gift("Heavy Bazooka", 0, ["Machine", "Weapon", "Electronics", "Explosive", "RangedWeapon", "Heavy"]),
+    134: create_gift("Heavy Bazooka", 0, ["Machine", "Weapon", "Electronics", "Explosive", "RangedWeapon"]),
 
     135: create_gift("HP-Sucker", 0, ["Machine", "Draining", "Electronics"]),
 
     136: create_gift("Hungry HP-Sucker", 0, ["Machine", "Draining", "Electronics"]),
 
-    137: create_gift("Xterminator Spray", 0, ["Can", "Metal", "Insecticide", "Weapon", "Chemicals"]),
+    137: create_gift("Xterminator Spray", 0, ["Can", "Metal", "Insect", "Weapon", "Chemicals"]),
 
     138: create_gift("Slime Generator", 0, ["Machine", "Slime", "Electronics"]),
 
