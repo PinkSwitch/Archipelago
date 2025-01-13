@@ -308,6 +308,7 @@ item_table: Dict[str, ItemData] = {
     "Jeff": ItemData("Characters", 0xEB010F, ItemClassification.progression),
     "Poo": ItemData("Characters", 0xEB0110, ItemClassification.progression),
     "Flying Man": ItemData("Characters", 0xEB0111, ItemClassification.useful),
+    "Ness": ItemData("Characters", 0xEB0112, ItemClassification.progression),
 
     'Threed Tunnels Clear': ItemData('Events', None, ItemClassification.progression, 0),
     'Submarine to Deep Darkness': ItemData('Events', None, ItemClassification.progression, 0),
