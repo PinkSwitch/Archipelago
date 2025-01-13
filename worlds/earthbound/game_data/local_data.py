@@ -547,7 +547,7 @@ location_dialogue = {  # Locations which just need to print the name of the item
     "Twoson - Everdred Meeting": [0x095FA2],
     "Twoson - Insignificant Location": [0x094EB1],
     "Happy-Happy Village - Donation Lady": [0x2EC578, 0x2EC580],
-    "Happy-Happy Village - Prisoner Item": [0x2F95FE, 0x079646],
+    "Happy-Happy Village - Prisoner Item": [0x2F95FE, 0x33001E],
     "Happy-Happy Village - Defeat Carpainter": [0x098215],
     "Threed - Hospital Drawer": [0x08686C],
     "Saturn Valley - Post Belch Gift #1": [0x07EAAA],
