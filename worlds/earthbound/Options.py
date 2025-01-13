@@ -346,6 +346,15 @@ class ScoutShopChecks(DefaultOnToggle):
     """Scouts Shop checks when you open a shop. Only affects shops in Shopsanity mode."""
     display_name = "Scout Shop Checks"
 
+class StartingCharacter(Choice):
+    """Sets which character you start as. Each character will always start with the ability to teleport,
+       and the ATM card. Ness will not be required to fight Sanctuary bosses."""
+    display_name = "Starting Character"
+    option_Ness = 0
+    option_Paula = 1
+    option_Jeff = 2
+    option_Poo = 3
+    default = 0
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -358,6 +367,7 @@ class EBOptions(PerGameCommonOptions):
     monkey_caves_mode: MonkeyCavesMode
     shuffle_teleports: TeleportShuffle  # Better name?
     character_shuffle: CharacterShuffle
+    starting_character: StartingCharacter
     psi_shuffle: PSIShuffle
     allow_flash_as_favorite_thing: BanFlashFavorite
     boss_shuffle: BossShuffle
@@ -383,9 +393,6 @@ class EBOptions(PerGameCommonOptions):
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight
-    start_inventory_from_pool: StartInventoryPool
-    death_link: DeathLink
-    death_link_mode: DeathLinkMode
     plando_lumine_hall_text: PlandoLumineHallText
     armorizer_resistance_chance: ElementChance
     no_free_sanctuaries: NoFreeSancs
@@ -395,7 +402,9 @@ class EBOptions(PerGameCommonOptions):
     randomize_psi_palettes: RandomizePSIPalettes
     shop_randomizer: ShopRandomizer
     scout_shop_checks: ScoutShopChecks
-    # starting_character: StartingCharacter
+    start_inventory_from_pool: StartInventoryPool
+    death_link: DeathLink
+    death_link_mode: DeathLinkMode
 
 
 eb_option_groups = [
@@ -427,7 +436,8 @@ eb_option_groups = [
         RandomStartLocation,
         MagicantMode,
         MonkeyCavesMode,
-        NoFreeSancs
+        NoFreeSancs,
+        StartingCharacter
     ]),
 
     OptionGroup("PSI Randomization", [
