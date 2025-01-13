@@ -356,6 +356,12 @@ class StartingCharacter(Choice):
     option_Poo = 3
     default = 0
 
+class EquipamizerStatCap(DefaultOnToggle):
+    """If enabled, the highest value that Equipamizer can roll for a piece of equipment's
+       main stat will be capped. 80 for armor, 125 for weapons.
+       If disabled, the main stat can potentially roll up to 128."""
+    display_name = "Equipamizer Stat Cap"
+
 @dataclass
 class EBOptions(PerGameCommonOptions):
     giygas_required: GiygasRequired
@@ -380,6 +386,8 @@ class EBOptions(PerGameCommonOptions):
     progressive_armor: ProgressiveArmor
     armorizer: Armorizer
     weaponizer: Weaponizer
+    armorizer_resistance_chance: ElementChance
+    equipamizer_cap_stats: EquipamizerStatCap
     auto_scale_party_members: AutoscaleParty
     remote_items: RemoteItems
     random_flavors: RandomFlavors
@@ -394,7 +402,6 @@ class EBOptions(PerGameCommonOptions):
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight
     plando_lumine_hall_text: PlandoLumineHallText
-    armorizer_resistance_chance: ElementChance
     no_free_sanctuaries: NoFreeSancs
     randomize_overworld_music: RandomizeOverworldMusic
     randomize_battle_music: RandomizeBattleMusic
@@ -429,7 +436,8 @@ eb_option_groups = [
     OptionGroup("Equipamizer", [
         Armorizer,
         Weaponizer,
-        ElementChance
+        ElementChance,
+        EquipamizerStatCap
     ]),
 
     OptionGroup("World Modes", [

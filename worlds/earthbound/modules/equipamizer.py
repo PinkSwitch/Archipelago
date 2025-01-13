@@ -274,6 +274,21 @@ royal_names = [
 
 
 def randomize_armor(world, rom):
+    if world.options.equipamizer_cap_stats:
+        armor_caps = {
+            "body": 30,
+            "arm": 80,
+            "other": 110
+
+        }
+    else:
+        armor_caps = {
+            "body": 127,
+            "arm": 127,
+            "other": 127
+        }
+
+
     other_adjectives = adjectives.copy()
     arm_adjectives = adjectives.copy()
     body_adjectives = adjectives.copy()
@@ -488,7 +503,7 @@ def randomize_armor(world, rom):
         elif armor.equip_type == "other" and armor.can_equip == "All":
             progressive_others.append(item)
 
-        armor.defense = world.random.randint(1, 127)
+        armor.defense = world.random.randint(1, armor_caps[armor.equip_type])
 
         chance = world.random.randint(0, 100)
         if chance < 8:
@@ -658,6 +673,11 @@ def randomize_armor(world, rom):
 
 
 def randomize_weapons(world, rom):
+    if world.options.equipamizer_cap_stats:
+        weapon_cap = 120
+    else:
+        weapon_cap = 127
+
     weapon_names = {
         "Ness": ["bat", "stick", "club", "board", "racket", "cue", "pole", "paddle"],
         "Paula": ["fry pan", "frypan", "skillet", "whisk", "saucepan", "pin"],
@@ -805,10 +825,10 @@ def randomize_weapons(world, rom):
         if item == "Tee Ball Bat" and not world.options.progressive_weapons:
             weapon.offense = 10
         else:
-            weapon.offense = world.random.randint(1, 127)
+            weapon.offense = world.random.randint(1, weapon_cap)
 
         if weapon.can_equip == "Poo":
-            weapon.poo_off = world.random.randint(1, 127)
+            weapon.poo_off = world.random.randint(1, weapon_cap)
             front_name = world.random.choice(weapon_names[weapon.can_equip])
             back_name = world.random.choice(royal_names)
         else:
