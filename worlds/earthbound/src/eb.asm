@@ -4522,7 +4522,7 @@ StarstormBits:
 db $02, $04
 
 CharFlags:
-dw $03E1, $003E2, $0010, $0068
+dw $03E1, $003E2, $0010, $0068, $0417
 
 ORG $CFD67D
 db $62, $00, $04, $0A, $00
@@ -5031,11 +5031,16 @@ AND #$00FF
 BEQ EndStartData
 PHX
 PHA
+CMP #$0001
+BNE .NotNess
+LDA #$0005
+.NotNess:
 DEC
 DEC
 ASL
 TAX
 LDA CharFlags,X
+LDX #$0001
 JSL $C2165E
 PLA
 JSL $C228F8
