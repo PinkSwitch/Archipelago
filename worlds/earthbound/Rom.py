@@ -421,8 +421,8 @@ def patch_rom(world, rom, player: int):
     for item in world.multiworld.precollected_items[player]:
         if world.options.remote_items:
             continue
-        #if item.name == world.options.starting_character:
-        #write the character specially here...
+        if item.name == world.starting_character:
+            rom.write_bytes(0x00B672, bytearray([world.options.starting_character.value + 1]))
 
         if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table:
             world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)
@@ -448,7 +448,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x17FC7C + starting_psi, bytearray([starting_psi_table[item.name]]))
                     starting_psi_types.append(item.name)
                     starting_psi += 1
-        elif item.name in character_item_table: #and item.name != world.options.starting_character?
+        elif item.name in character_item_table and item.name != world.starting_character:
             if item.name not in starting_character_count:
                 rom.write_bytes(0x17FC8D + starting_char, bytearray([party_id_nums[item.name]]))
                 starting_character_count.append(item.name)
@@ -644,14 +644,17 @@ class EBPatchExtensions(APPatchExtension):
 
         rom.write_bytes(0x2EF11F, rom.read_bytes(0x091D30, 0x17))
         # ---------------------------------------
+        ness_level = rom.read_bytes(0x15F5FB, 1)
         paula_level = rom.read_bytes(0x15f60f, 1)
         jeff_level = rom.read_bytes(0x15f623, 1)
         poo_level = rom.read_bytes(0x15f637, 1)
 
+        ness_start_exp = rom.read_bytes(0x158F49 + (ness_level[0] * 4), 4)
         paula_start_exp = rom.read_bytes(0x1590D9 + (paula_level[0] * 4), 4)
         jeff_start_exp = rom.read_bytes(0x159269 + (jeff_level[0] * 4), 4)
         poo_start_exp = rom.read_bytes(0x1593F9 + (poo_level[0] * 4), 4)
 
+        rom.write_bytes(0x17FD40, ness_start_exp)
         rom.write_bytes(0x17FD44, paula_start_exp)
         rom.write_bytes(0x17FD48, jeff_start_exp)
         rom.write_bytes(0x17FD4C, poo_start_exp)
