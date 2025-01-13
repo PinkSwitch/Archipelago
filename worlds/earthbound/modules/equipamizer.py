@@ -288,7 +288,6 @@ def randomize_armor(world, rom):
             "other": 127
         }
 
-
     other_adjectives = adjectives.copy()
     arm_adjectives = adjectives.copy()
     body_adjectives = adjectives.copy()

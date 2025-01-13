@@ -13,7 +13,7 @@ import settings
 from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations
 from .Regions import init_areas
-from .Options import EBOptions, eb_option_groups
+from .Options import EBOptions, eb_option_groups, StartingCharacter
 from .setup_game import setup_gamevars, place_static_items
 from .modules.enemy_data import initialize_enemies
 from .modules.flavor_data import create_flavors
@@ -94,6 +94,7 @@ class EarthBoundWorld(World):
         self.weapon_list: Dict[str, EBWeapon]
 
     def generate_early(self):  # Todo: place locked items in generate_early
+        self.starting_character = self.options.starting_character.current_key.capitalize()
         self.locals = []
         local_space_count = 0
         for item_name, amount in self.options.start_inventory.items():
@@ -350,6 +351,8 @@ class EarthBoundWorld(World):
 
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
+        excluded_items.add(self.starting_character)
+
         if self.options.shuffle_teleports == 0:
             excluded_items.add("Onett Teleport")
             excluded_items.add("Twoson Teleport")
@@ -371,6 +374,7 @@ class EarthBoundWorld(World):
             excluded_items.add("Magicant Teleport")
 
         if self.options.character_shuffle == 0:
+            excluded_items.add("Ness")
             excluded_items.add("Paula")
             excluded_items.add("Jeff")
             excluded_items.add("Poo")
