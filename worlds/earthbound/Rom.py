@@ -448,7 +448,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x17FC7C + starting_psi, bytearray([starting_psi_table[item.name]]))
                     starting_psi_types.append(item.name)
                     starting_psi += 1
-        elif item.name in character_item_table and item.name != world.starting_character:
+        elif item.name in character_item_table:
             if item.name not in starting_character_count:
                 rom.write_bytes(0x17FC8D + starting_char, bytearray([party_id_nums[item.name]]))
                 starting_character_count.append(item.name)
