@@ -222,6 +222,8 @@ def setup_gamevars(world):
             "Charm Coin"
         ])
 
+    world.multiworld.push_precollected(world.create_item(world.starting_character))
+
     valid_starts = 14
     if world.options.magicant_mode != 00:
         valid_starts -= 1

@@ -239,5 +239,7 @@ def connect_menu_region(world: "EarthBoundWorld") -> None:
     }
     #todo; change the coordinate dict to use names instead of numbers, change start_location instead of making a new var
     world.starting_region = starting_region_list[world.start_location]
-    world.multiworld.get_region("Menu", world.player).add_exits([world.starting_region, "Ness's Mind"])
+    world.multiworld.get_region("Menu", world.player).add_exits([world.starting_region, "Ness's Mind"],
+                                {"Ness's Mind": lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, world.player),
+                                world.starting_region: lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, world.player)})
     
