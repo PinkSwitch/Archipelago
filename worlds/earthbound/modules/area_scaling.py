@@ -251,6 +251,13 @@ def calculate_scaling(world):
     Paula_scaled = False
     Jeff_scaled = False
     Poo_scaled = False
+    scaled_chars = {
+        "Ness": Ness_scaled,
+        "Paula": Paula_scaled,
+        "Jeff": Jeff_scaled,
+        "Poo": Poo_scaled
+    }
+
     sphere_count = 0
     last_region = "Ness's Mind"
     early_regions = []
@@ -259,14 +266,8 @@ def calculate_scaling(world):
     world.Jeff_region = "Ness's Mind"
     world.Poo_region = "Ness's Mind"
     for item in world.multiworld.precollected_items[world.player]:
-        if item.name == "Ness":
-            Ness_scaled = True
-        elif item.name == "Paula":
-            Paula_scaled = True
-        elif item.name == "Jeff":
-            Jeff_scaled = True
-        elif item.name == "Poo":
-            Poo_scaled = True
+        if item.name in ["Ness", "Paula", "Jeff", "Poo"]:
+            scaled_chars[item.name] = True
 
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         if num + 1 not in inventory:
@@ -290,33 +291,33 @@ def calculate_scaling(world):
             if location.player == world.player and location.parent_region.name in combat_regions:
                 last_region = location.parent_region.name
 
-            if location.item.player == world.player and location.item.name == "Ness" and not Ness_scaled:
+            if location.item.player == world.player and location.item.name == "Ness" and not scaled_chars["Ness"]:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Ness_region = location.parent_region.name
-                    Ness_scaled = True
                 else:
                     world.Ness_region = last_region
+                scaled_chars["Ness"] = True
 
-            if location.item.player == world.player and location.item.name == "Paula" and not Paula_scaled:
+            if location.item.player == world.player and location.item.name == "Paula" and not scaled_chars["Paula"]:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Paula_region = location.parent_region.name
-                    Paula_scaled = True
                 else:
                     world.Paula_region = last_region
+                scaled_chars["Paula"] = True
 
-            if location.item.player == world.player and location.item.name == "Jeff" and not Jeff_scaled:
+            if location.item.player == world.player and location.item.name == "Jeff" and not scaled_chars["Jeff"]:
                 if location.parent_region.name in combat_regions and location.player == world.player:
-                    Jeff_scaled = True
                     world.Jeff_region = location.parent_region.name
                 else:
                     world.Jeff_region = last_region
+                scaled_chars["Jeff"] = True
 
-            if location.item.player == world.player and location.item.name == "Poo" and not Poo_scaled:
+            if location.item.player == world.player and location.item.name == "Poo" and not scaled_chars["Poo"]:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Poo_region = location.parent_region.name
-                    Poo_scaled = True
                 else:
                     world.Poo_region = last_region
+                scaled_chars["Poo"] = True
         sphere_count = num
 
     for item in range(1, len(inventory)):

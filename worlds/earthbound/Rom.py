@@ -125,6 +125,8 @@ def patch_rom(world, rom, player: int):
     if world.starting_character != "Jeff":
         for i in range(2):
             rom.write_bytes(teleport_learnlevel[world.starting_character][i - 1], bytearray([0x01]))
+    else:
+        rom.write_bytes(0x15F62B, bytearray([0xB5]))
 
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))
