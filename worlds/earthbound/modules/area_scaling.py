@@ -287,6 +287,13 @@ def calculate_scaling(world):
             if location.player == world.player and location.parent_region.name in combat_regions:
                 last_region = location.parent_region.name
 
+            if location.item.player == world.player and location.item.name == "Ness" and not Ness_scaled:
+                if location.parent_region.name in combat_regions and location.player == world.player:
+                    world.Ness_region = location.parent_region.name
+                    Ness_scaled = True
+                else:
+                    world.Ness_region = last_region
+
             if location.item.player == world.player and location.item.name == "Paula" and not Paula_scaled:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Paula_region = location.parent_region.name
@@ -357,6 +364,9 @@ def calculate_scaling(world):
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
+
+    if world.Ness_region == "Ness's Mind":
+        world.Ness_region = world.scaled_area_order[0]
 
     if world.Paula_region == "Ness's Mind":
         world.Paula_region = world.scaled_area_order[0]

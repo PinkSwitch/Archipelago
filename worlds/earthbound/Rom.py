@@ -72,6 +72,26 @@ def patch_rom(world, rom, player: int):
                     13: [0x9C, 0x00, 0x84, 0x17],  # Lost Underworld
                     14: [0x4B, 0x11, 0xAD, 0x18]  # Magicant
     }
+
+    starting_levels = {
+        "Ness": 0x15F5FB,
+        "Paula": 0x15F60F,
+        "Jeff": 0x15F623,
+        "Poo": 0x15F637
+    }
+
+    atm_card_slots = {
+        "Ness": 0x15F5FF,
+        "Paula": 0x15F613,
+        "Jeff": 0x15F629,
+        "Poo": 0x15F63B
+    }
+
+    starting_weapon = {
+        "Ness": [0x15F600, 0x12],
+        "Paula": [0x15F615, 0x1C],
+        "Jeff": [0x15F62A, 0x24]
+    }
     world.start_items = []
     world.handled_locations = []
     
@@ -90,6 +110,11 @@ def patch_rom(world, rom, player: int):
 
     rom.write_bytes(0x01FE91, bytearray(starting_area_coordinates[world.start_location][0:2]))
     rom.write_bytes(0x01FE8B, bytearray(starting_area_coordinates[world.start_location][2:4]))  # Respawn position
+
+    rom.write_bytes(starting_levels[world.starting_character], bytearray([0x03]))
+    rom.write_bytes(atm_card_slots[world.starting_character], bytearray([0xB1]))
+    if world.starting_character != "Poo":
+        rom.write_bytes(starting_weapon[world.starting_character][0], bytearray([starting_weapon[world.starting_character][1]]))
 
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))

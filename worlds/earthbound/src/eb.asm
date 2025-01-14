@@ -3885,7 +3885,7 @@ ORG $D5F5FB
 db $03, $00; Starting level
 
 ORG $D5F600
-db $12
+db $4A
 
 ORG $D5F830
 db $04, $e1, $03, $0a
@@ -5033,7 +5033,7 @@ PHX
 PHA
 CMP #$0001
 BNE .NotNess
-LDA #$0005
+LDA #$0006
 .NotNess:
 DEC
 DEC

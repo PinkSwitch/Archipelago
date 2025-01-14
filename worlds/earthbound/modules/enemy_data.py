@@ -952,8 +952,8 @@ guardian_intro = {
 
 def scale_enemies(world, rom):
     if world.options.auto_scale_party_members:
-        #if world.starting_character != "Ness":
-           # rom.write_bytes(0x????, bytearray([max(levels[world.scaled_area_order.index(world.Ness_region)] + world.random.randint(-3, 3), 1)]))
+        if world.starting_character != "Ness":
+            rom.write_bytes(0x15F5FB, bytearray([max(levels[world.scaled_area_order.index(world.Ness_region)] + world.random.randint(-3, 3), 1)]))
 
         if world.starting_character != "Paula":
             rom.write_bytes(0x15F60F, bytearray([max(levels[world.scaled_area_order.index(world.Paula_region)] + world.random.randint(-3, 3), 1)]))  # Paula starting level
