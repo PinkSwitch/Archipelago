@@ -244,12 +244,27 @@ def calculate_scaling(world):
     world.scaled_area_order = []
     passed_connections = []
     local_prog = []
+    Ness_scaled = False
+    Paula_scaled = False
+    Jeff_scaled = False
+    Poo_scaled = False
     sphere_count = 0
     last_region = "Ness's Mind"
     early_regions = []
+    world.Ness_region = "Ness's Mind"
     world.Paula_region = "Ness's Mind"
     world.Jeff_region = "Ness's Mind"
     world.Poo_region = "Ness's Mind"
+    for item in world.multiworld.precollected_items[world.player]:
+        if item.name == "Ness":
+            Ness_scaled = True
+        elif item.name == "Paula":
+            Paula_scaled = True
+        elif item.name == "Jeff":
+            Jeff_scaled = True
+        elif item.name == "Poo":
+            Poo_scaled = True
+
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         if num + 1 not in inventory:
             inventory[num + 1] = []
@@ -272,21 +287,24 @@ def calculate_scaling(world):
             if location.player == world.player and location.parent_region.name in combat_regions:
                 last_region = location.parent_region.name
 
-            if location.item.player == world.player and location.item.name == "Paula":
+            if location.item.player == world.player and location.item.name == "Paula" and not Paula_scaled:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Paula_region = location.parent_region.name
+                    Paula_scaled = True
                 else:
                     world.Paula_region = last_region
 
-            if location.item.player == world.player and location.item.name == "Jeff":
+            if location.item.player == world.player and location.item.name == "Jeff" and not Jeff_scaled:
                 if location.parent_region.name in combat_regions and location.player == world.player:
+                    Jeff_scaled = True
                     world.Jeff_region = location.parent_region.name
                 else:
                     world.Jeff_region = last_region
 
-            if location.item.player == world.player and location.item.name == "Poo":
+            if location.item.player == world.player and location.item.name == "Poo" and not Poo_scaled:
                 if location.parent_region.name in combat_regions and location.player == world.player:
                     world.Poo_region = location.parent_region.name
+                    Poo_scaled = True
                 else:
                     world.Poo_region = last_region
         sphere_count = num
