@@ -64,6 +64,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Lost Underworld"),
         create_region(world, player, locations_per_region, "Fire Spring"),
         create_region(world, player, locations_per_region, "Magicant"),
+        create_region(world, player, locations_per_region, "Sea of Eden"),
         create_region(world, player, locations_per_region, "Cave of the Present"),
 
         create_region(world, player, locations_per_region, "Global ATM Access"),
@@ -189,7 +190,8 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                                     {"Endgame": lambda state: state.has("Paula", player)})
 
     if world.options.magicant_mode < 2:
-        multiworld.get_region("Magicant", player).add_exits(["Global ATM Access"])
+        multiworld.get_region("Magicant", player).add_exits(["Global ATM Access", "Sea of Eden"],
+                                                            {"Sea of Eden": lambda state: state.has("Ness", player)})
 
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:

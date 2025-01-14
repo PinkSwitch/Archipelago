@@ -399,6 +399,7 @@ levels = [
     31,  # rainy circle
     32,  # summers
     33,  # museum
+    35,  # Moonside
     36,  # magnet hill
     38,  # pink cloud
     39,  # scaraba
@@ -407,12 +408,15 @@ levels = [
     45,  # dungeon man
     47,  # deep darkness
     49,  # deep darkness swamp
+    51, # Happy-Happy HQ
     52,  # stonehenge
+    54,  # Arcade
     56,  # lumine hall
     59,  # lost underworld
     61,  # fire spring
     63,  # magicant
     65,  # cave of the past
+    68, # Sea of Eden
     70,
     73]  # gigyas
 

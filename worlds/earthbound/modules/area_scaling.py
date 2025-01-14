@@ -46,7 +46,8 @@ area_exits = {
     "Lumine Hall": ["Lost Underworld"],
     "Lost Underworld": ["Fire Spring"],
     "Fire Spring": ["Fire Spring"],
-    "Magicant": ["Magicant"],
+    "Magicant": ["Sea of Eden"],
+    "Sea of Eden": ["Sea of Eden"],
     "Cave of the Present": ["Cave of the Past"],
     "Cave of the Past": ["Endgame"],
     "Endgame": ["Endgame"],
@@ -188,7 +189,9 @@ area_rules = {
 
     "Fire Spring": {"Fire Spring": [["Nothing"]]},
 
-    "Magicant": {"Magicant": [["Nothing"]]},
+    "Magicant": {"Sea of Eden": [["Ness"]]},
+
+    "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
 
     "Cave of the Present": {"Cave of the Past": [["Power of the Earth"]]},
 
@@ -353,12 +356,14 @@ def calculate_scaling(world):
     if world.options.magicant_mode == 2 and world.options.giygas_required:
         # If magicant is an alternate goal it should be scaled after Giygas
         world.accessible_regions.remove("Magicant")
+        world.accessible_regions.append("Sea of Eden")
         world.accessible_regions.insert(world.accessible_regions.index("Endgame") + 1, "Magicant")
     elif world.options.magicant_mode == 3 and world.options.giygas_required:
         world.accessible_regions.insert(world.accessible_regions.index("Endgame") - 1, "Magicant")
     elif world.options.magicant_mode == 3 and not world.options.giygas_required:
         # Just add it to the end of scaling
         world.accessible_regions.append("Magicant")
+        world.accessible_regions.append("Sea of Eden")
 
     # calculate which areas need to have enemies scaled
     for region in world.accessible_regions:

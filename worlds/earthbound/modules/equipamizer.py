@@ -705,6 +705,15 @@ def randomize_weapons(world, rom):
     progressive_alls = [
     ]
 
+    starting_weapons = {
+        "Ness": "Tee Ball Bat",
+        "Paula": "Fry Pan",
+        "Jeff": "Pop Gun",
+        "Poo": "None"
+    }
+    
+    starting_weapon = starting_weapons[world.starting_character]
+
     world.weapon_list = {
         "Cracked Bat": EBWeapon("Ness", "Bash", 0x155297),
         "Tee Ball Bat": EBWeapon("Ness", "Bash", 0x1552BE),
@@ -811,8 +820,8 @@ def randomize_weapons(world, rom):
             else:
                 weapon.can_equip = world.random.choice(["Ness", "Paula", "Jeff", "Poo"])
 
-            if item == "Tee Ball Bat":
-                weapon.can_equip = "Ness"
+            if item == starting_weapon:
+                weapon.can_equip = world.starting_character
 
         if weapon.can_equip == "Ness":
             progressive_bats.append(item)
@@ -821,7 +830,7 @@ def randomize_weapons(world, rom):
         elif weapon.can_equip == "Jeff":
             progressive_guns.append(item)
 
-        if item == "Tee Ball Bat" and not world.options.progressive_weapons:
+        if item == starting_weapon and not world.options.progressive_weapons:
             weapon.offense = 10
         else:
             weapon.offense = world.random.randint(1, weapon_cap)
@@ -847,7 +856,7 @@ def randomize_weapons(world, rom):
             weapon.equip_type = "Bash"
 
         chance = world.random.randint(1, 100)
-        if chance < 4 and item != "Tee Ball Bat":
+        if chance < 4 and item != starting_weapon:
             weapon.miss_rate = 12
         else:
             weapon.miss_rate = miss_rates[weapon.can_equip]

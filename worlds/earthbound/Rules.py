@@ -11,6 +11,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
 
     set_rule(world.multiworld.get_location("Onett - Traveling Entertainer", player), lambda state: state.has("Key to the Shack", player))
     set_rule(world.multiworld.get_location("Onett - South Road Present", player), lambda state: state.has("Police Badge", player))
+    set_rule(world.multiworld.get_location("Onett - Tracy Gift", player), lambda state: state.has("Ness", player))
     set_rule(world.multiworld.get_location("Twoson - Paula's Mother", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Twoson - Everdred Meeting", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Twoson - Insignificant Location", player), lambda state: state.has("Insignificant Item", player))
