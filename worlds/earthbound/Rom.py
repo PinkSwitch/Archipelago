@@ -92,6 +92,12 @@ def patch_rom(world, rom, player: int):
         "Paula": [0x15F615, 0x1C],
         "Jeff": [0x15F62A, 0x24]
     }
+
+    teleport_learnlevel = {
+        "Ness": [0x158D53, 0x158D62],
+        "Paula": [0x158D54, 0x158D63],
+        "Poo": [0x158D55, 0x158D64]
+    }
     world.start_items = []
     world.handled_locations = []
     
@@ -115,6 +121,10 @@ def patch_rom(world, rom, player: int):
     rom.write_bytes(atm_card_slots[world.starting_character], bytearray([0xB1]))
     if world.starting_character != "Poo":
         rom.write_bytes(starting_weapon[world.starting_character][0], bytearray([starting_weapon[world.starting_character][1]]))
+
+    if world.starting_character != "Jeff":
+        for i in range(2):
+            rom.write_bytes(teleport_learnlevel[world.starting_character][i - 1], bytearray([0x01]))
 
     if world.options.alternate_sanctuary_goal:
         rom.write_bytes(0x04FD72, bytearray([world.options.sanctuaries_required.value + 2]))

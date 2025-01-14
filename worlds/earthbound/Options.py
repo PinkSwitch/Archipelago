@@ -362,6 +362,13 @@ class EquipamizerStatCap(DefaultOnToggle):
        If disabled, the main stat can potentially roll up to 128."""
     display_name = "Equipamizer Stat Cap"
 
+class MoneyDropMultiplier(Range):
+    """Multiplies money dropped by enemies by the chosen value."""
+    display_name = "Money Drop Multiplier"
+    range_start = 1
+    range_end = 100
+    default = 1
+
 @dataclass
 class EBOptions(PerGameCommonOptions):
     giygas_required: GiygasRequired
@@ -380,6 +387,7 @@ class EBOptions(PerGameCommonOptions):
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
     experience_modifier: ExperienceModifier
+    money_drop_multiplier: MoneyDropMultiplier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
     progressive_weapons: ProgressiveWeapons
@@ -458,7 +466,8 @@ eb_option_groups = [
         DecoupleDiamondDog,
         ShuffleGiygas,
         ExperienceModifier,
-        ShuffleDrops
+        ShuffleDrops,
+        MoneyDropMultiplier
     ]),
 
     OptionGroup("Shop Randomization", [
