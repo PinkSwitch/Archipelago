@@ -8215,7 +8215,7 @@ ORG $D56F2E
 db $00
 
 ORG $D56B93
-db $83, $7f, $7c, $74, $50, $7f, $85, $84, $00; Change the Receiver phone to Sold Out
+db $87, $91, $a2, $a0, $50, $a0, $91, $94, $00; Change the Receiver phone to Sold Out
 
 
 ORG $F41000
@@ -8363,6 +8363,16 @@ dl $C76FEE
 ORG $C885AC
 db $02
 
+ORG $D56BAF
+db $04
+
+ORG $C55715
+db $0A
+dl WarpPadDescription
+
+ORG $C6FFBC
+db $0A
+dl WarpPadUsage
 ;New data table go here
 
 
@@ -9843,7 +9853,7 @@ CMP #$0020
 BEQ .SetShopFlag
 CMP #$0021
 BEQ .ClearAPName
-JML $C17DDC
+JML CheckMoreMoreCommands
 .CheckIfIsBanned:
 JMP .CompareBannedItemList
 .SendGiftPacket:
@@ -10908,6 +10918,25 @@ STA $06
 LDA #$00D7
 STA $08
 JML $C105D3
+
+CheckMoreMoreCommands:
+CMP #$0022
+BEQ CheckIfCanWarp
+JML $C17DDC
+
+CheckIfCanWarp:
+PHX
+LDX $987B
+LDA $9877
+JSL $C00AA1
+PLX
+AND #$0080
+BEQ .CantWarp
+LDA #$0001
+.CantWarp:
+STA $97CC
+LDA #$0000
+JML $C17F0F
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -14353,6 +14382,50 @@ db $1B, $03
 dd NessFlagText
 db $02
 
+WarpPadDescription:
+db $71, $50, $98, $91, $9e, $94, $98, $95, $9c, $94, $50, $a4, $95, $9c, $95, $a0
+db $9f, $a2, $a4, $95, $a2, $50, $92, $a5, $99, $9c, $a4, $50, $92, $a9, $50, $a4
+db $98, $95, $50, $97, $95, $9e, $99, $a5, $a3, $5c, $50, $1c, $02, $03, $5e, $03
+db $00, $70, $89, $9f, $a5, $50, $93, $91, $9e, $50, $a5, $a3, $95, $50, $99, $a4
+db $50, $a4, $9f, $50, $a4, $95, $9c, $95, $a0, $9f, $a2, $a4, $50, $a4, $9f, $50
+db $9b, $9e, $9f, $a7, $9e, $50, $9c, $9f, $93, $91, $a4, $99, $9f, $9e, $a3, $5e
+db $13, $02
+
+WarpPadUsage:
+db $1C, $22, $01
+db $1B, $06
+db $1B, $03
+dd .CantWarp
+db $06, $F2, $02
+dd $C7C865
+db $70
+db $83, $75, $7c, $75, $73, $84, $50, $87, $71, $82, $80, $50, $7d, $7f, $74, $75
+db $01
+db $19, $02
+db $71, $02
+db $19, $02
+db $72, $02
+db $1C, $07, $02
+db $11
+db $12
+db $09, $02
+dd .WarpAccept
+dd .WarpAccept
+db $02
+.WarpAccept:
+db $70, $79, $7e, $80, $85, $84, $50, $89, $7f, $85, $82, $50, $74, $75, $83, $84
+db $79, $7e, $71, $84, $79, $7f, $7e, $10, $06
+db $1B, $04
+db $1A, $0B
+db $1F, $20, $00, $00, $02
+
+
+
+.CantWarp:
+db $70, $84, $98, $95, $50, $a3, $99, $97, $9e, $91, $9c, $50, $99, $a3, $50, $9a
+db $91, $9d, $9d, $95, $94, $5c, $10, $05, $50, $a3, $9f, $50, $a4, $98, $95, $50
+db $1c, $05, $b5, $50, $93, $91, $9e, $9e, $9f, $a4, $50, $92, $95, $50, $a5, $a3
+db $95, $94, $50, $98, $95, $a2, $95, $5e, $13, $02
 
 ORG $F30080
 db $0A, $C3, $B8, $EE
