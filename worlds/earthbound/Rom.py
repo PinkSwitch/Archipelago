@@ -335,6 +335,7 @@ def patch_rom(world, rom, player: int):
         item_id = 0xAD
 
     rom.write_bytes(0x0800C4, bytearray([item_id]))  # Bike shop
+    rom.write_bytes(0x0802EA, bytearray([item_id]))
     
     hintable_locations = [
         location for location in world.multiworld.get_locations()

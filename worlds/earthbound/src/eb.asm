@@ -8373,6 +8373,10 @@ dl WarpPadDescription
 ORG $C6FFBC
 db $0A
 dl WarpPadUsage
+
+ORG $C8FD5B
+db $0A
+dl PokeyCharCount
 ;New data table go here
 
 
@@ -14419,13 +14423,35 @@ db $1B, $04
 db $1A, $0B
 db $1F, $20, $00, $00, $02
 
-
-
 .CantWarp:
 db $70, $84, $98, $95, $50, $a3, $99, $97, $9e, $91, $9c, $50, $99, $a3, $50, $9a
 db $91, $9d, $9d, $95, $94, $5c, $10, $05, $50, $a3, $9f, $50, $a4, $98, $95, $50
 db $1c, $05, $b5, $50, $93, $91, $9e, $9e, $9f, $a4, $50, $92, $95, $50, $a5, $a3
 db $95, $94, $50, $98, $95, $a2, $95, $5e, $13, $02
+
+
+PokeyCharCount:
+db $08
+dd .CountChars
+db $0A
+dl $C8FD5F
+
+.CountChars:
+db $19, $20
+db $09, $04
+dd .One
+dd .Two
+dd .Three
+dd .Four
+.One:
+db $02
+.Two:
+db $A4, $A7, $9F, $50, $02
+.Three:
+db $A4, $98, $A2, $95, $95, $50, $02
+.Four:
+db $96, $9F, $A5, $A2, $50, $02
+
 
 ORG $F30080
 db $0A, $C3, $B8, $EE
