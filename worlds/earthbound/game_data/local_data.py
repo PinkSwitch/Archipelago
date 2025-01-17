@@ -531,7 +531,7 @@ check_table = {
 }
 
 location_dialogue = {  # Locations which just need to print the name of the item
-    "Onett - Tracy Gift": [0x07616B],
+    "Onett - Tracy Gift": [0x07616B, 0x330478],
     "Onett - Meteor Item": [0x0862C3],
     "Onett - Library Counter": [0x05EC0C],
     "Onett - Library Bookshelf": [0x2EBA66],
@@ -1201,7 +1201,8 @@ client_specials = {
     0x010E: 0x10,
     0x010F: 0x11,
     0x0110: 0x12,
-    0x0111: 0x13
+    0x0111: 0x13,
+    0x0112: 0x15
 }
 
 
