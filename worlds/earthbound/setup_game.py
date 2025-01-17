@@ -541,3 +541,4 @@ def place_static_items(world):
             world.get_location("Fourside Department Store - Tool Shop Slot 7").place_locked_item(world.create_item("Ruler"))
             world.get_location("Fourside Department Store - Shop Shop Slot 3").place_locked_item(world.create_item("Protein Drink"))
             world.get_location("Fourside Department Store - Food Shop Slot 5").place_locked_item(world.create_item("Picnic Lunch"))
+            world.get_location("Dusty Dunes Drugstore - Left Shop Slot 1").place_locked_item(world.create_item("Wet Towel"))

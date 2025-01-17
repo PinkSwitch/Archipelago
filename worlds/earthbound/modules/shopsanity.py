@@ -415,3 +415,4 @@ def write_shop_checks(world, rom, shop_checks):
                     rom.write_bytes(0x157775, bytearray([0x8C]))
                     rom.write_bytes(0x157778, bytearray([0x6C]))
                     rom.write_bytes(0x157781, bytearray([0x5D]))
+                    rom.write_bytes(0x157848, bytearray([0x7F])) #DD Drugstore left counter 1
