@@ -8414,6 +8414,7 @@ dl DisplayRobots
 ORG $C811B3
 db $0A
 dl OrangeKidCrowdfund
+
 ;New data table go here
 
 
@@ -14554,7 +14555,6 @@ db $1C, $04
 db $1f, $00, $00, $7b
 db $0A
 dl PooReturnReal
-
 
 ORG $F30080
 db $0A, $C3, $B8, $EE
