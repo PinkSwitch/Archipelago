@@ -229,10 +229,12 @@ class EarthBoundClient(SNIClient):
         # We're in the Gift selection menu. This should write the selected player's name into RAM
         # for parsing.
         # TODO; CHECK A SETNOTIFY HERE
-        if gift_target[0] != 0x00 and motherbox is not None:
-            gift_recipient = str(gift_target[0])
-            recip_name = ctx.player_names[gift_target[0]]
-            recip_name = get_alias(recip_name, ctx.slot_info[gift_target[0]].name)
+        gift_target = int.from_bytes(gift_target, byteorder = "little")
+
+        if gift_target != 0x00 and motherbox is not None:
+            gift_recipient = str(gift_target)
+            recip_name = ctx.player_names[gift_target]
+            recip_name = get_alias(recip_name, ctx.slot_info[gift_target].name)
             recip_name = text_encoder(recip_name, 20)
             if gift_recipient in motherbox and motherbox[gift_recipient]["IsOpen"]:
                 recip_name.extend(text_encoder(" (Open)", 20))
@@ -300,7 +302,7 @@ class EarthBoundClient(SNIClient):
         for i in range(6):
             if scouted_hint_flags[0] & hint_bits[i]:
                 scoutable_hint = await snes_read(ctx, HINT_SCOUNT_IDS + (i * 2), 2)
-                scoutable_hint = scoutable_hint[0] + 0xEB0000
+                scoutable_hint = (int.from_bytes(scoutable_hint, byteorder = "little") + 0xEB0000)
 
                 if i not in self.hint_list:
                     self.hint_list.append(i)

@@ -269,7 +269,10 @@ def text_encoder(text, textcap):
 def calc_pixel_width(text):
     width = 0
     for char in text:
-        width += pixel_width_table[char]
+        if char in pixel_width_table:
+            width += pixel_width_table[char]
+        else:
+            width += 4
         width += 1
     width -= 1
     return width
