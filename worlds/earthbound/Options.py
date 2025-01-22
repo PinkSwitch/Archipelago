@@ -137,7 +137,7 @@ class ProgressiveWeapons(Toggle):
 
 class ProgressiveArmor(Toggle):
     """If enabled, Bracelets and items for the Other slot besides Ribbons will be progressive. Does not apply to items dropped by enemies or found in shops."""
-    display_name = "Progressive Weapons"
+    display_name = "Progressive Armor"
 
 
 class PresentSprites(DefaultOnToggle):
