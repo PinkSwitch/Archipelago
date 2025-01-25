@@ -194,7 +194,7 @@ def shuffle_psi(world):
         "Paralysis": ["Broken razor", "Broken fan"],
         "Offense Up": ["Broken faucet", "Broken tuba"],
         "Defense Down": ["Broken sprinkler", "Broken trombone"],
-        "Brainshock": ["Broken microwave", "Broken fryer"],
+        "Brainshock": ["Broken toaster", "Broken fryer"],
         "Defense up": ["Broken nozzle", "Broken trumpet"],
         "Drain": ["Broken hose", "Broken tube"],
         "Disable": ["Broken machine", "Broken device"],
