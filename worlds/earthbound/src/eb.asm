@@ -1002,6 +1002,7 @@ ORG $C573C1
 db $0A,$DC,$73,$C5,$00
 
 ORG $C573DC
+;CLEANUP: can I subrotuine here
 db $18, $01, $01, $70, $83, $9f, $5c, $50, $9e, $9f, $a7, $50, $79, $50, $a7, $99
 db $9c, $9c, $50, $a4, $95, $91, $93, $98, $50, $a9, $9f, $a5, $50, $a4, $98, $95
 db $50, $a3, $95, $93, $a2, $95, $a4, $50, $9f, $96, $50, $9d, $a9, $50, $a0, $9f
@@ -2549,8 +2550,8 @@ db $0A, $43, $A0, $EE
 
 ORG $EEA043
 db $18, $01, $01, $70, $74, $99, $94, $50, $a9, $9f, $a5, $50, $92, $a2, $99, $9e
-db $97, $50, $91, $9e, $a9, $50, $52, $84, $95, $9e, $94, $91, $9b, $a2, $91, $a5
-db $a4, $52, $6f, $03, $00, $70, $79, $a4, $57, $a3, $50, $a4, $98, $95, $50, $a0
+db $97, $50, $a4, $98, $95, $50, $6C, $1C, $05, $01, $0a, $64, $a0, $ee, $00, $00
+db $00, $6E, $6f, $03, $00, $70, $79, $a4, $57, $a3, $50, $a4, $98, $95, $50, $a0
 db $95, $a2, $96, $95, $93, $a4, $50, $a3, $9e, $91, $93, $9b, $50, $96, $9f, $a2
 db $50, $a0, $9c, $9f, $a4, $a4, $99, $9e, $97, $50, $a7, $9f, $a2, $9c, $94, $50
 db $94, $9f, $9d, $99, $9e, $91, $a4, $99, $9f, $9e, $5e, $03, $00, $0a, $b0, $61
@@ -4088,7 +4089,8 @@ db $95, $a0, $9f, $a2, $a4, $50, $a4, $9f, $50, $a4, $98, $95, $50, $7c, $9f, $a
 db $a4, $50, $85, $9e, $94, $95, $a2, $a7, $9f, $a2, $9c, $94, $51, $59, $04, $dc
 db $00, $02, $1f, $02, $67, $10, $30, $01, $70, $58, $1c, $02, $04, $50, $9c, $95
 db $91, $a2, $9e, $95, $94, $50, $98, $9f, $a7, $50, $a4, $9f, $50, $a5, $a3, $95
-db $06, $d1, $03, $36, $ae, $ee, $ff, $1c, $12, $15, $51, $59, $1f, $71, $04, $02
+db $06, $d1, $03, $36, $ae, $ee, $ff, $1c, $12, $15, $51, $59, $0A
+dl SetNpcPooPSIFlag
 db $02, $1c, $12, $16, $51, $59, $1f, $71, $04, $03, $02
 db $0A
 dl NPCPaulaTex
@@ -9061,7 +9063,7 @@ db $1E, $0E, $04, $05, $03, $02
 db $06, $69, $00
 dd $00C74207
 db $70, $58, $1c, $02, $01
-db $0A, $A9, $69, $C7
+db $0A, $AD, $69, $C7
 
 ;new text go here
 db $19, $10, $01
@@ -9457,6 +9459,10 @@ db $18, $04, $1f, $00, $00, $0b, $10, $78, $50, $08, $10, $F8, $D5, $00, $1f, $0
 db $18, $01, $01, $70, $1c, $02, $01, $50, $9a, $9f, $16, $b9, $94, $15, $a8, $03
 db $18, $04, $1f, $11, $01, $02
 db $02
+
+SetNpcPooPSIFlag:
+db $04, $D1, $03
+db $1f, $71, $04, $02
 
 
 ;FOR TESTING!!!!
@@ -11001,78 +11007,78 @@ JML $C17F0F
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-;JML APShopHandler;This JML is only in AP patch
+JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-;JML GetAPShopName
+JML GetAPShopName
 
 ORG $C19E8F
-;JML GetAPShopPrice
+JML GetAPShopPrice
 
 ORG $C11AC6
-;JML DisplayAPPlayer
+JML DisplayAPPlayer
 
 ORG $C19EDD
-;JML TransferOutOfMenu
+JML TransferOutOfMenu
 
 org $C19ED3
-;JML CheckIfBuyable
-;NOP
-;NOP
+JML CheckIfBuyable
+NOP
+NOP
 
 ORG $C19B66
-;JML OverrideShopWindowFX
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
-;db $08
-;dd CheckShopsanityPrice
+db $08
+dd CheckShopsanityPrice
 
 ORG $C19DA0
-;JML PreserveWindowPalette
+JML PreserveWindowPalette
 
 ORG $C5E0B6
-;db $08
-;dd BoughtShopsanityItemScript
+db $08
+dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-;db $0A
-;dl ShopsanityPurchaseHandler
+db $0A
+dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-;dl ShopsanityPurchaseHandler
+dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+dd CancelBuyRemoveName
 
 ORG $C50A6A
-;db $0A
-;dl BackupShopEquipText
+db $0A
+dl BackupShopEquipText
 
 ORG $C50B4C
-;db $0A
-;dl BackupShopSellText
+db $0A
+dl BackupShopSellText
 
 ORG $C50C2E
-;db $0A
-;dl BackupShopCantEquip
+db $0A
+dl BackupShopCantEquip
 
 ORG $C5E04C
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_oneslot
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $02, $ff, $ff, $00, $00, $00; Non-remote local item. Franklin Badge.
+db $03, $0f, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
 ;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
 ;db $96, $ff, $ff, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
@@ -11116,11 +11122,15 @@ db $0B, $05
 db $1B, $03
 dd .RemoteItem
 .CheckRemotePrice:
-db $1D, $14, $00, $00, $00, $00
+db $08
+dd $C5E254
 db $1B, $03
 dd .CantAffordSpecial
-db $0A
-dl .RegularPrice
+db $1B, $01
+db $1B, $04
+db $1B, $00
+db $1d, $19, $01
+db $02
 
 .NormalItem:
 ;Write a code here that checks if the item is in the banlist
@@ -11380,7 +11390,7 @@ db $0A
 dl .FinishGive
 .GivePoo:
 db $1B, $01
-db $1D, $0E, $03, $00
+db $1D, $0E, $04, $00
 db $0A
 dl .FinishGive
 .FinishGive:

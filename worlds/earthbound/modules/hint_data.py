@@ -192,6 +192,10 @@ def setup_hints(world):
     for item in world.options.start_inventory_from_pool:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
+
+    for item in world.options.start_hints:
+        if item in world.local_hintable_items:
+            world.local_hintable_items.remove(item)
             
     world.local_hintable_items.remove(world.starting_character)
 

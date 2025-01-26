@@ -976,6 +976,8 @@ def scale_enemies(world, rom):
                       "Lumine Hall", "Fire Spring"]:
             rom.write_bytes(guardian_intro[region], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
+        if region in [world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region]:
+            print("pog")
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 # print(f"{enemy.name} {level}")

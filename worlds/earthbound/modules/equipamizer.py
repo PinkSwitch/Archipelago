@@ -269,7 +269,8 @@ royal_names = [
     "of barons",
     "of lords",
     "of sultans",
-    "of counts"
+    "of counts",
+    "of England"
 ]
 
 
@@ -680,9 +681,9 @@ def randomize_weapons(world, rom):
     weapon_names = {
         "Ness": ["bat", "stick", "club", "board", "racket", "cue", "pole", "paddle"],
         "Paula": ["fry pan", "frypan", "skillet", "whisk", "saucepan", "pin"],
-        "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver"],
+        "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver", "shotgun"],
         "Poo": ["Sword", "Katana", "Knife", "Scisscors", "Cutter", "Blade", "Chisel", "Saw", "Axe"],
-        "All": ["Yo-yo", "Slingshot"]
+        "All": ["Yo-yo", "Slingshot", "Boomerang"]
     }
 
     miss_rates = {
