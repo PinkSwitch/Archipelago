@@ -101,6 +101,7 @@ def setup_hints(world):
         "Sea Pendant",
         "Shyness Book",
         "Hawk Eye",
+        "Ness"
         "Paula",
         "Jeff",
         "Poo",
@@ -191,6 +192,8 @@ def setup_hints(world):
     for item in world.options.start_inventory_from_pool:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
+
+    world.local_hintable_items.remove(world.starting_character)
 
     if world.local_hintable_items == []:
         hint_types.remove("hint_for_good_item")
