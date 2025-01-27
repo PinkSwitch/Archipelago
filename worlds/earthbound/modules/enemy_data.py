@@ -1,4 +1,5 @@
 from typing import Dict
+from collections import Counter
 import struct
 import math
 
@@ -956,6 +957,7 @@ guardian_intro = {
 
 
 def scale_enemies(world, rom):
+    additional_party_members = 0
     if world.options.auto_scale_party_members:
         if world.starting_character != "Ness":
             rom.write_bytes(0x15F5FB, bytearray([max(levels[world.scaled_area_order.index(world.Ness_region)] + world.random.randint(-3, 3), 1)]))
@@ -970,14 +972,17 @@ def scale_enemies(world, rom):
             rom.write_bytes(0x15F637, bytearray([max(levels[world.scaled_area_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
 
     melody_number = 1
+    c = Counter([world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region])
+    print(c)
     for region, level in zip(world.scaled_area_order, levels):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
                       "Lumine Hall", "Fire Spring"]:
             rom.write_bytes(guardian_intro[region], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
-        if region in [world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region]:
-            print("pog")
+
+        if region in c:
+            additional_party_members += c[region]
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 # print(f"{enemy.name} {level}")
