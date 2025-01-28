@@ -463,8 +463,8 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
     "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 200: "beta"},
     "flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
-    "blast": {10: "zeta", 20: "epislon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
-    "missile": {05: "zeta", 12: "epsilon": 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
+    "blast": {10: "zeta", 20: "epsilon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
+    "missile": {5: "zeta", 12: "epsilon": 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
     # Todo; blast/missile delta and lambda
     # "blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
 
