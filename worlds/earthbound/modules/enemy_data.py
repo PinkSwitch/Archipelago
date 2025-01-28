@@ -463,8 +463,8 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
     "starstorm_minus": {12: "zeta", 20: "epsilon", 45: "delta", 70: "lambda", 100: "alpha", 200: "beta"},
     "flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
-    "blast": {30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
-    "missile": {20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
+    "blast": {10: "zeta", 20: "epislon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
+    "missile": {05: "zeta", 12: "epsilon": 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
     # Todo; blast/missile delta and lambda
     # "blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
 
@@ -850,16 +850,16 @@ spell_data = {
         "beta": [0x1F, 0x00, 0x16]
     },
     "blast": {
-        "zeta": [0x00, 0x00, 0x00],
-        "epsilon": [0x00, 0x00, 0x00],
+        "zeta": [0xF7, 0x01, 0x58],
+        "epsilon": [0xF8, 0x01, 0x59],
         "alpha": [0xA4, 0x01, 0x46],
         "beta": [0xA5, 0x01, 0x47],
         "gamma": [0xA6, 0x01, 0x48],
         "omega": [0xA7, 0x01, 0x48]
     },
     "missile": {
-        "zeta": [0x00, 0x00, 0x00],
-        "epsilon": [0x00, 0x00, 0x00],
+        "zeta": [0xF9, 0x01, 0x5A],
+        "epsilon": [0xFA, 0x01, 0x5B],
         "alpha": [0xA8, 0x01, 0x4A],
         "beta": [0xA9, 0x01, 0x4B],
         "gamma": [0xAA, 0x01, 0x4C],
@@ -973,7 +973,6 @@ def scale_enemies(world, rom):
 
     melody_number = 1
     c = Counter([world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region])
-    print(c)
     for region, level in zip(world.scaled_area_order, levels):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
@@ -981,12 +980,12 @@ def scale_enemies(world, rom):
             rom.write_bytes(guardian_intro[region], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
 
-        if region in c:
-            additional_party_members += c[region]
+        additional_party_members += c[region]
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 # print(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
+                enemy_hp = int(enemy_hp + (enemy_hp * (0.25 * (additional_party_members - 1))))
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
                 enemy_money = min(65535, int((enemy.money * level / enemy.level) * world.options.money_drop_multiplier))

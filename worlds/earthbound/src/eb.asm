@@ -261,6 +261,9 @@ JML GetRandomizedTrack
 ORG $C105C9
 JML LoadExpandedWindowTable
 
+ORG $C2A5B2
+JSL early_missile_damage
+
 ;new jmls
 
 
@@ -9462,7 +9465,7 @@ db $02
 
 SetNpcPooPSIFlag:
 db $04, $D1, $03
-db $1f, $71, $04, $02
+db $1f, $71, $04, $02, $02
 
 
 ;FOR TESTING!!!!
@@ -11007,72 +11010,72 @@ JML $C17F0F
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-JML APShopHandler;This JML is only in AP patch
+;JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-JML GetAPShopName
+;JML GetAPShopName
 
 ORG $C19E8F
-JML GetAPShopPrice
+;JML GetAPShopPrice
 
 ORG $C11AC6
-JML DisplayAPPlayer
+;JML DisplayAPPlayer
 
 ORG $C19EDD
-JML TransferOutOfMenu
+;JML TransferOutOfMenu
 
 org $C19ED3
-JML CheckIfBuyable
-NOP
-NOP
+;JML CheckIfBuyable
+;NOP
+;NOP
 
 ORG $C19B66
-JML OverrideShopWindowFX
+;JML OverrideShopWindowFX
 
 ORG $C5E0A9
-db $08
-dd CheckShopsanityPrice
+;db $08
+;dd CheckShopsanityPrice
 
 ORG $C19DA0
-JML PreserveWindowPalette
+;JML PreserveWindowPalette
 
 ORG $C5E0B6
-db $08
-dd BoughtShopsanityItemScript
+;db $08
+;dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-db $0A
-dl ShopsanityPurchaseHandler
+;db $0A
+;dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-dl ShopsanityPurchaseHandler
+;dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-db $0A
-dl OverrideSpaceCheckOnSpecialItem
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_nosell
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-dd CancelBuyRemoveName
+;dd CancelBuyRemoveName
 
 ORG $C50A6A
-db $0A
-dl BackupShopEquipText
+;db $0A
+;dl BackupShopEquipText
 
 ORG $C50B4C
-db $0A
-dl BackupShopSellText
+;db $0A
+;dl BackupShopSellText
 
 ORG $C50C2E
-db $0A
-dl BackupShopCantEquip
+;db $0A
+;dl BackupShopCantEquip
 
 ORG $C5E04C
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_oneslot
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 
 
@@ -12478,7 +12481,21 @@ db $00, $04, $05, $00
 dd $00ef9e05
 dd $00C299EF
 ;;;;;;;;;;
+db $00, $01, $03, $01
+dd $00EF8543;Blast Zeta
+dd blast_zeta
 
+db $00, $01, $03, $03
+dd $00EF8543;Blast Epsilon
+dd blast_epsilon
+;;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $03, $05
+dd $00EF8543;Missile Zeta
+dd missile_zeta
+
+db $00, $01, $03, $05
+dd $00EF8543;Missile Epsilon
+dd missile_epsilon
 
 
 ;New battle text
@@ -13090,6 +13107,43 @@ dw $00B3 ;Epsilon
 dw $00B4 ;Delta
 dw $00B5 ;Lambda
 
+blast_zeta:
+REP #$31
+LDA #$0016
+JSR blast_common
+RTL
+
+blast_epsilon:
+REP #$31
+LDA #$002D
+JSR blast_common
+RTL
+
+missile_zeta:
+REP #$31
+LDA #$0001
+STA $B5EB
+JSR missile_common
+STZ $B5EB
+RTL
+
+missile_epsilon:
+REP #$31
+LDA #$0003
+STA $B5EB
+JSR missile_common
+STZ $B5EB
+RTL
+
+early_missile_damage:
+PHA
+LDA $B5EB
+BEQ late_missile_damage
+LDY #$0019
+late_missile_damage:
+PLA
+JML $C08FF7
+
 
 
 
@@ -13346,6 +13400,18 @@ db $02, $E5, $01, $00, $00, $00, $09, $00, $BD, $E5, $EE, $FF
 
 db $19, $05, $04;neutralize o
 db $02, $E6, $01, $00, $00, $00, $09, $00, $FA, $E5, $EE, $FF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $13, $06, $01;blast z
+db $02, $A4, $01, $00, $00, $00, $09, $00, $1C, $D2, $EE, $FF
+
+db $13, $07, $01;blast e
+db $02, $A5, $01, $00, $00, $00, $0B, $00, $6C, $D2, $EE, $FF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $14, $06, $01;missile z
+db $02, $A8, $01, $00, $00, $00, $09, $00, $5F, $D3, $EE, $FF
+
+db $14, $07, $01;missile e
+db $02, $A8, $01, $00, $00, $00, $09, $00, $5F, $D3, $EE, $FF
 
 
 ;;;;;;;;;;;;;;;
@@ -13358,7 +13424,7 @@ ORG $EF8580
 db $0A, $00, $00, $FB
 
 ORG $FB0000
-db $1F, $C0, $57; number of anims
+db $1F, $C0, $5B; number of anims
 
 ORG $FB00CB
 dd $00EF88E9; Teleport 1. change to a $02
@@ -13411,7 +13477,13 @@ dd $00EF88E9;Stop omega
 
 dd neutralize_anim;Neutralize alpha
 dd $00EF88E9;Neutralize omega
-;TODO;Fix/change animations to not be Jeff-ified
+
+dd blast_alpha_anim;Blast alpha
+dd blast_alpha_anim;Blast beta
+
+dd missile_alpha_anim;Missile Zeta
+dd missile_alpha_anim;Missile Epsilon
+
 db $02
 
 PSINameTable:

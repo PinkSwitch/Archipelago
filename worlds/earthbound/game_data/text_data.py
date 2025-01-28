@@ -201,7 +201,10 @@ lumine_hall_text = [
     "Well, that's never happened before...",
     "99 bottles of DXWater on the wall, 99 bottles of DXWater. Take one down, pass it around, 98 bottles of DXWater on the wall!",
     "After all these years. Finally, I have them all.",
-    "If there were two guys on the moon and one killed the other with a rock would that be screwed up or what"
+    "If there were two guys on the moon and one killed the other with a rock would that be screwed up or what",
+    "Help, I'm trapped in a Lumine Hall factory!",
+    "They say that Ice Palace can be found at Ice Palace...",
+    "Hey Mom, I'm in AP!",
 ]
 
 spoiler_psi = {
