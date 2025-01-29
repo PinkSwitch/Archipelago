@@ -20,6 +20,7 @@ from .modules.equipamizer import randomize_armor, randomize_weapons
 from .modules.music_rando import music_randomizer
 from .modules.palette_shuffle import randomize_psi_palettes
 from .modules.shopsanity import write_shop_checks
+from .modules.enemy_shuffler import apply_enemy_shuffle
 from .game_data.static_location_data import location_groups
 from BaseClasses import ItemClassification
 from typing import TYPE_CHECKING, Optional
@@ -699,6 +700,7 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x17FD44, paula_start_exp)
         rom.write_bytes(0x17FD48, jeff_start_exp)
         rom.write_bytes(0x17FD4C, poo_start_exp)
+        apply_enemy_shuffle(rom)
         return rom.get_bytes()
 
 
