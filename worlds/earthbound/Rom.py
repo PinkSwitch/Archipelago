@@ -286,7 +286,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x15F63C, bytearray([0x00]))  # Don't give anything if the item doesn't have a tangible ID
 
                 if item in special_name_table and location.item.player == location.player:  # Apply a special script if teleport or character
-                    rom.write_bytes(0x15F7D4, bytearray(special_name_table[item][1:4])) #This might be offset, check if it is
+                    rom.write_bytes(0x15F765, bytearray(special_name_table[item][1:4])) #This might be offset, check if it is
                     rom.write_bytes(0x2EC618, bytearray([special_name_table[item][4]]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
 
