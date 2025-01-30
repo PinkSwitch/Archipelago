@@ -284,7 +284,7 @@ def parse_hint_data(world, location, rom, hint):
             player_text = text_encoder("\n", 255)
         
         if hint == "hint_for_good_item":
-            location_text = text_encoder(f"at {location.name}.", 255)
+            location_text = text_encoder(f"@at {location.name}.", 255)
             # your [item] can be found by [player] at [location]
 
         else:
