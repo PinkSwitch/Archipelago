@@ -369,6 +369,10 @@ class MoneyDropMultiplier(Range):
     range_end = 100
     default = 1
 
+class EnemyShuffle(Toggle):
+    """Shuffles Non-boss enemies amongst each other."""
+    display_name = "Enemy Shuffle"
+
 @dataclass
 class EBOptions(PerGameCommonOptions):
     giygas_required: GiygasRequired
@@ -383,6 +387,7 @@ class EBOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
     psi_shuffle: PSIShuffle
     allow_flash_as_favorite_thing: BanFlashFavorite
+    enemy_shuffle: EnemyShuffle
     boss_shuffle: BossShuffle
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
@@ -462,6 +467,7 @@ eb_option_groups = [
     ]),
 
     OptionGroup("Enemy Randomization", [
+        EnemyShuffle,
         BossShuffle,
         DecoupleDiamondDog,
         ShuffleGiygas,

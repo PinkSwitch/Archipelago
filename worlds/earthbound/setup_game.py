@@ -4,6 +4,7 @@ from .game_data.text_data import lumine_hall_text, eb_text_table, text_encoder
 from .game_data.local_data import item_id_table
 from .modules.psi_shuffle import shuffle_psi
 from .modules.boss_shuffle import initialize_bosses
+from .modules.enemy_shuffler import shuffle_enemies
 
 
 def setup_gamevars(world):
@@ -545,6 +546,7 @@ def setup_gamevars(world):
     world.credits_player.extend([0x00])
     shuffle_psi(world)
     initialize_bosses(world)
+    shuffle_enemies(world)
 
 
 def place_static_items(world):

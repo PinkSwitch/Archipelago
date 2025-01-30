@@ -559,6 +559,7 @@ def patch_rom(world, rom, player: int):
     if world.options.randomize_psi_palettes:
         randomize_psi_palettes(world, rom)
 
+    apply_enemy_shuffle(world, rom)
     write_bosses(world, rom)
     calculate_scaling(world)
     if world.options.shop_randomizer:
@@ -700,7 +701,6 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x17FD44, paula_start_exp)
         rom.write_bytes(0x17FD48, jeff_start_exp)
         rom.write_bytes(0x17FD4C, poo_start_exp)
-        apply_enemy_shuffle(rom)
         return rom.get_bytes()
 
 
