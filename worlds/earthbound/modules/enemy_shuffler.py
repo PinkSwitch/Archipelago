@@ -300,22 +300,22 @@ enemy_descriptions = {
     "Bad Buffalo": "It really is a bad kind of buffalo.",
     "Black Antoid": "Be careful not to step on him.",
     "Red Antoid": "Collectors dig that bright red hue.",
-    "Ramblin' Evil Mushroom": 
-    "Struttin' Evil Mushroom":
-    "Mobile Sprout":
-    "Tough Mobile Sprout":
-    "Enraged Fire Plug":
-    "Mystical Record":
-    "Atomic Power Robot":
-    "Nuclear Reactor Robot":
+    "Ramblin' Evil Mushroom": "He is a really fun guy.",
+    "Struttin' Evil Mushroom": "Watch the spores!",
+    "Mobile Sprout": "The next evolution of plant.",
+    "Tough Mobile Sprout": "This plant is actually made of stainless steel.",
+    "Enraged Fire Plug": "A little hot-tempered.",
+    "Mystical Record": "It has all your least favorite songs.",
+    "Atomic Power Robot": "Handle with care!",
+    "Nuclear Reactor Robot": "Handle with care!",
     "Guardian Hieroglyph": "I found him at the Pyramid north of here.",
     "Lethal Asp Hieroglyph": "I found him at the Pyramid north of here.",
-    "Electro Swoosh":
-    "Conducting Menace": 
-    "Conducting Spirit":
-    "Evil Elemental":
+    "Electro Swoosh": "Don't stare directly at it.",
+    "Conducting Menace": "Shield your eyes from his light.",
+    "Conducting Spirit": "Shield your eyes from his light.",
+    "Evil Elemental": "What is the element of evil?",
     "Annoying Old Party Man":
-    "Annoying Reveler:"
+    "Annoying Reveler": "This is my friend, Dave.",
     "Unassuming Local Guy":
     "New Age Retro Hippie": "I like him better than the Old Age Modern Urbanite.",
     "Mighty Bear":
@@ -328,15 +328,15 @@ enemy_descriptions = {
     "Chomposaur":
     "Gigantic Ant":
     "Scalding Coffee Cup":
-    "Loaded Dice":
+    "Loaded Dice": "Always fun at parties.",
     "Even Slimier Little Pile": "Smells worse than the Slimy Little Pile.",
     "Arachnid!":
-    "Arachnid!!!":
-    "Bionic Kraken":
+    "Arachnid!!!": "How did it get the extra exclamation points?",
+    "Bionic Kraken": "The bionics make better soup.",
     "Spinning Robo":
     "Whirling Robo":
     "Hyper Spinning Robo":
-    "Cop":
+    "Cop": "He said I wasn't paying taxes.",
     "Coil Snake":
     "Thirsty Coil Snake":
     "Mr. Batty"
@@ -349,20 +349,20 @@ enemy_descriptions = {
     "Skate Punk": "I saw him do a sick flip once.",
     "Skelpion":
     "Dread Skelpion":
-    "Starman":
+    "Starman": "Famous for their fan-made websites.",
     "Starman Super": "My own personal sword farm.",
     "Ghost of Starman": "Are Starmen aliens or robots, anyways?",
     "Smilin' Sphere":
     "Uncontrollable Sphere": "Fortunately, these ones are controlled",
     "Petrified Royal Guard":
     "Final Starman":
-    "Urban Zombie":
-    "Zombie Possessor":
+    "Urban Zombie": "An import from the big city.",
+    "Zombie Possessor": "Did you hear something just now?",
     "Zombie Dog":
     "Crooked Cop":
-    "Over Zealous Cop:
-    "Territorial Oak":
-    "Hostile Elder Oak":
+    "Over Zealous Cop":
+    "Territorial Oak": "Don't worry, this one is just a model.",
+    "Hostile Elder Oak": "Don't worry, this one is just a model.",
     "Marauder Octobot":
     "Military Octobot":
     "Mechanical Octobot":
@@ -382,9 +382,9 @@ enemy_descriptions = {
     "Great Crested Booka":
     "Lesser Mook":
     "Mook Senior":
-    "Smelly Ghost":
-    "Stinky Ghost":
-    "Attack Slug":
+    "Smelly Ghost": "This exhibit needs some air freshener.",
+    "Stinky Ghost": "This exhibit needs some air freshener.",
+    "Attack Slug": "Cute when alone.",
     "Pit Bull Slug":
     "Rowdy Mouse":
     "Deadly Mouse"
@@ -406,7 +406,7 @@ enemy_descriptions = {
     "Pogo Punk":
     "Tough Guy": "Likes to chew gum and kick butt.",
     "Mad Taxi": "It has surprisingly good mental health.",
-    "Mr. Molecule":
+    "Mr. Molecule": "His whole family is here.",
     "Worthless Protoplasm":
     "Sentry Robot":
     "Psychic Psycho":
@@ -419,16 +419,156 @@ enemy_descriptions = {
     "High-class UFO":
     "Noose Man": "How was this approved for a family game?",
     "Robo-pump":
-    "Plain Crocodile":
+    "Plain Crocodile": "Also known as the vanilla crocodile.",
     "Strong Crocodile":
-    "Hard Crocodile":
-    "No Good Fly":
-    "Mostly Bad Fly":
-    "Spiteful Crow":
-    "Farm Zombie":
-    "Criminal Caterpillar": "He is wanted in seventeen countried for his crimes.",
-    "Evil Eye":
-    "Master Criminal Worm":
+    "Hard Crocodile": "Slightly harder than the soft crocodile.",
+    "No Good Fly": "They are often mistaken for bees.",
+    "Mostly Bad Fly": "He's not all bad.",
+    "Spiteful Crow": "Keep your valuables in your pocket!",
+    "Farm Zombie": "Easily subdued by plants.",
+    "Criminal Caterpillar": "He is wanted in seventeen countries for his crimes.",
+    "Evil Eye": "Third-year staring contest champion.",
+    "Master Criminal Worm": "He is wanted in seventeen countries for his crimes."
+}
+
+enemy_sprites = {
+    "Insane Cultist": 0x0065,
+    "Armored Frog": 0x0118,
+    "Bad Buffalo": 0x0137,
+    "Black Antoid": 0x013C,
+    "Red Antoid": 0x013C,
+    "Ramblin' Evil Mushroom": 0x0123,
+    "Struttin' Evil Mushroom": 0x0123,
+    "Mobile Sprout": 0x013D,
+    "Tough Mobile Sprout": 0x013D,
+    "Enraged Fire Plug": 0x0117,
+    "Mystical Record": 0x00C3,
+    "Atomic Power Robot": 0x0132,
+    "Nuclear Reactor Robot": 0x0132,
+    "Guardian Hieroglyph": 0x0145,
+    "Lethal Asp Hieroglyph": 0x0140,
+    "Electro Swoosh": 0x0114,
+    "Conducting Menace": 0x0144,
+    "Conducting Spirit": 0x0144,
+    "Evil Elemental": 0x0117,
+    "Annoying Old Party Man": 0x0187,
+    "Annoying Reveler": 0x0187,
+    "Unassuming Local Guy": 0x0184,
+    "New Age Retro Hippie": 0x0185,
+    "Mighty Bear": 0x014B,
+    "Mighty Bear Seven": 0x014B,
+    "Putrid Moldyman": 0x011D,
+    "Thunder Mite": 0x0144,
+    "Cranky Lady": 0x0188,
+    "Extra Cranky Lady": 0x0188,
+    "Wetnosaur": 0x012A,
+    "Chomposaur": 0x0138,
+    "Gigantic Ant": 0x0139,
+    "Scalding Coffee Cup": 0x00C3,
+    "Loaded Dice": 0x00C3,
+    "Slimy Little Pile": 0x013B,
+    "Even Slimier Little Pile": 0x013B,
+    "Arachnid!": 0x013A,
+    "Arachnid!!!": 0x013A,
+    "Bionic Kraken": 0x0132,
+    "Spinning Robo": 0x0132,
+    "Whirling Robo": 0x0132,
+    "Hyper Spinning Robo": 0x0132,
+    "Cop": 0x0182, 
+    "Coil Snake": 0x011B,
+    "Thirsty Coil Snake": 0x011B,
+    "Mr. Batty": 0x0112,
+    "Elder Batty": 0x0112,
+    "Violent Roach": 0x013A,
+    "Filthy Attack Roach": 0x013A,
+    "Crazed Sign": 0x0135,
+    "Wooly Shambler": 0x0132,
+    "Wild 'n Wooly Shambler": 0x0132,
+    "Skate Punk": 0x011C,
+    "Skelpion": 0x013F, 
+    "Dread Skelpion": 0x013F,
+    "Starman": 0x012F,
+    "Starman Super": 0x012F,
+    "Ghost of Starman": 0x0132,
+    "Smilin' Sphere": 0x012E,
+    "Uncontrollable Sphere": 0x012E,
+    "Petrified Royal Guard": 0x0142,
+    "Final Starman": 0x0132,
+    "Urban Zombie": 0x0134,
+    "Zombie Possessor": 0x0131,
+    "Zombie Dog": 0x016C,
+    "Crooked Cop": 0x0182,
+    "Over Zealous Cop": 0x0182,
+    "Territorial Oak": 0x0129,
+    "Hostile Elder Oak": 0x0129,
+    "Marauder Octobot": 0x0132,
+    "Military Octobot": 0x0132,
+    "Mechanical Octobot": 0x0132,
+    "Ultimate Octobot": 0x0132,
+    "Mad Duck": 0x011F,
+    "Dali's Clock": 0x0146,
+    "Musica": 0x00C3,
+    "Desert Wolf": 0x014A,
+    "Big Pile of Puke": 0x0148,
+    "Kiss of Death": 0x0144
+    "French Kiss of Death": 0x0115,
+    "Foppy": 0x0116,
+    "Fobby": 0x0116
+    "Zap Eel": 0x012D,
+    "Tangoo": 0x0144,
+    "Squatter Demon": 0x0132,
+    "Crested Booka": 0x0128,
+    "Great Crested Booka": 0x0128,
+    "Lesser Mook": 0x0132,
+    "Mook Senior": 0x0132,
+    "Smelly Ghost": 0x011D,
+    "Stinky Ghost": 0x011D
+    "Attack Slug": 0x013C,
+    "Pit Bull Slug": 0x013C,
+    "Rowdy Mouse": 0x01A0,
+    "Deadly Mouse" 0x01A0,
+    "Care Free Bomb": 0x0115,
+    "Handsome Tom": 0x011E,
+    "Smilin' Sam": 0x011E,
+    "Manly Fish": 0x0120,
+    "Manly Fish's Brother": 0x0120,
+    "Runaway Dog": 0x014A,
+    "Trick or Trick Kid": 0x01BC,
+    "Cave Boy": 0x0149,
+    "Abstract Art": 0x012C,
+    "Shattered Man": 0x0133,
+    "Fierce Shattered Man": 0x0133
+    "Ego Orb": 0x0147,
+    "Yes Man Junior": 0x011C,
+    "Cute Li'l UFO": 0x0130,
+    "Beautiful UFO": 0x0130
+    "Pogo Punk": 0x011C,
+    "Tough Guy": 0x0186,
+    "Mad Taxi": 0x0121,
+    "Mr. Molecule": 0x0115,
+    "Worthless Protoplasm": 0x00C3,
+    "Sentry Robot": 0x0136,
+    "Psychic Psycho": 0x0117,
+    "Major Psychic Psycho": 0x0117,
+    "Mole Playing Rough": 0x019F,
+    "Gruff Goat": 0x0126,
+    "Soul Consuming Flame": 0x0117,
+    "Demonic Petunia": 0x0122,
+    "Ranboob": 0x0124,
+    "Li'l UFO": 0x0130,
+    "High-class UFO": 0x0130,
+    "Noose Man": 0x0143,
+    "Robo-pump": 0x0117,
+    "Plain Crocodile": 0x014C,
+    "Strong Crocodile": 0x014C,
+    "Hard Crocodile": 0x014C,
+    "No Good Fly": 0x013E,
+    "Mostly Bad Fly": 0x013E,
+    "Spiteful Crow": 0x011A,
+    "Farm Zombie": 0x0134,
+    "Criminal Caterpillar": 0x01A1,
+    "Evil Eye": 0x0132,
+    "Master Criminal Worm": 0x01A1
 }
 
 
