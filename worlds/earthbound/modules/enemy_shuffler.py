@@ -997,3 +997,4 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x0FA37D, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
     rom.write_bytes(0x0FA38E, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
     rom.write_bytes(0x0FA39F, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
+    rom.write_bytes(0x0FA427, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
