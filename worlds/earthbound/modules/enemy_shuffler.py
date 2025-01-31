@@ -314,37 +314,37 @@ enemy_descriptions = {
     "Conducting Menace": "Shield your eyes from his light.",
     "Conducting Spirit": "Shield your eyes from his light.",
     "Evil Elemental": "What is the element of evil?",
-    "Annoying Old Party Man":
+    "Annoying Old Party Man": "He really knows how to throw a good party.",
     "Annoying Reveler": "This is my friend, Dave.",
-    "Unassuming Local Guy":
+    "Unassuming Local Guy": "What is he so unassuming about?",
     "New Age Retro Hippie": "I like him better than the Old Age Modern Urbanite.",
-    "Mighty Bear":
+    "Mighty Bear": "He's stronger than the average bear.",
     "Mighty Bear Seven": "I wonder what happened to two through six?",
-    "Putrid Moldyman":
+    "Putrid Moldyman": "I think this one's kinda cute.",
     "Thunder Mite": "He mite rain on your parade.",
-    "Cranky Lady":
-    "Extra Cranky Lady",
-    "Wetnosaur":
-    "Chomposaur":
-    "Gigantic Ant":
-    "Scalding Coffee Cup":
+    "Cranky Lady": "There aren't enough stores in the desert.",
+    "Extra Cranky Lady": "There aren't enough stores in the desert.",
+    "Wetnosaur": "Reminds me of a fossil I saw once.",
+    "Chomposaur": "Reminds me of a fossil I saw once.",
+    "Gigantic Ant": "No relation to the Titanic Ant.",
+    "Scalding Coffee Cup": "It's a little too hot for me.",
     "Loaded Dice": "Always fun at parties.",
     "Even Slimier Little Pile": "Smells worse than the Slimy Little Pile.",
-    "Arachnid!":
+    "Arachnid!": "I think he just lives here.",
     "Arachnid!!!": "How did it get the extra exclamation points?",
     "Bionic Kraken": "The bionics make better soup.",
-    "Spinning Robo":
-    "Whirling Robo":
-    "Hyper Spinning Robo":
+    "Spinning Robo": "Look at it go!",
+    "Whirling Robo": "Look at it go!",
+    "Hyper Spinning Robo": "Look at it go!",
     "Cop": "He said I wasn't paying taxes.",
-    "Coil Snake":
-    "Thirsty Coil Snake":
-    "Mr. Batty"
+    "Coil Snake": "Not a tool for modding.",
+    "Thirsty Coil Snake": "What could he be thirsting for?",
+    "Mr. Batty":
     "Elder Batty":
-    "Violent Roach":
-    "Filthy Attack Roach":
-    "Crazed Sign":
-    "Wooly Shambler":
+    "Violent Roach": "They make for good pets.",
+    "Filthy Attack Roach": "They make for good pets.",
+    "Crazed Sign": "That actually seems like a pretty reasonable speed limit.",
+    "Wooly Shambler": 
     "Wild 'n Wooly Shambler":
     "Skate Punk": "I saw him do a sick flip once.",
     "Skelpion":
@@ -368,15 +368,15 @@ enemy_descriptions = {
     "Mechanical Octobot":
     "Ultimate Octobot":
     "Dali's Clock":
-    "Musica":
+    "Musica": "His soothing music puts me to sleep.",
     "Desert Wolf":
-    "Big Pile of Puke":
-    "Kiss of Death":
-    "French Kiss of Death":
+    "Big Pile of Puke": "How did this one get in here?",
+    "Kiss of Death": "Despite the name, I wouldn't recommend kissing it.",
+    "French Kiss of Death": "Despite the name, I wouldn't recommend kissing it.",
     "Foppy":
     "Fobby": "I wonder what color they are?",
     "Zap Eel":
-    "Tangoo":
+    "Tangoo": "Watch out for his poisonous breath.",
     "Squatter Demon":
     "Crested Booka":
     "Great Crested Booka":
@@ -385,40 +385,41 @@ enemy_descriptions = {
     "Smelly Ghost": "This exhibit needs some air freshener.",
     "Stinky Ghost": "This exhibit needs some air freshener.",
     "Attack Slug": "Cute when alone.",
-    "Pit Bull Slug":
-    "Rowdy Mouse":
-    "Deadly Mouse"
+    "Pit Bull Slug": "It is neither pit bull nor slug.",
+    "Rowdy Mouse": "They're good pets if you don't let them SMAAAASH you.",
+    "Deadly Mouse": "They're good pets if you don't let them SMAAAASH you.",
     "Care Free Bomb":
     "Handsome Tom":
     "Smilin' Sam":
-    "Manly Fish":
+    "Manly Fish": "Not related to Manly Fish's Brother.",
     "Manly Fish's Brother": "They are not actually related.",
     "Runaway Dog":
     "Trick or Trick Kid":
-    "Cave Boy":
-    "Abstract Art":
+    "Cave Boy": "Not quite a Cave Man.",
+    "Cave Boy (2)": "Not quite a Cave Man.",
+    "Abstract Art": "Looks good in any gallery.",
     "Shattered Man":
     "Fierce Shattered Man":
     "Ego Orb": "I'll get back to you on that one.",
     "Yes Man Junior":
     "Cute Li'l UFO": "The ribbon is actually biological.",
-    "Beautiful UFO":
+    "Beautiful UFO": "Personally, I'm a bigger fan of the Li'l UFO.",
     "Pogo Punk":
     "Tough Guy": "Likes to chew gum and kick butt.",
     "Mad Taxi": "It has surprisingly good mental health.",
     "Mr. Molecule": "His whole family is here.",
     "Worthless Protoplasm":
-    "Sentry Robot":
-    "Psychic Psycho":
-    "Major Psychic Psycho":
-    "Mole Playing Rough":
-    "Soul Consuming Flame":
-    "Demonic Petunia":
-    "Ranboob":
-    "Li'l UFO":
-    "High-class UFO":
+    "Sentry Robot": "Built by a crafty engineer.",
+    "Psychic Psycho": "Watch out for Fire attacks!",
+    "Major Psychic Psycho": "Watch out for Fire attacks!",
+    "Mole Playing Rough": "They like to show up in the most random places.",
+    "Soul Consuming Flame": "This one can't affect me.",
+    "Demonic Petunia": "Looks beautiful from a distance.",
+    "Ranboob": "Yeah I've got nothing to say on this one.",
+    "Li'l UFO": "Personally, I'm a bigger fan of the High-class UFO.",
+    "High-class UFO": "Personally, I'm a bigger fan of the Beautiful UFO.",
     "Noose Man": "How was this approved for a family game?",
-    "Robo-pump":
+    "Robo-pump": "It causes fires more than it puts them out.",
     "Plain Crocodile": "Also known as the vanilla crocodile.",
     "Strong Crocodile":
     "Hard Crocodile": "Slightly harder than the soft crocodile.",
