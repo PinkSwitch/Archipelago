@@ -339,76 +339,77 @@ enemy_descriptions = {
     "Cop": "He said I wasn't paying taxes.",
     "Coil Snake": "Not a tool for modding.",
     "Thirsty Coil Snake": "What could he be thirsting for?",
-    "Mr. Batty":
-    "Elder Batty":
+    "Mr. Batty": "They make for good pets if you're careful.",
+    "Elder Batty": "They make for good pets if you're careful.",
     "Violent Roach": "They make for good pets.",
     "Filthy Attack Roach": "They make for good pets.",
     "Crazed Sign": "That actually seems like a pretty reasonable speed limit.",
-    "Wooly Shambler": 
-    "Wild 'n Wooly Shambler":
+    "Wooly Shambler": "These are not actually Earth sheep.",
+    "Wild 'n Wooly Shambler": "These are not actually Earth sheep.",
     "Skate Punk": "I saw him do a sick flip once.",
-    "Skelpion":
-    "Dread Skelpion":
+    "Skelpion": "How can scorpions shoot lightning?",
+    "Dread Skelpion": "How can scorpions shoot lightning?",
     "Starman": "Famous for their fan-made websites.",
     "Starman Super": "My own personal sword farm.",
     "Ghost of Starman": "Are Starmen aliens or robots, anyways?",
-    "Smilin' Sphere":
+    "Smilin' Sphere": "I don't like how it smiles at me.",
     "Uncontrollable Sphere": "Fortunately, these ones are controlled",
-    "Petrified Royal Guard":
-    "Final Starman":
+    "Petrified Royal Guard": "He isn't guarding this place.",
+    "Final Starman": "Watch yourself around this one.",
     "Urban Zombie": "An import from the big city.",
     "Zombie Possessor": "Did you hear something just now?",
-    "Zombie Dog":
-    "Crooked Cop":
-    "Over Zealous Cop":
+    "Zombie Dog": "He's more dog than zombie.",
+    "Crooked Cop": "Better than the 90 degree cop.",
+    "Over Zealous Cop": "He is overstaying his welcome.",
     "Territorial Oak": "Don't worry, this one is just a model.",
     "Hostile Elder Oak": "Don't worry, this one is just a model.",
-    "Marauder Octobot":
-    "Military Octobot":
-    "Mechanical Octobot":
-    "Ultimate Octobot":
-    "Dali's Clock":
+    "Marauder Octobot": "Watch out for your valuables!",
+    "Military Octobot": "Watch out for your valuables!",
+    "Mechanical Octobot": "Watch out for your valuables!",
+    "Ultimate Octobot": "Watch out for your valuables!",
+    "Dali's Clock": "I can never tell what time he's showing.",
     "Musica": "His soothing music puts me to sleep.",
-    "Desert Wolf":
+    "Desert Wolf": "He is a surprisingly good pet.",
     "Big Pile of Puke": "How did this one get in here?",
     "Kiss of Death": "Despite the name, I wouldn't recommend kissing it.",
     "French Kiss of Death": "Despite the name, I wouldn't recommend kissing it.",
-    "Foppy":
+    "Foppy": "I can't even tell what this thing is.",
     "Fobby": "I wonder what color they are?",
-    "Zap Eel":
+    "Zap Eel": "How can eels live on land, anyway?",
     "Tangoo": "Watch out for his poisonous breath.",
-    "Squatter Demon":
-    "Crested Booka":
-    "Great Crested Booka":
-    "Lesser Mook":
-    "Mook Senior":
+    "Squatter Demon": "I don't know what to say about this one.",
+    "Crested Booka": "The classic desert animal.",
+    "Great Crested Booka": "The classic desert animal.",
+    "Lesser Mook": "These aliens live here.",
+    "Mook Senior": "These aliens live here.",
     "Smelly Ghost": "This exhibit needs some air freshener.",
     "Stinky Ghost": "This exhibit needs some air freshener.",
     "Attack Slug": "Cute when alone.",
     "Pit Bull Slug": "It is neither pit bull nor slug.",
     "Rowdy Mouse": "They're good pets if you don't let them SMAAAASH you.",
     "Deadly Mouse": "They're good pets if you don't let them SMAAAASH you.",
-    "Care Free Bomb":
-    "Handsome Tom":
-    "Smilin' Sam":
+    "Care Free Bomb": "Don't get too close!",
+    "Handsome Tom": "Not really all that handsome.",
+    "Smilin' Sam": "He usually doesn't smile.",
     "Manly Fish": "Not related to Manly Fish's Brother.",
     "Manly Fish's Brother": "They are not actually related.",
-    "Runaway Dog":
-    "Trick or Trick Kid":
+    "Runaway Dog": "Don't worry, this one is adopted.",
+    "Runaway Dog (2)": "Don't worry, this one is adopted.",
+    "Trick or Trick Kid": "He likes to play Clique.",
     "Cave Boy": "Not quite a Cave Man.",
     "Cave Boy (2)": "Not quite a Cave Man.",
     "Abstract Art": "Looks good in any gallery.",
-    "Shattered Man":
-    "Fierce Shattered Man":
+    "Shattered Man": "He doesn't look so shattered to me.",
+    "Fierce Shattered Man": "He doesn't look so shattered to me.",
     "Ego Orb": "I'll get back to you on that one.",
-    "Yes Man Junior":
+    "Yes Man Junior": "Not that bad of a guy.",
     "Cute Li'l UFO": "The ribbon is actually biological.",
     "Beautiful UFO": "Personally, I'm a bigger fan of the Li'l UFO.",
-    "Pogo Punk":
+    "Pogo Punk": "He knows some sick tricks.",
     "Tough Guy": "Likes to chew gum and kick butt.",
     "Mad Taxi": "It has surprisingly good mental health.",
     "Mr. Molecule": "His whole family is here.",
-    "Worthless Protoplasm":
+    "Worthless Protoplasm": "He's actually kind of worthwhile.",
     "Sentry Robot": "Built by a crafty engineer.",
     "Psychic Psycho": "Watch out for Fire attacks!",
     "Major Psychic Psycho": "Watch out for Fire attacks!",
@@ -421,7 +422,7 @@ enemy_descriptions = {
     "Noose Man": "How was this approved for a family game?",
     "Robo-pump": "It causes fires more than it puts them out.",
     "Plain Crocodile": "Also known as the vanilla crocodile.",
-    "Strong Crocodile":
+    "Strong Crocodile": "Stronger than the weak crocodile",
     "Hard Crocodile": "Slightly harder than the soft crocodile.",
     "No Good Fly": "They are often mistaken for bees.",
     "Mostly Bad Fly": "He's not all bad.",
@@ -511,10 +512,10 @@ enemy_sprites = {
     "Musica": 0x00C3,
     "Desert Wolf": 0x014A,
     "Big Pile of Puke": 0x0148,
-    "Kiss of Death": 0x0144
+    "Kiss of Death": 0x0144,
     "French Kiss of Death": 0x0115,
     "Foppy": 0x0116,
-    "Fobby": 0x0116
+    "Fobby": 0x0116,
     "Zap Eel": 0x012D,
     "Tangoo": 0x0144,
     "Squatter Demon": 0x0132,
@@ -523,11 +524,11 @@ enemy_sprites = {
     "Lesser Mook": 0x0132,
     "Mook Senior": 0x0132,
     "Smelly Ghost": 0x011D,
-    "Stinky Ghost": 0x011D
+    "Stinky Ghost": 0x011D,
     "Attack Slug": 0x013C,
     "Pit Bull Slug": 0x013C,
     "Rowdy Mouse": 0x01A0,
-    "Deadly Mouse" 0x01A0,
+    "Deadly Mouse": 0x01A0,
     "Care Free Bomb": 0x0115,
     "Handsome Tom": 0x011E,
     "Smilin' Sam": 0x011E,
@@ -538,11 +539,11 @@ enemy_sprites = {
     "Cave Boy": 0x0149,
     "Abstract Art": 0x012C,
     "Shattered Man": 0x0133,
-    "Fierce Shattered Man": 0x0133
+    "Fierce Shattered Man": 0x0133,
     "Ego Orb": 0x0147,
     "Yes Man Junior": 0x011C,
     "Cute Li'l UFO": 0x0130,
-    "Beautiful UFO": 0x0130
+    "Beautiful UFO": 0x0130,
     "Pogo Punk": 0x011C,
     "Tough Guy": 0x0186,
     "Mad Taxi": 0x0121,
@@ -1329,3 +1330,5 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x0F9E409, bytearray([enemy_sprites[world.acting_enemy_list["Robo-pump"]]]))
     rom.write_bytes(0x0F9E491, bytearray([enemy_sprites[world.acting_enemy_list["Robo-pump"]]]))
     rom.write_bytes(0x0F9E43C, bytearray([enemy_sprites[world.acting_enemy_list["Abstract Art"]]]))
+
+    #Todo; action scripts for npc enemies?
