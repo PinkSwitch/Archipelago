@@ -294,14 +294,151 @@ base_enemy_table = [
     "Master Criminal Worm"
 ]
 
+enemy_descriptions = {
+    "Insane Cultist": "They are friendly if you give them blue gifts.",
+    "Armored Frog": "Their hard shell makes them very resistant.",
+    "Bad Buffalo": "It really is a bad kind of buffalo.",
+    "Black Antoid": "Be careful not to step on him.",
+    "Red Antoid": "Collectors dig that bright red hue.",
+    "Ramblin' Evil Mushroom": 
+    "Struttin' Evil Mushroom":
+    "Mobile Sprout":
+    "Tough Mobile Sprout":
+    "Enraged Fire Plug":
+    "Mystical Record":
+    "Atomic Power Robot":
+    "Nuclear Reactor Robot":
+    "Guardian Hieroglyph": "I found him at the Pyramid north of here.",
+    "Lethal Asp Hieroglyph": "I found him at the Pyramid north of here.",
+    "Electro Swoosh":
+    "Conducting Menace": 
+    "Conducting Spirit":
+    "Evil Elemental":
+    "Annoying Old Party Man":
+    "Annoying Reveler:"
+    "Unassuming Local Guy":
+    "New Age Retro Hippie": "I like him better than the Old Age Modern Urbanite.",
+    "Mighty Bear":
+    "Mighty Bear Seven": "I wonder what happened to two through six?",
+    "Putrid Moldyman":
+    "Thunder Mite": "He mite rain on your parade.",
+    "Cranky Lady":
+    "Extra Cranky Lady",
+    "Wetnosaur":
+    "Chomposaur":
+    "Gigantic Ant":
+    "Scalding Coffee Cup":
+    "Loaded Dice":
+    "Even Slimier Little Pile": "Smells worse than the Slimy Little Pile.",
+    "Arachnid!":
+    "Arachnid!!!":
+    "Bionic Kraken":
+    "Spinning Robo":
+    "Whirling Robo":
+    "Hyper Spinning Robo":
+    "Cop":
+    "Coil Snake":
+    "Thirsty Coil Snake":
+    "Mr. Batty"
+    "Elder Batty":
+    "Violent Roach":
+    "Filthy Attack Roach":
+    "Crazed Sign":
+    "Wooly Shambler":
+    "Wild 'n Wooly Shambler":
+    "Skate Punk": "I saw him do a sick flip once.",
+    "Skelpion":
+    "Dread Skelpion":
+    "Starman":
+    "Starman Super": "My own personal sword farm.",
+    "Ghost of Starman": "Are Starmen aliens or robots, anyways?",
+    "Smilin' Sphere":
+    "Uncontrollable Sphere": "Fortunately, these ones are controlled",
+    "Petrified Royal Guard":
+    "Final Starman":
+    "Urban Zombie":
+    "Zombie Possessor":
+    "Zombie Dog":
+    "Crooked Cop":
+    "Over Zealous Cop:
+    "Territorial Oak":
+    "Hostile Elder Oak":
+    "Marauder Octobot":
+    "Military Octobot":
+    "Mechanical Octobot":
+    "Ultimate Octobot":
+    "Dali's Clock":
+    "Musica":
+    "Desert Wolf":
+    "Big Pile of Puke":
+    "Kiss of Death":
+    "French Kiss of Death":
+    "Foppy":
+    "Fobby": "I wonder what color they are?",
+    "Zap Eel":
+    "Tangoo":
+    "Squatter Demon":
+    "Crested Booka":
+    "Great Crested Booka":
+    "Lesser Mook":
+    "Mook Senior":
+    "Smelly Ghost":
+    "Stinky Ghost":
+    "Attack Slug":
+    "Pit Bull Slug":
+    "Rowdy Mouse":
+    "Deadly Mouse"
+    "Care Free Bomb":
+    "Handsome Tom":
+    "Smilin' Sam":
+    "Manly Fish":
+    "Manly Fish's Brother": "They are not actually related.",
+    "Runaway Dog":
+    "Trick or Trick Kid":
+    "Cave Boy":
+    "Abstract Art":
+    "Shattered Man":
+    "Fierce Shattered Man":
+    "Ego Orb": "I'll get back to you on that one.",
+    "Yes Man Junior":
+    "Cute Li'l UFO": "The ribbon is actually biological.",
+    "Beautiful UFO":
+    "Pogo Punk":
+    "Tough Guy": "Likes to chew gum and kick butt.",
+    "Mad Taxi": "It has surprisingly good mental health.",
+    "Mr. Molecule":
+    "Worthless Protoplasm":
+    "Sentry Robot":
+    "Psychic Psycho":
+    "Major Psychic Psycho":
+    "Mole Playing Rough":
+    "Soul Consuming Flame":
+    "Demonic Petunia":
+    "Ranboob":
+    "Li'l UFO":
+    "High-class UFO":
+    "Noose Man": "How was this approved for a family game?",
+    "Robo-pump":
+    "Plain Crocodile":
+    "Strong Crocodile":
+    "Hard Crocodile":
+    "No Good Fly":
+    "Mostly Bad Fly":
+    "Spiteful Crow":
+    "Farm Zombie":
+    "Criminal Caterpillar": "He is wanted in seventeen countried for his crimes.",
+    "Evil Eye":
+    "Master Criminal Worm":
+}
+
 
 def shuffle_enemies(world):
     world.acting_enemy_list = {}
+    shuffled_enemies = base_enemy_table.copy()
     if world.options.enemy_shuffle:
-        shuffled_enemies = base_enemy_table.copy()
         world.random.shuffle(shuffled_enemies)
-        for index, enemy in enumerate(shuffled_enemies):
-            world.acting_enemy_list[base_enemy_table[index]] = enemy
+    for index, enemy in enumerate(shuffled_enemies):
+        world.acting_enemy_list[base_enemy_table[index]] = enemy
 
 
 def apply_enemy_shuffle(world, rom):
