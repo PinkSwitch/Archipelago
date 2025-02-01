@@ -201,10 +201,12 @@ class EarthBoundWorld(World):
                 add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
 
         if self.options.character_shuffle == 0:
+            main_characters = ["Ness", "Paula", "Jeff", "Poo"]
+            for character in main_characters:
+                if character != self.starting_character:
+                    prefill_items.append(self.create_item(character))
+
             prefill_items.extend([
-                self.create_item("Paula"),
-                self.create_item("Jeff"),
-                self.create_item("Poo"),
                 self.create_item("Flying Man"),
                 self.create_item("Teddy Bear"),
                 self.create_item("Super Plush Bear")

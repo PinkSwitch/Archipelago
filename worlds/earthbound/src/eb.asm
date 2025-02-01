@@ -14825,11 +14825,16 @@ db $50, $89, $7f, $85, $51
 db $03, $00
 db $0A
 dl $C92F88
+
+NessBarfAppear:
+db $70, $1c, $02, $01, $50, $a4, $95, $9c, $95, $a0, $9f, $a2, $a4, $95, $94, $50
+db $99, $9e, $51, $03, $02
+
+NessBarfAttack:
+;New New Text
+
 ORG $F30080
 db $0A, $C3, $B8, $EE
-
-
-;New New Text
 
 
 
