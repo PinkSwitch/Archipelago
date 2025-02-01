@@ -8474,6 +8474,9 @@ ORG $C39F0C
 db $42
 dl CheckNessRobot
 
+ORG $F30080
+db $0A, $C3, $B8, $EE
+
 ;New data table go here
 
 
@@ -14831,10 +14834,21 @@ db $70, $1c, $02, $01, $50, $a4, $95, $9c, $95, $a0, $9f, $a2, $a4, $95, $94, $5
 db $99, $9e, $51, $03, $02
 
 NessBarfAttack:
-;New New Text
+db $70
+db $1c, $02, $01, $50, $a4, $a2, $99, $95, $94, $50, $80, $83, $79, $50, $82, $9f
+db $93, $9b, $99, $9e, $51
+db $03, $00
+db $70, $1F, $02, $37
+db $1C, $02, $01
+db $50, $A4, $A2, $99, $95, $94, $50
+db $1C, $12, $01, $51
+db $08
+dd $EF864C
+db $02
 
-ORG $F30080
-db $0A, $C3, $B8, $EE
+;todo, PSI rockin?
+
+;New New Text
 
 
 
