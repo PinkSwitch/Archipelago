@@ -1,3 +1,5 @@
+import struct
+
 enemy_ids = {
     "Insane Cultist": 0x01,
     "Armored Frog": 0x03,
@@ -65,7 +67,6 @@ enemy_ids = {
     "Urban Zombie": 0x4c,
     "Zombie Possessor": 0x4d,
     "Zombie Dog": 0x4e,
-    "Crooked Cop": 0x4f,
     "Over Zealous Cop": 0x50,
     "Territorial Oak": 0x51,
     "Hostile Elder Oak": 0x52,
@@ -104,7 +105,6 @@ enemy_ids = {
     "Manly Fish's Brother": 0x78,
     "Runaway Dog": 0x79,
     "Trick or Trick Kid": 0x7a,
-    "Cave Boy": 0x7b,
     "Abstract Art": 0x7c,
     "Shattered Man": 0x7d,
     "Fierce Shattered Man": 0x7e,
@@ -138,8 +138,7 @@ enemy_ids = {
     "Mostly Bad Fly": 0x9e,
     "Spiteful Crow": 0x9f,
     "Black Antoid (2)": 0xD1,
-    "Runaway Dog (2)": 0xd3,
-    "Cave Boy (2)": 0xd4,
+    "Cave Boy": 0xd4,
     "Tiny Li'l Ghost": 0xd5,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
@@ -213,7 +212,6 @@ base_enemy_table = [
     "Urban Zombie",
     "Zombie Possessor",
     "Zombie Dog",
-    "Crooked Cop",
     "Over Zealous Cop",
     "Territorial Oak",
     "Hostile Elder Oak",
@@ -251,7 +249,6 @@ base_enemy_table = [
     "Manly Fish's Brother",
     "Runaway Dog",
     "Trick or Trick Kid",
-    "Cave Boy",
     "Abstract Art",
     "Shattered Man",
     "Fierce Shattered Man",
@@ -269,7 +266,6 @@ base_enemy_table = [
     "Major Psychic Psycho",
     "Mole Playing Rough",
     "Gruff Goat",
-    "Clumsy Robot",
     "Soul Consuming Flame",
     "Demonic Petunia",
     "Ranboob",
@@ -285,8 +281,7 @@ base_enemy_table = [
     "Spiteful Crow",
     "Black Antoid (2)",
     "Struttin' Evil Mushroom",
-    "Runaway Dog (2)",
-    "Cave Boy (2)",
+    "Cave Boy",
     "Tiny Li'l Ghost",
     "Farm Zombie",
     "Criminal Caterpillar",
@@ -359,7 +354,6 @@ enemy_descriptions = {
     "Urban Zombie": "An import from the big city.",
     "Zombie Possessor": "Did you hear something just now?",
     "Zombie Dog": "He's more dog than zombie.",
-    "Crooked Cop": "Better than the 90 degree cop.",
     "Over Zealous Cop": "He is overstaying his welcome.",
     "Territorial Oak": "Don't worry, this one is just a model.",
     "Hostile Elder Oak": "Don't worry, this one is just a model.",
@@ -394,10 +388,8 @@ enemy_descriptions = {
     "Manly Fish": "Not related to Manly Fish's Brother.",
     "Manly Fish's Brother": "They are not actually related.",
     "Runaway Dog": "Don't worry, this one is adopted.",
-    "Runaway Dog (2)": "Don't worry, this one is adopted.",
     "Trick or Trick Kid": "He likes to play Clique.",
     "Cave Boy": "Not quite a Cave Man.",
-    "Cave Boy (2)": "Not quite a Cave Man.",
     "Abstract Art": "Looks good in any gallery.",
     "Shattered Man": "He doesn't look so shattered to me.",
     "Fierce Shattered Man": "He doesn't look so shattered to me.",
@@ -499,7 +491,6 @@ enemy_sprites = {
     "Urban Zombie": 0x0134,
     "Zombie Possessor": 0x0131,
     "Zombie Dog": 0x016C,
-    "Crooked Cop": 0x0182,
     "Over Zealous Cop": 0x0182,
     "Territorial Oak": 0x0129,
     "Hostile Elder Oak": 0x0129,
@@ -1251,84 +1242,84 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10df4f, bytearray([enemy_ids[world.acting_enemy_list["Starman Super"]]]))
     rom.write_bytes(0x10df5e, bytearray([enemy_ids[world.acting_enemy_list["Even Slimier Little Pile"]]]))
 
-    rom.write_bytes(0x0F92F4, bytearray([enemy_sprites[world.acting_enemy_list["Skate Punk"]]]))
-    rom.write_bytes(0x0F9305, bytearray([enemy_sprites[world.acting_enemy_list["Pogo Punk"]]]))
-    rom.write_bytes(0x0F8997, bytearray([enemy_sprites[world.acting_enemy_list["Yes Man Junior"]]]))
-    rom.write_bytes(0x0F89A8, bytearray([enemy_sprites[world.acting_enemy_list["Pogo Punk"]]]))
-    rom.write_bytes(0x0F89B9, bytearray([enemy_sprites[world.acting_enemy_list["Skate Punk"]]]))
-    rom.write_bytes(0x0F89CA, bytearray([enemy_sprites[world.acting_enemy_list["Pogo Punk"]]]))
-    rom.write_bytes(0x0F89DB, bytearray([enemy_sprites[world.acting_enemy_list["Yes Man Junior"]]]))
-    rom.write_bytes(0x0F89FD, bytearray([enemy_sprites[world.acting_enemy_list["Skate Punk"]]]))
+    rom.write_bytes(0x0F92F4, struct.pack("H", enemy_sprites[world.acting_enemy_list["Skate Punk"]]))
+    rom.write_bytes(0x0F9305, struct.pack("H", enemy_sprites[world.acting_enemy_list["Pogo Punk"]]))
+    rom.write_bytes(0x0F8997, struct.pack("H", enemy_sprites[world.acting_enemy_list["Yes Man Junior"]]))
+    rom.write_bytes(0x0F89A8, struct.pack("H", enemy_sprites[world.acting_enemy_list["Pogo Punk"]]))
+    rom.write_bytes(0x0F89B9, struct.pack("H", enemy_sprites[world.acting_enemy_list["Skate Punk"]]))
+    rom.write_bytes(0x0F89CA, struct.pack("H", enemy_sprites[world.acting_enemy_list["Pogo Punk"]]))
+    rom.write_bytes(0x0F89DB, struct.pack("H", enemy_sprites[world.acting_enemy_list["Yes Man Junior"]]))
+    rom.write_bytes(0x0F89FD, struct.pack("H", enemy_sprites[world.acting_enemy_list["Skate Punk"]]))
 
-    rom.write_bytes(0x0FA2A0, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA2B1, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA2C2, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA2D3, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA2E4, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA2F5, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA306, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA317, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA328, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA339, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA34A, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA35B, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA36C, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA37D, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA38E, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA39F, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA427, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA6BE, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA6CF, bytearray([enemy_sprites[world.acting_enemy_list["Insane Cultist"]]]))
-    rom.write_bytes(0x0FA6E0, bytearray([enemy_sprites[world.acting_enemy_list["Spiteful Crow"]]]))
-    rom.write_bytes(0x0FA4E2, bytearray([enemy_sprites[world.acting_enemy_list["Unassuming Local Guy"]]]))
+    rom.write_bytes(0x0FA2A0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA2B1, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA2C2, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA2D3, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA2E4, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA2F5, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA306, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA317, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA328, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA339, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA34A, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA35B, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA36C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA37D, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA38E, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA39F, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA427, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA6BE, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA6CF, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA6E0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Spiteful Crow"]]))
+    rom.write_bytes(0x0FA4E2, struct.pack("H", enemy_sprites[world.acting_enemy_list["Unassuming Local Guy"]]))
 
-    rom.write_bytes(0x0FCE85, bytearray([enemy_sprites[world.acting_enemy_list["Shattered Man"]]]))
-    rom.write_bytes(0x0FCE96, bytearray([enemy_sprites[world.acting_enemy_list["Shattered Man"]]]))
+    rom.write_bytes(0x0FCE85, struct.pack("H", enemy_sprites[world.acting_enemy_list["Shattered Man"]]))
+    rom.write_bytes(0x0FCE96, struct.pack("H", enemy_sprites[world.acting_enemy_list["Shattered Man"]]))
 
-    rom.write_bytes(0x0FB6D0, bytearray([enemy_sprites[world.acting_enemy_list["Rowdy Mouse"]]]))
-    rom.write_bytes(0x0FB6E1, bytearray([enemy_sprites[world.acting_enemy_list["Rowdy Mouse"]]]))
-    rom.write_bytes(0x0FB6AE, bytearray([enemy_sprites[world.acting_enemy_list["Worthless Protoplasm"]]]))
-    rom.write_bytes(0x0FB6BF, bytearray([enemy_sprites[world.acting_enemy_list["Worthless Protoplasm"]]]))
-    rom.write_bytes(0x0FB68C, bytearray([enemy_sprites[world.acting_enemy_list["Mad Duck"]]]))
-    rom.write_bytes(0x0FB69D, bytearray([enemy_sprites[world.acting_enemy_list["Mad Duck"]]]))
+    rom.write_bytes(0x0FB6D0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Rowdy Mouse"]]))
+    rom.write_bytes(0x0FB6E1, struct.pack("H", enemy_sprites[world.acting_enemy_list["Rowdy Mouse"]]))
+    rom.write_bytes(0x0FB6AE, struct.pack("H", enemy_sprites[world.acting_enemy_list["Worthless Protoplasm"]]))
+    rom.write_bytes(0x0FB6BF, struct.pack("H", enemy_sprites[world.acting_enemy_list["Worthless Protoplasm"]]))
+    rom.write_bytes(0x0FB68C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Mad Duck"]]))
+    rom.write_bytes(0x0FB69D, struct.pack("H", enemy_sprites[world.acting_enemy_list["Mad Duck"]]))
 
-    rom.write_bytes(0x0FD716, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD727, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD738, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD749, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD75A, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD76B, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD77C, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD78D, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD79E, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD7AF, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD7C0, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD7D1, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD7F3, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD804, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD815, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD826, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD837, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD848, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD859, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD86A, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD87B, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD88C, bytearray([enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]]))
-    rom.write_bytes(0x0FD89D, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
-    rom.write_bytes(0x0FD8AE, bytearray([enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]]))
+    rom.write_bytes(0x0FD716, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD727, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD738, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD749, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD75A, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD76B, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD77C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD78D, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD79E, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD7AF, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD7C0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD7D1, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD7F3, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD804, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD815, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD826, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD837, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD848, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD859, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD86A, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD87B, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD88C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Guardian Hieroglyph"]]))
+    rom.write_bytes(0x0FD89D, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
+    rom.write_bytes(0x0FD8AE, struct.pack("H", enemy_sprites[world.acting_enemy_list["Lethal Asp Hieroglyph"]]))
 
-    rom.write_bytes(0x0F8E1B, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E2C, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E5F, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E70, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E81, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E92, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F8E2A3, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F9316, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
-    rom.write_bytes(0x0F9327, bytearray([enemy_sprites[world.acting_enemy_list["Cop"]]]))
+    rom.write_bytes(0x0F8E1B, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8E2C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8E5F, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8E70, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8E81, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8E92, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F8EA3, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F9316, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
+    rom.write_bytes(0x0F9327, struct.pack("H", enemy_sprites[world.acting_enemy_list["Cop"]]))
 
-    rom.write_bytes(0x0F9E409, bytearray([enemy_sprites[world.acting_enemy_list["Robo-pump"]]]))
-    rom.write_bytes(0x0F9E491, bytearray([enemy_sprites[world.acting_enemy_list["Robo-pump"]]]))
-    rom.write_bytes(0x0F9E43C, bytearray([enemy_sprites[world.acting_enemy_list["Abstract Art"]]]))
+    rom.write_bytes(0x0FE409, struct.pack("H", enemy_sprites[world.acting_enemy_list["Robo-pump"]]))
+    rom.write_bytes(0x0FE491, struct.pack("H", enemy_sprites[world.acting_enemy_list["Robo-pump"]]))
+    rom.write_bytes(0x0FE43C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Abstract Art"]]))
 
     #Todo; action scripts for npc enemies?
