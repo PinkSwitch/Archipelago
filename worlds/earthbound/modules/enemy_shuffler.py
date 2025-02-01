@@ -1,4 +1,5 @@
 import struct
+from ..game_data.text_data import text_encoder
 
 enemy_ids = {
     "Insane Cultist": 0x01,
@@ -138,7 +139,7 @@ enemy_ids = {
     "Mostly Bad Fly": 0x9e,
     "Spiteful Crow": 0x9f,
     "Black Antoid (2)": 0xD1,
-    "Cave Boy": 0xd4,
+    "Cave Boy (2)": 0xd4,
     "Tiny Li'l Ghost": 0xd5,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
@@ -281,7 +282,7 @@ base_enemy_table = [
     "Spiteful Crow",
     "Black Antoid (2)",
     "Struttin' Evil Mushroom",
-    "Cave Boy",
+    "Cave Boy (2)",
     "Tiny Li'l Ghost",
     "Farm Zombie",
     "Criminal Caterpillar",
@@ -389,7 +390,7 @@ enemy_descriptions = {
     "Manly Fish's Brother": "They are not actually related.",
     "Runaway Dog": "Don't worry, this one is adopted.",
     "Trick or Trick Kid": "He likes to play Clique.",
-    "Cave Boy": "Not quite a Cave Man.",
+    "Cave Boy (2)": "Not quite a Cave Man.",
     "Abstract Art": "Looks good in any gallery.",
     "Shattered Man": "He doesn't look so shattered to me.",
     "Fierce Shattered Man": "He doesn't look so shattered to me.",
@@ -527,7 +528,7 @@ enemy_sprites = {
     "Manly Fish's Brother": 0x0120,
     "Runaway Dog": 0x014A,
     "Trick or Trick Kid": 0x01BC,
-    "Cave Boy": 0x0149,
+    "Cave Boy (2)": 0x0149,
     "Abstract Art": 0x012C,
     "Shattered Man": 0x0133,
     "Fierce Shattered Man": 0x0133,
@@ -617,11 +618,11 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10d5e9, bytearray([enemy_ids[world.acting_enemy_list["Lesser Mook"]]]))
     rom.write_bytes(0x10d5ec, bytearray([enemy_ids[world.acting_enemy_list["Wooly Shambler"]]]))
     rom.write_bytes(0x10d5ef, bytearray([enemy_ids[world.acting_enemy_list["Whirling Robo"]]]))
-    rom.write_bytes(0x10d5f7, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
+    rom.write_bytes(0x10d5f7, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
     rom.write_bytes(0x10d5fa, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
-    rom.write_bytes(0x10d5fe, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
+    rom.write_bytes(0x10d5fe, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
     rom.write_bytes(0x10d601, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
-    rom.write_bytes(0x10d605, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
+    rom.write_bytes(0x10d605, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
     rom.write_bytes(0x10d608, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
     rom.write_bytes(0x10d60c, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid"]]]))
     rom.write_bytes(0x10d610, bytearray([enemy_ids[world.acting_enemy_list["Ramblin' Evil Mushroom"]]]))
@@ -1322,4 +1323,58 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x0FE491, struct.pack("H", enemy_sprites[world.acting_enemy_list["Robo-pump"]]))
     rom.write_bytes(0x0FE43C, struct.pack("H", enemy_sprites[world.acting_enemy_list["Abstract Art"]]))
 
-    #Todo; action scripts for npc enemies?
+    rom.write_bytes(0x0FD9F1, struct.pack("H", enemy_sprites[world.acting_enemy_list["Mad Duck"]]))
+    rom.write_bytes(0x0FDA02, struct.pack("H", enemy_sprites[world.acting_enemy_list["Mad Duck"]]))
+    rom.write_bytes(0x0FDA13, struct.pack("H", enemy_sprites[world.acting_enemy_list["Mad Duck"]]))
+    rom.write_bytes(0x0FDA24, struct.pack("H", enemy_sprites[world.acting_enemy_list["Slimy Little Pile"]]))
+    rom.write_bytes(0x0FDA35, struct.pack("H", enemy_sprites[world.acting_enemy_list["Slimy Little Pile"]]))
+    rom.write_bytes(0x0FDA46, struct.pack("H", enemy_sprites[world.acting_enemy_list["Slimy Little Pile"]]))
+    rom.write_bytes(0x0FDA57, struct.pack("H", enemy_sprites[world.acting_enemy_list["Gruff Goat"]]))
+    rom.write_bytes(0x0FDA68, struct.pack("H", enemy_sprites[world.acting_enemy_list["Gruff Goat"]]))
+
+    dungeon_zoo = [
+        "Mad Duck",
+        "Gruff Goat",
+        "Slimy Little Pile"
+    ]
+
+    name_addresses = [
+        0x330544,
+        0x330555,
+        0x330566
+    ]
+
+    desc_addresses = [
+        0x33054B,
+        0x33055C,
+        0x33056D
+    ]
+
+    normal_pointers = {
+        "Mad Duck": 0xC8796C,
+        "Gruff Goat": 0xC879A3,
+        "Slimy Little Pile": 0xC87A31
+    }
+
+    pointer = 0x313000
+
+    for i in range(3):
+
+        name = text_encoder(world.acting_enemy_list[dungeon_zoo[i]].replace(" (2)", ""), 255)
+        name.append(0x02)
+
+        if world.acting_enemy_list[dungeon_zoo[i]] not in dungeon_zoo:
+            text = text_encoder(enemy_descriptions[world.acting_enemy_list[dungeon_zoo[i]]], 255)
+            text.append(0x02)
+        else:
+            text = text_encoder("ERROR", 255)
+        rom.write_bytes(pointer, name)
+        rom.write_bytes(name_addresses[i], struct.pack("I", pointer))
+        pointer += len(name)
+        rom.write_bytes(pointer, text)
+        if world.acting_enemy_list[dungeon_zoo[i]] not in dungeon_zoo:
+            rom.write_bytes(desc_addresses[i], struct.pack("I", pointer))
+        else:
+            rom.write_bytes(desc_addresses[i], struct.pack("I", normal_pointers[world.acting_enemy_list[dungeon_zoo[i]]]))
+        pointer += len(text)
+    # Todo; action scripts for npc enemies?

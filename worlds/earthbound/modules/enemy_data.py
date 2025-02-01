@@ -284,7 +284,7 @@ def initialize_enemies(world):
                               "Fourside Dept. Store": {shuffled_enemies["Musica"], shuffled_enemies["Mystical Record"], shuffled_enemies["Scalding Coffee Cup"], world.enemies[world.boss_list[12]]},
                               "Monkey Caves": {shuffled_enemies["Struttin' Evil Mushroom"], shuffled_enemies["Tough Mobile Sprout"]},
                               "Monotoli Building": {shuffled_enemies["Sentry Robot"], world.enemies[world.boss_list[14]]},
-                              "Rainy Circle": {shuffled_enemies["Arachnid!"], shuffled_enemies["Cave Boy"], shuffled_enemies["Elder Batty"], shuffled_enemies["Mighty Bear Seven"], shuffled_enemies["Strong Crocodile"], world.enemies[world.boss_list[15]]},
+                              "Rainy Circle": {shuffled_enemies["Arachnid!"], shuffled_enemies["Cave Boy (2)"], shuffled_enemies["Elder Batty"], shuffled_enemies["Mighty Bear Seven"], shuffled_enemies["Strong Crocodile"], world.enemies[world.boss_list[15]]},
                               "Summers": {shuffled_enemies["Crazed Sign"], shuffled_enemies["Mad Taxi"], shuffled_enemies["Mole Playing Rough"], shuffled_enemies["Over Zealous Cop"], shuffled_enemies["Tough Guy"], world.enemies[world.boss_list[18]]},
                               "Summers Museum": {shuffled_enemies["Shattered Man"]},
                               "Magnet Hill": {shuffled_enemies["Deadly Mouse"], shuffled_enemies["Filthy Attack Roach"], shuffled_enemies["Stinky Ghost"], world.enemies[world.boss_list[16]]},

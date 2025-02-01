@@ -8436,6 +8436,27 @@ dl TracyNessText
 ORG $CFE367
 dd MagicantTentacleText
 
+ORG $C87963
+db $0A
+dl DuckSignTex
+
+ORG $C87997
+db $0A
+dl GoatSignTex
+
+ORG $C87A1F
+db $0A
+dl SlimeSignTex
+
+ORG $C8798A
+db $02
+
+ORG $C879BA
+db $02
+
+ORG $C87A45
+db $02
+
 ;New data table go here
 
 
@@ -9311,7 +9332,7 @@ db $08
 dd .CheckIfUseKeytoLocker
 db $1B, $02
 dd $C6FB5D
-db $06, $F8, $03
+db $06, $F4, $03
 dd $C7D9FD
 db $08
 dd .LockerItemAwaitsText
@@ -9326,7 +9347,7 @@ db $1D, $0E, $FF, $11
 db $08
 dd .LockerGetItemText
 db $03
-db $04, $F8, $03
+db $04, $F4, $03
 db $02
 
 .BottomRightLocker:
@@ -10455,7 +10476,7 @@ RTL
 
 SetShopFlag:
 STZ $B573
-LDA $97D4
+LDA $0734 ; If I change this to $0734 will it fix my flag bug?
 LDX #$0000
 .CheckShopID:
 CMP #$0007
@@ -14679,6 +14700,36 @@ db $5c, $10, $08, $50, $6c, $1c, $02, $01, $50, $9d, $a5, $a3, $a4, $50, $92, $9
 db $50, $a0, $a2, $95, $a3, $95, $9e, $a4, $50, $a4, $9f, $50, $a0, $a2, $9f, $93
 db $95, $95, $94, $50, $92, $95, $a9, $9f, $9e, $94, $50, $a4, $98, $99, $a3, $50
 db $a0, $9f, $99, $9e, $a4, $5e, $5e, $5e, $6e, $59, $13, $02
+
+DuckSignTex:
+db $08
+dd $C87994
+db $6E, $01
+db $08
+dd $C87994
+db $03
+db $0A
+dl $C8798B
+
+GoatSignTex:
+db $08
+dd $C87994
+db $6E, $01
+db $08
+dd $C87994
+db $03
+db $0A
+dl $C879BB
+
+SlimeSignTex:
+db $08
+dd $C87994
+db $6E, $01
+db $08
+dd $C87994
+db $03
+db $0A
+dl $C87A46
 
 
 ORG $F30080
