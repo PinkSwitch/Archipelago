@@ -139,7 +139,6 @@ enemy_ids = {
     "Spiteful Crow": 0x9f,
     "Black Antoid (2)": 0xD1,
     "Cave Boy (2)": 0xd4,
-    "Tiny Li'l Ghost": 0xd5,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
     "Evil Eye": 0xe0,
@@ -281,7 +280,6 @@ base_enemy_table = [
     "Black Antoid (2)",
     "Struttin' Evil Mushroom",
     "Cave Boy (2)",
-    "Tiny Li'l Ghost",
     "Farm Zombie",
     "Criminal Caterpillar",
     "Evil Eye",
@@ -429,6 +427,7 @@ enemy_sprites = {
     "Armored Frog": 0x0118,
     "Bad Buffalo": 0x0137,
     "Black Antoid": 0x013C,
+    "Black Antoid (2)": 0x013C,
     "Red Antoid": 0x013C,
     "Ramblin' Evil Mushroom": 0x0123,
     "Struttin' Evil Mushroom": 0x0123,
@@ -717,7 +716,10 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10d763, bytearray([enemy_ids[world.acting_enemy_list["Red Antoid"]]]))
     rom.write_bytes(0x10d769, bytearray([enemy_ids[world.acting_enemy_list["Armored Frog"]]]))
     rom.write_bytes(0x10d76d, bytearray([enemy_ids[world.acting_enemy_list["Red Antoid"]]]))
+    rom.write_bytes(0x10d770, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid (2)"]]]))
+    rom.write_bytes(0x10d766, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid (2)"]]]))
     rom.write_bytes(0x10d774, bytearray([enemy_ids[world.acting_enemy_list["Red Antoid"]]]))
+    rom.write_bytes(0x10d777, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid (2)"]]]))
     rom.write_bytes(0x10d77b, bytearray([enemy_ids[world.acting_enemy_list["Red Antoid"]]]))
     rom.write_bytes(0x10d77e, bytearray([enemy_ids[world.acting_enemy_list["Armored Frog"]]]))
     rom.write_bytes(0x10d781, bytearray([enemy_ids[world.acting_enemy_list["Plain Crocodile"]]]))
@@ -1233,6 +1235,7 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10dee9, bytearray([enemy_ids[world.acting_enemy_list["Mad Duck"]]]))
     rom.write_bytes(0x10deed, bytearray([enemy_ids[world.acting_enemy_list["Worthless Protoplasm"]]]))
     rom.write_bytes(0x10def1, bytearray([enemy_ids[world.acting_enemy_list["Rowdy Mouse"]]]))
+    rom.write_bytes(0x10dF00, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid (2)"]]]))
     rom.write_bytes(0x10df04, bytearray([enemy_ids[world.acting_enemy_list["Cop"]]]))
     rom.write_bytes(0x10df1b, bytearray([enemy_ids[world.acting_enemy_list["Slimy Little Pile"]]]))
     rom.write_bytes(0x10df22, bytearray([enemy_ids[world.acting_enemy_list["Tough Mobile Sprout"]]]))

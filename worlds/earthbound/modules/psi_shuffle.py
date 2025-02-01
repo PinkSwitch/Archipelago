@@ -159,7 +159,7 @@ def shuffle_psi(world):
         "Special": ["Psycho bomb", "Mad psycho bomb", "Psywave emitter", "Psywave blaster", "Broken radio"],
         "Flash": ["Smoke bomb", "Flashbang", "Flash pan", "Digital camera", "Broken camera"],
         "Freeze": ["Ice bomb", "Dry ice bomb", "Frost ray", "Freeze ray", "Broken minifridge"],
-        "Fire": ["Fire bomb", "Napalm bomb", "Blowtorch", "Flamethrower", "Broken toaster"],
+        "Fire": ["Fire bomb", "Napalm bomb", "Blowtorch", "Flamethrower", "Broken grill"],
         "Thunder": ["Electric bomb", "EMP bomb", "Shock coil", "Tesla coil", "Broken spring"],
         "Starstorm": ["Comet bomb", "Nova bomb", "Meteor radar", "Star radar", "Broken radar"],
         "Blast": ["Bomb", "Super bomb", "Bazooka", "Heavy bazooka", "Broken bazooka"],
