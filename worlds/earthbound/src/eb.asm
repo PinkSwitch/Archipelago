@@ -7361,15 +7361,14 @@ ORG $D57295
 db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $92, $91, $A4, $00
 
 ORG $D572BC
-db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $96, $A2, $A9, $50
-db $A0, $91, $9E, $00
+db $80, $a2, $9f, $97, $a2, $95, $a3, $a3, $99, $a6, $95, $50, $a0, $91, $9e, $00
 
 ORG $D572E3
 db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $97, $A5, $9E, $00
 
 ORG $D5730A
-db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $92, $A2, $91, $93
-db $95, $9C, $95, $A4, $00
+db $80, $a2, $9f, $97, $a2, $95, $a3, $5e, $50, $92, $a2, $91, $93, $95, $9c
+db $95, $a4, $00
 
 ORG $D57331
 db $80, $A2, $9F, $97, $A2, $95, $A3, $A3, $99, $A6, $95, $50, $9F, $A4, $98, $95
@@ -8259,8 +8258,7 @@ db $78, $78, $86, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .ThreedTeleport:
 db $84, $98, $A2, $95, $95, $94, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .SaturnTeleport:
-db $83, $91, $a4, $a5, $a2, $9e, $50, $86, $91, $9c, $9c, $95, $a9, $50, $84, $95
-db $9c, $95, $a0, $9f, $a2, $a4, $00
+db $83, $91, $a4, $a5, $a2, $9e, $50, $84, $95, $9c, $95, $a0, $9f, $a2, $a4, $00
 .DesertTeleport:
 db $74, $A5, $9E, $95, $A3, $50, $84, $95, $9C, $95, $A0, $9F, $A2, $A4, $00
 .FoursideTeleport:
@@ -8297,6 +8295,8 @@ db $7A, $95, $96, $96, $00
 db $80, $9F, $9F, $00
 .FlnMn:
 db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $00
+.Ness:
+db $7E, $95, $A3, $A3, $00
 .SoldOut:
 db $83, $7F, $7C, $74, $50, $7F, $85, $84, $00
 .TeleportNames:
@@ -8323,6 +8323,7 @@ dw .Paula
 dw .Jeff
 dw .Poo
 dw .FlnMn
+dw .Ness
 
 .PlayerText:
 db $18, $01, $0B, $1c, $02, $01, $02
@@ -8476,6 +8477,66 @@ dl CheckNessRobot
 
 ORG $F30080
 db $0A, $C3, $B8, $EE
+
+ORG $C7BF32
+db $0A
+dl GiantStepNessText
+
+ORG $C7BF5C
+db $0A
+dl GiantStepNessName
+
+ORG $C7BFFC
+db $0A
+dl LilliputNessText
+
+ORG $C7C027
+db $0A
+dl LilliputNessName
+
+ORG $C7C18F
+db $0A
+dl MilkyNessText
+
+ORG $C7C1CA
+db $0A
+dl MilkyNessName
+
+ORG $C7C0D4
+db $0A
+dl RainyNessText
+
+ORG $C7C0F9
+db $0A
+dl RainyNessName
+
+ORG $C7C26C
+db $0A
+dl MagnetNessText
+
+ORG $C7C295
+db $0A
+dl MagnetNessName
+
+ORG $C7C32B
+db $0A
+dl CloudNessText
+
+ORG $C7C35C
+db $0A
+dl CloudNessName
+
+ORG $EF97B2
+dd $EF97B6
+
+ORG $EF67AA
+dd $EF67AE
+
+ORG $C83D34
+dd $C83D38
+
+ORG $C9D2CA
+dd $C9D2CE
 
 ;New data table go here
 
@@ -10032,8 +10093,9 @@ LDA #$00EE
 STA $10
 LDA.w #PlayerNameText
 STA $0E
-JSL $C3E4CA
+JSL $C3E4D4
 JSL $C186B1
+JSL $C3E4CA
 .LoopWin:
 JSL $C12DD5
 
@@ -11137,8 +11199,8 @@ ORG $C5E04C
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-db $03, $0f, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
-;db $01, $ff, $ff, $01, $01, $00; Non-remote local Teleport.
+;db $03, $0f, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
+;db $05, $0F, $00, $02, $01, $00; Non-remote local Teleport.
 ;db $96, $ff, $ff, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
 ;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
@@ -11288,11 +11350,12 @@ dl $C50660
   db $02
 
   ..CharShopNameTable:
-  db $09, $04
+  db $09, $05
   dd .Paula
   dd .Jeff
   dd .Poo
   dd .FlnMn
+  dd .Ness
   db $02
 
 .Error:
@@ -11366,6 +11429,8 @@ db $1C, $02, $03, $02
 db $1C, $02, $04, $02
 .FlnMn:
 db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $02
+.Ness:
+db $1C, $02, $01, $02
 
 ShopsanityPurchaseHandler:
 ;Set the flag here, probably?
@@ -11533,11 +11598,12 @@ db $02
 ..Character:
 db $1B, $01
 db $1B, $04
-db $09, $04
+db $09, $05
 dd .Paula
 dd .Jeff
 dd .Poo
 dd .FlnMn
+dd .Ness
 db $02
 .Paula:
 db $08
@@ -11557,6 +11623,11 @@ db $02
 .FlnMn:
 db $08
 dd $D5F845
+db $18, $01, $01
+db $02
+.Ness:
+db $08
+dd $D5F849
 db $18, $01, $01
 db $02
 
@@ -14844,6 +14915,94 @@ db $50, $A4, $A2, $99, $95, $94, $50
 db $1C, $12, $01, $51
 db $08
 dd $EF864C
+db $02
+
+GiantStepNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7BF36
+
+LilliputNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C000
+
+MilkyNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C193
+
+RainyNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C0D8
+
+MagnetNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C270
+
+CloudNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C32F
+
+NessSancDiscover:
+db $70
+db $06, $17, $04
+dd .NessPresent
+db $83, $9F, $9D, $95, $A7, $98, $95, $A2, $95, $5C, $50, $10, $0A
+.NessPresent:
+db $1c, $02, $01
+db $02
+
+GiantStepNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7BF60
+
+LilliputNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C02B
+
+MilkyNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C1CE
+
+RainyNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C0FD
+
+MagnetNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C299
+
+CloudNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C360
+
+PrintLeader:
+db $70
+db $19, $10, $01
+db $1B, $04
+db $1C, $02, $00
 db $02
 
 ;todo, PSI rockin?
