@@ -790,90 +790,150 @@ db $02, $2A, $18, $04, $10, $80, $05, $2F, $01, $0A, $00, $AA, $EE ;Buzz Buzz te
 
 ORG $EE9210
 OnettTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd OnettLeaderName
+OnettLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $7F, $9E, $95, $A4, $A4, $51, $59, $1F, $02, $67, $04, $D1, $00, $13, $02 ;Onett
 
 TwosonTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd TwosonLeaderName
+TwosonLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $84, $A7, $9F, $A3, $9F, $9E, $51, $59, $1F, $02, $67, $04, $D2, $00, $13
 db $02 ;Twoson
 
 HappyTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd HappyLeaderName
+HappyLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $78, $91, $A0, $A0, $A9, $5D, $78, $91, $A0, $A0, $A9, $50, $86, $99, $9C
 db $9C, $91, $97, $95, $51, $59, $1F, $02, $67, $04, $DD, $00, $13, $02 ;Happy-Happy
 
 ThreedTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd ThreedLeaderName
+ThreedLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $84, $98, $A2, $95, $95, $94, $51, $59, $1F, $02, $67, $04, $D3, $00, $13
 db $02 ;Threed
 
 SaturnTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd SaturnLeaderName
+SaturnLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $83, $91, $A4, $A5, $A2, $9E, $50, $86, $91, $9C, $9C, $95, $A9, $51, $59
 db $1F, $02, $67, $04, $D5, $00, $13, $02 ;Saturn Valley
 
 DunesTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd DunesLeaderName
+DunesLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $74, $A5, $A3, $A4, $A9, $50, $74, $A5, $9E, $95, $A3, $50, $74, $95, $A3
 db $95, $A2, $A4, $51, $59, $1F, $02, $67, $04, $DE, $00, $13, $02;Dusty Dunes
 
 FoursTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd FoursLeaderName
+FoursLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $76, $9F, $A5, $A2, $A3, $99, $94, $95, $51, $59, $1F, $02, $67, $04, $D6
 db $00, $13, $02; Fourside
 
 WintersTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd WintersLeaderName
+WintersLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $87, $99, $9E, $A4, $95, $A2, $A3, $51, $59, $1F, $02, $67, $04, $D4, $00
 db $13, $02 ;Winters
 
 SummersTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd SummersLeaderName
+SummersLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $83, $A5, $9D, $9D, $95, $A2, $A3, $51, $59, $1F, $02, $67, $04, $D7, $00
 db $13, $02 ;Summers
 
 ScarabaTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dl ScarabaLeaderName
+ScarabaLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $83, $93, $91, $A2, $91, $92, $91, $51, $59, $1F, $02, $67, $04, $D9, $00
 db $13, $02 ;Scaraba
 
 DalaamTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd DalaamLeaderName
+DalaamLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $74, $91, $9C, $91, $91, $9D, $51, $59, $1F, $02, $67, $04, $D8, $00, $13
 db $02 ;Dalaam
 
 DarkTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd DarkLeaderName
+DarkLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $A4, $98, $95, $50, $74, $95, $95, $A0, $50, $74, $91, $A2, $9B, $9E, $95
 db $A3, $A3, $51, $59, $1F, $02, $67, $04, $DA, $00, $13, $02; Deep Darkness
 
 TendaTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd TendaLeaderName
+TendaLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $84, $95, $9E, $94, $91, $50, $86, $99, $9C, $9C, $91, $97, $95, $51, $59
 db $1F, $02, $67, $04, $DB, $00, $13, $02 ;Tenda Village
 
 UnderworldTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd UnderLeaderName
+UnderLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $A4, $98, $95, $50, $7C, $9F, $A3, $A4, $50, $85, $9E, $94, $95, $A2, $A7
 db $9F, $A2, $9C, $94, $51, $59, $1F, $02, $67, $04, $DC, $00, $13, $02; Lost Underworld
 
 MagicantTeleTex:
-db $18, $01, $01, $01, $70, $58, $1C, $02, $01, $50, $9C, $95, $91, $A2, $9E, $95
+db $18, $01, $01, $01
+db $0A
+dd MagicLeaderName
+MagicLeaderDone:
+db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
 db $50, $7D, $91, $97, $99, $93, $91, $9E, $A4, $51, $59, $1F, $02, $67, $04, $DF
 db $00, $13, $02 ;Magicant
@@ -15197,8 +15257,106 @@ dd PrintLeader
 db $0A
 dl $EE9BE2
 
+OnettLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl OnettLeaderDone
+
+TwosonLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl TwosonLeaderDone
+
+HappyLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl HappyLeaderDone
+
+ThreedLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl ThreedLeaderDone
+
+SaturnLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl SaturnLeaderDone
+
+DunesLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl DunesLeaderDone
+
+FoursLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl FoursLeaderDone
+
+WintersLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl WintersLeaderDone
+
+SummersLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl SummersLeaderDone
+
+ScarabaLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl ScarabaLeaderDone
+
+DalaamLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl DalaamLeaderDone
+
+DarkLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl DarkLeaderDone
+
+TendaLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl TendaLeaderDone
+
+UnderLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl UnderLeaderDone
+
+MagicLeaderName:
+db $08
+dd PrintLeader2
+db $0A
+dl MagicLeaderDone
+
 PrintLeader:
 db $70
+db $19, $10, $01
+db $1B, $04
+db $1C, $02, $00
+db $02
+
+PrintLeader2:
+db $70
+db $58
 db $19, $10, $01
 db $1B, $04
 db $1C, $02, $00
