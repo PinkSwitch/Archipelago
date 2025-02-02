@@ -97,12 +97,26 @@ class EarthBoundWorld(World):
         self.starting_character = self.options.starting_character.current_key.capitalize()
         self.locals = []
         local_space_count = 0
+        max_counts = {
+            "Ness": 12,
+            "Paula": 11,
+            "Jeff": 9,
+            "Poo": 99
+        }
+        max_count = max_counts[self.starting_character]
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
                 local_space_count += amount
-                if local_space_count > 12 and not self.options.remote_items:
+                if local_space_count > max_count and not self.options.remote_items:
                     player = self.multiworld.get_player_name(self.player)
-                    raise OptionError(f"{player}: start_inventory cannot place more than 12 items into 'Goods'. Attempted to place {local_space_count} Goods items.")
+                    raise OptionError(f"{player}: starting inventory cannot place more than {max_count} items into 'Goods' for {self.starting_character}. Attempted to place {local_space_count} Goods items.")
+
+        for item_name, amount in self.options.start_inventory_from_pool.items():
+            if item_name in item_id_table:
+                local_space_count += amount
+                if local_space_count > max_count and not self.options.remote_items:
+                    player = self.multiworld.get_player_name(self.player)
+                    raise OptionError(f"{player}: starting inventory cannot place more than {max_count} items into 'Goods' for {self.starting_character}. Attempted to place {local_space_count} Goods items.")
         setup_gamevars(self)
         create_flavors(self)
         initialize_enemies(self)

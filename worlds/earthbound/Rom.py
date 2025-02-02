@@ -463,6 +463,17 @@ def patch_rom(world, rom, player: int):
     starting_char = 0
     starting_psi_types = []
     starting_character_count = []
+    starting_inventory_pointers = {
+        "Ness": 0x99F3,
+        "Paula": 0x9A53,
+        "Jeff": 0x9AB4,
+        "Poo": 0x9B10
+    }
+
+    if world.starting_character == "Poo" and world.multiworld.get_location(
+        "Poo - Starting Item", world.player).item.name not in item_id_table:
+        starting_inventory_pointers["Poo"] = 0x9B0F
+    rom.write_bytes(0x16FB66, struct.pack("H", starting_inventory_pointers[world.starting_character]))
     for item in world.multiworld.precollected_items[player]:
         if world.options.remote_items:
             continue
