@@ -314,7 +314,17 @@ class EarthBoundClient(SNIClient):
                 slot_id = (0xEB0FF9 + (shop_scout[0] * 7) + i)
                 if slot_id in ctx.server_locations:
                     shop_slots.append(slot_id)
-            await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
+            
+            if shop_scout[0] == 2:
+                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
+            else:
+                prog_shops = []
+                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 0}])
+                for location in shop_slots:
+                    if location in ctx.locations_info:
+                        if ctx.locations_info[location].flags & 0x01:
+                            prog_shops.append(location)
+                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": prog_shops, "create_as_hint": 2}])
 
         await ctx.send_msgs([{
                     "cmd": "Set",
