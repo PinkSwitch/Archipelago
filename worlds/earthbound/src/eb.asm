@@ -8526,6 +8526,22 @@ ORG $C7C35C
 db $0A
 dl CloudNessName
 
+ORG $C7C426
+db $0A
+dl LumineNessText
+
+ORG $C7C44B
+db $0A
+dl LumineNessName
+
+ORG $C7C4DD
+db $0A
+dl FireNessText
+
+ORG $C7C50D
+db $0A
+dl FireNessName
+
 ORG $EF97B2
 dd $EF97B6
 
@@ -8537,6 +8553,12 @@ dd $C83D38
 
 ORG $C9D2CA
 dd $C9D2CE
+
+ORG $C9E28B
+dd $C9E28F
+
+ORG $EF57FB
+dd $EF57FF
 
 ;New data table go here
 
@@ -14953,6 +14975,18 @@ dd NessSancDiscover
 db $0A
 dl $C7C32F
 
+LumineNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C42A
+
+FireNessText:
+db $08
+dd NessSancDiscover
+db $0A
+dl $C7C4E1
+
 NessSancDiscover:
 db $70
 db $06, $17, $04
@@ -14997,6 +15031,18 @@ db $08
 dd PrintLeader
 db $0A
 dl $C7C360
+
+LumineNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C44F
+
+FireNessName:
+db $08
+dd PrintLeader
+db $0A
+dl $C7C511
 
 PrintLeader:
 db $70
