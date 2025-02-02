@@ -8560,6 +8560,10 @@ dd $C9E28F
 ORG $EF57FB
 dd $EF57FF
 
+ORG $C8854C
+db $0A
+dl $C88561
+
 ;New data table go here
 
 
@@ -11150,72 +11154,72 @@ RTL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-;JML APShopHandler;This JML is only in AP patch
+JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-;JML GetAPShopName
+JML GetAPShopName
 
 ORG $C19E8F
-;JML GetAPShopPrice
+JML GetAPShopPrice
 
 ORG $C11AC6
-;JML DisplayAPPlayer
+JML DisplayAPPlayer
 
 ORG $C19EDD
-;JML TransferOutOfMenu
+JML TransferOutOfMenu
 
 org $C19ED3
-;JML CheckIfBuyable
-;NOP
-;NOP
+JML CheckIfBuyable
+NOP
+NOP
 
 ORG $C19B66
-;JML OverrideShopWindowFX
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
-;db $08
-;dd CheckShopsanityPrice
+db $08
+dd CheckShopsanityPrice
 
 ORG $C19DA0
-;JML PreserveWindowPalette
+JML PreserveWindowPalette
 
 ORG $C5E0B6
-;db $08
-;dd BoughtShopsanityItemScript
+db $08
+dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-;db $0A
-;dl ShopsanityPurchaseHandler
+db $0A
+dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-;dl ShopsanityPurchaseHandler
+dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+dd CancelBuyRemoveName
 
 ORG $C50A6A
-;db $0A
-;dl BackupShopEquipText
+db $0A
+dl BackupShopEquipText
 
 ORG $C50B4C
-;db $0A
-;dl BackupShopSellText
+db $0A
+dl BackupShopSellText
 
 ORG $C50C2E
-;db $0A
-;dl BackupShopCantEquip
+db $0A
+dl BackupShopCantEquip
 
 ORG $C5E04C
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_oneslot
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 
 
