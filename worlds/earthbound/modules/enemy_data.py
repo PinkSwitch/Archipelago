@@ -468,8 +468,9 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
     "blast": {10: "zeta", 20: "epsilon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
     "missile": {5: "zeta", 12: "epsilon", 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
-    # Todo; blast/missile delta and lambda
-    # "blast": {00: "delta", 20: "lambda", 20: "alpha", 35: "beta", 45: "gamma", 100: "omega"},
+    "throw_bomb": {10: "zeta", 20: "epsilon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
+    "throw_bomb_minus": {20: "zeta", 30: "epsilon", 40: "alpha", 50: "beta", 100: "gamma", 200: "omega"},
+    "shoot_rocket": {5: "zeta", 12: "epsilon", 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
 
 
     # bombs and bottle rockets too? Also missile maybe? hmmm
@@ -541,6 +542,7 @@ enemy_psi = {
     "Mook Senior": ["freeze", "fire", "lifeup", "diamond_eyes"],
     "Smelly Ghost": ["null", "null", "lifeup", "null"],
     "Deadly Mouse": ["poisonous_fangs", "null", "null", "null"],
+    "Care Free Bomb": ["throw_bomb_minus", "throw_bomb_minus", "throw_bomb_minus", "throw_bomb"],
     "Electro Specter": ["electrical_shock", "null", "electrical_shock", "null"],
     "Smilin' Sam": ["null", "null", "null", "lifeup"],
     "Manly Fish's Brother": ["null", "null", "freeze", "healing"],
@@ -549,6 +551,7 @@ enemy_psi = {
     "Beautiful UFO": ["null", "null", "null", "lifeup"],
     "Evil Mani-Mani": ["null", "paralysis", "null", "null"],
     "Mr. Molecule": ["thunder", "flash", "fire", "freeze"],
+    "Sentry Robot": ["null", "null", "null", "shoot_rocket"],
     "Psychic Psycho": ["fire", "fire", "fire", "fire"],
     "Major Psychic Psycho": ["fire", "null", "paralysis", "fire"],
     "Soul Consuming Flame": ["null", "breathe_fire", "flaming_fireball", "spray_fire"],
@@ -873,7 +876,33 @@ spell_data = {
         "beta": [0xF5, 0x01, 0x00],
         "gamma": [0x58, 0x00, 0x00],
         "omega": [0xF6, 0x01, 0x00]
-    }
+    },
+    "throw_bomb": {
+        "zeta": [0xFC, 0x01, 0x00],
+        "epsilon": [0xFB, 0x01, 0x00],
+        "alpha": [0xFD, 0x01, 0x00],
+        "beta": [0xFE, 0x01, 0x00],
+        "gamma": [0xFF, 0x01, 0x00],
+        "omega": [0x00, 0x02, 0x00]
+    },
+
+    "throw_bomb_minus": {
+        "zeta": [0xFC, 0x01, 0x00],
+        "epsilon": [0xFB, 0x01, 0x00],
+        "alpha": [0xFD, 0x01, 0x00],
+        "beta": [0xFE, 0x01, 0x00],
+        "gamma": [0xFF, 0x01, 0x00],
+        "omega": [0x00, 0x02, 0x00]
+    },
+    "shoot_rocket": {
+        "zeta": [0x01, 0x02, 0x00],
+        "epsilon": [0x02, 0x02, 0x00],
+        "alpha": [0x03, 0x02, 0x00],
+        "beta": [0x04, 0x02, 0x00],
+        "gamma": [0x05, 0x02, 0x00],
+        "omega": [0x06, 0x02, 0x00]
+    },
+
 
 }
 

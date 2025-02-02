@@ -721,7 +721,7 @@ def randomize_weapons(world, rom):
         "Sand Lot Bat": EBWeapon("Ness", "Bash", 0x1552E5),
         "Minor League Bat": EBWeapon("Ness", "Bash", 0x15530C),
         "Mr. Baseball Bat": EBWeapon("Ness", "Bash", 0x155333),
-        "Big League Bat": EBWeapon("Ness", "Bash", 0x15535A),
+        "Big League Bat": EBWeapon("Ness", "Bash", 0x157073),
         "Hall of Fame Bat": EBWeapon("Ness", "Bash", 0x155381),
         "Magicant Bat": EBWeapon("Ness", "Bash", 0x1553A8),
         "Legendary Bat": EBWeapon("Ness", "Bash", 0x1553CF),

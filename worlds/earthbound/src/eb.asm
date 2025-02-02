@@ -12638,13 +12638,62 @@ db $00, $01, $03, $03
 dd $00EF8543;Blast Epsilon
 dd blast_epsilon
 ;;;;;;;;;;;;;;;;;;;;;;;;
-db $00, $01, $03, $05
+db $00, $01, $03, $01
 dd $00EF8543;Missile Zeta
 dd missile_zeta
 
-db $00, $01, $03, $05
+db $00, $01, $03, $03
 dd $00EF8543;Missile Epsilon
 dd missile_epsilon
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $01, $00
+dd throwbomb_zeta
+dd blast_zeta
+
+db $00, $01, $01, $00
+dd throwbomb_epsilon
+dd blast_epsilon
+
+db $00, $01, $01, $00
+dd throwbomb_alpha
+dd blast_alpha
+
+db $00, $01, $01, $00
+dd throwbomb_beta
+dd blast_beta
+
+db $00, $01, $01, $00
+dd throwbomb_gamma
+dd blast_gamma
+
+db $00, $01, $01, $00
+dd throwbomb_omega
+dd blast_omega
+;;;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $01, $00
+dd shootrocket_zeta
+dd missile_zeta
+
+db $00, $01, $01, $00
+dd shootrocket_epsilon
+dd missile_epsilon
+
+db $00, $01, $01, $00
+dd shootrocket_alpha
+dd missile_alpha
+
+db $00, $01, $01, $00
+dd shootrocket_beta
+dd missile_beta
+
+db $00, $01, $01, $00
+dd shootrocket_gamma
+dd missile_gamma
+
+db $00, $01, $01, $00
+dd shootrocket_omega
+dd missile_omega
+
 
 
 ;New battle text
@@ -12899,6 +12948,95 @@ extinguish_epsilon:
 db $01, $1f, $02, $19, $70, $1c, $0d, $50, $94, $99, $a3, $a0, $95, $9e, $a3, $95
 db $94, $50, $91, $9e, $50, $95, $a8, $a4, $99, $9e, $97, $a5, $99, $a3, $98, $99
 db $9e, $97, $50, $a3, $a0, $9c, $91, $a3, $98, $51, $1f, $02, $58, $03, $10, $01
+db $02
+
+throwbomb_zeta:
+db $01, $1F, $02, $19
+db $70, $1c, $0d, $50, $a4, $a2, $99, $95, $94, $50, $a4, $9f, $50, $a4, $98, $a2
+db $9f, $a7, $50, $91, $50, $92, $9f, $9d, $92, $5c, $10, $05, $50, $92, $a5, $a4
+db $50, $a4, $a2, $99, $a0, $a0, $95, $94, $50, $9f, $a6, $95, $a2, $50, $a9, $9f
+db $a5, $51
+db $1F, $02, $11
+db $03, $02
+
+throwbomb_epsilon:
+db $01, $1F, $02, $19
+db $70, $1c, $0d, $50, $a4, $98, $a2, $95, $a7, $50, $91, $50, $a4, $9f, $a9
+db $50, $92, $9f, $9d, $92, $51
+db $1F, $02, $11, $03
+db $02
+
+throwbomb_alpha:
+db $01, $1F, $02, $19
+db $70, $1c, $0d, $50, $a4, $98, $a2, $95, $a7, $50, $91, $50, $92, $9f, $9d
+db $92, $51
+db $1F, $02, $11, $03
+db $02
+
+throwbomb_beta:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a4, $98, $a2, $95, $a7, $50, $91, $50, $92, $99, $97
+db $50, $92, $9f, $9d, $92, $51
+db $1F, $02, $11, $03
+db $02
+
+throwbomb_gamma:
+db $01, $1F, $02, $19
+db $70, $1c, $0d, $50, $a4, $98, $a2, $95, $a7, $50, $91, $50, $a3, $a5, $a0
+db $95, $a2, $50, $92, $9f, $9d, $92, $51
+db $1F, $02, $11, $03
+db $02
+
+throwbomb_omega:
+db $01, $1F, $02, $19
+db $70, $1c, $0d, $50, $a4, $98, $a2, $95, $a7, $50, $91, $50, $98, $91, $9e, $94
+db $98, $95, $9c, $94, $50, $9e, $a5, $93, $9c, $95, $91, $a2, $50, $92, $9f, $9d
+db $92, $51
+db $1F, $02, $11, $03
+db $02
+
+shootrocket_zeta:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $94, $a5, $94, $50
+db $92, $9f, $a4, $a4, $9c, $95, $50, $a2, $9f, $93, $9b, $95, $a4, $51
+db $1F, $02, $46, $03
+db $02
+
+shootrocket_epsilon:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $a2, $9f, $9d, $91
+db $9e, $50, $93, $91, $9e, $94, $9c, $95, $51
+db $1F, $02, $46, $03
+db $02
+
+shootrocket_alpha:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $92, $9f, $a4, $a4
+db $9c, $95, $50, $a2, $9f, $93, $9b, $95, $a4, $51
+db $1F, $02, $46
+db $03
+db $02
+
+shootrocket_beta:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $94, $9f, $a5, $92
+db $9c, $95, $50, $92, $9f, $a4, $a4, $9c, $95, $50, $a2, $9f, $93, $9b, $95, $a4
+db $51
+db $1F, $02, $46, $03
+db $02
+
+shootrocket_gamma:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $92, $99, $97, $50
+db $92, $9f, $a4, $a4, $9c, $95, $50, $a2, $9f, $93, $9b, $95, $a4, $51
+db $1F, $02, $46, $03
+db $02
+
+shootrocket_omega:
+db $01, $1F, $02, $19
+db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $a2, $95, $91, $9c
+db $50, $97, $a5, $9e, $51
+db $1F, $02, $46, $03
 db $02
 
 ;New battle code
@@ -14964,6 +15102,7 @@ db $0A
 dl $C7C0D8
 
 MagnetNessText:
+db $1C, $21, $01
 db $08
 dd NessSancDiscover
 db $0A
