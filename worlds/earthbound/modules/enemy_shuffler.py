@@ -1274,6 +1274,9 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x0FA6CF, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
     rom.write_bytes(0x0FA6E0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Spiteful Crow"]]))
     rom.write_bytes(0x0FA4E2, struct.pack("H", enemy_sprites[world.acting_enemy_list["Unassuming Local Guy"]]))
+    rom.write_bytes(0x0FA3B0, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA3C1, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
+    rom.write_bytes(0x0FA3D2, struct.pack("H", enemy_sprites[world.acting_enemy_list["Insane Cultist"]]))
 
     rom.write_bytes(0x0FCE85, struct.pack("H", enemy_sprites[world.acting_enemy_list["Shattered Man"]]))
     rom.write_bytes(0x0FCE96, struct.pack("H", enemy_sprites[world.acting_enemy_list["Shattered Man"]]))
@@ -1364,6 +1367,15 @@ def apply_enemy_shuffle(world, rom):
     }
 
     pointer = 0x313000
+
+    if world.options.enemy_shuffle:
+        rom.write_bytes(0x0983D2, bytearray([0x1f, 0x1e, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x098459, bytearray([0x1f, 0x1e, 0x7B, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x0984D1, bytearray([0x1f, 0x1e, 0x7C, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x09855F, bytearray([0x1f, 0x1e, 0x7D, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x0985CE, bytearray([0x1f, 0x1e, 0x7E, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x098625, bytearray([0x1f, 0x1e, 0x7F, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x09869E, bytearray([0x1f, 0x1e, 0x80, 0x01, 0x00, 0x00, 0x00, 0x00]))
 
     for i in range(3):
 
