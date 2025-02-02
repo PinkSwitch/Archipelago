@@ -118,6 +118,9 @@ def patch_rom(world, rom, player: int):
     rom.write_bytes(0x01FE91, bytearray(starting_area_coordinates[world.start_location][0:2]))
     rom.write_bytes(0x01FE8B, bytearray(starting_area_coordinates[world.start_location][2:4]))  # Respawn position
 
+    if world.options.skip_epilogue:
+        rom.write_bytes(0x2EA3C6, struct.pack("I", 0xEEA432))
+
     rom.write_bytes(starting_levels[world.starting_character], bytearray([0x03]))
     rom.write_bytes(atm_card_slots[world.starting_character], bytearray([0xB1]))
     if world.starting_character != "Poo":

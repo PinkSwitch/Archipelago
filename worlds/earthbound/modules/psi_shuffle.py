@@ -504,13 +504,6 @@ def write_psi(world, rom):
     rom.write_bytes(0x15BA2B, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][0])))
     rom.write_bytes(0x15C06D, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][1])))
 
-    rom.write_bytes(0x15C009, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
-    rom.write_bytes(0x15C00B, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
-    rom.write_bytes(0x15C00D, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][0])))
-    rom.write_bytes(0x15C00F, bytearray(struct.pack("H", world.bomb_actions[world.jeff_offense_items[0]][1])))
-
-    rom.write_bytes(0x15C93D, bytearray(struct.pack("H", world.missile_actions[world.jeff_offense_items[1]][0])))
-
 
 def adjust_psi_list(psi_input, spell, index):
     psi_input.insert(index, (psi_input.pop(psi_input.index(spell))))

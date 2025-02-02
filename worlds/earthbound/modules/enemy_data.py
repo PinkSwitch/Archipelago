@@ -256,7 +256,7 @@ def initialize_enemies(world):
         "Trillionage Sprout": shuffled_enemies["Tough Mobile Sprout"],
         "Master Barf": shuffled_enemies["Even Slimier Little Pile"],
         "Starman Deluxe": [shuffled_enemies["Starman"], world.enemies["Starman Super"]],
-        "Carbon Dog": world.enemies["Diamond Dog"] #This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
+        "Carbon Dog": world.enemies["Diamond Dog"]  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
     }
 
     world.regional_enemies = {"Northern Onett": {shuffled_enemies["Spiteful Crow"], shuffled_enemies["Runaway Dog"], shuffled_enemies["Coil Snake"]},
@@ -413,7 +413,7 @@ levels = [
     45,  # dungeon man
     47,  # deep darkness
     49,  # deep darkness swamp
-    51, # Happy-Happy HQ
+    51,  # Happy-Happy HQ
     52,  # stonehenge
     54,  # Arcade
     56,  # lumine hall
@@ -421,7 +421,7 @@ levels = [
     61,  # fire spring
     63,  # magicant
     65,  # cave of the past
-    68, # Sea of Eden
+    68,  # Sea of Eden
     70,
     73]  # gigyas
 

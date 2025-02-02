@@ -243,20 +243,6 @@ class PlandoLumineHallText(FreeText):
     visibility = Visibility.none
 
 
-class StartingCharacter(Choice):
-    """Changes the character you start as. If random start location is disabled, each character has their own starting location.
-       Ness: Ness's House
-       Paula: the Happy-Happy Villagr cabin
-       Jeff: The Threed zombie prison
-       Poo: Dalaam"""
-    display_name = "Starting Character"
-    option_ness = 0
-    option_paula = 1
-    option_jeff = 2
-    option_poo = 3
-    default = 0
-
-
 class Armorizer(Choice):
     """All equippable armor will have randomly generated attributes. This includes who can equip it, elemental resistance (and how strong that resistance is),
        defense, and the secondary stat it increases (Either Luck or Speed, depending on armor slot.) Choosing "Help!" from the Goods menu will give you exact details
@@ -346,6 +332,7 @@ class ScoutShopChecks(DefaultOnToggle):
     """Scouts Shop checks when you open a shop. Only affects shops in Shopsanity mode."""
     display_name = "Scout Shop Checks"
 
+
 class StartingCharacter(Choice):
     """Sets which character you start as. Each character will always start with the ability to teleport,
        and the ATM card. Ness will not be required to fight Sanctuary bosses."""
@@ -356,11 +343,13 @@ class StartingCharacter(Choice):
     option_Poo = 3
     default = 0
 
+
 class EquipamizerStatCap(DefaultOnToggle):
     """If enabled, the highest value that Equipamizer can roll for a piece of equipment's
        main stat will be capped. 80 for armor, 125 for weapons.
        If disabled, the main stat can potentially roll up to 128."""
     display_name = "Equipamizer Stat Cap"
+
 
 class MoneyDropMultiplier(Range):
     """Multiplies money dropped by enemies by the chosen value."""
@@ -369,9 +358,19 @@ class MoneyDropMultiplier(Range):
     range_end = 100
     default = 1
 
+
 class EnemyShuffle(Toggle):
     """Shuffles Non-boss enemies amongst each other."""
     display_name = "Enemy Shuffle"
+
+
+class SkipEpilogue(Toggle):
+    """If enabled, the choice to play the epilogue after beating Giygas will be removed, and you will
+       go directly to the credits. This option is mainly for no-release seeds where checks could be
+       potentially spoiled in the open-access epilogue."""
+    display_name = "Skip Epilogue"
+    visibility = Visibility.template
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -422,6 +421,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_psi_palettes: RandomizePSIPalettes
     shop_randomizer: ShopRandomizer
     scout_shop_checks: ScoutShopChecks
+    skip_epilogue: SkipEpilogue
     start_inventory_from_pool: StartInventoryPool
     death_link: DeathLink
     death_link_mode: DeathLinkMode
@@ -486,7 +486,8 @@ eb_option_groups = [
         EasyDeaths,
         StartingMoney,
         RemoteItems,
-        AutoscaleParty
+        AutoscaleParty,
+        SkipEpilogue
     ]),
 
     OptionGroup("Aesthetic Settings", [

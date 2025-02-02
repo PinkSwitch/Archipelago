@@ -1382,6 +1382,7 @@ def apply_enemy_shuffle(world, rom):
         if world.acting_enemy_list[dungeon_zoo[i]] not in dungeon_zoo:
             rom.write_bytes(desc_addresses[i], struct.pack("I", pointer + 0xC00000))
         else:
-            rom.write_bytes(desc_addresses[i], struct.pack("I", normal_pointers[world.acting_enemy_list[dungeon_zoo[i]]]))
+            rom.write_bytes(desc_addresses[i], struct.pack("I",
+                                                           normal_pointers[world.acting_enemy_list[dungeon_zoo[i]]]))
         pointer += len(text)
     # Todo; action scripts for npc enemies?
