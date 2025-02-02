@@ -121,7 +121,10 @@ def patch_rom(world, rom, player: int):
     if world.options.skip_epilogue:
         rom.write_bytes(0x2EA3C6, struct.pack("I", 0xEEA432))
 
-    rom.write_bytes(starting_levels[world.starting_character], bytearray([0x03]))
+    if world.starting_character == "Poo":
+        rom.write_bytes(starting_levels[world.starting_character], bytearray([0x06]))
+    else:
+        rom.write_bytes(starting_levels[world.starting_character], bytearray([0x03]))
     rom.write_bytes(atm_card_slots[world.starting_character], bytearray([0xB1]))
     if world.starting_character != "Poo":
         rom.write_bytes(starting_weapon[world.starting_character][0], bytearray([starting_weapon[world.starting_character][1]]))
