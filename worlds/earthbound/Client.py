@@ -263,6 +263,7 @@ class EarthBoundClient(SNIClient):
             # Check if the player's box is open, refund if not
 
             if "IsOpen" in motherbox[str(recipient[0])]:
+                # Does the recipient 0 thing work if > 255? Will need some testing.
                 motherbox[str(recipient[0])]["is_open"] = motherbox[str(recipient[0])].pop("IsOpen")
 
             if "AcceptsAnyGift" in motherbox[str(recipient[0])]:
@@ -272,7 +273,7 @@ class EarthBoundClient(SNIClient):
                 motherbox[str(recipient[0])]["desired_traits"] = motherbox[str(recipient[0])].pop("DesiredTraits")
 
             if "Trait" in motherbox[str(recipient[0])]["desired_traits"]:
-                 motherbox[str(recipient[0])]["desired_traits"]["trait"] = motherbox[st(recipient[0])]["desired_traits"].pop("Trait")
+                 motherbox[str(recipient[0])]["desired_traits"]["trait"] = motherbox[str(recipient[0])]["desired_traits"].pop("Trait")
 
             if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["is_open"] and (any(
                         motherbox[str(recipient[0])]["accepts_any_gift"] or
