@@ -210,13 +210,14 @@ class EarthBoundClient(SNIClient):
             if gift_item_name in item_id_table:
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
                 # Maybe a key item override here
-                item = gift_item_name
+                item = item_id_table[gift_item_name]
             else:
                 item = trait_interpreter(gift)
 
             inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
             # Pause if the receiver queue is full
             if not inbox_queue[0]:
+                print(item)
                 await snes_write(ctx, [(WRAM_START + 0x3200, bytes([item]))])
                 inbox.pop(key)
                 await ctx.send_msgs([{
@@ -260,20 +261,20 @@ class EarthBoundClient(SNIClient):
             gift_item_id = gift_buffer[0]
             gift = gift_properties[gift_item_id]
             recipient = struct.unpack("H", gift_buffer[-2:])
-            # Check if the player's box is open, refund if not
+            if str(recipient[0]) in motherbox:
+                # Check if the player's box is open, refund if not
+                if "IsOpen" in motherbox[str(recipient[0])]:
+                    # Does the recipient 0 thing work if > 255? Will need some testing.
+                    motherbox[str(recipient[0])]["is_open"] = motherbox[str(recipient[0])].pop("IsOpen")
 
-            if "IsOpen" in motherbox[str(recipient[0])]:
-                # Does the recipient 0 thing work if > 255? Will need some testing.
-                motherbox[str(recipient[0])]["is_open"] = motherbox[str(recipient[0])].pop("IsOpen")
+                if "AcceptsAnyGift" in motherbox[str(recipient[0])]:
+                    motherbox[str(recipient[0])]["accepts_any_gift"] = motherbox[str(recipient[0])].pop("AcceptsAnyGift")
 
-            if "AcceptsAnyGift" in motherbox[str(recipient[0])]:
-                motherbox[str(recipient[0])]["accepts_any_gift"] = motherbox[str(recipient[0])].pop("AcceptsAnyGift")
+                if "DesiredTraits" in motherbox[str(recipient[0])]:
+                    motherbox[str(recipient[0])]["desired_traits"] = motherbox[str(recipient[0])].pop("DesiredTraits")
 
-            if "DesiredTraits" in motherbox[str(recipient[0])]:
-                motherbox[str(recipient[0])]["desired_traits"] = motherbox[str(recipient[0])].pop("DesiredTraits")
-
-            if "Trait" in motherbox[str(recipient[0])]["desired_traits"]:
-                 motherbox[str(recipient[0])]["desired_traits"]["trait"] = motherbox[str(recipient[0])]["desired_traits"].pop("Trait")
+                if "Trait" in motherbox[str(recipient[0])]["desired_traits"]:
+                    motherbox[str(recipient[0])]["desired_traits"]["trait"] = motherbox[str(recipient[0])]["desired_traits"].pop("Trait")
 
             if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["is_open"] and (any(
                         motherbox[str(recipient[0])]["accepts_any_gift"] or

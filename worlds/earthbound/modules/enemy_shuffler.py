@@ -291,6 +291,7 @@ enemy_descriptions = {
     "Armored Frog": "@Their hard shell makes them very resistant.",
     "Bad Buffalo": "@It really is a bad kind of buffalo.",
     "Black Antoid": "@Be careful not to step on him.",
+    "Black Antoid (2)": "@Be careful not to step on him.",
     "Red Antoid": "@Collectors dig that bright red hue.",
     "Ramblin' Evil Mushroom": "@He is a really fun guy.",
     "Struttin' Evil Mushroom": "@Watch the spores!",
