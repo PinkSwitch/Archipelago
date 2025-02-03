@@ -358,11 +358,23 @@ def trait_interpreter(gift):
     item = None
     trait_list = []
     got_trait = False
-    for trait in gift["Traits"]:
-        trait_list.append(trait["Trait"])
-        if trait["Trait"] in scaled_traits:
-            item_quality_table = gift_by_quality[trait["Trait"]]
-            quality = min(item_quality_table.keys(), key=lambda x: abs(x - trait["Quality"]))
+    if "Traits" in gift:
+        gift["traits"] = gift.pop("Traits")
+
+    for trait in gift["traits"]:
+        if "Trait" in trait:
+            trait["trait"] = trait.pop("Trait")
+
+        if "Quality" in trait:
+            trait["quality"] = trait.pop("Quality")
+
+        if "quality" not in trait:
+            trait["quality"] = 1
+
+        trait_list.append(trait["trait"])
+        if trait["trait"] in scaled_traits:
+            item_quality_table = gift_by_quality[trait["trait"]]
+            quality = min(item_quality_table.keys(), key=lambda x: abs(x - trait["quality"]))
             item = item_quality_table[quality]
             got_trait = True
             break

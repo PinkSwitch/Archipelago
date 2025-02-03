@@ -163,12 +163,12 @@ class EarthBoundGift:
     traits: list
 
 
-def make_trait(trait: str, name, duration: float = 1):
+def make_trait(trait: str, name):
     if name in gift_qualities and trait in gift_qualities[name]:
         quality = gift_qualities[name][trait]
     else:
         quality = 1
-    return {"Trait": trait, "Quality": quality, "Duration": duration}
+    return {"trait": trait, "quality": quality}
 
 
 def make_default_traits(traits: List[str], name: str):

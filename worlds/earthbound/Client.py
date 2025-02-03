@@ -174,16 +174,15 @@ class EarthBoundClient(SNIClient):
             "keys": [f"GiftBoxes;{ctx.team}"]
         }])
 
-        # Some sort of If goes here
-        # I forgor...
+        #### GIFTING DATA ######
         if f"GiftBox;{ctx.team};{ctx.slot}" not in ctx.stored_data:
             local_giftbox = {
                             str(ctx.slot): {
-                                "IsOpen": True,
-                                "AcceptsAnyGift": False,
-                                "DesiredTraits": wanted_traits,
-                                "MinimumGiftDataVersion": 2,
-                                "MaximumGiftDataVersion": 2}}
+                                "is_open": True,
+                                "accepts_any_gift": False,
+                                "desired_traits": wanted_traits,
+                                "minimum_gift_data_version": 2,
+                                "maximum_gift_data_version": 3}}
             await ctx.send_msgs([{
                         "cmd": "Set",
                         "key": f"GiftBoxes;{ctx.team}",
@@ -206,10 +205,12 @@ class EarthBoundClient(SNIClient):
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
         if inbox:
             key, gift = next(iter(inbox.items()))
-            if gift["ItemName"] in item_id_table:
+            if "item_name" in gift or "ItemName" in gift:
+                gift_item_name = gift.get("item_name", gift.get("ItemName"))
+            if gift_item_name in item_id_table:
                 # If the name matches an EB item, convert it to one (even if not coming from EB)
                 # Maybe a key item override here
-                item = item_id_table[gift["ItemName"]]
+                item = gift_item_name
             else:
                 item = trait_interpreter(gift)
 
@@ -231,12 +232,17 @@ class EarthBoundClient(SNIClient):
         # TODO; CHECK A SETNOTIFY HERE
         gift_target = int.from_bytes(gift_target, byteorder="little")
 
+        # Giftbox checking for the gift menu UI
         if gift_target != 0x00 and motherbox is not None:
             gift_recipient = str(gift_target)
             recip_name = ctx.player_names[gift_target]
             recip_name = get_alias(recip_name, ctx.slot_info[gift_target].name)
             recip_name = text_encoder(recip_name, 20)
-            if gift_recipient in motherbox and motherbox[gift_recipient]["IsOpen"]:
+            if gift_recipient in motherbox:
+                if "IsOpen" in motherbox[gift_recipient]:
+                    motherbox[gift_recipient]["is_open"] = motherbox[gift_recipient].pop("IsOpen")
+                    
+            if gift_recipient in motherbox and motherbox[gift_recipient]["is_open"]:
                 recip_name.extend(text_encoder(" (Open)", 20))
             else:
                 recip_name.extend(text_encoder(" (Closed)", 20))
@@ -256,9 +262,21 @@ class EarthBoundClient(SNIClient):
             recipient = struct.unpack("H", gift_buffer[-2:])
             # Check if the player's box is open, refund if not
 
-            if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["IsOpen"] and (any(
-                        motherbox[str(recipient[0])]["AcceptsAnyGift"] or
-                        trait["Trait"] in motherbox[str(recipient[0])]["DesiredTraits"] for trait in gift.traits)):
+            if "IsOpen" in motherbox[str(recipient[0])]:
+                motherbox[str(recipient[0])]["is_open"] = motherbox[str(recipient[0])].pop("IsOpen")
+
+            if "AcceptsAnyGift" in motherbox[str(recipient[0])]:
+                motherbox[str(recipient[0])]["accepts_any_gift"] = motherbox[str(recipient[0])].pop("AcceptsAnyGift")
+
+            if "DesiredTraits" in motherbox[str(recipient[0])]:
+                motherbox[str(recipient[0])]["desired_traits"] = motherbox[str(recipient[0])].pop("DesiredTraits")
+
+            if "Trait" in motherbox[str(recipient[0])]["desired_traits"]:
+                 motherbox[st(recipient[0])]["desired_traits"]["trait"] = motherbox[st(recipient[0])]["desired_traits"].pop("Trait")
+
+            if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["is_open"] and (any(
+                        motherbox[str(recipient[0])]["accepts_any_gift"] or
+                        trait["trait"] in motherbox[str(recipient[0])]["desired_traits"] for trait in gift.traits)):
                 was_refunded = False
                 recipient = recipient[0]
             else:
@@ -267,16 +285,16 @@ class EarthBoundClient(SNIClient):
             guid = str(uuid.uuid4())
             outgoing_gift = {
                             guid: {
-                                "ID": guid,
-                                "ItemName": gift.name,
-                                "Amount": 1,
-                                "ItemValue": gift.value,
-                                "Traits": gift.traits,
-                                "SenderSlot": ctx.slot,
-                                "ReceiverSlot": recipient,
-                                "SenderTeam": ctx.team,
-                                "ReceiverTeam": ctx.team,  # ??? Should be Receive slot team?
-                                "IsRefund": was_refunded}}
+                                "id": guid,
+                                "item_name": gift.name,
+                                "amount": 1,
+                                "item_value": gift.value,
+                                "traits": gift.traits,
+                                "sender_slot": ctx.slot,
+                                "receiver_slot": recipient,
+                                "sender_team": ctx.team,
+                                "receiver_team": ctx.team,  # ??? Should be Receive slot team?
+                                "is_refund": was_refunded}}
 
             await ctx.send_msgs([{
                         "cmd": "Set",
