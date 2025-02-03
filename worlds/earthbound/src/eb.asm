@@ -562,7 +562,7 @@ db $08
 dd $C929CD
 db $18, $04, $1f, $11, $04, $1f, $00, $00, $0b, $10, $78, $50
 db $08, $10, $F8, $D5, $00, $1f, $03, $18, $01, $01, $70, $1c, $02, $04, $50, $9a
-db $9f, $16, $b9, $94, $15, $a8, $03, $01, $08, $FC, $F7, $D5, $FF, $18, $04, $02; Poo join 
+db $9f, $16, $b9, $94, $15, $a8, $03, $01, $08, $6B, $F7, $D5, $FF, $18, $04, $02; Poo join 
 
 ORG $C884D0
 JeffUnlockText:
@@ -3464,9 +3464,7 @@ LDA $D55000,X
 BEQ CheckKeys
 JML $C14F5A
 CheckKeys:
-STZ $B58B
-PHX
-PHY
+JML DeleteExtraKeyItem
 LDA $06
 AND #$00FF
 LDX #$0000
@@ -3514,8 +3512,8 @@ BNE RemoveItem
 PLA
 INC $B580
 BRA BackToItems
-RemoveItem:
 PLA
+RemoveItem:
 LDA #$0010
 BRA EndKeyCheck
 CheckStorageForKeys:
@@ -11211,6 +11209,84 @@ LDY #$9F17
 STY $94
 RTL
 
+DeleteExtraKeyItem:
+PHX
+PHY
+STZ $B58B
+LDY #$0001
+.CheckNextCharacter:
+LDX #$0000
+JSR .GetCharacterInventory
+PHY
+LDA $06
+LDY #$0000
+.CheckNextSlot:
+SEP #$20
+CMP $9992,X
+REP #$20
+BEQ .LogKeyItem
+.IgnoreOriginalItem:
+INX
+INY
+CPY #$000E
+BNE .CheckNextSlot
+LDA $B58E
+CMP $98A4
+BEQ .Done
+PLY
+INY
+BRA .CheckNextCharacter
+
+.LogKeyItem:
+PHA
+LDA $B58B
+BNE .TossDuplicateItem
+PLA
+INC $B58B
+JMP .IgnoreOriginalItem
+.Done:
+LDA $06
+LDX #$0000
+.CheckStorage:
+SEP #$20
+CMP $3280,X
+REP #$20
+BEQ .TossDuplicateItemNoPull
+INX
+CPX #$0045
+BNE .CheckStorage
+
+.REALLYdone:
+PLY
+LDA #$0000
+JML EndKeyCheck
+.TossDuplicateItem:
+PLA
+PLY
+JML RemoveItem
+
+.TossDuplicateItemNoPull:
+PLY
+JML RemoveItem
+
+.GetCharacterInventory:
+PHY
+LDA $986E,Y ; get the character
+AND #$00FF
+TAY
+TXA
+..Check:
+CPY #$0000
+BEQ ..Done
+CLC
+ADC #$005F
+DEY
+BRA ..Check
+..Done:
+PLY
+TAX
+STY $B58E
+RTS
 
 ;new code go here
 
