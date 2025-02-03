@@ -218,7 +218,6 @@ class EarthBoundClient(SNIClient):
             inbox_queue = await snes_read(ctx, WRAM_START + 0x3200, 1)
             # Pause if the receiver queue is full
             if not inbox_queue[0]:
-                print(item)
                 await snes_write(ctx, [(WRAM_START + 0x3200, bytes([item]))])
                 inbox.pop(key)
                 await ctx.send_msgs([{
@@ -336,7 +335,7 @@ class EarthBoundClient(SNIClient):
                 if slot_id in ctx.server_locations:
                     shop_slots.append(slot_id)
             
-            if shop_scout[0] == 2:
+            if shop_scouts_enabled[0] == 2:
                 await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
             else:
                 prog_shops = []
