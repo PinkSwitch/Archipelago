@@ -193,7 +193,7 @@ def setup_hints(world):
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
 
-    for item in world.options.start_hints:
+    for item in world.options.start_hints.value:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
             

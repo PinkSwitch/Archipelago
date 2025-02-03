@@ -189,7 +189,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
         multiworld.get_region("Cave of the Past", player).add_exits(["Endgame"],
                                                                     {"Endgame": lambda state: state.has("Paula", player)})
 
-    if world.options.magicant_mode < 2:
+    if world.options.magicant_mode < 3:
         multiworld.get_region("Magicant", player).add_exits(["Global ATM Access", "Sea of Eden"],
                                                             {"Sea of Eden": lambda state: state.has("Ness", player)})
 
