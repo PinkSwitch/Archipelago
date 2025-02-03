@@ -204,6 +204,7 @@ class EarthBoundClient(SNIClient):
         inbox = ctx.stored_data.get(f"GiftBox;{ctx.team};{ctx.slot}")
         motherbox = ctx.stored_data.get(f"GiftBoxes;{ctx.team}")
         if inbox:
+            gift_item_name = "None"
             key, gift = next(iter(inbox.items()))
             if "item_name" in gift or "ItemName" in gift:
                 gift_item_name = gift.get("item_name", gift.get("ItemName"))
