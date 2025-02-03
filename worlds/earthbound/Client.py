@@ -272,7 +272,7 @@ class EarthBoundClient(SNIClient):
                 motherbox[str(recipient[0])]["desired_traits"] = motherbox[str(recipient[0])].pop("DesiredTraits")
 
             if "Trait" in motherbox[str(recipient[0])]["desired_traits"]:
-                 motherbox[st(recipient[0])]["desired_traits"]["trait"] = motherbox[st(recipient[0])]["desired_traits"].pop("Trait")
+                 motherbox[str(recipient[0])]["desired_traits"]["trait"] = motherbox[st(recipient[0])]["desired_traits"].pop("Trait")
 
             if str(recipient[0]) in motherbox and motherbox[str(recipient[0])]["is_open"] and (any(
                         motherbox[str(recipient[0])]["accepts_any_gift"] or
