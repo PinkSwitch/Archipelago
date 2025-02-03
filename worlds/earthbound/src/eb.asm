@@ -2293,7 +2293,7 @@ ORG $EF952F
 db $EC, $03, $29, $96, $C7
 
 ORG $C7961A
-db $0A, $08, $AF, $EE, $00, $18, $01, $01, $06, $56, $00, $8D, $96, $c7, $00, $70
+db $0A, $08, $AF, $EE, $00, $18, $01, $01, $06, $56, $00, $A2, $96, $c7, $00, $70
 db $72, $a9, $50, $a4, $98, $95, $50, $a7, $91, $a9, $5c, $10, $0a, $50, $79, $50
 db $96, $9f, $a5, $9e, $94, $50, $a4, $98, $99, $a3, $1c, $05, $11, $50, $98, $95
 db $a2, $95, $5e, $10, $0f, $0A, $34, $AF, $EE, $34, $AF, $EE, $1b, $02, $34, $93
@@ -4128,7 +4128,7 @@ db $91, $9c, $9c, $95, $a9, $51, $59, $04, $d5, $00, $02, $1f, $02, $67, $10, $3
 db $01, $70, $58, $1c, $02, $01, $50, $9c, $95, $91, $a2, $9e, $95, $94, $50, $98
 db $9f, $a7, $50, $a4, $9f, $50, $a4, $95, $9c, $95, $a0, $9f, $a2, $a4, $50, $a4
 db $9f, $50, $74, $a5, $a3, $a4, $a9, $50, $74, $a5, $9e, $95, $a3, $50, $74, $95
-db $a3, $95, $a2, $a4, $51, $59, $04, $de, $00, $02, $1f, $02, $67, $10, $30, $00
+db $a3, $95, $a2, $a4, $51, $59, $04, $de, $00, $02, $1f, $02, $67, $10, $30, $01
 db $70, $58, $1c, $02, $01, $50, $9c, $95, $91, $a2, $9e, $95, $94, $50, $98, $9f
 db $a7, $50, $a4, $9f, $50, $a4, $95, $9c, $95, $a0, $9f, $a2, $a4, $50, $a4, $9f
 db $50, $76, $9f, $a5, $a2, $a3, $99, $94, $95, $51, $59, $04, $d6, $00, $02, $1f
@@ -8625,6 +8625,81 @@ dl $C88561
 ORG $EE9BDD
 db $0A
 dl EarthPowerLeader
+
+ORG $EEAB04
+db $0A
+dd OnettTeleNPCName
+OnettTeleNPCBack:
+
+ORG $EEAB36
+db $0A
+dd TwosonTeleNPCName
+TwosonTeleNPCBack:
+
+ORG $EEAB69
+db $0A
+dd HappyTeleNPCName
+HappyTeleNPCBack:
+
+ORG $EEABA9
+db $0A
+dd ThreedTeleNPCName
+ThreedTeleNPCBack:
+
+ORG $EEABDC
+db $0A
+dd SaturnTeleNPCName
+SaturnTeleNPCBack:
+
+ORG $EEAC16
+db $0A
+dd DunesTeleNPCName
+DunesTeleNPCBack:
+
+ORG $EEAC55
+db $0A
+dd FoursTeleNPCName
+FoursTeleNPCBack:
+
+ORG $EEAC8A
+db $0A
+dd WintersTeleNPCName
+WintersTeleNPCBack:
+
+ORG $EEACBE
+db $0A
+dd SummersTeleNPCName
+SummersTeleNPCBack:
+
+ORG $EEACF2
+db $0A
+dd ScarabaTeleNPCName
+ScarabaTeleNPCBack:
+
+ORG $EEAD26
+db $0A
+dd DalaamTeleNPCName
+DalaamTeleNPCBack:
+
+ORG $EEAD59
+db $0A
+dd DarkTeleNPCName
+DarkTeleNPCBack:
+
+ORG $EEAD93
+db $0A
+dd TendaTeleNPCName
+TendaTeleNPCBack:
+
+ORG $EEADCD
+db $0A
+dd UnderTeleNPCName
+UnderTeleNPCBack:
+
+ORG $EEAECB
+db $0A
+dd MagicTeleNPCName
+MagicTeleNPCBack:
 
 ;New data table go here
 
@@ -15422,6 +15497,96 @@ db $08
 dd PrintLeader2
 db $0A
 dl MagicLeaderDone
+
+OnettTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl OnettTeleNPCBack
+
+TwosonTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl TwosonTeleNPCBack
+
+HappyTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl HappyTeleNPCBack
+
+ThreedTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl ThreedTeleNPCBack
+
+SaturnTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl SaturnTeleNPCBack
+
+DunesTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl DunesTeleNPCBack
+
+FoursTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl FoursTeleNPCBack
+
+WintersTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl WintersTeleNPCBack
+
+SummersTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl SummersTeleNPCBack
+
+ScarabaTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl ScarabaTeleNPCBack
+
+DalaamTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl DalaamTeleNPCBack
+
+DarkTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl DarkTeleNPCBack
+
+TendaTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl TendaTeleNPCBack
+
+UnderTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl UnderTeleNPCBack
+
+MagicTeleNPCName:
+db $08
+dd PrintLeader2
+db $0A
+dl MagicTeleNPCBack
 
 PrintLeader:
 db $70
