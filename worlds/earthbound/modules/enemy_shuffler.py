@@ -1343,6 +1343,12 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x0FB769, struct.pack("H", enemy_sprites[world.acting_enemy_list["Slimy Little Pile"]]))
     rom.write_bytes(0x0FB77A, struct.pack("H", enemy_sprites[world.acting_enemy_list["Slimy Little Pile"]]))
 
+    rom.write_bytes(0x0FC3E5, struct.pack("H", enemy_sprites[world.acting_enemy_list["Sentry Robot"]]))
+    rom.write_bytes(0x0FC3F6, struct.pack("H", enemy_sprites[world.acting_enemy_list["Sentry Robot"]]))
+    rom.write_bytes(0x0FC407, struct.pack("H", enemy_sprites[world.acting_enemy_list["Sentry Robot"]]))
+    rom.write_bytes(0x0FC418, struct.pack("H", enemy_sprites[world.acting_enemy_list["Sentry Robot"]]))
+    rom.write_bytes(0x0FC48F, struct.pack("H", enemy_sprites[world.acting_enemy_list["Sentry Robot"]]))
+
     dungeon_zoo = [
         "Mad Duck",
         "Gruff Goat",
@@ -1372,7 +1378,7 @@ def apply_enemy_shuffle(world, rom):
     if world.options.enemy_shuffle:
         rom.write_bytes(0x0983D2, bytearray([0x1f, 0x1e, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00]))
         rom.write_bytes(0x098459, bytearray([0x1f, 0x1e, 0x7B, 0x01, 0x00, 0x00, 0x00, 0x00]))
-        rom.write_bytes(0x0984D1, bytearray([0x1f, 0x1e, 0x7C, 0x01, 0x00, 0x00, 0x00, 0x00]))
+        rom.write_bytes(0x0984D1, bytearray([0x1f, 0x1e, 0x7C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
         rom.write_bytes(0x09855F, bytearray([0x1f, 0x1e, 0x7D, 0x01, 0x00, 0x00, 0x00, 0x00]))
         rom.write_bytes(0x0985CE, bytearray([0x1f, 0x1e, 0x7E, 0x01, 0x00, 0x00, 0x00, 0x00]))
         rom.write_bytes(0x098625, bytearray([0x1f, 0x1e, 0x7F, 0x01, 0x00, 0x00, 0x00, 0x00]))
