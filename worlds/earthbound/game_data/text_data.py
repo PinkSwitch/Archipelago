@@ -206,6 +206,7 @@ lumine_hall_text = [
     "Help, I'm trapped in a Lumine Hall factory!",
     "They say that Ice Palace can be found at Ice Palace...",
     "Hey Mom, I'm in AP!",
+    "As you are reading this, Pink Switch has maybe updated the APWorld once again.  ...Don't update until your run is done, okay?"
 ]
 
 spoiler_psi = {
