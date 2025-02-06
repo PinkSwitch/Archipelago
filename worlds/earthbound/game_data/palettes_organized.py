@@ -40,6 +40,10 @@ nice_palettes = {
 
     ],
 
+    "Onett Arcade": [
+
+    ],
+
     "Police Station Back Room": [
 
     ],
@@ -61,6 +65,14 @@ nice_palettes = {
     ],
 
     "Twoson": [
+
+    ],
+
+    "Bike Shop": [
+
+    ],
+
+    "Hint Shop": [
 
     ],
 
@@ -112,6 +124,10 @@ nice_palettes = {
 
     ],
 
+    "Saturn House/Circus Tent": [
+
+    ],
+
     "Threed Blue Floor House": [
 
     ],
@@ -136,6 +152,10 @@ nice_palettes = {
 
     ],
 
+    "Belch's Factory": [
+
+    ],
+
     "Milky Well Outdoors": [
 
     ],
@@ -149,6 +169,10 @@ nice_palettes = {
     ],
 
     "Fourside": [
+
+    ],
+
+    "Dept. Store Storage Room": [
 
     ],
 
@@ -185,6 +209,10 @@ nice_palettes = {
     ],
 
     "Winters Tent": [
+
+    ],
+
+    "Brickroad Maze": [
 
     ],
 
