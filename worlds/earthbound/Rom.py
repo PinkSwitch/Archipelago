@@ -705,7 +705,6 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x3C1D25, saturn_n)  # Setup n
         rom.write_bytes(0x3C1D22, saturn_tilde)
 
-        rom.write_bytes(0x2EF11F, rom.read_bytes(0x091D30, 0x17))
         # ---------------------------------------
         ness_level = rom.read_bytes(0x15F5FB, 1)
         paula_level = rom.read_bytes(0x15f60f, 1)
