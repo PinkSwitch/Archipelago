@@ -6199,7 +6199,8 @@ ORG $EEB08C
 db $f4, $03
 
 ORG $EEC66A
-db $83, $98, $a9, $9e, $95, $a3, $a3, $50, $92, $9f, $9f, $9b, $5e, $0a, $84, $be
+;;;TODO: Test the Shyness Book dialogue after getting an AP item? this
+db $1C, $05, $A4, $0a, $84, $be
 db $ee
 
 ORG $C6D3A2
