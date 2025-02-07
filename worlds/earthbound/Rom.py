@@ -690,6 +690,10 @@ class EBPatchExtensions(APPatchExtension):
         saturn_font_data = rom.read_bytes(0x201359, 96)
         saturn_font_gfx = rom.read_bytes(0x2013B9, 0x0C00)
         letter_n = rom.read_bytes(0x21169F, 6)
+        letter_a = rom.read_bytes(0x2114FF, 6)
+        saturn_a = rom.read_bytes(0x2017DD, 9)
+
+
         accent_tilde = rom.read_bytes(0x2118A1, 2)
         saturn_n = rom.read_bytes(0x20197E, 8)
         saturn_tilde = rom.read_bytes(0x201F7F, 2)
@@ -700,9 +704,11 @@ class EBPatchExtensions(APPatchExtension):
         rom.write_bytes(0x3A0100, saturn_font_data)
         rom.write_bytes(0x3C1000, saturn_font_gfx)
         rom.write_bytes(0x3C0D25, letter_n)  # Setup n
+        rom.write_bytes(0x3C0D45, letter_a)  # Setup a
         rom.write_bytes(0x3C0D22, accent_tilde)
 
         rom.write_bytes(0x3C1D25, saturn_n)  # Setup n
+        rom.write_bytes(0x3C1D45, saturn_a)
         rom.write_bytes(0x3C1D22, saturn_tilde)
 
         # ---------------------------------------
