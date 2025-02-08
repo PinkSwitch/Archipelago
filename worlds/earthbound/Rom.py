@@ -243,7 +243,7 @@ def patch_rom(world, rom, player: int):
                     if item in item_id_table or location.item.player != location.player or item == "Remote Item":
                         rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
-                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][4]]))
+                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][2]]))
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
 
             if name in psi_locations:
@@ -296,7 +296,7 @@ def patch_rom(world, rom, player: int):
 
                 if item in special_name_table and location.item.player == location.player:  # Apply a special script if teleport or character
                     rom.write_bytes(0x15F765, special_name_table[item][1].to_bytes(3, byteorder = "little")) #This might be offset, check if it is
-                    rom.write_bytes(0x2EC618, bytearray([special_name_table[item][4]]))
+                    rom.write_bytes(0x2EC618, bytearray([special_name_table[item][2]]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
 
             if location.address >= 0xEB1000:

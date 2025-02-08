@@ -88,6 +88,11 @@ class EarthBoundWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.event_count = 8
+        self.progressive_filler_bats = 0
+        self.progressive_filler_pans = 0
+        self.progressive_filler_guns = 0
+        self.progressive_filler_bracelets = 0
+        self.progressive_filler_other = 0
         self.world_version = world_version
         self.removed_teleports = []
         self.armor_list: Dict[str, EBArmor]
@@ -432,6 +437,9 @@ class EarthBoundWorld(World):
     def generate_filler(self, pool: List[Item]) -> None:
         for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count):  # Change to fix event count
             item = self.set_classifications(self.get_filler_item_name())
+            if item.name == "Progressive Gun":
+                self.progressive_filler_guns += 1
+                print(self.progressive_filler_guns)
             pool.append(item)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
