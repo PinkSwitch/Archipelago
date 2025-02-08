@@ -435,11 +435,33 @@ class EarthBoundWorld(World):
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
+        item_to_counts = {
+            "Progressive Bat": self.progressive_filler_bats,
+            "Progressive Fry Pan": self.progressive_filler_pans,
+            "Progressive Gun": self.progressive_filler_guns,
+            "Progressive Bracelet": self.progressive_filler_bracelets,
+            "Progressive Other": self.progressive_filler_other
+        }
+
+        max_filler_counts = {
+            "Progressive Bat": 8,
+            "Progressive Fry Pan": 9,
+            "Progressive Gun": 6,
+            "Progressive Bracelet": 6,
+            "Progressive Other": 10
+        }
+
         for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.event_count):  # Change to fix event count
             item = self.set_classifications(self.get_filler_item_name())
-            if item.name == "Progressive Gun":
-                self.progressive_filler_guns += 1
-                print(self.progressive_filler_guns)
+            if item.name in ["Progressive Bat", "Progressive Fry Pan", "Progressive Other",
+                             "Progressive Gun", "Progressive Bracelet"]:
+                item_to_counts[item.name] += 1
+
+                if item_to_counts[item.name] >= max_filler_counts[item.name]:
+                    print(item.name)
+                    self.common_gear = [x for x in self.common_gear if x != item.name]
+                    self.uncommon_gear = [x for x in self.common_gear if x != item.name]
+                    self.rare_gear = [x for x in self.common_gear if x != item.name]
             pool.append(item)
 
     def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
