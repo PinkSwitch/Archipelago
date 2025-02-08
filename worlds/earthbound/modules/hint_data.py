@@ -197,7 +197,8 @@ def setup_hints(world):
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
             
-    world.local_hintable_items.remove(world.starting_character)
+    if world.starting_character in world.local_hintable_items:
+        world.local_hintable_items.remove(world.starting_character)
 
     if world.local_hintable_items == []:
         hint_types.remove("hint_for_good_item")
