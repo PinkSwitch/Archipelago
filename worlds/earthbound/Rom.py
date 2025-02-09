@@ -481,10 +481,11 @@ def patch_rom(world, rom, player: int):
         starting_inventory_pointers["Poo"] = 0x9B0F
     rom.write_bytes(0x16FB66, struct.pack("H", starting_inventory_pointers[world.starting_character]))
     for item in world.multiworld.precollected_items[player]:
-        if world.options.remote_items:
-            continue
         if item.name == world.starting_character:
             rom.write_bytes(0x00B672, bytearray([world.options.starting_character.value + 1]))
+
+        if world.options.remote_items:
+            continue
 
         if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table:
             world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)

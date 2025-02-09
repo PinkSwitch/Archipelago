@@ -277,7 +277,9 @@ class EarthBoundWorld(World):
             "starting_area": self.start_location,
             "pizza_logic": self.options.monkey_caves_mode.value,
             "free_sancs": self.options.no_free_sanctuaries.value,
-            "shopsanity": self.options.shop_randomizer.value
+            "shopsanity": self.options.shop_randomizer.value,
+           # "starting_character": self.starting_character,
+          #  "items_remote": self.options.remote_items.value
         }
 
     def modify_multidata(self, multidata: dict):
@@ -458,7 +460,6 @@ class EarthBoundWorld(World):
                 item_to_counts[item.name] += 1
 
                 if item_to_counts[item.name] >= max_filler_counts[item.name]:
-                    print(item.name)
                     self.common_gear = [x for x in self.common_gear if x != item.name]
                     self.uncommon_gear = [x for x in self.common_gear if x != item.name]
                     self.rare_gear = [x for x in self.common_gear if x != item.name]
