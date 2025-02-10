@@ -264,6 +264,27 @@ JML LoadExpandedWindowTable
 ORG $C2A5B2
 JSL early_missile_damage
 
+ORG $C4F2E8
+JML ReadDynamicPhotoMapPositionY
+
+ORG $C4F2F1
+JML ReadDynamicPhotoMapPositionX
+
+ORG $C4F3E7
+JML ReadDynamicPhotoCharPosX
+
+ORG $C4F400
+JML ReadDynamicPhotoCharPosY
+
+ORG $C46D80
+JML SpawnDynamicPhotomanX
+
+ORG $C46D93
+JML SpawnDynamicPhotomanY
+
+ORG $C4F429
+JML IncrementCurPhotoCount
+
 ;new jmls
 
 
@@ -1104,6 +1125,7 @@ ORG $CFD211
 db $01
 
 ORG $C87220
+;Sphinx tetx
 db $18, $01, $01
 db $70, $89, $9f, $a5, $57, $a6, $95, $50, $92, $a2, $9f, $a5, $97, $98, $a4, $50
 db $a4, $98, $95, $50, $91, $9e, $93, $99, $95, $9e, $a4, $50, $9d, $91, $9e, $a5
@@ -1232,6 +1254,7 @@ ORG $CFBC05
 db $00
 
 
+;Dusty Dunes Miner
 ORG $C60365
 db $1d, $05, $ff, $cb, $1b, $03, $01, $04, $c6, $00, $70, $78, $95, $a9, $5e, $03
 db $00, $70, $79, $50, $a7, $91, $a3, $50, $9d, $99, $9e, $99, $9e, $97, $50, $96
@@ -1746,33 +1769,33 @@ db $50, $a4, $9f, $50, $98, $91, $a6, $95, $50, $98, $99, $a3, $50, $99, $9e, $a
 db $95, $9e, $a4, $99, $9f, $9e, $5e, $03, $0a, $8c, $c8, $c6; Apple kid mouse text
 
 ORG $CFB5EA
-db $14, $F6, $2F
+;db $14, $F6, $2F
 
 ORG $2FF614
-db $18, $04, $08, $74, $dd, $c7, $00, $1f, $00, $00, $58, $10, $b4, $10, $3c, $1f
-db $15, $8f, $00, $c0, $01, $01, $15, $73, $16, $4e, $1f, $61, $15, $00, $15, $00
-db $16, $3e, $50, $1f, $15, $58, $01, $c1, $01, $01, $50, $50, $1f, $61, $1f, $e7
-db $8f, $00, $19, $10, $01, $1f, $18, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $18, $01
-db $01, $1f, $41, $12, $70, $80, $99, $93, $a4, $a5, $17, $51, $50, $17, $0f, $9e
-db $15, $8c, $16, $9f, $9e, $a4, $91, $9e, $95, $17, $26, $9c, $a9, $51, $03, $00
-db $15, $45, $17, $d3, $98, $9f, $a4, $9f, $97, $a2, $91, $a0, $98, $99, $93, $50
-db $97, $95, $9e, $99, $a5, $a3, $5c, $10, $0f, $00, $50, $17, $dd, $15, $51, $94
-db $9f, $17, $b2, $16, $f8, $9d, $a9, $16, $eb, $51, $03, $00, $70, $7f, $17, $34
-db $5c, $10, $0f, $16, $2c, $16, $ce, $15, $0f, $91, $9e, $15, $8c, $a3, $a4, $16
-db $f7, $9d, $95, $9d, $9f, $a2, $a9, $51, $03, $00, $70, $7c, $17, $37, $15, $29
-db $17, $76, $a2, $91, $15, $03, $10, $14, $00, $50, $50, $82, $95, $91, $94, $17
-db $17, $03, $00, $70, $83, $91, $a9, $5c, $10, $0f, $50, $6c, $96, $a5, $aa, $aa
-db $a9, $50, $a0, $15, $fa, $9c, $95, $a3, $5e, $6e, $03, $00, $18, $04, $1f, $eb
-db $01, $06, $06, $fd, $01, $3a, $ac, $c7, $00, $1f, $15, $0e, $00, $c2, $01, $01
-db $50, $10, $40, $1f, $15, $6a, $00, $c4, $01, $01, $50, $50, $1f, $61, $1f, $1f
-db $0e, $00, $06, $15, $73, $50, $1f, $ec, $01, $01, $18, $01, $01, $70, $87, $9f
-db $a7, $5c, $15, $77, $91, $16, $03, $a0, $98, $9f, $a4, $9f, $97, $a2, $91, $a0
-db $98, $51, $03, $00, $16, $f4, $15, $19, $91, $9c, $16, $b0, $a3, $50, $92, $17
-db $ad, $15, $85, $15, $18, $96, $9f, $9e, $94, $95, $a3, $17, $1d, $9d, $95, $9d
-db $9f, $a2, $99, $95, $15, $53, $03, $00, $18, $04, $1f, $ea, $8f, $00, $15, $00
-db $16, $3e, $50, $1f, $61, $1f, $1f, $58, $01, $06, $16, $3e, $50, $1f, $61, $1f
-db $07, $03, $10, $3c, $1f, $03, $1f, $1e, $9c, $02, $06, $04, $D8, $02, $04, $DE
-db $03, $02; Stonehenge photoman
+;db $18, $04, $08, $74, $dd, $c7, $00, $1f, $00, $00, $58, $10, $b4, $10, $3c, $1f
+;db $15, $8f, $00, $c0, $01, $01, $15, $73, $16, $4e, $1f, $61, $15, $00, $15, $00
+;db $16, $3e, $50, $1f, $15, $58, $01, $c1, $01, $01, $50, $50, $1f, $61, $1f, $e7
+;db $8f, $00, $19, $10, $01, $1f, $18, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $18, $01
+;db $01, $1f, $41, $12, $70, $80, $99, $93, $a4, $a5, $17, $51, $50, $17, $0f, $9e
+;db $15, $8c, $16, $9f, $9e, $a4, $91, $9e, $95, $17, $26, $9c, $a9, $51, $03, $00
+;db $15, $45, $17, $d3, $98, $9f, $a4, $9f, $97, $a2, $91, $a0, $98, $99, $93, $50
+;db $97, $95, $9e, $99, $a5, $a3, $5c, $10, $0f, $00, $50, $17, $dd, $15, $51, $94
+;db $9f, $17, $b2, $16, $f8, $9d, $a9, $16, $eb, $51, $03, $00, $70, $7f, $17, $34
+;db $5c, $10, $0f, $16, $2c, $16, $ce, $15, $0f, $91, $9e, $15, $8c, $a3, $a4, $16
+;db $f7, $9d, $95, $9d, $9f, $a2, $a9, $51, $03, $00, $70, $7c, $17, $37, $15, $29
+;db $17, $76, $a2, $91, $15, $03, $10, $14, $00, $50, $50, $82, $95, $91, $94, $17
+;db $17, $03, $00, $70, $83, $91, $a9, $5c, $10, $0f, $50, $6c, $96, $a5, $aa, $aa
+;db $a9, $50, $a0, $15, $fa, $9c, $95, $a3, $5e, $6e, $03, $00, $18, $04, $1f, $eb
+;db $01, $06, $06, $fd, $01, $3a, $ac, $c7, $00, $1f, $15, $0e, $00, $c2, $01, $01
+;db $50, $10, $40, $1f, $15, $6a, $00, $c4, $01, $01, $50, $50, $1f, $61, $1f, $1f
+;db $0e, $00, $06, $15, $73, $50, $1f, $ec, $01, $01, $18, $01, $01, $70, $87, $9f
+;db $a7, $5c, $15, $77, $91, $16, $03, $a0, $98, $9f, $a4, $9f, $97, $a2, $91, $a0
+;db $98, $51, $03, $00, $16, $f4, $15, $19, $91, $9c, $16, $b0, $a3, $50, $92, $17
+;db $ad, $15, $85, $15, $18, $96, $9f, $9e, $94, $95, $a3, $17, $1d, $9d, $95, $9d
+;db $9f, $a2, $99, $95, $15, $53, $03, $00, $18, $04, $1f, $ea, $8f, $00, $15, $00
+;db $16, $3e, $50, $1f, $61, $1f, $1f, $58, $01, $06, $16, $3e, $50, $1f, $61, $1f
+;db $07, $03, $10, $3c, $1f, $03, $1f, $1e, $9c, $02, $06, $04, $D8, $02, $04, $DE
+;db $03, $02; Stonehenge photoman
 
 ORG $C6C099
 db $0A, $50, $F9, $2F
@@ -5219,6 +5242,7 @@ db $18, $01, $01, $0A, $C7, $B7, $EE
 ORG $C7DFE9
 db $0A, $0D, $BB, $EE
 
+;Magicant stat boosts
 ORG $EEBB0D
 db $1d, $19, $02, $1b, $03, $31, $bb, $ee, $ff, $1d, $19, $03, $1b, $03, $c5, $bb
 db $ee, $ff, $1d, $19, $04, $1b, $03, $9d, $bc, $ee, $ff, $1d, $19, $05, $1b, $03
@@ -8703,6 +8727,22 @@ ORG $C5EF84
 db $0A
 dl JeffTonyHint
 
+save_chunk_size_table:
+dw sram_chunk0_size
+dw sramchunk1_size
+dw sramchunk2_size
+dw sramchunk3_size
+dw sramchunk4_size
+dw sramchunk5_size
+save_chunk_pointer_table:
+dw sramchunk0_pointer
+dw sramchunk1_pointer
+dw sram_chunk2_pointer
+dw sram_chunk3_pointer
+dw sramchunk4_pointer
+dw sramchunk5_pointer
+dw $0000
+
 ;New data table go here
 
 
@@ -10101,7 +10141,6 @@ JML $C2E953
 .NormalSwirl:
 JML $C2E964
 ;;;;;;;;;;;;
-;new code go here
 GetSeedPlayer:
 PHY
 PHB
@@ -11364,6 +11403,113 @@ PLY
 TAX
 STY $B58E
 RTS
+
+ReadDynamicPhotoMapPositionY:
+PHX
+LDA $00D4
+AND #$00FF
+ASL
+ASL
+TAX
+LDA $00DF,X
+PLX
+JML $C4F2ED
+
+ReadDynamicPhotoMapPositionX:
+PHX
+LDA $00D4
+AND #$00FF
+ASL
+ASL
+TAX
+LDA $00DD,X
+PLX
+JML $C4F2F6
+
+ReadDynamicPhotoCharPosY:
+PHX
+LDA $00D4
+AND #$00FF
+ASL
+ASL
+TAX
+PHY
+LDY #$6A2C
+LDA #$0040
+PHX
+JSL goto_bank_c2
+PLX
+PLY
+STA $00D5
+LDA $00DF,X
+SEC
+SBC #$0020
+CLC
+ADC $00D5
+PLX
+JML $C4F405
+
+ReadDynamicPhotoCharPosX:
+PHX
+LDA $00D4
+AND #$00FF
+ASL
+ASL
+TAX
+PHY
+LDY #$6A2C
+LDA #$0040
+PHX
+JSL goto_bank_c2
+PLX
+PLY
+STA $00D5
+LDA $00DD,X
+SEC
+SBC #$0020
+CLC
+ADC $00D5
+PLX
+JML $C4F3EC
+
+SpawnDynamicPhotomanX:
+PHX
+PHY
+LDA $00D7
+ASL
+ASL
+TAX
+LDA $9877
+STA $00DD,X
+LDA $00D9
+LDY #$6A2C
+LDA #$0010
+JSL goto_bank_c2
+CLC
+ADC $9877
+PLY
+PLX
+STA $00DB
+JML $C46D85
+
+SpawnDynamicPhotomanY:
+PHX
+LDA $00D7
+ASL
+ASL
+TAX
+LDA $987B
+STA $00DF,X
+CLC
+ADC #$0050
+PLX
+JML $C46D98
+
+IncrementCurPhotoCount:
+LDX #$0001
+STX $1C
+INC $00D4
+JML $C4F42E
 
 ;new code go here
 
@@ -14313,7 +14459,7 @@ sramchunk3_size = $01C0; Expanded flags
 sramchunk4_pointer = $31D0
 sramchunk4_size = $0100
 
-sramchunk5_pointer = $0720
+sramchunk5_pointer = $000D4
 sramchunk5_size = $0070
 
 !save_size = #$AA0
@@ -14463,21 +14609,6 @@ ORG $EF0A4D
 JSR save_game
 RTL
 NOP
-save_chunk_size_table:
-dw sram_chunk0_size
-dw sramchunk1_size
-dw sramchunk2_size
-dw sramchunk3_size
-dw sramchunk4_size
-;dw sramchunk5_size
-save_chunk_pointer_table:
-dw sramchunk0_pointer
-dw sramchunk1_pointer
-dw sram_chunk2_pointer
-dw sram_chunk3_pointer
-dw sramchunk4_pointer
-;dw sramchunk5_pointer
-dw $0000
 
 ;;;;;;;;;;;;;;;;;;;;;
 ORG $EF0A72
