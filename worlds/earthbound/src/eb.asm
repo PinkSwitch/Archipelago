@@ -56,6 +56,7 @@ ORG $D5F880
 SpecialNameTable:
 dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, #SpecialTexMagicant
 dw #SpecialTexNess
+dw #SpecialTexPhotoGuy
 
 
 
@@ -4042,7 +4043,7 @@ db $9f, $99, $93, $95, $50, $a2, $91, $9e, $97, $50, $9f, $a5, $a4, $50, $96, $a
 db $9f, $9d, $50, $a7, $99, $a4, $98, $99, $9e, $0A, $F5, $A7, $EE, $50, $a0, $a2
 db $95, $a3, $95, $9e, $a4, $51, $03, $00, $1b, $04, $09, $04, $30, $f8, $d5, $ff
 db $37, $f8, $d5, $ff, $3e, $f8, $d5, $ff, $45, $f8, $d5, $ff, $0A
-dl PresentNessCheck
+dl ExtraPresentCheck
 
 ORG $EEA810
 db $7f, $9e, $95, $a4, $a4, $50, $84, $95, $9c, $95, $a0, $9f, $a2, $a4, $00, $84
@@ -6598,7 +6599,7 @@ db $91, $93, $9b, $50, $9c, $91, $a4, $95, $a2, $5e, $59, $13, $02;Fix re-enteri
 
 ORG $C58ED1
 db $0A
-dl DebugPalettePicker
+dl DynamicPhotoSetter
 
 ORG $EECD04
 db $18, $04, $1f, $e1, $00, $5c, $01, $02
@@ -9740,6 +9741,9 @@ db $A4, $00
 SpecialTexNess:
 db $7E, $95, $A3, $A3, $00
 
+SpecialTexPhotoGuy:
+db $A0, $98, $9F, $A4, $9F, $97, $A2, $91, $A0, $98, $00
+
 NpcNessGiveOverride:
 db $0D, $01
 db $1B, $04
@@ -9747,6 +9751,10 @@ db $1B, $00
 db $0B, $15
 db $1B, $03
 dd .GiveNess
+db $1B, $01
+db $0B, $16
+db $1B, $03
+dd PhotoHandler
 db $1B, $01
 db $0A
 dl $EEAAAB
@@ -11297,6 +11305,8 @@ JML $C105D3
 CheckMoreMoreCommands:
 CMP #$0022
 BEQ CheckIfCanWarp
+CMP #$0023
+BEQ IncTotalPhotos
 JML $C17DDC
 
 CheckIfCanWarp:
@@ -11310,6 +11320,11 @@ BEQ .CantWarp
 LDA #$0001
 .CantWarp:
 STA $97CC
+LDA #$0000
+JML $C17F0F
+
+IncTotalPhotos:
+INC $00D7
 LDA #$0000
 JML $C17F0F
 
@@ -11500,8 +11515,20 @@ ASL
 TAX
 LDA $987B
 STA $00DF,X
+PHA
+LDA $B623
+AND #$00FF
+AND #$0008
+BEQ .NormalOffset
+PLA
+CLC
+ADC #$0200
+BRA .Offscreen
+.NormalOffset:
+PLA
 CLC
 ADC #$0050
+.Offscreen:
 PLX
 JML $C46D98
 
@@ -14460,7 +14487,7 @@ sramchunk4_pointer = $31D0
 sramchunk4_size = $0100
 
 sramchunk5_pointer = $000D4
-sramchunk5_size = $0070
+sramchunk5_size = $008C
 
 !save_size = #$AA0
 !save_bytes = #$A80
@@ -15807,6 +15834,395 @@ db $50, $a9, $9f, $a5, $50, $98, $91, $94, $50, $a3, $9f, $9d, $95, $a4, $98, $9
 db $9e, $97, $50, $99, $9d, $a0, $9f, $a2, $a4, $91, $9e, $a4, $50, $a4, $9f, $50
 db $94, $a2, $9f, $a0, $50, $9f, $96, $96, $5c, $50, $9c, $99, $9b, $95, $50, $91
 db $50, $1c, $05, $a7, $5e, $5e, $5e, $1f, $02, $72, $13, $02
+
+DynamicPhotoSetter:
+db $18, $04
+db $06
+db $BA, $02
+dd .CheckPhoto2
+db $0A
+dl .SetPhoto1
+
+.CheckPhoto2:
+db $06
+db $BB, $02
+dd .CheckPhoto3
+db $0A
+dl .SetPhoto2
+
+.CheckPhoto3:
+db $06
+db $BC, $02
+dd .CheckPhoto4
+db $0A
+dl .SetPhoto3
+
+.CheckPhoto4:
+db $06
+db $BD, $02
+dd .CheckPhoto5
+db $0A
+dl .SetPhoto4
+
+.CheckPhoto5:
+db $06
+db $BE, $02
+dd .CheckPhoto6
+db $0A
+dl .SetPhoto5
+
+.CheckPhoto6:
+db $06
+db $BF, $02
+dd .CheckPhoto7
+db $0A
+dl .SetPhoto6
+
+.CheckPhoto7:
+db $06
+db $C0, $02
+dd .CheckPhoto8
+db $0A
+dl .SetPhoto7
+
+.CheckPhoto8:
+db $06
+db $C1, $02
+dd .CheckPhoto9
+db $0A
+dl .SetPhoto8
+
+.CheckPhoto9:
+db $06
+db $C2, $02
+dd .CheckPhoto10
+db $0A
+dl .SetPhoto9
+
+.CheckPhoto10:
+db $06
+db $C3, $02
+dd .CheckPhoto11
+db $0A
+dl .SetPhoto10
+
+.CheckPhoto11:
+db $06
+db $C4, $02
+dd .CheckPhoto12
+db $0A
+dl .SetPhoto11
+
+.CheckPhoto12:
+db $06
+db $C5, $02
+dd .CheckPhoto13
+db $0A
+dl .SetPhoto12
+
+.CheckPhoto13:
+db $06
+db $C6, $02
+dd .CheckPhoto14
+db $0A
+dl .SetPhoto13
+
+.CheckPhoto14:
+db $06
+db $C7, $02
+dd .CheckPhoto15
+db $0A
+dl .SetPhoto14
+
+.CheckPhoto15:
+db $06
+db $C8, $02
+dd .CheckPhoto16
+db $0A
+dl .SetPhoto15
+
+.CheckPhoto16:
+db $06
+db $C9, $02
+dd .CheckPhoto17
+db $0A
+dl .SetPhoto16
+
+.CheckPhoto17:
+db $06
+db $CA, $02
+dd .CheckPhoto18
+db $0A
+dl .SetPhoto17
+
+.CheckPhoto18:
+db $06
+db $CB, $02
+dd .CheckPhoto19
+db $0A
+dl .SetPhoto18
+
+.CheckPhoto19:
+db $06
+db $CC, $02
+dd .CheckPhoto20
+db $0A
+dl .SetPhoto19
+
+.CheckPhoto20:
+db $06
+db $CD, $02
+dd .CheckPhoto21
+db $0A
+dl .SetPhoto20
+
+.CheckPhoto21:
+db $06
+db $CE, $02
+dd .CheckPhoto22
+db $0A
+dl .SetPhoto21
+
+.CheckPhoto22:
+db $06
+db $CF, $02
+dd .CheckPhoto23
+db $0A
+dl .SetPhoto22
+
+.CheckPhoto23;
+db $06
+db $D0, $02
+dd .CheckPhoto24
+db $0A
+dl .SetPhoto23
+
+.CheckPhoto24:
+db $06
+db $D1, $02
+dd .CheckPhoto25
+db $0A
+dl .SetPhoto24
+
+.CheckPhoto25:
+db $06
+db $D2, $02
+dd .CheckPhoto26
+db $0A
+dl .SetPhoto25
+
+.CheckPhoto26:
+db $06
+db $D3, $02
+dd .CheckPhoto27
+db $0A
+dl .SetPhoto26
+
+.CheckPhoto27:
+db $06
+db $D4, $02
+dd .CheckPhoto28
+db $0A
+dl .SetPhoto27
+
+.CheckPhoto28:
+db $06
+db $D5, $02
+dd .CheckPhoto29
+db $0A
+dl .SetPhoto28
+
+.CheckPhoto29:
+db $06
+db $D6, $02
+dd .CheckPhoto30
+db $0A
+dl .SetPhoto29
+
+.CheckPhoto30:
+db $06
+db $D7, $02
+dd .CheckPhoto31
+db $0A
+dl .SetPhoto30
+
+.CheckPhoto31:
+db $06
+db $D8, $02
+dd .CheckPhoto32
+db $0A
+dl .SetPhoto31
+
+.CheckPhoto32:
+db $06
+db $D9, $02
+dd .DoneScript
+db $0A
+dl .SetPhoto32
+.DoneScript:
+;script here
+
+db $02
+.SetPhoto1:
+db $1F, $D2, $01, $1C, $23
+db $04, $BA, $02
+db $02
+.SetPhoto2:
+db $1F, $D2, $02, $1C, $23
+db $04, $BB, $02
+db $02
+.SetPhoto3:
+db $1F, $D2, $03, $1C, $23
+db $04, $BC, $02
+db $02
+.SetPhoto4:
+db $1F, $D2, $04, $1C, $23
+db $04, $BD, $02
+db $02
+.SetPhoto5:
+db $1F, $D2, $05, $1C, $23
+db $04, $BE, $02
+db $02
+.SetPhoto6:
+db $1F, $D2, $06, $1C, $23
+db $04, $BF, $02
+db $02
+.SetPhoto7:
+db $1F, $D2, $07, $1C, $23
+db $04, $C0, $02
+db $02
+.SetPhoto8:
+db $1F, $D2, $08, $1C, $23
+db $04, $C1, $02
+db $02
+.SetPhoto9:
+db $1F, $D2, $09, $1C, $23
+db $04, $C2, $02
+db $02
+.SetPhoto10:
+db $1F, $D2, $0A, $1C, $23
+db $04, $C3, $02
+db $02
+.SetPhoto11:
+db $1F, $D2, $0B, $1C, $23
+db $04, $C4, $02
+db $02
+.SetPhoto12:
+db $1F, $D2, $0C, $1C, $23
+db $04, $C5, $02
+db $02
+.SetPhoto13:
+db $1F, $D2, $0D, $1C, $23
+db $04, $C6, $02
+db $02
+.SetPhoto14:
+db $1F, $D2, $0E, $1C, $23
+db $04, $C7, $02
+db $02
+.SetPhoto15:
+db $1F, $D2, $0F, $1C, $23
+db $04, $C8, $02
+db $02
+.SetPhoto16:
+db $1F, $D2, $10, $1C, $23
+db $04, $C9, $02
+db $02
+.SetPhoto17:
+db $1F, $D2, $11, $1C, $23
+db $04, $CA, $02
+db $02
+.SetPhoto18:
+db $1F, $D2, $12, $1C, $23
+db $04, $CB, $02
+db $02
+.SetPhoto19:
+db $1F, $D2, $13, $1C, $23
+db $04, $CC, $02
+db $02
+.SetPhoto20:
+db $1F, $D2, $14, $1C, $23
+db $04, $CD, $02
+db $02
+.SetPhoto21:
+db $1F, $D2, $15, $1C, $23
+db $04, $CE, $02
+db $02
+.SetPhoto22:
+db $1F, $D2, $16, $1C, $23
+db $04, $CF, $02
+db $02
+.SetPhoto23:
+db $1F, $D2, $17, $1C, $23
+db $04, $D0, $02
+db $02
+.SetPhoto24:
+db $1F, $D2, $18, $1C, $23
+db $04, $D1, $02
+db $02
+.SetPhoto25:
+db $1F, $D2, $19, $1C, $23
+db $04, $D2, $02
+db $02
+.SetPhoto26:
+db $1F, $D2, $1A, $1C, $23
+db $04, $D3, $02
+db $02
+.SetPhoto27:
+db $1F, $D2, $1B, $1C, $23
+db $04, $D4, $02
+db $02
+.SetPhoto28:
+db $1F, $D2, $1C, $1C, $23
+db $04, $D5, $02
+db $02
+.SetPhoto29:
+db $1F, $D2, $1D, $1C, $23
+db $04, $D6, $02
+db $02
+.SetPhoto30:
+db $1F, $D2, $1E, $1C, $23
+db $04, $D7, $02
+db $02
+.SetPhoto31:
+db $1F, $D2, $1F, $1C, $23
+db $04, $D8, $02
+db $02
+.SetPhoto32:
+db $1F, $D2, $20, $1C, $23
+db $04, $D9, $02
+db $02
+
+PhotoHandler:
+db $08
+dd DynamicPhotoSetter
+db $18, $01, $01
+db $70
+db $87, $98, $91, $a4, $50, $91, $50, $9e, $99, $93, $95, $50, $9d, $95, $9d, $9f
+db $a2, $a9, $51, $02
+db $02
+
+PhotoPresentText:
+db $04
+db $1C, $04
+db $08
+dd DynamicPhotoSetter
+db $05
+db $1C, $04
+db $02
+
+ORG $F3FFE0
+db $0A
+dl DynamicPhotoSetter
+
+ExtraPresentCheck:
+db $1B, $00
+db $0B, $06
+db $1B, 03
+dd PhotoPresentText
+db $1B, $01
+db $0A
+dl PresentNessCheck
+
 
 ;todo, PSI rockin?
 

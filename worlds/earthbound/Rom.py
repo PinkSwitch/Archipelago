@@ -243,7 +243,7 @@ def patch_rom(world, rom, player: int):
                     if item in item_id_table or location.item.player != location.player or item == "Remote Item":
                         rom.write_bytes(npc_locations[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
-                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, special_name_table[item][2]]))
+                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, (special_name_table[item][0] + 1)]))
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
 
             if name in psi_locations:
@@ -260,7 +260,7 @@ def patch_rom(world, rom, player: int):
                 if item in character_item_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(character_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder = "little"))
                     if name == "Snow Wood - Bedroom":  # Use lying down sprites for the bedroom check
-                        rom.write_bytes(character_locations[name][1], bytearray(character_item_table[item][2:4]))
+                        rom.write_bytes(character_locations[name][1], struct.pack("H", character_item_table[item][2]))
                         rom.write_bytes(0x0FB0D8, bytearray([0x06]))
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
@@ -296,7 +296,7 @@ def patch_rom(world, rom, player: int):
 
                 if item in special_name_table and location.item.player == location.player:  # Apply a special script if teleport or character
                     rom.write_bytes(0x15F765, special_name_table[item][1].to_bytes(3, byteorder = "little")) #This might be offset, check if it is
-                    rom.write_bytes(0x2EC618, bytearray([special_name_table[item][2]]))
+                    rom.write_bytes(0x2EC618, bytearray([(special_name_table[item][0] + 1)]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
 
             if location.address >= 0xEB1000:
@@ -511,7 +511,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x17FC7C + starting_psi, bytearray([starting_psi_table[item.name]]))
                     starting_psi_types.append(item.name)
                     starting_psi += 1
-        elif item.name in character_item_table:
+        elif item.name in character_item_table and item.name != "Photograph":
             if item.name not in starting_character_count:
                 rom.write_bytes(0x17FC8D + starting_char, bytearray([party_id_nums[item.name]]))
                 starting_character_count.append(item.name)
