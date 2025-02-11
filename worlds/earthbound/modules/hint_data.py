@@ -235,7 +235,7 @@ def setup_hints(world):
 
 def parse_hint_data(world, location, rom, hint):
     if hint == "item_at_location":
-        if world.player == location.item.player and location.item.name in character_item_table:
+        if world.player == location.item.player and location.item.name in character_item_table and location.item.name != "Photograph":
             player_text = "your friend "
             # In-game text command to display party member names
             item_text = bytearray([0x1C, 0x02, party_id_nums[location.item.name]])
@@ -266,7 +266,7 @@ def parse_hint_data(world, location, rom, hint):
         text.append(0x02)
         
     elif hint == "hint_for_good_item" or hint == "prog_item_at_region" or hint == "item_in_local_region":
-        if location.item.name in character_item_table and location.item.player == world.player:
+        if location.item.name in character_item_table and location.item.player == world.player and location.item.name != "Photograph":
             item_text = text_encoder("your friend ", 255)
             item_text.extend([0x1C, 0x02, party_id_nums[location.item.name]])
         elif location.item.name in item_id_table and location.item.player == world.player:
