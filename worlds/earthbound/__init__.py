@@ -258,7 +258,7 @@ class EarthBoundWorld(World):
 
     def generate_output(self, output_directory: str):
         try:
-            patch = EBProcPatch()
+            patch = EBProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
             patch_rom(self, patch, self.player)
 

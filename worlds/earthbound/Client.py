@@ -174,7 +174,7 @@ class EarthBoundClient(SNIClient):
             "keys": [f"GiftBoxes;{ctx.team}"]
         }])
 
-        #### GIFTING DATA ######
+        # GIFTING DATA
         if f"GiftBox;{ctx.team};{ctx.slot}" not in ctx.stored_data:
             local_giftbox = {
                             str(ctx.slot): {

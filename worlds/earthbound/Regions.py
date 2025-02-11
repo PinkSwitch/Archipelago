@@ -80,21 +80,21 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     connect_menu_region(world)
 
     multiworld.get_region("Ness's Mind", player).add_exits(["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert", "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village", "Lost Underworld", "Magicant"],
-                                                           {"Onett": lambda state: state.has("Onett Teleport", player),
-                                                            "Twoson": lambda state: state.has("Twoson Teleport", player),
-                                                            "Happy-Happy Village": lambda state: state.has("Happy-Happy Village Teleport", player),
-                                                            "Threed": lambda state: state.has("Threed Teleport", player),
-                                                            "Saturn Valley": lambda state: state.has("Saturn Valley Teleport", player),
-                                                            "Dusty Dunes Desert": lambda state: state.has("Dusty Dunes Teleport", player),
-                                                            "Fourside": lambda state: state.has("Fourside Teleport", player),
-                                                            "Winters": lambda state: state.has("Winters Teleport", player),
-                                                            "Summers": lambda state: state.has("Summers Teleport", player),
-                                                            "Dalaam": lambda state: state.has("Dalaam Teleport", player),
-                                                            "Scaraba": lambda state: state.has("Scaraba Teleport", player),
-                                                            "Deep Darkness": lambda state: state.has("Deep Darkness Teleport", player),
-                                                            "Tenda Village": lambda state: state.has("Tenda Village Teleport", player),
-                                                            "Lost Underworld": lambda state: state.has("Lost Underworld Teleport", player),
-                                                            "Magicant": lambda state: state.has_any({"Magicant Teleport", "Magicant Unlock"}, player)})
+                   {"Onett": lambda state: state.has("Onett Teleport", player),
+                    "Twoson": lambda state: state.has("Twoson Teleport", player),
+                    "Happy-Happy Village": lambda state: state.has("Happy-Happy Village Teleport", player),
+                    "Threed": lambda state: state.has("Threed Teleport", player),
+                    "Saturn Valley": lambda state: state.has("Saturn Valley Teleport", player),
+                    "Dusty Dunes Desert": lambda state: state.has("Dusty Dunes Teleport", player),
+                    "Fourside": lambda state: state.has("Fourside Teleport", player),
+                    "Winters": lambda state: state.has("Winters Teleport", player),
+                    "Summers": lambda state: state.has("Summers Teleport", player),
+                    "Dalaam": lambda state: state.has("Dalaam Teleport", player),
+                    "Scaraba": lambda state: state.has("Scaraba Teleport", player),
+                    "Deep Darkness": lambda state: state.has("Deep Darkness Teleport", player),
+                    "Tenda Village": lambda state: state.has("Tenda Village Teleport", player),
+                    "Lost Underworld": lambda state: state.has("Lost Underworld Teleport", player),
+                    "Magicant": lambda state: state.has_any({"Magicant Teleport", "Magicant Unlock"}, player)})
     multiworld.get_region("Northern Onett", player).add_exits(["Onett"])
 
     multiworld.get_region("Onett", player).add_exits(["Giant Step", "Twoson", "Northern Onett", "Global ATM Access"],
@@ -239,7 +239,7 @@ def connect_menu_region(world: "EarthBoundWorld") -> None:
         13: "Lost Underworld",
         14: "Magicant"
     }
-    #todo; change the coordinate dict to use names instead of numbers, change start_location instead of making a new var
+    # todo; change the coordinate dict to use names instead of numbers, change start_location instead of making a new var
     world.starting_region = starting_region_list[world.start_location]
     world.multiworld.get_region("Menu", world.player).add_exits([world.starting_region, "Ness's Mind"],
                                 {"Ness's Mind": lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, world.player),
