@@ -8,7 +8,6 @@ from typing import List, Set, Dict, TextIO
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
-from Options import OptionGroup
 import settings
 from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations

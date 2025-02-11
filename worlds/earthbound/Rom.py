@@ -3,11 +3,9 @@ import os
 import Utils
 import typing
 import struct
+import settings
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
-from .game_data.local_data import (item_id_table, location_dialogue, present_locations, psi_item_table, npc_locations, psi_locations, 
-                         special_name_table, character_item_table, character_locations, starting_psi_table, item_space_checks,
-                         protection_checks, badge_names, protection_text, local_present_types, nonlocal_present_types,
-                         present_text_pointers, ap_text_pntrs, party_id_nums, world_version)
+from .game_data import local_data
 from .game_data.battle_bg_data import battle_bg_bpp
 from .modules.psi_shuffle import write_psi
 from .game_data.text_data import barf_text, eb_text_table, text_encoder
@@ -29,6 +27,28 @@ from logging import warning
 
 if TYPE_CHECKING:
     from . import EarthBoundWorld
+
+item_id_table = local_data.item_id_table
+location_dialogue = local_data.location_dialogue
+present_locations = local_data.present_locations
+psi_locations = local_data.psi_locations
+npc_locations = local_data.npc_locations
+character_locations = local_data.character_locations
+special_name_table = local_data.special_name_table
+item_space_checks = local_data.item_space_checks
+local_present_types = local_data.local_present_types
+present_text_pointers = local_data.present_text_pointers
+psi_item_table = local_data.psi_item_table
+character_item_table = local_data.character_item_table
+party_id_nums = local_data.party_id_nums
+starting_psi_table = local_data.starting_psi_table
+badge_names = local_data.badge_names
+world_version = local_data.world_version
+protection_checks = local_data.protection_checks
+protection_text = local_data.protection_text
+nonlocal_present_types = local_data.nonlocal_present_types
+ap_text_pntrs = local_data.ap_text_pntrs
+
 valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85",  # Cartridge
                 "6d71ccc8e2afda15d011348291afdf4f"]  # VC
 
@@ -171,11 +191,11 @@ def patch_rom(world, rom, player: int):
         rom.write_bytes(0x0F1388, bytearray([0x03, 0xCA, 0xEE]))
 
     if world.options.no_free_sanctuaries:
-        rom.write_bytes(0x0F09F2, bytearray([0x15, 0x84])) # Lock Lilliput steps with flag $0415
-        rom.write_bytes(0x0F09EE, struct.pack("I", 0xEEF790)) # Lilliput door script
+        rom.write_bytes(0x0F09F2, bytearray([0x15, 0x84]))  # Lock Lilliput steps with flag $0415
+        rom.write_bytes(0x0F09EE, struct.pack("I", 0xEEF790))  # Lilliput door script
 
-        rom.write_bytes(0x0F23D2, bytearray([0x16, 0x84])) # Lock Fire Spring with flag $0146
-        rom.write_bytes(0x0F23CE, struct.pack("I", 0xEEF946)) # Fire Spring door script
+        rom.write_bytes(0x0F23D2, bytearray([0x16, 0x84]))  # Lock Fire Spring with flag $0146
+        rom.write_bytes(0x0F23CE, struct.pack("I", 0xEEF946))  # Fire Spring door script
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
     shop_checks = []
@@ -249,7 +269,7 @@ def patch_rom(world, rom, player: int):
             if name in psi_locations:
                 world.handled_locations.append(name)
                 if item in special_name_table and location.item.player == location.player and item != "Remote Item":
-                    rom.write_bytes(psi_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder = "little"))
+                    rom.write_bytes(psi_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder="little"))
                     rom.write_bytes(psi_locations[name][0] + 4, bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
                 else:
                     rom.write_bytes(psi_locations[name][0], bytearray(psi_locations[name][1:4]))
@@ -258,14 +278,14 @@ def patch_rom(world, rom, player: int):
             if name in character_locations:
                 world.handled_locations.append(name)
                 if item in character_item_table and location.item.player == location.player and item != "Remote Item":
-                    rom.write_bytes(character_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder = "little"))
+                    rom.write_bytes(character_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder="little"))
                     if name == "Snow Wood - Bedroom":  # Use lying down sprites for the bedroom check
                         rom.write_bytes(character_locations[name][1], struct.pack("H", character_item_table[item][2]))
                         rom.write_bytes(0x0FB0D8, bytearray([0x06]))
                     else:
                         rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
                 elif item in psi_item_table and location.item.player == location.player:
-                    rom.write_bytes(character_locations[name][0], (special_name_table[item][1] + 1).to_bytes(3, byteorder = "little"))
+                    rom.write_bytes(character_locations[name][0], (special_name_table[item][1] + 1).to_bytes(3, byteorder="little"))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 else:
@@ -295,7 +315,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x15F63C, bytearray([0x00]))  # Don't give anything if the item doesn't have a tangible ID
 
                 if item in special_name_table and location.item.player == location.player:  # Apply a special script if teleport or character
-                    rom.write_bytes(0x15F765, special_name_table[item][1].to_bytes(3, byteorder = "little")) #This might be offset, check if it is
+                    rom.write_bytes(0x15F765, special_name_table[item][1].to_bytes(3, byteorder="little"))  # This might be offset, check if it is
                     rom.write_bytes(0x2EC618, bytearray([(special_name_table[item][0] + 1)]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
 
@@ -477,9 +497,10 @@ def patch_rom(world, rom, player: int):
     }
 
     if world.starting_character == "Poo" and world.multiworld.get_location(
-        "Poo - Starting Item", world.player).item.name not in item_id_table:
+            "Poo - Starting Item", world.player).item.name not in item_id_table:
         starting_inventory_pointers["Poo"] = 0x9B0F
     rom.write_bytes(0x16FB66, struct.pack("H", starting_inventory_pointers[world.starting_character]))
+    
     for item in world.multiworld.precollected_items[player]:
         if item.name == world.starting_character:
             rom.write_bytes(0x00B672, bytearray([world.options.starting_character.value + 1]))
@@ -647,7 +668,7 @@ class EBPatchExtensions(APPatchExtension):
     game = "EarthBound"
 
     @staticmethod
-    def repoint_vanilla_tables(caller: APProcedurePatch, rom: LocalRom) -> bytes:
+    def repoint_vanilla_tables(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         version_check = rom.read_bytes(0x3FF0A0, 16)
         version_check = version_check.split(b'\x00', 1)[0]
@@ -694,7 +715,6 @@ class EBPatchExtensions(APPatchExtension):
         letter_a = rom.read_bytes(0x2114FF, 6)
         saturn_a = rom.read_bytes(0x2017DD, 9)
 
-
         accent_tilde = rom.read_bytes(0x2118A1, 2)
         saturn_n = rom.read_bytes(0x20197E, 8)
         saturn_tilde = rom.read_bytes(0x201F7F, 2)
@@ -738,7 +758,6 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
-        rom_hash = basemd5.hexdigest
         if basemd5.hexdigest() not in valid_hashes:
             raise Exception('Supplied Base Rom does not match known MD5 for US(1.0) release. '
                             'Get the correct game and version, then dump it')
@@ -747,7 +766,7 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
 
 def get_base_rom_path(file_name: str = "") -> str:
-    options: Utils.OptionsType = Utils.get_options()
+    options: settings.Settings = settings.get_settings()
     if not file_name:
         file_name = options["earthbound_options"]["rom_file"]
     if not os.path.exists(file_name):
