@@ -167,8 +167,12 @@ def make_trait(trait: str, name):
     if name in gift_qualities and trait in gift_qualities[name]:
         quality = gift_qualities[name][trait]
     else:
-        quality = 1
-    return {"trait": trait, "quality": quality}
+        quality = None
+
+    if quality:
+        return {"trait": trait, "quality": quality}
+    else:
+        return {"trait": trait}
 
 
 def make_default_traits(traits: List[str], name: str):

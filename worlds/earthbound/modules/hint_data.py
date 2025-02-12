@@ -189,7 +189,7 @@ def setup_hints(world):
             # let's not hint an item that doesn't exist
             world.local_hintable_items.remove(item.name)
 
-    for item in world.options.start_inventory_from_pool:
+    for item in world.multiworld.precollected_items:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
 
