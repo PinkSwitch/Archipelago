@@ -375,6 +375,11 @@ class SkipEpilogue(Toggle):
     display_name = "Skip Epilogue"
     visibility = Visibility.template
 
+class EnergyLink(Toggle):
+    """If enabled, the money in the ATM will be linked across the Archipelago Server.
+       This requires a server connection to be used, but won't break offline play."""
+    display_name = "Energy Link"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -429,6 +434,7 @@ class EBOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     death_link: DeathLink
     death_link_mode: DeathLinkMode
+    energy_link: EnergyLink
 
 
 eb_option_groups = [
@@ -509,8 +515,9 @@ eb_option_groups = [
         RandomizeFanfares
     ]),
 
-    OptionGroup("Deathlink", [
+    OptionGroup("Multiplayer Features", [
         DeathLink,
-        DeathLinkMode
+        DeathLinkMode,
+        EnergyLink
     ])
 ]

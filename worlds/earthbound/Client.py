@@ -51,6 +51,8 @@ CHAR_COUNT = WRAM_START + 0x98A4
 OSS_FLAG = WRAM_START + 0x5D98
 HINT_SCOUNT_IDS = ROM_START + 0x310250
 SCOUTED_HINT_FLAGS = WRAM_START + 0xB621
+MONEY_IN_BANK = WRAM_START + 0x9835
+IS_ENERGYLINK_ENABLED = ROM_START + 0x04FD78
 already_tried_to_connect = False
 
 
@@ -156,6 +158,7 @@ class EarthBoundClient(SNIClient):
         outbound_gifts = await snes_read(ctx, WRAM_START + 0x31D0, 1)
         shop_scout = await snes_read(ctx, WRAM_START + 0x0770, 1)
         shop_scouts_enabled = await snes_read(ctx, ROM_START + 0x04FD77, 1)
+        outgoing_energy = await snes_read(ctx, MONEY_IN_BANK, 4)
         if rom != ctx.rom:
             ctx.rom = None
             return
@@ -401,6 +404,14 @@ class EarthBoundClient(SNIClient):
 
         if cur_script[0]:  # Stop items during cutscenes
             return
+
+        deposited_energy = int.from_bytes(outgoing_energy, byteorder="little")
+        if deposited_energy:
+            await snes_write(ctx, [(MONEY_IN_BANK, int.to_bytes(0x00, 4))])
+            await ctx.send_msgs([{
+                "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
+                    [{"operation": "add", "value": deposited_energy},
+                        {"operation": "max", "value": 0}]}])
 
         recv_count = await snes_read(ctx, ITEMQUEUE_HIGH, 2)
         recv_index = struct.unpack("H", recv_count)[0]

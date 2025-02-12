@@ -178,6 +178,7 @@ def patch_rom(world, rom, player: int):
     rom.write_bytes(0x04FD74, bytearray([world.options.death_link.value]))
     rom.write_bytes(0x04FD75, bytearray([world.options.death_link_mode.value]))
     rom.write_bytes(0x04FD76, bytearray([world.options.remote_items.value]))
+    rom.write_bytes(0x04FD78, bytearray([world.options.energy_link.value]))
 
     if world.options.death_link_mode != 1:
         rom.write_bytes(0x2FFDFE, bytearray([0x80]))  # Mercy healing
