@@ -19,7 +19,7 @@ UnsetScripts:
 dw $006B,$ED02,$000B,$005F
 
 CharUnlockPointers:
-dw $F830,$F837,$F83E,$F845,$F955,$F849
+dw $F830,$F837,$F83E,$F845,$F955,$F849, $F850
 
 ORG $03FE10
 db $1C,$02,$FE,$50,$9A,$9F,$99,$9E,$95,$94,$50,$A9,$9F,$A5,$A2,$50,$A0,$91,$A2,$A4,$A9,$51,$1F,$00,$00,$0B,$10,$78,$10,$78,$10,$78,$10,$3C,$1F,$03,$13,$02
@@ -3983,6 +3983,9 @@ NessFlagText:
 db $04, $17, $04
 db $0A
 dl NessUnlockText
+
+db $0A
+dl DynamicPhotoSetter
 
 ORG $C66AC1
 db $68; Tracy text
@@ -8728,21 +8731,13 @@ ORG $C5EF84
 db $0A
 dl JeffTonyHint
 
-save_chunk_size_table:
-dw sram_chunk0_size
-dw sramchunk1_size
-dw sramchunk2_size
-dw sramchunk3_size
-dw sramchunk4_size
-dw sramchunk5_size
-save_chunk_pointer_table:
-dw sramchunk0_pointer
-dw sramchunk1_pointer
-dw sram_chunk2_pointer
-dw sram_chunk3_pointer
-dw sramchunk4_pointer
-dw sramchunk5_pointer
-dw $0000
+ORG $EED7ED
+db $0A
+dl FixLightningTypo
+
+ORG $EED873
+db $0A
+dl FixLightningTypo2
 
 ;New data table go here
 
@@ -16210,6 +16205,16 @@ db $05
 db $1C, $04
 db $02
 
+FixLightningTypo:
+db $9C, $99, $97, $98, $A4, $9E, $99, $9E, $97
+db $0A
+dl $EED7F5
+
+FixLightningTypo2:
+db $9C, $99, $97, $98, $A4, $9E, $99, $9E, $97
+db $0A
+dl $EED87B
+
 ORG $F3FFE0
 db $0A
 dl DynamicPhotoSetter
@@ -16222,6 +16227,24 @@ dd PhotoPresentText
 db $1B, $01
 db $0A
 dl PresentNessCheck
+;dl
+
+ORG $F3FEE0
+save_chunk_size_table:
+dw sram_chunk0_size
+dw sramchunk1_size
+dw sramchunk2_size
+dw sramchunk3_size
+dw sramchunk4_size
+dw sramchunk5_size
+save_chunk_pointer_table:
+dw sramchunk0_pointer
+dw sramchunk1_pointer
+dw sram_chunk2_pointer
+dw sram_chunk3_pointer
+dw sramchunk4_pointer
+dw sramchunk5_pointer
+dw $0000
 
 
 ;todo, PSI rockin?
