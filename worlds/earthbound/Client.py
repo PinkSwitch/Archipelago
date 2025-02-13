@@ -405,14 +405,6 @@ class EarthBoundClient(SNIClient):
         if cur_script[0]:  # Stop items during cutscenes
             return
 
-        deposited_energy = int.from_bytes(outgoing_energy, byteorder="little")
-        if deposited_energy:
-            await snes_write(ctx, [(MONEY_IN_BANK, int.to_bytes(0x00, 4))])
-            await ctx.send_msgs([{
-                "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
-                    [{"operation": "add", "value": deposited_energy},
-                        {"operation": "max", "value": 0}]}])
-
         recv_count = await snes_read(ctx, ITEMQUEUE_HIGH, 2)
         recv_index = struct.unpack("H", recv_count)[0]
         if recv_index < len(ctx.items_received):
@@ -429,6 +421,16 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB570, bytes([item_id]))
             else:
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
+
+        is_energylink_enabled = await snes_read(ctx, IS_ENERGYLINK_ENABLED, 1)
+        if is_energylink_enabled[0]:
+            deposited_energy = int.from_bytes(outgoing_energy, byteorder="little")
+            if deposited_energy:
+                await snes_write(ctx, [(MONEY_IN_BANK, int.to_bytes(0x00, 4))])
+                await ctx.send_msgs([{
+                    "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
+                        [{"operation": "add", "value": deposited_energy},
+                            {"operation": "max", "value": 0}]}])
                     
         await snes_flush_writes(ctx)
 

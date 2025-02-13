@@ -90,7 +90,7 @@ secondary_trait_list = {
     "Copper": ["Copper Bracelet"],
     "Silver": ["Silver Bracelet"],
     "Gold": ["Gold Bracelet"],
-    "Diamond": ["Diamond Bracelet"],
+    "Diamond": ["Diamond Band"],
     "Plastic": ["Cheap Bracelet", "Bottle of Water", "Bottle of DXwater"],
     "Herb": ["Refreshing Herb", "Secret Herb"],
     "Repellant": ["Repel Sandwich", "Repel Superwich"],
