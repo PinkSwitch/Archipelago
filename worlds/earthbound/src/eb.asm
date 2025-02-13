@@ -286,6 +286,12 @@ JML SpawnDynamicPhotomanY
 ORG $C4F429
 JML IncrementCurPhotoCount
 
+ORG $C15F3A
+JML CheckTotalEnergy
+
+ORG $C192DE
+JML DisplayEnergy
+
 ;new jmls
 
 
@@ -8739,6 +8745,14 @@ ORG $EED873
 db $0A
 dl FixLightningTypo2
 
+ORG $C62E6D
+db $0A
+dl HandleEnergyLinkFromATM
+
+ORG $C62D30
+db $0A
+dl InitializeEnergyLink
+
 ;New data table go here
 
 
@@ -11302,6 +11316,13 @@ CMP #$0022
 BEQ CheckIfCanWarp
 CMP #$0023
 BEQ IncTotalPhotos
+CMP #$0024
+BEQ SendRequestForEnergy
+CMP #$0025
+BEQ AuthenticateEnergy
+CMP #$0026
+BEQ GotServerEnergyNum
+
 JML $C17DDC
 
 CheckIfCanWarp:
@@ -11322,6 +11343,21 @@ IncTotalPhotos:
 INC $00D7
 LDA #$0000
 JML $C17F0F
+
+SendRequestForEnergy:
+STZ $1BD8
+STZ $1BDA
+STZ $1BE0
+LDA #$0001
+STA $1BD6
+LDA #$0000
+JML $C17F0F
+
+AuthenticateEnergy:
+JMP AuthenticateEnergyLong
+
+GotServerEnergyNum:
+JMP GotServerEnergyLong
 
 CheckNessRobot:
 SEP #$20
@@ -11533,6 +11569,72 @@ STX $1C
 INC $00D4
 JML $C4F42E
 
+CheckTotalEnergy:
+LDA $08
+STA $0C
+LDA $B623
+AND #$10FF
+BEQ .CheckBank
+LDA $1BD8
+STA $06
+LDA $1BDA
+STA $08
+JML $C15F48
+.CheckBank:
+JML $C15F3E
+
+DisplayEnergy:
+TAY
+LDA $0000,Y
+PHA
+LDA $B623
+AND #$10FF
+BEQ .DontDisp
+PLA
+LDA $1BD8
+STA $06
+LDA $1BDA
+STA $08
+JML $C192E9
+.DontDisp:
+PLA
+JML $C192E2
+
+AuthenticateEnergyLong:
+PHX
+LDA $97D0
+STA $1BDC
+LDA $97D2
+STA $1BDE
+LDX #$00B4
+.CountFrames:
+LDA $1BE0
+AND #$00FF
+BNE .WithdrawSuccess
+PHX
+JSL $C08756
+PLX
+DEX
+CPX #$0000
+BNE .CountFrames
+PLX
+LDA #$0000
+STA $97D0
+.Done:
+STA $97D2
+LDA #$0000
+JML $C17F0F
+.WithdrawSuccess:
+PLX
+STA $97CC
+LDA #$0000
+BRA .Done
+
+GotServerEnergyLong:
+LDA $1BD6
+STA $97CC
+LDA #$0000
+JML $C17F0F
 ;new code go here
 
 
@@ -16215,6 +16317,108 @@ db $9C, $99, $97, $98, $A4, $9E, $99, $9E, $97
 db $0A
 dl $EED87B
 
+HandleEnergyLinkFromATM:
+db $1D, $17, $01, $00, $00, $00
+db $1B, $02
+dd $C62E79
+;Check for the energy flag here
+db $1C, $26, $01
+db $1B, $06
+db $1B, $03
+dd $C62F49
+
+db $04, $1D, $04
+db $1D, $17, $01, $00, $00, $00
+db $05, $1D, $04
+db $1B, $03
+dd $C62F49
+;Energy has been successfully donwloaded
+db $70
+db $84, $98, $95, $50, $a3, $95, $a2, $a6, $95, $a2, $50, $99, $a3, $50, $93, $a5
+db $a2, $a2, $95, $9e, $a4, $9c, $a9, $50, $a3, $a4, $9f, $a2, $99, $9e, $97, $50
+db $06, $1E, $04
+dd .OverCap
+;Cap is 9999999
+.DisplayMoney:
+db $54
+db $1B, $06
+db $04, $1D, $04
+db $1C, $01, $07, $5e, $03
+db $05, $1D, $04
+db $01
+db $04, $1D, $04
+db $08
+dd $C62F9E
+db $05, $1D, $04
+db $1B, $02
+dd $C62D8A
+db $0D, $00
+db $04, $1D, $04
+db $1D, $17, $00, $00, $00, $00
+db $05, $1D, $04
+db $1B, $03
+dd $C62EEF
+db $1B, $05
+db $70
+db $71, $a5, $a4, $98, $95, $9e, $a4, $99, $93, $91, $a4, $99, $9e, $97, $50, $a2
+db $95, $a1, $a5, $95, $a3, $a4, $5c, $50, $a0, $9c, $95, $91, $a3, $95, $50, $a7
+db $91, $99, $a4, $5e, $5e, $5e
+db $1C, $25, $01
+db $1B, $06
+db $1B, $02
+dd .FailedToAuthenticate
+db $09, $02
+dd .AuthenticateSuccessful
+dd .AuthenticateSuccessOverTotal
+db $02
+
+.OverCap:
+db $05, $1E, $04
+db $9D, $9F, $A2, $95, $50, $A4, $98, $91, $9E, $50
+db $0A
+dl .DisplayMoney
+.FailedToAuthenticate:
+db $70, $76, $91, $99, $9c, $95, $94, $50, $a4, $9f, $50, $91, $a5, $a4, $98, $95
+db $9e, $a4, $99, $93, $91, $a4, $95, $50, $a4, $9f, $50, $a3, $95, $a2, $a6, $95
+db $a2, $5e, $03, $00, $70, $80, $9c, $95, $91, $a3, $95, $50, $a4, $a2, $a9, $50
+db $91, $97, $91, $99, $9e, $5e, $03, $02
+.AuthenticateSuccessful:
+db $1B, $06
+db $0A
+dl $C62EA6
+db $02
+
+.AuthenticateSuccessOverTotal:
+db $70, $71, $9d, $9f, $a5, $9e, $a4, $50, $a2, $95, $a1, $a5, $95, $a3, $a4, $95
+db $94, $50, $95, $a8, $93, $95, $95, $94, $a3, $50, $a4, $98, $95, $50, $91, $9d
+db $9f, $a5, $9e, $a4, $50, $99, $9e, $50, $a4, $98, $95, $50, $a3, $95, $a2, $a6
+db $95, $a2, $5e, $03, $00, $70, $87, $99, $a4, $98, $94, $a2, $91, $a7, $99, $9e
+db $97, $50, $54, $1c, $0a, $00, $00, $00, $00, $50, $99, $9e, $a3, $a4, $95, $91, $94
+db $5e, $03, $01
+db $0A
+dl $C62EA6
+
+InitializeEnergyLink:
+db $0e, $00, $0d, $01
+db $1C, $24, $01
+db $0A
+dl $C62D34
+
+
+;New New Text
+
+
+
+
+
+
+
+
+
+
+
+
+
 ORG $F3FFE0
 db $0A
 dl DynamicPhotoSetter
@@ -16248,8 +16452,6 @@ dw $0000
 
 
 ;todo, PSI rockin?
-
-;New New Text
 
 
 
