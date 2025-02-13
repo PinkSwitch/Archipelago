@@ -9698,8 +9698,8 @@ db $02
 db $08
 dd .CheckItemUsage
 db $0B, $CD
-db $08
-dd .OpenLockerText
+db $0A
+dd CheckForLockerKey
 db $02
 
 .CheckItemUsage:
@@ -11620,6 +11620,8 @@ BNE .CountFrames
 PLX
 LDA #$0000
 STA $97D0
+STA $1BDC
+STA $1BDD
 .Done:
 STA $97D2
 LDA #$0000
@@ -16403,6 +16405,17 @@ db $0e, $00, $0d, $01
 db $1C, $24, $01
 db $0A
 dl $C62D34
+
+CheckForLockerKey:
+db $1B, $02
+dd .LockerFail
+db $08
+dl OpenLockers_OpenLockerText
+db $19, $20
+db $02
+.LockerFail:
+db $0B, $FE
+db $02
 
 
 ;New New Text

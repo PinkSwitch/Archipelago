@@ -823,7 +823,6 @@ def randomize_weapons(world, rom):
 
             #print(item)
             if item == starting_weapon:
-                print(starting_weapon)
                 weapon.can_equip = world.starting_character
 
         if weapon.can_equip == "Ness":
