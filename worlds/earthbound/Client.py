@@ -407,10 +407,12 @@ class EarthBoundClient(SNIClient):
         energy_withdrawal = await snes_read(ctx, WRAM_START + 0x1BDC, 4)
         energy = ctx.set_notify(f"EnergyLink{ctx.team}")
         energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0)
+        exchange_rate = 1000000
         if is_energylink_enabled[0]:
 
             deposited_energy = int.from_bytes(outgoing_energy, byteorder="little")
             if deposited_energy:
+                deposited_energy *= exchange_rate
                 await snes_write(ctx, [(MONEY_IN_BANK, (0x00).to_bytes(4, byteorder="little"))])
                 await ctx.send_msgs([{
                     "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
@@ -418,11 +420,20 @@ class EarthBoundClient(SNIClient):
                             {"operation": "max", "value": 0}]}])
 
             if is_requesting_energy[0] and energy: # This is just to pull the current number for a display.
+                energy //= exchange_rate
+                if energy > 9999999:
+                    energy = 9999999
+                    cap_flag = await snes_read(ctx, WRAM_START + 0xB623, 1)
+                    cap_flag = int.from_bytes(cap_flag)
+                    cap_flag |= 0x20
+                    await snes_write(ctx, [(WRAM_START + 0xB623, cap_flag.to_bytes(1, byteorder="little"))])
+
                 await snes_write(ctx, [(WRAM_START + 0x1BD8, energy.to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BD6, (0x00).to_bytes(1, byteorder="little"))])
 
             if energy_withdrawal[0] and energy:
                 withdrawal = int.from_bytes(energy_withdrawal, byteorder="little")
+                withdrawal *= exchange_rate
                 energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0) # Refresh the value
 
                 if withdrawal > energy:
@@ -431,7 +442,7 @@ class EarthBoundClient(SNIClient):
                 else:
                     energy_success = 1
 
-                await snes_write(ctx, [(WRAM_START + 0x97D0, withdrawal.to_bytes(4, byteorder="little"))])
+                await snes_write(ctx, [(WRAM_START + 0x97D0, (withdrawal // exchange_rate).to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BDC, (0x00).to_bytes(4, byteorder="little"))])
                 await ctx.send_msgs([{
                     "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
