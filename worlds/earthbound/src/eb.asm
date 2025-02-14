@@ -1775,35 +1775,6 @@ db $a6, $95, $50, $98, $95, $50, $a7, $91, $9e, $a4, $95, $94, $50, $a9, $9f, $a
 db $50, $a4, $9f, $50, $98, $91, $a6, $95, $50, $98, $99, $a3, $50, $99, $9e, $a6
 db $95, $9e, $a4, $99, $9f, $9e, $5e, $03, $0a, $8c, $c8, $c6; Apple kid mouse text
 
-ORG $CFB5EA
-;db $14, $F6, $2F
-
-ORG $2FF614
-;db $18, $04, $08, $74, $dd, $c7, $00, $1f, $00, $00, $58, $10, $b4, $10, $3c, $1f
-;db $15, $8f, $00, $c0, $01, $01, $15, $73, $16, $4e, $1f, $61, $15, $00, $15, $00
-;db $16, $3e, $50, $1f, $15, $58, $01, $c1, $01, $01, $50, $50, $1f, $61, $1f, $e7
-;db $8f, $00, $19, $10, $01, $1f, $18, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $18, $01
-;db $01, $1f, $41, $12, $70, $80, $99, $93, $a4, $a5, $17, $51, $50, $17, $0f, $9e
-;db $15, $8c, $16, $9f, $9e, $a4, $91, $9e, $95, $17, $26, $9c, $a9, $51, $03, $00
-;db $15, $45, $17, $d3, $98, $9f, $a4, $9f, $97, $a2, $91, $a0, $98, $99, $93, $50
-;db $97, $95, $9e, $99, $a5, $a3, $5c, $10, $0f, $00, $50, $17, $dd, $15, $51, $94
-;db $9f, $17, $b2, $16, $f8, $9d, $a9, $16, $eb, $51, $03, $00, $70, $7f, $17, $34
-;db $5c, $10, $0f, $16, $2c, $16, $ce, $15, $0f, $91, $9e, $15, $8c, $a3, $a4, $16
-;db $f7, $9d, $95, $9d, $9f, $a2, $a9, $51, $03, $00, $70, $7c, $17, $37, $15, $29
-;db $17, $76, $a2, $91, $15, $03, $10, $14, $00, $50, $50, $82, $95, $91, $94, $17
-;db $17, $03, $00, $70, $83, $91, $a9, $5c, $10, $0f, $50, $6c, $96, $a5, $aa, $aa
-;db $a9, $50, $a0, $15, $fa, $9c, $95, $a3, $5e, $6e, $03, $00, $18, $04, $1f, $eb
-;db $01, $06, $06, $fd, $01, $3a, $ac, $c7, $00, $1f, $15, $0e, $00, $c2, $01, $01
-;db $50, $10, $40, $1f, $15, $6a, $00, $c4, $01, $01, $50, $50, $1f, $61, $1f, $1f
-;db $0e, $00, $06, $15, $73, $50, $1f, $ec, $01, $01, $18, $01, $01, $70, $87, $9f
-;db $a7, $5c, $15, $77, $91, $16, $03, $a0, $98, $9f, $a4, $9f, $97, $a2, $91, $a0
-;db $98, $51, $03, $00, $16, $f4, $15, $19, $91, $9c, $16, $b0, $a3, $50, $92, $17
-;db $ad, $15, $85, $15, $18, $96, $9f, $9e, $94, $95, $a3, $17, $1d, $9d, $95, $9d
-;db $9f, $a2, $99, $95, $15, $53, $03, $00, $18, $04, $1f, $ea, $8f, $00, $15, $00
-;db $16, $3e, $50, $1f, $61, $1f, $1f, $58, $01, $06, $16, $3e, $50, $1f, $61, $1f
-;db $07, $03, $10, $3c, $1f, $03, $1f, $1e, $9c, $02, $06, $04, $D8, $02, $04, $DE
-;db $03, $02; Stonehenge photoman
-
 ORG $C6C099
 db $0A, $50, $F9, $2F
 
@@ -8752,6 +8723,49 @@ dl HandleEnergyLinkFromATM
 ORG $C62D30
 db $0A
 dl InitializeEnergyLink
+
+ORG $C68829 ;Disable PRV photo
+db $02
+
+ORG $C68876 ;Disable threed photo
+db $02
+
+ORG $C6886C ;Disable SV photo
+db $02
+
+ORG $C68927 ;Disable Deep Dark photo
+db $02
+
+ORG $C68847 ;Disable Winters photo
+db $02
+
+ORG $C87ADC ;Disable Brickroad photo
+db $02
+
+ORG $C688B9 ;Disable Dept store photo
+db $02
+
+ORG $C6889B ;Disable Museum photo
+db $02
+
+ORG $C60CC9 ;sesaphoto
+db $02
+
+ORG $C60C86 ;sesaphoto
+db $02
+
+ORG $C68887 ;Disable gold mine photo
+db $02
+
+ORG $C688FF ;Disable Summers photo
+db $02
+
+ORG $C688CD ;Disable Dalaam photo
+db $02
+
+ORG $2FF614
+db $0A
+dl StonehengePhotoText
 
 ;New data table go here
 
@@ -16416,6 +16430,19 @@ db $02
 .LockerFail:
 db $0B, $FE
 db $02
+
+PhotoBarfTextArrive:
+db $02
+
+PhotoBarfTextTake:
+db $08
+dd DynamicPhotoSetter
+db $02
+
+StonehengePhotoText:
+db $70, $83, $9f, $a2, $a2, $a9, $5c, $50, $79, $50, $94, $9f, $9e, $57, $a4, $50
+db $98, $91, $a6, $95, $50, $9d, $a9, $50, $93, $91, $9d, $95, $a2, $91, $50, $a7
+db $99, $a4, $98, $50, $9d, $95, $5e, $13, $02
 
 
 ;New New Text
