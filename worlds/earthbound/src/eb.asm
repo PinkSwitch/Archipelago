@@ -8777,6 +8777,16 @@ ORG $2FF614
 db $0A
 dl StonehengePhotoText
 
+ORG $C62FD6
+;db $0A
+;dd ShowDepositEnergy
+
+ORG $CFDF49
+dd UnderworldATM
+
+ORG $CFDBA2
+dd DarknessATM
+
 ;New data table go here
 
 
@@ -11346,7 +11356,8 @@ CMP #$0025
 BEQ AuthenticateEnergy
 CMP #$0026
 BEQ GotServerEnergyNum
-
+CMP #$0027
+BEQ CheckifELOn
 JML $C17DDC
 
 CheckIfCanWarp:
@@ -11382,6 +11393,9 @@ JMP AuthenticateEnergyLong
 
 GotServerEnergyNum:
 JMP GotServerEnergyLong
+
+CheckifELOn:
+JMP CheckifELLong
 
 CheckNessRobot:
 SEP #$20
@@ -11666,7 +11680,6 @@ JML $C17F0F
 
 CheckEndPhotos:
 PHX
-
 LDA HasStartingPhoto
 AND #$00FF
 BEQ .NoStartPhoto
@@ -11721,6 +11734,14 @@ INC $00D7
 .NoPooPhoto:
 PLX
 JML $C1FEB6
+
+CheckifELLong:
+LDA $C4FD78
+AND #$00FF
+STA $97CC
+LDA #$0000
+JML $C17F0F
+
 ;new code go here
 
 
@@ -16428,6 +16449,7 @@ dd .OverCap
 .DisplayMoney:
 db $54
 db $1B, $06
+;Argumentary has the amount
 db $04, $1D, $04
 db $1C, $01, $07, $5e, $03
 db $05, $1D, $04
@@ -16513,6 +16535,39 @@ StonehengePhotoText:
 db $70, $83, $9f, $a2, $a2, $a9, $5c, $50, $79, $50, $94, $9f, $9e, $57, $a4, $50
 db $98, $91, $a6, $95, $50, $9d, $a9, $50, $93, $91, $9d, $95, $a2, $91, $50, $a7
 db $99, $a4, $98, $50, $9d, $95, $5e, $13, $02
+
+ShowDepositEnergy:
+;The server is currently storing [Energy]
+
+RuralEnergyText:
+db $70, $89, $9f, $a5, $50, $a7, $91, $9e, $9e, $91, $50, $93, $98, $95, $93, $9b
+db $50, $98, $9f, $a7, $50, $9d, $a5, $93, $98, $50, $9d, $9f, $9e, $95, $a9, $50
+db $99, $a3, $50, $9f, $9e, $50, $a4, $98, $95, $50, $a3, $95, $a2, $a6, $95, $a2
+db $6f, $03, $00, $70, $74, $9f, $50, $79, $50, $9c, $9f, $9f, $9b, $50, $9c, $99
+db $9b, $95, $50, $79, $50, $9b, $9e, $9f, $a7, $50, $a7, $98, $91, $a4, $50, $91
+db $50, $a3, $95, $a2, $a6, $95, $a2, $50, $99, $a3, $6f, $13, $02
+
+DarknessATM:
+db $1C, $27, $01
+db $1B, $06
+db $1B,  $02
+dd $C9EC74
+db $1D, $17, $01, $00, $00, $00
+db $1B, $03
+dd RuralEnergyText
+db $0A
+dl $C9EC74
+
+UnderworldATM:
+db $1C, $27, $01
+db $1B, $06
+db $1B,  $02
+dd $EF6049
+db $1D, $17, $01, $00, $00, $00
+db $1B, $03
+dd RuralEnergyText
+db $0A
+dl $EF6049
 
 
 ;New New Text

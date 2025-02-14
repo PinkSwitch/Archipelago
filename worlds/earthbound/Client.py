@@ -431,7 +431,7 @@ class EarthBoundClient(SNIClient):
                 await snes_write(ctx, [(WRAM_START + 0x1BD8, energy.to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BD6, (0x00).to_bytes(1, byteorder="little"))])
 
-            if energy_withdrawal[0] and energy:
+            if any(energy_withdrawal) and energy:
                 withdrawal = int.from_bytes(energy_withdrawal, byteorder="little")
                 withdrawal *= exchange_rate
                 energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0) # Refresh the value
@@ -442,6 +442,7 @@ class EarthBoundClient(SNIClient):
                 else:
                     energy_success = 1
 
+                print(withdrawal // exchange_rate)
                 await snes_write(ctx, [(WRAM_START + 0x97D0, (withdrawal // exchange_rate).to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BDC, (0x00).to_bytes(4, byteorder="little"))])
                 await ctx.send_msgs([{
