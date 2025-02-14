@@ -509,8 +509,14 @@ def patch_rom(world, rom, player: int):
         if world.options.remote_items:
             continue
 
-        if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table:
+        if item.name == "Photograph":
+            rom.write_bytes(0x17FEA8, bytearray([0x01]))
+
+        if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table: #TODO; this might break if someone else's teleport is on my poo start
             world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)
+
+        # if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name == "Photograph":
+            # rom.write_bytes(0x17FEA9, bytearray([0x01]))
 
         if item.name in ["Progressive Bat", "Progressive Fry Pan", "Progressive Gun", "Progressive Bracelet",
                          "Progressive Other"]:

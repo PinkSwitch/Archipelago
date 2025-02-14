@@ -5121,7 +5121,7 @@ PLX
 INX
 BRA CheckChars
 EndStartData:
-JML $C1FEB6
+JML CheckEndPhotos
 GetStarstorm:
 PHX
 LDA $FF41
@@ -8390,6 +8390,16 @@ ORG $D7FEA0
 ExtraWindowData:
 dw $0005, $0009, $001A, $0004
 
+HasStartingPhoto:
+db $00
+
+HasPooStartPhoto:
+db $00
+
+PhotoFlags:
+dw $02BA
+dw $02BB
+
 ORG $C3E2A8
 ;contemplate switching to 1
 dw $000C, $0010, $0013, $0004
@@ -11587,7 +11597,8 @@ CheckTotalEnergy:
 LDA $08
 STA $0C
 LDA $B623
-AND #$10FF
+AND #$00FF
+AND #$0010
 BEQ .CheckBank
 LDA $1BD8
 STA $06
@@ -11602,7 +11613,8 @@ TAY
 LDA $0000,Y
 PHA
 LDA $B623
-AND #$10FF
+AND #$00FF
+AND #$0010
 BEQ .DontDisp
 PLA
 LDA $1BD8
@@ -11651,6 +11663,64 @@ LDA $1BD6
 STA $97CC
 LDA #$0000
 JML $C17F0F
+
+CheckEndPhotos:
+PHX
+
+LDA HasStartingPhoto
+AND #$00FF
+BEQ .NoStartPhoto
+LDA $00D7
+AND #$00FF
+ASL
+ASL
+TAX
+LDA $C1FE9E
+STA $00DD,X
+LDA $C1FE9B
+STA $00DF,X
+LDA $00D7
+ASL
+TAX
+LDA PhotoFlags,X
+LDX #$0001
+JSL $C2165E
+LDA $C0B672
+AND #$00FF
+STA $98CB
+INC $00D7
+.NoStartPhoto:
+LDA HasPooStartPhoto
+AND #$00FF
+BEQ .NoPooPhoto
+LDA $00D7
+AND #$00FF
+ASL
+ASL
+TAX
+LDA $C1FE9E
+STA $00DD,X
+LDA $C1FE9B
+STA $00DF,X
+LDA $00D7
+ASL
+TAX
+LDA PhotoFlags,X
+LDX #$0001
+JSL $C2165E
+LDA $00D7
+CMP #$0001
+BEQ .SpawnPoo2
+LDA #$0004
+STA $98CB
+.SpawnPoo2:
+LDA #$0004
+STA $98D4
+INC $00D7
+
+.NoPooPhoto:
+PLX
+JML $C1FEB6
 ;new code go here
 
 
