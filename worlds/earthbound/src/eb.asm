@@ -8778,8 +8778,8 @@ db $0A
 dl StonehengePhotoText
 
 ORG $C62FD6
-;db $0A
-;dd ShowDepositEnergy
+db $08
+dd ShowDepositEnergy
 
 ORG $CFDF49
 dd UnderworldATM
@@ -8789,6 +8789,17 @@ dd DarknessATM
 
 ORG $EF188B
 dd $EF2A4F
+
+ORG $D57B05
+db $C7
+
+ORG $C6332A
+db $0A
+dl ShowDadEnergy
+
+ORG $C63229
+db $0A
+dl PingDadEnergy
 
 ;New data table go here
 
@@ -16540,6 +16551,34 @@ db $98, $91, $a6, $95, $50, $9d, $a9, $50, $93, $91, $9d, $95, $a2, $91, $50, $a
 db $99, $a4, $98, $50, $9d, $95, $5e, $13, $02
 
 ShowDepositEnergy:
+db $05, $1D, $04
+db $1D, $17, $01, $00, $00, $00 ; Check if we have at least one dollar
+db $1B, $02
+dd $C63004
+db $04, $1D, $04
+db $0A
+dl $C63004
+
+ShowDadEnergy:
+db $00, $70, $54
+db $05, $1D, $04
+db $1D, $17, $01, $00, $00, $00 ; Check if we have at least one dollar
+db $1B, $02
+dd .BankMoney
+db $04, $1D, $04
+.BankMoney:
+db $1C, $01, $07
+db $05, $1D, $04
+db $0A
+dl $C63330
+
+PingDadEnergy:
+db $1C, $24, $01
+db $06, $04, $03
+dd $C75929
+db $0A
+dl $C63230
+
 ;The server is currently storing [Energy]
 
 RuralEnergyText:
