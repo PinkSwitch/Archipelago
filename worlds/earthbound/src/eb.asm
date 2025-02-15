@@ -11665,8 +11665,8 @@ LDA #$0000
 STA $97D0
 STA $1BDC
 STA $1BDD
-.Done:
 STA $97D2
+.Done:
 LDA #$0000
 JML $C17F0F
 .WithdrawSuccess:

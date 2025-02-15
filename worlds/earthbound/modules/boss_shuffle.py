@@ -256,7 +256,7 @@ def write_bosses(world, rom):
     rom.write_bytes(0x10DF69, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id))
     rom.write_bytes(0x02C503, bytearray([world.boss_info[world.boss_list[28]].music]))  # music
 
-    rom.write_bytes(0xEF188F, struct.pack("I", boss_sprite_pointers[world.boss_list[4]]))
+    rom.write_bytes(0x2F188F, struct.pack("I", boss_sprite_pointers[world.boss_list[4]]))
     
     # c2c505 sets the song
             
