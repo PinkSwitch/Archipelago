@@ -414,6 +414,7 @@ class EarthBoundClient(SNIClient):
             if deposited_energy:
                 deposited_energy *= exchange_rate
                 await snes_write(ctx, [(MONEY_IN_BANK, (0x00).to_bytes(4, byteorder="little"))])
+                print(deposited_energy)
                 await ctx.send_msgs([{
                     "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
                         [{"operation": "add", "value": deposited_energy},
@@ -442,7 +443,6 @@ class EarthBoundClient(SNIClient):
                 else:
                     energy_success = 1
 
-                print(withdrawal // exchange_rate)
                 await snes_write(ctx, [(WRAM_START + 0x97D0, (withdrawal // exchange_rate).to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BDC, (0x00).to_bytes(4, byteorder="little"))])
                 await ctx.send_msgs([{

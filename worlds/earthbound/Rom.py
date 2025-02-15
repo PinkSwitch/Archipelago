@@ -284,7 +284,7 @@ def patch_rom(world, rom, player: int):
                         rom.write_bytes(character_locations[name][1], struct.pack("H", character_item_table[item][2]))
                         rom.write_bytes(0x0FB0D8, bytearray([0x06]))
                     else:
-                        rom.write_bytes(character_locations[name][1], bytearray([character_item_table[item][1]]))
+                        rom.write_bytes(character_locations[name][1], struct.pack("H", character_item_table[item][1]))
                 elif item in psi_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][0], (special_name_table[item][1] + 1).to_bytes(3, byteorder="little"))
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))

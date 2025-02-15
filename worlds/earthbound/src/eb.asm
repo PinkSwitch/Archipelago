@@ -8787,6 +8787,9 @@ dd UnderworldATM
 ORG $CFDBA2
 dd DarknessATM
 
+ORG $EF188B
+dd $EF2A4F
+
 ;New data table go here
 
 
@@ -16577,16 +16580,12 @@ dl $EF6049
 
 
 
-
-
-
-
-
-
-
 ORG $F3FFE0
-db $0A
-dl DynamicPhotoSetter
+db $04, $1C, $04
+db $08
+dd DynamicPhotoSetter
+db $05, $1C, $05
+db $1D, $19, $01, $02
 
 ExtraPresentCheck:
 db $1B, $00
