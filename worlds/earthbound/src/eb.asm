@@ -16439,6 +16439,7 @@ db $0A
 dl $EED87B
 
 HandleEnergyLinkFromATM:
+db $05, $1D, $04
 db $1D, $17, $01, $00, $00, $00
 db $1B, $02
 dd $C62E79
