@@ -10978,6 +10978,8 @@ CMP #$0004
 BEQ .GetArchipelagoName
 CMP #$0005
 BEQ .GetArchipelagoName
+CMP #$0006
+BEQ .GetPhotoName
 .NormalItemName:
 PLA
 ADC $06
@@ -11020,6 +11022,14 @@ LDA #ShopItemNames_SoldOut
 STA $06
 STA $0E
 LDA #$00F4
+STA $08
+JML $C19E29
+.GetPhotoName:
+PLA
+LDA #PhotoShopText
+STA $06
+STA $0E
+LDA #$00F3
 STA $08
 JML $C19E29
 
@@ -11134,6 +11144,10 @@ STA $06
 LDA $8958
 CMP #$000C
 BNE .End
+BRA .DontEnd
+.End:
+JMP .End2
+.DontEnd:
 PHX
 LDA $20
 AND #$00FF
@@ -11158,6 +11172,8 @@ BEQ .SoldOutVar
 STZ $0736
 CMP #$0004
 BCC .DontDisplayPlayerName
+CMP #$0006
+BEQ .DontDisplayPlayerName
 LDA #$0001
 STA $B573
 STA $0724
@@ -11189,7 +11205,7 @@ JML $C11ACB
 LDA #$0001
 STA $0736
 JMP .DontDisplayPlayerName
-.End:
+.End2:
 JML $C11ACB
 
 MoveShopPlayerName:
@@ -11833,8 +11849,8 @@ ORG $C5E04C
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $03, $0f, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
-;db $05, $0F, $00, $02, $01, $00; Non-remote local Teleport.
+;db $AD, $00, $00, $06, $00, $00; Non-remote local item. Franklin Badge.
+;db $AD, $00, $00, $06, $01, $00; Non-remote local Teleport.
 ;db $96, $ff, $ff, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
 ;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
@@ -11922,7 +11938,11 @@ db $1B, $00
 db $1B, $06
 db $1B, $02
 dd .NormalItem
+db $0b, $06
+db $1B, $03
+dd .Photo
 db $70, $83, $9f, $5c, $10, $02, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
+db $1B, $06
 db $09, $05
 dd .Teleport
 dd .Character
@@ -12017,6 +12037,9 @@ db $96, $9F, $A2, $50
 db $1C, $02, $00
 db $6F, $02
 
+.Photo:
+db $02
+
 
 .ShopOnett:
 db $7F, $9E, $95, $A4, $A4, $02
@@ -12068,6 +12091,10 @@ db $1C, $02, $01, $02
 
 ShopsanityPurchaseHandler:
 ;Set the flag here, probably?
+db $1B, $06
+db $0B, $06
+db $1B, $03
+dd .Photo
 db $1B, $06
 db $1B, $02
 dd .NormalItem
@@ -12280,6 +12307,14 @@ dl .ConfirmRemotePurchase
 db $1B, $06
 db $0A
 dl .ConfirmRemotePurchase
+.Photo:
+db $1B, $06
+db $04, $91, $02
+db $1C, $20, $01
+db $08
+dd DynamicPhotoSetter
+db $18, $01, $01
+db $02
 
 OverrideSpaceCheckOnSpecialItem:
 db $1B, $06
@@ -16611,6 +16646,9 @@ db $1B, $03
 dd RuralEnergyText
 db $0A
 dl $EF6049
+
+PhotoShopText:
+db $80, $98, $9f, $a4, $9f, $5d, $9f, $a0, $00
 
 
 ;New New Text

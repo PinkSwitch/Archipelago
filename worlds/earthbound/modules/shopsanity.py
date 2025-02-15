@@ -1,6 +1,7 @@
 from ..game_data.local_data import psi_item_table, character_item_table, special_name_table, item_id_table
 from ..game_data.text_data import calc_pixel_width, text_encoder
 from ..game_data.static_location_data import location_ids
+from BaseClasses import ItemClassification
 import struct
 
 shop_locations = {
@@ -334,6 +335,9 @@ def write_shop_checks(world, rom, shop_checks):
                     if location.item.name in psi_item_table:
                         item_type = 0x01
                         item_id = psi_item_table[location.item.name]
+                    elif location.item.name == "Photograph" and location.item.player == world.player:
+                        item_type = 0x06
+                        item_id = 0xAD
                     elif location.item.name in character_item_table:
                         item_type = 0x02
                         item_id = character_item_table[location.item.name][0]
@@ -349,7 +353,10 @@ def write_shop_checks(world, rom, shop_checks):
                 item_type = 0x04
                 item_id = 0xAD
         
-            price = world.random.randint(1, (100 * (world.accessible_regions.index(location.parent_region.name) + 1)))
+            if ItemClassification.trap in location.item.classification:
+                price = 0
+            else:
+                price = world.random.randint(1, (100 * (world.accessible_regions.index(location.parent_region.name) + 1)))
             if not world.accessible_regions.index(location.parent_region.name):
                 price = int(price / 2)
             elif location.parent_region.name == "Onett" and not world.options.random_start_location:
@@ -373,23 +380,23 @@ def write_shop_checks(world, rom, shop_checks):
 
             rom.write_bytes(0x019DE5, struct.pack("I", 0xF007805C))  # Build the shop menus
             rom.write_bytes(0x019E23, struct.pack("I", 0xF0083C5C))  # Display the item name
-            rom.write_bytes(0x019E8F, struct.pack("I", 0xF009125C))  # Display the item price
-            rom.write_bytes(0x011AC6, struct.pack("I", 0xF0095C5C))  # display the player name
-            rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A5E5C))  # Transfer the used data and player selection into a script for processing
-            rom.write_bytes(0x019ED3, struct.pack("I", 0xF00A945C))  # Display SOLD OUT
-            rom.write_bytes(0x019B66, struct.pack("I", 0xF00AC25C))  # Prevent items for other players flashing the "you can equip this"
-            rom.write_bytes(0x019DA0, struct.pack("I", 0xF00ADE5C))  # Preserve the greyed out HP/PP palette
+            rom.write_bytes(0x019E8F, struct.pack("I", 0xF009285C))  # Display the item price
+            rom.write_bytes(0x011AC6, struct.pack("I", 0xF009725C))  # display the player name
+            rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A7E5C))  # Transfer the used data and player selection into a script for processing
+            rom.write_bytes(0x019ED3, struct.pack("I", 0xF00AB45C))  # Display SOLD OUT
+            rom.write_bytes(0x019B66, struct.pack("I", 0xF00AE25C))  # Prevent items for other players flashing the "you can equip this"
+            rom.write_bytes(0x019DA0, struct.pack("I", 0xF00AFE5C))  # Preserve the greyed out HP/PP palette
 
             rom.write_bytes(0x05E0A9, struct.pack("I", 0xF4900008))  # Compare the price of the item with money on hand
             rom.write_bytes(0x05E0B6, struct.pack("I", 0xF4905808))  # Display the item we bought and ask to confirm
             # The player bought the item; set a flag and give it to them
-            rom.write_bytes(0x05E0CE, struct.pack("I", 0xF492BF0A))
-            rom.write_bytes(0x05E0C8, struct.pack("I", 0xF492BF))
-            rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494900A))
+            rom.write_bytes(0x05E0CE, struct.pack("I", 0xF492CA0A))
+            rom.write_bytes(0x05E0C8, struct.pack("I", 0xF492CA))
+            rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494B60A))
             # Prevent the game from checking inventory space if not needed
-            rom.write_bytes(0x05E029, struct.pack("I", 0xF494B00A))
-            rom.write_bytes(0x05E04C, struct.pack("I", 0xF494D50A))
-            rom.write_bytes(0x05E1AE, struct.pack("I", 0xF494A9))  # Post-shop cleanup
+            rom.write_bytes(0x05E029, struct.pack("I", 0xF494D60A))
+            rom.write_bytes(0x05E04C, struct.pack("I", 0xF494FB0A))
+            rom.write_bytes(0x05E1AE, struct.pack("I", 0xF494CF))  # Post-shop cleanup
 
             rom.write_bytes(0x050A6A, struct.pack("I", 0xF494C90A))
             rom.write_bytes(0x050B4C, struct.pack("I", 0xF494CD0A))
