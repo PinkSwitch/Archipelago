@@ -450,8 +450,7 @@ class EarthBoundClient(SNIClient):
                     "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
                         [{"operation": "add", "value": (withdrawal * -1)},
                             {"operation": "max", "value": 0}]}])
-                await snes_write(ctx, [(WRAM_START + 0x1BE0, energy_success.to_bytes(1, byteorder="little"))]) # Signal the game to continue
-                
+                await snes_write(ctx, [(WRAM_START + 0x1BE0, energy_success.to_bytes(1, byteorder="little"))])  # Signal the game to continue
 
         if cur_script[0]:  # Stop items during cutscenes
             return
@@ -472,8 +471,7 @@ class EarthBoundClient(SNIClient):
                 snes_buffered_write(ctx, WRAM_START + 0xB570, bytes([item_id]))
             else:
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
-                            
-                    
+
         await snes_flush_writes(ctx)
 
 
