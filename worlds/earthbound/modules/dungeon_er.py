@@ -24,7 +24,7 @@ def shuffle_dungeons(world):
         "Brickroad Maze",
         "Rainy Circle",
         "Belch's Factory",
-        "Pyamid"
+        "Pyramid"
 
         ]
 
@@ -66,5 +66,5 @@ def shuffle_dungeons(world):
         world.dungeon_connections[entrance] = shuffled_single_dungeons[index]
 
     for index, entrance in enumerate(double_exit_dungeons):
-        world.dungeon_connections[entrance] = shuffled_single_dungeons[index]
+        world.dungeon_connections[entrance] = shuffled_double_dungeons[index]
     
