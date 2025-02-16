@@ -16,6 +16,8 @@ Sanctuaries, before they can win.
 Optionally, the player can set Alternate Goal conditions, on 1 or 2 sanctuaries more than required, but these will never be the expected
 goal.
 
+You can check your goals by speaking to Apple Kid in the Cave of the Present.
+
 
 ## What items and locations get shuffled?
 
@@ -25,20 +27,51 @@ PSI Locations are locations tied to psychic events in the normal game, usually c
 By default, PSI locations will always contain either a Teleport Destination, or a progressive upgrade for PSI Starstorm. These can be optionally placed
 in the Multiworld pool.
 
+PSI Locations:
+- Checking the Mani-Mani Statue in Onett
+- Speaking with Buzz Buzz
+- Drinking the Coffee at Saturn Valley
+- Defeating the Dept. Store Spook in Fourside
+- Speaking with the Monkey with Talah Rama
+- Eating the Magic Cake in Summers
+- Completing Poo's Trial of Mu in Dalaam
+- Speaking with the Star Master outside the Pyramid in Scaraba
+- Drinking the Tea at Tenda Village
+- Speaking with the Talking Rock in the Lost Underworld
+- Speaking with the Star Master in the Cave of the Present
+- Defeating Ness's Nightmare (Only if the Magicant Mode option is set to Psi location)
+
+Character Locations:
+ - The cabin just outside Happy-Happy Village
+ - The graveyard prison in Threed
+ - The second floor bedroom in the Snow Wood Boarding School
+ - Monotoli's office in Fourside
+ - The Throne Room in Dalaam
+ - Defeating Master Barf in Deep Darkness
+
+
 ## Which items can be in another player's world?
 
 Any shuffled item can be in other players' worlds.
 
 ## What does another world's item look like in EarthBound?
+When collecting an item for another player, the item and player are identified as the receiver. If Shopsanity is enable, items for other players
+in shops will display the player they are for below the shop window. When attempting to purchase an item for another player, the full name of the item and its receiver
+will be displayed to confirm. If the 'Presents Match Contents' option is enabled, presents will display the Archipelago symbol if they contain an item for another player.
 
-When receiving an item for another player, the game will identify it as the item, and it will report that the receiving player, as opposed to the player's party, received the item.
-Items do not have a visual appearance.
-
-## When the player receives an item, what happens?
-When receiving an item, a fanfare will be heard. If this item is a Teleport destination, they will instead hear a PSI fanfare. If the item is a character,
-that character's introductory speech will play, followed by them joining the party. If the player receives an item and all of their inventory slots are full,
-the item will automatically be sent to storage with Escargot Express. If storage is full, no items will be received until space is made.
+## What happens when I receive an item?
+When you receive an item, the sound effect of an item being received will play, and it will be put in your inventory. If your inventory is full, it will automatically be put in storage.
+!If storage is full, you will not be able to receive any more items until you clear room! If you receive PSI, the PSI learn fanfare plays instead. If you receive a character, a cutscene
+will play.
 
 
 ## My inventory is full and there's items I can't find!
 You can press R at any time on the overworld to access a pocket storage menu that allows you to store, withdraw from storage, and toss unnessecary items within one menu.
+
+## What about Escargo Express? ##
+Escargo Express's item storage has been replaced with a cross-game gift delivery system. From any phone, you can call Escargo Express to receive or send Gift items to other players.
+In order for players to be eligible, they have to have gifting enabled. Your gift inbox can hold 69 gifted items at a time, and up to 10 items can be queued to be sent to other players.
+
+## Hints? ##
+In most major towns, you can find a helpful Hint Man who will give hints about your game... for a price.
+The location of the Hint Man will be marked on your map, viewable at all times with X.

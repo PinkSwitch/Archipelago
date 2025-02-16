@@ -380,6 +380,10 @@ class EnergyLink(Toggle):
        This requires a server connection to be used, but won't break offline play."""
     display_name = "Energy Link"
 
+class DungeonShuffle(Toggle):
+    """Shuffles Dungeon entrances amongst each other."""
+    display_name = "Dungeon Shuffle"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -430,6 +434,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_psi_palettes: RandomizePSIPalettes
     shop_randomizer: ShopRandomizer
     scout_shop_checks: ScoutShopChecks
+    dungeon_shuffle: DungeonShuffle
     skip_epilogue: SkipEpilogue
     start_inventory_from_pool: StartInventoryPool
     death_link: DeathLink
@@ -489,6 +494,10 @@ eb_option_groups = [
     OptionGroup("Shop Randomization", [
         ShopRandomizer,
         ScoutShopChecks
+    ]),
+
+    OptionGroup("Entrance Randomization", [
+        DungeonShuffle
     ]),
 
     OptionGroup("Convenience Settings", [

@@ -1,236 +1,238 @@
 from ..modules.enemy_data import combat_regions
 
-area_exits = {
-    "Ness's Mind": ["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert",
-                    "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village",
-                    "Lost Underworld", "Magicant"],
-    "Northern Onett": ["Onett"],
-    "Onett": ["Northern Onett", "Twoson", "Giant Step"],
-    "Giant Step": ["Giant Step"],
-    "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop"],
-    "Everdred's House": ["Everdred's House"],
-    "Peaceful Rest Valley": ["Twoson", "Happy-Happy Village"],
-    "Happy-Happy Village": ["Peaceful Rest Valley", "Lilliput Steps"],
-    "Lilliput Steps": ["Lilliput Steps"],
-    "Threed": ["Twoson", "Dusty Dunes Desert", "Southern Winters", "Threed Underground", "Boogey Tent", "Winters"],
-    "Boogey Tent": ["Boogey Tent"],
-    "Threed Underground": ["Grapefruit Falls"],
-    "Grapefruit Falls": ["Belch's Factory", "Saturn Valley", "Threed Underground"],
-    "Saturn Valley": ["Grapefruit Falls", "Cave of the Present", "Upper Saturn Valley"],
-    "Belch's Factory": ["Upper Saturn Valley"],
-    "Upper Saturn Valley": ["Saturn Valley", "Milky Well"],
-    "Milky Well": ["Milky Well"],
-    "Dusty Dunes Desert": ["Threed", "Monkey Caves", "Gold Mine", "Fourside"],
-    "Monkey Caves": ["Monkey Caves"],
-    "Gold Mine": ["Gold Mine"],
-    "Fourside": ["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed", "Fourside Dept. Store"],
-    "Monotoli Building": ["Monotoli Building"],
-    "Fourside Dept. Store": ["Fourside Dept. Store"],
-    "Magnet Hill": ["Magnet Hill"],
-    "Winters": ["Snow Wood Boarding School", "Southern Winters"],
-    "Snow Wood Boarding School": ["Snow Wood Boarding School"],
-    "Southern Winters": ["Winters", "Rainy Circle", "Stonehenge Base"],
-    "Stonehenge Base": ["Stonehenge Base"],
-    "Rainy Circle": ["Rainy Circle"],
-    "Summers": ["Scaraba", "Summers Museum"],
-    "Summers Museum": ["Summers Museum"],
-    "Dalaam": ["Pink Cloud"],
-    "Pink Cloud": ["Pink Cloud"],
-    "Scaraba": ["Pyramid", "Common Condiment Shop"],
-    "Pyramid": ["Southern Scaraba"],
-    "Southern Scaraba": ["Dungeon Man"],
-    "Dungeon Man": ["Deep Darkness"],
-    "Deep Darkness": ["Deep Darkness Darkness"],
-    "Deep Darkness Darkness": ["Tenda Village", "Deep Darkness"],
-    "Tenda Village": ["Lumine Hall", "Deep Darkness Darkness"],
-    "Lumine Hall": ["Lost Underworld"],
-    "Lost Underworld": ["Fire Spring"],
-    "Fire Spring": ["Fire Spring"],
-    "Magicant": ["Sea of Eden"],
-    "Sea of Eden": ["Sea of Eden"],
-    "Cave of the Present": ["Cave of the Past"],
-    "Cave of the Past": ["Endgame"],
-    "Endgame": ["Endgame"],
-    "Global ATM Access": ["Global ATM Access"],
-    "Common Condiment Shop": ["Common Condiment Shop"]
-}
-
-area_rules = {
-    "Ness's Mind": {"Onett": [["Onett Teleport"]],
-                    "Twoson": [["Twoson Teleport"]],
-                    "Happy-Happy Village": [["Happy-Happy Village Teleport"]],
-                    "Threed": [["Threed Teleport"]],
-                    "Saturn Valley": [["Saturn Valley Teleport"]],
-                    "Dusty Dunes Desert": [["Dusty Dunes Teleport"]],
-                    "Fourside": [["Fourside Teleport"]],
-                    "Winters": [["Winters Teleport"]],
-                    "Summers": [["Summers Teleport"]],
-                    "Dalaam": [["Dalaam Teleport"]],
-                    "Scaraba": [["Scaraba Teleport"]],
-                    "Deep Darkness": [["Deep Darkness Teleport"]],
-                    "Tenda Village": [["Tenda Village Teleport"]],
-                    "Lost Underworld": [["Lost Underworld Teleport"]],
-                    "Magicant": [["Magicant Teleport"], ["Magicant Unlock"]]
-                    },
-
-    "Northern Onett": {"Onett": [["Nothing"]]},
-    "Onett": 
-             {"Northern Onett": [["Police Badge"]],
-              "Twoson": [["Police Badge"]],
-              "Giant Step": [["Key to the Shack"]]},
-    
-    "Giant Step": {"Giant Step": [["Nothing"]]},
-
-    "Twoson": {"Onett": [["Police Badge"]],
-               "Peaceful Rest Valley": [["Pencil Eraser"]],
-               "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
-               "Everdred's House": [["Paula"]],
-               "Common Condiment Shop": [["Nothing"]]},
-
-    "Everdred's House": {"Everdred's House": [["Nothing"]]},
-
-    "Peaceful Rest Valley": {"Twoson": [["Pencil Eraser"], ["Franklin Badge"]],
-                             "Happy-Happy Village": [["Nothing"]]},
-
-    "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
-                            "Lilliput Steps": [["Nothing"]]},
-
-    "Lilliput Steps": {"Lilliput Steps": [["Nothing"]]},
-
-    "Threed": {"Twoson": [["Threed Tunnels Clear"]],
-               "Dusty Dunes Desert": [["Threed Tunnels Clear"]],
-               "Southern Winters": [["UFO Engine", "Bad Key Machine"]],
-               "Threed Underground": [["Zombie Paper"]],
-               "Boogey Tent": [["Jeff"]],
-               "Winters": [["UFO Engine", "Bad Key Machine"]]},
-
-    "Boogey Tent": {"Boogey Tent": [["Nothing"]]},
-
-    "Threed Underground": {"Grapefruit Falls": [["Nothing"]]},
-                             
-    "Grapefruit Falls": {"Belch's Factory": [["Jar of Fly Honey"]],
-                         "Saturn Valley": [["Nothing"]],
-                         "Threed Underground": [["Nothing"]]},
-
-    "Saturn Valley": {"Grapefruit Falls": [["Nothing"]],
-                      "Cave of the Present": [["Meteorite Piece"]],
-                      "Upper Saturn Valley": [["Threed Tunnels Clear"]]},
-
-    "Belch's Factory": {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
-
-    "Upper Saturn Valley": {"Saturn Valley": [["Nothing"]],
-                            "Milky Well": [["Nothing"]]},
-
-    "Milky Well": {"Milky Well": [["Nothing"]]},
-
-    "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
-                           "Monkey Caves": [["King Banana"]],
-                           "Gold Mine": [["Mining Permit"]],
-                           "Fourside": [["Nothing"]]},
-
-    "Monkey Caves": {"Monkey Caves": [["Nothing"]]},
-
-    "Gold Mine": {"Gold Mine": [["Nothing"]]},
-
-    "Fourside": {"Dusty Dunes Desert": [["Nothing"]],
-                 "Monotoli Building": [["Yogurt Dispenser"]],
-                 "Threed": [["Diamond"]],
-                 "Magnet Hill": [["Signed Banana"]],
-                 "Fourside Dept. Store": [["Jeff"]]},
-
-    "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
-
-    "Fourside Dept. Store": {"Fourside Dept. Store": [["Nothing"]]},
-
-    "Magnet Hill": {"Magnet Hill": [["Nothing"]]},
-
-    "Winters": {"Snow Wood Boarding School": [["Letter for Tony"]],
-                "Southern Winters": [["Pak of Bubble Gum"]]},
-
-    "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
-
-    "Southern Winters": {"Stonehenge Base": [["Eraser Eraser"]],
-                         "Rainy Circle": [["Nothing"]],
-                         "Winters": ["Nothing"]},
-
-    "Rainy Circle": {"Rainy Circle": [["Nothing"]]},
-
-    "Stonehenge Base": {"Stonehenge Base": [["Nothing"]]},
-
-    "Summers": {"Scaraba": [["Nothing"]],
-                "Summers Museum": [["Tiny Ruby"]]},
-    
-    "Summers Museum": {"Summers Museum": [["Nothing"]]},
-
-    "Dalaam": {"Pink Cloud": [["Carrot Key"]]},
-
-    "Pink Cloud": {"Pink Cloud": [["Nothing"]]},
-
-    "Scaraba": {"Pyramid": [["Hieroglyph Copy"]],
-                "Common Condiment Shop": [["Nothing"]]},
-
-    "Pyramid": {"Southern Scaraba": [["Nothing"]]},
-    
-    "Southern Scaraba": {"Dungeon Man": [["Key to the Tower"]]},
-
-    "Dungeon Man": {"Deep Darkness": [["Submarine to Deep Darkness"]]},
-
-    "Deep Darkness": {"Deep Darkness Darkness": [["Hawk Eye"]]},
-
-    "Deep Darkness Darkness": {"Tenda Village": [["Nothing"]],
-                               "Deep Darkness": [["Nothing"]]},
-
-    "Tenda Village": {"Lumine Hall": [["Shyness Book"]],
-                      "Deep Darkness Darkness": [["Hawk Eye"]]},
-
-    "Lumine Hall": {"Lost Underworld": [["Nothing"]]},
-
-    "Lost Underworld": {"Fire Spring": [["Nothing"]]},
-
-    "Fire Spring": {"Fire Spring": [["Nothing"]]},
-
-    "Magicant": {"Sea of Eden": [["Ness"]]},
-
-    "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
-
-    "Cave of the Present": {"Cave of the Past": [["Power of the Earth"]]},
-
-    "Cave of the Past": {"Endgame": [["Paula"]]},
-
-    "Endgame": {"Endgame": [["Nothing"]]},
-
-    "Common Condiment Shop": {"Common Condiment Shop": [["Nothing"]]},
-
-    "Global ATM Access": {"Global ATM Access": [["Nothing"]]}
-    
-}
-
-teleports = {
-    "Onett Teleport": "Onett",
-    "Twoson Teleport": "Twoson",
-    "Happy-Happy Village Teleport": "Happy-Happy Village",
-    "Threed Teleport": "Threed",
-    "Saturn Valley Teleport": "Saturn Valley",
-    "Dusty Dunes Teleport": "Dusty Dunes Desert",
-    "Fourside Teleport": "Fourside",
-    "Winters Teleport": "Winters",
-    "Summers Teleport": "Summers",
-    "Scaraba Teleport": "Scaraba",
-    "Dalaam Teleport": "Dalaam",
-    "Deep Darkness Teleport": "Deep Darkness",
-    "Tenda Village Teleport": "Tenda Village",
-    "Lost Underworld Teleport": "Lost Underworld",
-    "Magicant Teleport": "Magicant"
-}
-
 
 def calculate_scaling(world):
+    world.area_exits = {
+        "Ness's Mind": ["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert",
+                        "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village",
+                        "Lost Underworld", "Magicant"],
+        "Northern Onett": ["Onett"],
+        "Onett": ["Northern Onett", "Twoson", "Giant Step"],
+        "Giant Step": ["Giant Step"],
+        "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop"],
+        "Everdred's House": ["Everdred's House"],
+        "Peaceful Rest Valley": ["Twoson", "Happy-Happy Village"],
+        "Happy-Happy Village": ["Peaceful Rest Valley", "Lilliput Steps"],
+        "Lilliput Steps": ["Lilliput Steps"],
+        "Threed": ["Twoson", "Dusty Dunes Desert", "Southern Winters", "Threed Underground", "Boogey Tent", "Winters"],
+        "Boogey Tent": ["Boogey Tent"],
+        "Threed Underground": ["Grapefruit Falls"],
+        "Grapefruit Falls": ["Belch's Factory", "Saturn Valley", "Threed Underground"],
+        "Saturn Valley": ["Grapefruit Falls", "Cave of the Present", "Upper Saturn Valley"],
+        "Belch's Factory": ["Upper Saturn Valley"],
+        "Upper Saturn Valley": ["Saturn Valley", "Milky Well"],
+        "Milky Well": ["Milky Well"],
+        "Dusty Dunes Desert": ["Threed", "Monkey Caves", "Gold Mine", "Fourside"],
+        "Monkey Caves": ["Monkey Caves"],
+        "Gold Mine": ["Gold Mine"],
+        "Fourside": ["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed", "Fourside Dept. Store"],
+        "Monotoli Building": ["Monotoli Building"],
+        "Fourside Dept. Store": ["Fourside Dept. Store"],
+        "Magnet Hill": ["Magnet Hill"],
+        "Winters": ["Snow Wood Boarding School", "Southern Winters"],
+        "Snow Wood Boarding School": ["Snow Wood Boarding School"],
+        "Southern Winters": ["Winters", "Rainy Circle", "Stonehenge Base"],
+        "Stonehenge Base": ["Stonehenge Base"],
+        "Rainy Circle": ["Rainy Circle"],
+        "Summers": ["Scaraba", "Summers Museum"],
+        "Summers Museum": ["Summers Museum"],
+        "Dalaam": ["Pink Cloud"],
+        "Pink Cloud": ["Pink Cloud"],
+        "Scaraba": ["Pyramid", "Common Condiment Shop"],
+        "Pyramid": ["Southern Scaraba"],
+        "Southern Scaraba": ["Dungeon Man"],
+        "Dungeon Man": ["Deep Darkness"],
+        "Deep Darkness": ["Deep Darkness Darkness"],
+        "Deep Darkness Darkness": ["Tenda Village", "Deep Darkness"],
+        "Tenda Village": ["Lumine Hall", "Deep Darkness Darkness"],
+        "Lumine Hall": ["Lost Underworld"],
+        "Lost Underworld": ["Fire Spring"],
+        "Fire Spring": ["Fire Spring"],
+        "Magicant": ["Sea of Eden"],
+        "Sea of Eden": ["Sea of Eden"],
+        "Cave of the Present": ["Cave of the Past"],
+        "Cave of the Past": ["Endgame"],
+        "Endgame": ["Endgame"],
+        "Global ATM Access": ["Global ATM Access"],
+        "Common Condiment Shop": ["Common Condiment Shop"]
+    }
+
+    world.area_rules = {
+        "Ness's Mind": {"Onett": [["Onett Teleport"]],
+                        "Twoson": [["Twoson Teleport"]],
+                        "Happy-Happy Village": [["Happy-Happy Village Teleport"]],
+                        "Threed": [["Threed Teleport"]],
+                        "Saturn Valley": [["Saturn Valley Teleport"]],
+                        "Dusty Dunes Desert": [["Dusty Dunes Teleport"]],
+                        "Fourside": [["Fourside Teleport"]],
+                        "Winters": [["Winters Teleport"]],
+                        "Summers": [["Summers Teleport"]],
+                        "Dalaam": [["Dalaam Teleport"]],
+                        "Scaraba": [["Scaraba Teleport"]],
+                        "Deep Darkness": [["Deep Darkness Teleport"]],
+                        "Tenda Village": [["Tenda Village Teleport"]],
+                        "Lost Underworld": [["Lost Underworld Teleport"]],
+                        "Magicant": [["Magicant Teleport"], ["Magicant Unlock"]]
+                        },
+
+        "Northern Onett": {"Onett": [["Nothing"]]},
+        "Onett": 
+                {"Northern Onett": [["Police Badge"]],
+                "Twoson": [["Police Badge"]],
+                "Giant Step": [["Key to the Shack"]]},
+        
+        "Giant Step": {"Giant Step": [["Nothing"]]},
+
+        "Twoson": {"Onett": [["Police Badge"]],
+                "Peaceful Rest Valley": [["Pencil Eraser"]],
+                "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
+                "Everdred's House": [["Paula"]],
+                "Common Condiment Shop": [["Nothing"]]},
+
+        "Everdred's House": {"Everdred's House": [["Nothing"]]},
+
+        "Peaceful Rest Valley": {"Twoson": [["Pencil Eraser"], ["Franklin Badge"]],
+                                "Happy-Happy Village": [["Nothing"]]},
+
+        "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
+                                "Lilliput Steps": [["Nothing"]]},
+
+        "Lilliput Steps": {"Lilliput Steps": [["Nothing"]]},
+
+        "Threed": {"Twoson": [["Threed Tunnels Clear"]],
+                "Dusty Dunes Desert": [["Threed Tunnels Clear"]],
+                "Southern Winters": [["UFO Engine", "Bad Key Machine"]],
+                "Threed Underground": [["Zombie Paper"]],
+                "Boogey Tent": [["Jeff"]],
+                "Winters": [["UFO Engine", "Bad Key Machine"]]},
+
+        "Boogey Tent": {"Boogey Tent": [["Nothing"]]},
+
+        "Threed Underground": {"Grapefruit Falls": [["Nothing"]]},
+                                
+        "Grapefruit Falls": {"Belch's Factory": [["Jar of Fly Honey"]],
+                            "Saturn Valley": [["Nothing"]],
+                            "Threed Underground": [["Nothing"]]},
+
+        "Saturn Valley": {"Grapefruit Falls": [["Nothing"]],
+                        "Cave of the Present": [["Meteorite Piece"]],
+                        "Upper Saturn Valley": [["Threed Tunnels Clear"]]},
+
+        "Belch's Factory": {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
+
+        "Upper Saturn Valley": {"Saturn Valley": [["Nothing"]],
+                                "Milky Well": [["Nothing"]]},
+
+        "Milky Well": {"Milky Well": [["Nothing"]]},
+
+        "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
+                            "Monkey Caves": [["King Banana"]],
+                            "Gold Mine": [["Mining Permit"]],
+                            "Fourside": [["Nothing"]]},
+
+        "Monkey Caves": {"Monkey Caves": [["Nothing"]]},
+
+        "Gold Mine": {"Gold Mine": [["Nothing"]]},
+
+        "Fourside": {"Dusty Dunes Desert": [["Nothing"]],
+                    "Monotoli Building": [["Yogurt Dispenser"]],
+                    "Threed": [["Diamond"]],
+                    "Magnet Hill": [["Signed Banana"]],
+                    "Fourside Dept. Store": [["Jeff"]]},
+
+        "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
+
+        "Fourside Dept. Store": {"Fourside Dept. Store": [["Nothing"]]},
+
+        "Magnet Hill": {"Magnet Hill": [["Nothing"]]},
+
+        "Winters": {"Snow Wood Boarding School": [["Letter for Tony"]],
+                    "Southern Winters": [["Pak of Bubble Gum"]]},
+
+        "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
+
+        "Southern Winters": {"Stonehenge Base": [["Eraser Eraser"]],
+                            "Rainy Circle": [["Nothing"]],
+                            "Winters": ["Nothing"]},
+
+        "Rainy Circle": {"Rainy Circle": [["Nothing"]]},
+
+        "Stonehenge Base": {"Stonehenge Base": [["Nothing"]]},
+
+        "Summers": {"Scaraba": [["Nothing"]],
+                    "Summers Museum": [["Tiny Ruby"]]},
+        
+        "Summers Museum": {"Summers Museum": [["Nothing"]]},
+
+        "Dalaam": {"Pink Cloud": [["Carrot Key"]]},
+
+        "Pink Cloud": {"Pink Cloud": [["Nothing"]]},
+
+        "Scaraba": {"Pyramid": [["Hieroglyph Copy"]],
+                    "Common Condiment Shop": [["Nothing"]]},
+
+        "Pyramid": {"Southern Scaraba": [["Nothing"]]},
+        
+        "Southern Scaraba": {"Dungeon Man": [["Key to the Tower"]]},
+
+        "Dungeon Man": {"Deep Darkness": [["Submarine to Deep Darkness"]]},
+
+        "Deep Darkness": {"Deep Darkness Darkness": [["Hawk Eye"]]},
+
+        "Deep Darkness Darkness": {"Tenda Village": [["Nothing"]],
+                                "Deep Darkness": [["Nothing"]]},
+
+        "Tenda Village": {"Lumine Hall": [["Shyness Book"]],
+                        "Deep Darkness Darkness": [["Hawk Eye"]]},
+
+        "Lumine Hall": {"Lost Underworld": [["Nothing"]]},
+
+        "Lost Underworld": {"Fire Spring": [["Nothing"]]},
+
+        "Fire Spring": {"Fire Spring": [["Nothing"]]},
+
+        "Magicant": {"Sea of Eden": [["Ness"]]},
+
+        "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
+
+        "Cave of the Present": {"Cave of the Past": [["Power of the Earth"]]},
+
+        "Cave of the Past": {"Endgame": [["Paula"]]},
+
+        "Endgame": {"Endgame": [["Nothing"]]},
+
+        "Common Condiment Shop": {"Common Condiment Shop": [["Nothing"]]},
+
+        "Global ATM Access": {"Global ATM Access": [["Nothing"]]}
+        
+    }
+
+    teleports = {
+        "Onett Teleport": "Onett",
+        "Twoson Teleport": "Twoson",
+        "Happy-Happy Village Teleport": "Happy-Happy Village",
+        "Threed Teleport": "Threed",
+        "Saturn Valley Teleport": "Saturn Valley",
+        "Dusty Dunes Teleport": "Dusty Dunes Desert",
+        "Fourside Teleport": "Fourside",
+        "Winters Teleport": "Winters",
+        "Summers Teleport": "Summers",
+        "Scaraba Teleport": "Scaraba",
+        "Dalaam Teleport": "Dalaam",
+        "Deep Darkness Teleport": "Deep Darkness",
+        "Tenda Village Teleport": "Tenda Village",
+        "Lost Underworld Teleport": "Lost Underworld",
+        "Magicant Teleport": "Magicant"
+    }
+
+
+
     if world.options.no_free_sanctuaries:
-        area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Tiny Key"]]
-        area_rules["Lost Underworld"]["Fire Spring"] = [["Tenda Lavapants"]]
+        world.area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Tiny Key"]]
+        world.area_rules["Lost Underworld"]["Fire Spring"] = [["Tenda Lavapants"]]
     else:
-        area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Nothing"]]
-        area_rules["Lost Underworld"]["Fire Spring"] = [["Nothing"]]
+        world.area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Nothing"]]
+        world.area_rules["Lost Underworld"]["Fire Spring"] = [["Nothing"]]
 
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     item_regions = {}
@@ -335,9 +337,9 @@ def calculate_scaling(world):
             unconnected_regions.remove("Ness's Mind")
             unconnected_regions.append("Ness's Mind")  # probably do this differently earlier
         for region in unconnected_regions:
-            for connection in area_exits[region]:
+            for connection in world.area_exits[region]:
                 if f"{region} -> {connection}" not in passed_connections:
-                    for rule_set in area_rules[region][connection]:
+                    for rule_set in world.area_rules[region][connection]:
                         # check if this sphere has the items needed to make this connection
                         if all(item in inventory[i] for item in rule_set):
                             passed_connections.append(f"{region} -> {connection}")
@@ -345,7 +347,7 @@ def calculate_scaling(world):
                                 world.accessible_regions.append(connection)
                                 unconnected_regions.append(connection)
                 else:
-                    area_exits[region].remove(connection)
+                    world.area_exits[region].remove(connection)
         if "Endgame" in unconnected_regions:
             unconnected_regions.remove("Endgame")
             unconnected_regions.insert(0, "Endgame")

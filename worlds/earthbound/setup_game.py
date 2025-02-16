@@ -5,6 +5,7 @@ from .game_data.local_data import item_id_table
 from .modules.psi_shuffle import shuffle_psi
 from .modules.boss_shuffle import initialize_bosses
 from .modules.enemy_shuffler import shuffle_enemies
+from .modules.dungeon_er import shuffle_dungeons
 
 
 def setup_gamevars(world):
@@ -546,6 +547,7 @@ def setup_gamevars(world):
     shuffle_psi(world)
     initialize_bosses(world)
     shuffle_enemies(world)
+    shuffle_dungeons(world)
 
 
 def place_static_items(world):
