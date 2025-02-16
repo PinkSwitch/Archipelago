@@ -39,3 +39,13 @@ class TestBossShuffleFull(EarthBoundTestBase):
         "ShuffleGiygas": 1,
         "DecoupleDiamondDog": 1
     }
+
+class TestShopChecks(EarthBoundTestBase):
+    options = {
+        "ShopRandomizer": 2,
+    }
+
+class TestDungeons(EarthBoundTestBase):
+    options = {
+        "DungeonShuffle": 1,
+    }
