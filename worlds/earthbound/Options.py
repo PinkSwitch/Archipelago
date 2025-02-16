@@ -334,7 +334,7 @@ class ScoutShopChecks(Choice):
     option_off = 0
     option_progression_only = 1
     option_all = 2
-    default = 0
+    default = 1
 
 
 class StartingCharacter(Choice):
