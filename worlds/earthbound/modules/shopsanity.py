@@ -398,9 +398,9 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x05E04C, struct.pack("I", 0xF494FB0A))
             rom.write_bytes(0x05E1AE, struct.pack("I", 0xF494CF))  # Post-shop cleanup
 
-            rom.write_bytes(0x050A6A, struct.pack("I", 0xF494C90A))
-            rom.write_bytes(0x050B4C, struct.pack("I", 0xF494CD0A))
-            rom.write_bytes(0x050C2E, struct.pack("I", 0xF494D10A))
+            rom.write_bytes(0x050A6A, struct.pack("I", 0xF494EF0A))
+            rom.write_bytes(0x050B4C, struct.pack("I", 0xF494F30A))
+            rom.write_bytes(0x050C2E, struct.pack("I", 0xF494F70A))
 
             rom.write_bytes(0x3407E0, bytearray([item_id_table[world.filler_shop[0]], 0x00, 0x00, 0x00, 0x49, 0x01]))
             rom.write_bytes(0x3407E6, bytearray([item_id_table[world.filler_shop[1]], 0x00, 0x00, 0x00, 0x4A, 0x01]))
