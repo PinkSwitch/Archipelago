@@ -273,7 +273,17 @@ class EarthBoundWorld(World):
 
     def extend_hint_information(self, hint_data: Dict[int, Dict[int, str]]):
         if self.options.dungeon_shuffle:
-            print("oof")
+            dungeon_entrances = {}
+            dungeon_mapping = {}
+            for dungeon in self.dungeon_connections:
+                dungeon_entrances[self.dungeon_connections[dungeon]] = dungeon
+
+            for dungeon in dungeon_entrances:
+                for location in self.get_region(dungeon).locations:
+                    if location.address:
+                        dungeon_mapping[location.address] = dungeon_entrances[dungeon]
+
+            hint_data[self.player] = dungeon_mapping
 
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {

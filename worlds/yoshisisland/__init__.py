@@ -383,5 +383,5 @@ class YoshisIslandWorld(World):
                 if level_id in stages:
                     stage_pos_data[loc.address] = level
                     break
-
+        print(stage_pos_data)
         hint_data[self.player] = stage_pos_data
