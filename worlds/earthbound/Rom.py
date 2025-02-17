@@ -381,7 +381,7 @@ def patch_rom(world, rom, player: int):
         if hint == "item_at_location":
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index] and location.player == world.player:
-                    parse_hint_data(world, location, rom, hint)
+                    parse_hint_data(world, location, rom, hint, index)
                     
         elif hint == "region_progression_check":
             world.progression_count = 0
@@ -390,7 +390,7 @@ def patch_rom(world, rom, player: int):
                     if ItemClassification.progression in location.item.classification:
                         world.progression_count += 1
             world.hinted_area = world.hinted_regions[index]  # im doing a little sneaky
-            parse_hint_data(world, location, rom, hint)
+            parse_hint_data(world, location, rom, hint, index)
 
         elif hint == "hint_for_good_item" or hint == "prog_item_at_region":
             hintable_locations_2 = []
@@ -405,15 +405,15 @@ def patch_rom(world, rom, player: int):
                 location = world.random.choice(hintable_locations)
             else:
                 location = world.random.choice(hintable_locations_2)
-            parse_hint_data(world, location, rom, hint)
+            parse_hint_data(world, location, rom, hint, index)
 
         elif hint == "item_in_local_region":
             for location in hintable_locations:
                 if location.name == world.hinted_locations[index] and location.player == world.player:
-                    parse_hint_data(world, location, rom, hint)
+                    parse_hint_data(world, location, rom, hint, index)
         else:
             location = "null"
-            parse_hint_data(world, location, rom, hint)
+            parse_hint_data(world, location, rom, hint, index)
     
     for location in hintable_locations:
         if location.item.name == "Paula":
