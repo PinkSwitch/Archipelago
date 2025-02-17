@@ -2,53 +2,77 @@ from ..modules.enemy_data import combat_regions
 
 
 def calculate_scaling(world):
+    arcade = world.dungeon_connections["Arcade"]
+    giant_step = world.dungeon_connections["Giant Step"]
+    lilliput_steps = world.dungeon_connections["Lilliput Steps"]
+    happy_happy_hq = world.dungeon_connections["Happy-Happy HQ"]
+    belch_factory = world.dungeon_connections["Belch's Factory"]
+    milky_well = world.dungeon_connections["Milky Well"]
+    gold_mine = world.dungeon_connections["Gold Mine"]
+    monkey_caves = world.dungeon_connections["Monkey Caves"]
+    monotoli_building = world.dungeon_connections["Monotoli Building"]
+    magnet_hill = world.dungeon_connections["Magnet Hill"]
+    moonside = world.dungeon_connections["Moonside"]
+    pink_cloud = world.dungeon_connections["Pink Cloud"]
+    rainy_circle = world.dungeon_connections["Rainy Circle"]
+    stonehenge_base = world.dungeon_connections["Stonehenge Base"]
+    brickroad_maze = world.dungeon_connections["Brickroad Maze"]
+    pyramid = world.dungeon_connections["Pyramid"]
+    dungeon_man = world.dungeon_connections["Dungeon Man"]
+    lumine_hall = world.dungeon_connections["Lumine Hall"]
+    fire_spring = world.dungeon_connections["Fire Spring"]
+    sea_of_eden = world.dungeon_connections["Sea of Eden"]
     world.area_exits = {
         "Ness's Mind": ["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert",
                         "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village",
                         "Lost Underworld", "Magicant"],
         "Northern Onett": ["Onett"],
-        "Onett": ["Northern Onett", "Twoson", "Giant Step"],
+        "Onett": ["Northern Onett", "Twoson", giant_step, arcade],
+        arcade: [arcade],
         "Giant Step": ["Giant Step"],
         "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop"],
         "Everdred's House": ["Everdred's House"],
         "Peaceful Rest Valley": ["Twoson", "Happy-Happy Village"],
-        "Happy-Happy Village": ["Peaceful Rest Valley", "Lilliput Steps"],
+        "Happy-Happy Village": ["Peaceful Rest Valley", lilliput_steps, happy_happy_hq],
+        "Happy-Happy HQ": ["Happy-Happy HQ"],
         "Lilliput Steps": ["Lilliput Steps"],
         "Threed": ["Twoson", "Dusty Dunes Desert", "Southern Winters", "Threed Underground", "Boogey Tent", "Winters"],
         "Boogey Tent": ["Boogey Tent"],
         "Threed Underground": ["Grapefruit Falls"],
-        "Grapefruit Falls": ["Belch's Factory", "Saturn Valley", "Threed Underground"],
-        "Saturn Valley": ["Grapefruit Falls", "Cave of the Present", "Upper Saturn Valley"],
-        "Belch's Factory": ["Upper Saturn Valley"],
-        "Upper Saturn Valley": ["Saturn Valley", "Milky Well"],
+        "Grapefruit Falls": [belch_factory, "Saturn Valley", "Threed Underground"],
+        "Saturn Valley": ["Grapefruit Falls", "Cave of the Present"],
+        belch_factory: ["Upper Saturn Valley"],
+        "Upper Saturn Valley": ["Saturn Valley", world.dungeon_connections["Milky Well"]],
         "Milky Well": ["Milky Well"],
-        "Dusty Dunes Desert": ["Threed", "Monkey Caves", "Gold Mine", "Fourside"],
+        "Dusty Dunes Desert": ["Threed", monkey_caves, gold_mine, "Fourside"],
         "Monkey Caves": ["Monkey Caves"],
         "Gold Mine": ["Gold Mine"],
-        "Fourside": ["Dusty Dunes Desert", "Monotoli Building", "Magnet Hill", "Threed", "Fourside Dept. Store"],
+        "Fourside": ["Dusty Dunes Desert", monotoli_building, magnet_hill, "Threed", "Fourside Dept. Store", moonside],
+        "Moonside": ["Moonside"],
         "Monotoli Building": ["Monotoli Building"],
         "Fourside Dept. Store": ["Fourside Dept. Store"],
         "Magnet Hill": ["Magnet Hill"],
         "Winters": ["Snow Wood Boarding School", "Southern Winters"],
         "Snow Wood Boarding School": ["Snow Wood Boarding School"],
-        "Southern Winters": ["Winters", "Rainy Circle", "Stonehenge Base"],
+        "Southern Winters": ["Winters", stonehenge_base, brickroad_maze],
+        brickroad_maze: [rainy_circle],
         "Stonehenge Base": ["Stonehenge Base"],
-        "Rainy Circle": ["Rainy Circle"],
+        rainy_circle: [rainy_circle],
         "Summers": ["Scaraba", "Summers Museum"],
         "Summers Museum": ["Summers Museum"],
-        "Dalaam": ["Pink Cloud"],
+        "Dalaam": [pink_cloud],
         "Pink Cloud": ["Pink Cloud"],
-        "Scaraba": ["Pyramid", "Common Condiment Shop"],
-        "Pyramid": ["Southern Scaraba"],
-        "Southern Scaraba": ["Dungeon Man"],
+        "Scaraba": [pyramid, "Common Condiment Shop"],
+        pyramid: ["Southern Scaraba"],
+        "Southern Scaraba": [dungeon_man],
         "Dungeon Man": ["Deep Darkness"],
         "Deep Darkness": ["Deep Darkness Darkness"],
         "Deep Darkness Darkness": ["Tenda Village", "Deep Darkness"],
-        "Tenda Village": ["Lumine Hall", "Deep Darkness Darkness"],
+        "Tenda Village": [lumine_hall, "Deep Darkness Darkness"],
         "Lumine Hall": ["Lost Underworld"],
-        "Lost Underworld": ["Fire Spring"],
+        "Lost Underworld": [fire_spring],
         "Fire Spring": ["Fire Spring"],
-        "Magicant": ["Sea of Eden"],
+        "Magicant": [sea_of_eden],
         "Sea of Eden": ["Sea of Eden"],
         "Cave of the Present": ["Cave of the Past"],
         "Cave of the Past": ["Endgame"],
@@ -79,8 +103,10 @@ def calculate_scaling(world):
         "Onett": 
                 {"Northern Onett": [["Police Badge"]],
                 "Twoson": [["Police Badge"]],
-                "Giant Step": [["Key to the Shack"]]},
+                giant_step: [["Key to the Shack"]],
+                arcade: [["Nothing"]]},
         
+        arcade: {arcade: [["Nothing"]]},
         "Giant Step": {"Giant Step": [["Nothing"]]},
 
         "Twoson": {"Onett": [["Police Badge"]],
@@ -95,7 +121,10 @@ def calculate_scaling(world):
                                 "Happy-Happy Village": [["Nothing"]]},
 
         "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
-                                "Lilliput Steps": [["Nothing"]]},
+                                lilliput_steps: [["Nothing"]],
+                                happy_happy_hq: [["Nothing"]]},
+
+        "Happy-Happy HQ": {"Happy-Happy HQ": [["Nothing"]]},
 
         "Lilliput Steps": {"Lilliput Steps": [["Nothing"]]},
 
@@ -110,24 +139,23 @@ def calculate_scaling(world):
 
         "Threed Underground": {"Grapefruit Falls": [["Nothing"]]},
                                 
-        "Grapefruit Falls": {"Belch's Factory": [["Jar of Fly Honey"]],
+        "Grapefruit Falls": {belch_factory: [["Jar of Fly Honey"]],
                             "Saturn Valley": [["Nothing"]],
                             "Threed Underground": [["Nothing"]]},
 
         "Saturn Valley": {"Grapefruit Falls": [["Nothing"]],
-                        "Cave of the Present": [["Meteorite Piece"]],
-                        "Upper Saturn Valley": [["Threed Tunnels Clear"]]},
+                        "Cave of the Present": [["Meteorite Piece"]]},
 
-        "Belch's Factory": {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
+        belch_factory: {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
 
         "Upper Saturn Valley": {"Saturn Valley": [["Nothing"]],
-                                "Milky Well": [["Nothing"]]},
+                                milky_well: [["Nothing"]]},
 
         "Milky Well": {"Milky Well": [["Nothing"]]},
 
         "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
-                            "Monkey Caves": [["King Banana"]],
-                            "Gold Mine": [["Mining Permit"]],
+                            monkey_caves: [["King Banana"]],
+                            gold_mine: [["Mining Permit"]],
                             "Fourside": [["Nothing"]]},
 
         "Monkey Caves": {"Monkey Caves": [["Nothing"]]},
@@ -135,12 +163,15 @@ def calculate_scaling(world):
         "Gold Mine": {"Gold Mine": [["Nothing"]]},
 
         "Fourside": {"Dusty Dunes Desert": [["Nothing"]],
-                    "Monotoli Building": [["Yogurt Dispenser"]],
+                    monotoli_building: [["Yogurt Dispenser"]],
                     "Threed": [["Diamond"]],
-                    "Magnet Hill": [["Signed Banana"]],
-                    "Fourside Dept. Store": [["Jeff"]]},
+                    magnet_hill: [["Signed Banana"]],
+                    "Fourside Dept. Store": [["Jeff"]],
+                    moonside: [["Nothing"]]},
 
         "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
+
+        "Moonside": {"Moonside": [["Nothing"]]},
 
         "Fourside Dept. Store": {"Fourside Dept. Store": [["Nothing"]]},
 
@@ -151,11 +182,13 @@ def calculate_scaling(world):
 
         "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
 
-        "Southern Winters": {"Stonehenge Base": [["Eraser Eraser"]],
-                            "Rainy Circle": [["Nothing"]],
+        "Southern Winters": {stonehenge_base: [["Eraser Eraser"]],
+                            brickroad_maze: [["Nothing"]],
                             "Winters": ["Nothing"]},
 
-        "Rainy Circle": {"Rainy Circle": [["Nothing"]]},
+        brickroad_maze: {rainy_circle: [["Nothing"]]},
+
+        rainy_circle: {rainy_circle: [["Nothing"]]},
 
         "Stonehenge Base": {"Stonehenge Base": [["Nothing"]]},
 
@@ -164,16 +197,16 @@ def calculate_scaling(world):
         
         "Summers Museum": {"Summers Museum": [["Nothing"]]},
 
-        "Dalaam": {"Pink Cloud": [["Carrot Key"]]},
+        "Dalaam": {pink_cloud: [["Carrot Key"]]},
 
         "Pink Cloud": {"Pink Cloud": [["Nothing"]]},
 
-        "Scaraba": {"Pyramid": [["Hieroglyph Copy"]],
+        "Scaraba": {pyramid: [["Hieroglyph Copy"]],
                     "Common Condiment Shop": [["Nothing"]]},
 
-        "Pyramid": {"Southern Scaraba": [["Nothing"]]},
+        pyramid: {"Southern Scaraba": [["Nothing"]]},
         
-        "Southern Scaraba": {"Dungeon Man": [["Key to the Tower"]]},
+        "Southern Scaraba": {dungeon_man: [["Key to the Tower"]]},
 
         "Dungeon Man": {"Deep Darkness": [["Submarine to Deep Darkness"]]},
 
@@ -182,16 +215,16 @@ def calculate_scaling(world):
         "Deep Darkness Darkness": {"Tenda Village": [["Nothing"]],
                                 "Deep Darkness": [["Nothing"]]},
 
-        "Tenda Village": {"Lumine Hall": [["Shyness Book"]],
+        "Tenda Village": {lumine_hall: [["Shyness Book"]],
                         "Deep Darkness Darkness": [["Hawk Eye"]]},
 
         "Lumine Hall": {"Lost Underworld": [["Nothing"]]},
 
-        "Lost Underworld": {"Fire Spring": [["Nothing"]]},
+        "Lost Underworld": {fire_spring: [["Nothing"]]},
 
         "Fire Spring": {"Fire Spring": [["Nothing"]]},
 
-        "Magicant": {"Sea of Eden": [["Ness"]]},
+        "Magicant": {sea_of_eden: [["Ness"]]},
 
         "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
 
@@ -225,14 +258,12 @@ def calculate_scaling(world):
         "Magicant Teleport": "Magicant"
     }
 
-
-
     if world.options.no_free_sanctuaries:
-        world.area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Tiny Key"]]
-        world.area_rules["Lost Underworld"]["Fire Spring"] = [["Tenda Lavapants"]]
+        world.area_rules["Happy-Happy Village"][lilliput_steps] = [["Tiny Key"]]
+        world.area_rules["Lost Underworld"][fire_spring] = [["Tenda Lavapants"]]
     else:
-        world.area_rules["Happy-Happy Village"]["Lilliput Steps"] = [["Nothing"]]
-        world.area_rules["Lost Underworld"]["Fire Spring"] = [["Nothing"]]
+        world.area_rules["Happy-Happy Village"][lilliput_steps] = [["Nothing"]]
+        world.area_rules["Lost Underworld"][fire_spring] = [["Nothing"]]
 
     inventory = {0: ["Nothing"]}  # Nothing means no item needed for connection
     item_regions = {}
@@ -245,6 +276,7 @@ def calculate_scaling(world):
     if world.options.random_start_location:
         unconnected_regions.append(teleports[world.starting_teleport])
         world.accessible_regions.append(teleports[world.starting_teleport])
+
 
     world.scaled_area_order = []
     passed_connections = []
