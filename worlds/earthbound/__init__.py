@@ -271,6 +271,10 @@ class EarthBoundWorld(World):
         finally:
             self.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
+    def extend_hint_information(self, hint_data: Dict[int, Dict[int, str]]):
+        if self.options.dungeon_shuffle:
+            print("oof")
+
     def fill_slot_data(self) -> Dict[str, List[int]]:
         return {
             "starting_area": self.start_location,
@@ -295,24 +299,24 @@ class EarthBoundWorld(World):
         spoiler_handle.write(f"Franklin Badge Protection:    {spoiler_badges[self.franklin_protection]}\n")
         if self.options.psi_shuffle:
             spoiler_handle.write("\nPSI Shuffle:\n")
-            spoiler_handle.write(f"Favorite Thing PSI Slot:    {spoiler_psi[self.offensive_psi_slots[0]]}\n")
-            spoiler_handle.write(f"Ness Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[1]]}\n")
-            spoiler_handle.write(f"Paula Offensive PSI Top Slot:    {spoiler_psi[self.offensive_psi_slots[2]]}\n")
-            spoiler_handle.write(f"Paula/Poo Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[3]]}\n")
-            spoiler_handle.write(f"Paula/Poo Offensive PSI Bottom Slot:    {spoiler_psi[self.offensive_psi_slots[4]]}\n")
-            spoiler_handle.write(f"Poo Progressive PSI Slot:    {spoiler_psi[self.offensive_psi_slots[5]]}\n")
+            spoiler_handle.write(f" Favorite Thing PSI Slot:    {spoiler_psi[self.offensive_psi_slots[0]]}\n")
+            spoiler_handle.write(f" Ness Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[1]]}\n")
+            spoiler_handle.write(f" Paula Offensive PSI Top Slot:    {spoiler_psi[self.offensive_psi_slots[2]]}\n")
+            spoiler_handle.write(f" Paula/Poo Offensive PSI Middle Slot:    {spoiler_psi[self.offensive_psi_slots[3]]}\n")
+            spoiler_handle.write(f" Paula/Poo Offensive PSI Bottom Slot:    {spoiler_psi[self.offensive_psi_slots[4]]}\n")
+            spoiler_handle.write(f" Poo Progressive PSI Slot:    {spoiler_psi[self.offensive_psi_slots[5]]}\n")
 
-            spoiler_handle.write(f"Ness/Poo Shield Slot:    {spoiler_psi[self.shield_slots[0]]}\n")
-            spoiler_handle.write(f"Paula Shield Slot:    {spoiler_psi[self.shield_slots[1]]}\n")
+            spoiler_handle.write(f" Ness/Poo Shield Slot:    {spoiler_psi[self.shield_slots[0]]}\n")
+            spoiler_handle.write(f" Paula Shield Slot:    {spoiler_psi[self.shield_slots[1]]}\n")
 
-            spoiler_handle.write(f"Ness Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[0]]}\n")
-            spoiler_handle.write(f"Ness Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[1]]}\n")
-            spoiler_handle.write(f"Paula Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[2]]}\n")
-            spoiler_handle.write(f"Paula Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[3]]}\n")
-            spoiler_handle.write(f"Poo Assist PSI Slot:    {spoiler_psi[self.assist_psi_slots[4]]}\n")
+            spoiler_handle.write(f" Ness Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[0]]}\n")
+            spoiler_handle.write(f" Ness Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[1]]}\n")
+            spoiler_handle.write(f" Paula Assist PSI Middle Slot:    {spoiler_psi[self.assist_psi_slots[2]]}\n")
+            spoiler_handle.write(f" Paula Assist PSI Bottom Slot:    {spoiler_psi[self.assist_psi_slots[3]]}\n")
+            spoiler_handle.write(f" Poo Assist PSI Slot:    {spoiler_psi[self.assist_psi_slots[4]]}\n")
         if self.options.psi_shuffle == 2:
-            spoiler_handle.write(f"Bomb/Bazooka Slot:    {spoiler_psi[self.jeff_offense_items[0]]}\n")
-            spoiler_handle.write(f"Bottle Rocket Slot:    {spoiler_psi[self.jeff_offense_items[1]]}\n")
+            spoiler_handle.write(f" Bomb/Bazooka Slot:    {spoiler_psi[self.jeff_offense_items[0]]}\n")
+            spoiler_handle.write(f" Bottle Rocket Slot:    {spoiler_psi[self.jeff_offense_items[1]]}\n")
 
             spoiler_handle.write(f"Spray Can Slot:    {spoiler_psi[self.jeff_assist_items[0]]}\n")
             spoiler_handle.write(f"Multi-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[1]]}\n")
@@ -351,6 +355,13 @@ class EarthBoundWorld(World):
                                  f" Starman Junior => {self.boss_list[26]}\n" +
                                  f" Diamond Dog => {self.boss_list[27]}\n" +
                                  f" Giygas (Phase 2) => {self.boss_list[28]}\n")
+
+        if self.options.dungeon_shuffle:
+            spoiler_handle.write("\nDungeon Entrances:\n")
+            for dungeon in self.dungeon_connections:
+                spoiler_handle.write(
+                f" {dungeon} => {self.dungeon_connections[dungeon]}\n"
+                )
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
