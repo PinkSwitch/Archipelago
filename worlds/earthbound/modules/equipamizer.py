@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import dataclasses
+import copy
 from ..game_data.text_data import text_encoder, calc_pixel_width
 from operator import attrgetter
 import struct
@@ -600,7 +601,8 @@ def randomize_armor(world, rom):
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
     
-    sorted_armor = sorted(world.armor_list.values(), key=attrgetter("defense"))
+    sortable_armor = copy.deepcopy(world.armor_list)
+    sorted_armor = sorted(sortable_armor.values(), key=attrgetter("defense"))
 
     sorted_arm_gear = [armor for armor in sorted_armor if armor.equip_type == "arm"]
     sorted_body_gear = [armor for armor in sorted_armor if armor.equip_type == "body"]
@@ -616,17 +618,19 @@ def randomize_armor(world, rom):
         progressive_bracelets,
         progressive_others
     ]
-
-    for i in range(3):
-        price_armors(sorts[i], rom)
     
     if world.options.progressive_armor:
         for i in range(2):
             apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
 
+    for i in range(3):
+        price_armors(sorts[i], rom)
+
     for item in all_armor:
         armor = world.armor_list[item]
 
+        if "Summers" in armor.name:
+            armor.name = armor.name.replace("Summers", "")
         item_name = text_encoder(armor.name, 25)
         item_name.extend([0x00])
 
@@ -657,7 +661,7 @@ def randomize_armor(world, rom):
 
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
-            
+        
         description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
@@ -897,7 +901,8 @@ def randomize_weapons(world, rom):
             weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
 
-    sorted_weapons = sorted(world.weapon_list.values(), key=attrgetter("offense"))
+    sortable_weapons = copy.deepcopy(world.weapon_list)
+    sorted_weapons = sorted(sortable_weapons.values(), key=attrgetter("offense"))
 
     sorted_bats = [weapon for weapon in sorted_weapons if weapon.can_equip == "Ness"]
     sorted_pans = [weapon for weapon in sorted_weapons if weapon.can_equip == "Paula"]
@@ -929,6 +934,13 @@ def randomize_weapons(world, rom):
 
     for item in all_weapons:
         weapon = world.weapon_list[item]
+        if "Summers" in item:
+            weapon.offense = world.weapon_list["Big League Bat"].offense
+            rom.write_bytes(weapon.address + 31, bytearray([world.weapon_list["Big League Bat"].offense]))
+
+        if "Summers" in weapon.name:
+            weapon.name = weapon.name.replace("Summers", "")
+
         item_name = text_encoder(weapon.name, 25)
         item_name.extend([0x00])
         
