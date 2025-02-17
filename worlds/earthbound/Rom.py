@@ -19,6 +19,7 @@ from .modules.music_rando import music_randomizer
 from .modules.palette_shuffle import randomize_psi_palettes
 from .modules.shopsanity import write_shop_checks
 from .modules.enemy_shuffler import apply_enemy_shuffle
+from .modules.dungeon_er import write_dungeon_entrances
 from .game_data.static_location_data import location_groups
 from BaseClasses import ItemClassification
 from typing import TYPE_CHECKING, Optional
@@ -610,6 +611,9 @@ def patch_rom(world, rom, player: int):
 
     apply_enemy_shuffle(world, rom)
     write_bosses(world, rom)
+    if world.options.dungeon_shuffle:
+        write_dungeon_entrances(world, rom)
+
     calculate_scaling(world)
     if world.options.shop_randomizer:
         write_shop_checks(world, rom, shop_checks)

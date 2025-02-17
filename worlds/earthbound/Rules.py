@@ -22,6 +22,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #1", player), lambda state: state.has("Threed Tunnels Clear", player))
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #2", player), lambda state: state.has("Threed Tunnels Clear", player))
     set_rule(world.multiworld.get_location("Saturn Valley - Post Belch Gift #3", player), lambda state: state.has("Threed Tunnels Clear", player))
+    set_rule(world.multiworld.get_location("Saturn Valley - Saturn Coffee", player), lambda state: state.has("Threed Tunnels Clear", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #1", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: state.has("Pencil Eraser", player))
