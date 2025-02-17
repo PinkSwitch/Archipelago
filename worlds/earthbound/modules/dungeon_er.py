@@ -16,7 +16,6 @@ def shuffle_dungeons(world):
         "Lumine Hall",
         "Fire Spring",
         "Sea of Eden"
-
     ]
 
     double_exit_dungeons = [
@@ -25,7 +24,6 @@ def shuffle_dungeons(world):
         "Rainy Circle",
         "Belch's Factory",
         "Pyramid"
-
         ]
 
     world.dungeon_connections = {

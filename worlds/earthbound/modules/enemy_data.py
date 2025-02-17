@@ -261,13 +261,15 @@ def initialize_enemies(world):
 
     world.regional_enemies = {"Northern Onett": {shuffled_enemies["Spiteful Crow"], shuffled_enemies["Runaway Dog"], shuffled_enemies["Coil Snake"]},
                               "Onett": {shuffled_enemies["Pogo Punk"], shuffled_enemies["Skate Punk"], shuffled_enemies["Yes Man Junior"], world.enemies[world.boss_list[0]], world.enemies[world.boss_list[1]]},
+                              "Arcade": {shuffled_enemies["Pogo Punk"], shuffled_enemies["Skate Punk"], shuffled_enemies["Yes Man Junior"]},
                               "Giant Step": {shuffled_enemies["Attack Slug"], shuffled_enemies["Black Antoid"], shuffled_enemies["Rowdy Mouse"], world.enemies[world.boss_list[2]]},
                               "Twoson": {shuffled_enemies["Black Antoid"], shuffled_enemies["Cop"], world.enemies[world.boss_list[3]], shuffled_enemies["Ramblin' Evil Mushroom"],
                                          shuffled_enemies["Annoying Old Party Man"], shuffled_enemies["Cranky Lady"], shuffled_enemies["Mobile Sprout"], shuffled_enemies["New Age Retro Hippie"], shuffled_enemies["Unassuming Local Guy"],
                                          shuffled_enemies["Runaway Dog"]},
                               "Everdred's House": {world.enemies[world.boss_list[4]]},
                               "Peaceful Rest Valley": {shuffled_enemies["Li'l UFO"], shuffled_enemies["Mobile Sprout"], shuffled_enemies["Spinning Robo"], shuffled_enemies["Territorial Oak"]},
-                              "Happy-Happy Village": {shuffled_enemies["Coil Snake"], shuffled_enemies["Insane Cultist"], shuffled_enemies["Spiteful Crow"], shuffled_enemies["Unassuming Local Guy"], world.enemies[world.boss_list[5]]},
+                              "Happy-Happy Village": {shuffled_enemies["Coil Snake"], shuffled_enemies["Insane Cultist"], shuffled_enemies["Spiteful Crow"], shuffled_enemies["Unassuming Local Guy"]},
+                              "Happy-Happy HQ": {shuffled_enemies["Insane Cultist"], world.enemies[world.boss_list[5]]},
                               "Lilliput Steps": {shuffled_enemies["Mighty Bear"], shuffled_enemies["Mole Playing Rough"], shuffled_enemies["Mr. Batty"], world.enemies[world.boss_list[6]]},
                               "Threed": {shuffled_enemies["Coil Snake"], shuffled_enemies["Handsome Tom"], shuffled_enemies["Smilin' Sam"], shuffled_enemies["Trick or Trick Kid"],
                                          shuffled_enemies["Zombie Dog"], shuffled_enemies["Putrid Moldyman"], shuffled_enemies["Smelly Ghost"]},
@@ -278,8 +280,8 @@ def initialize_enemies(world):
                               "Milky Well": {shuffled_enemies["Mad Duck"], shuffled_enemies["Ranboob"], shuffled_enemies["Struttin' Evil Mushroom"], shuffled_enemies["Tough Mobile Sprout"], world.enemies[world.boss_list[10]]},
                               "Dusty Dunes Desert": {shuffled_enemies["Bad Buffalo"], shuffled_enemies["Crested Booka"], shuffled_enemies["Criminal Caterpillar"], shuffled_enemies["Cute Li'l UFO"], shuffled_enemies["Desert Wolf"], shuffled_enemies["Mole Playing Rough"],
                                                      shuffled_enemies["Skelpion"], shuffled_enemies["Smilin' Sphere"]},
-                              "Fourside": {shuffled_enemies["Annoying Reveler"], shuffled_enemies["Crazed Sign"], shuffled_enemies["Extra Cranky Lady"], shuffled_enemies["Mad Taxi"],
-                                           shuffled_enemies["Abstract Art"], shuffled_enemies["Dali's Clock"], shuffled_enemies["Enraged Fire Plug"], shuffled_enemies["Robo-pump"], world.enemies[world.boss_list[13]]},
+                              "Fourside": {shuffled_enemies["Annoying Reveler"], shuffled_enemies["Crazed Sign"], shuffled_enemies["Extra Cranky Lady"], shuffled_enemies["Mad Taxi"]},
+                              "Moonside": {shuffled_enemies["Abstract Art"], shuffled_enemies["Dali's Clock"], shuffled_enemies["Enraged Fire Plug"], shuffled_enemies["Robo-pump"], world.enemies[world.boss_list[13]]},
                               "Gold Mine": {shuffled_enemies["Gigantic Ant"], shuffled_enemies["Mad Duck"], shuffled_enemies["Noose Man"], shuffled_enemies["Thirsty Coil Snake"], world.enemies[world.boss_list[11]]},
                               "Fourside Dept. Store": {shuffled_enemies["Musica"], shuffled_enemies["Mystical Record"], shuffled_enemies["Scalding Coffee Cup"], world.enemies[world.boss_list[12]]},
                               "Monkey Caves": {shuffled_enemies["Struttin' Evil Mushroom"], shuffled_enemies["Tough Mobile Sprout"]},
@@ -299,8 +301,8 @@ def initialize_enemies(world):
                               "Deep Darkness Darkness": {shuffled_enemies["Big Pile of Puke"], shuffled_enemies["Demonic Petunia"], shuffled_enemies["Even Slimier Little Pile"], shuffled_enemies["Hard Crocodile"], shuffled_enemies["Hostile Elder Oak"],
                                                          shuffled_enemies["Manly Fish"], shuffled_enemies["Manly Fish's Brother"], shuffled_enemies["Pit Bull Slug"], shuffled_enemies["Zap Eel"], world.enemies[world.boss_list[20]]},
                               "Boogey Tent": {world.enemies[world.boss_list[7]]},
-                              "Southern Winters": {shuffled_enemies["Rowdy Mouse"], shuffled_enemies["Worthless Protoplasm"], shuffled_enemies["Mad Duck"],
-                                                   shuffled_enemies["Lesser Mook"], shuffled_enemies["Whirling Robo"], shuffled_enemies["Wooly Shambler"]},
+                              "Southern Winters": {shuffled_enemies["Lesser Mook"], shuffled_enemies["Whirling Robo"], shuffled_enemies["Wooly Shambler"]},
+                              "Brickroad Maze": {shuffled_enemies["Rowdy Mouse"], shuffled_enemies["Worthless Protoplasm"], shuffled_enemies["Mad Duck"]},
                               "Stonehenge Base": {shuffled_enemies["Atomic Power Robot"], shuffled_enemies["Military Octobot"], shuffled_enemies["Mook Senior"], shuffled_enemies["Starman"], shuffled_enemies["Starman Super"], world.enemies[world.boss_list[21]]},
                               "Lumine Hall": {shuffled_enemies["Conducting Spirit"], shuffled_enemies["Fobby"], shuffled_enemies["Hyper Spinning Robo"], shuffled_enemies["Uncontrollable Sphere"], world.enemies[world.boss_list[22]]},
                               "Lost Underworld": {shuffled_enemies["Chomposaur"], shuffled_enemies["Ego Orb"], shuffled_enemies["Wetnosaur"]},
@@ -338,15 +340,18 @@ def initialize_enemies(world):
 combat_regions = [
     "Northern Onett",
     "Onett",
+    "Arcade",
     "Giant Step",
     "Twoson",
     "Happy-Happy Village",
+    "Happy-Happy HQ"
     "Lilliput Steps",
     "Winters",
     "Threed",
     "Milky Well",
     "Dusty Dunes Desert",
     "Fourside",
+    "Moonside",
     "Gold Mine",
     "Monkey Caves",
     "Monotoli Building",
@@ -372,6 +377,7 @@ combat_regions = [
     "Everdred's House",
     "Belch's Factory",
     "Southern Winters",
+    "Brickroad Maze"
     "Summers Museum",
     "Fourside Dept. Store",
     "Threed Underground",
@@ -423,7 +429,9 @@ levels = [
     65,  # cave of the past
     68,  # Sea of Eden
     70,
-    73]  # gigyas
+    73,
+    74,
+    75]  # gigyas
 
 spell_breaks: Dict[str, Dict[int, str]] = {
     "freeze": {8: "zeta", 12: "epsilon", 20: "delta", 25: "lambda", 40: "alpha", 65: "beta", 70: "gamma", 100: "omega"},
