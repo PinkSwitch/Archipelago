@@ -257,6 +257,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Cave of the Present", "Cave of the Present - Star Master", 0xEB00EE),
         LocationData("Cave of the Present", "Cave of the Present - Broken Phase Distorter", 0xEB00EF),
 
+        LocationData("Happy-Happy HQ", "Carpainter Defeated", None),
         LocationData("Belch's Factory", "Belch Defeated", None),
         LocationData("Dungeon Man", "Dungeon Man Submarine", None),
         LocationData("Giant Step", "Giant Step Sanctuary", None),
@@ -270,6 +271,11 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Ness's Mind", "Sanctuary Goal", None),
         LocationData("Global ATM Access", "Any ATM", None)
     ]
+
+    if world.options.dungeon_shuffle:
+        location_table += [
+            LocationData("Fourside", "Fourside - Everdred Meeting", None),
+        ]
 
     if world.options.giygas_required:
         location_table += [

@@ -128,12 +128,12 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Twoson", player).add_exits(["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Global ATM Access", "Common Condiment Shop"],
                                                       {"Onett": lambda state: state.has("Police Badge", player),
-                                                       "Peaceful Rest Valley": lambda state: state.has("Pencil Eraser", player),
+                                                       "Peaceful Rest Valley": lambda state: state.has_any({"Pencil Eraser", "Valley Bridge Repair"}, player),
                                                        "Threed": lambda state: state.has_any({"Threed Tunnels Clear", "Wad of Bills"}, player),
                                                        "Everdred's House": lambda state: state.has("Paula", player)})
 
     multiworld.get_region("Peaceful Rest Valley", player).add_exits(["Twoson", "Happy-Happy Village"],
-                                                                    {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Franklin Badge"}, player)})  # Change to franklin badge
+                                                                    {"Twoson": lambda state: state.has_any({"Pencil Eraser", "Valley Bridge Repair"}, player)})
 
     multiworld.get_region("Happy-Happy Village", player).add_exits(["Peaceful Rest Valley", lilliput_steps_connection, "Global ATM Access", happy_happy_hq_connection])
     

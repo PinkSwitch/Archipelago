@@ -564,6 +564,11 @@ def place_static_items(world):
     world.get_location("Lumine Hall Sanctuary").place_locked_item(world.create_item("Melody"))
     world.get_location("Fire Spring Sanctuary").place_locked_item(world.create_item("Melody"))
 
+    if world.options.dungeon_shuffle:
+        world.get_location("Fourside - Everdred Meeting").place_locked_item(world.create_item("Moonside Password"))
+
+    world.get_location("Carpainter Defeated").place_locked_item(world.create_item("Valley Bridge Repair"))
+
     if world.options.giygas_required == 1:
         world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))  # Normal final boss
         if world.options.magicant_mode == 1:

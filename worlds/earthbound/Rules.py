@@ -16,6 +16,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Twoson - Everdred Meeting", player), lambda state: state.has("Paula", player))
     set_rule(world.multiworld.get_location("Twoson - Insignificant Location", player), lambda state: state.has("Insignificant Item", player))
     set_rule(world.multiworld.get_location("Happy-Happy Village - Defeat Carpainter", player), lambda state: state.has("Franklin Badge", player))
+    set_rule(world.multiworld.get_location("Carpainter Defeated", player), lambda state: state.has("Franklin Badge", player))
     set_rule(world.multiworld.get_location("Happy-Happy Village - Prisoner", player), lambda state: state.has("Key to the Cabin", player))
     set_rule(world.multiworld.get_location("Threed - Boogey Tent Trashcan", player), lambda state: state.has("Jeff", player))
     set_rule(world.multiworld.get_location("Threed - Zombie Prisoner", player), lambda state: state.has("Bad Key Machine", player))
