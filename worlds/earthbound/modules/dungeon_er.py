@@ -163,9 +163,10 @@ def write_dungeon_entrances(world, rom):
 
     for door in world.dungeon_connections:
         for index, entrance in enumerate(dungeon_entrances[door]):
-            paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
-    
-    print(paired_doors)
+            if "Exit" in entrance:
+                paired_doors[dungeon_entrances[world.dungeon_connections[door]][index]] = entrance
+            else:
+                paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
             #if connection.is_script:
              #   rom.copy_bytes(destination_door.copyaddress + 2, 2, connection.address)
