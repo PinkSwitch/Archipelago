@@ -6,6 +6,7 @@ import dataclasses
 class EBDungeonDoor:
     address: int
     copyaddress: int
+    direction: int
     is_script: Optional[bool] = False
 
 
@@ -103,63 +104,63 @@ def write_dungeon_entrances(world, rom):
     }
 
     all_dungeon_doors = {
-        "Arcade Entrance": EBDungeonDoor(0x0F00CC, 0x321000),
-        "Arcade Exit": EBDungeonDoor(0x0F029A, 0x321010),
-        "Arcade Back Exit": EBDungeonDoor(0x0F026E, 0x321020),
-        "Arcade Back Entrance": EBDungeonDoor(0x0F00C1, 0x321030),
-        "Giant Step Entrance": EBDungeonDoor(0x0F0032, 0x321040),
-        "Giant Step Exit": EBDungeonDoor(0x0F04B5, 0x321050),
-        "Happy-Happy HQ Entrance": EBDungeonDoor(0x0F09E9, 0x321060),
-        "Happy-Happy HQ Exit": EBDungeonDoor(0x0F0A99, 0x321070),
-        "Lilliput Steps Entrance": EBDungeonDoor(0x0F09F4, 0x321080),
-        "Lilliput Steps Exit": EBDungeonDoor(0x0F0B1A, 0x321090),
-        "Factory Entrance": EBDungeonDoor(0x0F1277, 0x3210A0),
-        "Factory Script Warp": EBDungeonDoor(0x15EECB, 0x3210B0, True),
-        "Factory Exit": EBDungeonDoor(0x0F1159, 0x3210C0),
-        "Factory Back Exit": EBDungeonDoor(0x0F11BC, 0x3210D0),
-        "Factory Back Entrance": EBDungeonDoor(0x0F11FE, 0x3210E0),
-        "Milky Well Entrance": EBDungeonDoor(0x0F12E9, 0x3210F0),
-        "Milky Well Exit": EBDungeonDoor(0x0F11E8, 0x321100),
-        "Mine Entrance": EBDungeonDoor(0x0F1378, 0x321110),
-        "Mine Exit": EBDungeonDoor(0x0F1400, 0x321120),
-        "Monkey Entrance": EBDungeonDoor(0x0F1458, 0x321130),
-        "Monkey Exit": EBDungeonDoor(0x0F1513, 0x321140),
-        "Cafe Entrance": EBDungeonDoor(0x0F165D, 0x321150),
-        "Cafe Exit": EBDungeonDoor(0x0F1A25, 0x321160),
-        "Monotoli Entrance": EBDungeonDoor(0x0F1928, 0x321170),
-        "Monotoli Exit": EBDungeonDoor(0x0F1862, 0x321180),
-        "Maze Entrance": EBDungeonDoor(0x0F0EB6, 0x321190),
-        "Maze Exit": EBDungeonDoor(0x0F0FD8, 0x3211A0),
-        "Maze Back Exit": EBDungeonDoor(0x0F0FE3, 0x3211B0),
-        "Maze Back Entrance": EBDungeonDoor(0x0F0EC1, 0x3211C0),
-        "Rainy Entrance": EBDungeonDoor(0x0F0ED7, 0x3211D0),
-        "Rainy Exit": EBDungeonDoor(0x0F1030, 0x3211E0),
-        "Rainy Back Exit": EBDungeonDoor(0x0F0FEE, 0x3211F0),
-        "Rainy Back Entrance": EBDungeonDoor(0x0F0EAB, 0x321200),
-        "Sewer Entrance": EBDungeonDoor(0x0F1A3B, 0x321210),
-        "Sewer Exit": EBDungeonDoor(0x0F1A9E, 0x321220),
-        "Pink Cloud Entrance": EBDungeonDoor(0x0F1E32, 0x321230),
-        "Pink Cloud Exit": EBDungeonDoor(0x0F1EAB, 0x321240),
-        "Pyramid Entrance": EBDungeonDoor(0x0F1F3A, 0x321250),
-        "Pyramid Exit": EBDungeonDoor(0x0F1FA9, 0x321260),
-        "D.M. Entrance Script": EBDungeonDoor(0x15F0A3, 0x321270, True),
-        "D.M. Exit Script": EBDungeonDoor(0x15F0CB, 0x321280, True),
-        "Pyramid Back Exit": EBDungeonDoor(0x0F20E8, 0x321290),
-        "Pyramid Back Entrance": EBDungeonDoor(0x0F1F45, 0x3212A0),
-        "Stonehenge Entrance": EBDungeonDoor(0x0F105C, 0x3212B0),
-        "Stonehenge Exit": EBDungeonDoor(0x0F1072, 0x3212C0),
-        "Lumine Entrance": EBDungeonDoor(0x0F239C, 0x3212D0),
-        "Lumine Exit": EBDungeonDoor(0x0F2318, 0x3212E0),
-        "Fire Spring Entrance": EBDungeonDoor(0x0F23D4, 0x3212F0),
-        "Fire Spring Exit": EBDungeonDoor(0x0F2437, 0x321300),
-        "Sea Entrance Script": EBDungeonDoor(0x15F25B, 0x321310, True),
-        "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, True)
+        "Arcade Entrance": EBDungeonDoor(0x0F00CC, 0x321000, 7),
+        "Arcade Exit": EBDungeonDoor(0x0F029A, 0x321010, 5),
+        "Arcade Back Exit": EBDungeonDoor(0x0F026E, 0x321020, 1),
+        "Arcade Back Entrance": EBDungeonDoor(0x0F00C1, 0x321030, 5),
+        "Giant Step Entrance": EBDungeonDoor(0x0F0032, 0x321040, 7),
+        "Giant Step Exit": EBDungeonDoor(0x0F04B5, 0x321050, 5),
+        "Happy-Happy HQ Entrance": EBDungeonDoor(0x0F09E9, 0x321060, 7),
+        "Happy-Happy HQ Exit": EBDungeonDoor(0x0F0A99, 0x321070, 5),
+        "Lilliput Steps Entrance": EBDungeonDoor(0x0F09F4, 0x321080, 3),
+        "Lilliput Steps Exit": EBDungeonDoor(0x0F0B1A, 0x321090, 7),
+        "Factory Entrance": EBDungeonDoor(0x0F1277, 0x3210A0, 5),
+        "Factory Script Warp": EBDungeonDoor(0x15EECB, 0x3210B0, 5, True),
+        "Factory Exit": EBDungeonDoor(0x0F1159, 0x3210C0, 5),
+        "Factory Back Exit": EBDungeonDoor(0x0F11BC, 0x3210D0, 5),
+        "Factory Back Entrance": EBDungeonDoor(0x0F11FE, 0x3210E0, 3),
+        "Milky Well Entrance": EBDungeonDoor(0x0F12E9, 0x3210F0, 3),
+        "Milky Well Exit": EBDungeonDoor(0x0F11E8, 0x321100, 5),
+        "Mine Entrance": EBDungeonDoor(0x0F1378, 0x321110, 7),
+        "Mine Exit": EBDungeonDoor(0x0F1400, 0x321120, 5),
+        "Monkey Entrance": EBDungeonDoor(0x0F1458, 0x321130, 7),
+        "Monkey Exit": EBDungeonDoor(0x0F1513, 0x321140, 3),
+        "Cafe Entrance": EBDungeonDoor(0x0F165D, 0x321150, 3),
+        "Cafe Exit": EBDungeonDoor(0x0F1A25, 0x321160, 7),
+        "Monotoli Entrance": EBDungeonDoor(0x0F1928, 0x321170, 7),
+        "Monotoli Exit": EBDungeonDoor(0x0F1862, 0x321180, 3),
+        "Maze Entrance": EBDungeonDoor(0x0F0EB6, 0x321190, 3),
+        "Maze Exit": EBDungeonDoor(0x0F0FD8, 0x3211A0, 5),
+        "Maze Back Exit": EBDungeonDoor(0x0F0FE3, 0x3211B0, 5),
+        "Maze Back Entrance": EBDungeonDoor(0x0F0EC1, 0x3211C0, 7),
+        "Rainy Entrance": EBDungeonDoor(0x0F0ED7, 0x3211D0, 7),
+        "Rainy Exit": EBDungeonDoor(0x0F1030, 0x3211E0, 5),
+        "Rainy Back Exit": EBDungeonDoor(0x0F0FEE, 0x3211F0, 5),
+        "Rainy Back Entrance": EBDungeonDoor(0x0F0EAB, 0x321200, 3),
+        "Sewer Entrance": EBDungeonDoor(0x0F1A3B, 0x321210, 5),
+        "Sewer Exit": EBDungeonDoor(0x0F1A9E, 0x321220, 1),
+        "Pink Cloud Entrance": EBDungeonDoor(0x0F1E32, 0x321230, 7),
+        "Pink Cloud Exit": EBDungeonDoor(0x0F1EAB, 0x321240, 5),
+        "Pyramid Entrance": EBDungeonDoor(0x0F1F3A, 0x321250, 3),
+        "Pyramid Exit": EBDungeonDoor(0x0F1FA9, 0x321260, 5),
+        "Pyramid Back Exit": EBDungeonDoor(0x0F20E8, 0x321290, 5),
+        "Pyramid Back Entrance": EBDungeonDoor(0x0F1F45, 0x3212A0, 3),
+        "D.M. Entrance Script": EBDungeonDoor(0x15F0A3, 0x321270, 7, True),
+        "D.M. Exit Script": EBDungeonDoor(0x15F0CB, 0x321280, 5, True),
+        "Stonehenge Entrance": EBDungeonDoor(0x0F105C, 0x3212B0, 7),
+        "Stonehenge Exit": EBDungeonDoor(0x0F1072, 0x3212C0, 3),
+        "Lumine Entrance": EBDungeonDoor(0x0F239C, 0x3212D0, 7),
+        "Lumine Exit": EBDungeonDoor(0x0F2318, 0x3212E0, 3),
+        "Fire Spring Entrance": EBDungeonDoor(0x0F23D4, 0x3212F0, 3),
+        "Fire Spring Exit": EBDungeonDoor(0x0F2437, 0x321300, 5),
+        "Sea Entrance Script": EBDungeonDoor(0x15F25B, 0x321310, 3, True),
+        "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, 5, True)
     }
 
     paired_doors = {}
 
     for door in all_dungeon_doors:
-        rom.copy_bytes(all_dungeon_doors[door].address, 5, all_dungeon_doors[door].copyaddress)
+        rom.copy_bytes(all_dungeon_doors[door].address, 6, all_dungeon_doors[door].copyaddress)
 
     for door in world.dungeon_connections:
         for index, entrance in enumerate(dungeon_entrances[door]):
@@ -168,11 +169,21 @@ def write_dungeon_entrances(world, rom):
             else:
                 paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
-            #if connection.is_script:
-             #   rom.copy_bytes(destination_door.copyaddress + 2, 2, connection.address)
-              #  rom.copy_bytes(destination_door.copyaddress, 2, connection.address + 2) # Scripts swap x and y
-               # rom.copy_bytes(destination_door.copyaddress + 4, 1, connection.address + 5)
-                #rom.write_bytes(connection.address + 4, bytearray([connection.direction]))
-            #else:
-             #   rom.copy_bytes(destination_door.copyaddress, 5, connection.address)
-                
+    for door in paired_doors:
+        destination = all_dungeon_doors[paired_doors[door]]
+        source = all_dungeon_doors[door]
+        if source.is_script:
+            if destination.is_script:
+                rom.copy_bytes(destination.copyaddress, 6, source.address)
+            else:
+                rom.copy_bytes(destination.copyaddress + 2, 2, source.address)
+                rom.copy_bytes(destination.copyaddress, 2, source.address + 2)
+                rom.write_bytes(source.address + 4, bytearray([destination.direction]))
+                rom.copy_bytes(destination.copyaddress + 4, 1, source.address + 5)
+        else:
+            if destination.is_script:
+                rom.copy_bytes(destination.copyaddress + 2, 2, source.address)
+                rom.copy_bytes(destination.copyaddress, 2, source.address + 2)
+                rom.copy_bytes(destination.copyaddress + 5, 1, source.address + 4)
+            else:
+                rom.copy_bytes(destination.copyaddress, 5, source.address)
