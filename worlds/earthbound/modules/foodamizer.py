@@ -1,10 +1,10 @@
-import dataclasses
+from dataclasses import dataclass
 from typing import Optional
 
 @dataclass
 class EBFood:
     ID: int
-    Name: str
+    name: str
     price: int
     hp_recovery: int
     pp_recovery: int
@@ -62,3 +62,35 @@ def randomize_food(world, rom):
         "Magic Pudding": EBFood(0xF7, "Undefined Item", 0, 0, 0),
         "Popsicle": EBFood(0xFB, "Undefined Item", 0, 0, 0),
     }
+
+    for item in all_foods:
+        food = all_foods[item]
+        is_liquid = False
+        can_repel = False
+        heals_hp = False
+        heals_pp = False
+        heal_chance = world.random.randint(1,100)
+        # Determine what type of healing item it is
+        if heal_chance < 5:
+            heals_hp = True
+            heals_pp = True
+        elif heal_chance < 15:
+            heals_pp = True
+        else:
+            heals_hp = True
+        repel_chance = world.random.randint(1,100)
+
+        if repel_chance < 10:
+            food.hp_recovery = 1
+            front_name = "Repel"
+            food.repel_timer = world.random.randint(0x00, 0xFF)
+        else:
+            if heals_hp:
+                food.hp_recovery = world.random.randint(0x01, 0xFFFF)
+            if heals_pp:
+                food.pp_recovery = world.random.randint(0x01, 0xFFFF)
+
+        if not food.repel_timer:
+            liquid_chance = world.random.randint(1,100)
+            if liquid_chance < 16:
+                liquid = "pizza"

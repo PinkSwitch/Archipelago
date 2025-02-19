@@ -8816,6 +8816,12 @@ dd JackieItemCheck
 ORG $CF0648
 dd UnlockOnettTeleport
 
+ORG $CF09E3
+dd $C9B10B
+
+ORG $CF1922
+dd $C9B10B
+
 ;New data table go here
 
 
