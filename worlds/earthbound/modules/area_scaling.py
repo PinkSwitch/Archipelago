@@ -277,7 +277,6 @@ def calculate_scaling(world):
         unconnected_regions.append(teleports[world.starting_teleport])
         world.accessible_regions.append(teleports[world.starting_teleport])
 
-
     world.scaled_area_order = []
     passed_connections = []
     local_prog = []
