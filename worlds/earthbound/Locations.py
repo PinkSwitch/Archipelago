@@ -272,11 +272,6 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Global ATM Access", "Any ATM", None)
     ]
 
-    if world.options.dungeon_shuffle:
-        location_table += [
-            LocationData("Fourside", "Fourside - Everdred Meeting", None),
-        ]
-
     if world.options.giygas_required:
         location_table += [
             LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),

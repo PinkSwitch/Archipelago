@@ -1,6 +1,8 @@
+import struct
 from typing import Optional
 from dataclasses import dataclass
 import dataclasses
+from ..game_data.local_data import item_id_table
 
 @dataclass
 class EBDungeonDoor:
@@ -169,6 +171,8 @@ def write_dungeon_entrances(world, rom):
             else:
                 paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
+    paired_doors["Factory Script Warp"] = dungeon_entrances[world.dungeon_connections["Belch's Factory"]][0]
+
     for door in paired_doors:
         destination = all_dungeon_doors[paired_doors[door]]
         source = all_dungeon_doors[door]
@@ -187,3 +191,9 @@ def write_dungeon_entrances(world, rom):
                 rom.copy_bytes(destination.copyaddress + 5, 1, source.address + 4)
             else:
                 rom.copy_bytes(destination.copyaddress, 5, source.address)
+
+    rom.write_bytes(0x101664, struct.pack("H", 0x041F)) # Flag controlling the Saturn Valley ladder
+    rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C)) # Replacement for the Moonside deliveryman
+    moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
+    if (moonside_reward.player != world.player) or (world.options.remote_items) or moonside_reward.name not in item_id_table:
+        rom.write_byes(0x3310F7, struct.pack("I", 0xF310FB))

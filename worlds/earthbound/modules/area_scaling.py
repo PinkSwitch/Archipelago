@@ -110,14 +110,14 @@ def calculate_scaling(world):
         "Giant Step": {"Giant Step": [["Nothing"]]},
 
         "Twoson": {"Onett": [["Police Badge"]],
-                "Peaceful Rest Valley": [["Pencil Eraser"]],
+                "Peaceful Rest Valley": [["Pencil Eraser"], ["Valley Bridge Repair"]],
                 "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
                 "Everdred's House": [["Paula"]],
                 "Common Condiment Shop": [["Nothing"]]},
 
         "Everdred's House": {"Everdred's House": [["Nothing"]]},
 
-        "Peaceful Rest Valley": {"Twoson": [["Pencil Eraser"], ["Franklin Badge"]],
+        "Peaceful Rest Valley": {"Twoson": [["Pencil Eraser"], ["Valley Bridge Repair"]],
                                 "Happy-Happy Village": [["Nothing"]]},
 
         "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],

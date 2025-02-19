@@ -4,7 +4,7 @@ CharLastInvSlot:
 dw $99FE,$9A5D,$9ABC,$9B1B
 
 TeleSectorID:
-dw $5A59,$5A85,$5A91,$5AAD,$5AED,$5B09,$5B31,$5AD1,$5B4D,$5B5D,$5B79,$5B91,$5B99,$5BAD,$5AB1,$5B89,$5B29
+dw $FFFF,$5A85,$5A91,$5AAD,$5AED,$5B09,$5B31,$5AD1,$5B4D,$5B5D,$5B79,$5B91,$5B99,$5BAD,$5AB1,$5B89,$5B29
 
 TeleFlags:
 dw $0001,$0002,$1000,$0004,$0010,$2000,$0020,$0008,$0040,$0100,$0080,$0400,$0800,$4000,$0004,$0200,$0020
@@ -6081,7 +6081,7 @@ ORG $EEC2C6
 db $50, $16, $6f, $51, $08, $58, $24, $c9, $ff, $0a, $bc, $d5, $c9
 
 ORG $CF213D
-db $D6, $81
+db $C7, $80
 
 ORG $EEA0E6
 db $01
@@ -8800,6 +8800,21 @@ dl ShowDadEnergy
 ORG $C63229
 db $0A
 dl PingDadEnergy
+
+ORG $CF1203
+dd SetSaturnLadderFlag
+
+;ORG $D01664
+;db $1F, $04 Flag for the Saturn Valley Ladder
+
+;ORG $CF19C7
+;dd JackieMoonsideSetup
+
+ORG $CFC50E
+dd JackieItemCheck
+
+ORG $CF0648
+dd UnlockOnettTeleport
 
 ;New data table go here
 
@@ -16650,6 +16665,64 @@ dl $EF6049
 PhotoShopText:
 db $80, $98, $9f, $a4, $9f, $5d, $9f, $a0, $00
 
+SetSaturnLadderFlag:
+db $04
+db $1F, $04
+db $02
+
+JackieMoonsideSetup:
+db $1F, $63
+dd JackieMoonsideGive
+db $0A
+dl $C9A08B
+
+JackieMoonsideGive:
+db $05, $4F, $02
+db $1F, $1A, $80, $03, $03
+db $1F, $16, $80, $03, $03
+db $10, $30
+db $1F, $1B, $80, $03
+db $18, $01, $01
+.JackieGiveItem:
+db $70, $71, $50, $a3, $a4, $a2, $91, $9e, $97, $95, $50, $9d, $91, $9e, $50, $9a
+db $a5, $a3, $a4, $50, $93, $91, $9d, $95, $50, $92, $91, $a2, $97, $99, $9e, $97
+db $50, $99, $9e, $50, $98, $95, $a2, $95, $5c, $10, $0b, $50, $9c, $9f, $9f, $9b
+db $99, $9e, $97, $50, $96, $9f, $a2, $50, $a9, $9f, $a5, $5e, $5e, $5e, $03, $00
+db $70, $79, $a3, $50, $98, $95, $50, $91, $50, $96, $a2, $99, $95, $9e, $94, $50
+db $9f, $96, $50, $a9, $9f, $a5, $a2, $a3, $6f, $10, $16, $50, $78, $95, $50, $94
+db $95, $9d, $91, $9e, $94, $95, $94, $50, $79, $50, $97, $99, $a6, $95, $50, $a9
+db $9f, $a5, $50, $a4, $98, $99, $a3, $50, $1c, $05, $01, $50, $91, $9e, $94, $50
+db $9c, $95, $96, $a4, $5e, $03
+db $1D, $03, $FF
+db $1B, $02
+dd .FullInv
+db $05, $20, $04
+db $04, $DF, $03
+db $1D, $0E, $FF, $04, $08
+dd $C7DCB6
+db $03
+db $18, $04, $02
+.FullInv:
+db $00, $70
+db $83, $99, $9e, $93, $95, $50, $a9, $9f, $a5, $a2, $50, $a0, $9f, $93, $9b, $95
+db $a4, $a3, $50, $91, $a2, $95, $50, $a3, $9f, $50, $96, $a5, $9c, $9c, $5c, $10
+db $0a, $50, $79, $57, $9c, $9c, $50, $98, $9f, $9c, $94, $50, $9f, $9e, $50, $a4
+db $9f, $50, $99, $a4, $50, $96, $9f, $a2, $50, $9e, $9f, $a7, $5e
+db $04, $20, $04
+db $03
+db $18, $04
+db $02
+
+JackieItemCheck:
+db $06
+db $20, $04
+dd JackieMoonsideGive_JackieGiveItem
+db $0A
+dl $c6f175
+
+UnlockOnettTeleport:
+db $04, $D1, $00
+db $02
 
 ;New New Text
 
