@@ -28,7 +28,7 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Chest #2", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Talah Rama Gift", player), lambda state: state.has("Pencil Eraser", player))
     set_rule(world.multiworld.get_location("Monkey Caves - Monkey Power", player), lambda state: state.has("Pencil Eraser", player))
-    set_rule(world.multiworld.get_location("Dusty Dunes - Mine Reward", player), lambda state: state.has("Mining Permit", player))
+    set_rule(world.multiworld.get_location("Dusty Dunes - Mine Reward", player), lambda state: state.can_reach_region("Gold Mine", player))
     set_rule(world.multiworld.get_location("Snow Wood - Upper Right Locker", player), lambda state: state.has("Key to the Locker", player))
     set_rule(world.multiworld.get_location("Snow Wood - Upper Left Locker", player), lambda state: state.has("Key to the Locker", player))
     set_rule(world.multiworld.get_location("Snow Wood - Bottom Right Locker", player), lambda state: state.has("Key to the Locker", player))

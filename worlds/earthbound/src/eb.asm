@@ -8808,7 +8808,7 @@ dd SetSaturnLadderFlag
 ;db $1F, $04 Flag for the Saturn Valley Ladder
 
 ;ORG $CF19C7
-;dd JackieMoonsideSetup
+;dd JackieMoonsideSetup Only in dungeon er
 
 ORG $CFC50E
 dd JackieItemCheck
@@ -8834,6 +8834,9 @@ dd MinerDialogue
 ORG $C6122B
 db $0A
 dl MinerText2
+
+;ORG $CF1657
+;dd CafeEverdredText ; Only in dungeon ER
 
 ;New data table go here
 
@@ -16778,6 +16781,20 @@ dl $C61231
 db $98, $91, $94
 db $0A
 dl $C61231
+
+CafeEverdredText:
+db $06, $91, $00
+dd .Done
+db $18, $01, $01
+db $70, $58, $71, $a2, $95, $50, $a9, $9f, $a5, $50, $a2, $95, $91, $9c, $9c, $a9
+db $50, $97, $9f, $99, $9e, $97, $50, $a4, $9f, $50, $9a, $a5, $a3, $a4, $50, $9c
+db $95, $91, $a6, $95, $50, $98, $99, $9d, $50, $9c, $a9, $99, $9e, $97, $50, $9f
+db $9e, $50, $a4, $98, $95, $50, $a3, $a4, $a2, $95, $95, $a4, $5E, $5E, $5E, $6f, $59, $03
+db $18, $04, $02
+.Done:
+db $1F, $63
+dd $C9B112
+db $02
 
 ;New New Text
 

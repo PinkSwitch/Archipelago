@@ -40,6 +40,23 @@ def shuffle_dungeons(world):
         "Pyramid"
         ]
 
+    dungeon_sources = {
+        "Giant Step": "Onett",
+        "Happy-Happy HQ": "Happy-Happy Village",
+        "Lilliput Steps": "Happy-Happy Village",
+        "Gold Mine": "Dusty Dunes Desert",
+        "Moonside": "Fourside",
+        "Monkey Caves": "Dusty Dunes Desert",
+        "Monotoli Building": "Fourside",
+        "Magnet Hill": "Fourside",
+        "Pink Cloud": "Dalaam",
+        "Dungeon Man": "Southern Scaraba",
+        "Stonehenge Base": "Southern Winters",
+        "Lumine Hall": "Tenda Village",
+        "Fire Spring": "Lost Underworld",
+        "Sea of Eden": "Magicant"
+    }
+
     world.dungeon_connections = {
         "Arcade": "Arcade",
         "Giant Step": "Giant Step",
@@ -197,8 +214,10 @@ def write_dungeon_entrances(world, rom):
     rom.write_bytes(0x101664, struct.pack("H", 0x041F)) # Flag controlling the Saturn Valley ladder
     rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C)) # Replacement for the Moonside deliveryman
     rom.write_bytes(0x0F0A93, struct.pack("I", 0x000000)) # Skip Pokey walking up after HHHQ
+    rom.write_bytes(0x086DFC, struct.pack("H", 0x00C7)) # Flag-independent Moonside entry
+    rom.write_bytes(0x0F1657, struct.pack("I", 0xF311A7)) # Fourside Cafe Door Script
+    rom.write_bytes(0x0F165B, struct.pack("H", 0x8091)) # Lock Cafe
+
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
     if (moonside_reward.player != world.player) or (world.options.remote_items) or moonside_reward.name not in item_id_table:
         rom.write_byes(0x3310F7, struct.pack("I", 0xF310FB))
-
-    print(paired_doors)
