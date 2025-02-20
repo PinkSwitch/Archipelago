@@ -4,7 +4,6 @@ from dataclasses import dataclass
 import dataclasses
 from ..game_data.local_data import item_id_table
 
-
 @dataclass
 class EBDungeonDoor:
     address: int
@@ -157,7 +156,8 @@ def write_dungeon_entrances(world, rom):
         "Fire Spring Entrance": EBDungeonDoor(0x0F23D4, 0x3212F0, 3),
         "Fire Spring Exit": EBDungeonDoor(0x0F2437, 0x321300, 5),
         "Sea Entrance Script": EBDungeonDoor(0x15F25B, 0x321310, 3, True),
-        "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, 5, True)
+        "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, 5, True),
+        "Post-Nightmare Script": EBDungeonDoor(0x15ED4B, 0x321330, 5, True)
     }
 
     paired_doors = {}
@@ -173,6 +173,7 @@ def write_dungeon_entrances(world, rom):
                 paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
     paired_doors["Factory Script Warp"] = dungeon_entrances[world.dungeon_connections["Belch's Factory"]][0]
+    paired_doors["Post-Nightmare Script"] = dungeon_entrances[world.dungeon_connections["Sea of Eden"]][1]
 
     for door in paired_doors:
         destination = all_dungeon_doors[paired_doors[door]]
@@ -193,9 +194,11 @@ def write_dungeon_entrances(world, rom):
             else:
                 rom.copy_bytes(destination.copyaddress, 5, source.address)
 
-    rom.write_bytes(0x101664, struct.pack("H", 0x041F))  # Flag controlling the Saturn Valley ladder
-    rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C))  # Replacement for the Moonside deliveryman
+    rom.write_bytes(0x101664, struct.pack("H", 0x041F)) # Flag controlling the Saturn Valley ladder
+    rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C)) # Replacement for the Moonside deliveryman
+    rom.write_bytes(0x0F0A93, struct.pack("I", 0x000000)) # Skip Pokey walking up after HHHQ
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
-    if (moonside_reward.player != world.player) or (
-            world.options.remote_items) or moonside_reward.name not in item_id_table:
+    if (moonside_reward.player != world.player) or (world.options.remote_items) or moonside_reward.name not in item_id_table:
         rom.write_byes(0x3310F7, struct.pack("I", 0xF310FB))
+
+    print(paired_doors)

@@ -8495,7 +8495,7 @@ db $0A
 dl TracyNessText
 
 ORG $CFE367
-dd MagicantTentacleText
+dd MagicantTentacleERText
 
 ORG $C87963
 db $0A
@@ -8821,6 +8821,19 @@ dd $C9B10B
 
 ORG $CF1922
 dd $C9B10B
+
+ORG $CF00C6
+dd $C9B10B
+
+ORG $CF00BB
+dd $C9B10B
+
+ORG $CFBC06
+dd MinerDialogue
+
+ORG $C6122B
+db $0A
+dl MinerText2
 
 ;New data table go here
 
@@ -16729,6 +16742,42 @@ dl $c6f175
 UnlockOnettTeleport:
 db $04, $D1, $00
 db $02
+
+MagicantTentacleERText:
+db $07
+db $17, $04
+db $1B, $02
+dd .Ness
+db $1F, $63
+dd $C9B112
+.Ness:
+db $0A
+dl MagicantTentacleText
+
+MinerDialogue:
+db $06
+db $AE, $00 ;If the mine is open...
+dd $C60349;Proceed as normal
+;If the mine is closed
+db $06
+db $5A, $00 ;and we got the check
+dd $C60365 ;Run the permit script
+db $06
+db $48, $00 ;If the check is primed...
+dd $C6050B ;Give it to the player
+db $0A
+dl $C60365 ;Else run the permit script
+
+MinerText2:
+db $06, $5A, $00
+dd .Already
+db $91, $9C, $9D, $9F, $A3, $A4
+db $0A
+dl $C61231
+.Already:
+db $98, $91, $94
+db $0A
+dl $C61231
 
 ;New New Text
 
