@@ -553,7 +553,7 @@ enemy_psi = {
     "Care Free Bomb": ["throw_bomb_minus", "throw_bomb_minus", "throw_bomb_minus", "throw_bomb"],
     "Electro Specter": ["electrical_shock", "null", "electrical_shock", "null"],
     "Smilin' Sam": ["null", "null", "null", "lifeup"],
-    "Manly Fish's Brother": ["null", "null", "freeze", "healing"],
+    "Manly Fish's Brother": ["null", "paralysis", "freeze", "healing"],
     "Thunder and Storm": ["crashing_boom_bang", "null", "null", "null"],
     "Cute Li'l UFO": ["null", "null", "null", "lifeup"],
     "Beautiful UFO": ["null", "null", "null", "lifeup"],

@@ -8835,6 +8835,10 @@ ORG $C6122B
 db $0A
 dl MinerText2
 
+ORG $C93267
+db $0A
+dl $C9327F
+
 ;ORG $CF1657
 ;dd CafeEverdredText ; Only in dungeon ER
 
