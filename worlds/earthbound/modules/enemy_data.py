@@ -479,6 +479,7 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "throw_bomb": {10: "zeta", 20: "epsilon", 30: "alpha", 40: "beta", 50: "gamma", 100: "omega"},
     "throw_bomb_minus": {20: "zeta", 30: "epsilon", 40: "alpha", 50: "beta", 100: "gamma", 200: "omega"},
     "shoot_rocket": {5: "zeta", 12: "epsilon", 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
+    "paralyzing_pollen": {30: "lambda", 60: "alpha", 100: "omega"},
 
 
     # bombs and bottle rockets too? Also missile maybe? hmmm
@@ -563,7 +564,7 @@ enemy_psi = {
     "Psychic Psycho": ["fire", "fire", "fire", "fire"],
     "Major Psychic Psycho": ["fire", "null", "paralysis", "fire"],
     "Soul Consuming Flame": ["null", "breathe_fire", "flaming_fireball", "spray_fire"],
-    "Demonic Petunia": ["null", "extinguishing_blast", "null", "null"],
+    "Demonic Petunia": ["null", "extinguishing_blast", "null", "paralyzing_pollen"],
     "Li'l UFO": ["null", "null", "stuffiness_beam", "null"],
     "Ness's Nightmare (2)": ["special", "lifeup", "special", "null"],
     "Mr. Carpainter (2)": ["crashing_boom_bang", "null", "null", "null"],
@@ -909,6 +910,12 @@ spell_data = {
         "beta": [0x04, 0x02, 0x00],
         "gamma": [0x05, 0x02, 0x00],
         "omega": [0x06, 0x02, 0x00]
+    },
+
+    "paralyzing_pollen": {
+        "lambda": [0x07, 0x02, 0x00],
+        "alpha": [0xCB, 0x00, 0x00],
+        "omega": [0x08, 0x02, 0x00]
     },
 
 

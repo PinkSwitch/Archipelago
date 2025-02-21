@@ -8839,6 +8839,9 @@ ORG $C93267
 db $0A
 dl $C9327F
 
+;ORG $CFC8C6
+;dd EverDeadText ; Only in dungeon ER
+
 ;ORG $CF1657
 ;dd CafeEverdredText ; Only in dungeon ER
 
@@ -9471,7 +9474,9 @@ db $1E, $0E, $04, $05, $03, $02
 
 db $06, $69, $00
 dd $00C74207
-db $70, $58, $1c, $02, $01
+db $0A
+dl LeaderHandinBadge
+db $01
 db $0A, $AD, $69, $C7
 
 ;new text go here
@@ -13381,7 +13386,14 @@ dd missile_gamma
 db $00, $01, $01, $00
 dd shootrocket_omega
 dd missile_omega
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+db $00, $01, $05, $00
+dd paralyz_pollen_lambda
+dd $C28CF1
 
+db $00, $04, $05, $00
+dd paralyz_pollen_omega
+dd $C28A92
 
 
 ;New battle text
@@ -13725,6 +13737,25 @@ db $01, $1F, $02, $19
 db $01, $70, $1c, $0d, $50, $a3, $98, $9f, $a4, $50, $91, $50, $a2, $95, $91, $9c
 db $50, $97, $a5, $9e, $51
 db $1F, $02, $46, $03
+db $02
+
+paralyz_pollen_lambda:
+db $01, $1F, $02, $19
+db $01, $70, $1C, $0D, $50
+db $97, $9f, $a4, $50, $91, $50, $9c, $99, $a4, $a4, $9c, $95, $50, $a0, $9f, $9c
+db $9c, $95, $9e, $50, $9f, $9e, $50, $a9, $9f, $a5, $51
+db $1F, $02, $52
+db $03
+db $02
+
+paralyz_pollen_omega:
+db $01, $1F, $02, $19
+db $01, $70, $1C, $0D, $50
+db $97, $9f, $a4, $50, $91, $50, $92, $a5, $9e, $93, $98, $50, $9f, $96, $50, $a0
+db $9f, $9c, $9c, $95, $9e, $50, $95, $a6, $95, $a2, $a9, $a7, $98, $95, $a2, $95
+db $51
+db $1F, $02, $52
+db $03
 db $02
 
 ;New battle code
@@ -16799,6 +16830,23 @@ db $18, $04, $02
 db $1F, $63
 dd $C9B112
 db $02
+
+LeaderHandinBadge:
+db $70, $58
+db $19, $10, $01
+db $1B, $04
+db $1C, $02, $00
+db $0A
+dl $EEF748
+
+EverDeadText:
+db $70, $87, $98, $a9, $50, $91, $a2, $95, $50, $a9, $9f, $a5, $50, $99, $9e, $a4
+db $95, $a2, $a2, $a5, $a0, $a4, $99, $9e, $97, $50, $9d, $a9, $50, $a3, $a4, $a2
+db $95, $95, $a4, $50, $a9, $9f, $97, $91, $6f, $03, $01, $70, $85, $97, $98, $5c
+db $50, $99, $a4, $57, $a3, $50, $9e, $9f, $a4, $50, $95, $a6, $95, $9e, $50, $a2
+db $95, $9c, $91, $a8, $99, $9e, $97, $50, $9e, $9f, $a7, $5e, $13
+db $0A
+dl $C839EB
 
 ;New New Text
 
