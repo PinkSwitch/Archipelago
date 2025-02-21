@@ -176,12 +176,13 @@ def initialize_bosses(world):
     if world.options.boss_shuffle:
         world.random.shuffle(world.boss_list)
 
-    if not world.options.decouple_diamond_dog:
-        world.boss_list.remove("Diamond Dog")
-        world.boss_list.append("Diamond Dog")  # Reorder it
-    if not world.options.boss_shuffle_add_giygas:
-        world.boss_list.remove("Giygas (4)")
-        world.boss_list.append("Giygas (4)")
+        if not world.options.decouple_diamond_dog:
+            world.boss_list.remove("Diamond Dog")
+            insert_index = 28 if not world.options.boss_shuffle_add_giygas else 27
+            world.boss_list.insert(insert_index, "Diamond Dog")
+        if not world.options.boss_shuffle_add_giygas:
+            world.boss_list.remove("Giygas (4)")
+            world.boss_list.insert(29, "Giygas (4)")
 
 
 def write_bosses(world, rom):
