@@ -107,6 +107,9 @@ class EarthBoundWorld(World):
             "Jeff": 9,
             "Poo": 99
         }
+
+        #if self.options.dungeon_shuffle:
+          #  self.options.shuffle_teleports.value = "Anywhere"
         max_count = max_counts[self.starting_character]
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
@@ -202,6 +205,7 @@ class EarthBoundWorld(World):
                 self.create_item("Progressive Poo PSI"),
                 self.create_item("Progressive Poo PSI")
             ])
+
             # In dungeon ER, this would be your only way to get here
             if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
                 prefill_items.append(self.create_item("Lost Underworld Teleport"))

@@ -186,7 +186,6 @@ def setup_hints(world):
         world.local_hintable_items.append("Magicant Teleport")
 
     for item in world.removed_teleports:
-        print(item.name)
         if item.name in world.local_hintable_items:
             # let's not hint an item that doesn't exist
             world.local_hintable_items.remove(item.name)

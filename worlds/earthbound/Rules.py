@@ -73,8 +73,8 @@ def set_location_rules(world: "EarthBoundWorld") -> None:
         add_rule(world.multiworld.get_location("Monkey Caves - Monkey Power", player), lambda state: (twoson_paula_room_present.can_reach(state) or can_buy_pizza.can_reach(state)))
 
     if world.options.no_free_sanctuaries:
-        lilliput_steps = world.multiworld.get_entrance("Happy-Happy Village -> Lilliput Steps", player)
-        fire_spring = world.multiworld.get_entrance("Lost Underworld -> Fire Spring", player)
+        lilliput_steps = world.multiworld.get_entrance(f"Happy-Happy Village -> {world.dungeon_connections['Lilliput Steps']}", player)
+        fire_spring = world.multiworld.get_entrance(f"Lost Underworld -> {world.dungeon_connections['Fire Spring']}", player)
         add_rule(fire_spring, lambda state: state.has("Tenda Lavapants", player))
         add_rule(lilliput_steps, lambda state: state.has("Tiny Key", player))
 
