@@ -79,12 +79,13 @@ def shuffle_dungeons(world):
         "Fire Spring": "Fire Spring",
         "Sea of Eden": "Sea of Eden"
     }
-    
-    if world.options.magicant_mode or (
-        not world.options.shuffle_teleports and 
-        (world.start_location == 14 and world.starting_teleport == "Winters Teleport") or
-        (world.start_location == 7 and world.starting_teleport == "Magicant Teleport")
-    ):
+    #if world.options.magicant_mode or (
+     #   not world.options.shuffle_teleports and 
+      #  (world.start_location == 14 and world.starting_teleport == "Winters Teleport") or
+       # (world.start_location == 7 and world.starting_teleport == "Magicant Teleport")
+    #):
+    #Alternate version of block below
+    if world.options.magicant_mode:
         # Don't shuffle Magicant when it's important
         single_exit_dungeons.remove("Sea of Eden")
 
