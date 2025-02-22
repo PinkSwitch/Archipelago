@@ -191,6 +191,9 @@ class EarthBoundWorld(World):
 
             ])
             self.random.shuffle(prefill_items)
+            if self.dungeon_connections["Lumine Hall"] != "Lumine Hall":
+                removable_teleports -= 1
+
             self.removed_teleports.extend(prefill_items[0:removable_teleports])
             del prefill_items[0:removable_teleports]
             prefill_items.extend([
@@ -199,6 +202,10 @@ class EarthBoundWorld(World):
                 self.create_item("Progressive Poo PSI"),
                 self.create_item("Progressive Poo PSI")
             ])
+            # In dungeon ER, this would be your only way to get here
+            if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
+                prefill_items.append(self.create_item("Lost Underworld Teleport"))
+
 
             if self.options.magicant_mode in [0, 3]:
                 prefill_items.append(self.create_item("Magicant Teleport"))
@@ -252,6 +259,13 @@ class EarthBoundWorld(World):
                     add_item_rule(self.multiworld.get_location(forced_poo, self.player), lambda item: item.name == "Poo")
                 forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Winters Teleport"}, self.player)
                 forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Progressive Poo PSI"}, self.player)
+
+            if (self.start_location == 7 and self.starting_teleport == "Magicant Teleport") or (
+                self.start_location == 14 and self.starting_teleport == "Winters Teleport"):
+                if self.starting_character != "Ness":
+                    add_item_rule(self.multiworld.get_location("Snow Wood - Bedroom", self.player), lambda item: item.name == "Ness")
+                    forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Winters Teleport"}, self.player)
+                    forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Progressive Poo PSI"}, self.player)
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)

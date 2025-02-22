@@ -80,7 +80,11 @@ def shuffle_dungeons(world):
         "Sea of Eden": "Sea of Eden"
     }
     
-    if world.options.magicant_mode:
+    if world.options.magicant_mode or (
+        not world.options.shuffle_teleports and 
+        (world.start_location == 14 and world.starting_teleport == "Winters Teleport") or
+        (world.start_location == 7 and world.starting_teleport == "Magicant Teleport")
+    ):
         # Don't shuffle Magicant when it's important
         single_exit_dungeons.remove("Sea of Eden")
 
@@ -221,4 +225,4 @@ def write_dungeon_entrances(world, rom):
 
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
     if (moonside_reward.player != world.player) or (world.options.remote_items) or moonside_reward.name not in item_id_table:
-        rom.write_byes(0x3310F7, struct.pack("I", 0xF310FB))
+        rom.write_bytes(0x3310F7, struct.pack("I", 0xF310FB))
