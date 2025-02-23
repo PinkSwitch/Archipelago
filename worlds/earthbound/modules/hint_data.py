@@ -185,9 +185,9 @@ def setup_hints(world):
     if world.options.magicant_mode.value in [0, 3]:
         world.local_hintable_items.append("Magicant Teleport")
 
-    for item in world.multiworld.precollected_items:
-        if item in world.local_hintable_items:
-            world.local_hintable_items.remove(item)
+    for item in world.multiworld.precollected_items[world.player]:
+        if item.name in world.local_hintable_items:
+            world.local_hintable_items.remove(item.name)
 
     for item in world.options.start_hints.value:
         if item in world.local_hintable_items:
