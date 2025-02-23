@@ -108,8 +108,6 @@ class EarthBoundWorld(World):
             "Poo": 99
         }
 
-        #if self.options.dungeon_shuffle:
-          #  self.options.shuffle_teleports.value = "Anywhere"
         max_count = max_counts[self.starting_character]
         for item_name, amount in self.options.start_inventory.items():
             if item_name in item_id_table:
@@ -127,11 +125,6 @@ class EarthBoundWorld(World):
         setup_gamevars(self)
         create_flavors(self)
         initialize_enemies(self)
-        if self.options.shuffle_teleports == 0:
-            self.options.local_items.value |= self.item_name_groups["PSI"]
-            self.event_count += 12
-            if self.options.magicant_mode != 0:
-                self.event_count -= 1
 
         if self.options.character_shuffle == 0:
             self.options.local_items.value.update(["Paula", "Jeff", "Poo", "Flying Man"])
@@ -154,88 +147,6 @@ class EarthBoundWorld(World):
     def pre_fill(self) -> None:
         prefill_locations = []
         prefill_items = []
-        
-        if self.options.magicant_mode == 3:
-            removable_teleports = 5
-        else:
-            removable_teleports = 4
-
-        if self.options.shuffle_teleports == 0:
-            prefill_locations.extend([
-                self.multiworld.get_location("Onett - Buzz Buzz", self.player),
-                self.multiworld.get_location("Onett - Mani Mani Statue", self.player),
-                self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player),
-                self.multiworld.get_location("Monkey Caves - Monkey Power", self.player),
-                self.multiworld.get_location("Summers - Magic Cake", self.player),
-                self.multiworld.get_location("Scaraba - Star Master", self.player),
-                self.multiworld.get_location("Tenda Village - Tenda Tea", self.player),
-                self.multiworld.get_location("Lost Underworld - Talking Rock", self.player),
-                self.multiworld.get_location("Fourside - Department Store Blackout", self.player),
-                self.multiworld.get_location("Cave of the Present - Star Master", self.player),
-                self.multiworld.get_location("Dalaam - Trial of Mu", self.player)
-            ])
-
-            if self.options.magicant_mode == 0:
-                prefill_locations.append(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player))
-
-            prefill_items.extend([
-                self.create_item("Onett Teleport"),
-                self.create_item("Twoson Teleport"),
-                self.create_item("Happy-Happy Village Teleport"),
-                self.create_item("Threed Teleport"),
-                self.create_item("Saturn Valley Teleport"),
-                # self.create_item("Dusty Dunes Teleport"),
-                self.create_item("Fourside Teleport"),
-                self.create_item("Winters Teleport"),
-                self.create_item("Scaraba Teleport"),
-                self.create_item("Deep Darkness Teleport"),
-                self.create_item("Tenda Village Teleport"),
-                self.create_item("Lost Underworld Teleport")
-
-            ])
-            self.random.shuffle(prefill_items)
-            # if self.dungeon_connections["Lumine Hall"] != "Lumine Hall":
-                # removable_teleports -= 1
-
-            self.removed_teleports.extend(prefill_items[0:removable_teleports])
-            del prefill_items[0:removable_teleports]
-            prefill_items.extend([
-                self.create_item("Dalaam Teleport"),
-                self.create_item("Summers Teleport"),
-                self.create_item("Progressive Poo PSI"),
-                self.create_item("Progressive Poo PSI")
-            ])
-
-            # In dungeon ER, this would be your only way to get here
-            # if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
-                # prefill_items.append(self.create_item("Lost Underworld Teleport"))
-
-            if self.options.magicant_mode in [0, 3]:
-                prefill_items.append(self.create_item("Magicant Teleport"))
-            self.random.shuffle(prefill_items)
-            add_item_rule(self.multiworld.get_location("Onett - Buzz Buzz", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Onett - Mani Mani Statue", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Saturn Valley - Saturn Coffee", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Monkey Caves - Monkey Power", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Summers - Magic Cake", self.player), lambda item: item.name in self.item_name_groups["PSI"] and item.name != "Summers Teleport")
-            add_item_rule(self.multiworld.get_location("Scaraba - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Tenda Village - Tenda Tea", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Lost Underworld - Talking Rock", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Fourside - Department Store Blackout", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Cave of the Present - Star Master", self.player), lambda item: item.name in self.item_name_groups["PSI"])
-            add_item_rule(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Dalaam Teleport"))
-            
-            if self.options.magicant_mode == 0:
-                add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
-
-            if (self.start_location == 9) or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport"):
-                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Winters Teleport"}, self.player)
-                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Progressive Poo PSI"}, self.player)
-
-            if (self.start_location == 7 and self.starting_teleport == "Magicant Teleport") or (
-                self.start_location == 14):
-                forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Winters Teleport"}, self.player)
-                forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Progressive Poo PSI"}, self.player)
 
         if self.options.character_shuffle == 0:
             main_characters = ["Ness", "Paula", "Jeff", "Poo"]
@@ -264,17 +175,6 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Monotoli Building - Monotoli Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
             add_item_rule(self.multiworld.get_location("Dalaam - Throne Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
             add_item_rule(self.multiworld.get_location("Deep Darkness - Barf Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
-
-            if (self.start_location == 9) or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport") and not (
-                self.options.shuffle_teleports
-            ):
-                if self.starting_character != "Poo":
-                    forced_poo = self.random.choice(["Dalaam - Throne Character", "Snow Wood - Bedroom"])
-                    add_item_rule(self.multiworld.get_location(forced_poo, self.player), lambda item: item.name == "Poo")
-            if (self.start_location == 7 and self.starting_teleport == "Magicant Teleport") or (
-                self.start_location == 14 and self.starting_teleport == "Winters Teleport"):
-                if self.starting_character != "Ness":
-                    add_item_rule(self.multiworld.get_location("Snow Wood - Bedroom", self.player), lambda item: item.name == "Ness")
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
@@ -419,25 +319,16 @@ class EarthBoundWorld(World):
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
         excluded_items.add(self.starting_character)
+        starting_area_to_teleport = ["Onett Teleport", "Onett Teleport", "Twoson Teleport", "Happy-Happy Village Teleport",
+                                   "Threed Teleport", "Saturn Valley Teleport", "Fourside Teleport", "Winters Teleport",
+                                   "Summers Teleport", "Dalaam Teleport", "Scaraba Teleport", "Deep Darkness Teleport",
+                                   "Tenda Village Teleport", "Lost Underworld Teleport", "Magicant Teleport"]
+        self.starting_area_teleport = starting_area_to_teleport[self.start_location]
+        excluded_items.add(self.starting_area_teleport)
+        if self.options.random_start_location:
+            excluded_items.add(self.starting_teleport)
 
-        if self.options.shuffle_teleports == 0:
-            excluded_items.add("Onett Teleport")
-            excluded_items.add("Twoson Teleport")
-            excluded_items.add("Happy-Happy Village Teleport")
-            excluded_items.add("Threed Teleport")
-            excluded_items.add("Saturn Valley Teleport")
-            excluded_items.add("Dusty Dunes Teleport")
-            excluded_items.add("Fourside Teleport")
-            excluded_items.add("Winters Teleport")
-            excluded_items.add("Summers Teleport")
-            excluded_items.add("Scaraba Teleport")
-            excluded_items.add("Deep Darkness Teleport")
-            excluded_items.add("Tenda Village Teleport")
-            excluded_items.add("Lost Underworld Teleport")
-            excluded_items.add("Magicant Teleport")
-            excluded_items.add("Progressive Poo PSI")
-            excluded_items.add("Dalaam Teleport")
-        elif self.options.magicant_mode not in [0, 3]:
+        if self.options.magicant_mode not in [0, 3]:
             excluded_items.add("Magicant Teleport")
 
         if self.options.character_shuffle == 0:

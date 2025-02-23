@@ -384,6 +384,13 @@ class DungeonShuffle(Toggle):
     """Shuffles Dungeon entrances amongst each other."""
     display_name = "Dungeon Shuffle"
 
+class PhotoCount(Range):
+    """How many Photograph traps are placed in the item pool."""
+    display_name = "Photos in pool"
+    range_start = 0
+    range_end = 32
+    default = 20
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -394,7 +401,7 @@ class EBOptions(PerGameCommonOptions):
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
     monkey_caves_mode: MonkeyCavesMode
-    shuffle_teleports: TeleportShuffle  # Better name?
+    # shuffle_teleports: TeleportShuffle  # Better name?
     character_shuffle: CharacterShuffle
     starting_character: StartingCharacter
     psi_shuffle: PSIShuffle
@@ -420,7 +427,7 @@ class EBOptions(PerGameCommonOptions):
     random_swirl_colors: RandomSwirlColors
     presents_match_contents: PresentSprites
     prefixed_items: PreFixItems
-    # excluded_teleports: ExcludedTeleports
+    total_photos: PhotoCount
     randomize_franklinbadge_protection: RandomFranklinBadge
     shuffle_enemy_drops: ShuffleDrops
     common_filler_weight: CommonWeight
@@ -450,7 +457,7 @@ eb_option_groups = [
     ]),
     
     OptionGroup("Item Settings", [
-        TeleportShuffle,
+        # TeleportShuffle,
         CharacterShuffle,
         ProgressiveWeapons,
         ProgressiveArmor,
@@ -458,7 +465,8 @@ eb_option_groups = [
         CommonWeight,
         UncommonWeight,
         RareWeight,
-        PreFixItems
+        PreFixItems,
+        PhotoCount
     ]),
 
     OptionGroup("Equipamizer", [

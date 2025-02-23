@@ -90,10 +90,10 @@ def shuffle_dungeons(world):
         single_exit_dungeons.remove("Sea of Eden")
 
     # FIND A BETTER SOLUTION THAN THIS!
-    if world.options.dungeon_shuffle and not world.options.shuffle_teleports:
-        world.options.shuffle_teleports.value = 1
+    # if world.options.dungeon_shuffle and not world.options.shuffle_teleports:
+        # world.options.shuffle_teleports.value = 1
 
-    if world.options.monkey_caves_mode < 3 or not world.options.shuffle_teleports: # Is there a better way to handle the teleports case
+    if world.options.monkey_caves_mode < 3:
         single_exit_dungeons.remove("Monkey Caves")
 
     shuffled_single_dungeons = single_exit_dungeons.copy()

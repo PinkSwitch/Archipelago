@@ -185,11 +185,6 @@ def setup_hints(world):
     if world.options.magicant_mode.value in [0, 3]:
         world.local_hintable_items.append("Magicant Teleport")
 
-    for item in world.removed_teleports:
-        if item.name in world.local_hintable_items:
-            # let's not hint an item that doesn't exist
-            world.local_hintable_items.remove(item.name)
-
     for item in world.multiworld.precollected_items:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
@@ -197,9 +192,9 @@ def setup_hints(world):
     for item in world.options.start_hints.value:
         if item in world.local_hintable_items:
             world.local_hintable_items.remove(item)
-            
-    if world.starting_character in world.local_hintable_items:
-        world.local_hintable_items.remove(world.starting_character)
+
+    if world.starting_area_teleport in world.local_hintable_items:
+        world.local_hintable_items.remove(world.starting_area_teleport)
 
     if world.local_hintable_items == []:
         hint_types.remove("hint_for_good_item")

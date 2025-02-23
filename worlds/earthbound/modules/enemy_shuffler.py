@@ -563,7 +563,8 @@ enemy_sprites = {
     "Farm Zombie": 0x0134,
     "Criminal Caterpillar": 0x01A1,
     "Evil Eye": 0x0132,
-    "Master Criminal Worm": 0x01CD
+    "Master Criminal Worm": 0x01CD,
+    "Loaded Dice (2)": 0x00C3,
 }
 
 can_walkthrough = [

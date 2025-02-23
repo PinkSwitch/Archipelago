@@ -343,6 +343,10 @@ def setup_gamevars(world):
             world.uncommon_gear.append("Broken Cannon")
             world.rare_gear.append("Broken Antenna")
 
+    for i in range(world.options.total_photos):
+        world.multiworld.itempool.append(world.create_item("Photograph"))
+        world.event_count += 1
+        
     world.franklinbadge_elements = [
         "thunder",
         "fire",
