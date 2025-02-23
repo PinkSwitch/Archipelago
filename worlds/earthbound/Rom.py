@@ -148,6 +148,8 @@ def patch_rom(world, rom, player: int):
     else:
         rom.write_bytes(starting_levels[world.starting_character], bytearray([0x03]))
     rom.write_bytes(atm_card_slots[world.starting_character], bytearray([0xB1]))
+    if world.starting_character != "Ness":
+        rom.write_bytes(atm_card_slots["Ness"], bytearray([0x58]))
     if world.starting_character != "Poo":
         rom.write_bytes(starting_weapon[world.starting_character][0], bytearray([starting_weapon[world.starting_character][1]]))
 

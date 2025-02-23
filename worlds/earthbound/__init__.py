@@ -211,8 +211,9 @@ class EarthBoundWorld(World):
                     prefill_items.remove(self.create_item(self.starting_teleport))
                     prefill_items.append(self.removed_teleports[2])
             else:
-                prefill_items.remove(self.create_item("Onett Teleport"))
-                prefill_items.append(self.removed_teleports[0])
+                if self.create_item("Onett Teleport" in prefill_items):
+                    prefill_items.remove(self.create_item("Onett Teleport"))
+                    prefill_items.append(self.removed_teleports[0])
 
             # In dungeon ER, this would be your only way to get here
             # if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
