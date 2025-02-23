@@ -137,12 +137,13 @@ enemy_ids = {
     "No Good Fly": 0x9d,
     "Mostly Bad Fly": 0x9e,
     "Spiteful Crow": 0x9f,
+    "Loaded Dice (2)": 0xC3,
     "Black Antoid (2)": 0xD1,
     "Cave Boy (2)": 0xd4,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
     "Evil Eye": 0xe0,
-    "Master Criminal Worm": 0xe3,
+    "Master Criminal Worm": 0xe3
 }
 
 base_enemy_table = [
@@ -283,7 +284,8 @@ base_enemy_table = [
     "Farm Zombie",
     "Criminal Caterpillar",
     "Evil Eye",
-    "Master Criminal Worm"
+    "Master Criminal Worm",
+    "Loaded Dice (2)"
 ]
 
 enemy_descriptions = {
@@ -420,7 +422,8 @@ enemy_descriptions = {
     "Farm Zombie": "@Easily subdued by plants.",
     "Criminal Caterpillar": "@He is wanted in seventeen countries for his crimes.",
     "Evil Eye": "@Third-year staring contest champion.",
-    "Master Criminal Worm": "@He is wanted in seventeen countries for his crimes."
+    "Master Criminal Worm": "@He is wanted in seventeen countries for his crimes.",
+    "Loaded Dice (2)": "@Always dangerous at parties.",
 }
 
 enemy_sprites = {
@@ -626,6 +629,9 @@ def shuffle_enemies(world):
         world.random.shuffle(shuffled_enemies)
     for index, enemy in enumerate(shuffled_enemies):
         world.acting_enemy_list[base_enemy_table[index]] = enemy
+    for enemy in world.acting_enemy_list:
+        if world.acting_enemy_list[enemy] == "Mr. Molecule":
+            print(enemy)
 
 
 def apply_enemy_shuffle(world, rom):
@@ -905,6 +911,8 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10d947, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]]))
     rom.write_bytes(0x10d94a, bytearray([enemy_ids[world.acting_enemy_list["Beautiful UFO"]]]))
     rom.write_bytes(0x10d94d, bytearray([enemy_ids[world.acting_enemy_list["High-class UFO"]]]))
+
+    rom.write_bytes(0x10d950, bytearray([enemy_ids[world.acting_enemy_list["Loaded Dice (2)"]]]))
     rom.write_bytes(0x10d954, bytearray([enemy_ids[world.acting_enemy_list["Electro Swoosh"]]]))
     rom.write_bytes(0x10d957, bytearray([enemy_ids[world.acting_enemy_list["Fobby"]]]))
     rom.write_bytes(0x10d95a, bytearray([enemy_ids[world.acting_enemy_list["Uncontrollable Sphere"]]]))
@@ -1299,6 +1307,20 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10df4c, bytearray([enemy_ids[world.acting_enemy_list["Starman"]]]))
     rom.write_bytes(0x10df4f, bytearray([enemy_ids[world.acting_enemy_list["Starman Super"]]]))
     rom.write_bytes(0x10df5e, bytearray([enemy_ids[world.acting_enemy_list["Even Slimier Little Pile"]]]))
+
+    # Calls for help
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]])) # Loaded Dice
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Beautiful UFO"]]]))
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["High-class UFO"]]]))
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]]))
+
+    # rom.write_bytes(0x15AD5B, bytearray([enemy_ids[world.acting_enemy_list["Yes Man Junior"]]])) # Skate Punk
+    # rom.write_bytes(0x15AD5C, bytearray([enemy_ids[world.acting_enemy_list["Pogo Punk"]]]))
+
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman"]]])) #S Super
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman Super"]]])) #SDX
+
+    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Slimy Little Pile"]]])) # Belch
 
     rom.write_bytes(0x0F92F4, struct.pack("H", enemy_sprites[world.acting_enemy_list["Skate Punk"]]))
     rom.write_bytes(0x0F9305, struct.pack("H", enemy_sprites[world.acting_enemy_list["Pogo Punk"]]))

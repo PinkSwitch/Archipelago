@@ -1823,9 +1823,6 @@ db $8F
 ORG $CF0EC6
 db $86, $f7, $2f
 
-ORG $2FF786
-db $02, $b2, $01, $8e, $f7, $2f, $00, $02, $05, $33, $00, $02
-
 ORG $CF111C
 db $86, $F7, $2F
 
@@ -15292,7 +15289,7 @@ Gift_menu:
   db $0A
   dl .gift_item_picker
   .GetGiftText:
-  db $1C, $21, $01
+  db $1C, $21, $12
   db $12
   db $1C, $1C, $01  
   db $1B, $06
