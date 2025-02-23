@@ -156,9 +156,9 @@ class EarthBoundWorld(World):
         prefill_items = []
         
         if self.options.magicant_mode == 3:
-            removable_teleports = 6
-        else:
             removable_teleports = 5
+        else:
+            removable_teleports = 4
 
         if self.options.shuffle_teleports == 0:
             prefill_locations.extend([
@@ -184,7 +184,7 @@ class EarthBoundWorld(World):
                 self.create_item("Happy-Happy Village Teleport"),
                 self.create_item("Threed Teleport"),
                 self.create_item("Saturn Valley Teleport"),
-                self.create_item("Dusty Dunes Teleport"),
+                # self.create_item("Dusty Dunes Teleport"),
                 self.create_item("Fourside Teleport"),
                 self.create_item("Winters Teleport"),
                 self.create_item("Scaraba Teleport"),
@@ -194,8 +194,8 @@ class EarthBoundWorld(World):
 
             ])
             self.random.shuffle(prefill_items)
-            if self.dungeon_connections["Lumine Hall"] != "Lumine Hall":
-                removable_teleports -= 1
+            # if self.dungeon_connections["Lumine Hall"] != "Lumine Hall":
+                # removable_teleports -= 1
 
             self.removed_teleports.extend(prefill_items[0:removable_teleports])
             del prefill_items[0:removable_teleports]
@@ -206,10 +206,17 @@ class EarthBoundWorld(World):
                 self.create_item("Progressive Poo PSI")
             ])
 
-            # In dungeon ER, this would be your only way to get here
-            if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
-                prefill_items.append(self.create_item("Lost Underworld Teleport"))
+            if self.options.random_start_location:
+                if self.starting_teleport in prefill_items:
+                    prefill_items.remove(self.create_item(self.starting_teleport))
+                    prefill_items.append(self.removed_teleports[2])
+            else:
+                prefill_items.remove(self.create_item("Onett Teleport"))
+                prefill_items.append(self.removed_teleports[0])
 
+            # In dungeon ER, this would be your only way to get here
+            # if self.dungeon_connections["Lumine Hall"] != "Lumine Hall" and self.create_item("Lost Underworld Teleport") not in prefill_items:
+                # prefill_items.append(self.create_item("Lost Underworld Teleport"))
 
             if self.options.magicant_mode in [0, 3]:
                 prefill_items.append(self.create_item("Magicant Teleport"))
@@ -228,6 +235,15 @@ class EarthBoundWorld(World):
             
             if self.options.magicant_mode == 0:
                 add_item_rule(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), lambda item: (item.name in self.item_name_groups["PSI"] and item.name != "Magicant Teleport"))
+
+            if (self.start_location == 9) or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport"):
+                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Winters Teleport"}, self.player)
+                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Progressive Poo PSI"}, self.player)
+
+            if (self.start_location == 7 and self.starting_teleport == "Magicant Teleport") or (
+                self.start_location == 14):
+                forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Winters Teleport"}, self.player)
+                forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Progressive Poo PSI"}, self.player)
 
         if self.options.character_shuffle == 0:
             main_characters = ["Ness", "Paula", "Jeff", "Poo"]
@@ -257,19 +273,16 @@ class EarthBoundWorld(World):
             add_item_rule(self.multiworld.get_location("Dalaam - Throne Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
             add_item_rule(self.multiworld.get_location("Deep Darkness - Barf Character", self.player), lambda item: item.name in self.item_name_groups["Characters"])
 
-            if (self.start_location == 9 and self.starting_teleport == "Winters Teleport") or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport"):
+            if (self.start_location == 9) or (self.start_location == 7 and self.starting_teleport == "Dalaam Teleport") and not (
+                self.options.shuffle_teleports
+            ):
                 if self.starting_character != "Poo":
                     forced_poo = self.random.choice(["Dalaam - Throne Character", "Snow Wood - Bedroom"])
                     add_item_rule(self.multiworld.get_location(forced_poo, self.player), lambda item: item.name == "Poo")
-                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Winters Teleport"}, self.player)
-                forbid_items_for_player(self.multiworld.get_location("Dalaam - Trial of Mu", self.player), {"Progressive Poo PSI"}, self.player)
-
             if (self.start_location == 7 and self.starting_teleport == "Magicant Teleport") or (
                 self.start_location == 14 and self.starting_teleport == "Winters Teleport"):
                 if self.starting_character != "Ness":
                     add_item_rule(self.multiworld.get_location("Snow Wood - Bedroom", self.player), lambda item: item.name == "Ness")
-                    forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Winters Teleport"}, self.player)
-                    forbid_items_for_player(self.multiworld.get_location("Magicant - Ness's Nightmare", self.player), {"Progressive Poo PSI"}, self.player)
 
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)

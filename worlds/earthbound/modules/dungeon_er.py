@@ -89,6 +89,13 @@ def shuffle_dungeons(world):
         # Don't shuffle Magicant when it's important
         single_exit_dungeons.remove("Sea of Eden")
 
+    # FIND A BETTER SOLUTION THAN THIS!
+    if world.options.dungeon_shuffle and not world.options.shuffle_teleports:
+        world.options.shuffle_teleports.value = 1
+
+    if world.options.monkey_caves_mode < 3 or not world.options.shuffle_teleports: # Is there a better way to handle the teleports case
+        single_exit_dungeons.remove("Monkey Caves")
+
     shuffled_single_dungeons = single_exit_dungeons.copy()
     shuffled_double_dungeons = double_exit_dungeons.copy()
 

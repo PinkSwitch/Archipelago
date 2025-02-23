@@ -1,4 +1,4 @@
-world_version = "3.2"
+world_version = "3.3"
 
 check_table = {
     0xEB0000: [0x11, 3],

@@ -1,0 +1,134 @@
+Archipelago (0.6.0) logging initialized on Windows-10-10.0.22631-SP0 process 41740 running Python 3.11.9
+P1 Weights: 436-0.yaml >> EarthBound Template, generated with https://github.com/Eijebong/Archipelago-fuzzer
+P2 Weights: 436-1.yaml >> EarthBound Template, generated with https://github.com/Eijebong/Archipelago-fuzzer
+P3 Weights: 436-2.yaml >> EarthBound Template, generated with https://github.com/Eijebong/Archipelago-fuzzer
+Generating for 3 players, 75272518469969140901 Seed 965383198 with plando: []
+Archipelago Version 0.6.0  -  Seed: 965383198
+
+Found 80 World Types:
+ Luigi's Mansion                         :  134 Items (IDs:           8000 -           8139) |   776 Locations (IDs:           8000 -           8852)
+ Sonic Riders                            :   88 Items (IDs:        8770000 -        8770087) |    88 Locations (IDs:        8770000 -        8770087)
+ Adventure                               :   15 Items (IDs:      118000000 -      118000262) |    24 Locations (IDs:      118000004 -      118000210)
+ A Hat in Time                           :   58 Items (IDs:     2000300001 -     2000300207) |   455 Locations (IDs:     2000300200 -     2000350075)
+ A Link to the Past                      :  146 Items (IDs:              2 -            180) |   286 Locations (IDs:          59758 -        4194341)
+ Aquaria                                 :  134 Items (IDs:         698000 -         698133) |   218 Locations (IDs:         698000 -         698217)
+ Blasphemous                             :  204 Items (IDs:        1909000 -        1909203) |   306 Locations (IDs:        1909000 -        1909305)
+ Bomb Rush Cyberfunk                     :  165 Items (IDs:        2308000 -        2308164) |   247 Locations (IDs:        2308000 -        2308246)
+ Bumper Stickers                         :   12 Items (IDs:         595000 -         595011) |   100 Locations (IDs:         595000 -         595099)
+ Celeste 64                              :   14 Items (IDs:       13238272 -       13238285) |    46 Locations (IDs:       13238272 -       13239041)
+ ChecksFinder                            :    3 Items (IDs:          80000 -          80002) |    25 Locations (IDs:          81000 -          81024)
+ Clique                                  :    3 Items (IDs:       69696967 -       69696969) |     2 Locations (IDs:       69696968 -       69696969)
+ Castlevania 64                          :   36 Items (IDs:       12992514 -       12992780) |   352 Locations (IDs:       12992513 -       12993153)
+ Castlevania - Circle of the Moon        :   31 Items (IDs:     3579634688 -     3579635721) |   125 Locations (IDs:     3579576373 -     3579576560)
+ Dark Souls III                          : 1204 Items (IDs:         100000 -         101205) |  1506 Locations (IDs:         100000 -         101505)
+ Donkey Kong Country 3                   :    8 Items (IDs:       14430208 -       14430215) |   230 Locations (IDs:       14430208 -       14430618)
+ DLCQuest                                :   51 Items (IDs:         120000 -         120051) | 18913 Locations (IDs:         120000 -     3829217140)
+ DOOM 1993                               :  191 Items (IDs:         350000 -         350190) |   474 Locations (IDs:         351000 -         351473)
+ DOOM II                                 :  174 Items (IDs:         360000 -         360495) |   479 Locations (IDs:         361000 -         361478)
+ EarthBound                              :  271 Items (IDs:       15400961 -       15401235) |   526 Locations (IDs:       15400960 -       15405508)
+ Factorio                                :  233 Items (IDs:         131063 -         131296) |  6993 Locations (IDs:         131072 -         138064)
+ Faxanadu                                :   30 Items (IDs:         400000 -         400029) |   110 Locations (IDs:         400100 -         400210)
+ Final Fantasy                           :  194 Items (IDs:            256 -            500) |   255 Locations (IDs:            257 -            767)
+ Final Fantasy Mystic Quest              :   67 Items (IDs:        4325376 -        4325693) |   266 Locations (IDs:        4325376 -        4325746)
+ Heretic                                 :  263 Items (IDs:         370000 -         370534) |  1014 Locations (IDs:         371000 -         372013)
+ Hollow Knight                           :  249 Items (IDs:       16777216 -       16777464) |   740 Locations (IDs:       16777216 -       16777955)
+ Hylics 2                                :   70 Items (IDs:         200622 -         200692) |   166 Locations (IDs:         200622 -         200787)
+ Inscryption                             :   42 Items (IDs:         147000 -         147041) |   100 Locations (IDs:         147000 -         147099)
+ Kirby's Dream Land 3                    :   24 Items (IDs:        7798785 -        7798850) |   876 Locations (IDs:        7798784 -        7800575)
+ Kingdom Hearts                          :  361 Items (IDs:        2640000 -        2649003) |   520 Locations (IDs:        2650211 -        2659999)
+ Kingdom Hearts 2                        :  293 Items (IDs:        1245184 -        1245476) |   724 Locations (IDs:        1245184 -        1245907)
+ Links Awakening DX                      :  118 Items (IDs:       10000000 -       10000165) |   255 Locations (IDs:       10000000 -       10003673)
+ Landstalker - The Treasures of King Nole:   62 Items (IDs:           4000 -           4070) |   292 Locations (IDs:           4000 -           4346)
+ Lingo                                   :  276 Items (IDs:         444400 -         444680) |   872 Locations (IDs:         444400 -         445271)
+ Lufia II Ancient Cave                   :  415 Items (IDs:       11272193 -       11304994) |   123 Locations (IDs:       11272192 -       11273124)
+ Meritous                                :   23 Items (IDs:         593000 -         593022) |   104 Locations (IDs:         593000 -         593103)
+ The Messenger                           :   64 Items (IDs:       11390976 -       11391039) |   136 Locations (IDs:       11390976 -       11391111)
+ Minecraft                               :   47 Items (IDs:          45000 -          45100) |   114 Locations (IDs:          42000 -          42113)
+ Mario & Luigi Superstar Saga            :  145 Items (IDs:       77771000 -       77771144) |   594 Locations (IDs:        2003971 -        3933858)
+ Mega Man 2                              :   23 Items (IDs:        8912897 -        8913160) |    71 Locations (IDs:        8912897 -        8913455)
+ MegaMan Battle Network 3                :  224 Items (IDs:       11735040 -       11735265) |   263 Locations (IDs:       11735040 -       11735311)
+ Muse Dash                               :  622 Items (IDs:        2900000 -        2900738) |  1216 Locations (IDs:        2900000 -        2901215)
+ Noita                                   :   32 Items (IDs:         110000 -         110031) |   672 Locations (IDs:         110000 -         110671)
+ Ocarina of Time                         :  143 Items (IDs:          66001 -          66211) |  1623 Locations (IDs:          67010 -          68705)
+ Old School Runescape                    :   35 Items (IDs:         458752 -         458786) |   120 Locations (IDs:         458752 -         458871)
+ Overcooked! 2                           :   45 Items (IDs:         213701 -         213745) |    43 Locations (IDs:              1 -             44)
+ Pokemon Emerald                         :  291 Items (IDs:        3860001 -        3860376) |  1338 Locations (IDs:        3860094 -        3870386)
+ Pokemon Red and Blue                    :  207 Items (IDs:      172000001 -      172000506) |   709 Locations (IDs:      172000000 -      172000708)
+ Raft                                    :  325 Items (IDs:          47001 -          47325) |   154 Locations (IDs:          48001 -          48155)
+ Rogue Legacy                            :   60 Items (IDs:          90000 -          90097) |   584 Locations (IDs:          91000 -          92259)
+ Risk of Rain 2                          :   51 Items (IDs:          37001 -          37747) |   954 Locations (IDs:          38000 -          40361)
+ Sonic Adventure 2 Battle                :  168 Items (IDs:       16711680 -       16712984) |  2024 Locations (IDs:       16711680 -       16716608)
+ Saving Princess                         :   20 Items (IDs: 91630179862862 - 91630179862881) |    36 Locations (IDs: 91630179862862 - 91630179862897)
+ Starcraft 2                             :  595 Items (IDs:           1000 -           3812) |   663 Locations (IDs:           1100 -       20005401)
+ Shivers                                 :   76 Items (IDs:          27000 -          27145) |   117 Locations (IDs:          27000 -          27116)
+ A Short Hike                            :   37 Items (IDs:          82001 -          82037) |   131 Locations (IDs:          83001 -          83132)
+ Super Metroid                           :   24 Items (IDs:          83000 -          83023) |   101 Locations (IDs:          82000 -          82170)
+ Super Mario 64                          :   29 Items (IDs:        3626000 -        3626214) |   164 Locations (IDs:        3626000 -        3626243)
+ Super Mario World                       :   29 Items (IDs:       12320768 -       12320797) |   765 Locations (IDs:       12320768 -       12322885)
+ SMZ3                                    :  151 Items (IDs:          84000 -          84223) |   316 Locations (IDs:          85000 -          85510)
+ Secret of Evermore                      :  165 Items (IDs:          64000 -          65533) |   913 Locations (IDs:          64000 -          65592)
+ Slay the Spire                          :    4 Items (IDs:           8000 -           8003) |    29 Locations (IDs:          19001 -          22002)
+ Stardew Valley                          :  962 Items (IDs:         717000 -         727721) |  3291 Locations (IDs:         717001 -         725247)
+ Subnautica                              :  104 Items (IDs:          35000 -          35213) |   181 Locations (IDs:          33000 -          34049)
+ Terraria                                :  190 Items (IDs:        8257536 -        8257725) |   155 Locations (IDs:        8257726 -        8257880)
+ Timespinner                             :  193 Items (IDs:        1337000 -        1337249) |   212 Locations (IDs:        1337000 -        1337249)
+ The Legend of Zelda                     :   33 Items (IDs:           7100 -           7132) |   155 Locations (IDs:           7000 -           7154)
+ TUNIC                                   :  153 Items (IDs:      509342400 -      509342556) |  6529 Locations (IDs:      509342400 -      509348928)
+ Undertale                               :   85 Items (IDs:          77000 -          77999) |   122 Locations (IDs:          79001 -          79920)
+ VVVVVV                                  :   20 Items (IDs:        2515000 -        2515019) |    20 Locations (IDs:        2515000 -        2515019)
+ Wargroove                               :   31 Items (IDs:          52000 -          52030) |    38 Locations (IDs:          53001 -          53038)
+ The Witness                             :  267 Items (IDs:         158000 -         160205) |   765 Locations (IDs:         158000 -         159804)
+ Yacht Dice                              :   47 Items (IDs:    16871244000 -    16871244303) |  1000 Locations (IDs:    16871244501 -    16871245500)
+ Yoshi's Island                          :   69 Items (IDs:        3154000 -        3154069) |   235 Locations (IDs:        3166240 -        3166475)
+ Yu-Gi-Oh! 2006                          :  172 Items (IDs:        5730001 -        5730255) |   165 Locations (IDs:        5730001 -        5730169)
+ Zillion                                 :   12 Items (IDs:        8675309 -        8675320) |  1555 Locations (IDs:        8675309 -        8676863)
+ Zork Grand Inquisitor                   :  123 Items (IDs:     9758067000 -     9758067704) |   150 Locations (IDs:     9758067000 -     9758067215)
+
+Creating MultiWorld.
+Creating Items.
+Calculating Access Rules.
+Running Item Plando.
+Running Pre Main Fill.
+[Happy-Happy Village Teleport (Player 3), Fourside Teleport (Player 3), Threed Teleport (Player 3), Twoson Teleport (Player 3), Onett Teleport (Player 3)]
+Traceback (most recent call last):
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\fuzz.py", line 252, in gen_wrapper
+    run_with_timeout(call_generate, timeout_s, yaml_path_dir, output_path)
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\fuzz.py", line 68, in run_with_timeout
+    return future.result(timeout=seconds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blabi\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blabi\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\blabi\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\fuzz.py", line 225, in call_generate
+    ERmain(erargs, seed)
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\Main.py", line 201, in main
+    AutoWorld.call_all(multiworld, "pre_fill")
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\worlds\AutoWorld.py", line 184, in call_all
+    call_single(multiworld, method_name, player, *args)
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\worlds\AutoWorld.py", line 174, in call_single
+    raise e
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\worlds\AutoWorld.py", line 167, in call_single
+    ret = _timed_call(method, *args, multiworld=multiworld, player=player)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\worlds\AutoWorld.py", line 153, in _timed_call
+    ret = method(*args)
+          ^^^^^^^^^^^^^
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\worlds\earthbound\__init__.py", line 283, in pre_fill
+    setup_hints(self)
+  File "C:\Users\blabi\Desktop\Archipelago Dev\yoshi branch\earthbound\Archipelago\Fill.py", line 223, in fill_restrictive
+    raise FillError(f"No more spots to place {len(unplaced_items)} items. Remaining locations are invalid.\n"
+Fill.FillError: No more spots to place 9 items. Remaining locations are invalid.
+Unplaced items:
+Flying Man (Player 3), Paula (Player 3), Ness (Player 3), Lost Underworld Teleport (Player 3), Scaraba Teleport (Player 3), Summers Teleport (Player 3), Tenda Village Teleport (Player 3), Progressive Poo PSI (Player 3), Dalaam Teleport (Player 3)
+Unfilled locations:
+Onett - Mani Mani Statue (436-2), Fourside - Department Store Blackout (436-2), Happy-Happy Village - Prisoner (436-2), Monkey Caves - Monkey Power (436-2), Monotoli Building - Monotoli Character (436-2), Threed - Zombie Prisoner (436-2), Onett - Buzz Buzz (436-2), Summers - Magic Cake (436-2), Scaraba - Star Master (436-2)
+Already placed 10:
+Snow Wood - Bedroom (436-2), Deep Darkness - Barf Character (436-2), Dalaam - Throne Character (436-2), Summers - Magic Cake (436-2), Saturn Valley - Saturn Coffee (436-2), Scaraba - Star Master (436-2), Tenda Village - Tenda Tea (436-2), Cave of the Present - Star Master (436-2), Dalaam - Trial of Mu (436-2), Lost Underworld - Talking Rock (436-2)
+All Placements:
+[(Sanctuary Goal (436-0), Saved Earth (436-0)), (+2 Sanctuaries (436-0), Alternate Goal (436-0)), (Giant Step Sanctuary (436-0), Melody (436-0)), (Carpainter Defeated (436-0), Valley Bridge Repair (436-0)), (Lilliput Steps Sanctuary (436-0), Melody (436-0)), (Belch Defeated (436-0), Threed Tunnels Clear (436-0)), (Milky Well Sanctuary (436-0), Melody (436-0)), (Magnet Hill Sanctuary (436-0), Melody (436-0)), (Rainy Circle Sanctuary (436-0), Melody (436-0)), (Pink Cloud Sanctuary (436-0), Melody (436-0)), (Dungeon Man Submarine (436-0), Submarine to Deep Darkness (436-0)), (Lumine Hall Sanctuary (436-0), Melody (436-0)), (Fire Spring Sanctuary (436-0), Melody (436-0)), (Any ATM (436-0), ATM Access (436-0)), (Sanctuary Goal (436-1), Magicant Unlock (436-1)), (Giant Step Sanctuary (436-1), Melody (436-1)), (Twoson Department Store Bakery - Slot 1 (436-1), Plain Roll (436-1)), (Happy-Happy Village - Prisoner (436-1), Teddy Bear (436-1)), (Carpainter Defeated (436-1), Valley Bridge Repair (436-1)), (Lilliput Steps Sanctuary (436-1), Melody (436-1)), (Threed - Zombie Prisoner (436-1), Ness (436-1)), (Belch Defeated (436-1), Threed Tunnels Clear (436-1)), (Milky Well Sanctuary (436-1), Melody (436-1)), (Dusty Dunes Drugstore - Left Shop Slot 1 (436-1), Wet Towel (436-1)), (Fourside Bakery - Slot 4 (436-1), Repel Sandwich (436-1)), (Fourside Department Store - Tool Shop Slot 7 (436-1), Ruler (436-1)), (Fourside Department Store - Shop Shop Slot 3 (436-1), Protein Drink (436-1)), (Fourside Department Store - Food Shop Slot 5 (436-1), Picnic Lunch (436-1)), (Fourside Department Store - Burger Shop Slot 4 (436-1), Hamburger (436-1)), (Magnet Hill Sanctuary (436-1), Melody (436-1)), (Monotoli Building - Monotoli Character (436-1), Super Plush Bear (436-1)), (Snow Wood - Bedroom (436-1), Paula (436-1)), (Rainy Circle Sanctuary (436-1), Melody (436-1)), (Dalaam - Throne Character (436-1), Flying Man (436-1)), (Pink Cloud Sanctuary (436-1), Melody (436-1)), (Dungeon Man Submarine (436-1), Submarine to Deep Darkness (436-1)), (Deep Darkness - Barf Character (436-1), Jeff (436-1)), (Lumine Hall Sanctuary (436-1), Melody (436-1)), (Fire Spring Sanctuary (436-1), Melody (436-1)), (Magicant - Ness's Nightmare (436-1), Power of the Earth (436-1)), (Any ATM (436-1), ATM Access (436-1)), (Giygas (436-1), Saved Earth (436-1)), (Sanctuary Goal (436-2), Saved Earth (436-2)), (+2 Sanctuaries (436-2), Alternate Goal (436-2)), (Giant Step Sanctuary (436-2), Melody (436-2)), (Twoson Department Store Bakery - Slot 1 (436-2), Plain Roll (436-2)), (Carpainter Defeated (436-2), Valley Bridge Repair (436-2)), (Lilliput Steps Sanctuary (436-2), Melody (436-2)), (Belch Defeated (436-2), Threed Tunnels Clear (436-2)), (Saturn Valley - Saturn Coffee (436-2), Progressive Poo PSI (436-2)), (Milky Well Sanctuary (436-2), Melody (436-2)), (Dusty Dunes Drugstore - Left Shop Slot 1 (436-2), Wet Towel (436-2)), (Monkey Caves - 1F Right Chest (436-2), Wet Towel (436-2)), (Monkey Caves - 1F Left Chest (436-2), Pizza (436-2)), (Monkey Caves - West 2F Left Chest (436-2), Pizza (436-2)), (Monkey Caves - West 2F Right Chest #1 (436-2), Hamburger (436-2)), (Monkey Caves - West 2F Right Chest #2 (436-2), Ruler (436-2)), (Monkey Caves - East 2F Left Chest (436-2), Protein Drink (436-2)), (Monkey Caves - East 2F Right Chest (436-2), Hamburger (436-2)), (Monkey Caves - East West 3F Right Chest #1 (436-2), Hamburger (436-2)), (Monkey Caves - East West 3F Right Chest #2 (436-2), Picnic Lunch (436-2)), (Fourside Bakery - Slot 4 (436-2), Repel Sandwich (436-2)), (Fourside Department Store - Tool Shop Slot 7 (436-2), Ruler (436-2)), (Fourside Department Store - Shop Shop Slot 3 (436-2), Protein Drink (436-2)), (Fourside Department Store - Food Shop Slot 5 (436-2), Picnic Lunch (436-2)), (Fourside Department Store - Burger Shop Slot 4 (436-2), Hamburger (436-2)), (Magnet Hill Sanctuary (436-2), Melody (436-2)), (Snow Wood - Bedroom (436-2), Poo (436-2)), (Rainy Circle Sanctuary (436-2), Melody (436-2)), (Dalaam - Trial of Mu (436-2), Deep Darkness Teleport (436-2)), (Dalaam - Throne Character (436-2), Teddy Bear (436-2)), (Pink Cloud Sanctuary (436-2), Melody (436-2)), (Dungeon Man Submarine (436-2), Submarine to Deep Darkness (436-2)), (Deep Darkness - Barf Character (436-2), Super Plush Bear (436-2)), (Tenda Village - Tenda Tea (436-2), Magicant Teleport (436-2)), (Lumine Hall Sanctuary (436-2), Melody (436-2)), (Lost Underworld - Talking Rock (436-2), Saturn Valley Teleport (436-2)), (Fire Spring Sanctuary (436-2), Melody (436-2)), (Cave of the Present - Star Master (436-2), Winters Teleport (436-2)), (Any ATM (436-2), ATM Access (436-2))]
+Exception in <bound method EarthBoundWorld.pre_fill of <worlds.earthbound.EarthBoundWorld object at 0x000001D10BEA3010>> for player 3, named 436-2.

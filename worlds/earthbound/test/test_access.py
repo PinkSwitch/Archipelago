@@ -47,5 +47,5 @@ class TestShopChecks(EarthBoundTestBase):
 
 class TestDungeons(EarthBoundTestBase):
     options = {
-        "DungeonShuffle": 1,
+        "DungeonShuffle": True,
     }
