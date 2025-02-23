@@ -1310,18 +1310,18 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10df5e, bytearray([enemy_ids[world.acting_enemy_list["Even Slimier Little Pile"]]]))
 
     # Calls for help
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]])) # Loaded Dice
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Beautiful UFO"]]]))
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["High-class UFO"]]]))
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]]))
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]])) # Loaded Dice
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Beautiful UFO"]]]))
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["High-class UFO"]]]))
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Care Free Bomb"]]]))
 
     # rom.write_bytes(0x15AD5B, bytearray([enemy_ids[world.acting_enemy_list["Yes Man Junior"]]])) # Skate Punk
     # rom.write_bytes(0x15AD5C, bytearray([enemy_ids[world.acting_enemy_list["Pogo Punk"]]]))
 
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman"]]])) #S Super
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman Super"]]])) #SDX
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman"]]])) #S Super
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Starman Super"]]])) #SDX
 
-    #rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Slimy Little Pile"]]])) # Belch
+    # rom.write_bytes(0x, bytearray([enemy_ids[world.acting_enemy_list["Slimy Little Pile"]]])) # Belch
 
     rom.write_bytes(0x0F92F4, struct.pack("H", enemy_sprites[world.acting_enemy_list["Skate Punk"]]))
     rom.write_bytes(0x0F9305, struct.pack("H", enemy_sprites[world.acting_enemy_list["Pogo Punk"]]))

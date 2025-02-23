@@ -405,7 +405,7 @@ class EarthBoundClient(SNIClient):
         is_energylink_enabled = await snes_read(ctx, IS_ENERGYLINK_ENABLED, 1)
         is_requesting_energy = await snes_read(ctx, WRAM_START + 0x1BD6, 1)
         energy_withdrawal = await snes_read(ctx, WRAM_START + 0x1BDC, 4)
-        energy = ctx.set_notify(f"EnergyLink{ctx.team}")
+        ctx.set_notify(f"EnergyLink{ctx.team}")
         energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0)
         exchange_rate = 1000000
         if is_energylink_enabled[0]:
@@ -419,7 +419,7 @@ class EarthBoundClient(SNIClient):
                         [{"operation": "add", "value": deposited_energy},
                             {"operation": "max", "value": 0}]}])
 
-            if is_requesting_energy[0] and energy: # This is just to pull the current number for a display.
+            if is_requesting_energy[0] and energy:  # This is just to pull the current number for a display.
                 energy //= exchange_rate
                 if energy > 9999999:
                     energy = 9999999
@@ -434,7 +434,7 @@ class EarthBoundClient(SNIClient):
             if any(energy_withdrawal) and energy:
                 withdrawal = int.from_bytes(energy_withdrawal, byteorder="little")
                 withdrawal *= exchange_rate
-                energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0) # Refresh the value
+                energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0)  # Refresh the value
 
                 if withdrawal > energy:
                     energy_success = 2

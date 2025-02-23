@@ -1,8 +1,8 @@
 import struct
 from typing import Optional
 from dataclasses import dataclass
-import dataclasses
 from ..game_data.local_data import item_id_table
+
 
 @dataclass
 class EBDungeonDoor:
@@ -79,12 +79,6 @@ def shuffle_dungeons(world):
         "Fire Spring": "Fire Spring",
         "Sea of Eden": "Sea of Eden"
     }
-    #if world.options.magicant_mode or (
-     #   not world.options.shuffle_teleports and 
-      #  (world.start_location == 14 and world.starting_teleport == "Winters Teleport") or
-       # (world.start_location == 7 and world.starting_teleport == "Magicant Teleport")
-    #):
-    #Alternate version of block below
     if world.options.magicant_mode:
         # Don't shuffle Magicant when it's important
         single_exit_dungeons.remove("Sea of Eden")
@@ -223,14 +217,14 @@ def write_dungeon_entrances(world, rom):
             else:
                 rom.copy_bytes(destination.copyaddress, 5, source.address)
 
-    rom.write_bytes(0x101664, struct.pack("H", 0x041F)) # Flag controlling the Saturn Valley ladder
-    rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C)) # Replacement for the Moonside deliveryman
-    rom.write_bytes(0x0F0A93, struct.pack("I", 0x000000)) # Skip Pokey walking up after HHHQ
-    rom.write_bytes(0x086DFC, struct.pack("H", 0x00C7)) # Flag-independent Moonside entry
-    rom.write_bytes(0x0F1657, struct.pack("I", 0xF311A7)) # Fourside Cafe Door Script
-    rom.write_bytes(0x0F165B, struct.pack("H", 0x8091)) # Lock Cafe
-    rom.write_bytes(0x0FC8C6, struct.pack("I", 0xF3120B)) # Everdred script
+    rom.write_bytes(0x101664, struct.pack("H", 0x041F))  # Flag controlling the Saturn Valley ladder
+    rom.write_bytes(0x0F19C7, struct.pack("I", 0xF3104C))  # Replacement for the Moonside deliveryman
+    rom.write_bytes(0x0F0A93, struct.pack("I", 0x000000))  # Skip Pokey walking up after HHHQ
+    rom.write_bytes(0x086DFC, struct.pack("H", 0x00C7))  # Flag-independent Moonside entry
+    rom.write_bytes(0x0F1657, struct.pack("I", 0xF311A7))  # Fourside Cafe Door Script
+    rom.write_bytes(0x0F165B, struct.pack("H", 0x8091))  # Lock Cafe
+    rom.write_bytes(0x0FC8C6, struct.pack("I", 0xF3120B))  # Everdred script
 
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
-    if (moonside_reward.player != world.player) or (world.options.remote_items) or moonside_reward.name not in item_id_table:
+    if (moonside_reward.player != world.player) or world.options.remote_items or moonside_reward.name not in item_id_table:
         rom.write_bytes(0x3310F7, struct.pack("I", 0xF310FB))

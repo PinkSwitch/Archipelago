@@ -24,7 +24,7 @@ from .Rules import set_location_rules
 from .Rom import patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .game_data.static_location_data import location_ids, location_groups
 from .modules.equipamizer import EBArmor, EBWeapon
-from worlds.generic.Rules import add_item_rule, forbid_items_for_player
+from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
 
@@ -105,7 +105,7 @@ class EarthBoundWorld(World):
             "Ness": 12,
             "Paula": 11,
             "Jeff": 9,
-            "Poo": 99
+            "Poo": 12
         }
 
         max_count = max_counts[self.starting_character]
@@ -293,7 +293,7 @@ class EarthBoundWorld(World):
             spoiler_handle.write("\nDungeon Entrances:\n")
             for dungeon in self.dungeon_connections:
                 spoiler_handle.write(
-                f" {dungeon} => {self.dungeon_connections[dungeon]}\n"
+                    f" {dungeon} => {self.dungeon_connections[dungeon]}\n"
                 )
 
     def create_item(self, name: str) -> Item:
