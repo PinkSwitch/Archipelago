@@ -187,6 +187,8 @@ def initialize_bosses(world):
 
 def write_bosses(world, rom):
     print(world.boss_list[25])
+    world.boss_list[25] = "Carbon Dog"
+    print(world.boss_list[25])
     rom.write_bytes(0x15E527, bytearray([0x00, 0x00]))  # Blank out Pokey's end battle action
     rom.write_bytes(0x15B8B9, bytearray([0x00, 0x00]))
     rom.write_bytes(0x15DD13, bytearray([0x00, 0x00]))  # Blank out barf's end battle script
@@ -269,5 +271,13 @@ def write_bosses(world, rom):
     rom.write_bytes(0x05FBFC, struct.pack("H", 0x0154))
     rom.write_bytes(0x05FD08, struct.pack("H", 0x0154))
     rom.write_bytes(0x05FD5C, struct.pack("H", 0x0154))
+    rom.copy_bytes(0x10DF7B, 6, 0x2FFF10)
+    if world.boss_list[25] == "Carbon Dog":
+        rom.write_bytes(0x2FFF16, bytearray([0x00]))  # Count of enemies
+        rom.write_bytes(0x2FFF17, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id))  # Add diamond dog
+        rom.write_bytes(0x2FFF19, bytearray([0xFF]))
+        rom.write_bytes(world.enemies[world.boss_list[27]].address + 91, bytearray([0x02]))  # Force to front row
+    else:
+        rom.write_bytes(0x2FFF16, bytearray([0xFF]))
     
     # c2c505 sets the song
