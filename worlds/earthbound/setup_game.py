@@ -498,6 +498,15 @@ def setup_gamevars(world):
 
     filler_items = (world.common_items + world.uncommon_items + world.rare_items + world.common_gear +
                     world.uncommon_gear + world.rare_gear)
+
+    if world.options.progressive_weapons:
+        remove_items = {"Progressive Bat", "Progressive Fry Pan", "Progressive Gun"}
+        filler_items = [item for item in filler_items if item not in remove_items]
+
+    if world.options.progressive_armor:
+        remove_items = {"Progressive Bracelet", "Progressive Other"}
+        filler_items = [item for item in filler_items if item not in remove_items]
+
     world.filler_drops = [item_id_table[i] for i in filler_items if i in item_id_table]
     world.filler_drops.append(0x00)
     if world.options.prefixed_items:
