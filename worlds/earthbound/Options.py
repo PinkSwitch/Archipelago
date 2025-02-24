@@ -64,14 +64,9 @@ class RandomStartLocation(Toggle):
     display_name = "Random Starting Location"
 
 
-class TeleportShuffle(Choice):
-    """Shuffled: Teleports and Starstorm will be shuffled amongst the PSI locations. A few redundant Teleports may not be available.
-       Anywhere: Teleports and Starstorm will be placed anywhere in the multiworld, and PSI locations will have regular checks.
-       See the Game Page for more information on PSI Locations."""
-    display_name = "Teleport Shuffle"
-    option_shuffled = 0
-    option_anywhere = 1
-    default = 0
+class LocalTeleports(DefaultOnToggle):
+    """Forces all teleports and Poo PSI to be placed locally in your world."""
+    display_name = "Local Teleports"
 
 
 class CharacterShuffle(Choice):
@@ -401,7 +396,7 @@ class EBOptions(PerGameCommonOptions):
     alternate_sanctuary_goal: SanctuaryAltGoal
     magicant_mode: MagicantMode
     monkey_caves_mode: MonkeyCavesMode
-    # shuffle_teleports: TeleportShuffle  # Better name?
+    local_teleports: LocalTeleports
     character_shuffle: CharacterShuffle
     starting_character: StartingCharacter
     psi_shuffle: PSIShuffle
@@ -457,7 +452,7 @@ eb_option_groups = [
     ]),
     
     OptionGroup("Item Settings", [
-        # TeleportShuffle,
+        LocalTeleports,
         CharacterShuffle,
         ProgressiveWeapons,
         ProgressiveArmor,

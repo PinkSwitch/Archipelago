@@ -892,7 +892,7 @@ db $13, $02 ;Summers
 ScarabaTeleTex:
 db $18, $01, $01, $01
 db $0A
-dl ScarabaLeaderName
+dd ScarabaLeaderName
 ScarabaLeaderDone:
 db $50, $9C, $95, $91, $A2, $9E, $95
 db $94, $50, $A4, $9F, $50, $A4, $95, $9C, $95, $A0, $9F, $A2, $A4, $50, $A4, $9F
