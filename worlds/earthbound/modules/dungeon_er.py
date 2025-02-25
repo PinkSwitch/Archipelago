@@ -224,6 +224,7 @@ def write_dungeon_entrances(world, rom):
     rom.write_bytes(0x0F1657, struct.pack("I", 0xF311A7))  # Fourside Cafe Door Script
     rom.write_bytes(0x0F165B, struct.pack("H", 0x8091))  # Lock Cafe
     rom.write_bytes(0x0FC8C6, struct.pack("I", 0xF3120B))  # Everdred script
+    rom.write_bytes(0x10784A, struct.pack("H", 0x0000))  # Mook spawn in stonehenge anteroom
 
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
     if (moonside_reward.player != world.player) or world.options.remote_items or moonside_reward.name not in item_id_table:
