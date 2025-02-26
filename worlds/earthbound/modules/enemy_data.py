@@ -491,6 +491,45 @@ def get_psi_levels(level: int, breaks: Dict[int, str]) -> str:
         if level <= top_val:
             return psi_level
 
+spell_elements = {
+    "thunder": "thunder",
+    "giygas_phase2_thunder": "thunder",
+    "giygas_phase3_thunder": "thunder",
+    "giygas_phase4_thunder": "thunder",
+    "crashing_boom_bang": "thunder",
+    "electrical_shock": "thunder",
+    "thunder_minus": "thunder",
+
+    "freeze": "freeze",
+    "giygas_phase2_freeze": "freeze",
+    "giygas_phase3_freeze": "freeze",
+    "giygas_phase4_freeze": "freeze",
+
+    "fire": "fire",
+    "scalding_espresson": "fire",
+    "extinguishing_blast": "fire",
+    "spray_fire": "fire",
+    "breathe_fire": "fire",
+    "flaming_fireball": "fire",
+
+    "flash": "flash",
+    "summon_storm": "flash",
+    "glorious_light": "flash",
+    "giygas_phase2_flash": "flash",
+    "giygas_phase3_flash": "flash",
+    "giygas_phase4_flash": "flash",
+    "flash_minus": "flash",
+
+    "starstorm": "starstorm",
+    "starstorm_minus": "starstorm",
+
+    "special": "special",
+
+    "blast": "explosive",
+    "throw_bomb": "explosive",
+    "throw_bomb_minus": "explosive"
+}
+
 
 enemy_psi = {
     "Dept. Store Spook": ["freeze", "fire", "lifeup", "null"],
@@ -1030,7 +1069,6 @@ def scale_enemies(world, rom):
         additional_party_members += c[region]
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
-                # print(f"{enemy.name} {level}")
                 enemy_hp = int(enemy.hp * level / enemy.level)
                 enemy_hp = int(enemy_hp + (enemy_hp * (0.25 * (additional_party_members - 1))))
                 enemy_pp = int(enemy.pp * level / enemy.level)
@@ -1062,8 +1100,14 @@ def scale_enemies(world, rom):
                     for index, spell in [(i, s) for i, s in enumerate(enemy_psi[enemy.name]) if s != "null"]:
                         if spell == "special":
                             spell = world.offensive_psi_slots[0].lower()
-                        # print(enemy.name)
-                        # print(index, spell)
+
+                        if spell in spell_elements:
+                            element = spell_elements[spell]
+                        else:
+                            element = "None"
+                        
+                        if element == world.franklin_protection:
+                            print("BOOM! PROTECTED!")
                         psi_level = get_psi_levels(level, spell_breaks[spell])
                         rom.write_bytes(enemy.address + 70 + (index * 2), bytearray(spell_data[spell][psi_level][0:2]))
                         rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][2]]))
