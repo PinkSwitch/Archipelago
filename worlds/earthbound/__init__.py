@@ -130,6 +130,9 @@ class EarthBoundWorld(World):
             self.options.local_items.value.update(["Paula", "Jeff", "Poo", "Flying Man"])
             self.event_count += 6
 
+        if self.options.local_teleports:
+            self.options.local_items.value |= self.item_name_groups["PSI"]
+
     def create_regions(self) -> None:
         init_areas(self, get_locations(self))
         place_static_items(self)
