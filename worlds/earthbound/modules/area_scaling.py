@@ -284,6 +284,7 @@ def calculate_scaling(world):
     Paula_scaled = False
     Jeff_scaled = False
     Poo_scaled = False
+    badge_scaled = False
     scaled_chars = {
         "Ness": Ness_scaled,
         "Paula": Paula_scaled,
@@ -298,9 +299,13 @@ def calculate_scaling(world):
     world.Paula_region = "Ness's Mind"
     world.Jeff_region = "Ness's Mind"
     world.Poo_region = "Ness's Mind"
+    world.Badge_region = "Ness's Mind"
     for item in world.multiworld.precollected_items[world.player]:
         if item.name in ["Ness", "Paula", "Jeff", "Poo"]:
             scaled_chars[item.name] = True
+
+        if item.name == "Franklin Badge":
+            badge_scaled = True
 
     for num, sphere in enumerate(world.multiworld.get_spheres()):
         if num + 1 not in inventory:
@@ -351,6 +356,14 @@ def calculate_scaling(world):
                 else:
                     world.Poo_region = last_region
                 scaled_chars["Poo"] = True
+
+            if location.item.player == world.player and location.item.name == "Franklin Badge" and not badge_scaled:
+                if location.parent_region.name in combat_regions and location.player == world.player:
+                    world.Badge_region = location.parent_region.name
+                else:
+                    world.Badge_region = last_region
+                    badge_scaled = True
+
         sphere_count = num
 
     for item in range(1, len(inventory)):
@@ -415,3 +428,6 @@ def calculate_scaling(world):
 
     if world.Poo_region == "Ness's Mind":
         world.Poo_region = world.scaled_area_order[0]
+
+    if world.Badge_region == "Ness's Mind":
+        world.Badge_region = world.scaled_area_order[0]

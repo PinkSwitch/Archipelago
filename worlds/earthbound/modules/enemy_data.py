@@ -481,8 +481,41 @@ spell_breaks: Dict[str, Dict[int, str]] = {
     "shoot_rocket": {5: "zeta", 12: "epsilon", 20: "alpha", 50: "beta", 73: "gamma", 100: "omega"},
     "paralyzing_pollen": {30: "lambda", 60: "alpha", 100: "omega"},
 
+    "electrical_shock_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
+    "crashing_boom_bang_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 45: "alpha", 60: "beta", 100: "gamma", 200: "omega"},
+    "giygas_phase2_thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 100: "alpha", 200: "beta"},
+    "giygas_phase3_thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 100: "alpha", 200: "beta"},
+    "giygas_phase4_thunder_minus": {10: "zeta", 15: "epsilon", 20: "delta", 35: "lambda", 100: "alpha", 200: "beta"},
+    "thunder_minus_minus": {15: "zeta", 20: "epsilon", 35: "delta", 45: "lambda", 60: "alpha", 100: "beta", 200: "gamma", 300: "omega"},
 
-    # bombs and bottle rockets too? Also missile maybe? hmmm
+    "starstorm_minus_minus": {20: "zeta", 45: "epsilon", 70: "delta", 100: "lambda", 200: "alpha", 300: "beta"},
+
+    "giygas_phase2_flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "giygas_phase3_flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "giygas_phase4_flash_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "summon_storm_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "glorious_light_minus": {60: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "flash_minus_minus": {70: "alpha", 100: "beta", 200: "gamma", 300: "omega"},
+
+    "fire_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "spray_fire_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "breathe_fire_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "scalding_espresso_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "flaming_fireball_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "extinguishing_blast_minus": {10: "zeta", 20: "epsilon", 50: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+
+    "throw_bomb_minus_minus": {30: "zeta", 40: "epsilon", 50: "alpha", 100: "beta", 200: "gamma", 300: "omega"},
+
+    "shoot_rocket_minus": {12: "zeta", 20: "epsilon", 50: "alpha", 73: "beta", 100: "gamma", 200: "omega"},
+
+    "freeze_minus": {12: "zeta", 20: "epsilon", 25: "delta", 40: "lambda", 65: "alpha", 70: "beta", 100: "gamma", 200: "omega"},
+    "giygas_phase2_freeze_minus": {12: "zeta", 20: "epsilon", 25: "delta", 100: "lambda", 200: "alpha"},
+    "giygas_phase3_freeze_minus": {12: "zeta", 20: "epsilon", 25: "delta", 100: "lambda", 200: "alpha"},
+    "giygas_phase4_freeze_minus": {12: "zeta", 20: "epsilon", 25: "delta", 100: "lambda", 200: "alpha"},
+
+    "special_minus": {10: "zeta", 30: "epsilon", 65: "alpha", 80: "beta", 100: "gamma", 200: "omega"},
+    "blast_minus": {20: "zeta", 30: "epsilon", 40: "alpha", 50: "beta", 100: "gamma", 200: "omega"},
+
 }
 
 
@@ -775,6 +808,7 @@ spell_data = {
         "gamma": [0x54, 0x01, 0x00],
         "omega": [0x55, 0x01, 0x00]
     },
+
     "scalding_espresso": {
         "zeta": [0x77, 0x01, 0x00],
         "epsilon": [0x78, 0x01, 0x00],
@@ -791,6 +825,7 @@ spell_data = {
         "gamma": [0x5B, 0x00, 0x00],
         "omega": [0x5B, 0x01, 0x00]
     },
+
     "diamond_bite": {
         "alpha": [0x5C, 0x01, 0x00],
         "beta": [0x5D, 0x01, 0x00],
@@ -820,6 +855,7 @@ spell_data = {
         "alpha": [0x83, 0x01, 0x00],
         "beta": [0x12, 0x01, 0x00]
     },
+
     "giygas_phase3_thunder": {
         "zeta": [0x8C, 0x01, 0x00],
         "epsilon": [0x8B, 0x01, 0x00],
@@ -828,6 +864,7 @@ spell_data = {
         "alpha": [0x88, 0x01, 0x00],
         "beta": [0x2E, 0x01, 0x00]
     },
+
     "giygas_phase4_thunder": {
         "zeta": [0x91, 0x01, 0x00],
         "epsilon": [0x90, 0x01, 0x00],
@@ -837,6 +874,7 @@ spell_data = {
         "beta": [0x31, 0x01, 0x00]
     },
 
+
     "giygas_phase2_freeze": {
         "zeta": [0x92, 0x01, 0x00],
         "epsilon": [0x93, 0x01, 0x00],
@@ -844,6 +882,7 @@ spell_data = {
         "lambda": [0x95, 0x01, 0x00],
         "alpha": [0x2C, 0x01, 0x00]
     },
+
     "giygas_phase3_freeze": {
         "zeta": [0x96, 0x01, 0x00],
         "epsilon": [0x97, 0x01, 0x00],
@@ -851,6 +890,7 @@ spell_data = {
         "lambda": [0x99, 0x01, 0x00],
         "alpha": [0x2F, 0x01, 0x00]
     },
+
     "giygas_phase4_freeze": {
         "zeta": [0x9A, 0x01, 0x00],
         "epsilon": [0x9B, 0x01, 0x00],
@@ -859,21 +899,25 @@ spell_data = {
         "alpha": [0x32, 0x01, 0x00]
     },
 
+
     "giygas_phase2_flash": {
         "alpha": [0x9E, 0x01, 0x00],
         "beta": [0x9F, 0x01, 0x00],
         "gamma": [0x2D, 0x01, 0x00]
     },
+
     "giygas_phase3_flash": {
         "alpha": [0xA0, 0x01, 0x00],
         "beta": [0xA1, 0x01, 0x00],
         "gamma": [0x30, 0x01, 0x00]
     },
+
     "giygas_phase4_flash": {
         "alpha": [0xA2, 0x01, 0x00],
         "beta": [0xA3, 0x01, 0x00],
         "gamma": [0x33, 0x01, 0x00]
     },
+    
     "explosion_damage": {
         "alpha": [0xA7, 0x00, 0x00],
         "beta": [0xA3, 0x01, 0x00],
@@ -889,12 +933,14 @@ spell_data = {
         "gamma": [0x18, 0x00, 0x0F],
         "omega": [0x19, 0x00, 0x10]
     },
+
     "flash_minus": {
         "alpha": [0x1A, 0x00, 0x11],
         "beta": [0x1B, 0x00, 0x12],
         "gamma": [0x1C, 0x00, 0x13],
         "omega": [0x1D, 0x00, 0x14]
     },
+
     "starstorm_minus": {
         "zeta": [0x6D, 0x01, 0x42],
         "epsilon": [0x6E, 0x01, 0x43],
@@ -1058,6 +1104,7 @@ def scale_enemies(world, rom):
             rom.write_bytes(0x15F637, bytearray([max(levels[world.scaled_area_order.index(world.Poo_region)] + world.random.randint(-3, 3), 1)]))  # Poo starting level
 
     melody_number = 1
+    has_badge = False
     c = Counter([world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region])
     for region, level in zip(world.scaled_area_order, levels):
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
@@ -1065,6 +1112,9 @@ def scale_enemies(world, rom):
                       "Lumine Hall", "Fire Spring"]:
             rom.write_bytes(guardian_intro[region], struct.pack("I", guardian_text[melody_number - 1]))
             melody_number += 1
+
+        if region == world.Badge_region:
+            has_badge = True
 
         additional_party_members += c[region]
         for enemy in world.regional_enemies[region]:
@@ -1106,11 +1156,12 @@ def scale_enemies(world, rom):
                         else:
                             element = "None"
                         
-                        if element == world.franklin_protection:
-                            print("BOOM! PROTECTED!")
+                        if element == world.franklin_protection and not has_badge:
+                            spell = f"{spell}_minus"
                         psi_level = get_psi_levels(level, spell_breaks[spell])
-                        rom.write_bytes(enemy.address + 70 + (index * 2), bytearray(spell_data[spell][psi_level][0:2]))
-                        rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[spell][psi_level][2]]))
+                        filtered_spell = spell.replace("_minus", "")
+                        rom.write_bytes(enemy.address + 70 + (index * 2), bytearray(spell_data[filtered_spell][psi_level][0:2]))
+                        rom.write_bytes(enemy.address + 80 + index, bytearray([spell_data[filtered_spell][psi_level][2]]))
                 if world.options.shuffle_enemy_drops:
                     rom.write_bytes(enemy.address + 88, bytearray([world.random.choice(world.filler_drops)]))
                 enemy.is_scaled = True
