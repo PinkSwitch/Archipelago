@@ -209,6 +209,8 @@ lumine_hall_text = [
     "They say that Ice Palace can be found at Ice Palace...",
     "Hey Mom, I'm in AP!",
     "It says “gullible” on the wall",
+    "64 bits! 32 bits! 16 bits! 8 bits! 4 bits! 2 bits! 1 bit! Half bit! Quarter bit! THE WRIST GAME!!!",
+    "Where did YOU learn to teleport?"
 ]
 
 spoiler_psi = {

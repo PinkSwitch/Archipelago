@@ -379,13 +379,13 @@ def write_shop_checks(world, rom, shop_checks):
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
 
         rom.write_bytes(0x019DE5, struct.pack("I", 0xF007805C))  # Build the shop menus
-        rom.write_bytes(0x019E23, struct.pack("I", 0xF0083C5C))  # Display the item name
-        rom.write_bytes(0x019E8F, struct.pack("I", 0xF009285C))  # Display the item price
-        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009725C))  # display the player name
-        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A7E5C))  # Transfer the used data and player selection into a script for processing
-        rom.write_bytes(0x019ED3, struct.pack("I", 0xF00AB45C))  # Display SOLD OUT
-        rom.write_bytes(0x019B66, struct.pack("I", 0xF00AE25C))  # Prevent items for other players flashing the "you can equip this"
-        rom.write_bytes(0x019DA0, struct.pack("I", 0xF00AFE5C))  # Preserve the greyed out HP/PP palette
+        rom.write_bytes(0x019E23, struct.pack("I", 0xF0083F5C))  # Display the item name
+        rom.write_bytes(0x019E8F, struct.pack("I", 0xF0092B5C))  # Display the item price
+        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009755C))  # display the player name
+        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A715C))  # Transfer the used data and player selection into a script for processing
+        rom.write_bytes(0x019ED3, struct.pack("I", 0xF00AB75C))  # Display SOLD OUT
+        rom.write_bytes(0x019B66, struct.pack("I", 0xF00AE55C))  # Prevent items for other players flashing the "you can equip this"
+        rom.write_bytes(0x019DA0, struct.pack("I", 0xF00B015C))  # Preserve the greyed out HP/PP palette
 
         rom.write_bytes(0x05E0A9, struct.pack("I", 0xF4900008))  # Compare the price of the item with money on hand
         rom.write_bytes(0x05E0B6, struct.pack("I", 0xF4905808))  # Display the item we bought and ask to confirm

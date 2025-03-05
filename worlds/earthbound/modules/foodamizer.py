@@ -15,12 +15,97 @@ class EBFood:
 
 
 def randomize_food(world, rom):
+    front_names = {
+        "hp_recovery": [
+            "Ham",
+            "Chef's",
+            "Bread",
+            "Plain",
+            "Kraken",
+            "Gelato",
+            "Trout",
+            "Piggy",
+            "Picnic",
+            "Brain",
+            "Royal",
+            "Protein",
+            "Calorie",
+            "Double",
+            "Peanut",
+            "Beef",
+            "Mammoth",
+            "Spicy",
+            "Luxury",
+            "Cheese",
+            "Peculiar",
+            "Baked",
+            "Bean",
+            "Boiled",
+            "Old",
+            "Stale",
+            "Moldy",
+            "Cold",
+            "Edible",
+            "Fresh",
+            "Grilled",
+            "Hot",
+            "Molokheiya",
+            "Noble",
+            "Nut",
+            "Pasta",
+            "Pickled",
+            "Pork",
+            "Meaty",
+            "Strawberry",
+            "Apple",
+            "Cherry",
+            "Wet",
+            "Pack of",
+            "Bag of",
+            "Can of",
+            "Bottle of",
+            "Jug of",
+            "Pitcher of",
+            "Mug of",
+            "Cup of",
+            "Bowl of",
+            "Thermos of",
+            "Glass of",
+            "Goblet of",
+            "Chalice of",
+            "Canteen of",
+            "Flask of",
+            "Pouch of",
+            "Spoon of",
+        ],
+        "pp_recovery": [
+            "Magic",
+            "PP",
+            "PSI",
+            "Magic",
+            "Mana",
+            "Spirit",
+            "Mind",
+            "Soul"
+        ]
+    }
+
+    back_names = {
+        "drinks": [
+            " juice",
+            " water",
+            " cola"
+        ],
+        "food": [
+            ""
+        ]
+    }
+
     all_foods = {
         "Cookie": EBFood(0x58, "Undefined Item", 0, 0, 0),
         "Bag of Fries": EBFood(0x59, "Undefined Item", 0, 0, 0),
         "Hamburger": EBFood(0x5A, "Undefined Item", 0, 0, 0),
         "Boiled Egg": EBFood(0x5B, "Undefined Item", 0, 0, 0),
-        # "Fresh Egg": EBFood(0x5C, "Undefined Item", 0, 0, 0),
         "Picnic Lunch": EBFood(0x5D, "Undefined Item", 0, 0, 0),
         "Pasta di Summers": EBFood(0x5E, "Undefined Item", 0, 0, 0),
         "Pizza": EBFood(0x5F, "Undefined Item", 0, 0, 0),
@@ -65,32 +150,46 @@ def randomize_food(world, rom):
 
     for item in all_foods:
         food = all_foods[item]
-        is_liquid = False
-        can_repel = False
-        heals_hp = False
-        heals_pp = False
-        heal_chance = world.random.randint(1,100)
-        # Determine what type of healing item it is
-        if heal_chance < 5:
-            heals_hp = True
-            heals_pp = True
-        elif heal_chance < 15:
-            heals_pp = True
-        else:
-            heals_hp = True
-        repel_chance = world.random.randint(1,100)
+        healing_type_roll = world.random.randint(1,100)
+        consumption_type_roll = world.random.randint(1,100)
+        roll_for_if_poo_item = world.random.randint(1,100)
+        repel_chance_roll = world.random.randint(1,100)
 
-        if repel_chance < 10:
-            food.hp_recovery = 1
+        if healing_type_roll < 5:
+            healing_type = "hp_and_pp"
+        elif healing_type_roll < 20:
+            healing_type = "pp"
+        else:
+            healing_type = "hp"
+        food.restoration_amount = world.random.randint(0x00,0x32)
+
+        if consumption_type_roll < 2:
+            food.consumption_type = "all_food"
+        elif consumption_type_roll < 15:
+            food.consumption_type = "liquid"
+        else:
+            food.consumption_type = "food"
+        
+        if roll_for_if_poo_item < 10:  # 10% chance of being healing for Poo
+            food.is_poo_food = True
+
+        if repel_chance_roll < 5:  # 5% chance of repelling enemies
+            food.repel_timer = world.random.randint(1, 255)
+
+        if food.repel_timer:
             front_name = "Repel"
-            food.repel_timer = world.random.randint(0x00, 0xFF)
+        elif healing_type == "pp":
+            front_name = world.random.choice(front_names["pp_recovery"])
         else:
-            if heals_hp:
-                food.hp_recovery = world.random.randint(0x01, 0xFFFF)
-            if heals_pp:
-                food.pp_recovery = world.random.randint(0x01, 0xFFFF)
+            front_name = world.random.choice(front_names["hp_recovery"])
+        
+        if food.consumption_type == "liquid":
+            back_name = world.random.choice(back_names["drinks"])
+        else:
+            back_name = world.random.choice(back_names["food"])
+        
+        food.name = front_name + back_name
+        # print(food.name)
 
-        if not food.repel_timer:
-            liquid_chance = world.random.randint(1,100)
-            if liquid_chance < 16:
-                liquid = "pizza"
+
+        # Rough healing is 6 * restoration value

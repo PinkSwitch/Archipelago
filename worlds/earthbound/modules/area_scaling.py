@@ -1,5 +1,62 @@
 from ..modules.enemy_data import combat_regions
 
+expected_level_gains = {
+    "Ness's Mind": 0,
+    "Global ATM Access": 0,
+    "Northern Onett": 2,
+    "Onett": 3,
+    "Arcade": 3,
+    "Giant Step": 3,
+    "Twoson": 1,
+    "Everdred's House": 1,
+    "Common Condiment Shop": 0,
+    "Peaceful Rest Valley": 4,
+    "Happy-Happy Village": 2,
+    "Happy-Happy HQ": 2,
+    "Lilliput Steps": 5,
+    "Threed": 4,
+    "Boogey Tent": 1,
+    "Threed Underground": 5,
+    "Grapefruit Falls": 4,
+    "Saturn Valley": 0,
+    "Belch's Factory": 7,
+    "Upper Saturn Valley": 0,
+    "Milky Well": 6,
+    "Dusty Dunes Desert": 4,
+    "Gold Mine": 10,
+    "Monkey Caves": 0,
+    "Fourside": 1,
+    "Fourside Dept. Store": 2,
+    "Moonside": 6,
+    "Monotoli Building": 5,
+    "Magnet Hill": 7,
+    "Winters": 0,
+    "Snow Wood Boarding School": 0,
+    "Southern Winters": 8,
+    "Brickroad Maze": 2,
+    "Rainy Circle": 6,
+    "Stonehenge Base": 10,
+    "Summers": 3,
+    "Summers Museum": 0,
+    "Dalaam": 0,
+    "Pink Cloud": 5,
+    "Scaraba": 4,
+    "Pyramid": 5,
+    "Southern Scaraba": 2,
+    "Dungeon Man": 3,
+    "Deep Darkness": 0,
+    "Deep Darkness Darkness": 8,
+    "Tenda Village": 0,
+    "Lumine Hall": 8,
+    "Lost Underworld": 4,
+    "Fire Spring": 6,
+    "Magicant": 6,
+    "Sea of Eden": 3,
+    "Cave of the Present": 0,
+    "Cave of the Past": 4,
+    "Endgame": 0
+}
+
 
 def calculate_scaling(world):
     arcade = world.dungeon_connections["Arcade"]
@@ -416,6 +473,14 @@ def calculate_scaling(world):
     for region in world.accessible_regions:
         if region in combat_regions:
             world.scaled_area_order.append(region)
+
+    current_level = 1
+    world.area_levels = {}
+    for region in world.accessible_regions:
+        world.area_levels[region] = current_level
+        current_level += expected_level_gains[region]
+
+    print(world.area_levels)
 
     if world.Ness_region == "Ness's Mind":
         world.Ness_region = world.scaled_area_order[0]

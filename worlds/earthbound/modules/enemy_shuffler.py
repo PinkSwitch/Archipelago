@@ -631,7 +631,7 @@ def shuffle_enemies(world):
     for index, enemy in enumerate(shuffled_enemies):
         world.acting_enemy_list[base_enemy_table[index]] = enemy
     for enemy in world.acting_enemy_list:
-        if world.acting_enemy_list[enemy] == "Mr. Molecule":
+        if world.acting_enemy_list[enemy] == "Skate Punk":
             print(enemy)
 
 

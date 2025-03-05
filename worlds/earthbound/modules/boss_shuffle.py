@@ -186,9 +186,6 @@ def initialize_bosses(world):
 
 
 def write_bosses(world, rom):
-    print(world.boss_list[25])
-    world.boss_list[25] = "Carbon Dog"
-    print(world.boss_list[25])
     rom.write_bytes(0x15E527, bytearray([0x00, 0x00]))  # Blank out Pokey's end battle action
     rom.write_bytes(0x15B8B9, bytearray([0x00, 0x00]))
     rom.write_bytes(0x15DD13, bytearray([0x00, 0x00]))  # Blank out barf's end battle script

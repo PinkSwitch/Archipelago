@@ -638,6 +638,7 @@ enemy_psi = {
     "Soul Consuming Flame": ["null", "breathe_fire", "flaming_fireball", "spray_fire"],
     "Demonic Petunia": ["null", "extinguishing_blast", "null", "paralyzing_pollen"],
     "Li'l UFO": ["null", "null", "stuffiness_beam", "null"],
+    "Robo-Pump (2)": ["throw_bomb", "null", "null", "null"],
     "Ness's Nightmare (2)": ["special", "lifeup", "special", "null"],
     "Mr. Carpainter (2)": ["crashing_boom_bang", "null", "null", "null"],
     "Carbon Dog (2)": ["spray_fire", "null", "null", "null"],
