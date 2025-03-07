@@ -57,79 +57,77 @@ expected_level_gains = {
     "Endgame": 0
 }
 
-locations_with_item_requirements = {
-    "Onett - Traveling Entertainer": "Key to the Shack",
-    "Onett - South Road Present": "Police Badge",
-    "Onett - Tracy Gift": "Ness",
-    "Twoson - Paula's Mother": "Paula",
-    "Twoson - Everdred Meeting": "Paula",
-    "Twoson - Insignificant Location": "Insignificant Item",
-    "Happy-Happy Village - Defeat Carpainter": "Franklin Badge",
-    "Happy-Happy Village - Prisoner": "Key to the Cabin",
-    "Threed - Boogey Tent Trashcan": "Jeff",
-    "Threed - Zombie Prisoner": "Bad Key Machine",
-    "Saturn Valley - Post Belch Gift #1": "Threed Tunnels Clear",
-    "Saturn Valley - Post Belch Gift #2": "Threed Tunnels Clear",
-    "Saturn Valley - Post Belch Gift #3": "Threed Tunnels Clear",
-    "Saturn Valley - Saturn Coffee": "Threed Tunnels Clear",
-    "Monkey Caves - Talah Rama Chest #1": "Pencil Eraser",
-    "Monkey Caves - Talah Rama Chest #2": "Pencil Eraser",
-    "Monkey Caves - Talah Rama Gift": "Pencil Eraser",
-    "Monkey Caves - Monkey Power": "Pencil Eraser",
-    # Dusty dunes uh oh
-    "Snow Wood - Upper Right Locker": "Key to the Locker",
-    "Snow Wood - Upper Left Locker": "Key to the Locker",
-    "Snow Wood - Bottom Right Locker": "Key to the Locker",
-    "Snow Wood - Bottom Left Locker": "Key to the Locker",
-    "Fourside - Bakery 2F Gift": "Contact Lens",
-    "Fourside - Department Store Blackout": "Jeff",
-    "Fourside - Venus Gift": "Diamond",
-    "Summers - Museum Item": "Tiny Ruby",
-    "Dalaam - Trial of Mu": "Poo",
-    "Deep Darkness - North Alcove Truffle": "Piggy Nose",
-    "Deep Darkness - Near Land Truffle": "Piggy Nose",
-    "Deep Darkness - Present Truffle": "Piggy Nose",
-    "Deep Darkness - Village Truffle": "Piggy Nose",
-    "Deep Darkness - Entrance Truffle": "Piggy Nose",
-    "Tenda Village - Tenda Tea": "Shyness Book",
-    "Tenda Village - Tenda Gift": "Shyness Book",
-    "Tenda Village - Tenda Gift #2": "Shyness Book",
-    "Lost Underworld - Talking Rock": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 1": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 2": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 3": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 4": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 5": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 6": "Tendakraut",
-    "Lost Underworld - Tenda Camp Shop Slot 7": "Tendakraut",
-    "Dusty Dunes - Mine Food Cart Slot 1": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 2": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 3": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 4": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 5": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 6": "Mining Permit",
-    "Dusty Dunes - Mine Food Cart Slot 7": "Mining Permit",
-    "Saturn Valley Shop - Post-Belch Saturn Slot 1": "Threed Tunnels Clear",
-    "Saturn Valley Shop - Post-Belch Saturn Slot 2": "Threed Tunnels Clear",
-    "Saturn Valley Shop - Post-Belch Saturn Slot 3": "Threed Tunnels Clear",
-    "Saturn Valley Shop - Post-Belch Saturn Slot 4": "Threed Tunnels Clear",
-    "Deep Darkness - Arms Dealer Slot 1": "ATM Access",
-    "Deep Darkness - Arms Dealer Slot 2": "ATM Access",
-    "Deep Darkness - Arms Dealer Slot 3": "ATM Access",
-    "Deep Darkness - Arms Dealer Slot 4": "ATM Access",
-    "Deep Darkness - Businessman Slot 1": "ATM Access",
-    "Deep Darkness - Businessman Slot 2": "ATM Access",
-    "Deep Darkness - Businessman Slot 3": "ATM Access",
-    "Deep Darkness - Businessman Slot 4": "ATM Access",
-    "Deep Darkness - Businessman Slot 5": "ATM Access",
-    "Deep Darkness - Businessman Slot 6": "ATM Access",
-    "Deep Darkness - Businessman Slot 7": "ATM Access",
-    "Dalaam Restaurant - Slot 1": "ATM Access",
-    "Dalaam Restaurant - Slot 2": "ATM Access",
-    "Dalaam Restaurant - Slot 3": "ATM Access",
-    "Dalaam Restaurant - Slot 4": "ATM Access",
-
-}
+locations_with_item_requirements = [
+    "Onett - Traveling Entertainer",
+    "Onett - South Road Present",
+    "Onett - Tracy Gift",
+    "Twoson - Paula's Mother",
+    "Twoson - Everdred Meeting",
+    "Twoson - Insignificant Location",
+    "Happy-Happy Village - Defeat Carpainter",
+    "Happy-Happy Village - Prisoner",
+    "Threed - Boogey Tent Trashcan",
+    "Threed - Zombie Prisoner",
+    "Saturn Valley - Post Belch Gift #1",
+    "Saturn Valley - Post Belch Gift #2",
+    "Saturn Valley - Post Belch Gift #3",
+    "Saturn Valley - Saturn Coffee",
+    "Monkey Caves - Talah Rama Chest #1",
+    "Monkey Caves - Talah Rama Chest #2",
+    "Monkey Caves - Talah Rama Gift",
+    "Monkey Caves - Monkey Power",
+    "Dusty Dunes - Mine Reward",
+    "Snow Wood - Upper Right Locker",
+    "Snow Wood - Upper Left Locker",
+    "Snow Wood - Bottom Right Locker",
+    "Snow Wood - Bottom Left Locker",
+    "Fourside - Bakery 2F Gift",
+    "Fourside - Department Store Blackout",
+    "Fourside - Venus Gift",
+    "Summers - Museum Item",
+    "Dalaam - Trial of Mu",
+    "Deep Darkness - North Alcove Truffle",
+    "Deep Darkness - Near Land Truffle",
+    "Deep Darkness - Present Truffle",
+    "Deep Darkness - Village Truffle",
+    "Deep Darkness - Entrance Truffle",
+    "Tenda Village - Tenda Tea",
+    "Tenda Village - Tenda Gift",
+    "Tenda Village - Tenda Gift #2",
+    "Lost Underworld - Talking Rock",
+    "Lost Underworld - Tenda Camp Shop Slot 1",
+    "Lost Underworld - Tenda Camp Shop Slot 2",
+    "Lost Underworld - Tenda Camp Shop Slot 3",
+    "Lost Underworld - Tenda Camp Shop Slot 4",
+    "Lost Underworld - Tenda Camp Shop Slot 5",
+    "Lost Underworld - Tenda Camp Shop Slot 6",
+    "Lost Underworld - Tenda Camp Shop Slot 7",
+    "Dusty Dunes - Mine Food Cart Slot 1",
+    "Dusty Dunes - Mine Food Cart Slot 2",
+    "Dusty Dunes - Mine Food Cart Slot 3",
+    "Dusty Dunes - Mine Food Cart Slot 4",
+    "Dusty Dunes - Mine Food Cart Slot 5",
+    "Dusty Dunes - Mine Food Cart Slot 6",
+    "Dusty Dunes - Mine Food Cart Slot 7",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 1",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 2",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 3",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 4",
+    "Deep Darkness - Arms Dealer Slot 1",
+    "Deep Darkness - Arms Dealer Slot 2",
+    "Deep Darkness - Arms Dealer Slot 3",
+    "Deep Darkness - Arms Dealer Slot 4",
+    "Deep Darkness - Businessman Slot 1",
+    "Deep Darkness - Businessman Slot 2",
+    "Deep Darkness - Businessman Slot 3",
+    "Deep Darkness - Businessman Slot 4",
+    "Deep Darkness - Businessman Slot 5",
+    "Deep Darkness - Businessman Slot 6",
+    "Deep Darkness - Businessman Slot 7",
+    "Dalaam Restaurant - Slot 1",
+    "Dalaam Restaurant - Slot 2",
+    "Dalaam Restaurant - Slot 3",
+    "Dalaam Restaurant - Slot 4"]
 
 
 def calculate_scaling(world):
@@ -465,7 +463,8 @@ def calculate_scaling(world):
             regions_that_were_already_scaled.append(last_region)
 
             if location.item.player == world.player and location.item.name == "Ness" and not scaled_chars["Ness"]:
-                if location.parent_region.name in combat_regions and location.player == world.player:
+                if location.parent_region.name in combat_regions and (location.player == world.player) and (
+                        location.name not in locations_with_item_requirements):
                     world.Ness_region = location.parent_region.name
                 else:
                     world.Ness_region = last_region
@@ -480,21 +479,24 @@ def calculate_scaling(world):
                 scaled_chars["Paula"] = True
 
             if location.item.player == world.player and location.item.name == "Jeff" and not scaled_chars["Jeff"]:
-                if location.parent_region.name in combat_regions and location.player == world.player:
+                if location.parent_region.name in combat_regions and (location.player == world.player) and (
+                        location.name not in locations_with_item_requirements):
                     world.Jeff_region = location.parent_region.name
                 else:
                     world.Jeff_region = last_region
                 scaled_chars["Jeff"] = True
 
             if location.item.player == world.player and location.item.name == "Poo" and not scaled_chars["Poo"]:
-                if location.parent_region.name in combat_regions and location.player == world.player:
+                if location.parent_region.name in combat_regions and (location.player == world.player) and (
+                        location.name not in locations_with_item_requirements):
                     world.Poo_region = location.parent_region.name
                 else:
                     world.Poo_region = last_region
                 scaled_chars["Poo"] = True
 
             if location.item.player == world.player and location.item.name == "Franklin Badge" and not badge_scaled:
-                if location.parent_region.name in combat_regions and location.player == world.player:
+                if location.parent_region.name in combat_regions and (location.player == world.player) and (
+                        location.name not in locations_with_item_requirements):
                     world.Badge_region = location.parent_region.name
                 else:
                     world.Badge_region = last_region
@@ -573,3 +575,6 @@ def calculate_scaling(world):
 
     if world.Badge_region == "Ness's Mind":
         world.Badge_region = world.scaled_area_order[0]
+
+# Just a thought for later. Can scaled chars ALWAYs be last region, since you know, it'll usuablly be the region we're in? Unless it's a locked item
+# which we want

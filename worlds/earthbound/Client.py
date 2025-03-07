@@ -93,12 +93,17 @@ class EarthBoundClient(SNIClient):
         is_in_battle = await snes_read(ctx, IS_IN_BATTLE, 1)
         char_count = await snes_read(ctx, CHAR_COUNT, 1)
         snes_buffered_write(ctx, GOT_DEATH_FROM_SERVER, bytes([0x01]))
+        text_open = await snes_read(ctx, OPEN_WINDOW, 1)
 
         if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
             return
 
         # If suppression is set and we're not in a battle dont do deathlinks
         if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00:
+            return
+
+        # Prevent overworld deaths while a menu is open
+        if not is_in_battle[0] and text_open[0] != 0xFF:
             return
 
         for i in range(char_count[0]):
