@@ -34,6 +34,8 @@ boss_sprite_pointers = {
 
 }
 
+banned_transformations = ["Master Belch", "Master Barf", "Kraken", "Heavily Armed Pokey"]
+
 
 def initialize_bosses(world):
     world.boss_list = [
@@ -186,6 +188,14 @@ def initialize_bosses(world):
 
 
 def write_bosses(world, rom):
+    world.boss_list[25] = "Carbon Dog"
+
+    if world.boss_list[25] == "Carbon Dog" and world.boss_list[27] in banned_transformations:
+        original_boss = world.boss_list[27]
+        transformation_replacement = world.random.randint(0,24)
+        world.boss_list[27] = world.boss_list[transformation_replacement]
+        world.boss_list[transformation_replacement] = original_boss
+
     rom.write_bytes(0x15E527, bytearray([0x00, 0x00]))  # Blank out Pokey's end battle action
     rom.write_bytes(0x15B8B9, bytearray([0x00, 0x00]))
     rom.write_bytes(0x15DD13, bytearray([0x00, 0x00]))  # Blank out barf's end battle script
@@ -273,7 +283,7 @@ def write_bosses(world, rom):
         rom.write_bytes(0x2FFF16, bytearray([0x00]))  # Count of enemies
         rom.write_bytes(0x2FFF17, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id))  # Add diamond dog
         rom.write_bytes(0x2FFF19, bytearray([0xFF]))
-        rom.write_bytes(world.enemies[world.boss_list[27]].address + 91, bytearray([0x02]))  # Force to front row
+        rom.write_bytes(world.enemies[world.boss_list[27]].address + 91, bytearray([0x00]))  # Force to front row
     else:
         rom.write_bytes(0x2FFF16, bytearray([0xFF]))
     
