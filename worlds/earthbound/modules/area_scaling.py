@@ -4,57 +4,131 @@ expected_level_gains = {
     "Ness's Mind": 0,
     "Global ATM Access": 0,
     "Northern Onett": 2,
-    "Onett": 3,
-    "Arcade": 3,
+    "Onett": 2,
+    "Arcade": 0,
     "Giant Step": 3,
-    "Twoson": 1,
-    "Everdred's House": 1,
+    "Twoson": 0,
+    "Everdred's House": 0,
     "Common Condiment Shop": 0,
-    "Peaceful Rest Valley": 4,
-    "Happy-Happy Village": 2,
+    "Peaceful Rest Valley": 2,
+    "Happy-Happy Village": 0,
     "Happy-Happy HQ": 2,
-    "Lilliput Steps": 5,
-    "Threed": 4,
-    "Boogey Tent": 1,
-    "Threed Underground": 5,
-    "Grapefruit Falls": 4,
+    "Lilliput Steps": 3,
+    "Threed": 2,
+    "Boogey Tent": 0,
+    "Threed Underground": 2,
+    "Grapefruit Falls": 1,
     "Saturn Valley": 0,
-    "Belch's Factory": 7,
+    "Belch's Factory": 2,
     "Upper Saturn Valley": 0,
-    "Milky Well": 6,
-    "Dusty Dunes Desert": 4,
-    "Gold Mine": 10,
-    "Monkey Caves": 0,
-    "Fourside": 1,
+    "Milky Well": 3,
+    "Dusty Dunes Desert": 2,
+    "Gold Mine": 4,
+    "Monkey Caves": 2,
+    "Fourside": 0,
     "Fourside Dept. Store": 2,
-    "Moonside": 6,
-    "Monotoli Building": 5,
-    "Magnet Hill": 7,
-    "Winters": 0,
+    "Moonside": 3,
+    "Monotoli Building": 2,
+    "Magnet Hill": 2,
+    "Winters": 2,
     "Snow Wood Boarding School": 0,
-    "Southern Winters": 8,
+    "Southern Winters": 2,
     "Brickroad Maze": 2,
-    "Rainy Circle": 6,
-    "Stonehenge Base": 10,
-    "Summers": 3,
+    "Rainy Circle": 0,
+    "Stonehenge Base": 2,
+    "Summers": 1,
     "Summers Museum": 0,
     "Dalaam": 0,
-    "Pink Cloud": 5,
-    "Scaraba": 4,
-    "Pyramid": 5,
-    "Southern Scaraba": 2,
-    "Dungeon Man": 3,
+    "Pink Cloud": 2,
+    "Scaraba": 0,
+    "Pyramid": 2,
+    "Southern Scaraba": 0,
+    "Dungeon Man": 2,
     "Deep Darkness": 0,
-    "Deep Darkness Darkness": 8,
+    "Deep Darkness Darkness": 3,
     "Tenda Village": 0,
-    "Lumine Hall": 8,
-    "Lost Underworld": 4,
-    "Fire Spring": 6,
-    "Magicant": 6,
-    "Sea of Eden": 3,
+    "Lumine Hall": 5,
+    "Lost Underworld": 2,
+    "Fire Spring": 4,
+    "Magicant": 2,
+    "Sea of Eden": 2,
     "Cave of the Present": 0,
     "Cave of the Past": 4,
     "Endgame": 0
+}
+
+locations_with_item_requirements = {
+    "Onett - Traveling Entertainer": "Key to the Shack",
+    "Onett - South Road Present": "Police Badge",
+    "Onett - Tracy Gift": "Ness",
+    "Twoson - Paula's Mother": "Paula",
+    "Twoson - Everdred Meeting": "Paula",
+    "Twoson - Insignificant Location": "Insignificant Item",
+    "Happy-Happy Village - Defeat Carpainter": "Franklin Badge",
+    "Happy-Happy Village - Prisoner": "Key to the Cabin",
+    "Threed - Boogey Tent Trashcan": "Jeff",
+    "Threed - Zombie Prisoner": "Bad Key Machine",
+    "Saturn Valley - Post Belch Gift #1": "Threed Tunnels Clear",
+    "Saturn Valley - Post Belch Gift #2": "Threed Tunnels Clear",
+    "Saturn Valley - Post Belch Gift #3": "Threed Tunnels Clear",
+    "Saturn Valley - Saturn Coffee": "Threed Tunnels Clear",
+    "Monkey Caves - Talah Rama Chest #1": "Pencil Eraser",
+    "Monkey Caves - Talah Rama Chest #2": "Pencil Eraser",
+    "Monkey Caves - Talah Rama Gift": "Pencil Eraser",
+    "Monkey Caves - Monkey Power": "Pencil Eraser",
+    # Dusty dunes uh oh
+    "Snow Wood - Upper Right Locker": "Key to the Locker",
+    "Snow Wood - Upper Left Locker": "Key to the Locker",
+    "Snow Wood - Bottom Right Locker": "Key to the Locker",
+    "Snow Wood - Bottom Left Locker": "Key to the Locker",
+    "Fourside - Bakery 2F Gift": "Contact Lens",
+    "Fourside - Department Store Blackout": "Jeff",
+    "Fourside - Venus Gift": "Diamond",
+    "Summers - Museum Item": "Tiny Ruby",
+    "Dalaam - Trial of Mu": "Poo",
+    "Deep Darkness - North Alcove Truffle": "Piggy Nose",
+    "Deep Darkness - Near Land Truffle": "Piggy Nose",
+    "Deep Darkness - Present Truffle": "Piggy Nose",
+    "Deep Darkness - Village Truffle": "Piggy Nose",
+    "Deep Darkness - Entrance Truffle": "Piggy Nose",
+    "Tenda Village - Tenda Tea": "Shyness Book",
+    "Tenda Village - Tenda Gift": "Shyness Book",
+    "Tenda Village - Tenda Gift #2": "Shyness Book",
+    "Lost Underworld - Talking Rock": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 1": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 2": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 3": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 4": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 5": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 6": "Tendakraut",
+    "Lost Underworld - Tenda Camp Shop Slot 7": "Tendakraut",
+    "Dusty Dunes - Mine Food Cart Slot 1": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 2": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 3": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 4": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 5": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 6": "Mining Permit",
+    "Dusty Dunes - Mine Food Cart Slot 7": "Mining Permit",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 1": "Threed Tunnels Clear",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 2": "Threed Tunnels Clear",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 3": "Threed Tunnels Clear",
+    "Saturn Valley Shop - Post-Belch Saturn Slot 4": "Threed Tunnels Clear",
+    "Deep Darkness - Arms Dealer Slot 1": "ATM Access",
+    "Deep Darkness - Arms Dealer Slot 2": "ATM Access",
+    "Deep Darkness - Arms Dealer Slot 3": "ATM Access",
+    "Deep Darkness - Arms Dealer Slot 4": "ATM Access",
+    "Deep Darkness - Businessman Slot 1": "ATM Access",
+    "Deep Darkness - Businessman Slot 2": "ATM Access",
+    "Deep Darkness - Businessman Slot 3": "ATM Access",
+    "Deep Darkness - Businessman Slot 4": "ATM Access",
+    "Deep Darkness - Businessman Slot 5": "ATM Access",
+    "Deep Darkness - Businessman Slot 6": "ATM Access",
+    "Deep Darkness - Businessman Slot 7": "ATM Access",
+    "Dalaam Restaurant - Slot 1": "ATM Access",
+    "Dalaam Restaurant - Slot 2": "ATM Access",
+    "Dalaam Restaurant - Slot 3": "ATM Access",
+    "Dalaam Restaurant - Slot 4": "ATM Access",
+
 }
 
 
@@ -158,24 +232,24 @@ def calculate_scaling(world):
 
         "Northern Onett": {"Onett": [["Nothing"]]},
         "Onett": 
-                {"Northern Onett": [["Police Badge"]],
-                "Twoson": [["Police Badge"]],
-                giant_step: [["Key to the Shack"]],
-                arcade: [["Nothing"]]},
+            {"Northern Onett": [["Police Badge"]],
+             "Twoson": [["Police Badge"]],
+             giant_step: [["Key to the Shack"]],
+             arcade: [["Nothing"]]},
         
         arcade: {arcade: [["Nothing"]]},
         "Giant Step": {"Giant Step": [["Nothing"]]},
 
         "Twoson": {"Onett": [["Police Badge"]],
-                "Peaceful Rest Valley": [["Pencil Eraser"], ["Valley Bridge Repair"]],
-                "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
-                "Everdred's House": [["Paula"]],
-                "Common Condiment Shop": [["Nothing"]]},
+                   "Peaceful Rest Valley": [["Pencil Eraser"], ["Valley Bridge Repair"]],
+                   "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
+                   "Everdred's House": [["Paula"]],
+                   "Common Condiment Shop": [["Nothing"]]},
 
         "Everdred's House": {"Everdred's House": [["Nothing"]]},
 
         "Peaceful Rest Valley": {"Twoson": [["Pencil Eraser"], ["Valley Bridge Repair"]],
-                                "Happy-Happy Village": [["Nothing"]]},
+                                 "Happy-Happy Village": [["Nothing"]]},
 
         "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
                                 lilliput_steps: [["Nothing"]],
@@ -186,22 +260,22 @@ def calculate_scaling(world):
         "Lilliput Steps": {"Lilliput Steps": [["Nothing"]]},
 
         "Threed": {"Twoson": [["Threed Tunnels Clear"]],
-                "Dusty Dunes Desert": [["Threed Tunnels Clear"]],
-                "Southern Winters": [["UFO Engine", "Bad Key Machine"]],
-                "Threed Underground": [["Zombie Paper"]],
-                "Boogey Tent": [["Jeff"]],
-                "Winters": [["UFO Engine", "Bad Key Machine"]]},
+                   "Dusty Dunes Desert": [["Threed Tunnels Clear"]],
+                   "Southern Winters": [["UFO Engine", "Bad Key Machine"]],
+                   "Threed Underground": [["Zombie Paper"]],
+                   "Boogey Tent": [["Jeff"]],
+                   "Winters": [["UFO Engine", "Bad Key Machine"]]},
 
         "Boogey Tent": {"Boogey Tent": [["Nothing"]]},
 
         "Threed Underground": {"Grapefruit Falls": [["Nothing"]]},
                                 
         "Grapefruit Falls": {belch_factory: [["Jar of Fly Honey"]],
-                            "Saturn Valley": [["Nothing"]],
-                            "Threed Underground": [["Nothing"]]},
+                             "Saturn Valley": [["Nothing"]],
+                             "Threed Underground": [["Nothing"]]},
 
         "Saturn Valley": {"Grapefruit Falls": [["Nothing"]],
-                        "Cave of the Present": [["Meteorite Piece"]]},
+                          "Cave of the Present": [["Meteorite Piece"]]},
 
         belch_factory: {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
 
@@ -211,20 +285,20 @@ def calculate_scaling(world):
         "Milky Well": {"Milky Well": [["Nothing"]]},
 
         "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
-                            monkey_caves: [["King Banana"]],
-                            gold_mine: [["Mining Permit"]],
-                            "Fourside": [["Nothing"]]},
+                               monkey_caves: [["King Banana"]],
+                               gold_mine: [["Mining Permit"]],
+                               "Fourside": [["Nothing"]]},
 
         "Monkey Caves": {"Monkey Caves": [["Nothing"]]},
 
         "Gold Mine": {"Gold Mine": [["Nothing"]]},
 
         "Fourside": {"Dusty Dunes Desert": [["Nothing"]],
-                    monotoli_building: [["Yogurt Dispenser"]],
-                    "Threed": [["Diamond"]],
-                    magnet_hill: [["Signed Banana"]],
-                    "Fourside Dept. Store": [["Jeff"]],
-                    moonside: [["Nothing"]]},
+                     monotoli_building: [["Yogurt Dispenser"]],
+                     "Threed": [["Diamond"]],
+                     magnet_hill: [["Signed Banana"]],
+                     "Fourside Dept. Store": [["Jeff"]],
+                     moonside: [["Nothing"]]},
 
         "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
 
@@ -240,8 +314,8 @@ def calculate_scaling(world):
         "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
 
         "Southern Winters": {stonehenge_base: [["Eraser Eraser"]],
-                            brickroad_maze: [["Nothing"]],
-                            "Winters": ["Nothing"]},
+                             brickroad_maze: [["Nothing"]],
+                             "Winters": ["Nothing"]},
 
         brickroad_maze: {rainy_circle: [["Nothing"]]},
 
@@ -270,10 +344,10 @@ def calculate_scaling(world):
         "Deep Darkness": {"Deep Darkness Darkness": [["Hawk Eye"]]},
 
         "Deep Darkness Darkness": {"Tenda Village": [["Nothing"]],
-                                "Deep Darkness": [["Nothing"]]},
+                                   "Deep Darkness": [["Nothing"]]},
 
         "Tenda Village": {lumine_hall: [["Shyness Book"]],
-                        "Deep Darkness Darkness": [["Hawk Eye"]]},
+                          "Deep Darkness Darkness": [["Hawk Eye"]]},
 
         "Lumine Hall": {"Lost Underworld": [["Nothing"]]},
 
@@ -337,20 +411,21 @@ def calculate_scaling(world):
     world.scaled_area_order = []
     passed_connections = []
     local_prog = []
-    Ness_scaled = False
-    Paula_scaled = False
-    Jeff_scaled = False
-    Poo_scaled = False
+    ness_scaled = False
+    paula_scaled = False
+    jeff_scaled = False
+    poo_scaled = False
     badge_scaled = False
     scaled_chars = {
-        "Ness": Ness_scaled,
-        "Paula": Paula_scaled,
-        "Jeff": Jeff_scaled,
-        "Poo": Poo_scaled
+        "Ness": ness_scaled,
+        "Paula": paula_scaled,
+        "Jeff": jeff_scaled,
+        "Poo": poo_scaled
     }
 
     sphere_count = 0
     last_region = "Ness's Mind"
+    regions_that_were_already_scaled = []
     early_regions = []
     world.Ness_region = "Ness's Mind"
     world.Paula_region = "Ness's Mind"
@@ -383,8 +458,11 @@ def calculate_scaling(world):
                     item_regions[location.item.name] = []
                 item_regions[location.item.name].append(location.parent_region.name)
 
-            if location.player == world.player and location.parent_region.name in combat_regions:
+            if location.player == world.player and location.parent_region.name in combat_regions and (
+                    location.parent_region.name not in regions_that_were_already_scaled):
                 last_region = location.parent_region.name
+            
+            regions_that_were_already_scaled.append(last_region)
 
             if location.item.player == world.player and location.item.name == "Ness" and not scaled_chars["Ness"]:
                 if location.parent_region.name in combat_regions and location.player == world.player:
@@ -394,7 +472,8 @@ def calculate_scaling(world):
                 scaled_chars["Ness"] = True
 
             if location.item.player == world.player and location.item.name == "Paula" and not scaled_chars["Paula"]:
-                if location.parent_region.name in combat_regions and location.player == world.player:
+                if location.parent_region.name in combat_regions and (location.player == world.player) and (
+                        location.name not in locations_with_item_requirements):
                     world.Paula_region = location.parent_region.name
                 else:
                     world.Paula_region = last_region
@@ -479,8 +558,6 @@ def calculate_scaling(world):
     for region in world.accessible_regions:
         world.area_levels[region] = current_level
         current_level += expected_level_gains[region]
-
-    print(world.area_levels)
 
     if world.Ness_region == "Ness's Mind":
         world.Ness_region = world.scaled_area_order[0]

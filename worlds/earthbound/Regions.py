@@ -184,7 +184,7 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Scaraba", player).add_exits([pyramid_connection, "Global ATM Access", "Common Condiment Shop"],
                                                        {pyramid_connection: lambda state: state.has("Hieroglyph Copy", player)})
 
-    multiworld.get_region("Pyramid", player).add_exits(["Southern Scaraba"])
+    multiworld.get_region(pyramid_connection, player).add_exits(["Southern Scaraba"])
 
     multiworld.get_region("Southern Scaraba", player).add_exits([dungeon_man_connection],
                                                                 {dungeon_man_connection: lambda state: state.has_any({"Key to the Tower"}, player)})
