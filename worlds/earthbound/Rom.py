@@ -78,12 +78,13 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, player: int):
-    rom.copy_bytes(0x1578DD, 0x3D, 0x1578FC) # Threed/Saturn teleport move
-    rom.copy_bytes(0x15791B, 0xF7, 0x157959)
+    rom.copy_bytes(0x1578DD, 0x3E, 0x34A060) # Threed/Saturn teleport move
+    rom.copy_bytes(0x15791B, 0xF8, 0x157959)
 
-    rom.copy_bytes(0x340000, 0x1E, 0x1578DD)
-    rom.copy_bytes(0x340020, 0x1E, 0x15793A)
-    rom.copy_bytes(0x340040, 0x1E, 0x157A51)
+    rom.copy_bytes(0x34A000, 0x1F, 0x1578DD)
+    rom.copy_bytes(0x34A020, 0x1F, 0x15793A)
+    rom.copy_bytes(0x34A040, 0x1F, 0x157A51)
+    rom.copy_bytes(0x34A060, 0x3E, 0x1578FC)
 
     starting_area_coordinates = {
                     0: [0x50, 0x04, 0xB5, 0x1F],  # North Onett
