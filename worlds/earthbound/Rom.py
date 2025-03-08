@@ -78,6 +78,9 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, player: int):
+    rom.copy_bytes(0x1578DD, 0x3D, 0x1578FC) # Threed/Saturn teleport move
+    rom.copy_bytes(0x15791B, 0xF7, ???)
+
     starting_area_coordinates = {
                     0: [0x50, 0x04, 0xB5, 0x1F],  # North Onett
                     1: [0x52, 0x06, 0x4C, 0x1F],  # Onett
@@ -613,7 +616,7 @@ def patch_rom(world, rom, player: int):
         randomize_psi_palettes(world, rom)
 
     apply_enemy_shuffle(world, rom)
-    randomize_food(world,rom)
+    # randomize_food(world,rom)
     write_bosses(world, rom)
     if world.options.dungeon_shuffle:
         write_dungeon_entrances(world, rom)

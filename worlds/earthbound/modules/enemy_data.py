@@ -1107,7 +1107,9 @@ def scale_enemies(world, rom):
     melody_number = 1
     has_badge = False
     c = Counter([world.Ness_region, world.Paula_region, world.Jeff_region, world.Poo_region])
-    for region, level in zip(world.scaled_area_order, levels):
+    # for region, level in zip(world.scaled_area_order, levels):
+    for region in world.scaled_area_order:
+        level = world.area_levels[region]
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
                       "Lumine Hall", "Fire Spring"]:
