@@ -356,12 +356,11 @@ def write_shop_checks(world, rom, shop_checks):
             if ItemClassification.trap in location.item.classification:
                 price = 0
             else:
-                price = world.random.randint(1, (100 * (world.accessible_regions.index(location.parent_region.name) + 1)))
+                price = world.random.randint(1, (75 * (world.accessible_regions.index(location.parent_region.name) + 1)))
             if not world.accessible_regions.index(location.parent_region.name):
                 price = int(price / 2)
             elif location.parent_region.name == "Onett" and not world.options.random_start_location:
                 price = int(price / 3)
-
             item_struct = struct.pack('<BHBH', item_id, price, item_type, flag)
             rom.write_bytes(0x34002A + (0x06 * flag), item_struct)
             menu_long_name = text_encoder(location.item.name, 127)

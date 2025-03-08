@@ -188,8 +188,6 @@ def initialize_bosses(world):
 
 
 def write_bosses(world, rom):
-    world.boss_list[25] = "Carbon Dog"
-
     if world.boss_list[25] == "Carbon Dog" and world.boss_list[27] in banned_transformations:
         original_boss = world.boss_list[27]
         transformation_replacement = world.random.randint(0,24)
@@ -284,6 +282,9 @@ def write_bosses(world, rom):
         rom.write_bytes(0x2FFF17, struct.pack("H", world.boss_info[world.boss_list[27]].enemy_id))  # Add diamond dog
         rom.write_bytes(0x2FFF19, bytearray([0xFF]))
         rom.write_bytes(world.enemies[world.boss_list[27]].address + 91, bytearray([0x00]))  # Force to front row
+    elif world.boss_list[25] == "Giygas (4)":
+        rom.write_bytes(0x0121DF, bytearray([0x00]))
+        rom.write_bytes(0x2FFF16, bytearray([0xFF]))
     else:
         rom.write_bytes(0x2FFF16, bytearray([0xFF]))
     
