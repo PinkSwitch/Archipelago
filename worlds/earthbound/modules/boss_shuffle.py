@@ -37,7 +37,7 @@ boss_sprite_pointers = {
 banned_transformations = ["Master Belch", "Master Barf", "Kraken", "Heavily Armed Pokey"]
 
 
-def initialize_bosses(world):
+def initialize_bosses(world) -> None:
     world.boss_list = [
         "Frank",
         "Frankystein Mark II",
@@ -187,7 +187,7 @@ def initialize_bosses(world):
             world.boss_list.insert(29, "Giygas (4)")
 
 
-def write_bosses(world, rom):
+def write_bosses(world, rom) -> None:
     if world.boss_list[25] == "Carbon Dog" and world.boss_list[27] in banned_transformations:
         original_boss = world.boss_list[27]
         transformation_replacement = world.random.randint(0,24)

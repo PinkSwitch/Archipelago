@@ -97,7 +97,7 @@ class EarthBoundWorld(World):
         self.armor_list: Dict[str, EBArmor]
         self.weapon_list: Dict[str, EBWeapon]
 
-    def generate_early(self):  # Todo: place locked items in generate_early
+    def generate_early(self) -> None:  # Todo: place locked items in generate_early
         self.starting_character = self.options.starting_character.current_key.capitalize()
         self.locals = []
         local_space_count = 0
@@ -182,7 +182,7 @@ class EarthBoundWorld(World):
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
 
-    def generate_output(self, output_directory: str):
+    def generate_output(self, output_directory: str) -> None:
         try:
             patch = EBProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
             patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
@@ -221,7 +221,7 @@ class EarthBoundWorld(World):
           #  "items_remote": self.options.remote_items.value
         }
 
-    def modify_multidata(self, multidata: dict):
+    def modify_multidata(self, multidata: dict) -> None:
         import base64
         # wait for self.rom_name to be available.
         self.rom_name_available_event.wait()

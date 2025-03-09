@@ -130,7 +130,7 @@ locations_with_item_requirements = [
     "Dalaam Restaurant - Slot 4"]
 
 
-def calculate_scaling(world):
+def calculate_scaling(world) -> None:
     arcade = world.dungeon_connections["Arcade"]
     giant_step = world.dungeon_connections["Giant Step"]
     lilliput_steps = world.dungeon_connections["Lilliput Steps"]

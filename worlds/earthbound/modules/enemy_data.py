@@ -255,7 +255,7 @@ def initialize_enemies(world):
         "Master Belch": shuffled_enemies["Slimy Little Pile"],
         "Trillionage Sprout": shuffled_enemies["Tough Mobile Sprout"],
         "Master Barf": shuffled_enemies["Even Slimier Little Pile"],
-        "Starman Deluxe": [shuffled_enemies["Starman"], world.enemies["Starman Super"]],
+        "Starman Deluxe": [shuffled_enemies["Starman"], shuffled_enemies["Starman Super"]],
         "Carbon Dog": world.enemies["Diamond Dog"]  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
     }
 
@@ -1025,11 +1025,6 @@ def scale_enemy_speed(enemy, new_level):
 
     enemy_scaled_speed = (normal_dodge_chance * 500 + assumed_player_speed_for_level(new_level)) / 2
     return enemy_scaled_speed
-
-
-def scale_exp(base_exp, base_level, new_level, k):
-    new_exp = base_exp * (new_level / base_level) ** k
-    return new_exp
 
 
 def scale_exp_2(base_exp, base_level, new_level, world):

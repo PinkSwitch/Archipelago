@@ -12,7 +12,7 @@ class EBDungeonDoor:
     is_script: Optional[bool] = False
 
 
-def shuffle_dungeons(world):
+def shuffle_dungeons(world) -> None:
     # Is the dept. store a dungeon
     single_exit_dungeons = [
         "Giant Step",
@@ -104,7 +104,7 @@ def shuffle_dungeons(world):
         world.dungeon_connections[entrance] = shuffled_double_dungeons[index]
 
 
-def write_dungeon_entrances(world, rom):
+def write_dungeon_entrances(world, rom) -> None:
     dungeon_entrances = {
         "Arcade": ["Arcade Entrance", "Arcade Exit", "Arcade Back Exit", "Arcade Back Entrance"],
         "Giant Step": ["Giant Step Entrance", "Giant Step Exit"],

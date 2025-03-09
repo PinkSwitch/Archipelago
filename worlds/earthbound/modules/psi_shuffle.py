@@ -1,7 +1,7 @@
 import struct
 
 
-def shuffle_psi(world):
+def shuffle_psi(world) -> None:
     world.offensive_psi_slots = [
         "Special",
         "Flash",
@@ -406,7 +406,7 @@ def shuffle_psi(world):
     ]
 
 
-def write_psi(world, rom):
+def write_psi(world, rom) -> None:
     from ..game_data.text_data import text_encoder
     psi_num = 0
     for spell, (address, levels) in world.psi_address.items():
@@ -505,5 +505,5 @@ def write_psi(world, rom):
     rom.write_bytes(0x15C06D, bytearray(struct.pack("H", world.gadget_actions[world.jeff_assist_items[1]][1])))
 
 
-def adjust_psi_list(psi_input, spell, index):
+def adjust_psi_list(psi_input, spell, index) -> None:
     psi_input.insert(index, (psi_input.pop(psi_input.index(spell))))

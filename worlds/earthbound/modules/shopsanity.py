@@ -284,7 +284,7 @@ shop_locations = {
 }
 
 
-def write_shop_checks(world, rom, shop_checks):
+def write_shop_checks(world, rom, shop_checks) -> None:
     unsellable_filler_prices = {
         "Broken Machine": 150,
         "Broken Air Gun": 110,
