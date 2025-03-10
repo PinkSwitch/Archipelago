@@ -32,8 +32,9 @@ expected_level_gains = {
     "Magnet Hill": 2,
     "Winters": 2,
     "Snow Wood Boarding School": 0,
-    "Southern Winters": 2,
+    "Southern Winters": 1,
     "Brickroad Maze": 2,
+    "Andonuts Lab Area": 1,
     "Rainy Circle": 0,
     "Stonehenge Base": 2,
     "Summers": 1,
@@ -165,7 +166,7 @@ def calculate_scaling(world) -> None:
         "Happy-Happy Village": ["Peaceful Rest Valley", lilliput_steps, happy_happy_hq],
         "Happy-Happy HQ": ["Happy-Happy HQ"],
         "Lilliput Steps": ["Lilliput Steps"],
-        "Threed": ["Twoson", "Dusty Dunes Desert", "Southern Winters", "Threed Underground", "Boogey Tent", "Winters"],
+        "Threed": ["Twoson", "Dusty Dunes Desert", "Andonuts Lab Area", "Threed Underground", "Boogey Tent", "Winters"],
         "Boogey Tent": ["Boogey Tent"],
         "Threed Underground": ["Grapefruit Falls"],
         "Grapefruit Falls": [belch_factory, "Saturn Valley", "Threed Underground"],
@@ -183,10 +184,11 @@ def calculate_scaling(world) -> None:
         "Magnet Hill": ["Magnet Hill"],
         "Winters": ["Snow Wood Boarding School", "Southern Winters"],
         "Snow Wood Boarding School": ["Snow Wood Boarding School"],
-        "Southern Winters": ["Winters", stonehenge_base, brickroad_maze],
-        brickroad_maze: [rainy_circle],
+        "Southern Winters": [brickroad_maze],
+        brickroad_maze: [rainy_circle, "Southern Winters"],
         "Stonehenge Base": ["Stonehenge Base"],
-        rainy_circle: [rainy_circle],
+        rainy_circle: [brickroad_maze, "Andonuts Lab Area"],
+        "Andonuts Lab Area": [rainy_circle, "Winters", stonehenge_base],
         "Summers": ["Scaraba", "Summers Museum"],
         "Summers Museum": ["Summers Museum"],
         "Dalaam": [pink_cloud],
@@ -259,7 +261,7 @@ def calculate_scaling(world) -> None:
 
         "Threed": {"Twoson": [["Threed Tunnels Clear"]],
                    "Dusty Dunes Desert": [["Threed Tunnels Clear"]],
-                   "Southern Winters": [["UFO Engine", "Bad Key Machine"]],
+                   "Andonuts Lab Area": [["UFO Engine", "Bad Key Machine"]],
                    "Threed Underground": [["Zombie Paper"]],
                    "Boogey Tent": [["Jeff"]],
                    "Winters": [["UFO Engine", "Bad Key Machine"]]},
@@ -311,13 +313,19 @@ def calculate_scaling(world) -> None:
 
         "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
 
-        "Southern Winters": {stonehenge_base: [["Eraser Eraser"]],
-                             brickroad_maze: [["Nothing"]],
-                             "Winters": ["Nothing"]},
+        "Southern Winters": {brickroad_maze: [["Nothing"]]},
 
-        brickroad_maze: {rainy_circle: [["Nothing"]]},
+        brickroad_maze: {rainy_circle: [["Nothing"]],
+                         "Southern Winters": [["Nothing"]],
+                         brickroad_maze: [["Nothing"]]},
 
-        rainy_circle: {rainy_circle: [["Nothing"]]},
+        rainy_circle: {rainy_circle: [["Nothing"]],
+        "Andonuts Lab Area": [["Nothing"]],
+        brickroad_maze: [["Nothing"]]},
+
+        "Andonuts Lab Area": {rainy_circle: [["Nothing"]],
+                              stonehenge_base: [["Eraser Eraser"]],
+                              "Winters": [["Nothing"]]},
 
         "Stonehenge Base": {"Stonehenge Base": [["Nothing"]]},
 

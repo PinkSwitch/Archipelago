@@ -117,8 +117,8 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Rainy Circle", "Rainy Circle - Isolated Present", 0xEB0065),
         LocationData("Rainy Circle", "Rainy Circle - East Cliff Present", 0xEB0066),
         LocationData("Rainy Circle", "Rainy Circle - Near Ropes Present", 0xEB0067),
-        LocationData("Southern Winters", "Andonuts Lab - Present", 0xEB0068),
-        LocationData("Southern Winters", "Andonuts Lab - Mouse", 0xEB0069),
+        LocationData("Andonuts Lab Area", "Andonuts Lab - Present", 0xEB0068),
+        LocationData("Andonuts Lab Area", "Andonuts Lab - Mouse", 0xEB0069),
         LocationData("Stonehenge Base", "Stonehenge - Purple Maze Present", 0xEB006A),
         LocationData("Stonehenge Base", "Stonehenge - Dead End Present", 0xEB006B),
         LocationData("Stonehenge Base", "Stonehenge - Near End of the Maze Present", 0xEB006C),
@@ -577,11 +577,11 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
             LocationData("Common Condiment Shop", "Twoson/Scaraba - Shared Condiment Shop Slot 5", 0xeb11b6),
             LocationData("Common Condiment Shop", "Twoson/Scaraba - Shared Condiment Shop Slot 6", 0xeb11b7),
             LocationData("Common Condiment Shop", "Twoson/Scaraba - Shared Condiment Shop Slot 7", 0xeb11b8),
-            LocationData("Southern Winters", "Andonuts Lab - Caveman Shop Slot 1", 0xeb11c0),
-            LocationData("Southern Winters", "Andonuts Lab - Caveman Shop Slot 2", 0xeb11c1),
-            LocationData("Southern Winters", "Andonuts Lab - Caveman Shop Slot 3", 0xeb11c2),
-            LocationData("Southern Winters", "Andonuts Lab - Caveman Shop Slot 4", 0xeb11c3),
-            LocationData("Southern Winters", "Andonuts Lab - Caveman Shop Slot 5", 0xeb11c4)
+            LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 1", 0xeb11c0),
+            LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 2", 0xeb11c1),
+            LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 3", 0xeb11c2),
+            LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 4", 0xeb11c3),
+            LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 5", 0xeb11c4)
         ]
 
         if world.options.magicant_mode < 2:
