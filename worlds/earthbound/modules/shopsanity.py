@@ -378,10 +378,10 @@ def write_shop_checks(world, rom, shop_checks) -> None:
             rom.write_bytes(0x351100 + (flag * 127), menu_long_name)
 
         rom.write_bytes(0x019DE5, struct.pack("I", 0xF007805C))  # Build the shop menus
-        rom.write_bytes(0x019E23, struct.pack("I", 0xF0083F5C))  # Display the item name
+        rom.write_bytes(0x019E23, struct.pack("I", 0xF0083C5C))  # Display the item name
         rom.write_bytes(0x019E8F, struct.pack("I", 0xF0092B5C))  # Display the item price
-        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009755C))  # display the player name
-        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A715C))  # Transfer the used data and player selection into a script for processing
+        rom.write_bytes(0x011AC6, struct.pack("I", 0xF009725C))  # display the player name
+        rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A7E5C))  # Transfer the used data and player selection into a script for processing
         rom.write_bytes(0x019ED3, struct.pack("I", 0xF00AB75C))  # Display SOLD OUT
         rom.write_bytes(0x019B66, struct.pack("I", 0xF00AE55C))  # Prevent items for other players flashing the "you can equip this"
         rom.write_bytes(0x019DA0, struct.pack("I", 0xF00B015C))  # Preserve the greyed out HP/PP palette
@@ -391,15 +391,19 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         # The player bought the item; set a flag and give it to them
         rom.write_bytes(0x05E0CE, struct.pack("I", 0xF492CA0A))
         rom.write_bytes(0x05E0C8, struct.pack("I", 0xF492CA))
-        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494B60A))
+        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494B30A))
         # Prevent the game from checking inventory space if not needed
-        rom.write_bytes(0x05E029, struct.pack("I", 0xF494D60A))
-        rom.write_bytes(0x05E04C, struct.pack("I", 0xF494FB0A))
-        rom.write_bytes(0x05E1AE, struct.pack("I", 0xF494CF))  # Post-shop cleanup
+        rom.write_bytes(0x05E029, struct.pack("I", 0xF494D30A))
+        rom.write_bytes(0x05E04C, struct.pack("I", 0xF494F80A))
+        rom.write_bytes(0x05E1AE, struct.pack("I", 0xF00E92))  # Post-shop cleanup
 
-        rom.write_bytes(0x050A6A, struct.pack("I", 0xF494EF0A))
-        rom.write_bytes(0x050B4C, struct.pack("I", 0xF494F30A))
-        rom.write_bytes(0x050C2E, struct.pack("I", 0xF494F70A))
+        rom.write_bytes(0x050A6A, struct.pack("I", 0xF494EC0A))
+        rom.write_bytes(0x050B4C, struct.pack("I", 0xF494F00A))
+        rom.write_bytes(0x050C2E, struct.pack("I", 0xF494F40A))
+
+        rom.write_bytes(0x05E1A5, struct.pack("I", 0xF00E84))
+        rom.write_bytes(0x05E119, struct.pack("I", 0xF00E8B))
+        rom.write_bytes(0x05E0F2, struct.pack("I", 0xF00E9A))
 
         rom.write_bytes(0x3407E0, bytearray([item_id_table[world.filler_shop[0]], 0x00, 0x00, 0x00, 0x49, 0x01]))
         rom.write_bytes(0x3407E6, bytearray([item_id_table[world.filler_shop[1]], 0x00, 0x00, 0x00, 0x4A, 0x01]))

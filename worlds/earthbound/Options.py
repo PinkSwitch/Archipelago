@@ -64,7 +64,7 @@ class RandomStartLocation(Toggle):
     display_name = "Random Starting Location"
 
 
-class LocalTeleports(DefaultOnToggle):
+class LocalTeleports(Toggle):
     """Forces all teleports and Poo PSI to be placed locally in your world."""
     display_name = "Local Teleports"
 

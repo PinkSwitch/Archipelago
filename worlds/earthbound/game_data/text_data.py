@@ -210,7 +210,8 @@ lumine_hall_text = [
     "Hey Mom, I'm in AP!",
     "It says “gullible” on the wall",
     "64 bits! 32 bits! 16 bits! 8 bits! 4 bits! 2 bits! 1 bit! Half bit! Quarter bit! THE WRIST GAME!!!",
-    "Where did YOU learn to teleport?"
+    "Where did YOU learn to teleport?",
+    "My statistics show about 70% of kids these days don't stop to read bulletin boards anymore. Well, I had to shell out a lot of money for this, but let's see you ignore THIS one, suckers!          ...Brick Road"
 ]
 
 spoiler_psi = {
