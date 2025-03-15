@@ -292,6 +292,9 @@ JML CheckTotalEnergy
 ORG $C192DE
 JML DisplayEnergy
 
+ORG $C2EF3D
+JML LoadEnemyToVram
+
 ;new jmls
 
 
@@ -2907,7 +2910,11 @@ db $f2, $03, $00, $5e, $02, $1f, $ea, $04, $00, $1f, $f2, $04, $00, $5e, $02, $1
 db $00, $00, $5e, $5e, $0a, $6e, $a5, $ee; Credits choice
 
 ORG $EEA5D0
-db $04, $d1, $00, $04, $d2, $00, $04, $d3, $00, $04, $d5, $00, $04, $d6, $00, $04
+db $0A
+dl FixEpilogueWinters
+db $d2, $00
+BackfromEpilogueFix:
+db $04, $d3, $00, $04, $d5, $00, $04, $d6, $00, $04
 db $d7, $00, $04, $d8, $00, $04, $d9, $00, $04, $da, $00, $04, $db, $00, $04, $dc
 db $00, $04, $dd, $00, $04, $de, $00, $04, $df, $00, $04, $69, $00, $12, $70, $80
 db $9c, $95, $91, $a3, $95, $50, $9b, $95, $95, $a0, $50, $99, $9e, $50, $9d, $99
@@ -11831,6 +11838,38 @@ STA $97CC
 LDA #$0000
 JML $C17F0F
 
+SetFlagOnEquipConfirmSolo:
+db $1C, $20, $01
+db $0A
+dl $C5E1E0
+
+SetFlagOnEquipConfirm:
+db $1C, $20, $01
+db $0A
+dl $C50990
+
+ForcePurchaseCheck:
+db $1D, $19, $01
+db $0A
+dd CancelBuyRemoveName
+
+ForceSetSoloCheck:
+db $1C, $20, $01
+db $0A
+dl $C5E1E0
+
+LoadEnemyToVram:
+LDA $1BE2
+BEQ .LoadNormal
+LDA $9D11
+AND #$00FF
+BRA .LoadCustom
+.LoadNormal:
+LDA [$0A]
+.LoadCustom:
+LDY #$005E
+JML $C2EF42
+
 ;new code go here
 
 
@@ -11886,7 +11925,7 @@ ORG $C5E029
 ;dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd CancelBuyRemoveName
+;dd ForcePurchaseCheck
 
 ORG $C50A6A
 ;db $0A
@@ -11904,12 +11943,22 @@ ORG $C5E04C
 ;db $0A
 ;dl OverrideSpaceCheckOnSpecialItem_oneslot
 
+ORG $C5E1A5
+;dd SetFlagOnEquipConfirmSolo
+
+ORG $C5E119
+;dd SetFlagOnEquipConfirm
+
+ORG $C5E0F2
+;dd ForceSetSoloCheck
 
 
-ORG $F4002A
+
+
+ORG $F400A8
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $AD, $00, $00, $06, $00, $00; Non-remote local item. Franklin Badge.
-;db $AD, $00, $00, $06, $01, $00; Non-remote local Teleport.
+;db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $5A, $00, $00, $00, $01, $00; Non-remote local Teleport.
 ;db $96, $ff, $ff, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
 ;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
@@ -12273,7 +12322,7 @@ dl .LeaderGiven
 db $1D, $03, $FF
 db $1B, $02
 dd $C5DF89
-db $1C, $20, $01
+;db $1C, $20, $01
 db $0A
 dl $C5E0DE
 .BoughtSpecialItemGiveToPlayer:
@@ -13407,6 +13456,10 @@ dd $C28CF1
 db $00, $04, $05, $00
 dd paralyz_pollen_omega
 dd $C28A92
+;;;;;;;;;;;;;;;;
+db $00, $00, $05, $00
+dd vram_test_message
+dd code_test_load_enemyvram
 
 
 ;New battle text
@@ -13770,6 +13823,11 @@ db $51
 db $1F, $02, $52
 db $03
 db $02
+
+vram_test_message:
+db $01, $70
+db $77, $9F, $50, $97, $9F, $50, $97, $91, $94, $97, $95, $A4, $50, $94, $A9, $9E
+db $91, $9D, $99, $93, $50, $A6, $A2, $91, $9D, $51, $03, $02
 
 ;New battle code
 ORG $FD0000
@@ -14163,7 +14221,23 @@ late_missile_damage:
 PLA
 JML $C08FF7
 
+code_test_load_enemyvram:
+REP #$31
+LDA #$0090
+LDY #$005E
+INC $1BE2
+JSL goto_vramload
+DEC $1BE2
+JSL $C2C145 ;Do the enemy call
+RTL
 
+goto_vramload:
+REP #$31
+PHD
+TDC
+ADC #$FFE2
+TCD
+JML $C2EEF5
 
 
 
@@ -16883,6 +16957,13 @@ dd $EE9650
 ActivateCakeEnemies:
 db $05, $0B, $00
 db $04, $3d, $00, $02
+
+FixEpilogueWinters:
+db $04, $d1, $00
+db $04, $d2, $00
+db $04, $d4, $00
+db $0A
+dl BackfromEpilogueFix
 
 ;New New Text
 
