@@ -304,6 +304,9 @@ JML AllowEnemyToSpawn
 ORG $C2EFC6
 JML ForceLoadSingle
 
+ORG $C2EEEF
+JML InitializeLoadingEnemies
+
 ;new jmls
 
 
@@ -11877,6 +11880,12 @@ BRA .LoadCustom
 LDA [$0A]
 .LoadCustom:
 LDY #$005E
+PHX
+LDX $AAB4
+SEP #$20
+STA $1BE4,X
+REP #$20
+PLX
 JML $C2EF42
 
 AllowDynamicCallEnemyLoad:
@@ -11916,14 +11925,23 @@ PLA
 JML $C2EFCB
 
 .ForceMode:
-LDA $1BE4
+LDA $B5ED
 BNE .Done
-INC $1BE4
+INC $B5ED
 BRA .Load
 .Done:
 PLA
 JML $C2EFD4
 
+InitializeLoadingEnemies:
+LDA $1BE2
+BNE .MidBattle
+STZ $1BE4
+STZ $1BE6
+.MidBattle:
+STZ $AAB4
+STZ $AAB2
+JML $C2EEF5
 
 ;new code go here
 
@@ -14283,17 +14301,25 @@ CMP #$0004
 BCS .skip_vram_load ; 4 is the max enemies the game can handle. If we already loaded 4, ignore
 LDA $9D11
 AND #$00FF
-
-
-
+SEP #$20
+CMP $1BE4
+BEQ .skip_vram_load
+CMP $1BE5
+BEQ .skip_vram_load
+CMP $1BE6
+BEQ .skip_vram_load
+CMP $1BE7
+BEQ .skip_vram_load ;If the enemy is already loaded, don't load it into a new slot
+REP #$20
 LDA #$0090
 LDY #$005E
 INC $1BE2
 JSL goto_vramload
 .skip_vram_load:
+REP #$31
 JSL $C2C145 ;Do the enemy call
-DEC $1BE2
-STZ $1BE4
+STZ $1BE2
+STZ $B5ED
 RTL
 
 goto_vramload:
@@ -14303,8 +14329,6 @@ TDC
 ADC #$FFE2
 TCD
 JML $C2EEF5
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ORG $C28FC8

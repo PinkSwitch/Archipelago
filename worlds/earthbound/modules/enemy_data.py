@@ -256,7 +256,10 @@ def initialize_enemies(world):
         "Trillionage Sprout": shuffled_enemies["Tough Mobile Sprout"],
         "Master Barf": shuffled_enemies["Even Slimier Little Pile"],
         "Starman Deluxe": [shuffled_enemies["Starman"], shuffled_enemies["Starman Super"]],
-        "Carbon Dog": world.enemies["Diamond Dog"]  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
+        "Carbon Dog": world.enemies["Diamond Dog"],  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
+        "Skate Punk": [shuffled_enemies["Pogo Punk"], shuffled_enemies["Yes Man Junior"]],
+        "Loaded Dice": [shuffled_enemies["Care Free Bomb"], shuffled_enemies["Beautiful UFO"], shuffled_enemies["High-class UFO"]],
+        "Loaded Dice (2)": [shuffled_enemies["Electro Swoosh"], shuffled_enemies["Fobby"], shuffled_enemies["Uncontrollable Sphere"]]
     }
 
     world.regional_enemies = {"Northern Onett": {shuffled_enemies["Spiteful Crow"], shuffled_enemies["Runaway Dog"], shuffled_enemies["Coil Snake"]},
@@ -308,8 +311,7 @@ def initialize_enemies(world):
                               "Lumine Hall": {shuffled_enemies["Conducting Spirit"], shuffled_enemies["Fobby"], shuffled_enemies["Hyper Spinning Robo"], shuffled_enemies["Uncontrollable Sphere"], world.enemies[world.boss_list[22]]},
                               "Lost Underworld": {shuffled_enemies["Chomposaur"], shuffled_enemies["Ego Orb"], shuffled_enemies["Wetnosaur"]},
                               "Fire Spring": {shuffled_enemies["Evil Elemental"], shuffled_enemies["Major Psychic Psycho"], shuffled_enemies["Psychic Psycho"], shuffled_enemies["Soul Consuming Flame"], world.enemies[world.boss_list[23]]},
-                              "Magicant": {shuffled_enemies["Care Free Bomb"], shuffled_enemies["Electro Swoosh"], shuffled_enemies["French Kiss of Death"], shuffled_enemies["Loaded Dice"], shuffled_enemies["Mr. Molecule"], shuffled_enemies["Uncontrollable Sphere"],
-                                           shuffled_enemies["Fobby"], shuffled_enemies["Beautiful UFO"], shuffled_enemies["High-class UFO"], shuffled_enemies["Loaded Dice (2)"]},
+                              "Magicant": {shuffled_enemies["Care Free Bomb"], shuffled_enemies["Electro Swoosh"], shuffled_enemies["French Kiss of Death"], shuffled_enemies["Loaded Dice"], shuffled_enemies["Mr. Molecule"], shuffled_enemies["Loaded Dice (2)"]},
                               "Sea of Eden": {world.enemies[world.boss_list[18]], world.enemies[world.boss_list[24]]},
                               "Cave of the Past": {shuffled_enemies["Bionic Kraken"], shuffled_enemies["Final Starman"], shuffled_enemies["Ghost of Starman"], shuffled_enemies["Nuclear Reactor Robot"], shuffled_enemies["Squatter Demon"],
                                                    shuffled_enemies["Ultimate Octobot"], shuffled_enemies["Wild 'n Wooly Shambler"]},
@@ -327,7 +329,8 @@ def initialize_enemies(world):
                 # todo; option to not have in Giygas/Mine
 
             if enemy.name in flunkies:
-                if enemy.name == "Starman Deluxe":
+                # Can I just always update instead of doing an add? Would probably need to make singulars a list of one item...
+                if enemy.name in ["Starman Deluxe", "Skate Punk", "Loaded Dice", "Loaded Dice (2)"]:
                     updated_list.update(flunkies[enemy.name])
                 else:
                     updated_list.add(flunkies[enemy.name])
