@@ -301,6 +301,9 @@ JML AllowDynamicCallEnemyLoad
 ORG $C2EFA2
 JML AllowEnemyToSpawn
 
+ORG $C2EFC6
+JML ForceLoadSingle
+
 ;new jmls
 
 
@@ -11902,6 +11905,26 @@ LDA [$0A]
 STA $AABE,X
 JML $C2EFA7
 
+ForceLoadSingle:
+LDA [$1A],y
+AND #$00FF
+PHA
+LDA $1BE2
+BNE .ForceMode
+.Load:
+PLA
+JML $C2EFCB
+
+.ForceMode:
+LDA $1BE4
+BNE .Done
+INC $1BE4
+BRA .Load
+.Done:
+PLA
+JML $C2EFD4
+
+
 ;new code go here
 
 
@@ -13490,7 +13513,7 @@ dd paralyz_pollen_omega
 dd $C28A92
 ;;;;;;;;;;;;;;;;
 db $00, $00, $05, $00
-dd vram_test_message
+dd $EF9A47
 dd code_test_load_enemyvram
 
 
@@ -14270,6 +14293,7 @@ JSL goto_vramload
 .skip_vram_load:
 JSL $C2C145 ;Do the enemy call
 DEC $1BE2
+STZ $1BE4
 RTL
 
 goto_vramload:
