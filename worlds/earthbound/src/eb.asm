@@ -295,6 +295,12 @@ JML DisplayEnergy
 ORG $C2EF3D
 JML LoadEnemyToVram
 
+ORG $C2BDC1
+JML AllowDynamicCallEnemyLoad
+
+ORG $C2EFA2
+JML AllowEnemyToSpawn
+
 ;new jmls
 
 
@@ -11870,6 +11876,32 @@ LDA [$0A]
 LDY #$005E
 JML $C2EF42
 
+AllowDynamicCallEnemyLoad:
+CMP #$00FF
+BEQ .cantcall
+JML $C2BDA3
+.cantcall:
+LDA $1BE2
+BEQ .DontOverride
+LDA $9D11
+AND #$00FF
+JML $C2BDEC
+
+.DontOverride:
+JML $C2BDC6
+
+AllowEnemyToSpawn:
+LDA $1BE2
+BEQ .DontOverride
+LDA $9D11
+AND #$00FF
+BRA .Done
+.DontOverride:
+LDA [$0A]
+.Done:
+STA $AABE,X
+JML $C2EFA7
+
 ;new code go here
 
 
@@ -14223,12 +14255,21 @@ JML $C08FF7
 
 code_test_load_enemyvram:
 REP #$31
+LDA $AAB4
+CMP #$0004
+BCS .skip_vram_load ; 4 is the max enemies the game can handle. If we already loaded 4, ignore
+LDA $9D11
+AND #$00FF
+
+
+
 LDA #$0090
 LDY #$005E
 INC $1BE2
 JSL goto_vramload
-DEC $1BE2
+.skip_vram_load:
 JSL $C2C145 ;Do the enemy call
+DEC $1BE2
 RTL
 
 goto_vramload:
