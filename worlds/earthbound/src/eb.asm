@@ -307,6 +307,9 @@ JML ForceLoadSingle
 ORG $C2EEEF
 JML InitializeLoadingEnemies
 
+ORG $C2EFF7
+JSL SetupVramForSpriteLoad
+
 ;new jmls
 
 
@@ -8876,6 +8879,27 @@ dl $C9327F
 ORG $CF6BF1
 db $6F
 
+ORG $D5AD53
+dw $0209
+dw $0209; Skate Punk
+
+ORG $D5DD69 ; Loaded Dice
+dw $0209
+dw $0209
+dw $0209
+dw $0209
+
+ORG $D5A5F7 ; Loaded Dice
+dw $0209
+dw $0209
+dw $0209
+dw $0209
+
+ORG $D5AEC9 ; Starman Super
+dw $0209
+
+
+
 ;New data table go here
 
 
@@ -11893,14 +11917,25 @@ CMP #$00FF
 BEQ .cantcall
 JML $C2BDA3
 .cantcall:
-LDA $1BE2
+LDA $26
+PHX
+LDX #$0000
+SEP #$20
+.Check:
+CMP $1BE4,X
+BEQ .Loaded
+CPX #$0003
 BEQ .DontOverride
-LDA $9D11
-AND #$00FF
-JML $C2BDEC
-
+INX
+BRA .Check
 .DontOverride:
+REP #$20
+PLX
 JML $C2BDC6
+.Loaded:
+REP #$20
+PLX
+JML $C2BDEC
 
 AllowEnemyToSpawn:
 LDA $1BE2
@@ -11942,6 +11977,23 @@ STZ $1BE6
 STZ $AAB4
 STZ $AAB2
 JML $C2EEF5
+
+SetupVramForSpriteLoad:
+PHA
+LDA $1BE2
+BEQ .NormalLoad
+LDA $AAB4
+CMP #$04
+BCC .NormalLoad
+PLA
+JSL $C085B7
+SEP #$20
+LDA #$0F
+STA $00000D
+RTL
+.NormalLoad:
+PLA
+JML $C08616
 
 ;new code go here
 
