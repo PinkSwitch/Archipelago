@@ -630,6 +630,7 @@ def shuffle_enemies(world):
         world.random.shuffle(shuffled_enemies)
     for index, enemy in enumerate(shuffled_enemies):
         world.acting_enemy_list[base_enemy_table[index]] = enemy
+    
 
 
 def apply_enemy_shuffle(world, rom):

@@ -560,7 +560,7 @@ def calculate_scaling(world) -> None:
 
     # calculate which areas need to have enemies scaled
     for region in world.accessible_regions:
-        if region in combat_regions:
+        if region in world.regional_enemies:
             world.scaled_area_order.append(region)
 
     current_level = 1
@@ -583,6 +583,3 @@ def calculate_scaling(world) -> None:
 
     if world.Badge_region == "Ness's Mind":
         world.Badge_region = world.scaled_area_order[0]
-
-# Just a thought for later. Can scaled chars ALWAYs be last region, since you know, it'll usuablly be the region we're in? Unless it's a locked item
-# which we want

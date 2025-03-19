@@ -8901,6 +8901,9 @@ dw $0209
 ORG $D03CA4 ; Remove bugged plate
 db $00
 
+ORG $CF0457
+dd OnettHotelSetTeleport
+
 
 
 ;New data table go here
@@ -17108,6 +17111,12 @@ db $04, $d2, $00
 db $04, $d4, $00
 db $0A
 dl BackfromEpilogueFix
+
+OnettHotelSetTeleport:
+db $04
+db $D1, $00
+db $0A
+dl $C9B11E
 
 ;New New Text
 
