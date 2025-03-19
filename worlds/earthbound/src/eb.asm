@@ -8898,6 +8898,9 @@ dw $0209
 ORG $D5AEC9 ; Starman Super
 dw $0209
 
+ORG $D03CA4 ; Remove bugged plate
+db $00
+
 
 
 ;New data table go here
