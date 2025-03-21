@@ -8904,6 +8904,55 @@ db $00
 ORG $CF0457
 dd OnettHotelSetTeleport
 
+ORG $EECA28
+db $0A
+dl MonkeyCaveShop
+
+ORG $C50051
+dd MonkeyShopGreeting
+
+ORG $C50519
+dd MonkeyShopBuyLine
+
+ORG $C50E1F
+dd MonkeyShopNotEnoughMoney
+
+ORG $C506B1
+dd MonkeyShopSelectItem
+
+ORG $C50849
+dd MonkeyShopPickCarrier
+
+ORG $C50381
+dd MonkeyShopNoBuy
+
+ORG $C50C87
+dd MonkeyShopCancelBuy
+
+ORG $C501E9
+dd MonkeyShopExitThanks
+
+ORG $C515B9
+dd MonkeyShopThank
+
+ORG $C519CB
+dd MonkeyShopCantCarry
+
+ORG $C51751
+dd MonkeyShopBuyAnother
+
+ORG $C50FB7
+dd MonkeyShopCantCarrySingle
+
+ORG $D5782C
+db $E0 ; Repel Sandwich
+db $5D
+db $5A
+db $7F
+db $5F
+db $6C ; Protein Drink
+db $8C ; Ruler
+
 
 
 ;New data table go here
@@ -17117,6 +17166,81 @@ db $04
 db $D1, $00
 db $0A
 dl $C9B11E
+
+MonkeyCaveShop:
+db $04, $ED, $00
+db $08 
+dd $C5DFB1
+db $05, $ED, $00
+db $02
+
+MonkeyShopGreeting: ; todo: write this
+db $70, $85, $9b, $99, $9b, $99, $50, $85, $9b, $a5, $51, $03, $00, $70, $58, $87
+db $95, $9c, $93, $9f, $9d, $95, $50, $a4, $9f, $50, $7d, $9f, $9e, $9b, $95, $a9
+db $50, $7d, $91, $a2, $a4, $5e, $59, $03, $02
+db $02
+
+MonkeyShopBuyLine:
+db $70, $7b, $a5, $50, $7b, $99, $9b, $a5, $51, $03, $00, $70, $58, $87, $98, $91
+db $a4, $50, $a7, $9f, $a5, $9c, $94, $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95
+db $6f, $03, $02
+
+MonkeyShopNotEnoughMoney:
+db $70, $85, $9b, $99, $50, $a5, $9b, $a5, $50, $a5, $9b, $a5, $9c, $95, $9c, $95
+db $51, $03, $00, $70, $58, $89, $9f, $a5, $50, $91, $a2, $95, $50, $a4, $9f, $9f
+db $50, $a0, $9f, $9f, $a2, $50, $96, $9f, $a2, $50, $a4, $98, $99, $a3, $50, $99
+db $a4, $95, $9d, $51, $59, $03, $02
+
+MonkeyShopSelectItem:
+db $70, $7b, $99, $99, $9b, $a5, $9b, $91, $50, $1c, $05, $00, $6f, $03, $00, $70
+db $58, $89, $9f, $a5, $50, $a7, $91, $9e, $a4, $50, $a4, $98, $95, $50, $1c, $05
+db $00, $6f, $59, $03, $02
+
+MonkeyShopPickCarrier:
+db $70, $7b, $a9, $a5, $9b, $a9, $9b, $99, $9b, $95, $9b, $99, $a5, $6f, $03, $00
+db $70, $58, $87, $98, $9f, $57, $a3, $50, $a4, $91, $9b, $99, $9e, $97, $50, $99
+db $a4, $6f, $59, $03, $02
+
+MonkeyShopCancelBuy:
+db $70, $85, $9b, $99, $91, $a9, $50, $a5, $9b, $99, $5e, $03, $00, $70, $58, $7f
+db $98, $5c, $10, $05, $50, $9f, $9b, $91, $a9, $5e, $59, $03, $02
+
+MonkeyShopThank:
+db $70, $85, $9b, $a5, $9b, $a5, $9b, $a5, $51, $03, $00, $70, $58, $84, $98, $91
+db $9e, $9b, $a3, $51, $59, $03, $02
+
+MonkeyShopNoBuy:
+db $70, $7b, $a9, $99, $99, $99, $95, $9b, $95, $9b, $95, $9b, $95, $6f, $03, $00
+db $70, $58, $89, $9f, $a5, $50, $94, $9f, $9e, $57, $a4, $50, $a7, $91, $9e, $a4
+db $50, $a4, $9f, $50, $92, $a5, $a9, $50, $96, $a2, $9f, $9d, $50, $91, $50, $9d
+db $9f, $9e, $9b, $95, $a9, $6f, $59, $03, $02
+
+MonkeyShopCantCarrySingle:
+db $70, $7b, $95, $95, $9b, $99, $9b, $99, $95, $95, $51, $03, $00, $70, $58, $89
+db $9f, $a5, $50, $91, $a2, $95, $50, $93, $91, $a2, $a2, $a9, $99, $9e, $97, $50
+db $a7, $91, $a9, $50, $a4, $9f, $9f, $50, $9d, $a5, $93, $98, $51, $59, $03, $02
+
+MonkeyShopExitThanks:
+db $70, $85, $9b, $99, $9b, $99, $9b, $99, $51, $03, $00, $70, $58, $73, $9f, $9d
+db $95, $50, $91, $97, $91, $99, $9e, $51, $59, $03, $02
+
+MonkeyShopBuyAnother:
+db $70, $85, $9b, $a9, $a5, $99, $9b, $a5, $a5, $a5, $a9, $95, $50, $7b, $a9, $95
+db $a5, $95, $9b, $a5, $9b, $9f, $5e, $03, $00, $70, $58, $87, $9f, $a5, $9c, $94
+db $50, $a9, $9f, $a5, $50, $9c, $99, $9b, $95, $50, $91, $9e, $a9, $a4, $98, $99
+db $9e, $97, $50, $95, $9c, $a3, $95, $6f, $59, $03, $00, $02
+
+MonkeyShopCantCarry:
+db $70, $1c, $02, $00, $50, $9b, $99, $9b, $99, $95, $95, $51, $03, $00, $70, $58, $1c
+db $02, $00, $50, $99, $a3, $50, $93, $91, $a2, $a2, $a9, $99, $9e, $97, $50, $a7
+db $91, $a9, $50, $a4, $9f, $9f, $50, $9d, $a5, $93, $98, $51, $59, $03, $00, $70
+db $7b, $a9, $95, $9b, $99, $9b, $99, $9f, $9b, $95, $6f, $03, $00, $70, $58, $87
+db $99, $9c, $9c, $50, $a3, $9f, $9d, $95, $9f, $9e, $95, $50, $95, $9c, $a3, $95
+db $50, $a4, $91, $9b, $95, $50, $99, $a4, $6f, $59, $03, $00, $02
+
+
+ORG $C62B87
+db $0a, $28, $ca, $ee ; Test, delete later
 
 ;New New Text
 
