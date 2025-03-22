@@ -379,7 +379,7 @@ def write_shop_checks(world, rom, shop_checks) -> None:
 
         rom.write_bytes(0x019DE5, struct.pack("I", 0xF007805C))  # Build the shop menus
         rom.write_bytes(0x019E23, struct.pack("I", 0xF0083C5C))  # Display the item name
-        rom.write_bytes(0x019E8F, struct.pack("I", 0xF0092B5C))  # Display the item price
+        rom.write_bytes(0x019E8F, struct.pack("I", 0xF009285C))  # Display the item price
         rom.write_bytes(0x011AC6, struct.pack("I", 0xF009725C))  # display the player name
         rom.write_bytes(0x019EDD, struct.pack("I", 0xF00A7E5C))  # Transfer the used data and player selection into a script for processing
         rom.write_bytes(0x019ED3, struct.pack("I", 0xF00AB75C))  # Display SOLD OUT
@@ -407,6 +407,16 @@ def write_shop_checks(world, rom, shop_checks) -> None:
 
         rom.write_bytes(0x3407E0, bytearray([item_id_table[world.filler_shop[0]], 0x00, 0x00, 0x00, 0x49, 0x01]))
         rom.write_bytes(0x3407E6, bytearray([item_id_table[world.filler_shop[1]], 0x00, 0x00, 0x00, 0x4A, 0x01]))
+
+        rom.write_bytes(0x3408DC, bytearray([0xE0]))
+        rom.write_bytes(0x3408E2, bytearray([0x5D]))
+        rom.write_bytes(0x3408E8, bytearray([0x5A]))
+        rom.write_bytes(0x3408EE, bytearray([0x7F]))
+        rom.write_bytes(0x3408F4, bytearray([0x5F]))
+        rom.write_bytes(0x3408FA, bytearray([0x6C]))
+        rom.write_bytes(0x340900, bytearray([0x8C]))
+
+
 
         if world.options.magicant_mode >= 2:
             rom.write_bytes(0x3405E8, bytearray([item_id_table[world.magicant_junk[6]], 0x00, 0x00, 0x00, 0xF5, 0x00]))

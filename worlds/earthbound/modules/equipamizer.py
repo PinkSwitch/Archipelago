@@ -371,26 +371,26 @@ def randomize_armor(world, rom):
         "Goddess Band",
         "Bracer of Kings",
         "Baseball Cap",
-        "Holmes Hat",
         "Mr. Baseball Cap",
+        "Holmes Hat",
         "Hard Hat",
-        "Ribbon",
-        "Red Ribbon",
-        "Goddess Ribbon",
         "Coin of Slumber",
         "Coin of Defense",
+        "Coin of Silence",
+        "Mr. Saturn Coin",
         "Lucky Coin",
+        "Charm Coin",
         "Talisman Coin",
         "Shiny Coin",
         "Souvenir Coin",
         "Diadem of Kings",
         "Earth Pendant",
+        "Saturn Ribbon",
+        "Ribbon",
+        "Red Ribbon",
         "Defense Ribbon",
         "Talisman Ribbon",
-        "Saturn Ribbon",
-        "Coin of Silence",
-        "Charm Coin",
-        "Mr. Saturn Coin",
+        "Goddess Ribbon",
         "Summers Platinum Band",
         "Summers Diamond Band"
 
@@ -526,9 +526,6 @@ def randomize_armor(world, rom):
             # Only Arm gear can have sleep resistance; arm gear cannot have elemental resistance
             roll_resistances(world, "sleep_res", armor)
 
-        # if "Pendant" in item and world.options.retain_resistances:
-            # print(item)
-
         if armor.flash_res + armor.freeze_res + armor.fire_res == 0:
             # If no resistances are active use a normal name
             front_name = world.random.choice(armor_dict[armor.equip_type])
@@ -643,7 +640,10 @@ def randomize_armor(world, rom):
             else:
                 description += f"@Must be equipped on your {armor.equip_type}.\n"
 
-        description += f"@+{armor.defense} Defense.\n"
+        if armor.can_equip == "Poo":
+            description += f"@+{armor.poo_def} Defense.\n"
+        else:
+            description += f"@+{armor.defense} Defense.\n"
         if armor.aux_stat > 0:
             description += f"@+{armor.aux_stat} {aux_stat[armor.equip_type]}. \n"
 
@@ -770,19 +770,24 @@ def randomize_weapons(world, rom):
         "Sand Lot Bat",
         "Minor League Bat",
         "Mr. Baseball Bat",
+        "T-Rex's Bat",
         "Big League Bat",
         "Hall of Fame Bat",
+        "Ultimate Bat",
+        "Casey Bat",
         "Magicant Bat",
         "Legendary Bat",
         "Gutsy Bat",
-        "Casey Bat",
+        
         "Fry Pan",
         "Thick Fry Pan",
         "Deluxe Fry Pan",
         "Chef's Fry Pan",
+        "Non-stick Frypan",
         "French Fry Pan",
-        "Magic Fry Pan",
         "Holy Fry Pan",
+        "Magic Fry Pan",
+
         "Sword of Kings",
         "Pop Gun",
         "Stun Gun",
@@ -791,6 +796,7 @@ def randomize_weapons(world, rom):
         "Zip Gun",
         "Laser Gun",
         "Hyper Beam",
+        "Double Beam",
         "Crusher Beam",
         "Spectrum Beam",
         "Death Ray",
@@ -802,10 +808,6 @@ def randomize_weapons(world, rom):
         "Bionic Slingshot",
         "Trick Yo-yo",
         "Combat Yo-yo",
-        "T-Rex's Bat",
-        "Ultimate Bat",
-        "Double Beam",
-        "Non-stick Frypan",
         "Summers Big League Bat"
     ]
 

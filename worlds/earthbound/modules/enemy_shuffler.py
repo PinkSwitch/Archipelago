@@ -911,7 +911,7 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10d94a, bytearray([enemy_ids[world.acting_enemy_list["Beautiful UFO"]]]))
     rom.write_bytes(0x10d94d, bytearray([enemy_ids[world.acting_enemy_list["High-class UFO"]]]))
 
-    rom.write_bytes(0x10d950, bytearray([enemy_ids[world.acting_enemy_list["Loaded Dice (2)"]]]))
+    rom.write_bytes(0x10d951, bytearray([enemy_ids[world.acting_enemy_list["Loaded Dice (2)"]]]))
     rom.write_bytes(0x10d954, bytearray([enemy_ids[world.acting_enemy_list["Electro Swoosh"]]]))
     rom.write_bytes(0x10d957, bytearray([enemy_ids[world.acting_enemy_list["Fobby"]]]))
     rom.write_bytes(0x10d95a, bytearray([enemy_ids[world.acting_enemy_list["Uncontrollable Sphere"]]]))
