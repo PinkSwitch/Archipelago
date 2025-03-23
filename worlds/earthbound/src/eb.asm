@@ -12045,11 +12045,9 @@ PLA
 JML $C2EFD4
 
 InitializeLoadingEnemies:
-LDA $1BE2
-BNE .MidBattle
+STZ $1BE2
 STZ $1BE4
 STZ $1BE6
-.MidBattle:
 STZ $AAB4
 STZ $AAB2
 JML $C2EEF5
