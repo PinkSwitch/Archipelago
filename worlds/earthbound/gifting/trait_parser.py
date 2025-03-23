@@ -362,6 +362,7 @@ def trait_interpreter(gift):
         gift["traits"] = gift.pop("Traits")
 
     for trait in gift["traits"]:
+
         if "Trait" in trait:
             trait["trait"] = trait.pop("Trait")
 

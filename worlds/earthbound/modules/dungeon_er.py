@@ -83,10 +83,6 @@ def shuffle_dungeons(world) -> None:
         # Don't shuffle Magicant when it's important
         single_exit_dungeons.remove("Sea of Eden")
 
-    # FIND A BETTER SOLUTION THAN THIS!
-    # if world.options.dungeon_shuffle and not world.options.shuffle_teleports:
-        # world.options.shuffle_teleports.value = 1
-
     if world.options.monkey_caves_mode < 3:
         single_exit_dungeons.remove("Monkey Caves")
 
@@ -110,7 +106,7 @@ def write_dungeon_entrances(world, rom) -> None:
         "Giant Step": ["Giant Step Entrance", "Giant Step Exit"],
         "Happy-Happy HQ": ["Happy-Happy HQ Entrance", "Happy-Happy HQ Exit"],
         "Lilliput Steps": ["Lilliput Steps Entrance", "Lilliput Steps Exit"],
-        "Belch's Factory": ["Factory Entrance", "Factory Exit", "Factory Back Exit", "Factory Back Entrance"],
+        "Belch's Factory": ["Factory Script Warp", "Factory Exit", "Factory Back Exit", "Factory Back Entrance"],
         "Milky Well": ["Milky Well Entrance", "Milky Well Exit"],
         "Gold Mine": ["Mine Entrance", "Mine Exit"],
         "Monkey Caves": ["Monkey Entrance", "Monkey Exit"],
@@ -186,7 +182,7 @@ def write_dungeon_entrances(world, rom) -> None:
     paired_doors = {}
 
     for door in all_dungeon_doors:
-        rom.copy_bytes(all_dungeon_doors[door].address, 6, all_dungeon_doors[door].copyaddress)
+        rom.copy_bytes(all_dungeon_doors[door].address, 6, all_dungeon_doors[door].copyaddress) # Copy 6 bytes at the source of the door to the destination of the door
 
     for door in world.dungeon_connections:
         for index, entrance in enumerate(dungeon_entrances[door]):
@@ -195,7 +191,6 @@ def write_dungeon_entrances(world, rom) -> None:
             else:
                 paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
-    paired_doors["Factory Script Warp"] = dungeon_entrances[world.dungeon_connections["Belch's Factory"]][0]
     paired_doors["Post-Nightmare Script"] = dungeon_entrances[world.dungeon_connections["Sea of Eden"]][1]
 
     for door in paired_doors:
