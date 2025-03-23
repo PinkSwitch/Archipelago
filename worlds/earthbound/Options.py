@@ -386,6 +386,10 @@ class PhotoCount(Range):
     range_end = 32
     default = 20
 
+class EasyCombat(Toggle):
+    """Automatically halves all scaled enemy levels."""
+    display_name = "Easy Combat"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -409,6 +413,7 @@ class EBOptions(PerGameCommonOptions):
     money_drop_multiplier: MoneyDropMultiplier
     starting_money: StartingMoney
     easy_deaths: EasyDeaths
+    easy_combat: EasyCombat
     progressive_weapons: ProgressiveWeapons
     progressive_armor: ProgressiveArmor
     armorizer: Armorizer
@@ -509,7 +514,8 @@ eb_option_groups = [
         StartingMoney,
         RemoteItems,
         AutoscaleParty,
-        SkipEpilogue
+        SkipEpilogue,
+        EasyCombat
     ]),
 
     OptionGroup("Aesthetic Settings", [
