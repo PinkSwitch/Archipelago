@@ -374,17 +374,18 @@ db $04
 ORG $D7BB70
 db $04
 
+; Flags for Tenda VIllage, was $02, now $00 to disable mice
 ORG $D7B200
-dw $0002, $0002
+dw $0000, $0000
 
 ORG $D7B240
-dw $0002, $0002, $0002
+dw $0000, $0000, $0000
 
 ORG $D7B280
-dw $0002, $0002, $0002
+dw $0000, $0000, $0000
 
 ORG $D7B2C0
-dw $0002, $0002, $0002
+dw $0000, $0000, $0000
 
 ORG $C13CF4
 NOP
@@ -8859,6 +8860,9 @@ dd $C9B10B
 ORG $CF00BB
 dd $C9B10B
 
+ORG $CF2396
+dd $C9B10B
+
 ORG $CFBC06
 dd MinerDialogue
 
@@ -8955,6 +8959,20 @@ db $8C ; Ruler
 
 ORG $C74C11
 dd PostFrankGuardText
+
+ORG $D7B200
+db $00
+
+;Tenda lower floor
+ORG $D7B708
+db $80
+
+ORG $D7B748
+db $80
+
+; Tenda Inn
+ORG $D7C4F0
+db $80
 
 
 
