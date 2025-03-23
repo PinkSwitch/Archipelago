@@ -47,7 +47,7 @@ enemy_species = [
     "Royal Guard",
     "General",
     "Zombie",
-    "Posessor",
+    "Possessor",
     "Dog",
     "Oak",
     "Octobot",
@@ -231,20 +231,22 @@ battle_sprites = {
     "Dog": 0x02,
     "Frog": 0x03,
     "Sphere": 0x04,
-    "Mushroom": 0x05,
+    "Evil Mushroom": 0x05,
     "Bomb": 0x06,
     "Octobot": 0x07,
     "Musica": 0x08,
     "Ranboob": 0x09,
     "Moldyman": 0x0A,
+    # Shroooom
     "Booka": 0x0C,
     "Shambler": 0x0D,
+    # Wetnosaur
     "Art": 0x0F,
     "Crow": 0x10,
     "Fobby": 0x11,
     "Foppy": 0x11,
     "Duck": 0x12,
-    "Bat": 0x13,
+    "Batty": 0x13,
     "Mouse": 0x14,
     "Kiss of Death": 0x15,
     "Swoosh": 0x16,
@@ -254,15 +256,28 @@ battle_sprites = {
     "Sign": 0x1A,
     "Kid": 0x1B,
     "Sam": 0x1C,
+    "Tom": 0x1C,
     "Psycho": 0x1D,
     "Mite": 0x1E,
     "Fish": 0x1F,
+    "Fish's Brother": 0x1F,
+    #Everdred
+    #Carpainter
     "Party Man": 0x22,
     "Reveler": 0x22,
     "Local Guy": 0x23,
     "Menace": 0x24,
     "Spirit": 0x24,
+    #Frank
+    "Guy": 0x26,
+    #Thunder N Storm
+    #Carbon
+    "Kraken": 0x29,
+    #Pokey
     "Li'l UFO": 0x2B,
+    "Coffee Cup": 0x2C,
+    "Molecule": 0x2D,
+    "Record": 0x2E,
     "Slug": 0x2F,
     "Elemental": 0x30,
     "UFO": 0x31,
@@ -272,7 +287,8 @@ battle_sprites = {
     "Ghost": 0x35,
     "Robot": 0x36,
     "Starman": 0x37,
-    "Shatted Man": 0x38,
+    "Shattered Man": 0x38,
+    #Electro specter
     "Dice": 0x3A,
     "Fire Plug": 0x3B,
     "Protoplasm": 0x3C,
@@ -281,21 +297,53 @@ battle_sprites = {
     "Pump": 0x3E,
     "Cultist": 0x3F,
     "Man Junior": 0x40,
+    #Chomposaur
+    #Zombie Dog
     "Asp Hieroglyph": 0x43,
     "Eel": 0x44,
+    #Captain Strong
     "Hieroglyph": 0x46,
+    #Clumsy Robot
     "Zombie": 0x48,
     "Ant": 0x49,
-    "Skelpion": 0x4E,
+    "Buffalo": 0x4A,
+    #Plauge Rat
+    #Diamond Dog
+    "Arachnid": 0x4D,
+    "Mole": 0x4E,
+    #Statue
+    "Roach": 0x50,
+    "Noose": 0x51,
+    "Tangoo": 0x52,
+    #MondoMole
+    "Crocodile": 0x54,
+    "Taxi": 0x55,
+    "Demon": 0x56,
+    "General": 0x57,
+    "Royal Guard": 0x57,
+    #Trillionage sprout
+    "Fly": 0x59,
+    "Mobile Sprout": 0x5A,
+    "Little Pile": 0x5B,
+    "Skelpion": 0x5C,
+    "Clock": 0x5D,
     "Goat": 0x5E,
+    "Oak": 0x5F,
+    "Punk": 0x60,
+    #Frankystein
     "Pile of Puke": 0x62,
     "Lady": 0x63,
     "Skater": 0x64,
+    "Boy": 0x65,
+    "Orb": 0x66,
     "Wolf": 0x67,
     "Bear": 0x68,
+    "Bear Seven": 0x68,
     "Power Robot": 0x69,
     "Reactor Robot": 0x69,
+    #DX/final star
     "Hippie": 0x6B,
+    #Giygas
     "Worm": 0x6D,
     "Caterpillar": 0x6D,
     "Eye": 0x6E
