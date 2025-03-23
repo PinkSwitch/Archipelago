@@ -390,6 +390,10 @@ class EasyCombat(Toggle):
     """Automatically halves all scaled enemy levels."""
     display_name = "Easy Combat"
 
+class EnemizerStats(Toggle):
+    """Randomizes base stats and level of non-boss enemies."""
+    display_name = "Randomize Enemy Stats"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -409,6 +413,7 @@ class EBOptions(PerGameCommonOptions):
     boss_shuffle: BossShuffle
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
+    randomize_enemy_stats: EnemizerStats
     experience_modifier: ExperienceModifier
     money_drop_multiplier: MoneyDropMultiplier
     starting_money: StartingMoney
@@ -497,6 +502,10 @@ eb_option_groups = [
         ExperienceModifier,
         ShuffleDrops,
         MoneyDropMultiplier
+    ]),
+
+    OptionGroup("Enemizer", [
+        EnemizerStats
     ]),
 
     OptionGroup("Shop Randomization", [
