@@ -394,6 +394,10 @@ class EnemizerStats(Toggle):
     """Randomizes base stats and level of non-boss enemies."""
     display_name = "Randomize Enemy Stats"
 
+class EnemizerAttacks(Toggle):
+    """Randomizes attacks of non-boss enemies."""
+    display_name = "Randomize Enemy Attacks"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -414,6 +418,7 @@ class EBOptions(PerGameCommonOptions):
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
     randomize_enemy_stats: EnemizerStats
+    randomize_enemy_attacks: EnemizerAttacks
     experience_modifier: ExperienceModifier
     money_drop_multiplier: MoneyDropMultiplier
     starting_money: StartingMoney
@@ -505,6 +510,7 @@ eb_option_groups = [
     ]),
 
     OptionGroup("Enemizer", [
+        EnemizerAttacks,
         EnemizerStats
     ]),
 

@@ -629,8 +629,8 @@ def patch_rom(world, rom, player: int):
     if world.options.randomize_enemy_stats:
         randomize_enemy_stats(world, rom)
 
-    # if world.options.randomize_enemy_attacks:
-    randomize_enemy_attacks(world, rom)
+    if world.options.randomize_enemy_attacks:
+        randomize_enemy_attacks(world, rom)
 
     apply_enemy_shuffle(world, rom)
     # randomize_food(world,rom)

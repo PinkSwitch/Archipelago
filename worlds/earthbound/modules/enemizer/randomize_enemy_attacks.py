@@ -193,6 +193,5 @@ def randomize_enemy_attacks(world, rom):
                 
                 rom.write_bytes(world.enemies[enemy].address + (0x46 + (i * 2)), struct.pack("H", attack_id))
                 rom.write_bytes(world.enemies[enemy].address + (0x50 + (i)), bytearray([argument]))
-
-                if world.enemies[enemy].attack_extensions:
-                    print(world.enemies[enemy].name)
+                # Todo; attack extenders?
+                # Todo; more attacks?
