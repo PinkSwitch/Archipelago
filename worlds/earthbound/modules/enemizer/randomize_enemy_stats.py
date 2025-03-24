@@ -13,7 +13,7 @@ def randomize_enemy_stats(world, rom):
             world.enemies[enemy].speed = world.random.randint(10, 65)
             world.enemies[enemy].level = world.random.randint(10, 70)
             world.enemies[enemy].exp = world.random.randint(10, 62000)
-            print(f"HAHAHA! {world.enemies[enemy].name}! {world.enemies[enemy].exp}")
+            # print(f"HAHAHA! {world.enemies[enemy].name}! {world.enemies[enemy].exp}")
             world.enemies[enemy].money = world.random.randint(10, 1000)
             guts = world.random.randint(1,255)
             luck = world.random.randint(1,255)

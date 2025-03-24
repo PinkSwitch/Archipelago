@@ -433,7 +433,7 @@ class EarthBoundClient(SNIClient):
                     cap_flag |= 0x20
                     await snes_write(ctx, [(WRAM_START + 0xB623, cap_flag.to_bytes(1, byteorder="little"))])
 
-                await snes_write(ctx, [(WRAM_START + 0x1BD8, energy.to_bytes(4, byteorder="little"))])
+                await snes_write(ctx, [(WRAM_START + 0x1BD8, int(energy).to_bytes(4, byteorder="little"))])
                 await snes_write(ctx, [(WRAM_START + 0x1BD6, (0x00).to_bytes(1, byteorder="little"))])
 
             if any(energy_withdrawal) and energy:

@@ -554,3 +554,5 @@ eb_option_groups = [
         EnergyLink
     ])
 ]
+
+eb_option_presets = "h"

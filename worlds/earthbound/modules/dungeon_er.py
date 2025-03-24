@@ -185,13 +185,16 @@ def write_dungeon_entrances(world, rom) -> None:
         rom.copy_bytes(all_dungeon_doors[door].address, 6, all_dungeon_doors[door].copyaddress) # Copy 6 bytes at the source of the door to the destination of the door
 
     for door in world.dungeon_connections:
+        if world.dungeon_connections[door] == "Sea of Eden":
+            sea_connection = door
         for index, entrance in enumerate(dungeon_entrances[door]):
             if "Exit" in entrance:
                 paired_doors[dungeon_entrances[world.dungeon_connections[door]][index]] = entrance
             else:
                 paired_doors[entrance] = dungeon_entrances[world.dungeon_connections[door]][index]
 
-    paired_doors["Post-Nightmare Script"] = dungeon_entrances[world.dungeon_connections["Sea of Eden"]][1]
+
+    paired_doors["Post-Nightmare Script"] = paired_doors["Sea Exit Script"]
 
     for door in paired_doors:
         destination = all_dungeon_doors[paired_doors[door]]

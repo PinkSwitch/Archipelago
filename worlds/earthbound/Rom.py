@@ -88,6 +88,7 @@ def patch_rom(world, rom, player: int):
     rom.copy_bytes(0x34A020, 0x1F, 0x15793A)
     rom.copy_bytes(0x34A040, 0x1F, 0x157A51)
     rom.copy_bytes(0x34A060, 0x3E, 0x1578FC)
+    rom.copy_bytes(0x15ED4B, 0x06, 0x15F1FB)
 
     starting_area_coordinates = {
                     0: [0x50, 0x04, 0xB5, 0x1F],  # North Onett

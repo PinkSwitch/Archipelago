@@ -300,8 +300,8 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         "Hungry HP-Sucker": 1600,
         "Defense Shower": 1000,
         "Neutralizer": 5000,
-        "Brain Stone": 1,
-        "Monkey's Love": 1
+        "Brain Stone": 2,
+        "Monkey's Love": 2
     }
     # Unique non-progression items that have no price by default. If they're on a shop,
     # give them a base price. (prog items are handled by the "price" variable)

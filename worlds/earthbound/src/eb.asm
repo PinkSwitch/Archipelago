@@ -8974,6 +8974,9 @@ db $80
 ORG $D7C4F0
 db $80
 
+ORG $C772F8 ; Magicant Mom
+db $CA
+
 
 
 ;New data table go here
