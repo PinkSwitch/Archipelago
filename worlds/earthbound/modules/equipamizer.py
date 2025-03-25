@@ -378,8 +378,8 @@ def randomize_armor(world, rom):
         "Coin of Defense",
         "Coin of Silence",
         "Mr. Saturn Coin",
-        "Lucky Coin",
         "Charm Coin",
+        "Lucky Coin",
         "Talisman Coin",
         "Shiny Coin",
         "Souvenir Coin",
@@ -551,11 +551,6 @@ def randomize_armor(world, rom):
         else:
             armor.can_equip = "All"
 
-        if armor.can_equip != "Poo":
-            armor.poo_def = 216  # defense is signed, all non-kings equipment has this value
-        else:
-            armor.poo_def = armor.defense
-
         if armor.can_equip == "Poo":
             back_name = world.random.choice(royal_names)
             front_name = world.random.choice(armor_names[armor.equip_type]).capitalize()
@@ -626,6 +621,11 @@ def randomize_armor(world, rom):
     for item in all_armor:
         armor = world.armor_list[item]
 
+        if armor.can_equip != "Poo":
+            armor.poo_def = 216  # defense is signed, all non-kings equipment has this value
+        else:
+            armor.poo_def = armor.defense
+
         if "Summers" in armor.name:
             armor.name = armor.name.replace("Summers", "")
         item_name = text_encoder(armor.name, 25)
@@ -661,7 +661,7 @@ def randomize_armor(world, rom):
 
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
-        
+            
         description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
@@ -843,11 +843,9 @@ def randomize_weapons(world, rom):
             weapon.offense = world.random.randint(1, weapon_cap)
 
         if weapon.can_equip == "Poo":
-            weapon.poo_off = weapon.offense
             front_name = world.random.choice(weapon_names[weapon.can_equip])
             back_name = world.random.choice(royal_names)
         else:
-            weapon.poo_off = 250
             front_name = world.random.choice(adjectives)
             back_name = world.random.choice(weapon_names[weapon.can_equip])
 
@@ -935,6 +933,12 @@ def randomize_weapons(world, rom):
 
     for item in all_weapons:
         weapon = world.weapon_list[item]
+
+        if weapon.can_equip == "Poo":
+            weapon.poo_off = weapon.offense
+        else:
+            weapon.poo_off = 250
+
         if "Summers" in item:
             weapon.offense = world.weapon_list["Big League Bat"].offense
             rom.write_bytes(weapon.address + 31, bytearray([world.weapon_list["Big League Bat"].offense]))

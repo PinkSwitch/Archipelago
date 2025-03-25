@@ -177,7 +177,7 @@ def write_dungeon_entrances(world, rom) -> None:
         "Sea Entrance Script": EBDungeonDoor(0x15F25B, 0x321310, 3, True),
         "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, 5, True),
         "Post-Nightmare Script": EBDungeonDoor(0x15ED4B, 0x321330, 5, True),
-        "Carpainter Failure Script": EBDungeonDoor(0x15EEF3, 7, 0x321340, True)
+        "Carpainter Failure Script": EBDungeonDoor(0x15EEF3, 0x321340, 7, True)
     }
 
     paired_doors = {}
