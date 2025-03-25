@@ -176,7 +176,8 @@ def write_dungeon_entrances(world, rom) -> None:
         "Fire Spring Exit": EBDungeonDoor(0x0F2437, 0x321300, 5),
         "Sea Entrance Script": EBDungeonDoor(0x15F25B, 0x321310, 3, True),
         "Sea Exit Script": EBDungeonDoor(0x15ECEB, 0x321320, 5, True),
-        "Post-Nightmare Script": EBDungeonDoor(0x15ED4B, 0x321330, 5, True)
+        "Post-Nightmare Script": EBDungeonDoor(0x15ED4B, 0x321330, 5, True),
+        "Carpainter Failure Script": EBDungeonDoor(0x15EEF3, 7, 0x321340, True)
     }
 
     paired_doors = {}
@@ -195,6 +196,7 @@ def write_dungeon_entrances(world, rom) -> None:
 
 
     paired_doors["Post-Nightmare Script"] = paired_doors["Sea Exit Script"]
+    paired_doors["Carpainter Failure Script"] = paired_doors["Happy-Happy HQ Exit"]
 
     for door in paired_doors:
         destination = all_dungeon_doors[paired_doors[door]]
