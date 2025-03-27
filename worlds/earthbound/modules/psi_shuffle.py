@@ -418,7 +418,7 @@ def write_psi(world, rom) -> None:
             elif psi_num == 5 and i > 1:
                 rom.write_bytes(0x01C4AB + (0x9E * (i - 2)), struct.pack("H", world.starstorm_address[spell][i - 2]))  # Menu spells
                 rom.write_bytes(0x01C536 + (0x78 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))  # What spell is controlled by the PSI flags
-                rom.write_bytes(0x2E957E + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))  # The global Poo PSI text
+                rom.write_bytes(0x2E957F + (0x11 * (i - 2)), bytearray([world.starstorm_spell_id[spell][i - 2]]))  # The global Poo PSI text
                 rom.write_bytes(address + 9, bytearray(world.psi_slot_data[psi_num][i - 2]))
 
             if spell == "Special" and psi_num != 0:

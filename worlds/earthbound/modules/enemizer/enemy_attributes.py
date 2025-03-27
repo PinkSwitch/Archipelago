@@ -234,7 +234,28 @@ enemy_adjectives = [
     "Criminal ",
     "Master Criminal ",
     "Final ",
-    "Plague "
+    "Plague ",
+    "Disingenuous ",
+    "Disgusting ",
+    "Inadequate ",
+    "Dr. ",
+    "Electronic ",
+    "Jealous ",
+    "Bald ",
+    "Baked ",
+    "Magic ",
+    "Polar ",
+    "Depressed ",
+    "Clean ",
+    "Elderly ",
+    "Banned ",
+    "Grumpy ",
+    "Whelmed ",
+    "Loud ",
+    "Mushy ",
+    "Randomized ",
+    "Homesick ",
+    "Mecha "
 ]
 
 battle_sprites = {

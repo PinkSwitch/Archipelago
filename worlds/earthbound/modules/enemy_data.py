@@ -362,7 +362,7 @@ def initialize_enemies(world):
         "Trillionage Sprout": shuffled_enemies["Tough Mobile Sprout"],
         "Master Barf": shuffled_enemies["Even Slimier Little Pile"],
         "Starman Deluxe": [shuffled_enemies["Starman"], shuffled_enemies["Starman Super"]],
-        "Carbon Dog": world.enemies["Diamond Dog"],  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
+        "Carbon Dog": world.enemies[world.boss_list[27]],  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
         "Skate Punk": [shuffled_enemies["Pogo Punk"], shuffled_enemies["Yes Man Junior"]],
         "Loaded Dice": [shuffled_enemies["Care Free Bomb"], shuffled_enemies["Beautiful UFO"], shuffled_enemies["High-class UFO"]],
         "Loaded Dice (2)": [shuffled_enemies["Electro Swoosh"], shuffled_enemies["Fobby"], shuffled_enemies["Uncontrollable Sphere"]]
