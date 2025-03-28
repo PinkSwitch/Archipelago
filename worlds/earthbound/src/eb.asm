@@ -1842,7 +1842,7 @@ db $71, $a2, $93, $98, $99, $a0, $95, $9c, $91, $97, $9f, $6E, $50, $9c, $91, $a
 db $95, $9c, $a9, $5e, $13, $02; Stonehenge item
 
 ORG $CFB5E7
-db $D8, $02, $01
+db $49, $00, $02
 
 ORG $CFB5E2
 db $8F
@@ -8980,6 +8980,9 @@ db $80
 ORG $C772F8 ; Magicant Mom
 db $CA
 
+ORG $C1D6B5
+LDA #$03D6
+
 
 
 ;New data table go here
@@ -11977,7 +11980,7 @@ db $0A
 dl $C5E1E0
 
 LoadEnemyToVram:
-LDA $1BE2
+LDA $0780
 BEQ .LoadNormal
 LDA $9D11
 AND #$00FF
@@ -11989,7 +11992,7 @@ LDY #$005E
 PHX
 LDX $AAB4
 SEP #$20
-STA $1BE4,X
+STA $0782,X
 REP #$20
 PLX
 JML $C2EF42
@@ -12004,7 +12007,7 @@ PHX
 LDX #$0000
 SEP #$20
 .Check:
-CMP $1BE4,X
+CMP $0782,X
 BEQ .Loaded
 CPX #$0003
 BEQ .DontOverride
@@ -12020,7 +12023,7 @@ PLX
 JML $C2BDEC
 
 AllowEnemyToSpawn:
-LDA $1BE2
+LDA $0780
 BEQ .DontOverride
 LDA $9D11
 AND #$00FF
@@ -12035,7 +12038,7 @@ ForceLoadSingle:
 LDA [$1A],y
 AND #$00FF
 PHA
-LDA $1BE2
+LDA $0780
 BNE .ForceMode
 .Load:
 PLA
@@ -12051,16 +12054,16 @@ PLA
 JML $C2EFD4
 
 InitializeLoadingEnemies:
-STZ $1BE2
-STZ $1BE4
-STZ $1BE6
+STZ $0780
+STZ $0782
+STZ $0784
 STZ $AAB4
 STZ $AAB2
 JML $C2EEF5
 
 SetupVramForSpriteLoad:
 PHA
-LDA $1BE2
+LDA $0780
 BEQ .NormalLoad
 LDA $AAB4
 CMP #$04
@@ -14440,23 +14443,23 @@ BCS .skip_vram_load ; 4 is the max enemies the game can handle. If we already lo
 LDA $9D11
 AND #$00FF
 SEP #$20
-CMP $1BE4
+CMP $0782
 BEQ .skip_vram_load
-CMP $1BE5
+CMP $0783
 BEQ .skip_vram_load
-CMP $1BE6
+CMP $0784
 BEQ .skip_vram_load
-CMP $1BE7
+CMP $0785
 BEQ .skip_vram_load ;If the enemy is already loaded, don't load it into a new slot
 REP #$20
 LDA #$0090
 LDY #$005E
-INC $1BE2
+INC $0780
 JSL goto_vramload
 .skip_vram_load:
 REP #$31
 JSL $C2C145 ;Do the enemy call
-STZ $1BE2
+STZ $0780
 STZ $B5ED
 RTL
 
