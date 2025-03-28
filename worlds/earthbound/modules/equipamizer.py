@@ -661,7 +661,7 @@ def randomize_armor(world, rom):
 
         if armor.sleep_res > 0:
             description += f"@Protects against Sleep{res_strength[armor.sleep_res - 1]}.\n"
-            
+
         description = text_encoder(description, 0x100)
         description = description[:-2]
         description.extend([0x13, 0x02])
@@ -687,7 +687,7 @@ def randomize_weapons(world, rom):
         "Paula": ["fry pan", "frypan", "skillet", "whisk", "saucepan", "pin"],
         "Jeff": ["gun", "beam", "air gun", "beam gun", "cannon", "blaster", "pistol", "revolver", "shotgun"],
         "Poo": ["Sword", "Katana", "Knife", "Scisscors", "Cutter", "Blade", "Chisel", "Saw", "Axe"],
-        "All": ["Yo-yo", "Slingshot", "Boomerang"]
+        "All": ["yo-yo", "slingshot", "boomerang"]
     }
 
     miss_rates = {
