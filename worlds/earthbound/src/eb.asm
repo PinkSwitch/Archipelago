@@ -313,6 +313,9 @@ JSL SetupVramForSpriteLoad
 ORG $C1F06B
 JML CloseVersionWindow
 
+ORG $C27F2C
+JSL FixGiygasReflect
+
 ;new jmls
 
 
@@ -12083,6 +12086,16 @@ REP #$20
 LDA #$0024
 JSL $C3E521
 JML LoadAPData
+
+FixGiygasReflect:
+PHA
+LDA $AA96
+BEQ .NotReflection
+LDA #$A26A
+STA $A972
+.NotReflection:
+PLA
+JML $C23D05
 
 ;new code go here
 

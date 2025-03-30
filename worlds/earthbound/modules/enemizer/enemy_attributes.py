@@ -109,7 +109,8 @@ enemy_species = [
     "Storm",
     "Dino",
     "Painter",
-    "Burglar"
+    "Burglar",
+    "Tank",
 ]
 
 enemy_adjectives = [
@@ -255,7 +256,8 @@ enemy_adjectives = [
     "Mushy ",
     "Randomized ",
     "Homesick ",
-    "Mecha "
+    "Mecha ",
+    "Ramblin' Evil "
 ]
 
 battle_sprites = {
@@ -263,7 +265,7 @@ battle_sprites = {
     "Dog": [0x02, 0x42],
     "Frog": [0x03],
     "Sphere": [0x04],
-    "Evil Mushroom": [0x05],
+    "Mushroom": [0x05],
     "Bomb": [0x06],
     "Octobot": [0x07],
     "Musica": [0x08],
@@ -360,7 +362,7 @@ battle_sprites = {
     "Goat": [0x5E],
     "Oak": [0x5F],
     "Punk": [0x60],
-    #Frankystein
+    "Tank": [0x61],
     "Pile of Puke": [0x62],
     "Lady": [0x63],
     "Skater": [0x64],
