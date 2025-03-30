@@ -237,7 +237,7 @@ item_table: Dict[str, ItemData] = {
     "Insignificant Item": ItemData("Key Items", 0xEB00CE, ItemClassification.progression),
     "Magic Tart": ItemData("Food", 0xEB00CF, ItemClassification.useful, 0),
     "Tiny Ruby": ItemData("Key Items", 0xEB00D0, ItemClassification.progression),
-    "Monkey's Love": ItemData("Battle Items", 0xEB00D1, ItemClassification.filler),
+    "Monkey's Love": ItemData("Battle Items", 0xEB00D1, ItemClassification.useful),
     "Eraser Eraser": ItemData("Key Items", 0xEB00D2, ItemClassification.progression),
     "Tendakraut": ItemData("Key Items", 0xEB00D3, ItemClassification.progression),
 

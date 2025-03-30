@@ -174,6 +174,7 @@ def randomize_enemy_attacks(world, rom):
         if enemy not in excluded_enemies and " (" not in enemy:
             enemy_ai = world.random.randint(0, 3)
             world.enemy_psi[enemy] = ["null", "null", "null", "null"]
+            max_calls = 0
             for i in range(4):
                 if world.enemies[enemy].pp and world.random.randint(1, 100) < 20:
                     attack = world.random.choice(list(psi_actions.keys()))
@@ -188,6 +189,7 @@ def randomize_enemy_attacks(world, rom):
                     argument = world.random.choice(needs_argument[attack])
                 elif attack in ["Sow Seeds", "Call"]:
                     argument = enemy_ids[enemy]
+                    max_calls = world.random.randint(1,4)
                 else:
                     argument = 0
                 
