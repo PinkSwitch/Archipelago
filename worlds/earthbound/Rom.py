@@ -624,8 +624,8 @@ def patch_rom(world, rom, player: int):
     if world.options.randomize_psi_palettes:
         randomize_psi_palettes(world, rom)
 
-    #if world.options.randomize_enemy_attributes:
-    randomize_enemy_attributes(world, rom)
+    if world.options.randomize_enemy_attributes:
+        randomize_enemy_attributes(world, rom)
 
     if world.options.randomize_enemy_stats:
         randomize_enemy_stats(world, rom)

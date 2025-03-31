@@ -398,6 +398,10 @@ class EnemizerAttacks(Toggle):
     """Randomizes attacks of non-boss enemies."""
     display_name = "Randomize Enemy Attacks"
 
+class EnemizerAttributes(Toggle):
+    """Randomizes most attributes of non-boss enemies."""
+    display_name = "Randomize Enemy Attributes"
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -417,6 +421,7 @@ class EBOptions(PerGameCommonOptions):
     boss_shuffle: BossShuffle
     decouple_diamond_dog: DecoupleDiamondDog
     boss_shuffle_add_giygas: ShuffleGiygas
+    randomize_enemy_attributes: EnemizerAttributes
     randomize_enemy_stats: EnemizerStats
     randomize_enemy_attacks: EnemizerAttacks
     experience_modifier: ExperienceModifier
@@ -510,6 +515,7 @@ eb_option_groups = [
     ]),
 
     OptionGroup("Enemizer", [
+        EnemizerAttributes,
         EnemizerAttacks,
         EnemizerStats
     ]),
@@ -554,5 +560,3 @@ eb_option_groups = [
         EnergyLink
     ])
 ]
-
-eb_option_presets = "h"

@@ -27,6 +27,7 @@ def randomize_enemy_attributes(world, rom):
             taken_names.append(new_name)
             sprite = world.random.choice(battle_sprites[species])
             field_sprite = field_sprites[sprite]
+            world.enemy_sprites[enemy] = field_sprite
             movement_pattern = movement_patterns[field_sprite]
             palette = world.random.randint(1, 31)
             gender = world.random.randint(1, 3)
