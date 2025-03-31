@@ -304,9 +304,9 @@ battle_sprites = {
     "Gangster": [0x25],
     "Guy": [0x26],
     "Storm": [0x27],
-    #Carbon
+    # Carbon
     "Kraken": [0x29],
-    #Pokey
+    # Pokey
     "Li'l UFO": [0x2B],
     "Coffee Cup": [0x2C],
     "Molecule": [0x2D],
@@ -339,20 +339,20 @@ battle_sprites = {
     "Ant": [0x49],
     "Buffalo": [0x4A],
     "Rat of Doom": [0x4B],
-    #Diamond Dog
+    # iamond Dog
     "Arachnid": [0x4D],
     "Mole": [0x4E],
     "Statue": [0x4F],
     "Roach": [0x50],
     "Noose": [0x51],
     "Tangoo": [0x52],
-    #MondoMole
+    # MondoMole
     "Crocodile": [0x54],
     "Taxi": [0x55],
     "Demon": [0x56],
     "General": [0x57],
     "Royal Guard": [0x57],
-    #Trillionage sprout
+    # Trillionage sprout
     "Fly": [0x59],
     "Mobile Sprout": [0x5A],
     "Little Pile": [0x5B],
@@ -651,27 +651,27 @@ movement_patterns = {
 }
 
 start_texts = [
-    0xEF7858, # attacked
-    0xEF7866, # blocked the way
-    0xEF7879, # came after you
-    0xEF788B, # trapped you
-    0xEF789C, # you encounter
-    0xEF78AB, # you meet
-    0xEF78B8, # you engage
-    0xEF78C7, # you confront
+    0xEF7858,  # attacked
+    0xEF7866,  # blocked the way
+    0xEF7879,  # came after you
+    0xEF788B,  # trapped you
+    0xEF789C,  # you encounter
+    0xEF78AB,  # you meet
+    0xEF78B8,  # you engage
+    0xEF78C7,  # you confront
 ]
 
 death_texts = [
     0xEF6D71,
-    0xEF6D83, # Stopped moving
+    0xEF6D83,  # Stopped moving
     0xEF6D96,
-    0xEF6DA7, # disappeared
-    0xEF6DB8, # melted into thin air
-    0xEF6DD8, # broken into pieces
-    0xEF6DF0, # destroyed
-    0xEF6E03, # totally scrapped
-    0xEF6E19, # turned back to normal
-    0xEF6E31, # dust of the earth
+    0xEF6DA7,  # disappeared
+    0xEF6DB8,  # melted into thin air
+    0xEF6DD8,  # broken into pieces
+    0xEF6DF0,  # destroyed
+    0xEF6E03,  # totally scrapped
+    0xEF6E19,  # turned back to normal
+    0xEF6E31,  # dust of the earth
 
 ]
 
@@ -753,7 +753,7 @@ weakness_table = {
              "Tank": 0
              },
 
-"Freeze": {
+    "Freeze": {
              "Frog": 0,
              "Antoid": 0,
              "Mushroom": 0,
@@ -821,7 +821,7 @@ weakness_table = {
              "Tank": 0
              },
             
-"Flash": {
+    "Flash": {
             "Fire Plug": 3,
             "Record": 3,
             "Power Robot": 2,
@@ -866,7 +866,7 @@ weakness_table = {
             "Tank": 2
             },
 
-"Paralysis": {
+    "Paralysis": {
             "Spook": 2,
             "Buffalo": 0,
             "Antoid": 0,
@@ -920,7 +920,7 @@ weakness_table = {
             "Tank": 2
             },
 
-"Hypnosis": {
+    "Hypnosis": {
             "Buffalo": 2,
             "Antoid": 0,
             "Mushroom": 3,

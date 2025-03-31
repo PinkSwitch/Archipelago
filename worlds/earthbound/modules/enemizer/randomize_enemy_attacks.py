@@ -82,7 +82,7 @@ battle_actions = {
     # "Eat Food": 0x8A,
     "PSI Food": 0x8E,
     # "Stat Food": 0x91,
-    #Counter PSI: 0x9F World.gadget actions?
+    # Counter PSI: 0x9F World.gadget actions?
     # Shield Killer
     # HP Sucker
     "Toothbrush": 0xAE,
@@ -169,6 +169,7 @@ psi_actions = {
     "Brainshock": 0x3A,
 }
 
+
 def randomize_enemy_attacks(world, rom):
     for enemy in world.enemies:
         if enemy not in excluded_enemies and " (" not in enemy:
@@ -189,7 +190,7 @@ def randomize_enemy_attacks(world, rom):
                     argument = world.random.choice(needs_argument[attack])
                 elif attack in ["Sow Seeds", "Call"]:
                     argument = enemy_ids[enemy]
-                    max_calls = world.random.randint(1,4)
+                    max_calls = world.random.randint(1, 4)
                 else:
                     argument = 0
                 

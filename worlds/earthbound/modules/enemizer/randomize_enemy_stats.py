@@ -1,10 +1,11 @@
 from .enemy_attributes import excluded_enemies
 
+
 def randomize_enemy_stats(world, rom):
     for enemy in world.enemies:
         if enemy not in excluded_enemies and " (" not in enemy:
             world.enemies[enemy].hp = world.random.randint(10, 900)
-            if world.random.randint(1,100) < 20:
+            if world.random.randint(1, 100) < 20:
                 world.enemies[enemy].pp = int(world.random.randint(10, 500) / 2)
             else:
                 world.enemies[enemy].pp = 0
@@ -15,8 +16,8 @@ def randomize_enemy_stats(world, rom):
             world.enemies[enemy].exp = world.random.randint(10, 62000)
             # print(f"HAHAHA! {world.enemies[enemy].name}! {world.enemies[enemy].exp}")
             world.enemies[enemy].money = world.random.randint(10, 1000)
-            guts = world.random.randint(1,255)
-            luck = world.random.randint(1,255)
+            guts = world.random.randint(1, 255)
+            luck = world.random.randint(1, 255)
             rom.write_bytes(world.enemies[enemy].address + 0x3D, bytearray([guts]))
             rom.write_bytes(world.enemies[enemy].address + 0x3E, bytearray([luck]))
             if world.enemies[enemy].attack_extensions > 0:
