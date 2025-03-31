@@ -1,6 +1,6 @@
 import struct
 from .enemy_attributes import (enemy_species, enemy_adjectives, battle_sprites, field_sprites, excluded_enemies, insects, robots, movement_patterns,
-start_texts, death_texts)
+start_texts, death_texts, weakness_table)
 from ..music_rando import battle_songs
 from ...game_data.text_data import calc_pixel_width, text_encoder
 
@@ -15,7 +15,6 @@ def randomize_enemy_attributes(world, rom):
     taken_names = []
     for enemy in world.enemies:
         if enemy not in excluded_enemies and " (" not in enemy:
-            # print(enemy)
             new_name = "FFFFFFFFFFFFFFFFFFFFFFFFFF"
             pixel_width = calc_pixel_width(new_name)
             while len(new_name) > 25 and new_name not in taken_names and pixel_width > 95:
@@ -38,7 +37,7 @@ def randomize_enemy_attributes(world, rom):
             row = world.random.randint(0,1)
             mirror_chance = world.random.randint(0,100)
             start_text = world.random.choice(start_texts)
-            #death_text = ????
+            death_text = world.random.choice(death_texts)
             if species in ["Power Robot", "Reactor Robot", "Sphere"]:
                 death_action = 0x0040
             elif species == "Oak":
@@ -54,8 +53,27 @@ def randomize_enemy_attributes(world, rom):
                     world.enemies[enemy].has_shield = shield_statuses[status - 1]
             else:
                 status = 0
+
+            if species in ["Party Man", "Reveler"]:
+                miss_rate = 6
+            elif species == "Boy":
+                miss_rate = 8
+            elif species == "Bot":
+                miss_rate = 5
+            else:
+                miss_rate = world.random.randint(0,4)
+                
+            fire_weakness = get_weakness("Fire", species)
+
+            freeze_weakness = get_weakness("Freeze", species)
+
+            flash_weakness = get_weakness("Flash", species)
+
+            paralysis_weakness = get_weakness("Paralysis", species)
+
+            hypnosis_weakness = get_weakness("Hypnosis", species)
+
             address = world.enemies[enemy].address
-            print(f"{new_name} using {palette}")
             new_name = text_encoder(new_name, 0x18)
             if len(new_name) < 0x18:
                 new_name.extend([0x00])
@@ -66,25 +84,26 @@ def randomize_enemy_attributes(world, rom):
             rom.write_bytes(address + 0x1C, struct.pack("H", sprite))
             rom.write_bytes(address + 0x1E, struct.pack("H", field_sprite))
             rom.write_bytes(address + 0x2B, struct.pack("H", movement_pattern))
-            rom.write_bytes(address + 0x2B, struct.pack("H", movement_pattern))
             rom.write_bytes(address + 0x2D, struct.pack("I", start_text))
-            #rom.write_bytes(address + 0x31, struct.pack("I", death_text))
+            rom.write_bytes(address + 0x31, struct.pack("I", death_text))
             rom.write_bytes(address + 0x35, bytearray([palette]))
             rom.write_bytes(address + 0x37, bytearray([music]))
-            # Miss rate?
+            rom.write_bytes(address + 0x3F, bytearray([fire_weakness]))
+            rom.write_bytes(address + 0x40, bytearray([freeze_weakness]))
+            rom.write_bytes(address + 0x41, bytearray([flash_weakness]))
+            rom.write_bytes(address + 0x42, bytearray([paralysis_weakness]))
+            rom.write_bytes(address + 0x43, bytearray([hypnosis_weakness]))
+            rom.write_bytes(address + 0x43, bytearray([miss_rate]))
             rom.write_bytes(address + 0x4E, struct.pack("H", death_action))
             rom.write_bytes(address + 0x57, bytearray([drop_rate]))
             rom.write_bytes(address + 0x58, bytearray([base_drop]))
             rom.write_bytes(address + 0x59, bytearray([status]))
             rom.write_bytes(address + 0x5B, bytearray([row]))
             rom.write_bytes(address + 0x5D, bytearray([mirror_chance]))
-            
-            #fire_weakness =
 
-            #freeze_weakness = 
-
-            #flash_weakness =
-
-            #paralyz_weankess = 
-
-            #hypnosis_weakness = 
+def get_weakness(element, species) -> int:
+    if species in weakness_table[element]:
+        weakness = weakness_table[element][species]
+    else:
+        weakness = 1
+    return weakness
