@@ -143,7 +143,18 @@ needs_argument = {
     "Ruler": [0xBA],
     "Protractor": [0xBB],
     "Monkey Love": [0xD1],
-    "Sudden Guts": [0x9F]
+    "Sudden Guts": [0x9F],
+    "Shield Alpha": [0x1F],
+    "Shield Beta": [0x20],
+    "PSI Shield Alpha": [0x23],
+    "PSI Shield Beta": [0x24],
+    "Offense Up Alpha": [0x27],
+    "Offense Up Omega": [0x28],
+    "Defense Down Alpha": [0x29],
+    "Defense Down Omega": [0x2A],
+    "Hypnosis Alpha": [0x2B],
+    "Hypnosis Omega": [0x2C],
+    "Brainshock": [0x31]
 }
 
 psi_actions = {
