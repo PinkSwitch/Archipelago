@@ -139,7 +139,6 @@ def calculate_scaling(world) -> None:
     belch_factory = world.dungeon_connections["Belch's Factory"]
     milky_well = world.dungeon_connections["Milky Well"]
     gold_mine = world.dungeon_connections["Gold Mine"]
-    monkey_caves = world.dungeon_connections["Monkey Caves"]
     monotoli_building = world.dungeon_connections["Monotoli Building"]
     magnet_hill = world.dungeon_connections["Magnet Hill"]
     moonside = world.dungeon_connections["Moonside"]
@@ -174,7 +173,7 @@ def calculate_scaling(world) -> None:
         belch_factory: ["Upper Saturn Valley"],
         "Upper Saturn Valley": ["Saturn Valley", world.dungeon_connections["Milky Well"]],
         "Milky Well": ["Milky Well"],
-        "Dusty Dunes Desert": ["Threed", monkey_caves, gold_mine, "Fourside"],
+        "Dusty Dunes Desert": ["Threed", "Monkey Caves", gold_mine, "Fourside"],
         "Monkey Caves": ["Monkey Caves"],
         "Gold Mine": ["Gold Mine"],
         "Fourside": ["Dusty Dunes Desert", monotoli_building, magnet_hill, "Threed", "Fourside Dept. Store", moonside],
@@ -285,7 +284,7 @@ def calculate_scaling(world) -> None:
         "Milky Well": {"Milky Well": [["Nothing"]]},
 
         "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
-                               monkey_caves: [["King Banana"]],
+                               "Monkey Caves": [["King Banana"]],
                                gold_mine: [["Mining Permit"]],
                                "Fourside": [["Nothing"]]},
 

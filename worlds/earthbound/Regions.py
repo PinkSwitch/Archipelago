@@ -25,7 +25,6 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
     milky_well_connection = world.dungeon_connections["Milky Well"]
     gold_mine_connection = world.dungeon_connections["Gold Mine"]
     moonside_connection = world.dungeon_connections["Moonside"]
-    monkey_cave_connection = world.dungeon_connections["Monkey Caves"]
     monotoli_building_connection = world.dungeon_connections["Monotoli Building"]
     magnet_hill_connection = world.dungeon_connections["Magnet Hill"]
     pink_cloud_connection = world.dungeon_connections["Pink Cloud"]
@@ -157,9 +156,9 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Upper Saturn Valley", player).add_exits([milky_well_connection, "Saturn Valley"])
 
-    multiworld.get_region("Dusty Dunes Desert", player).add_exits(["Threed", monkey_cave_connection, gold_mine_connection, "Fourside", "Global ATM Access"],
+    multiworld.get_region("Dusty Dunes Desert", player).add_exits(["Threed", "Monkey Caves", gold_mine_connection, "Fourside", "Global ATM Access"],
                                                                   {"Threed": lambda state: state.has("Threed Tunnels Clear", player),
-                                                                  monkey_cave_connection: lambda state: state.has("King Banana", player),
+                                                                  "Monkey Caves": lambda state: state.has("King Banana", player),
                                                                    gold_mine_connection: lambda state: state.has("Mining Permit", player)})
 
     multiworld.get_region("Fourside", player).add_exits(["Dusty Dunes Desert", monotoli_building_connection, magnet_hill_connection, "Threed", "Fourside Dept. Store", "Global ATM Access", moonside_connection],

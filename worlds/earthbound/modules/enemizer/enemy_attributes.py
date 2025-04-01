@@ -256,7 +256,11 @@ enemy_adjectives = [
     "Homesick ",
     "Mecha ",
     "Ramblin' Evil ",
-    "Master "
+    "Master ",
+    "Secret ",
+    "Platinum ",
+    "Armed ",
+    "Condemmed "
 ]
 
 battle_sprites = {
