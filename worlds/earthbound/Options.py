@@ -278,9 +278,13 @@ class NoFreeSancs(Toggle):
     display_name = "No Free Sanctuaries"
 
 
-class RandomizeFanfares(Toggle):
+class RandomizeFanfares(Choice):
     """Randomizes fanfares."""
     display_name = "Randomize Fanfares"
+    option_off = 0
+    option_on = 1
+    option_on_no_sound_stone_fanfares = 2
+    default = 0
 
 
 class RandomizeBattleMusic(Toggle):

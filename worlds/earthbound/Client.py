@@ -408,8 +408,8 @@ class EarthBoundClient(SNIClient):
             return
 
         is_energylink_enabled = await snes_read(ctx, IS_ENERGYLINK_ENABLED, 1)
-        is_requesting_energy = await snes_read(ctx, WRAM_START + 0x1BD6, 1)
-        energy_withdrawal = await snes_read(ctx, WRAM_START + 0x1BDC, 4)
+        is_requesting_energy = await snes_read(ctx, WRAM_START + 0x0790, 1)
+        energy_withdrawal = await snes_read(ctx, WRAM_START + 0x0796, 4)
         ctx.set_notify(f"EnergyLink{ctx.team}")
         energy = ctx.stored_data.get(f"EnergyLink{ctx.team}", 0)
         exchange_rate = 1000000
@@ -433,8 +433,8 @@ class EarthBoundClient(SNIClient):
                     cap_flag |= 0x20
                     await snes_write(ctx, [(WRAM_START + 0xB623, cap_flag.to_bytes(1, byteorder="little"))])
 
-                await snes_write(ctx, [(WRAM_START + 0x1BD8, int(energy).to_bytes(4, byteorder="little"))])
-                await snes_write(ctx, [(WRAM_START + 0x1BD6, (0x00).to_bytes(1, byteorder="little"))])
+                await snes_write(ctx, [(WRAM_START + 0x0792, int(energy).to_bytes(4, byteorder="little"))])
+                await snes_write(ctx, [(WRAM_START + 0x0790, (0x00).to_bytes(1, byteorder="little"))])
 
             if any(energy_withdrawal) and energy:
                 withdrawal = int.from_bytes(energy_withdrawal, byteorder="little")
@@ -448,12 +448,12 @@ class EarthBoundClient(SNIClient):
                     energy_success = 1
 
                 await snes_write(ctx, [(WRAM_START + 0x97D0, (withdrawal // exchange_rate).to_bytes(4, byteorder="little"))])
-                await snes_write(ctx, [(WRAM_START + 0x1BDC, (0x00).to_bytes(4, byteorder="little"))])
+                await snes_write(ctx, [(WRAM_START + 0x0796, (0x00).to_bytes(4, byteorder="little"))])
                 await ctx.send_msgs([{
                     "cmd": "Set", "key": f"EnergyLink{ctx.team}", "slot": ctx.slot, "operations":
                         [{"operation": "add", "value": (withdrawal * -1)},
                             {"operation": "max", "value": 0}]}])
-                await snes_write(ctx, [(WRAM_START + 0x1BE0, energy_success.to_bytes(1, byteorder="little"))])  # Signal the game to continue
+                await snes_write(ctx, [(WRAM_START + 0x079A, energy_success.to_bytes(1, byteorder="little"))])  # Signal the game to continue
 
         if cur_script[0]:  # Stop items during cutscenes
             return

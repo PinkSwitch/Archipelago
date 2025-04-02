@@ -310,8 +310,8 @@ JML InitializeLoadingEnemies
 ORG $C2EFF7
 JSL SetupVramForSpriteLoad
 
-ORG $C1F06B
-JML CloseVersionWindow
+ORG $C1F3D0
+JSL CloseVersionWindow
 
 ORG $C27F2C
 JSL FixGiygasReflect
@@ -11600,11 +11600,11 @@ LDA #$0000
 JML $C17F0F
 
 SendRequestForEnergy:
-STZ $1BD8
-STZ $1BDA
-STZ $1BE0
+STZ $0792
+STZ $0794
+STZ $079A
 LDA #$0001
-STA $1BD6
+STA $0790
 LDA #$0000
 JML $C17F0F
 
@@ -11834,9 +11834,9 @@ LDA $B623
 AND #$00FF
 AND #$0010
 BEQ .CheckBank
-LDA $1BD8
+LDA $0792
 STA $06
-LDA $1BDA
+LDA $0794
 STA $08
 JML $C15F48
 .CheckBank:
@@ -11851,9 +11851,9 @@ AND #$00FF
 AND #$0010
 BEQ .DontDisp
 PLA
-LDA $1BD8
+LDA $0792
 STA $06
-LDA $1BDA
+LDA $0794
 STA $08
 JML $C192E9
 .DontDisp:
@@ -11863,12 +11863,12 @@ JML $C192E2
 AuthenticateEnergyLong:
 PHX
 LDA $97D0
-STA $1BDC
+STA $0796
 LDA $97D2
-STA $1BDE
+STA $0798
 LDX #$00B4
 .CountFrames:
-LDA $1BE0
+LDA $079A
 AND #$00FF
 BNE .WithdrawSuccess
 PHX
@@ -11880,8 +11880,8 @@ BNE .CountFrames
 PLX
 LDA #$0000
 STA $97D0
-STA $1BDC
-STA $1BDD
+STA $0796
+STA $0797
 STA $97D2
 .Done:
 LDA #$0000
@@ -11893,7 +11893,7 @@ LDA #$0000
 BRA .Done
 
 GotServerEnergyLong:
-LDA $1BD6
+LDA $0790
 STA $97CC
 LDA #$0000
 JML $C17F0F
@@ -12082,10 +12082,9 @@ PLA
 JML $C08616
 
 CloseVersionWindow:
-REP #$20
 LDA #$0024
 JSL $C3E521
-JML LoadAPData
+JML $C3E4D4
 
 FixGiygasReflect:
 PHA
@@ -12094,7 +12093,6 @@ BEQ .NotReflection
 LDA #$A26A
 STA $A972
 .NotReflection:
-PLA
 JML $C23D05
 
 ;new code go here
