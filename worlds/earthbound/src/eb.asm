@@ -12219,15 +12219,15 @@ dd ForceSetSoloCheck
 
 
 
-ORG $F400A8
+ORG $F403C6
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
-;db $5A, $00, $00, $00, $01, $00; Non-remote local Teleport.
-;db $96, $ff, $ff, $05, $02, $00; A remote regular item
-;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
+db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
+db $96, $00, $00, $05, $02, $00; A remote regular item
+db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 
 ORG $F400D2
 ;db $11
@@ -12313,7 +12313,12 @@ dd .NormalItem
 db $0b, $06
 db $1B, $03
 dd .Photo
-db $70, $83, $9f, $5c, $10, $02, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
+db $70
+db $0A
+dl .CheckSaturnText
+.NonSaturnTetx:
+db $83, $9f, $5c, $10, $02, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
+.BackSaturnText:
 db $1B, $06
 db $09, $05
 dd .Teleport
@@ -12461,6 +12466,25 @@ db $76, $9C, $A9, $99, $9E, $97, $50, $7D, $91, $9E, $02
 .Ness:
 db $1C, $02, $01, $02
 
+.CheckSaturnText:
+db $06
+db $F8, $00
+dd .SaturnText
+db $06
+db $F9, $00
+dd .SaturnText
+db $06
+db $FA, $00
+dd .SaturnText
+db $0A
+dl .NonSaturnTetx
+.SaturnText:
+db $1F, $31
+db $89, $9F, $A5, $50, $A7, $91, $9E
+db $A4, $50
+db $0A
+dl .BackSaturnText
+
 ShopsanityPurchaseHandler:
 ;Set the flag here, probably?
 db $1B, $06
@@ -12471,6 +12495,10 @@ db $1B, $06
 db $1B, $02
 dd .NormalItem
 db $01
+db $1F, $30
+db $06
+db $93, $02
+dd .SpecialMoonsideFlagHandler
 db $19, $02
 db $89, $95, $A3, $02
 db $19, $02
@@ -12687,6 +12715,20 @@ db $08
 dd DynamicPhotoSetter
 db $18, $01, $01
 db $02
+
+.SpecialMoonsideFlagHandler:
+db $19, $02
+db $89, $95, $A3, $02
+db $19, $02
+db $7E, $9F, $02
+db $1C, $07, $02, $11
+db $12
+db $09, $02
+dd .Cancel
+dd .Purchase
+db $0A
+dl .Purchase
+
 
 OverrideSpaceCheckOnSpecialItem:
 db $1B, $06
