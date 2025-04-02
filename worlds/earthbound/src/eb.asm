@@ -8986,6 +8986,17 @@ db $CA
 ORG $C1D6B5
 LDA #$03D6
 
+ORG $C7FB56
+db $0A
+dl AddNessToEpilogue
+
+ORG $C9C356
+db $00, $00, $00
+
+
+ORG $C9C359
+db $00, $00, $00, $00
+
 
 
 ;New data table go here
@@ -11678,7 +11689,8 @@ BNE .CheckStorage
 
 .REALLYdone:
 PLY
-LDA #$0000
+JMP CheckNormalStorage
+.ReallyReallyDoneTheItems:
 JML EndKeyCheck
 .TossDuplicateItem:
 PLA
@@ -12094,6 +12106,25 @@ LDA #$A26A
 STA $A972
 .NotReflection:
 JML $C23D05
+
+CheckNormalStorage:
+PHY
+LDA $06
+LDX #$0000
+.CheckStorage:
+SEP #$20
+CMP $B590,X
+REP #$20
+BEQ .TossDuplicateItemNoPull
+INX
+CPX #$0045
+BNE .CheckStorage
+PLY
+LDA #$0000
+JML DeleteExtraKeyItem_ReallyReallyDoneTheItems
+.TossDuplicateItemNoPull:
+PLY
+JML RemoveItem
 
 ;new code go here
 
@@ -17301,6 +17332,12 @@ MagicantTentaGetNessName:
 db $19, $10, $01, $1B, $04, $1C, $02, $00
 db $0A
 dl MagicantNameReturn
+
+AddNessToEpilogue:
+db $1F, $11, $01
+db $18, $01, $01, $70
+db $0A
+dl $C7FB5A
 
 
 ;ORG $C62B87
