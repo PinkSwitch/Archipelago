@@ -50,7 +50,7 @@ db $00, $0A, $00, $61
 
 ORG $C4FD50
 NewSectorPointers:
-dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0,$FEEA
+dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0,$FEEA,$FF00
 
 ORG $D5F880
 SpecialNameTable:
@@ -8993,9 +8993,17 @@ dl AddNessToEpilogue
 ORG $C9C356
 db $00, $00, $00
 
-
 ORG $C9C359
 db $00, $00, $00, $00
+
+ORG $CFB374
+db $00
+
+ORG $CF666B
+db $0C, $00
+
+ORG $C4FF00
+db $02, $00, $77, $02, $60, $c8, $15, $00, $60, $dd ; Winters brickroad and phone
 
 
 
@@ -12132,81 +12140,81 @@ JML RemoveItem
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-;JML APShopHandler;This JML is only in AP patch
+JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-;JML GetAPShopName
+JML GetAPShopName
 
 ORG $C19E8F
-;JML GetAPShopPrice
+JML GetAPShopPrice
 
 ORG $C11AC6
-;JML DisplayAPPlayer
+JML DisplayAPPlayer
 
 ORG $C19EDD
-;JML TransferOutOfMenu
+JML TransferOutOfMenu
 
 org $C19ED3
-;JML CheckIfBuyable
-;NOP
-;NOP
+JML CheckIfBuyable
+NOP
+NOP
 
 ORG $C19B66
-;JML OverrideShopWindowFX
+JML OverrideShopWindowFX
 
 ORG $C5E0A9
-;db $08
-;dd CheckShopsanityPrice
+db $08
+dd CheckShopsanityPrice
 
 ORG $C19DA0
-;JML PreserveWindowPalette
+JML PreserveWindowPalette
 
 ORG $C5E0B6
-;db $08
-;dd BoughtShopsanityItemScript
+db $08
+dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-;db $0A
-;dl ShopsanityPurchaseHandler
+db $0A
+dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-;dl ShopsanityPurchaseHandler
+dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem
+db $0A
+dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_nosell
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-;dd ForcePurchaseCheck
+dd ForcePurchaseCheck
 
 ORG $C50A6A
-;db $0A
-;dl BackupShopEquipText
+db $0A
+dl BackupShopEquipText
 
 ORG $C50B4C
-;db $0A
-;dl BackupShopSellText
+db $0A
+dl BackupShopSellText
 
 ORG $C50C2E
-;db $0A
-;dl BackupShopCantEquip
+db $0A
+dl BackupShopCantEquip
 
 ORG $C5E04C
-;db $0A
-;dl OverrideSpaceCheckOnSpecialItem_oneslot
+db $0A
+dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 ORG $C5E1A5
-;dd SetFlagOnEquipConfirmSolo
+dd SetFlagOnEquipConfirmSolo
 
 ORG $C5E119
-;dd SetFlagOnEquipConfirm
+dd SetFlagOnEquipConfirm
 
 ORG $C5E0F2
-;dd ForceSetSoloCheck
+dd ForceSetSoloCheck
 
 
 
