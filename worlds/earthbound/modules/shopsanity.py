@@ -389,17 +389,17 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         rom.write_bytes(0x05E0A9, struct.pack("I", 0xF4900008))  # Compare the price of the item with money on hand
         rom.write_bytes(0x05E0B6, struct.pack("I", 0xF4905808))  # Display the item we bought and ask to confirm
         # The player bought the item; set a flag and give it to them
-        rom.write_bytes(0x05E0CE, struct.pack("I", 0xF492CA0A))
-        rom.write_bytes(0x05E0C8, struct.pack("I", 0xF492CA))
-        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF494B30A))
+        rom.write_bytes(0x05E0CE, struct.pack("I", 0xF493940A))
+        rom.write_bytes(0x05E0C8, struct.pack("I", 0xF49394))
+        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF495A40A))
         # Prevent the game from checking inventory space if not needed
-        rom.write_bytes(0x05E029, struct.pack("I", 0xF494D30A))
-        rom.write_bytes(0x05E04C, struct.pack("I", 0xF494F80A))
+        rom.write_bytes(0x05E029, struct.pack("I", 0xF495C40A))
+        rom.write_bytes(0x05E04C, struct.pack("I", 0xF495E90A))
         rom.write_bytes(0x05E1AE, struct.pack("I", 0xF00E92))  # Post-shop cleanup
 
-        rom.write_bytes(0x050A6A, struct.pack("I", 0xF494EC0A))
-        rom.write_bytes(0x050B4C, struct.pack("I", 0xF494F00A))
-        rom.write_bytes(0x050C2E, struct.pack("I", 0xF494F40A))
+        rom.write_bytes(0x050A6A, struct.pack("I", 0xF495DD0A))
+        rom.write_bytes(0x050B4C, struct.pack("I", 0xF495E10A))
+        rom.write_bytes(0x050C2E, struct.pack("I", 0xF495E50A))
 
         rom.write_bytes(0x05E1A5, struct.pack("I", 0xF00E84))
         rom.write_bytes(0x05E119, struct.pack("I", 0xF00E8B))

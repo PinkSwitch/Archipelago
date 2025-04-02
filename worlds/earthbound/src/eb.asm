@@ -12339,14 +12339,33 @@ dl $C50660
   db $1B, $03
   dd ..PooPsi
   db $1B, $01
+  db $06
+  db $F8, $00
+  dd .TeleportActiveSaturn
+  db $06
+  db $F9, $00
+  dd .TeleportActiveSaturn
+  db $06
+  db $FA, $00
+  dd .TeleportActiveSaturn
   db $a4, $98, $95, $50, $91, $92, $99, $9c, $99, $a4, $a9, $50, $a4, $9f, $50, $a4
   db $95, $9c, $95, $a0, $9f, $a2, $a4, $50, $a4, $9f, $50
+  ..ContinueTeleport:
   db $08
   dd ..TeleportShopNameTable
   db $6F
   db $02
 
   ..PooPsi:
+  db $06
+  db $F8, $00
+  dd .PooPsiSaturn
+  db $06
+  db $F9, $00
+  dd .PooPsiSaturn
+  db $06
+  db $FA, $00
+  dd .PooPsiSaturn
   db $a4, $9f, $50, $9c, $95, $91, $a2, $9e, $50, $91, $50, $9e, $95, $a7, $50, $80
   db $83, $79, $50, $91, $92, $99, $9c, $99, $a4, $a9, $6f, $02
 
@@ -12373,8 +12392,18 @@ dl $C50660
 .Character:
   db $1B, $01
   db $1B, $04
+  db $06
+  db $F8, $00
+  dd .CharacterSaturn
+  db $06
+  db $F9, $00
+  dd .CharacterSaturn
+  db $06
+  db $FA, $00
+  dd .CharacterSaturn
   db $a4, $9f, $50, $98, $99, $a2, $95, $50, $9d, $a9, $50, $91, $a0, $a0, $a2, $95
   db $9e, $a4, $99, $93, $95, $5c, $50
+  ..ContinueCharacter
   db $08
   dd ..CharShopNameTable
   db $6F
@@ -12400,6 +12429,15 @@ db $98, $99, $a3, $50, $91, $a3, $50, $91, $50, $92, $a5, $97, $51, $51, $02
 
 .OffWorld:
 db $1B, $01
+  db $06
+  db $F8, $00
+  dd .OffworldSaturn
+  db $06
+  db $F9, $00
+  dd .OffworldSaturn
+  db $06
+  db $FA, $00
+  dd .OffworldSaturn
 db $A4, $98, $95, $50
 db $1C, $05, $00, $50
 db $96, $9F, $A2, $50
@@ -12408,6 +12446,15 @@ db $6F, $02
 
 .RemoteLocal:
 db $1B, $01
+  db $06
+  db $F8, $00
+  dd .RemoteSaturn
+  db $06
+  db $F9, $00
+  dd .RemoteSaturn
+  db $06
+  db $FA, $00
+  dd .RemoteSaturn
 db $A4, $98, $95, $50
 db $1C, $05, $AD, $50
 db $96, $9F, $A2, $50
@@ -12417,6 +12464,30 @@ db $6F, $02
 .Photo:
 db $02
 
+.TeleportActiveSaturn:
+db $97, $9F, $50, $A4, $9F, $50
+db $0A
+dl .Teleport_ContinueTeleport
+
+.PooPsiSaturn:
+db $9E, $95, $A7, $50, $80, $83, $79, $6F, $02
+
+.CharacterSaturn:
+db $92, $A5, $A9, $50
+db $0A
+dl .Character_ContinueCharacter
+
+.OffworldSaturn:
+db $1C, $05, $00, $50
+db $96, $9F, $A2, $50
+db $1C, $02, $00
+db $6F, $02
+
+.RemoteSaturn:
+db $1C, $05, $AD, $50
+db $96, $9F, $A2, $50
+db $1C, $02, $00
+db $6F, $02
 
 .ShopOnett:
 db $7F, $9E, $95, $A4, $A4, $02
