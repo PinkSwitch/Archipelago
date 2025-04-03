@@ -15148,6 +15148,7 @@ db $06 ;#
 db $05 ;arrows
 db $06 ;n
 db $05 ;ä
+db $05 ;é
 
 ORG $FA0100
 SaturnFontTable:
@@ -15165,6 +15166,7 @@ db $0B
 db $0B
 db $09
 db $08
+db $0B
 
 ORG $FC0000
 FontGFXTable:

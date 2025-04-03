@@ -1,7 +1,6 @@
 import struct
 from .enemy_attributes import (enemy_species, enemy_adjectives, battle_sprites, field_sprites, excluded_enemies,
                                insects, robots, movement_patterns, start_texts, death_texts, weakness_table)
-from ..music_rando import battle_songs
 from ...game_data.text_data import calc_pixel_width, text_encoder
 
 shield_statuses = [
@@ -9,6 +8,21 @@ shield_statuses = [
     "phys_2",
     "psi_1",
     "psi_2"
+]
+
+battle_songs = [
+    0x60,
+    0x61,
+    0x62,
+    0x63,
+    0x64,
+    0x65,
+    0x66,
+    0x67,
+    0x68,
+    0x69,
+    0x8D,
+    0x94
 ]
 
 
