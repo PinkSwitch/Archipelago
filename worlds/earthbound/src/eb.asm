@@ -5100,76 +5100,6 @@ RepelsEmpty:
 PLA
 BRA CheckNormal
 
-GetStartingData:
-PHB
-LDA #$000B
-LDX #$FC70
-LDY #$99F3
-MVN $D77E
-PLB
-LDA #$0000
-LDX #$0000
-CheckTeleport:
-LDA StartingTeleports,X
-AND #$00FF
-BEQ EndStartTeleports
-CMP #$0010
-BNE NormalTeleport
-JMP GetStarstorm
-NormalTeleport:
-PHX
-ASL
-TAX
-LDA TeleportFlags,X
-JSL $C2165E
-PLX
-INX
-BRA CheckTeleport
-EndStartTeleports:
-STZ $FF41
-LDA #$0000
-LDX #$0000
-CheckChars:
-LDA StartingChars,X
-AND #$00FF
-BEQ EndStartData
-PHX
-PHA
-CMP #$0001
-BNE .NotNess
-LDA #$0006
-.NotNess:
-DEC
-DEC
-ASL
-TAX
-LDA CharFlags,X
-LDX #$0001
-JSL $C2165E
-PLA
-JSL $C228F8
-PLX
-INX
-BRA CheckChars
-EndStartData:
-JML CheckEndPhotos
-GetStarstorm:
-PHX
-LDA $FF41
-AND #$00FF
-CMP #$0002
-BNE .StarstormYeah
-DEC $FF41
-.StarstormYeah:
-TAX
-LDA StarstormBits,X
-AND #$00FF
-TSB $9839
-PLX
-INX
-INC $FF41
-JMP CheckTeleport
-
 ORG $C57675
 db $0a, $9b, $ba, $ee
 
@@ -12134,100 +12064,170 @@ JML DeleteExtraKeyItem_ReallyReallyDoneTheItems
 PLY
 JML RemoveItem
 
+GetStartingData:
+PHB
+LDA #$000B
+LDX #$FC70
+LDY #$99F3
+MVN $D77E
+PLB
+LDA #$0000
+LDX #$0000
+CheckTeleport:
+LDA StartingTeleports,X
+AND #$00FF
+BEQ EndStartTeleports
+CMP #$0010
+BNE NormalTeleport
+JMP GetStarstorm
+NormalTeleport:
+PHX
+ASL
+TAX
+LDA TeleportFlags,X
+JSL $C2165E
+PLX
+INX
+BRA CheckTeleport
+EndStartTeleports:
+STZ $FF41
+LDA #$0000
+LDX #$0000
+CheckChars:
+LDA StartingChars,X
+AND #$00FF
+BEQ EndStartData
+PHX
+PHA
+CMP #$0001
+BNE .NotNess
+LDA #$0006
+.NotNess:
+DEC
+DEC
+ASL
+TAX
+LDA CharFlags,X
+LDX #$0001
+JSL $C2165E
+PLA
+JSL $C228F8
+PLX
+INX
+BRA CheckChars
+EndStartData:
+JML CheckEndPhotos
+GetStarstorm:
+PHX
+LDA $FF41
+AND #$00FF
+CMP #$0002
+BNE .StarstormYeah
+DEC $FF41
+.StarstormYeah:
+TAX
+LDA StarstormBits,X
+AND #$00FF
+TSB $9839
+PLX
+INX
+INC $FF41
+JMP CheckTeleport
+
 ;new code go here
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;ANYTHING BETWEEN THIS BREAK AND THE NEXT NEEDS TO GET COMMENTED OUT!
 ORG $C19DE5
-JML APShopHandler;This JML is only in AP patch
+;JML APShopHandler;This JML is only in AP patch
 
 ORG $C19E23
-JML GetAPShopName
+;JML GetAPShopName
 
 ORG $C19E8F
-JML GetAPShopPrice
+;JML GetAPShopPrice
 
 ORG $C11AC6
-JML DisplayAPPlayer
+;JML DisplayAPPlayer
 
 ORG $C19EDD
-JML TransferOutOfMenu
+;JML TransferOutOfMenu
 
 org $C19ED3
-JML CheckIfBuyable
-NOP
-NOP
+;JML CheckIfBuyable
+;NOP
+;NOP
 
 ORG $C19B66
-JML OverrideShopWindowFX
+;JML OverrideShopWindowFX
 
 ORG $C5E0A9
-db $08
-dd CheckShopsanityPrice
+;db $08
+;dd CheckShopsanityPrice
 
 ORG $C19DA0
-JML PreserveWindowPalette
+;JML PreserveWindowPalette
 
 ORG $C5E0B6
-db $08
-dd BoughtShopsanityItemScript
+;db $08
+;dd BoughtShopsanityItemScript
 
 ORG $C5E0CE
-db $0A
-dl ShopsanityPurchaseHandler
+;db $0A
+;dl ShopsanityPurchaseHandler
 
 ORG $C5E0C8
-dl ShopsanityPurchaseHandler
+;dl ShopsanityPurchaseHandler
 
 ORG $C5DF1E
-db $0A
-dl OverrideSpaceCheckOnSpecialItem
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem
 
 ORG $C5E029
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_nosell
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_nosell
 
 ORG $C5E1AE
-dd ForcePurchaseCheck
+;dd ForcePurchaseCheck
 
 ORG $C50A6A
-db $0A
-dl BackupShopEquipText
+;db $0A
+;dl BackupShopEquipText
 
 ORG $C50B4C
-db $0A
-dl BackupShopSellText
+;db $0A
+;dl BackupShopSellText
 
 ORG $C50C2E
-db $0A
-dl BackupShopCantEquip
+;db $0A
+;dl BackupShopCantEquip
 
 ORG $C5E04C
-db $0A
-dl OverrideSpaceCheckOnSpecialItem_oneslot
+;db $0A
+;dl OverrideSpaceCheckOnSpecialItem_oneslot
 
 ORG $C5E1A5
-dd SetFlagOnEquipConfirmSolo
+;dd SetFlagOnEquipConfirmSolo
 
 ORG $C5E119
-dd SetFlagOnEquipConfirm
+;dd SetFlagOnEquipConfirm
 
 ORG $C5E0F2
-dd ForceSetSoloCheck
+;dd ForceSetSoloCheck
 
 
 
 
 ORG $F403C6
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
-db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
-db $96, $00, $00, $05, $02, $00; A remote regular item
-db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
-db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
-db $ad, $ff, $ff, $04, $05, $00; Item for another player 
-db $01, $ff, $ff, $05, $06, $00; A remote Key Item
+;db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
+;db $96, $00, $00, $05, $02, $00; A remote regular item
+;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
+;db $ad, $ff, $ff, $04, $04, $00; Item that the player already bought and got the flag for
+;db $ad, $ff, $ff, $04, $05, $00; Item for another player 
+;db $01, $ff, $ff, $05, $06, $00; A remote Key Item
 
 ORG $F400D2
 ;db $11

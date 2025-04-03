@@ -401,7 +401,7 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         rom.write_bytes(0x050B4C, struct.pack("I", 0xF495E10A))
         rom.write_bytes(0x050C2E, struct.pack("I", 0xF495E50A))
 
-        rom.write_bytes(0x05E1A5, struct.pack("I", 0xF00E84))
+        rom.write_bytes(0x05E1A5, struct.pack("I", 0xF00E92))
         rom.write_bytes(0x05E119, struct.pack("I", 0xF00E8B))
         rom.write_bytes(0x05E0F2, struct.pack("I", 0xF00E9A))
 
