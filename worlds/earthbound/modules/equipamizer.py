@@ -28,19 +28,14 @@ def price_weapons(weapons, rom):
             rom.write_bytes((weapon.address + 26), struct.pack("H", price))
 
 
-def price_armors(armor_pricing_list, rom):
+def price_armors(armor_pricing_list, rom, item):
     price = 0
     for index, armor in enumerate(armor_pricing_list):
         price = ((99 * (index + 1) + price) +
                  (50 * armor.flash_res + armor.fire_res + armor.freeze_res + armor.par_res) + armor.defense)
-        if "Summers" in armor.name:
-            armor.name = armor.name.replace("Summers", "")
-            rom.write_bytes((armor.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(armor.name, 25)
-            item_name.extend([0x00])
-            rom.write_bytes(armor.address, item_name)
-        else:
-            rom.write_bytes((armor.address + 26), struct.pack("H", price))
+        rom.write_bytes((armor.address + 26), struct.pack("H", price))
+        if item in ["Platinum Band", "Diamond Band"]:
+            rom.write_bytes((summers_addresses[item] + 26), struct.pack("H", price))
 
 
 def apply_progressive_weapons(world, weapons, progressives, rom):
@@ -258,8 +253,8 @@ type_bytes = {
 }
 
 summers_addresses = {
-    "Summers Platinum Band": 0x155A5C,
-    "Summers Diamond Band": 0x155A83,
+    "Platinum Band": 0x155A5C,
+    "Diamond Band": 0x155A83,
     "Summers Big League Bat": 0x15535A
 }
 
@@ -391,9 +386,6 @@ def randomize_armor(world, rom):
         "Defense Ribbon",
         "Talisman Ribbon",
         "Goddess Ribbon",
-        "Summers Platinum Band",
-        "Summers Diamond Band"
-
     ]
 
     char_armor_names = {
@@ -483,18 +475,9 @@ def randomize_armor(world, rom):
         "Defense Ribbon": EBArmor(0x157136, "other"),
         "Talisman Ribbon": EBArmor(0x15715D, "other"),
         "Saturn Ribbon": EBArmor(0x157184, "other"),
-        "Summers Platinum Band": EBArmor(0x0, "other"),
-        "Summers Diamond Band": EBArmor(0x0, "other"),
     }
 
     for item in all_armor:
-        if "Summers" in item:
-            world.armor_list[item] = dataclasses.replace(
-                world.armor_list[item.replace("Summers ", "")], address=summers_addresses[item]
-                )
-            world.armor_list[item].name += "Summers"
-            continue
-
         armor = world.armor_list[item]
         if world.options.armorizer == 2:
             armor.equip_type = world.random.choice(["arm", "body", "other"])
@@ -588,8 +571,8 @@ def randomize_armor(world, rom):
 
             pixel_length = calc_pixel_width(armor.name)
             
-        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
+        rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
     
@@ -616,7 +599,7 @@ def randomize_armor(world, rom):
             apply_progressive_armor(world, prog_armors[i], sorts[i], rom)
 
     for i in range(3):
-        price_armors(sorts[i], rom)
+        price_armors(sorts[i], rom, item)
 
     for item in all_armor:
         armor = world.armor_list[item]
@@ -626,8 +609,6 @@ def randomize_armor(world, rom):
         else:
             armor.poo_def = armor.defense
 
-        if "Summers" in armor.name:
-            armor.name = armor.name.replace("Summers", "")
         item_name = text_encoder(armor.name, 25)
         item_name.extend([0x00])
 
@@ -673,6 +654,12 @@ def randomize_armor(world, rom):
         rom.write_bytes(armor.address, item_name)
         rom.write_bytes((0x310000 + world.description_pointer), description)
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
+        if item in ["Platinum Band", "Diamond Band"]:
+            rom.write_bytes(summers_addresses[item] + 28, bytearray([usage_bytes[armor.can_equip]]))
+            rom.write_bytes(summers_addresses[item] + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
+            rom.write_bytes(summers_addresses[item] + 25, bytearray([type_bytes[armor.equip_type]]))
+            rom.write_bytes(summers_addresses[item], item_name)
+            rom.write_bytes((summers_addresses[item] + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         world.description_pointer += len(description)
 
 
