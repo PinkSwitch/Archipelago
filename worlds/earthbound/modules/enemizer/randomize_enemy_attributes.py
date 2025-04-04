@@ -28,12 +28,14 @@ battle_songs = [
 
 def randomize_enemy_attributes(world, rom):
     taken_names = []
+    pixel_width = calc_pixel_width("Handsome Fish's Brother")
+    print(pixel_width)
     for enemy in world.enemies:
         if enemy not in excluded_enemies and " (" not in enemy:
             new_name = "FFFFFFFFFFFFFFFFFFFFFFFFFF"
             pixel_width = calc_pixel_width(new_name)
             species = "Null"
-            while len(new_name) > 25 and new_name not in taken_names and pixel_width > 95:
+            while not (len(new_name) <= 25 and new_name in taken_names and pixel_width <= 95):
                 species = world.random.choice(enemy_species)
                 adjective = world.random.choice(enemy_adjectives)
                 new_name = adjective + species

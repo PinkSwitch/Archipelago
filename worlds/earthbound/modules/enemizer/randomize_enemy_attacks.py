@@ -141,7 +141,7 @@ battle_actions = {
 needs_argument = {
     "PSI Food": [0xCF, 0xF7, 0x6E, 0xF6, 0x63, 0x62],
     "Ruler": [0xBA],
-    "Protractor": [0xBB],
+    "Protractor": [0x8F],
     "Monkey Love": [0xD1],
     "Sudden Guts": [0x9F],
     "Shield Alpha": [0x1F],
@@ -154,7 +154,9 @@ needs_argument = {
     "Defense Down Omega": [0x2A],
     "Hypnosis Alpha": [0x2B],
     "Hypnosis Omega": [0x2C],
-    "Brainshock": [0x31]
+    "Brainshock": [0x31],
+    "Magnet Alpha": [0x2D],
+    "Magnet Omega": [0x2E],
 }
 
 psi_actions = {

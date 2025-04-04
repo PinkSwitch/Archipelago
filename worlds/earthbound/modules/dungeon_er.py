@@ -217,6 +217,8 @@ def write_dungeon_entrances(world, rom) -> None:
     rom.write_bytes(0x0FC8C6, struct.pack("I", 0xF3120B))  # Everdred script
     rom.write_bytes(0x10784A, struct.pack("H", 0x0000))  # Mook spawn in stonehenge anteroom
 
+    rom.write_bytes(0x0FA4D6, bytearray([0xC9, 0x00, 0x01]))
+
     moonside_reward = world.multiworld.get_location("Fourside - Post-Moonside Delivery", world.player).item
     if (moonside_reward.player != world.player) or world.options.remote_items or moonside_reward.name not in item_id_table:
         rom.write_bytes(0x3310F7, struct.pack("I", 0xF310FB))
