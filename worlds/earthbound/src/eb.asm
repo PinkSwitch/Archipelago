@@ -8935,6 +8935,8 @@ db $0C, $00
 ORG $C4FF00
 db $02, $00, $77, $02, $60, $c8, $15, $00, $60, $dd ; Winters brickroad and phone
 
+ORG $C5E572
+db $00, $00 ; Fix vanilla storage bug
 
 
 ;New data table go here
