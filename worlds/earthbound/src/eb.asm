@@ -6043,7 +6043,7 @@ ORG $EEC2C6
 db $50, $16, $6f, $51, $08, $58, $24, $c9, $ff, $0a, $bc, $d5, $c9
 
 ORG $CF213D
-db $C7, $80
+db $C7, $00
 
 ORG $EEA0E6
 db $01
@@ -8937,6 +8937,16 @@ db $02, $00, $77, $02, $60, $c8, $15, $00, $60, $dd ; Winters brickroad and phon
 
 ORG $C5E572
 db $00, $00 ; Fix vanilla storage bug
+
+ORG $C9AF4B
+db $C7, $00
+
+ORG $D56AE9
+db $3B
+
+ORG $C9FD46
+db $0A
+dl NewBikeText
 
 
 ;New data table go here
@@ -17463,6 +17473,30 @@ db $1F, $11, $01
 db $18, $01, $01, $70
 db $0A
 dl $C7FB5A
+
+NewBikeText:
+db $1C, $22
+db $1B, $06
+db $1B, $03
+dd $C7C6F1
+db $19, $10, $01
+db $0B, $01
+db $1B, $02
+dd .OtherCharBike
+db $70, $1C, $0D, $50
+db $0A
+dl $C9FD4A
+.OtherCharBike:
+db $70, $1C, $0D, $50
+db $a4, $a2, $99, $95, $94, $50, $a4, $9f, $50, $a2, $99, $94, $95, $50, $91, $50
+db $92, $99, $93, $a9, $93, $9c, $95, $5c, $03, $01, $70, $92, $a5, $a4, $50
+db $1C, $14, $01
+db $08
+dd $C7E602
+db $50
+db $94
+db $99, $94, $9e, $57, $a4, $50, $9b, $9e, $9f, $a7, $50, $98, $9f, $a7, $5e, $13
+db $02
 
 
 ;ORG $C62B87
