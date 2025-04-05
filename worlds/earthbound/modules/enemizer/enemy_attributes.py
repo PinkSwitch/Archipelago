@@ -546,7 +546,11 @@ excluded_enemies = [
     "Clumsy Robot",
     "Trillionage Sprout",
     "Electro Specter",
-    "Everdred"
+    "Everdred",
+    "Diamond Dog (2)",
+    "Trillionage Sprout (2)",
+    
+
 ]
 
 robots = [

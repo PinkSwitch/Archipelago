@@ -94,29 +94,38 @@ def randomize_enemy_attributes(world, rom):
             new_name = text_encoder(new_name, 0x18)
             if len(new_name) < 0x18:
                 new_name.extend([0x00])
-            rom.write_bytes(address, bytearray([0x01]))
-            rom.write_bytes(address + 1, new_name)
-            rom.write_bytes(address + 0x1A, bytearray([gender]))
-            rom.write_bytes(address + 0x1B, bytearray([enemy_type]))
-            rom.write_bytes(address + 0x1C, struct.pack("H", sprite))
-            rom.write_bytes(address + 0x1E, struct.pack("H", field_sprite))
-            rom.write_bytes(address + 0x2B, struct.pack("H", movement_pattern))
-            rom.write_bytes(address + 0x2D, struct.pack("I", start_text))
-            rom.write_bytes(address + 0x31, struct.pack("I", death_text))
-            rom.write_bytes(address + 0x35, bytearray([palette]))
-            rom.write_bytes(address + 0x37, bytearray([music]))
-            rom.write_bytes(address + 0x3F, bytearray([fire_weakness]))
-            rom.write_bytes(address + 0x40, bytearray([freeze_weakness]))
-            rom.write_bytes(address + 0x41, bytearray([flash_weakness]))
-            rom.write_bytes(address + 0x42, bytearray([paralysis_weakness]))
-            rom.write_bytes(address + 0x43, bytearray([hypnosis_weakness]))
-            rom.write_bytes(address + 0x43, bytearray([miss_rate]))
-            rom.write_bytes(address + 0x4E, struct.pack("H", death_action))
-            rom.write_bytes(address + 0x57, bytearray([drop_rate]))
-            rom.write_bytes(address + 0x58, bytearray([base_drop]))
-            rom.write_bytes(address + 0x59, bytearray([status]))
-            rom.write_bytes(address + 0x5B, bytearray([row]))
-            rom.write_bytes(address + 0x5D, bytearray([mirror_chance]))
+
+            if world.enemies[enemy].attack_extensions > 1:
+                num_enemies = world.enemies[enemy].attack_extensions
+            else:
+                num_enemies = 1
+
+            for i in range(num_enemies):
+                rom.write_bytes(address, bytearray([0x01]))
+                rom.write_bytes(address + 1, new_name)
+                rom.write_bytes(address + 0x1A, bytearray([gender]))
+                rom.write_bytes(address + 0x1B, bytearray([enemy_type]))
+                rom.write_bytes(address + 0x1C, struct.pack("H", sprite))
+                rom.write_bytes(address + 0x1E, struct.pack("H", field_sprite))
+                rom.write_bytes(address + 0x2B, struct.pack("H", movement_pattern))
+                rom.write_bytes(address + 0x2D, struct.pack("I", start_text))
+                rom.write_bytes(address + 0x31, struct.pack("I", death_text))
+                rom.write_bytes(address + 0x35, bytearray([palette]))
+                rom.write_bytes(address + 0x37, bytearray([music]))
+                rom.write_bytes(address + 0x3F, bytearray([fire_weakness]))
+                rom.write_bytes(address + 0x40, bytearray([freeze_weakness]))
+                rom.write_bytes(address + 0x41, bytearray([flash_weakness]))
+                rom.write_bytes(address + 0x42, bytearray([paralysis_weakness]))
+                rom.write_bytes(address + 0x43, bytearray([hypnosis_weakness]))
+                rom.write_bytes(address + 0x43, bytearray([miss_rate]))
+                rom.write_bytes(address + 0x4E, struct.pack("H", death_action))
+                rom.write_bytes(address + 0x57, bytearray([drop_rate]))
+                rom.write_bytes(address + 0x58, bytearray([base_drop]))
+                rom.write_bytes(address + 0x59, bytearray([status]))
+                rom.write_bytes(address + 0x5B, bytearray([row]))
+                rom.write_bytes(address + 0x5D, bytearray([mirror_chance]))
+            if world.enemies[enemy].attack_extensions > 1:
+                address = world.enemies[f"{enemy} ({i + 1})"].address
 
 
 def get_weakness(element, species) -> int:
