@@ -1249,7 +1249,7 @@ def scale_enemies(world, rom):
     for region in world.scaled_area_order:
         level = world.area_levels[region]
         if world.options.easy_combat:
-            level = int(level / 2)
+            level = max(1, int(level / 2))
         if region in ["Giant Step", "Lilliput Steps", "Milky Well",
                       "Rainy Circle", "Magnet Hill", "Pink Cloud",
                       "Lumine Hall", "Fire Spring"]:
