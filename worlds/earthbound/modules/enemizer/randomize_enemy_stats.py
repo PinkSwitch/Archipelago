@@ -24,7 +24,7 @@ def randomize_enemy_stats(world, rom):
         )
 
     for enemy in world.enemies:
-        if enemy not in excluded_enemies and " (" not in enemy:
+        if enemy not in excluded_enemies:
             copied_stat_base = world.random.choice(list(stat_copies))
             world.enemies[enemy].hp = stat_copies[copied_stat_base].hp
             if world.random.randint(1, 100) < 20:

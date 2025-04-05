@@ -185,7 +185,7 @@ psi_actions = {
 
 def randomize_enemy_attacks(world, rom):
     for enemy in world.enemies:
-        if enemy not in excluded_enemies and " (" not in enemy:
+        if enemy not in excluded_enemies:
             enemy_ai = world.random.randint(0, 3)
             world.enemy_psi[enemy] = ["null", "null", "null", "null"]
             max_calls = 0
