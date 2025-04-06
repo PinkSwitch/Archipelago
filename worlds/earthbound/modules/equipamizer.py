@@ -573,7 +573,6 @@ def randomize_armor(world, rom):
             
         resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
-        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
     
     sortable_armor = copy.deepcopy(world.armor_list)
@@ -608,6 +607,8 @@ def randomize_armor(world, rom):
             armor.poo_def = 216  # defense is signed, all non-kings equipment has this value
         else:
             armor.poo_def = armor.defense
+        
+        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
 
         item_name = text_encoder(armor.name, 25)
         item_name.extend([0x00])
@@ -883,8 +884,6 @@ def randomize_weapons(world, rom):
             pixel_length = calc_pixel_width(weapon.name)
 
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
-        rom.write_bytes(weapon.address + 31, bytearray([
-            weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
 
     sortable_weapons = copy.deepcopy(world.weapon_list)
@@ -925,6 +924,9 @@ def randomize_weapons(world, rom):
             weapon.poo_off = weapon.offense
         else:
             weapon.poo_off = 250
+
+        rom.write_bytes(weapon.address + 31, bytearray([
+            weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
 
         if "Summers" in item:
             weapon.offense = world.weapon_list["Big League Bat"].offense
