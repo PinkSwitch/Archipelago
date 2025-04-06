@@ -12082,9 +12082,10 @@ JML RemoveItem
 
 GetStartingData:
 PHB
-LDA #$000B
+LDA StartingInvetory
+TAY
 LDX #$FC70
-LDY #$99F3
+LDA StartingInvAmounts
 MVN $D77E
 PLB
 LDA #$0000
@@ -12160,6 +12161,13 @@ LDA $B5D4
 RTL
 .NormalItem:
 JML KeyItemBlocker
+
+ORG $D6FB66
+StartingInvetory:
+dw $99F3
+
+StartingInvAmounts:
+dw $000B
 
 ;new code go here
 

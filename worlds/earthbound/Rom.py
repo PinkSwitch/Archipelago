@@ -513,13 +513,22 @@ def patch_rom(world, rom, player: int):
         "Poo": 0x9B10
     }
 
+    starting_inv_amounts = {
+        "Ness": 0x0B,
+        "Paula": 0x0A,
+        "Jeff": 0x08,
+        "Poo": 0x0C
+    }
+
     if world.starting_character == "Poo" and world.multiworld.get_location(
             "Poo - Starting Item", world.player).item.name not in item_id_table:
         starting_inventory_pointers["Poo"] = 0x9B0F
+        starting_inv_amounts["Poo"] = 0x0C
     rom.write_bytes(0x16FB66, struct.pack("H", starting_inventory_pointers[world.starting_character]))
+    rom.write_bytes(0x16FB68, struct.pack("H", starting_inv_amounts[world.starting_character]))
     
     for item in world.multiworld.precollected_items[player]:
-        if item.name == world.starting_character:
+        if item.name == world.starting_character: # Write the starting character
             rom.write_bytes(0x00B672, bytearray([world.options.starting_character.value + 1]))
 
         if world.options.remote_items:
