@@ -517,7 +517,7 @@ def patch_rom(world, rom, player: int):
         "Ness": 0x0B,
         "Paula": 0x0A,
         "Jeff": 0x08,
-        "Poo": 0x0C
+        "Poo": 0x0B
     }
 
     if world.starting_character == "Poo" and world.multiworld.get_location(
