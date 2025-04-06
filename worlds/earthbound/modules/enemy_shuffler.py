@@ -139,7 +139,7 @@ enemy_ids = {
     "Spiteful Crow": 0x9f,
     "Loaded Dice (2)": 0xC3,
     "Black Antoid (2)": 0xD1,
-    "Cave Boy (2)": 0xd4,
+    "Cave Boy": 0xd4,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
     "Evil Eye": 0xe0,
@@ -280,7 +280,7 @@ base_enemy_table = [
     "Spiteful Crow",
     "Black Antoid (2)",
     "Struttin' Evil Mushroom",
-    "Cave Boy (2)",
+    "Cave Boy",
     "Farm Zombie",
     "Criminal Caterpillar",
     "Evil Eye",
@@ -389,7 +389,7 @@ enemy_descriptions = {
     "Manly Fish's Brother": "@They are not actually related.",
     "Runaway Dog": "@Don't worry, this one is adopted.",
     "Trick or Trick Kid": "@He likes to play Clique.",
-    "Cave Boy (2)": "@Not quite a Cave Man.",
+    "Cave Boy": "@Not quite a Cave Man.",
     "Abstract Art": "@Looks good in any gallery.",
     "Shattered Man": "@He doesn't look so shattered to me.",
     "Fierce Shattered Man": "@He doesn't look so shattered to me.",
@@ -535,11 +535,11 @@ def apply_enemy_shuffle(world, rom):
     rom.write_bytes(0x10d5e9, bytearray([enemy_ids[world.acting_enemy_list["Lesser Mook"]]]))
     rom.write_bytes(0x10d5ec, bytearray([enemy_ids[world.acting_enemy_list["Wooly Shambler"]]]))
     rom.write_bytes(0x10d5ef, bytearray([enemy_ids[world.acting_enemy_list["Whirling Robo"]]]))
-    rom.write_bytes(0x10d5f7, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
+    rom.write_bytes(0x10d5f7, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
     rom.write_bytes(0x10d5fa, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
-    rom.write_bytes(0x10d5fe, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
+    rom.write_bytes(0x10d5fe, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
     rom.write_bytes(0x10d601, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
-    rom.write_bytes(0x10d605, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy (2)"]]]))
+    rom.write_bytes(0x10d605, bytearray([enemy_ids[world.acting_enemy_list["Cave Boy"]]]))
     rom.write_bytes(0x10d608, bytearray([enemy_ids[world.acting_enemy_list["Mighty Bear Seven"]]]))
     rom.write_bytes(0x10d60c, bytearray([enemy_ids[world.acting_enemy_list["Black Antoid"]]]))
     rom.write_bytes(0x10d610, bytearray([enemy_ids[world.acting_enemy_list["Ramblin' Evil Mushroom"]]]))

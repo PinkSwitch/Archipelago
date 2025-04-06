@@ -350,7 +350,7 @@ battle_sprites = {
     "Roach": [0x50],
     "Noose": [0x51],
     "Tangoo": [0x52],
-    # MondoMole
+    #"Digger": [0x53],
     "Crocodile": [0x54],
     "Taxi": [0x55],
     "Demon": [0x56],

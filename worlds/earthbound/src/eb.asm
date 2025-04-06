@@ -3053,7 +3053,7 @@ CPY $98A4
 BEQ CharacterInvalid
 BRA CheckNextChar
 CharacterInvalid:
-JSL KeyItemBlocker
+JSL KeyItemBlockerAndCheckProg
 BEQ SendItemToStorage
 LDA #$69
 RTS
@@ -3569,7 +3569,7 @@ LDA $0000,X
 JML $C18B5B
 
 GetLumiTextMain:
-LDA $C4803B,X
+LDA $C48037
 AND #$00FF
 BEQ .EndLumiText
 JML $C4845A
@@ -6167,7 +6167,7 @@ db $f4, $03
 
 ORG $EEC66A
 ;;;TODO: Test the Shyness Book dialogue after getting an AP item? this
-db $1C, $05, $A4, $0a, $84, $be
+db $0A, $91, $BF, $C6, $84, $be
 db $ee
 
 ORG $C6D3A2
@@ -8947,6 +8947,10 @@ db $3B
 ORG $C9FD46
 db $0A
 dl NewBikeText
+
+ORG $C6BFA3
+db $5E, $0A
+dl $EEBE84
 
 
 ;New data table go here
@@ -12146,6 +12150,17 @@ INX
 INC $FF41
 JMP CheckTeleport
 
+KeyItemBlockerAndCheckProg:
+LDA $B570
+CMP #$E3
+BCC .NormalItem
+CMP #$E8
+BCS .NormalItem
+LDA $B5D4
+RTL
+.NormalItem:
+JML KeyItemBlocker
+
 ;new code go here
 
 
@@ -14696,6 +14711,7 @@ db $4A, $4C, $4B, $4D, $51, $52, $DD, $F9, $DE, $53, $54, $55, $56
 
 ProgCaps:
 db $09, $07, $0D, $08, $0C
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Repointed PSI table
 macro PSIAddress06(address)

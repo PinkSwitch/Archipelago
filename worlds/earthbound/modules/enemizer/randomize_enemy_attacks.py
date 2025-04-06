@@ -135,7 +135,10 @@ battle_actions = {
     "Chant": 0x0109,
     "Scratch Head": 0x010B,
     "Discharge Gas": 0x0111,
-    "Monkey Love": 0x011B
+    "Monkey Love": 0x011B,
+    "throw_bomb": 0x01FC,
+    "shoot_rocket": 0x0203
+
 }
 
 needs_argument = {
@@ -180,6 +183,8 @@ psi_actions = {
     "Hypnosis Omega": 0x35,
     "paralysis": 0x38,
     "Brainshock": 0x3A,
+    "blast": 0x01A4,
+    "missile": 0x01A8
 }
 
 
