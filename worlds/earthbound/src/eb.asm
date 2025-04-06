@@ -8817,7 +8817,7 @@ dl $C9327F
 ;PokeyBattleExpanded:
 
 ORG $CF6BF1
-db $6F
+db $6D, $CF
 
 ORG $D5AD53
 dw $0209

@@ -139,7 +139,7 @@ enemy_ids = {
     "Spiteful Crow": 0x9f,
     "Loaded Dice (2)": 0xC3,
     "Black Antoid (2)": 0xD1,
-    "Cave Boy": 0xd4,
+    "Cave Boy": 0x7B,
     "Farm Zombie": 0xde,
     "Criminal Caterpillar": 0xdf,
     "Evil Eye": 0xe0,
