@@ -288,6 +288,7 @@ def randomize_armor(world, rom):
     other_adjectives = adjectives.copy()
     arm_adjectives = adjectives.copy()
     body_adjectives = adjectives.copy()
+    taken_names = []
 
     armor_dict = {
         "arm": arm_adjectives,
@@ -543,6 +544,11 @@ def randomize_armor(world, rom):
             back_name = world.random.choice(armor_names[armor.equip_type])
 
         armor.name = front_name + " " + back_name
+        if armor.name in taken_names:
+            front_name = world.random.choice(armor_dict[armor.equip_type])
+            armor_dict[armor.equip_type].remove(front_name)
+            armor.name = front_name + " " + back_name
+        taken_names.append(armor.name)
 
         pixel_length = calc_pixel_width(armor.name)
         first_armor = False

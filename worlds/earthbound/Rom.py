@@ -612,12 +612,12 @@ def patch_rom(world, rom, player: int):
         rom.write_bytes(0x300273, bytearray([world.random.randint(0x00, 0x1F)]))
 
     if not world.options.prefixed_items:
-        rom.write_bytes(0x15F9DB, bytearray([0x06]))
-        rom.write_bytes(0x15F9DD, bytearray([0x08]))
-        rom.write_bytes(0x15F9DF, bytearray([0x05]))
-        rom.write_bytes(0x15F9E1, bytearray([0x0B]))
-        rom.write_bytes(0x15F9E3, bytearray([0x0F]))
-        rom.write_bytes(0x15F9E4, bytearray([0x10]))
+        rom.write_bytes(0x15F9DC, bytearray([0x06]))
+        rom.write_bytes(0x15F9DE, bytearray([0x08]))
+        rom.write_bytes(0x15F9E0, bytearray([0x05]))
+        rom.write_bytes(0x15F9E2, bytearray([0x0B]))
+        rom.write_bytes(0x15F9E4, bytearray([0x0F]))
+        rom.write_bytes(0x15F9E6, bytearray([0x10]))
         # change if necessary
 
     if world.options.psi_shuffle:
