@@ -37,6 +37,22 @@ boss_sprite_pointers = {
 banned_transformations = ["Master Belch", "Master Barf", "Kraken", "Heavily Armed Pokey"]
 
 
+class SlotInfo(NamedTuple):
+    sprite_addrs: List[int]
+    short_names: List[int]
+    long_names: List[int]
+    battle_data: List[int]
+
+
+class BossData(NamedTuple):
+    sprite_pointer: int
+    short_name_pointer: int
+    long_name_pointer: int
+    battle_group: int
+    enemy_id: int
+    music: int
+
+
 def initialize_bosses(world) -> None:
     world.boss_list = [
         "Frank",
@@ -69,20 +85,6 @@ def initialize_bosses(world) -> None:
         "Diamond Dog",
         "Giygas (4)"
     ]
-
-    class SlotInfo(NamedTuple):
-        sprite_addrs: List[int]
-        short_names: List[int]
-        long_names: List[int]
-        battle_data: List[int]
-
-    class BossData(NamedTuple):
-        sprite_pointer: int
-        short_name_pointer: int
-        long_name_pointer: int
-        battle_group: int
-        enemy_id: int
-        music: int
 
     world.boss_slots: Dict[str, SlotInfo] = {
         "Frank": SlotInfo([0x0F9338],
@@ -190,7 +192,7 @@ def initialize_bosses(world) -> None:
 def write_bosses(world, rom) -> None:
     if world.boss_list[25] == "Carbon Dog" and world.boss_list[27] in banned_transformations:
         original_boss = world.boss_list[27]
-        transformation_replacement = world.random.randint(0,24)
+        transformation_replacement = world.random.randint(0, 24)
         world.boss_list[27] = world.boss_list[transformation_replacement]
         world.boss_list[transformation_replacement] = original_boss
 

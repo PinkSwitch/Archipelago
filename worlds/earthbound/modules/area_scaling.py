@@ -319,8 +319,8 @@ def calculate_scaling(world) -> None:
                          brickroad_maze: [["Nothing"]]},
 
         rainy_circle: {rainy_circle: [["Nothing"]],
-        "Andonuts Lab Area": [["Nothing"]],
-        brickroad_maze: [["Nothing"]]},
+                       "Andonuts Lab Area": [["Nothing"]],
+                       brickroad_maze: [["Nothing"]]},
 
         "Andonuts Lab Area": {rainy_circle: [["Nothing"]],
                               stonehenge_base: [["Eraser Eraser"]],

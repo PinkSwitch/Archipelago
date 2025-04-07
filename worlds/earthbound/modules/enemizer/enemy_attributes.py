@@ -261,7 +261,9 @@ enemy_adjectives = [
     "Platinum ",
     "Armed ",
     "Condemned ",
-    "Rad "
+    "Rad ",
+    "Hangry ",
+    "Moonsidian "
 ]
 
 battle_sprites = {

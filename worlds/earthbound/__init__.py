@@ -24,6 +24,7 @@ from .Rules import set_location_rules
 from .Rom import patch_rom, get_base_rom_path, EBProcPatch, valid_hashes
 from .game_data.static_location_data import location_ids, location_groups
 from .modules.equipamizer import EBArmor, EBWeapon
+from .modules.boss_shuffle import BossData, SlotInfo
 from worlds.generic.Rules import add_item_rule
 from Options import OptionError
 
@@ -97,6 +98,15 @@ class EarthBoundWorld(World):
         self.removed_teleports = []
         self.armor_list: Dict[str, EBArmor]
         self.weapon_list: Dict[str, EBWeapon]
+        self.boss_slots: Dict[str, SlotInfo]
+        self.boss_info: Dict[str, BossData]
+        self.starting_character = None
+        self.locals = []
+        self.rom_name = None
+        self.starting_area_teleport = None
+        self.common_gear = []
+        self.uncommon_gear = []
+        self.rare_gear = []
 
     def generate_early(self) -> None:  # Todo: place locked items in generate_early
         self.starting_character = self.options.starting_character.current_key.capitalize()
@@ -218,8 +228,6 @@ class EarthBoundWorld(World):
             "pizza_logic": self.options.monkey_caves_mode.value,
             "free_sancs": self.options.no_free_sanctuaries.value,
             "shopsanity": self.options.shop_randomizer.value,
-           # "starting_character": self.starting_character,
-          #  "items_remote": self.options.remote_items.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:
@@ -324,9 +332,9 @@ class EarthBoundWorld(World):
         excluded_items: Set[str] = set()
         excluded_items.add(self.starting_character)
         starting_area_to_teleport = ["Onett Teleport", "Onett Teleport", "Twoson Teleport", "Happy-Happy Village Teleport",
-                                   "Threed Teleport", "Saturn Valley Teleport", "Fourside Teleport", "Winters Teleport",
-                                   "Summers Teleport", "Dalaam Teleport", "Scaraba Teleport", "Deep Darkness Teleport",
-                                   "Tenda Village Teleport", "Lost Underworld Teleport", "Magicant Teleport"]
+                                     "Threed Teleport", "Saturn Valley Teleport", "Fourside Teleport", "Winters Teleport",
+                                     "Summers Teleport", "Dalaam Teleport", "Scaraba Teleport", "Deep Darkness Teleport",
+                                     "Tenda Village Teleport", "Lost Underworld Teleport", "Magicant Teleport"]
         self.starting_area_teleport = starting_area_to_teleport[self.start_location]
         excluded_items.add(self.starting_area_teleport)
         if self.options.random_start_location:
