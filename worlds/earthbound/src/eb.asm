@@ -8952,6 +8952,12 @@ ORG $C6BFA3
 db $5E, $0A
 dl $EEBE84
 
+ORG $C8630A
+db $90, $90
+
+ORG $EEC613
+db $90, $90
+
 
 ;New data table go here
 

@@ -335,6 +335,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x15F765, special_name_table[item][1].to_bytes(3, byteorder="little"))  # This might be offset, check if it is
                     rom.write_bytes(0x2EC618, bytearray([(special_name_table[item][0] + 1)]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
+                    rom.write_bytes(0x2EC613, bytearray([0x03, 0x01]))
 
             if location.address >= 0xEB1000:
                 world.handled_locations.append(name)
