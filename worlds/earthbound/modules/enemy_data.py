@@ -230,7 +230,7 @@ def initialize_enemies(world):
         "Manly Fish's Brother": 0x0120,
         "Runaway Dog": 0x014A,
         "Trick or Trick Kid": 0x01BC,
-        "Cave Boy (2)": 0x0149,
+        "Cave Boy": 0x0149,
         "Abstract Art": 0x012C,
         "Shattered Man": 0x0133,
         "Fierce Shattered Man": 0x0133,

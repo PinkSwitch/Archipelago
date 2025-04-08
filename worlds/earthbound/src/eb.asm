@@ -11549,7 +11549,7 @@ CMP #$0026
 BEQ GotServerEnergyNum
 CMP #$0027
 BEQ CheckifELOn
-JML $C17DDC
+JML CheckMoreMoreMoreCommands
 
 CheckIfCanWarp:
 PHX
@@ -12175,6 +12175,91 @@ dw $99F3
 StartingInvAmounts:
 dw $000B
 
+CheckMoreMoreMoreCommands:
+CMP #$0028
+BEQ StorePartyDirections
+CMP #$0029
+BEQ LoadPartyDirections
+JML $C17DDC
+
+StorePartyDirections:
+PHB
+PHX
+PHY
+LDX #$2B26
+LDY #$B43E
+LDA #$000A
+MVN $7E7E
+PLY
+PLX
+PLB
+LDA #$0000
+JML $C17F0F
+
+LoadPartyDirections:
+PHX
+PHY
+.Ness:
+  LDA #$0001
+  LDX $B43E
+  JSL $C46363
+.Paula:
+  LDA #$0002
+  LDX $B440
+  JSL $C46363
+.Jeff:
+  LDA #$0003
+  LDX $B442
+  JSL $C46363
+.Poo:
+  LDA #$0004
+  LDX $B444
+  JSL $C46363
+.Temp1:
+LDA $B446
+STA $2B2E
+LDA $B448
+STA $2B30
+  LDA $98A4
+  ASL
+  TAX
+  LDA $9897,X
+  ASL
+  TAX
+  LDA $2AF6,x
+  STZ $2AF6,X
+  TAX
+  PHX
+  LDA $98A4
+  TAX
+  LDA $988B,X
+  AND #$00FF
+  PLX
+  JSL $C46363 ; not working
+.Temp2:
+  LDA $98A4
+  INC
+  ASL
+  TAX
+  LDA $9897,X
+  ASL
+  TAX
+  LDA $2AF6,x
+  STZ $2AF6,X
+  TAX
+  PHX
+  LDA $98A4
+  INC
+  TAX
+  LDA $988B,X
+  AND #$00FF
+  PLX
+  JSL $C46363 ;not working
+PLY
+PLX
+LDA #$0000
+JML $C17F0F
+
 ;new code go here
 
 
@@ -12260,9 +12345,9 @@ ORG $C5E0F2
 
 
 
-ORG $F403C6
+ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $4A, $00, $00, $00, $00, $00; Non-remote local item. Franklin Badge.
+;db $05, $00, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
 ;db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
 ;db $96, $00, $00, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
@@ -12278,6 +12363,7 @@ ORG $F400D2
 ;type 3- item that's already been bought- SOLD OUT
 ;type 4; Item for another player
 ;type 5- Remote local item
+;type 6- Photograph
 
 ;ORG $F41280
 ;db $73, $9F, $9F, $9C, $50, $79, $A4, $95, $9D, $00
@@ -12820,11 +12906,13 @@ db $1B, $06
 db $0A
 dl .ConfirmRemotePurchase
 .Photo:
+db $1C, $28, $01
 db $1B, $06
 db $04, $91, $02
 db $1C, $20, $01
 db $08
 dd DynamicPhotoSetter
+db $1C, $29, $01
 db $18, $01, $01
 db $02
 
@@ -15735,14 +15823,15 @@ Gift_menu:
   dl .declined_to_send_gift
   .send_gift_to_gift_buffer:
   db $18, $04
+  db $1C, $28, $01
   db $1F, $00, $01, $59
   db $1f, $15, $87, $00, $99, $02, $01 
   db $10, $05
   db $1F, $13, $FF, $03
   db $10, $20
   db $1F, $03
+  db $1C, $29, $01
   db $18, $01, $01
-  db $1F, $13, $FF, $01
   db $1b, $06
   db $1F, $02, $76
   db $10, $15
@@ -15935,14 +16024,15 @@ Gift_menu:
   db $1B, $02
   dd .SelectedCharFull
   db $18, $04
+  db $1C, $28, $01
   db $1F, $00, $01, $59
   db $1f, $15, $87, $00, $99, $02, $01 
   db $10, $05
   db $1F, $13, $FF, $03
   db $10, $20
   db $1F, $03
+  db $1C, $29, $01
   db $18, $01, $01
-  db $1F, $13, $FF, $01
   db $1F, $02, $74
 
   db $1B, $04
