@@ -8958,6 +8958,13 @@ db $90, $90
 ORG $EEC613
 db $90, $90
 
+ORG $D6FB66
+StartingInvetory:
+dw $99F3
+
+StartingInvAmounts:
+dw $000B
+
 
 ;New data table go here
 
@@ -12167,13 +12174,6 @@ LDA $B5D4
 RTL
 .NormalItem:
 JML KeyItemBlocker
-
-ORG $D6FB66
-StartingInvetory:
-dw $99F3
-
-StartingInvAmounts:
-dw $000B
 
 CheckMoreMoreMoreCommands:
 CMP #$0028
