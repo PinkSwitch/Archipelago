@@ -362,7 +362,7 @@ def patch_rom(world, rom, player: int):
                 else:
                     world.present_type = "filler"
 
-                if location.item.player == world.player:
+                if location.item.player == world.player or world.options.nonlocal_items_use_local_presents:
                     rom.write_bytes(present_locations[name] - 12, bytearray(local_present_types[world.present_type]))
                     if name != "Threed - Boogey Tent Trashcan":
                         rom.write_bytes(present_locations[name] - 4, bytearray(present_text_pointers[world.present_type]))

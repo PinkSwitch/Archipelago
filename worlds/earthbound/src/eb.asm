@@ -5445,7 +5445,7 @@ MVN $D77E
 PLY
 PLX
 PLB
-JML $C1FEBA
+JML GiveTeddyOnLoad
 
 ResetStatus:
 STZ $9A3B
@@ -12259,6 +12259,76 @@ PLY
 PLX
 LDA #$0000
 JML $C17F0F
+
+GiveTeddyOnLoad:
+PHX
+PHY
+LDA #$0000
+LDX #$0000
+LDY #$0000
+SEP #$20
+LDA $98A3
+BNE .End
+LDA $C0B672
+TAX
+REP #$20
+LDA #$99F1
+.CheckChar:
+CPX #$0001
+BEQ .GotChar
+CLC
+ADC #$005F
+DEX
+BRA .CheckChar
+.GotChar:
+TAX
+SEP #$20
+.CheckSlot:
+LDA $0000,X
+BEQ .End
+CMP #$02
+BEQ .GiveTeddy
+CMP #$03
+BEQ .GiveSuper
+.KeepGoing:
+CPY #$000D
+BEQ .End
+INY
+INX
+BRA .CheckSlot
+.End:
+REP #$20
+PLY
+PLX
+JML $C1FEBA
+.GiveTeddy:
+INC $B44A
+PHA
+PHX
+PHY
+REP #$20
+LDA #$0010
+JSL $C228F8
+SEP #$20
+PLY
+PLX
+PLA
+BRA .KeepGoing
+.GiveSuper:
+REP #$20
+LDA $B44A
+BNE .ReplaceBear
+.AddSuper:
+LDA #$0011
+JSL $C228F8
+BRA .End
+.ReplaceBear:
+LDA #$0010
+INC $98A3
+JSL $C229BB
+DEC $98A3
+BRA .AddSuper
+
 
 ;new code go here
 

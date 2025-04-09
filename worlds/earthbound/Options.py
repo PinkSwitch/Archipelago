@@ -139,6 +139,10 @@ class PresentSprites(DefaultOnToggle):
     """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""
     display_name = "Match Present Sprites"
 
+class NoAPPresents(Toggle):
+    """If enabled, present that contain items for other players will appear as EarthBound presents (trashcan, present, and chest) instead of Archipelago boxes.
+       Does nothing if Presents Match Contents is disabled."""
+
 
 class ShuffleDrops(Toggle):
     """If enabled, enemies will drop random filler items. This does not put checks on enemy drops.
@@ -445,6 +449,7 @@ class EBOptions(PerGameCommonOptions):
     random_battle_backgrounds: RandomBattleBG
     random_swirl_colors: RandomSwirlColors
     presents_match_contents: PresentSprites
+    nonlocal_items_use_local_presents: NoAPPresents
     prefixed_items: PreFixItems
     total_photos: PhotoCount
     randomize_franklinbadge_protection: RandomFranklinBadge
@@ -548,6 +553,7 @@ eb_option_groups = [
         RandomSwirlColors,
         RandomBattleBG,
         PresentSprites,
+        NoAPPresents,
         RandomizePSIPalettes,
         PlandoLumineHallText
     ]),
