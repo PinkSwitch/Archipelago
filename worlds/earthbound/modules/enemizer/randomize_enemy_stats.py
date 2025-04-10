@@ -13,15 +13,16 @@ class EnemyStatCopy:
 def randomize_enemy_stats(world, rom):
     stat_copies = {}
     for enemy in world.enemies:
-        stat_copies[enemy] = EnemyStatCopy(
-            hp=world.enemies[enemy].hp,
-            exp=world.enemies[enemy].exp,
-            money=world.enemies[enemy].money,
-            speed=world.enemies[enemy].speed,
-            offense=world.enemies[enemy].offense,
-            defense=world.enemies[enemy].defense,
-            level=world.enemies[enemy].level
-        )
+        if enemy not in excluded_enemies:
+            stat_copies[enemy] = EnemyStatCopy(
+                hp=world.enemies[enemy].hp,
+                exp=world.enemies[enemy].exp,
+                money=world.enemies[enemy].money,
+                speed=world.enemies[enemy].speed,
+                offense=world.enemies[enemy].offense,
+                defense=world.enemies[enemy].defense,
+                level=world.enemies[enemy].level
+            )
 
     for enemy in world.enemies:
         if enemy not in excluded_enemies:

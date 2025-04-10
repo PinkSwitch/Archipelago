@@ -12069,7 +12069,7 @@ LDA #$0024
 JSL $C3E521
 JML $C3E4D4
 
-FixGiygasReflect:
+FixGiygasReflectBroken:
 PHA
 LDA $AA96
 BEQ .NotReflection
@@ -12332,6 +12332,16 @@ INC $98A3
 JSL $C229BB
 DEC $98A3
 BRA .AddSuper
+
+FixGiygasReflect:
+PHA
+LDA $AA96
+BEQ .NotReflection
+LDA #$A26A
+STA $A972
+.NotReflection:
+PLA
+JML $C23D05
 
 
 ;new code go here
