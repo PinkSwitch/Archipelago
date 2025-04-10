@@ -8965,6 +8965,10 @@ dw $99F3
 StartingInvAmounts:
 dw $000B
 
+ORG $EF79DE
+db $0A
+dl FixYouWonAlignment
+
 
 ;New data table go here
 
@@ -17722,6 +17726,13 @@ db $16, $0e, $17, $cc, $a4, $5e, $03, $00, $1d, $03, $ff, $1b, $02, $8a, $b5, $e
 db $ff, $1d, $0e, $ff, $01, $08, $cf, $dc, $c7, $ff, $03
 db $19, $20
 db $02
+
+FixYouWonAlignment:
+db $15, $1D
+db $18, $05, $06, $01
+db $1C, $08, $02
+db $0A
+dl $EF79E3
 
 
 ;ORG $C62B87
