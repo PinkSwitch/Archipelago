@@ -8969,6 +8969,25 @@ ORG $EF79DE
 db $0A
 dl FixYouWonAlignment
 
+ORG $C7AC44
+db $0A
+dl FixPhotoManLoad
+
+ORG $C33BF8
+db $09
+
+ORG $C33BB8
+db $00
+
+ORG $C7AC9B
+db $0A
+dl PhotomanLeave
+
+ORG $C3765F
+db $03
+dd PhotoManActionScript
+
+
 
 ;New data table go here
 
@@ -17743,6 +17762,20 @@ db $18, $05, $06, $01
 db $1C, $08, $02
 db $0A
 dl $EF79E3
+
+FixPhotoManLoad:
+db $1f, $f2, $8f, $00, $c4, $01, $0a
+dl $C7AC4D
+
+PhotomanLeave:
+db $1F, $F2, $8F, $00, $83, $02
+db $0A
+dl $C7ACA4
+
+PhotoManActionScript:
+db $25, $0C, $A0
+db $03
+dd $C33B53
 
 
 ;ORG $C62B87
