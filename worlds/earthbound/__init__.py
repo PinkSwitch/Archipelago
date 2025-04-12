@@ -107,6 +107,7 @@ class EarthBoundWorld(World):
         self.common_gear = []
         self.uncommon_gear = []
         self.rare_gear = []
+        self.get_all_spheres = threading.Event()
 
     def generate_early(self) -> None:  # Todo: place locked items in generate_early
         self.starting_character = self.options.starting_character.current_key.capitalize()
@@ -193,9 +194,11 @@ class EarthBoundWorld(World):
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
 
-    #@classmethod
-    #def stage_generate_output(cls, multiworld, output_directory):
-     #   cls.spheres = multiworld.get_spheres()
+    @classmethod
+    def stage_generate_output(cls, multiworld, output_directory):
+        multiworld.eb_spheres = multiworld.get_spheres()
+        for world in multiworld.get_game_worlds("EarthBound"):
+            world.get_all_spheres.set()
 
 
     def generate_output(self, output_directory: str) -> None:

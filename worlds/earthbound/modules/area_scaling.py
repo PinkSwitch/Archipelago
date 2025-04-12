@@ -444,7 +444,7 @@ def calculate_scaling(world) -> None:
         if item.name == "Franklin Badge":
             badge_scaled = True
 
-    for num, sphere in enumerate(world.multiworld.get_spheres()):
+    for num, sphere in enumerate(world.multiworld.eb_spheres):
         if num + 1 not in inventory:
             inventory[num + 1] = []
 

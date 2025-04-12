@@ -649,6 +649,7 @@ def patch_rom(world, rom, player: int):
     if world.options.dungeon_shuffle:
         write_dungeon_entrances(world, rom)
 
+    world.get_all_spheres.wait()
     calculate_scaling(world)
     if world.options.shop_randomizer:
         write_shop_checks(world, rom, shop_checks)
