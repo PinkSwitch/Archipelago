@@ -14,18 +14,13 @@ def roll_resistances(world, element, armor):
         setattr(armor, element, 0)
 
 
-def price_weapons(weapons, rom):
+def price_weapons(weapons, rom, item):
     price = 0
     for index, weapon in enumerate(weapons):
         price = (99 * (index + 1) + price) + (2 * weapon.aux_stat) + weapon.offense
-        if "Summers" in weapon.name:
-            weapon.name = weapon.name.replace("Summers", "")
-            rom.write_bytes((weapon.address + 26), struct.pack("H", min((price * 2), 50000)))
-            item_name = text_encoder(weapon.name, 25)
-            item_name.extend([0x00])
-            rom.write_bytes(weapon.address, item_name)
-        else:
-            rom.write_bytes((weapon.address + 26), struct.pack("H", price))
+        rom.write_bytes((weapon.address + 26), struct.pack("H", price))
+        if item == "Big League Bat":
+            rom.write_bytes((summers_addresses[item] + 26), struct.pack("H", price))
 
 
 def price_armors(armor_pricing_list, rom, item):
@@ -255,7 +250,7 @@ type_bytes = {
 summers_addresses = {
     "Platinum Band": 0x155A5C,
     "Diamond Band": 0x155A83,
-    "Summers Big League Bat": 0x15535A
+    "Big League Bat": 0x15535A
 }
 
 royal_names = [
@@ -754,8 +749,7 @@ def randomize_weapons(world, rom):
         "T-Rex's Bat": EBWeapon("Ness", "Bash", 0x15704C),
         "Ultimate Bat": EBWeapon("Ness", "Bash", 0x15709A),
         "Double Beam": EBWeapon("Jeff", "Shoot", 0x1570C1),
-        "Non-stick Frypan": EBWeapon("Paula", "Bash", 0x1575C8),
-        "Summers Big League Bat": EBWeapon("Ness", "Bash", 0x0),
+        "Non-stick Frypan": EBWeapon("Paula", "Bash", 0x1575C8)
     }
 
     all_weapons = [
@@ -801,17 +795,10 @@ def randomize_weapons(world, rom):
         "Slingshot",
         "Bionic Slingshot",
         "Trick Yo-yo",
-        "Combat Yo-yo",
-        "Summers Big League Bat"
+        "Combat Yo-yo"
     ]
 
     for item in all_weapons:
-        if "Summers" in item:
-            world.weapon_list[item] = dataclasses.replace(
-                world.weapon_list[item.replace("Summers ", "")], address=summers_addresses[item]
-                )
-            world.weapon_list[item].name += "Summers"
-            continue
         weapon = world.weapon_list[item]
 
         if world.options.weaponizer == 2:
@@ -917,7 +904,7 @@ def randomize_weapons(world, rom):
     ]
 
     for i in range(5):
-        price_weapons(sorts[i], rom)
+        price_weapons(sorts[i], rom, item)
 
     if world.options.progressive_weapons:
         for i in range(4):
@@ -933,13 +920,6 @@ def randomize_weapons(world, rom):
 
         rom.write_bytes(weapon.address + 31, bytearray([
             weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
-
-        if "Summers" in item:
-            weapon.offense = world.weapon_list["Big League Bat"].offense
-            rom.write_bytes(weapon.address + 31, bytearray([world.weapon_list["Big League Bat"].offense]))
-
-        if "Summers" in weapon.name:
-            weapon.name = weapon.name.replace("Summers", "")
 
         item_name = text_encoder(weapon.name, 25)
         item_name.extend([0x00])
@@ -966,9 +946,10 @@ def randomize_weapons(world, rom):
         rom.write_bytes(weapon.address, item_name)
         rom.write_bytes((0x310000 + world.description_pointer), description)
         rom.write_bytes((weapon.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
-        weapon.description_pointer = world.description_pointer
+        if item == "Big League Bat":
+            rom.write_bytes(summers_addresses[item] + 28, bytearray([usage_bytes[weapon.can_equip]]))
+            rom.write_bytes(summers_addresses[item] + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
+            rom.write_bytes(summers_addresses[item] + 25, bytearray([type_bytes[weapon.equip_type]]))
+            rom.write_bytes(summers_addresses[item], item_name)
         world.description_pointer += len(description)
-
-        # test capping armor defense (50, 100, 127 for body arm other)
-
-        # Rom.write_bytes(progressive_waepon address + index, weapon.id)
+            

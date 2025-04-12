@@ -448,7 +448,7 @@ def calculate_scaling(world) -> None:
         if num + 1 not in inventory:
             inventory[num + 1] = []
 
-        for location in sphere:
+        for location in sorted(sphere):
             if num == 0:
                 if location.parent_region.name not in world.accessible_regions and location.player == world.player:
                     early_regions.append(location.parent_region.name)

@@ -193,6 +193,11 @@ class EarthBoundWorld(World):
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
 
+    #def stage_generate_output(self):
+       # for sphere in world.multiworld.get_spheres():
+
+
+
     def generate_output(self, output_directory: str) -> None:
         try:
             patch = EBProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
