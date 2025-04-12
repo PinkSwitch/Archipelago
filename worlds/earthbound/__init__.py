@@ -193,9 +193,9 @@ class EarthBoundWorld(World):
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
 
-    #def stage_generate_output(self):
-       # for sphere in world.multiworld.get_spheres():
-
+    #@classmethod
+    #def stage_generate_output(cls, multiworld, output_directory):
+     #   cls.spheres = multiworld.get_spheres()
 
 
     def generate_output(self, output_directory: str) -> None:

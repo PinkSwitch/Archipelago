@@ -316,6 +316,9 @@ JSL CloseVersionWindow
 ORG $C27F2C
 JSL FixGiygasReflect
 
+ORG $C13660
+JML HandleUnusableWarpPad
+
 ;new jmls
 
 
@@ -8987,6 +8990,14 @@ ORG $C3765F
 db $03
 dd PhotoManActionScript
 
+ORG $C701F6
+db $0A
+dl DenyHintsSaidNo
+
+ORG $C72664
+db $0A
+dl DenyHintsNoMoney
+
 
 
 ;New data table go here
@@ -12361,6 +12372,25 @@ STA $A972
 .NotReflection:
 PLA
 JML $C23D05
+
+HandleUnusableWarpPad:
+PHX
+LDA $1D
+TAX
+LDA $1F
+AND #$00FF
+JSL $C3E977
+PLX
+CMP #$00B5
+BNE .NormalItem
+LDA #$0000
+BRA .UseItem
+.NormalItem:
+LDA $06
+.UseItem:
+DEC
+LDY #$005F
+JML $C13666
 
 
 ;new code go here
@@ -17777,6 +17807,52 @@ db $25, $0C, $A0
 db $03
 dd $C33B53
 
+UnsetDenyHints:
+db $06, $05, $04
+dd .DenyOnett
+db $06, $06, $04
+dd .DenyTwoson
+db $06, $07, $04
+dd .DenyThreed
+db $06, $08, $04
+dd .DenyFourside
+db $06, $09, $04
+dd .DenySummers
+db $06, $0A, $04
+dd .DenyScaraba
+db $02
+.DenyOnett:
+db $05, $05, $04
+db $02
+.DenyTwoson:
+db $05, $06, $04
+db $02
+.DenyThreed:
+db $05, $07, $04
+db $02
+.DenyFourside:
+db $05, $08, $04
+db $02
+.DenySummers:
+db $05, $09, $04
+db $02
+.DenyScaraba:
+db $05, $0A, $04
+db $02
+
+DenyHintsNoMoney:
+db $08
+dd UnsetDenyHints
+db $15, $d0, $a9, $15, $20
+db $0A
+dl $C72669
+
+DenyHintsSaidNo:
+db $08
+dd UnsetDenyHints
+db $17, $f3, $15, $10
+db $0A
+dl $C701FA
 
 ;ORG $C62B87
 ;db $0a, $28, $ca, $ee ; Test, delete later
@@ -17792,7 +17868,7 @@ ORG $F3FFE0
 db $04, $1C, $04
 db $08
 dd DynamicPhotoSetter
-db $05, $1C, $05
+db $05, $1C, $04
 db $1D, $19, $01, $02
 
 ExtraPresentCheck:

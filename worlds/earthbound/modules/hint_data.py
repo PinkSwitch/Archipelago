@@ -16,7 +16,6 @@ def setup_hints(world):
         "prog_item_at_region",  # Hints the region that a good item can be found for this player
         "joke_hint",  # Doesn't hint anything
         "dungeon_location"
-        # dungeon er?
     ]
     world.in_game_hint_types = []
     world.hinted_locations = {}

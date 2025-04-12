@@ -59,7 +59,6 @@ class EBArmor:
     fire_res: int = 0
     par_res: int = 0
     sleep_res: int = 0
-    description: str = ""
     name: str = "None"
     can_equip: str = "All"
 
@@ -74,8 +73,6 @@ class EBWeapon:
     aux_stat: int = 0
     poo_off: int = 0
     miss_rate: int = 0
-    description_pointer: int = 0
-    description: str = ""
 
 
 adjectives = [
@@ -951,5 +948,6 @@ def randomize_weapons(world, rom):
             rom.write_bytes(summers_addresses[item] + 31, bytearray([weapon.offense, weapon.poo_off, weapon.aux_stat, weapon.miss_rate]))
             rom.write_bytes(summers_addresses[item] + 25, bytearray([type_bytes[weapon.equip_type]]))
             rom.write_bytes(summers_addresses[item], item_name)
+            rom.write_bytes((summers_addresses[item] + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         world.description_pointer += len(description)
             
