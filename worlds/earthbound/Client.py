@@ -371,7 +371,7 @@ class EarthBoundClient(SNIClient):
                 }])
 
         # death link handling goes here
-        received_deathlink = await snes_read(ctx, GOT_DEATH_FROM_SERVER, 1)
+        receieved_deathlink = await snes_read(ctx, GOT_DEATH_FROM_SERVER, 1)
         if not receieved_deathlink[0]: # test this
             if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
                 send_deathlink = await snes_read(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, 1)
