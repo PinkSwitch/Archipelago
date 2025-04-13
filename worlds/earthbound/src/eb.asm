@@ -319,6 +319,9 @@ JSL FixGiygasReflect
 ORG $C13660
 JML HandleUnusableWarpPad
 
+ORG $C0089A
+JML LoadPhotoColor
+
 ;new jmls
 
 
@@ -11807,7 +11810,7 @@ ADC $9877
 PLY
 PLX
 STA $00DB
-JML $C46D85
+JML SavePhotoColor
 
 SpawnDynamicPhotomanY:
 PHX
@@ -12419,9 +12422,38 @@ PHA
 LDA #$0010
 BRA .ForceLoad0
 
-;SavePhotoColor - the code in the Photo routine that saves the Map color into the photo
+SavePhotoColor:
+PHA
+PHX
+LDA $00D7
+TAX
+SEP #$20
+LDA $B44C
+STA $0160,X
+REP #$20
+PLX
+PLA
+JML $C46D85
 
-;LoadPhotoColor  - the code in the credits that loads the stored photo color
+LoadPhotoColor:
+PHX
+LDA $00D4
+AND #$00FF
+TAX
+LDA $0160,X
+AND #$00FF
+TAX
+LDA #$0000
+.Check:
+CPX #$0000
+BEQ .Done
+CLC
+ADC #$00C0
+DEX
+BRA .Check
+.Done:
+PLX
+JML $C0089E
 
 
 
@@ -18170,7 +18202,7 @@ dw $0010 ; Lier's Cave
 dw $0005 ; Bricroad's maze
 dw $000A ; Stonehenge Entrance
 dw $0004 ; Stonehenge Balcony
-dw $ ; Stonehenge Flashing room
+dw $0010 ; Stonehenge Flashing room
 dw $0002 ; Belch's Factory
 dw $0010 ; Monkey Caves
 dw $0010 ; Gold Mine
@@ -18181,19 +18213,19 @@ dw $0008 ; Arcade
 dw $000C ; Onett Drugstore
 dw $0010 ; Ness's House
 dw $000C ; Burger shop
-dw $ ; Onett Hint House
+dw $0010 ; Onett Hint House
 dw $000C ; Onett Bakery
 dw $0010 ; Pokey's House
-dw $ ; Onett Hotel
+dw $0010 ; Onett Hotel
 dw $0009 ; Police Station
-dw $ ; Town Hall
+dw $0010 ; Town Hall
 dw $0010 ; Onett Green House
-dw $ ; Onett Blue House
+dw $0010 ; Onett Blue House
 dw $0010 ; Onett seafoam house
-dw $ ; Left of Hint House
-dw $ ; Onett Pink House
+dw $0010 ; Left of Hint House
+dw $0010 ; Onett Pink House
 dw $0009 ; Library
-dw $ ; Lier's House
+dw $0010 ; Lier's House
 dw $0010 ; Onett hospital
 dw $000A ; Treehouse
 dw $0010 ; Traveler shack
@@ -18201,18 +18233,18 @@ dw $0009 ; Apple Kid
 dw $0010 ; Orange Kid
 dw $000C ; Bike Shop
 dw $000C ; Twoson Dept Store
-dw $ ; Everdred's House
+dw $0010 ; Everdred's House
 dw $0012 ; Bus Station
-dw $ ; Twoson Orange Roof
-dw $ ; Twoson Hint House
+dw $0010 ; Twoson Orange Roof
+dw $0010 ; Twoson Hint House
 dw $000B ; Chaos Theater
-dw $ ; Twoson Hotel
-dw $ ; Twoson Pizza
-dw $ ; Twoson North Left House
-dw $ ; Twoson North Right House
-dw $ ; Twoson Cat House
+dw $0010 ; Twoson Hotel
+dw $0010 ; Twoson Pizza
+dw $0010 ; Twoson North Left House
+dw $0010 ; Twoson North Right House
+dw $0010 ; Twoson Cat House
 dw $0010 ; Twoson Hospital
-dw $ ; Paula's House
+dw $0010 ; Paula's House
 dw $0010 ; HH House
 dw $0010 ; HH House
 dw $0008 ; Happy HQ
@@ -18221,34 +18253,34 @@ dw $000C ; Happy Drugstore
 dw $000C ; Happy Drugstore
 dw $0010 ; Happy Hospital
 dw $0010 ; Happy Hospital
-dw $ ; Happy Sturn House
+dw $0010 ; Happy Sturn House
 dw $0010 ; Happy Hotel
 dw $0010 ; Happy Hotel
 dw $0010 ; Saturn Hotel
 dw $0010 ; Saturn Hospital
 dw $0010 ; Saturn Shop
-dw $ ; Cabin
+dw $0010 ; Cabin
 dw $000C ; Threed Drugstore
 dw $000C ; Threed Drugstore Scary
-dw $ ; Threed Hint Shop
-dw $ ; Threed Hint Scary
-dw $ 000C; Threed Bakery
+dw $0010 ; Threed Hint Shop
+dw $0010 ; Threed Hint Scary
+dw $000C; Threed Bakery
 dw $000C ; Threed Bakery Scary
-dw $ ; Threed Hotel Scary
-dw $ ; Threed Pizza Scary
-dw $ ; Threed Red House Scary
-dw $ ; Tent
-dw $ ; Tent Scary
+dw $0010 ; Threed Hotel Scary
+dw $000C ; Threed Pizza Scary
+dw $0010 ; Threed Red House Scary
+dw $0010 ; Tent
+dw $0010 ; Tent Scary
 dw $0010 ; Threed Hospital
 dw $0010 ; Threed Hospital Scary
-dw $ ; Snow Wood
+dw $0010 ; Snow Wood
 dw $000C ; Winters drugstore
 dw $000B ; Andonuts Lab
 dw $0010 ; Winters tents
 dw $0010 ; Miner shack
-dw $ ; DD Drugstore
+dw $0010 ; DD Drugstore
 dw $000C ; Fourside Dept Store
-dw $ ; Monotoli Building
+dw $0010 ; Monotoli Building
 dw $0010 ; Monotoli Gold Room
 dw $0010 ; Monotoli upstairs
 dw $0010 ; Monotoli Elevator
@@ -18256,13 +18288,13 @@ dw $0010 ; Monotoli Offices?
 dw $0010 ; Monotoli penthouse
 dw $0010 ; Topolla Theater
 dw $000C ; Fourside Bakery
-dw $ ; Fourside Hotel
-dw $ ; Fourside Hotel
+dw $000C ; Fourside Hotel
+dw $000C ; Fourside Hotel
 dw $000B ; Fourside Cafe
 dw $000B ; Fourside Museum
 dw $0010 ; Fourside Hospital
-dw $ ; Stoic Club
-dw $ ; Summers Shop
+dw $0010 ; Stoic Club
+dw $0010 ; Summers Shop
 dw $0010 ; Summers Restaurant
 dw $000B ; Summers Hotel
 dw $0010 ; Summers Museum
@@ -18278,7 +18310,7 @@ dw $0010 ; Dalaam House
 dw $0000 ; Magicant Shop
 dw $0000 ; Magicant House
 dw $0000 ; Flying Man House
-dw $ ; Moonside Hotel
+dw $0010 ; Moonside Hotel
 dw $0013 ; Sky
 
 

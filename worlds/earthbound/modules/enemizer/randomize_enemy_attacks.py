@@ -39,7 +39,7 @@ battle_actions = {
     "extinguishing_blast": 0x5B,
     "crashing_boom_bang": 0x5C,
     "spray_fire": 0x5D,
-    "breathe_fue": 0x5E,
+    "breathe_fire": 0x5E,
     "Spin Around": 0x5F,
     "Lose Temper": 0x60,
     "Say Nasty": 0x61,
