@@ -18197,7 +18197,7 @@ dw $0010 ; Orange Kid
 dw $000C ; Bike Shop
 dw $000C ; Twoson Dept Store
 dw $ ; Everdred's House
-dw $ ; Bus Station
+dw $0012 ; Bus Station
 dw $ ; Twoson Orange Roof
 dw $ ; Twoson Hint House
 dw $000B ; Chaos Theater
@@ -18259,14 +18259,14 @@ dw $0010 ; Fourside Hospital
 dw $ ; Stoic Club
 dw $ ; Summers Shop
 dw $0010 ; Summers Restaurant
-dw $ ; Summers Hotel
+dw $000B ; Summers Hotel
 dw $0010 ; Summers Museum
 dw $0010 ; Summers Hospital
 dw $0010 ; Toto Shop
 dw $0010 ; Scaraba Shop
 dw $0010 ; Scaraba Hotel
 dw $0010 ; Scaraba House
-dw $ ; Scaraba Hospital
+dw $0010 ; Scaraba Hospital
 dw $0010 ; Toto House
 dw $000D ; Dalaam Palace
 dw $0010 ; Dalaam House
