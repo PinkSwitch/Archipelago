@@ -463,6 +463,7 @@ def calculate_scaling(world) -> None:
                     item_regions[location.item.name] = []
                 item_regions[location.item.name].append(location.parent_region.name)
 
+            # TODO; all areas have levels now, so I can skip the combat regions check
             if location.player == world.player and location.parent_region.name in combat_regions and (
                     location.parent_region.name not in regions_that_were_already_scaled):
                 last_region = location.parent_region.name

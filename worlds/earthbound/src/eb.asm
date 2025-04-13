@@ -3143,7 +3143,7 @@ BRA CheckTeleFlag
 EndTeleCheck:
 PLX
 STA $5E38
-JML $C06987
+JML LoadCurrentPhotoColor
 UnlockTeleport:
 PHA
 LDA TeleFlags,X
@@ -12392,6 +12392,33 @@ DEC
 LDY #$005F
 JML $C13666
 
+LoadCurrentPhotoColor:
+PHX
+LDX #$0000
+.Check:
+CMP PhotocolorTable,X
+BEQ .GotPhotoColor
+CPX #$0156
+BEQ .NotInTable
+INX
+INX
+BRA .Check
+.GotPhotoColor:
+PHA
+LDA GoodPhotoColors,X
+.ForceLoad0:
+AND #$00FF
+SEP #$20
+STA ????
+REP #$20
+PLA
+PLX
+JML $C06987
+.NotInTable:
+PHA
+LDA #$0000
+BRA .ForceLoad0
+
 
 ;new code go here
 
@@ -17859,11 +17886,6 @@ dl $C701FA
 
 ;New New Text
 
-
-
-
-
-
 ORG $F3FFE0
 db $04, $1C, $04
 db $08
@@ -17897,6 +17919,362 @@ dw sram_chunk3_pointer
 dw sramchunk4_pointer
 dw sramchunk5_pointer
 dw $0000
+
+ORG $F80000
+PhotocolorTable:
+dw $5A39 ; Blank
+dw $5A49 ; Giant Step as well????
+dw $5A4D ; Giant Step
+dw $5A59 ; Onett
+dw $5A85 ; Twoson
+dw $5A8D ; Happy-Happy Free
+dw $5A91 ; Happy-Happy
+dw $5A99 ; Peaceful Rest Valley
+dw $5AB1 ; Threed
+dw $5AC1 ; Rain Circle as well?????
+dw $5AC5 ; Rainy Circle
+dw $5AAD ; Threed Daytime
+dw $5AD1 ; Winters
+dw $5AED ; Saturn Valley
+dw $5AF5 ; Grapefruit Falls
+dw $5B09 ; Dusty Dunes
+dw $5B19 ; Magnet Hill as well?????
+dw $5B1D ; Magnet Hill
+dw $5B29 ; Fourside (Make sure start-of-seed fourside isnt different)
+dw $5B4D ; Summers
+dw $5B5D ; Scaraba Bazaar
+dw $5B6D ; Scaraba Desert
+dw $5B79 ; Dalaam
+dw $5B89 ; Deep Darkness
+dw $5B91 ;Tenda Village
+dw $5B99 ; Lost Underworld
+dw $5BA1 ; Memory house
+dw $5BAD ; Magicant
+dw $5BB1 ; Deep Magicant
+dw $5BB5 ; Sea of Eden
+dw $5BC1 ; Cave of the Present
+dw $5BCD ; Cave of the Past
+dw $5BD1 ; Giygas's Lair
+dw $5C09 ; Lilliput Steps
+dw $5C0D ; Lilliput steps as well????
+dw $5C2D ; Milky Well as well????
+dw $5C31 ; Milky Well
+dw $5C35 ; Milky Well outdoors
+dw $5C51 ; Pink Cloud as well????
+dw $5C55 ; Pink Cloud
+dw $5C65 ; Lumine Hall
+dw $5C69 ; Lumine Hall as well????
+dw $5D71 ; Threed Underground
+dw $5C8D ; Sea
+dw $5C9D ; Three-Two Tunnel
+dw $5CB1 ; Threed-Desert tunnel
+dw $5CC5 ; Desert Tunnel
+dw $5CD5 ; Fourside Tunnel
+dw $5CDD ; PRV Connector Cave
+dw $5CE5 ; Saturn Cave
+dw $5CED ; Giant Step Cave
+dw $5CF5 ; Lilliput Steps cave
+dw $5CFD ; Rainy Circle Cave
+dw $5D05 ; Milky Well Caves
+dw $5D0D ; Sewers
+dw $5D15 ; Pink Cloud Cave
+dw $5D1D ; Lumine Hall Cave
+dw $5D31 ; Fire Spring Cave
+dw $5D39 ; Lier's Cave
+dw $5D49 ; Bricroad's maze
+dw $5D51 ; Stonehenge Entrance
+dw $5D59 ; Stonehenge Balcony
+dw $5D61 ; Stonehenge Flashing room
+dw $5D79 ; Belch's Factory
+dw $5D81 ; Monkey Caves
+dw $5D95 ; Gold Mine
+dw $5D99 ; Moonside
+dw $5DA9 ; Pyramid
+dw $5DB1 ; Dungeon Man
+dw $5DB5 ; Arcade
+dw $5DBD ; Onett Drugstore
+dw $5DD1 ; Ness's House
+dw $5DF1 ; Burger shop
+dw $5DF9 ; Onett Hint House
+dw $5E01 ; Onett Bakery
+dw $5E09 ; Pokey's House
+dw $5E1D ; Onett Hotel
+dw $5E29 ; Police Station
+dw $5E31 ; Town Hall
+dw $5E39 ; Onett Green House
+dw $5E41 ; Onett Blue House
+dw $5E49 ; Onett seafoam house
+dw $5E51 ; Left of Hint House
+dw $5E61 ; Onett Pink House
+dw $5E71 ; Library
+dw $5E79 ; Lier's House
+dw $5E81 ; Onett hospital
+dw $5E91 ; Treehouse
+dw $5E99 ; Traveler shack
+dw $5EA1 ; Apple Kid
+dw $5EA9 ; Orange Kid
+dw $5EB1 ; Bike Shop
+dw $5EB9 ; Twoson Dept Store
+dw $5EC1 ; Everdred's House
+dw $5EC9 ; Bus Station
+dw $5ED1 ; Twoson Orange Roof
+dw $5ED9 ; Twoson Hint House
+dw $5EE9 ; Chaos Theater
+dw $5EF5 ; Twoson Hotel
+dw $5EFD ; Twoson Pizza
+dw $5F05 ; Twoson North Left House
+dw $5F0D ; Twoson North Right House
+dw $5F15 ; Twoson Cat House
+dw $5F1D ; Twoson Hospital
+dw $5F29 ; Paula's House
+dw $5F31 ; HH House
+dw $5F35 ; HH House
+dw $5F3D ; Happy HQ
+dw $5F41 ; Happy HQ
+dw $5F49 ; Happy Drugstore
+dw $5F4D ; Happy Drugstore
+dw $5F61 ; Happy Hospital
+dw $5F65 ; Happy Hospital
+dw $5F6D ; Happy Sturn House
+dw $5F55 ; Happy Hotel
+dw $5F59 ; Happy Hotel
+dw $5F7D ; Saturn Hotel
+dw $5F85 ; Saturn Hospital
+dw $5F8D ; Saturn Shop
+dw $5F95 ; Cabin
+dw $5F9D ; Threed Drugstore
+dw $5FA1 ; Threed Drugstore Scary
+dw $5FA9 ; Threed Hint Shop
+dw $5FAD ; Threed Hint Scary
+dw $5FB5 ; Threed Bakery
+dw $5FB9 ; Threed Bakery Scary
+dw $5FC9 ; Threed Hotel Scary
+dw $5FD5 ; Threed Pizza Scary
+dw $5FED ; Threed Red House Scary
+dw $600D ; Tent
+dw $6011 ; Tent Scary
+dw $6019 ; Threed Hospital
+dw $601D ; Threed Hospital Scary
+dw $6025 ; Snow Wood
+dw $6031 ; Winters drugstore
+dw $603D ; Andonuts Lab
+dw $6051 ; Winters tents
+dw $6059 ; Miner shack
+dw $6061 ; DD Drugstore
+dw $6069 ; Fourside Dept Store
+dw $607D ; Monotoli Building
+dw $608D ; Monotoli Gold Room
+dw $609D ; Monotoli upstairs
+dw $60A5 ; Monotoli Elevator
+dw $60D5 ; Monotoli Offices?
+dw $60C1 ; Monotoli penthouse
+dw $60E1 ; Topolla Theater
+dw $60F1 ; Fourside Bakery
+dw $60F5 ; Fourside Hotel
+dw $6101 ; Fourside Hotel
+dw $6109 ; Fourside Cafe
+dw $6115 ; Fourside Museum
+dw $611D ; Fourside Hospital
+dw $6125 ; Stoic Club
+dw $612D ; Summers Shop
+dw $6141 ; Summers Restaurant
+dw $6139 ; Summers Hotel
+dw $6149 ; Summers Museum
+dw $6151 ; Summers Hospital
+dw $6159 ; Toto Shop
+dw $617D ; Scaraba Shop
+dw $6189 ; Scaraba Hotel
+dw $6191 ; Scaraba House
+dw $6199 ; Scaraba Hospital
+dw $6161 ; Toto House
+dw $6169 ; Dalaam Palace
+dw $6175 ; Dalaam House
+dw $61A9 ; Magicant Shop
+dw $61B1 ; Magicant House
+dw $61BD ; Flying Man House
+dw $61C1 ; Moonside Hotel
+dw $61C9 ; Sky
+;todo here; Hotel wakeups
+;Saturn house when bad carpainter
+;run down onett house
+;tala rama
+;threed pizza shops
+;fire spring sanc
+;Mouse House
+
+GoodPhotoColors:
+dw $0000 ; Blank
+dw $0000 ; Giant Step as well????
+dw $0000 ; Giant Step
+dw $0000 ; Onett
+dw $0000 ; Twoson
+dw $0007 ; Happy-Happy Free
+dw $0007 ; Happy-Happy
+dw $0003 ; Peaceful Rest Valley
+dw $0006 ; Threed
+dw $0004 ; Rain Circle as well?????
+dw $0004 ; Rainy Circle
+dw $0006 ; Threed Daytime
+dw $0004 ; Winters
+dw $0008 ; Saturn Valley
+dw $0007 ; Grapefruit Falls
+dw $0009 ; Dusty Dunes
+dw $0009 ; Magnet Hill as well?????
+dw $0009 ; Magnet Hill
+dw $0009 ; Fourside (Make sure start-of-seed fourside isnt different)
+dw $000F ; Summers
+dw $0011 ; Scaraba Bazaar
+dw $0011 ; Scaraba Desert
+dw $000E ; Dalaam
+dw $0012 ; Deep Darkness
+dw $0013 ; Tenda Village
+dw $0012 ; Lost Underworld
+dw $0010 ; Memory house
+dw $0007 ; Magicant
+dw $0010 ; Deep Magicant
+dw $0010 ; Sea of Eden
+dw $0012 ; Cave of the Present
+dw $000F ; Cave of the Past
+dw $0005 ; Giygas's Lair
+dw $ ; Lilliput Steps
+dw $ ; Lilliput steps as well????
+dw $0008 ; Milky Well as well????
+dw $0008 ; Milky Well
+dw $0008 ; Milky Well outdoors
+dw $0002 ; Pink Cloud as well????
+dw $0002 ; Pink Cloud
+dw $0005 ; Lumine Hall
+dw $0005 ; Lumine Hall as well????
+dw $000B ; Threed Underground
+dw $0010 ; Sea
+dw $0000 ; Three-Two Tunnel
+dw $0000 ; Threed-Desert tunnel
+dw $0000 ; Desert Tunnel
+dw $0000 ; Fourside Tunnel
+dw $0005 ; PRV Connector Cave
+dw $0005 ; Saturn Cave
+dw $ ; Giant Step Cave
+dw $0010 ; Lilliput Steps cave
+dw $0010 ; Rainy Circle Cave
+dw $ ; Milky Well Caves
+dw $0011 ; Sewers
+dw $0005 ; Pink Cloud Cave
+dw $0013 ; Lumine Hall Cave
+dw $0013 ; Fire Spring Cave
+dw $0010 ; Lier's Cave
+dw $0005 ; Bricroad's maze
+dw $000A ; Stonehenge Entrance
+dw $0004 ; Stonehenge Balcony
+dw $ ; Stonehenge Flashing room
+dw $ ; Belch's Factory
+dw $ ; Monkey Caves
+dw $0010 ; Gold Mine
+dw $0007 ; Moonside
+dw $0013 ; Pyramid
+dw $0013 ; Dungeon Man
+dw $0008 ; Arcade
+dw $ ; Onett Drugstore
+dw $ ; Ness's House
+dw $ ; Burger shop
+dw $ ; Onett Hint House
+dw $ ; Onett Bakery
+dw $0010 ; Pokey's House
+dw $ ; Onett Hotel
+dw $0009 ; Police Station
+dw $ ; Town Hall
+dw $ ; Onett Green House
+dw $ ; Onett Blue House
+dw $ ; Onett seafoam house
+dw $ ; Left of Hint House
+dw $ ; Onett Pink House
+dw $0009 ; Library
+dw $ ; Lier's House
+dw $ ; Onett hospital
+dw $000A ; Treehouse
+dw $ ; Traveler shack
+dw $ ; Apple Kid
+dw $0010 ; Orange Kid
+dw $000C ; Bike Shop
+dw $000C ; Twoson Dept Store
+dw $ ; Everdred's House
+dw $ ; Bus Station
+dw $ ; Twoson Orange Roof
+dw $ ; Twoson Hint House
+dw $000B ; Chaos Theater
+dw $ ; Twoson Hotel
+dw $ ; Twoson Pizza
+dw $ ; Twoson North Left House
+dw $ ; Twoson North Right House
+dw $ ; Twoson Cat House
+dw $ ; Twoson Hospital
+dw $ ; Paula's House
+dw $ ; HH House
+dw $ ; HH House
+dw $0008 ; Happy HQ
+dw $0008 ; Happy HQ
+dw $ ; Happy Drugstore
+dw $ ; Happy Drugstore
+dw $ ; Happy Hospital
+dw $ ; Happy Hospital
+dw $ ; Happy Sturn House
+dw $ ; Happy Hotel
+dw $ ; Happy Hotel
+dw $ ; Saturn Hotel
+dw $ ; Saturn Hospital
+dw $ ; Saturn Shop
+dw $ ; Cabin
+dw $ ; Threed Drugstore
+dw $ ; Threed Drugstore Scary
+dw $ ; Threed Hint Shop
+dw $ ; Threed Hint Scary
+dw $ ; Threed Bakery
+dw $ ; Threed Bakery Scary
+dw $ ; Threed Hotel Scary
+dw $ ; Threed Pizza Scary
+dw $ ; Threed Red House Scary
+dw $ ; Tent
+dw $ ; Tent Scary
+dw $ ; Threed Hospital
+dw $ ; Threed Hospital Scary
+dw $ ; Snow Wood
+dw $ ; Winters drugstore
+dw $000B ; Andonuts Lab
+dw $ ; Winters tents
+dw $ ; Miner shack
+dw $ ; DD Drugstore
+dw $000C ; Fourside Dept Store
+dw $ ; Monotoli Building
+dw $ ; Monotoli Gold Room
+dw $ ; Monotoli upstairs
+dw $ ; Monotoli Elevator
+dw $ ; Monotoli Offices?
+dw $ ; Monotoli penthouse
+dw $ ; Topolla Theater
+dw $ ; Fourside Bakery
+dw $ ; Fourside Hotel
+dw $ ; Fourside Hotel
+dw $ ; Fourside Cafe
+dw $000B ; Fourside Museum
+dw $ ; Fourside Hospital
+dw $ ; Stoic Club
+dw $ ; Summers Shop
+dw $0010 ; Summers Restaurant
+dw $ ; Summers Hotel
+dw $0010 ; Summers Museum
+dw $ ; Summers Hospital
+dw $ ; Toto Shop
+dw $ ; Scaraba Shop
+dw $ ; Scaraba Hotel
+dw $ ; Scaraba House
+dw $ ; Scaraba Hospital
+dw $ ; Toto House
+dw $000D ; Dalaam Palace
+dw $0010 ; Dalaam House
+dw $0000 ; Magicant Shop
+dw $0000 ; Magicant House
+dw $ ; Flying Man House
+dw $ ; Moonside Hotel
+dw $0013 ; Sky
 
 
 ;todo, PSI rockin?
