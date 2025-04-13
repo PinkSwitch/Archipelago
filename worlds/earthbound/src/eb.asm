@@ -12409,7 +12409,7 @@ LDA GoodPhotoColors,X
 .ForceLoad0:
 AND #$00FF
 SEP #$20
-STA ????
+STA $B44C
 REP #$20
 PLA
 PLX
@@ -12418,6 +12418,11 @@ JML $C06987
 PHA
 LDA #$0010
 BRA .ForceLoad0
+
+;SavePhotoColor - the code in the Photo routine that saves the Map color into the photo
+
+;LoadPhotoColor  - the code in the credits that loads the stored photo color
+
 
 
 ;new code go here
@@ -15584,7 +15589,7 @@ sramchunk4_pointer = $31D0
 sramchunk4_size = $0100
 
 sramchunk5_pointer = $000D4
-sramchunk5_size = $008C
+sramchunk5_size = $00AC
 
 !save_size = #$AA0
 !save_bytes = #$A80
