@@ -271,11 +271,11 @@ class EarthBoundWorld(World):
             spoiler_handle.write(f" Bomb/Bazooka Slot:    {spoiler_psi[self.jeff_offense_items[0]]}\n")
             spoiler_handle.write(f" Bottle Rocket Slot:    {spoiler_psi[self.jeff_offense_items[1]]}\n")
 
-            spoiler_handle.write(f"Spray Can Slot:    {spoiler_psi[self.jeff_assist_items[0]]}\n")
-            spoiler_handle.write(f"Multi-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[1]]}\n")
-            spoiler_handle.write(f"Single-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[2]]}\n")
-            spoiler_handle.write(f"Single-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[3]]}\n")
-            spoiler_handle.write(f"Multi-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[4]]}\n")
+            spoiler_handle.write(f" Spray Can Slot:    {spoiler_psi[self.jeff_assist_items[0]]}\n")
+            spoiler_handle.write(f" Multi-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[1]]}\n")
+            spoiler_handle.write(f" Single-Level Gadget Slot 1:    {spoiler_psi[self.jeff_assist_items[2]]}\n")
+            spoiler_handle.write(f" Single-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[3]]}\n")
+            spoiler_handle.write(f" Multi-Level Gadget Slot 2:    {spoiler_psi[self.jeff_assist_items[4]]}\n")
 
         if self.options.boss_shuffle:
             spoiler_handle.write("\nBoss Randomization:\n" + 

@@ -371,12 +371,14 @@ class EarthBoundClient(SNIClient):
                 }])
 
         # death link handling goes here
-        if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
-            send_deathlink = await snes_read(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, 1)
-            currently_dead = send_deathlink[0] != 0x00
-            if send_deathlink[0] != 0x00:
-                snes_buffered_write(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, bytes([0x00]))
-            await ctx.handle_deathlink_state(currently_dead)
+        received_deathlink = await snes_read(ctx, GOT_DEATH_FROM_SERVER, 1)
+        if not receieved_deathlink[0]: # test this
+            if "DeathLink" in ctx.tags and ctx.last_death_link + 1 < time.time():
+                send_deathlink = await snes_read(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, 1)
+                currently_dead = send_deathlink[0] != 0x00
+                if send_deathlink[0] != 0x00:
+                    snes_buffered_write(ctx, PLAYER_JUST_DIED_SEND_DEATHLINK, bytes([0x00]))
+                await ctx.handle_deathlink_state(currently_dead)
 
         new_checks = []
         from .game_data.local_data import check_table

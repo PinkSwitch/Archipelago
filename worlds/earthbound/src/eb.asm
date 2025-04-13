@@ -9001,6 +9001,9 @@ ORG $C72664
 db $0A
 dl DenyHintsNoMoney
 
+ORG $CFA96E
+dd fixed_skyrunner_redirect
+
 
 
 ;New data table go here
@@ -9734,7 +9737,7 @@ db $18, $04
 db $02
 .UnlockDoor:
 db $08
-dd LavaPantsUseTxt
+dd LeaderPantsText
 db $1D, $01, $FF, $B3
 db $18, $04
 .FireSpringUnlocked
@@ -9743,7 +9746,9 @@ db $0A, $0B, $B1, $C9
 LavaPantsUseTxt:
 db $01, $70
 db $1C, $0D
-db $1B, $04, $50
+db $1B, $04
+.DoorPantsTex:
+db $50
 db $a5, $a3, $95, $94, $50, $a4, $98, $95, $50, $1c, $05, $b3, $51
 db $1F, $02, $73
 db $14
@@ -17917,6 +17922,15 @@ dd UnsetDenyHints
 db $17, $f3, $15, $10
 db $0A
 dl $C701FA
+
+LeaderPantsText:
+db $01, $70
+db $19, $10, $01
+db $1B, $04
+db $1C, $02, $00
+db $0A
+dl LavaPantsUseTxt_DoorPantsTex
+
 
 ;ORG $C62B87
 ;db $0a, $28, $ca, $ee ; Test, delete later

@@ -81,7 +81,6 @@ battle_actions = {
     "Tick Tock": 0x86,
     # "Eat Food": 0x8A,
     "PSI Food": 0x8E,
-    # "Stat Food": 0x91,
     # Counter PSI: 0x9F World.gadget actions?
     # Shield Killer
     # HP Sucker
@@ -145,6 +144,7 @@ needs_argument = {
     "PSI Food": [0xCF, 0xF7, 0x6E, 0xF6, 0x63, 0x62],
     "Ruler": [0xBA],
     "Protractor": [0x8F],
+    "Toothbrush": [0x9A],
     "Monkey Love": [0xD1],
     "Sudden Guts": [0x9F],
     "Shield Alpha": [0x1F],

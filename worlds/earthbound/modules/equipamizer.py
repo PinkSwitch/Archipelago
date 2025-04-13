@@ -61,6 +61,7 @@ class EBArmor:
     sleep_res: int = 0
     name: str = "None"
     can_equip: str = "All"
+    total_resistance = 0
 
 
 @dataclass
@@ -569,7 +570,7 @@ def randomize_armor(world, rom):
 
             pixel_length = calc_pixel_width(armor.name)
             
-        resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
+        armor.total_resistance = (1 * armor.fire_res) + (4 * armor.freeze_res) + (16 * armor.flash_res) + (64 * armor.par_res)
         rom.write_bytes(armor.address + 28, bytearray([usage_bytes[armor.can_equip]]))
         rom.write_bytes(armor.address + 25, bytearray([type_bytes[armor.equip_type]]))
     
@@ -606,7 +607,7 @@ def randomize_armor(world, rom):
         else:
             armor.poo_def = armor.defense
         
-        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
+        rom.write_bytes(armor.address + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, armor.total_resistance]))
 
         item_name = text_encoder(armor.name, 25)
         item_name.extend([0x00])
@@ -655,7 +656,7 @@ def randomize_armor(world, rom):
         rom.write_bytes((armor.address + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
         if item in ["Platinum Band", "Diamond Band"]:
             rom.write_bytes(summers_addresses[item] + 28, bytearray([usage_bytes[armor.can_equip]]))
-            rom.write_bytes(summers_addresses[item] + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, resistance]))
+            rom.write_bytes(summers_addresses[item] + 31, bytearray([armor.defense, armor.poo_def, armor.aux_stat, armor.total_resistance]))
             rom.write_bytes(summers_addresses[item] + 25, bytearray([type_bytes[armor.equip_type]]))
             rom.write_bytes(summers_addresses[item], item_name)
             rom.write_bytes((summers_addresses[item] + 35), struct.pack("I", (0xF10000 + world.description_pointer)))
