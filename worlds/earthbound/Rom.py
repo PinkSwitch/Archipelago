@@ -370,7 +370,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(present_locations[name] - 12, bytearray(nonlocal_present_types[world.present_type]))
                     if name != "Threed - Boogey Tent Trashcan":
                         if world.present_type == "progression":
-                            rom.write_bytes(present_locations[name] - 4, struct.pack("I", world.random.choice(ap_text_ptrs)))
+                            rom.write_bytes(present_locations[name] - 4, struct.pack("I", world.random.choice(ap_text_pntrs)))
                         elif world.present_type == "trap":
                             rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xce, 0xee]))
                         else:
