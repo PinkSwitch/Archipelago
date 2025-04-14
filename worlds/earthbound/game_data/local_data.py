@@ -1362,22 +1362,22 @@ present_text_pointers = {
 }
 
 ap_text_pntrs = [
-    [0xEECDCD],  # ce
-    [0xEECDD9],  # cf
-    [0xEECDE5],  # d0
-    [0xEECDF1],  # e7
-    [0xEECDFD],  # e8
-    [0xEECE09],  # e9
-    [0xEECE15],  # ea
-    [0xEECE21],  # eb
-    [0xEECE2D],  # ec
-    [0xEECE39],  # ed
-    [0xEECE45],  # ee
-    [0xEECE51],  # ef
-    [0xEECE5D],  # f0
-    [0xEECE69],  # f1
-    [0xEECE75],  # f2
-    [0xEECE81],  # f3
+    0xEECDCD,  # ce
+    0xEECDD9,  # cf
+    0xEECDE5,  # d0
+    0xEECDF1,  # e7
+    0xEECDFD,  # e8
+    0xEECE09,  # e9
+    0xEECE15,  # ea
+    0xEECE21,  # eb
+    0xEECE2D,  # ec
+    0xEECE39,  # ed
+    0xEECE45,  # ee
+    0xEECE51,  # ef
+    0xEECE5D,  # f0
+    0xEECE69,  # f1
+    0xEECE75,  # f2
+    0xEECE81,  # f3
     # [0x8D, 0xCE, 0xEE] #trap text
 ]
 
