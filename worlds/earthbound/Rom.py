@@ -314,7 +314,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(character_locations[name][2], bytearray([0x18, 0xF9, 0xD5]))
                     rom.write_bytes(character_locations[name][3], bytearray([item_id]))
                 if name == "Deep Darkness - Barf Character":
-                    if item in character_item_table and location.item.player == location.player:
+                    if item in character_item_table:
                         rom.write_bytes(0x2EA0E2, bytearray(barf_text[item][0:3]))
                         rom.write_bytes(0x2EA0E8, bytearray(barf_text[item][3:6]))
                     elif item in psi_item_table and location.item.player == location.player:
@@ -370,7 +370,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(present_locations[name] - 12, bytearray(nonlocal_present_types[world.present_type]))
                     if name != "Threed - Boogey Tent Trashcan":
                         if world.present_type == "progression":
-                            rom.write_bytes(present_locations[name] - 4, bytearray(world.random.choice(ap_text_pntrs)))
+                            rom.write_bytes(present_locations[name] - 4, struct.pack("I", world.random.choice(ap_text_ptrs)))
                         elif world.present_type == "trap":
                             rom.write_bytes(present_locations[name] - 4, bytearray([0x8D, 0xce, 0xee]))
                         else:
@@ -675,8 +675,8 @@ def patch_rom(world, rom, player: int):
             else:
                 rom.write_bytes(address, [0x80])
                 # THIS WILL CRASH IF ADDRESS IS WRONG.
-    rom.write_bytes(0x2EC909, bytearray(protection_text[world.franklin_protection][0:3]))  # help text
-    rom.write_bytes(0x2EC957, bytearray(protection_text[world.franklin_protection][3:6]))  # battle text
+    rom.write_bytes(0x2EC909, struct.pack("I", protection_text[world.franklin_protection][0]))  # help text
+    rom.write_bytes(0x2EC957, struct.pack("I", protection_text[world.franklin_protection][1]))  # battle text
     from Main import __version__
     rom.name = bytearray(f'MOM2AP{__version__.replace(".", "")[0:3]}_{player}_{world.multiworld.seed:11}\0', "utf8")[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
