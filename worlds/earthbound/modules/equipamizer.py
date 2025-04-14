@@ -28,7 +28,6 @@ def price_weapons(world, weapons, rom):
         price -= (50 * weapon.miss_rate)
         price += world.random.randint(-20, 20)
         price = max(5, price)
-        print(price)
         rom.write_bytes((weapon.address + 26), struct.pack("H", price))
         if weapon.double_price_item in summers_addresses:
             rom.write_bytes((summers_addresses[weapon.double_price_item] + 26), struct.pack("H", price))

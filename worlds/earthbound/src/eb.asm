@@ -13906,7 +13906,7 @@ dd $00c97df5
 dd starstorm_lambda
 
 db $00, $04, $04, $00
-dd $00c29aaf
+dd $00c97e24
 dd $00c29aaf
 ;Bomb missile
 db $00, $01, $04, $00
