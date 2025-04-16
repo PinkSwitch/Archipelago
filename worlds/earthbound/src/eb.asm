@@ -17575,9 +17575,9 @@ db $1D, $03, $FF
 db $1B, $02
 dd .FullInv
 db $05, $20, $04
-db $04, $DF, $03
 db $1D, $0E, $FF, $04, $08
 dd $C7DCB6
+db $04, $DF, $03
 db $03
 db $18, $04, $02
 .FullInv:

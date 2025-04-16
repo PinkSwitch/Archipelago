@@ -263,7 +263,10 @@ enemy_adjectives = [
     "Condemned ",
     "Rad ",
     "Hangry ",
-    "Moonsidian "
+    "Moonsidian ",
+    "No. 3 ",
+    "Legal ",
+    "Copyrighted "
 ]
 
 battle_sprites = {

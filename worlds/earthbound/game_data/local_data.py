@@ -640,7 +640,7 @@ npc_locations = {  # Locations given to you by an NPC
     "Monkey Caves - Bow Monkey Gift": [0x062636],
     "Monkey Caves - Talah Rama Gift": [0x060FEB],
     "Fourside - Venus Gift": [0x2EB1CE],
-    "Fourside - Post-Moonside Delivery": [0x07AAC4, 0x07B598, 0x331104],
+    "Fourside - Post-Moonside Delivery": [0x07AAC4, 0x07B598, 0x331101],
     "Fourside - Bakery 2F Gift": [0x06DE56],
     "Monotoli Building - Electra Gift": [0x2EB29B],
     "Monotoli Building - Monotoli Gift": [0x06EB3C],

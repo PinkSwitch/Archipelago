@@ -435,7 +435,7 @@ def randomize_armor(world, rom):
         "body": ["pendant", "charm", "foot", "brooch", "shirt",
                  "amulet", "cloak", "suit", "plate", "vest", "coat", "jersey", "poncho"],
         "arm": ["bracelet", "band", "bracer", "gauntlet", "sleeve", "glove", "bangle", "armlet", "sweatband"],
-        "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants", "jeans", "grieves", "boot"]
+        "other": ["cap", "hat", "coin", "crown", "diadem", "helmet", "mask", "wig", "pants", "jeans", "greaves", "boot"]
     }
 
     res_strength = [
