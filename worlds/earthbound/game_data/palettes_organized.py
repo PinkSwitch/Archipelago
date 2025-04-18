@@ -1,4 +1,3 @@
-
 nice_palettes = {
     "Onett": [
 

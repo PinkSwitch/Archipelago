@@ -196,7 +196,7 @@ class EarthBoundWorld(World):
 
     @classmethod
     def stage_generate_output(cls, multiworld, output_directory):
-        multiworld.eb_spheres = multiworld.get_spheres()
+        multiworld.eb_spheres = list(multiworld.get_spheres())
         for world in multiworld.get_game_worlds("EarthBound"):
             world.get_all_spheres.set()
 
