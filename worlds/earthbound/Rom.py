@@ -16,7 +16,7 @@ from .modules.area_scaling import calculate_scaling
 from .modules.boss_shuffle import write_bosses
 from .modules.equipamizer import randomize_armor, randomize_weapons
 from .modules.music_rando import music_randomizer
-from .modules.palette_shuffle import randomize_psi_palettes
+from .modules.palette_shuffle import randomize_psi_palettes, map_palette_shuffle
 from .modules.shopsanity import write_shop_checks
 from .modules.enemy_shuffler import apply_enemy_shuffle
 from .modules.dungeon_er import write_dungeon_entrances
@@ -216,7 +216,7 @@ def patch_rom(world, rom, player: int):
 
     rom.write_bytes(0x04FD70, bytearray([world.options.sanctuaries_required.value]))
     shop_checks = []
-
+    
     for location in world.multiworld.get_locations(player):
         if location.address:
             receiver_name = world.multiworld.get_player_name(location.item.player)
@@ -631,6 +631,8 @@ def patch_rom(world, rom, player: int):
         randomize_weapons(world, rom)
     
     music_randomizer(world, rom)
+    if world.options.map_palette_shuffle:
+        map_palette_shuffle(world, rom)
     if world.options.randomize_psi_palettes:
         randomize_psi_palettes(world, rom)
 

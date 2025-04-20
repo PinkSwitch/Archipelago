@@ -1,3 +1,5 @@
+from ..game_data.palettes_organized import map_palettes, nice_palettes, ugly_palettes, nonsense_palettes
+
 
 palette_list = [
     0x00,  # Pyramid
@@ -118,24 +120,6 @@ palette_list = [
     0x5F  # Cafe backroom
 ]
 
-good_palettes = {
-    "Onett": [0x04, 0x05, 0x07, 0x09, 0x0B, 0x0C, 0x0D, 0x0E, 0x2A, 0x3E],
-    "Giant Step": [],
-    "Twoson": [0x04, 0x05, 0x07, 0x09, 0x0B, 0x0C, 0x0D, 0x0E, 0x2A, 0x3E],
-    "Peaceful Rest Valley": [],
-    "Happy-Happy Village": [],
-    "Lilliput Steps": [],
-    "Two-Three Tunnel": [],
-    "Threed": [0x04, 0x05, 0x07, 0x09, 0x0B, 0x0C, 0x0D, 0x2A, 0x3E, 0x3F],
-    "Winters": [0x3E],
-}
-
-good_palettes_plus = {
-    "Onett": [0x01, 0x02, 0x06, 0x08, 0x0A, 0x13, 0x15, 0x16, 0x1A, 0x1B, 0x27, 0x5B],
-
-}
-
-
 def randomize_psi_palettes(world, rom):
     spell_palettes = []
     for i in range(34):
@@ -158,4 +142,18 @@ def randomize_psi_palettes(world, rom):
 
     for index, pointer in enumerate(spell_palettes):
         rom.copy_bytes(pointer, 8, shuffled_palettes[index])
+
+def map_palette_shuffle(world, rom):
+    for i in range(168):
+        rom.copy_bytes(0x1A7CA7 + (i * 192), 191, 0x381000 + (i * 192))
+    
+    for item in map_palettes:
+        choosable_palettes = nice_palettes[item]
+        if world.options.map_palette_shuffle > 1:
+            choosable_palettes += ugly_palettes[item]
+        if world.options.map_palette_shuffle > 2:
+            choosable_palettes += nonsense_palettes[item]
         
+        chosen_palette = world.random.choice(choosable_palettes)
+        print(chosen_palette)
+        rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))

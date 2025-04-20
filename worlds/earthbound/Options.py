@@ -410,6 +410,19 @@ class EnemizerAttributes(Toggle):
     """Randomizes most attributes of non-boss enemies."""
     display_name = "Randomize Enemy Attributes"
 
+class RandomMapColors(Choice):
+    """Randomizes map colors.
+       Normal: Uses normal colors
+       Nice: Uses generally good looking palettes for maps with little artifacting.
+       Ugly: Allows map palettes with artifacting or colors that may not look good.
+       Nonsense: Allows really bad palettes or heavy artifacting."""
+    display_name = "Shuffle Map Palettes"
+    option_normal = 0
+    option_nice = 1
+    option_ugly = 2
+    option_nonse = 3
+    default = 0
+
 
 @dataclass
 class EBOptions(PerGameCommonOptions):
@@ -463,6 +476,7 @@ class EBOptions(PerGameCommonOptions):
     randomize_battle_music: RandomizeBattleMusic
     randomize_fanfares: RandomizeFanfares
     randomize_psi_palettes: RandomizePSIPalettes
+    map_palette_shuffle: RandomMapColors
     shop_randomizer: ShopRandomizer
     scout_shop_checks: ScoutShopChecks
     dungeon_shuffle: DungeonShuffle
@@ -552,6 +566,7 @@ eb_option_groups = [
         RandomFlavors,
         RandomSwirlColors,
         RandomBattleBG,
+        RandomMapColors,
         PresentSprites,
         NoAPPresents,
         RandomizePSIPalettes,
