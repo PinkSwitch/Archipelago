@@ -24,8 +24,6 @@ You can check your goals by speaking to Apple Kid in the Cave of the Present.
 Locations consist of PSI Locations, Character Locations, presents, and gifts from NPCs.
 
 PSI Locations are locations tied to psychic events in the normal game, usually corresponding to the Sanctuaries, PSI Teleport, or PSI Starstorm.
-By default, PSI locations will always contain either a Teleport Destination, or a progressive upgrade for PSI Starstorm. These can be optionally placed
-in the Multiworld pool.
 
 PSI Locations:
 - Checking the Mani-Mani Statue in Onett
@@ -64,7 +62,6 @@ When you receive an item, the sound effect of an item being received will play, 
 !If storage is full, you will not be able to receive any more items until you clear room! If you receive PSI, the PSI learn fanfare plays instead. If you receive a character, a cutscene
 will play.
 
-
 ## My inventory is full and there's items I can't find!
 You can press R at any time on the overworld to access a pocket storage menu that allows you to store, withdraw from storage, and toss unnessecary items within one menu.
 
@@ -79,3 +76,10 @@ The location of the Hint Man will be marked on your map, viewable at all times w
 ## My game suddenly went to an anti-piracy screen! ##
 Do not fear, this is just a crash handler implemented as part of the Archipelago randomizer, in case anything goes terribly wrong.
 If you get this screen, please report it as a bug with as much detail and replciability of the situation as possible.
+
+## Repel Sandwiches? ##
+Skip Sandwiches (And Skip Sandwich DXs) have been replaced with an item called the Repel Sandwich (and Repel Superwich).
+Repel Sandwiches will prevent normal enemies from spawning for a short time. The help text can tell you more.
+
+## Run Button ##
+You can hold down the Y button to run.

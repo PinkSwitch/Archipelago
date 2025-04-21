@@ -33,7 +33,7 @@ palette_list = [
     0x15,  # Saturn valley
     0x16,  # Deep Darkness
     0x17,  # Lilliput Steps
-    0x18,  # Milky Well
+    0x18,  # Milky Well Outdoors
     0x19,  # Deep Darkness with darkness effect
 
     0x1A,  # Summers
@@ -118,6 +118,7 @@ palette_list = [
     0x5D,  # Scaraba House
     0x5E,  # Happy Happy HQ
     0x5F  # Cafe backroom
+    #0xA7
 ]
 
 def randomize_psi_palettes(world, rom):
@@ -155,5 +156,4 @@ def map_palette_shuffle(world, rom):
             choosable_palettes += nonsense_palettes[item]
         
         chosen_palette = world.random.choice(choosable_palettes)
-        print(chosen_palette)
         rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))

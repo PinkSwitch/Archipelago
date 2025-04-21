@@ -6117,7 +6117,7 @@ ORG $00FEF0
 ;Crash handler
 SEP #$20
 STZ $B4A1
-JML $C30100; Jump to anti-piracy screen
+JML RenderCrashScreen; Jump to anti-piracy screen
 
 ORG $EEAAF1
 db $F2, $C5, $EE
@@ -12460,6 +12460,53 @@ BRA .Check
 PLX
 JML $C0089E
 
+RenderCrashScreen:
+STZ $002B
+.CheckForFrame:
+  LDA $002B
+  BEQ .CheckForFrame
+  STZ $002B
+  STZ $4100
+  JSL $C08726
+  REP #$31
+  LDA #$1EE0
+  TCD
+    LDA #$00F8
+    STA $10
+    LDA #$9000
+    STA $0E
+    LDA #$0000
+    LDX #$01B0
+    LDY #$6100
+  JSL $C08616
+    LDA #$0000
+    LDX #$7C00
+    LDY #$6000
+  JSL $C08E1C
+  LDA #$06FF
+  LDX #$9700
+  LDY #$7DFE
+  MVN $F87E
+
+
+  LDA #$0460
+  LDX #$9200
+  LDY #$7F16
+  MVN $F87E
+JSL $C2038B
+LDA #$0004
+STA $001A
+  LDA #$000F
+  LDX #$0002
+  JSL $C0886C
+.Loop:
+JSL $C08756
+LDA $006A
+AND #$0010
+BNE .Reset
+BRA .Loop
+.Reset:
+JML ReallyReset
 
 
 ;new code go here
@@ -18326,6 +18373,12 @@ dw $0000 ; Magicant House
 dw $0000 ; Flying Man House
 dw $0010 ; Moonside Hotel
 dw $0013 ; Sky
+
+ORG $F89000
+incbin CrashFont.bin
+
+ORG $F89200
+incbin crashscreen.bin
 
 
 ;todo, PSI rockin?

@@ -1,5 +1,18 @@
 map_palettes = {
-    "Onett": 4
+    "Pyramid": 0,
+    "Lost Underworld": 1,
+    "Cave of the Past": 2,
+
+    "Onett": 4,
+    # "Onett Nighttime": 5,
+    # "Onett Flashback": 6,
+
+    "Winters": 59,
+    "Rainy Circle Sanctuary": 60,
+    #"Winters Night": 61,
+    #"???": 62,
+    "Lumine Hall": 134,
+    "Tenda Village": 159
 }
 
 
