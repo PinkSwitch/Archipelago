@@ -597,7 +597,8 @@ location_groups = {
         "Onett - Tracy's Room Present",
         "Onett - Meteor Item",
         "Onett - Buzz Buzz",
-        "Onett - Mani Mani Statue"
+        "Onett - Mani Mani Statue",
+        "Onett - Hilltop Present"
     },
 
     "Onett": {
@@ -609,6 +610,7 @@ location_groups = {
         "Onett - Hotel Trashcan",
         "Onett - Mayor Pirkle",
         "Onett - Traveling Entertainer",
+        "Onett - Arcade Trashcan",
         "Onett Drugstore - Right Counter Slot 1",
         "Onett Drugstore - Right Counter Slot 2",
         "Onett Drugstore - Right Counter Slot 3",
@@ -658,6 +660,7 @@ location_groups = {
         "Twoson Department Store Top Floor - Right Counter Slot 5",
         "Twoson Department Store Top Floor - Right Counter Slot 6",
         "Twoson Department Store Top Floor - Left Counter Slot 1",
+        "Twoson Department Store Top Floor - Left Counter Slot 2",
         "Twoson/Scaraba - Shared Condiment Shop Slot 1",
         "Twoson/Scaraba - Shared Condiment Shop Slot 2",
         "Twoson/Scaraba - Shared Condiment Shop Slot 3",
@@ -1328,7 +1331,8 @@ location_groups = {
         "Twoson Department Store Top Floor - Right Counter Slot 4",
         "Twoson Department Store Top Floor - Right Counter Slot 5",
         "Twoson Department Store Top Floor - Right Counter Slot 6",
-        "Twoson Department Store Top Floor - Left Counter Slot 1"
+        "Twoson Department Store Top Floor - Left Counter Slot 1",
+        "Twoson Department Store Top Floor - Left Counter Slot 2"
     },
     
     "the Fourside Department Store": {

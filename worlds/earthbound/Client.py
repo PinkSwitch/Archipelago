@@ -62,6 +62,7 @@ class EarthBoundClient(SNIClient):
     most_recent_connect: str = ""
     client_version = world_version
     hint_list = []
+    hinted_shop_locations = []
 
     async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
         from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
@@ -340,19 +341,21 @@ class EarthBoundClient(SNIClient):
             shop_slots = []
             for i in range(7):
                 slot_id = (0xEB0FF9 + (shop_scout[0] * 7) + i)
-                if slot_id in ctx.server_locations:
+                if slot_id in ctx.server_locations and slot_id not in self.hinted_shop_locations:
                     shop_slots.append(slot_id)
+                    self.hinted_shop_locations.append(slot_id)
             
-            if shop_scouts_enabled[0] == 2:
-                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
-            else:
-                prog_shops = []
-                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 0}])
-                for location in shop_slots:
-                    if location in ctx.locations_info:
-                        if ctx.locations_info[location].flags & 0x01:
-                            prog_shops.append(location)
-                await ctx.send_msgs([{"cmd": "LocationScouts", "locations": prog_shops, "create_as_hint": 2}])
+            if shop_slots:
+                if shop_scouts_enabled[0] == 2:
+                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
+                else:
+                    prog_shops = []
+                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 0}])
+                    for location in shop_slots:
+                        if location in ctx.locations_info:
+                            if ctx.locations_info[location].flags & 0x01:
+                                prog_shops.append(location)
+                    await ctx.send_msgs([{"cmd": "LocationScouts", "locations": prog_shops, "create_as_hint": 2}])
 
         await ctx.send_msgs([{
                     "cmd": "Set",

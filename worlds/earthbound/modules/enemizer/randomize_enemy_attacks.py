@@ -7,6 +7,8 @@ battle_actions = {
     "Attack": 0x04,
     "Shoot": 0x05,
     "Spy": 0x06,
+    "Defend": 0x08,
+    "None": 0x09,
     "Magnet Alpha": 0x36,
     "Magnet Omega": 0x37,
     "Call": 0x3E,
@@ -46,6 +48,7 @@ battle_actions = {
     "Vacuum Attack": 0x62,
     # "Replenish Fuel",
     "poisonous_fangs": 0x64,
+    # Dizzy Missile
     "Continuous Attack": 0x66,
     "Guard": 0x67,
     "flaming_fireball": 0x68,
@@ -84,6 +87,7 @@ battle_actions = {
     # Counter PSI: 0x9F World.gadget actions?
     # Shield Killer
     # HP Sucker
+    "Yogurt Dispenser": 0xAA,
     "Toothbrush": 0xAE,
     "Sudden Guts": 0xB6,
     "Ruler": 0xBA,
@@ -130,11 +134,15 @@ battle_actions = {
     "Coil Around": 0xF2,
     "Emit Light": 0xF8,
     "Homesick": 0xFB,
+    "Fake PSI": 0x0100,
     "Bark": 0x0108,
     "Chant": 0x0109,
     "Scratch Head": 0x010B,
     "Discharge Gas": 0x0111,
     "Monkey Love": 0x011B,
+    "Lost Bolts": 0x013A,
+    "Clean Area": 0x013C,
+    "Want Battery": 0x013D,
     "throw_bomb": 0x01FC,
     "shoot_rocket": 0x0203
 
@@ -142,7 +150,7 @@ battle_actions = {
 
 needs_argument = {
     "PSI Food": [0xCF, 0xF7, 0x6E, 0xF6, 0x63, 0x62],
-    "Ruler": [0xBA],
+    "Ruler": [0x8C],
     "Protractor": [0x8F],
     "Toothbrush": [0x9A],
     "Monkey Love": [0xD1],
@@ -160,6 +168,7 @@ needs_argument = {
     "Brainshock": [0x31],
     "Magnet Alpha": [0x2D],
     "Magnet Omega": [0x2E],
+    "Yogurt Dispenser": [0x8B],
 }
 
 psi_actions = {
