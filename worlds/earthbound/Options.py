@@ -139,6 +139,7 @@ class PresentSprites(DefaultOnToggle):
     """If enabled, Presents, Trash cans, and chests will have their appearance modified to be indicative of the item they contain."""
     display_name = "Match Present Sprites"
 
+
 class NoAPPresents(Toggle):
     """If enabled, present that contain items for other players will appear as EarthBound presents (trashcan, present, and chest) instead of Archipelago boxes.
        Does nothing if Presents Match Contents is disabled."""
@@ -378,14 +379,17 @@ class SkipEpilogue(Toggle):
     display_name = "Skip Epilogue"
     visibility = Visibility.template
 
+
 class EnergyLink(Toggle):
     """If enabled, the money in the ATM will be linked across the Archipelago Server.
        This requires a server connection to be used, but won't break offline play."""
     display_name = "Energy Link"
 
+
 class DungeonShuffle(Toggle):
     """Shuffles Dungeon entrances amongst each other."""
     display_name = "Dungeon Shuffle"
+
 
 class PhotoCount(Range):
     """How many Photograph traps are placed in the item pool."""
@@ -394,21 +398,26 @@ class PhotoCount(Range):
     range_end = 32
     default = 20
 
+
 class EasyCombat(Toggle):
     """Automatically halves all scaled enemy levels."""
     display_name = "Easy Combat"
+
 
 class EnemizerStats(Toggle):
     """Randomizes base stats and level of non-boss enemies."""
     display_name = "Randomize Enemy Stats"
 
+
 class EnemizerAttacks(Toggle):
     """Randomizes attacks of non-boss enemies."""
     display_name = "Randomize Enemy Attacks"
 
+
 class EnemizerAttributes(Toggle):
     """Randomizes most attributes of non-boss enemies."""
     display_name = "Randomize Enemy Attributes"
+
 
 class RandomMapColors(Choice):
     """Randomizes map colors.

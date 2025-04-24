@@ -20,7 +20,7 @@ from .modules.palette_shuffle import randomize_psi_palettes, map_palette_shuffle
 from .modules.shopsanity import write_shop_checks
 from .modules.enemy_shuffler import apply_enemy_shuffle
 from .modules.dungeon_er import write_dungeon_entrances
-from .modules.foodamizer import randomize_food
+# from .modules.foodamizer import randomize_food
 from .modules.enemizer.randomize_enemy_attributes import randomize_enemy_attributes
 from .modules.enemizer.randomize_enemy_stats import randomize_enemy_stats
 from .modules.enemizer.randomize_enemy_attacks import randomize_enemy_attacks
@@ -81,7 +81,7 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, player: int):
-    rom.copy_bytes(0x1578DD, 0x3E, 0x34A060) # Threed/Saturn teleport move
+    rom.copy_bytes(0x1578DD, 0x3E, 0x34A060)  # Threed/Saturn teleport move
     rom.copy_bytes(0x15791B, 0xF8, 0x157959)
 
     rom.copy_bytes(0x34A000, 0x1F, 0x1578DD)
@@ -529,7 +529,7 @@ def patch_rom(world, rom, player: int):
     rom.write_bytes(0x16FB68, struct.pack("H", starting_inv_amounts[world.starting_character]))
     
     for item in world.multiworld.precollected_items[player]:
-        if item.name == world.starting_character: # Write the starting character
+        if item.name == world.starting_character:  # Write the starting character
             rom.write_bytes(0x00B672, bytearray([world.options.starting_character.value + 1]))
 
         if world.options.remote_items:

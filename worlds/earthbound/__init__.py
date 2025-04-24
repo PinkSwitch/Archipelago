@@ -200,7 +200,6 @@ class EarthBoundWorld(World):
         for world in multiworld.get_game_worlds("EarthBound"):
             world.get_all_spheres.set()
 
-
     def generate_output(self, output_directory: str) -> None:
         try:
             patch = EBProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])

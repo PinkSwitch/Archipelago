@@ -546,7 +546,8 @@ def setup_gamevars(world):
     world.lumine_text.extend([0x00])
     world.starting_money = struct.pack('<I', world.options.starting_money.value)
 
-    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))  # todo; move to text converter
+    # todo; move to text converter
+    prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
     for char in prayer_player[:24]:
         if char in eb_text_table:
             world.prayer_player.extend(eb_text_table[char])
@@ -582,16 +583,20 @@ def place_static_items(world):
     if world.options.giygas_required == 1:
         world.get_location("Giygas").place_locked_item(world.create_item("Saved Earth"))  # Normal final boss
         if world.options.magicant_mode == 1:
-            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))  # If required magicant
+            # If required magicant
+            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Power of the Earth"))
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
-            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))  # If not required, place this condition on sanctuary goal
+            # If not required, place this condition on sanctuary goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Power of the Earth"))
     else:
         if world.options.magicant_mode == 1:
-            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))  # If Magicant required but not Giygas, place goal
+            # If Magicant required but not Giygas, place goal
+            world.get_location("Magicant - Ness's Nightmare").place_locked_item(world.create_item("Saved Earth"))
             world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Magicant Unlock"))
         else:
-            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))  # If neither final boss, place goal
+            # If neither final boss, place goal
+            world.get_location("Sanctuary Goal").place_locked_item(world.create_item("Saved Earth"))
 
     if world.options.alternate_sanctuary_goal:
         world.get_location("+2 Sanctuaries").place_locked_item(world.create_item("Alternate Goal"))
