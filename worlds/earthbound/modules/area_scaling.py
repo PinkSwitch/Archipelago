@@ -156,43 +156,43 @@ def calculate_scaling(world) -> None:
                         "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village",
                         "Lost Underworld", "Magicant"],
         "Northern Onett": ["Onett"],
-        "Onett": ["Northern Onett", "Twoson", giant_step, arcade],
+        "Onett": ["Northern Onett", "Twoson", giant_step, arcade, "Global ATM Access"],
         arcade: [arcade],
         "Giant Step": ["Giant Step"],
-        "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop"],
+        "Twoson": ["Onett", "Peaceful Rest Valley", "Threed", "Everdred's House", "Common Condiment Shop", "Global ATM Access"],
         "Everdred's House": ["Everdred's House"],
         "Peaceful Rest Valley": ["Twoson", "Happy-Happy Village"],
-        "Happy-Happy Village": ["Peaceful Rest Valley", lilliput_steps, happy_happy_hq],
+        "Happy-Happy Village": ["Peaceful Rest Valley", lilliput_steps, happy_happy_hq, "Global ATM Access"],
         "Happy-Happy HQ": ["Happy-Happy HQ"],
         "Lilliput Steps": ["Lilliput Steps"],
-        "Threed": ["Twoson", "Dusty Dunes Desert", "Andonuts Lab Area", "Threed Underground", "Boogey Tent", "Winters"],
+        "Threed": ["Twoson", "Dusty Dunes Desert", "Andonuts Lab Area", "Threed Underground", "Boogey Tent", "Winters", "Global ATM Access"],
         "Boogey Tent": ["Boogey Tent"],
         "Threed Underground": ["Grapefruit Falls"],
         "Grapefruit Falls": [belch_factory, "Saturn Valley", "Threed Underground"],
-        "Saturn Valley": ["Grapefruit Falls", "Cave of the Present"],
+        "Saturn Valley": ["Grapefruit Falls", "Cave of the Present", "Global ATM Access"],
         belch_factory: ["Upper Saturn Valley"],
         "Upper Saturn Valley": ["Saturn Valley", world.dungeon_connections["Milky Well"]],
         "Milky Well": ["Milky Well"],
-        "Dusty Dunes Desert": ["Threed", "Monkey Caves", gold_mine, "Fourside"],
+        "Dusty Dunes Desert": ["Threed", "Monkey Caves", gold_mine, "Fourside", "Global ATM Access"],
         "Monkey Caves": ["Monkey Caves"],
         "Gold Mine": ["Gold Mine"],
-        "Fourside": ["Dusty Dunes Desert", monotoli_building, magnet_hill, "Threed", "Fourside Dept. Store", moonside],
-        "Moonside": ["Moonside"],
+        "Fourside": ["Dusty Dunes Desert", monotoli_building, magnet_hill, "Threed", "Fourside Dept. Store", moonside, "Global ATM Access"],
+        "Moonside": ["Moonside", "Global ATM Access"],
         "Monotoli Building": ["Monotoli Building"],
         "Fourside Dept. Store": ["Fourside Dept. Store"],
         "Magnet Hill": ["Magnet Hill"],
-        "Winters": ["Snow Wood Boarding School", "Southern Winters"],
+        "Winters": ["Snow Wood Boarding School", "Southern Winters", "Global ATM Access"],
         "Snow Wood Boarding School": ["Snow Wood Boarding School"],
         "Southern Winters": [brickroad_maze],
         brickroad_maze: [rainy_circle, "Southern Winters"],
         "Stonehenge Base": ["Stonehenge Base"],
         rainy_circle: [brickroad_maze, "Andonuts Lab Area"],
         "Andonuts Lab Area": [rainy_circle, "Winters", stonehenge_base],
-        "Summers": ["Scaraba", "Summers Museum"],
+        "Summers": ["Scaraba", "Summers Museum", "Global ATM Access"],
         "Summers Museum": ["Summers Museum"],
         "Dalaam": [pink_cloud],
         "Pink Cloud": ["Pink Cloud"],
-        "Scaraba": [pyramid, "Common Condiment Shop"],
+        "Scaraba": [pyramid, "Common Condiment Shop", "Global ATM Access"],
         pyramid: ["Southern Scaraba"],
         "Southern Scaraba": [dungeon_man],
         "Dungeon Man": ["Deep Darkness"],
@@ -202,7 +202,7 @@ def calculate_scaling(world) -> None:
         "Lumine Hall": ["Lost Underworld"],
         "Lost Underworld": [fire_spring],
         "Fire Spring": ["Fire Spring"],
-        "Magicant": [sea_of_eden],
+        "Magicant": [sea_of_eden, "Global ATM Access"],
         "Sea of Eden": ["Sea of Eden"],
         "Cave of the Present": ["Cave of the Past"],
         "Cave of the Past": ["Endgame"],
@@ -234,7 +234,8 @@ def calculate_scaling(world) -> None:
             {"Northern Onett": [["Police Badge"]],
              "Twoson": [["Police Badge"]],
              giant_step: [["Key to the Shack"]],
-             arcade: [["Nothing"]]},
+             arcade: [["Nothing"]],
+             "Global ATM Access": [["Nothing"]]},
         
         arcade: {arcade: [["Nothing"]]},
         "Giant Step": {"Giant Step": [["Nothing"]]},
@@ -243,7 +244,8 @@ def calculate_scaling(world) -> None:
                    "Peaceful Rest Valley": [["Pencil Eraser"], ["Valley Bridge Repair"]],
                    "Threed": [["Wad of Bills"], ["Threed Tunnels Clear"]],
                    "Everdred's House": [["Paula"]],
-                   "Common Condiment Shop": [["Nothing"]]},
+                   "Common Condiment Shop": [["Nothing"]],
+                   "Global ATM Access": [["Nothing"]]},
 
         "Everdred's House": {"Everdred's House": [["Nothing"]]},
 
@@ -252,7 +254,8 @@ def calculate_scaling(world) -> None:
 
         "Happy-Happy Village": {"Peaceful Rest Valley": [["Nothing"]],
                                 lilliput_steps: [["Nothing"]],
-                                happy_happy_hq: [["Nothing"]]},
+                                happy_happy_hq: [["Nothing"]],
+                                "Global ATM Access": [["Nothing"]]},
 
         "Happy-Happy HQ": {"Happy-Happy HQ": [["Nothing"]]},
 
@@ -263,7 +266,8 @@ def calculate_scaling(world) -> None:
                    "Andonuts Lab Area": [["UFO Engine", "Bad Key Machine"]],
                    "Threed Underground": [["Zombie Paper"]],
                    "Boogey Tent": [["Jeff"]],
-                   "Winters": [["UFO Engine", "Bad Key Machine"]]},
+                   "Winters": [["UFO Engine", "Bad Key Machine"]],
+                   "Global ATM Access": [["Nothing"]]},
 
         "Boogey Tent": {"Boogey Tent": [["Nothing"]]},
 
@@ -274,7 +278,8 @@ def calculate_scaling(world) -> None:
                              "Threed Underground": [["Nothing"]]},
 
         "Saturn Valley": {"Grapefruit Falls": [["Nothing"]],
-                          "Cave of the Present": [["Meteorite Piece"]]},
+                          "Cave of the Present": [["Meteorite Piece"]],
+                          "Global ATM Access": [["Nothing"]]},
 
         belch_factory: {"Upper Saturn Valley": [["Threed Tunnels Clear"]]},
 
@@ -286,7 +291,8 @@ def calculate_scaling(world) -> None:
         "Dusty Dunes Desert": {"Threed": [["Threed Tunnels Clear"]],
                                "Monkey Caves": [["King Banana"]],
                                gold_mine: [["Mining Permit"]],
-                               "Fourside": [["Nothing"]]},
+                               "Fourside": [["Nothing"]],
+                               "Global ATM Access": [["Nothing"]]},
 
         "Monkey Caves": {"Monkey Caves": [["Nothing"]]},
 
@@ -297,18 +303,21 @@ def calculate_scaling(world) -> None:
                      "Threed": [["Diamond"]],
                      magnet_hill: [["Signed Banana"]],
                      "Fourside Dept. Store": [["Jeff"]],
-                     moonside: [["Nothing"]]},
+                     moonside: [["Nothing"]],
+                     "Global ATM Access": [["Nothing"]]},
 
         "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
 
-        "Moonside": {"Moonside": [["Nothing"]]},
+        "Moonside": {"Moonside": [["Nothing"]],
+        "Global ATM Access": [["Nothing"]]},
 
         "Fourside Dept. Store": {"Fourside Dept. Store": [["Nothing"]]},
 
         "Magnet Hill": {"Magnet Hill": [["Nothing"]]},
 
         "Winters": {"Snow Wood Boarding School": [["Letter For Tony"]],
-                    "Southern Winters": [["Pak of Bubble Gum"]]},
+                    "Southern Winters": [["Pak of Bubble Gum"]],
+                    "Global ATM Access": [["Nothing"]]},
 
         "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},
 
@@ -329,7 +338,8 @@ def calculate_scaling(world) -> None:
         "Stonehenge Base": {"Stonehenge Base": [["Nothing"]]},
 
         "Summers": {"Scaraba": [["Nothing"]],
-                    "Summers Museum": [["Tiny Ruby"]]},
+                    "Summers Museum": [["Tiny Ruby"]],
+                    "Global ATM Access": [["Nothing"]]},
         
         "Summers Museum": {"Summers Museum": [["Nothing"]]},
 
@@ -338,7 +348,8 @@ def calculate_scaling(world) -> None:
         "Pink Cloud": {"Pink Cloud": [["Nothing"]]},
 
         "Scaraba": {pyramid: [["Hieroglyph Copy"]],
-                    "Common Condiment Shop": [["Nothing"]]},
+                    "Common Condiment Shop": [["Nothing"]],
+                    "Global ATM Access": [["Nothing"]]},
 
         pyramid: {"Southern Scaraba": [["Nothing"]]},
         
@@ -360,7 +371,8 @@ def calculate_scaling(world) -> None:
 
         "Fire Spring": {"Fire Spring": [["Nothing"]]},
 
-        "Magicant": {sea_of_eden: [["Ness"]]},
+        "Magicant": {sea_of_eden: [["Ness"]],
+        "Global ATM Access": [["Nothing"]]},
 
         "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
 

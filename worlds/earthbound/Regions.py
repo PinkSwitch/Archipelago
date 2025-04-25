@@ -167,6 +167,8 @@ def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
                                                             "Threed": lambda state: state.has("Diamond", player),
                                                             "Fourside Dept. Store": lambda state: state.has("Jeff", player)})
 
+    multiworld.get_region("Moonside", player).add_exits(["Global ATM Access"])
+
     multiworld.get_region("Summers", player).add_exits(["Scaraba", "Summers Museum", "Global ATM Access"],
         {"Summers Museum": lambda state: state.has("Tiny Ruby", player)})
 
