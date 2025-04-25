@@ -16,7 +16,6 @@ battle_actions = {
     "Steal": 0x42,
     "Freeze in Time": 0x43,
     "diamond_eyes": 0x44,
-    "Electric Field": 0x45,
     "Strange Beam": 0x46,
     "nauseous_breath": 0x47,
     "poison_stinger": 0x48,

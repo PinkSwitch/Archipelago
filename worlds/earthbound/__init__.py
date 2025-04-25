@@ -314,6 +314,10 @@ class EarthBoundWorld(World):
                 spoiler_handle.write(
                     f" {dungeon} => {self.dungeon_connections[dungeon]}\n"
                 )
+        
+        spoiler_handle.write("\nArea Levels:\n")
+        for area in self.area_levels:
+            spoiler_handle.write(f" {area}: Level {self.area_levels[area]}\n")
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

@@ -73,10 +73,6 @@ In order for players to be eligible, they have to have gifting enabled. Your gif
 In most major towns, you can find a helpful Hint Man who will give hints about your game... for a price.
 The location of the Hint Man will be marked on your map, viewable at all times with X.
 
-## My game suddenly went to an anti-piracy screen! ##
-Do not fear, this is just a crash handler implemented as part of the Archipelago randomizer, in case anything goes terribly wrong.
-If you get this screen, please report it as a bug with as much detail and replciability of the situation as possible.
-
 ## Repel Sandwiches? ##
 Skip Sandwiches (And Skip Sandwich DXs) have been replaced with an item called the Repel Sandwich (and Repel Superwich).
 Repel Sandwiches will prevent normal enemies from spawning for a short time. The help text can tell you more.

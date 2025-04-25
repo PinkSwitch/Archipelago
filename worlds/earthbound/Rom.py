@@ -552,7 +552,7 @@ def patch_rom(world, rom, player: int):
                 world.start_prog_counts[old_item_name] += 1
 
         if item.name in item_id_table:
-            rom.write_bytes(0x17FC70 + starting_item_address, bytearray([item_id_table[item.name]]))
+            rom.write_bytes(0x380000 + starting_item_address, bytearray([item_id_table[item.name]]))
             starting_item_address += 1
         elif item.name in psi_item_table:
             if item.name != "Progressive Poo PSI":

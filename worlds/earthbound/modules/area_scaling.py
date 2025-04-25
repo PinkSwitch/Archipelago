@@ -307,7 +307,7 @@ def calculate_scaling(world) -> None:
 
         "Magnet Hill": {"Magnet Hill": [["Nothing"]]},
 
-        "Winters": {"Snow Wood Boarding School": [["Letter for Tony"]],
+        "Winters": {"Snow Wood Boarding School": [["Letter For Tony"]],
                     "Southern Winters": [["Pak of Bubble Gum"]]},
 
         "Snow Wood Boarding School": {"Snow Wood Boarding School": [["Nothing"]]},

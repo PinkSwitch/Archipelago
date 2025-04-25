@@ -6,6 +6,7 @@ map_palettes = {
     "Onett": 4,
     # "Onett Nighttime": 5,
     # "Onett Flashback": 6,
+    "Twoson": 7,
 
     "Winters": 59,
     "Rainy Circle Sanctuary": 60,
@@ -38,7 +39,7 @@ nice_palettes = {
         107,
         109,
         116,
-    ]
+    ],
 }
 
 ugly_palettes = {
