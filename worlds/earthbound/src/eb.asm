@@ -12139,9 +12139,9 @@ GetStartingData:
 PHB
 LDA StartingInvetory
 TAY
-LDX #$FC70
+LDX #$5000
 LDA StartingInvAmounts
-MVN $D77E
+MVN $F77E
 PLB
 LDA #$0000
 LDX #$0000

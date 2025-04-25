@@ -511,20 +511,20 @@ def patch_rom(world, rom, player: int):
         "Ness": 0x99F3,
         "Paula": 0x9A53,
         "Jeff": 0x9AB4,
-        "Poo": 0x9B10
+        "Poo": 0x9B0F
     }
 
     starting_inv_amounts = {
         "Ness": 0x0B,
         "Paula": 0x0A,
         "Jeff": 0x08,
-        "Poo": 0x0B
+        "Poo": 0x0C
     }
 
-    if world.starting_character == "Poo" and world.multiworld.get_location(
-            "Poo - Starting Item", world.player).item.name not in item_id_table:
-        starting_inventory_pointers["Poo"] = 0x9B0F
-        starting_inv_amounts["Poo"] = 0x0C
+    location = world.multiworld.get_location("Poo - Starting Item", world.player)
+    if world.starting_character == "Poo" and location.item.name in item_id_table and location.item.player == world.player:
+        starting_inventory_pointers["Poo"] = 0x9B10
+        starting_inv_amounts["Poo"] = 0x0B
     rom.write_bytes(0x16FB66, struct.pack("H", starting_inventory_pointers[world.starting_character]))
     rom.write_bytes(0x16FB68, struct.pack("H", starting_inv_amounts[world.starting_character]))
     
@@ -552,7 +552,7 @@ def patch_rom(world, rom, player: int):
                 world.start_prog_counts[old_item_name] += 1
 
         if item.name in item_id_table:
-            rom.write_bytes(0x380000 + starting_item_address, bytearray([item_id_table[item.name]]))
+            rom.write_bytes(0x375000 + starting_item_address, bytearray([item_id_table[item.name]]))
             starting_item_address += 1
         elif item.name in psi_item_table:
             if item.name != "Progressive Poo PSI":
