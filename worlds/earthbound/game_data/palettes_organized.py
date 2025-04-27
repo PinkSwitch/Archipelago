@@ -111,12 +111,21 @@ map_palettes = {
     "Summers Hotel": 109,
     "Summers Shop": 110,
     # "Topolla Theater Stage": 111,
-
     "Snow Wood Boarding School": 112,
-    "Chaos Theater Stage": 113,
+    # "Chaos Theater Stage": 113,
     "Summers Harbor House": 114,
     "Summers Restaurant": 115,
     "Moonside Museum": 116,
+    "Stoic Club": 117,
+    "Andonuts Lab": 118,
+    "Topolla Theater": 119,
+    "Summers Museum": 120,
+
+    "Onett Arcade": 121,
+    "????": 122,
+    "Twoson Bike Shop": 123,
+    "Hint Shop": 124,
+    "Fourside Dept. Store Rooms": 125,
 
 
     "Lumine Hall": 134,
