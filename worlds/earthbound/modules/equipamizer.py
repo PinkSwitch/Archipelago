@@ -30,6 +30,7 @@ def price_weapons(world, weapons, rom):
         price = max(5, price)
         rom.write_bytes((weapon.address + 26), struct.pack("H", price))
         if weapon.double_price_item in summers_addresses:
+            price = min(0xFFFF, price * 2)
             rom.write_bytes((summers_addresses[weapon.double_price_item] + 26), struct.pack("H", price))
 
 
@@ -51,6 +52,7 @@ def price_armors(world, armor_pricing_list, rom):
         price = max(5, price)
         rom.write_bytes((armor.address + 26), struct.pack("H", price))
         if armor.double_price_item in summers_addresses:
+            price = min(0xFFFF, price * 2)
             rom.write_bytes((summers_addresses[armor.double_price_item] + 26), struct.pack("H", price))
 
 

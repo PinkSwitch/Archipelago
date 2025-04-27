@@ -94,7 +94,7 @@ battle_actions = {
     "Fly Honey": 0xBD,
     "glorious_light": 0xC9,
     "electrical_shock": 0xCA,
-    "Poison Pollen": 0xCB,
+    "paralyzing_pollen": 0xCB,
     "Icy Hand": 0xCC,
     "poison_flute": 0xCD,
     "Exhaust Fumes": 0xCE,
