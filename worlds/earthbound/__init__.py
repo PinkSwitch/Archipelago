@@ -109,6 +109,140 @@ class EarthBoundWorld(World):
         self.rare_gear = []
         self.get_all_spheres = threading.Event()
 
+        self.common_items = [
+            "Cookie",
+            "Bag of Fries",
+            "Teddy Bear",
+            "Hamburger",
+            "Boiled Egg",
+            "Fresh Egg",
+            "Picnic Lunch",
+            "Croissant",
+            "Bread Roll",
+            "Can of Fruit Juice",
+            "Royal Iced Tea",
+            "Protein Drink",
+            "Bottle of Water",
+            "Cold Remedy",
+            "Vial of Serum",
+            "Ketchup Packet",
+            "Sugar Packet",
+            "Tin of Cocoa",
+            "Carton of Cream",
+            "Sprig of Parsley",
+            "Jar of Hot Sauce",
+            "Salt Packet",
+            "Wet Towel",
+            "Refreshing Herb",
+            "Ruler",
+            "Protractor",
+            "Insecticide Spray",
+            "Rust Promoter",
+            "Stag Beetle",
+            "Toothbrush",
+            "Handbag Strap",
+            "Chick",
+            "Chicken",
+            "Trout Yogurt",
+            "Banana",
+            "Calorie Stick",
+            "Gelato de Resort",
+            "Snake",
+            "Cup of Noodles",
+            "Cup of Coffee",
+            "Double Burger",
+            "Bean Croquette",
+            "Molokheiya Soup",
+            "Plain Roll",
+            "Magic Tart",
+            "Popsicle",
+            "Bottle Rocket"
+        ]
+
+        self.common_gear = [
+            "Yo-yo",
+            "Slingshot",
+            "Travel Charm",
+            "Great Charm",
+            "Ribbon",
+            "Red Ribbon"
+        ]
+
+        self.uncommon_items = [
+            "Pasta di Summers",
+            "Pizza",
+            "Chef's Special",
+            "Super Plush Bear",
+            "PSI Caramel",
+            "Jar of Delisauce",
+            "Secret Herb",
+            "Xterminator Spray",
+            "Snake Bag",
+            "Bomb",
+            "Rust Promoter DX",
+            "Pair of Dirty Socks",
+            "Mummy Wrap",
+            "Pharaoh's Curse",
+            "Sudden Guts Pill",
+            "Picture Postcard",
+            "Viper",
+            "Repel Sandwich",
+            "Lucky Sandwich",
+            "Peanut Cheese Bar",
+            "Bowl of Rice Gruel",
+            "Kabob",
+            "Plain Yogurt",
+            "Beef Jerky",
+            "Mammoth Burger",
+            "Bottle of DXwater",
+            "Magic Pudding",
+            "Big Bottle Rocket",
+            "Bazooka"
+
+        ]
+
+        self.uncommon_gear = [
+            "Trick Yo-yo",
+            "Bionic Slingshot",
+            "Crystal Charm",
+            "Defense Ribbon",
+            "Earth Pendant",
+            "Flame Pendant",
+            "Rain Pendant",
+            "Night Pendant"
+        ]
+
+        self.rare_items = [
+            "Large Pizza",
+            "Magic Truffle",
+            "Brain Food Lunch",
+            "Rock Candy",
+            "Kraken Soup",
+            "IQ Capsule",
+            "Guts Capsule",
+            "Speed Capsule",
+            "Vital Capsule",
+            "Luck Capsule",
+            "Horn of Life",
+            "Multi Bottle Rocket",
+            "Super Bomb",
+            "Bag of Dragonite",
+            "Meteotite",
+            "Repel Superwich",
+            "Piggy Jelly",
+            "Spicy Jerky",
+            "Luxury Jerky",
+            "Cup of Lifenoodles"
+        ]
+
+        self.rare_gear = [
+            "Combat Yo-yo",
+            "Sword of Kings",
+            "Sea Pendant",
+            "Star Pendant",
+            "Goddess Ribbon"
+        ]
+
     def generate_early(self) -> None:  # Todo: place locked items in generate_early
         self.starting_character = self.options.starting_character.current_key.capitalize()
         self.locals = []
@@ -327,8 +461,8 @@ class EarthBoundWorld(World):
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
                    "common_gear": int(self.options.common_filler_weight.value * 0.5)}
-        choices = self.random.choices(list(weights), weights=list(weights.values()), k=len(self.multiworld.get_unfilled_locations(self.player)))
-        filler_type = self.random.choice(choices)
+        
+        filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
         weight_table = {
             "common": self.common_items,
             "common_gear": self.common_gear,

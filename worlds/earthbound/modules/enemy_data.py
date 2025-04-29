@@ -1257,7 +1257,8 @@ def scale_enemies(world, rom):
         for enemy in world.regional_enemies[region]:
             if enemy.is_scaled is False:
                 enemy_hp = int(enemy.hp * level / enemy.level)
-                enemy_hp = int(enemy_hp + (enemy_hp * (0.25 * (additional_party_members - 1))))
+                if not world.options.easy_combat:
+                    enemy_hp = int(enemy_hp + (enemy_hp * (0.25 * (additional_party_members - 1))))
                 enemy_pp = int(enemy.pp * level / enemy.level)
                 enemy_exp = int(scale_exp_2(enemy.exp, enemy.level, level, world))
                 enemy_money = min(65535, int((enemy.money * level / enemy.level) * world.options.money_drop_multiplier))

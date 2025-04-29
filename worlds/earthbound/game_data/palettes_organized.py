@@ -148,7 +148,7 @@ map_palettes = {
     "Rainy Circle": 146,
     "Belch's Factory": 147,
     "Milky Well Caves": 148,
-    "Lilliput Steps": 148,
+    "Lilliput Steps": 149,
     "Monkey Caves Hallway": 150,
     "Giant Step": 151,
     "Pink Cloud": 152,
@@ -296,6 +296,23 @@ nice_palettes = {
         109,
         116,
     ],
+    'Twoson': [
+        4,
+        5,
+        7,
+        9,
+        11,
+        12,
+        13,
+        14,
+        22,
+        42,
+        59,
+        62,
+        63,
+        107,
+        116,
+    ]
 }
 
 ugly_palettes = {
@@ -473,6 +490,21 @@ ugly_palettes = {
         130,
         132,
         133,
+    ],
+    'Twoson': [
+        6,
+        8,
+        10,
+        19,
+        21,
+        38,
+        47,
+        51,
+        57,
+        82,
+        91,
+        96,
+        104,
     ]
 }
 
@@ -605,5 +637,20 @@ nonsense_palettes = {
         161,
         162,
         164,
+    ],
+    'Twoson': [
+        1,
+        2,
+        26,
+        27,
+        39,
+        58,
+        68,
+        74,
+        88,
+        89,
+        90,
+        93,
+        99,
     ],
 }
