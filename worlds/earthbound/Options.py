@@ -429,7 +429,7 @@ class RandomMapColors(Choice):
     option_normal = 0
     option_nice = 1
     option_ugly = 2
-    option_nonse = 3
+    option_nonsense = 3
     default = 0
 
 
