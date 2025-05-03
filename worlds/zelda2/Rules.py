@@ -135,6 +135,8 @@ def set_region_rules(world: "Z2World") -> None:
         apply_region_rules(world, "Eastern Hyrule -> Northeastern Hyrule", lambda state: state.has_any(("Candle", "Boots"), world.player))
         apply_region_rules(world, "Southeastern Hyrule -> Great Palace", lambda state: state.has("Candle", world.player))
         apply_region_rules(world, "Western Coast -> Island Palace", lambda state: state.has("Candle", world.player))
+        apply_region_rules(world, "Death Mountain -> Western Coast", lambda state: state.has("Candle", world.player))
+        apply_region_rules(world, "Western Coast -> Death Mountain", lambda state: state.has("Candle", world.player))
         # If candle isn't required, this has no rule anyway
         if not world.options.remove_early_boulder:
             apply_region_rules(world, "Northwestern Hyrule -> Western Hyrule", lambda state: (state.has("Candle", world.player) and state.has_any(can_get_high, world.player)) or state.has("Hammer", world.player))
@@ -143,16 +145,18 @@ def set_region_rules(world: "Z2World") -> None:
     if world.options.better_boots:
         apply_region_rules(world, "Death Mountain -> Western Hyrule", lambda state: state.has_any(("Bagu's Letter", "Fairy Spell", "Boots"), world.player))
         apply_region_rules(world, "Western Hyrule -> Death Mountain", lambda state: state.has_any(("Bagu's Letter", "Fairy Spell", "Boots"), world.player))
+        apply_region_rules(world, "Western Hyrule -> Western Coast", lambda state: state.has_any(("Hammer", "Boots"), world.player))
+        apply_region_rules(world, "Western Coast -> Western Hyrule", lambda state: state.has_any(("Hammer", "Boots"), world.player))
     else:
         apply_region_rules(world, "Death Mountain -> Western Hyrule", lambda state: state.has_any(("Bagu's Letter", "Fairy Spell"), world.player))
         apply_region_rules(world, "Western Hyrule -> Death Mountain", lambda state: state.has_any(("Bagu's Letter", "Fairy Spell"), world.player))
+        apply_region_rules(world, "Western Hyrule -> Western Coast", lambda state: state.has("Hammer", world.player))
+        apply_region_rules(world, "Western Coast -> Western Hyrule", lambda state: state.has("Hammer", world.player))
 
     if world.options.cross_required:
         apply_region_rules(world, "Southeastern Hyrule -> Great Palace", lambda state: state.has("Cross", world.player))
 
-    apply_region_rules(world, "Western Hyrule -> Western Coast", lambda state: state.has("Hammer", world.player))
 
-    apply_region_rules(world, "Western Coast -> Western Hyrule", lambda state: state.has("Hammer", world.player))
     apply_region_rules(world, "Western Coast -> Island Palace", lambda state: state.has("Fairy Spell", world.player))
     apply_region_rules(world, "Western Coast -> Eastern Hyrule", lambda state: state.has("Raft", world.player))
     apply_region_rules(world, "Eastern Hyrule -> Western Coast", lambda state: state.has("Raft", world.player))
