@@ -576,6 +576,7 @@ def randomize_armor(world, rom):
             names_to_try = royal_names.copy()
         else:
             names_to_try = armor_names[armor.equip_type].copy()
+
         while pixel_length > 70:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if first_armor is False:
@@ -703,6 +704,8 @@ def randomize_weapons(world, rom):
         "Poo": ["Sword", "Katana", "Knife", "Scisscors", "Cutter", "Blade", "Chisel", "Saw", "Axe"],
         "All": ["yo-yo", "slingshot", "boomerang"]
     }
+
+    taken_names = []
 
     miss_rates = {
         "Ness": 1,
@@ -884,7 +887,7 @@ def randomize_weapons(world, rom):
             names_to_try = royal_names.copy()
         else:
             names_to_try = weapon_names[weapon.can_equip].copy()
-        while pixel_length > 70:
+        while pixel_length > 70 and weapon.name in taken_names: # TEST!!!!
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if half_space is False:
                 weapon.name = weapon.name.replace(" ", " ")
@@ -906,6 +909,7 @@ def randomize_weapons(world, rom):
 
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
+        taken_names.append(weapon.name) # TEST THIS SOMEHOW
 
     sortable_weapons = copy.deepcopy(world.weapon_list)
     sorted_weapons = sorted(sortable_weapons.values(), key=attrgetter("offense"))

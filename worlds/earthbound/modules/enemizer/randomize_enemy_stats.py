@@ -42,8 +42,8 @@ def randomize_enemy_stats(world, rom):
             world.enemies[enemy].money = stat_copies[copied_stat_base].money
             world.enemies[enemy].guts = stat_copies[copied_stat_base].guts
             world.enemies[enemy].luck = stat_copies[copied_stat_base].luck
-            rom.write_bytes(world.enemies[enemy].address + 0x3D, bytearray([guts]))
-            rom.write_bytes(world.enemies[enemy].address + 0x3E, bytearray([luck]))
+            rom.write_bytes(world.enemies[enemy].address + 0x3D, bytearray([world.enemies[enemy].guts]))
+            rom.write_bytes(world.enemies[enemy].address + 0x3E, bytearray([world.enemies[enemy].luck ]))
             if world.enemies[enemy].attack_extensions > 0:
                 world.enemies[f"{enemy} (2)"].hp = world.enemies[enemy].hp
                 world.enemies[f"{enemy} (2)"].pp = world.enemies[enemy].pp
@@ -53,6 +53,6 @@ def randomize_enemy_stats(world, rom):
                 world.enemies[f"{enemy} (2)"].level = world.enemies[enemy].level
                 world.enemies[f"{enemy} (2)"].exp = world.enemies[enemy].exp
                 world.enemies[f"{enemy} (2)"].money = world.enemies[enemy].money
-                rom.write_bytes(world.enemies[f"{enemy} (2)"].address + 0x3D, bytearray([guts]))
-                rom.write_bytes(world.enemies[f"{enemy} (2)"].address + 0x3E, bytearray([luck]))
+                rom.write_bytes(world.enemies[f"{enemy} (2)"].address + 0x3D, bytearray([world.enemies[enemy].guts ]))
+                rom.write_bytes(world.enemies[f"{enemy} (2)"].address + 0x3E, bytearray([world.enemies[enemy].luck ]))
                 
