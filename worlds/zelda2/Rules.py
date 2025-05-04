@@ -84,7 +84,7 @@ def set_location_rules(world: "Z2World") -> None:
     apply_location_rules(world, "Maze Palace: Block Mountain Left", lambda state: (state.has("Maze Palace Key", world.player, 4) or state.has("Magical Key", world.player)) and state.has("Handy Glove", world.player))
     apply_location_rules(world, "Maze Palace: Block Mountain Right", lambda state: (state.has("Maze Palace Key", world.player, 4) or state.has("Magical Key", world.player)) and state.has("Handy Glove", world.player))
     apply_location_rules(world, "Maze Palace: West Hall of Fire", lambda state: state.has("Maze Palace Key", world.player, 4) or state.has("Magical Key", world.player))
-    apply_location_rules(world, "Maze Palace: Pedestal Item", lambda state: state.has("Maze Palace Key", world.player, 5) or state.has("Magical Key", world.player))
+    apply_location_rules(world, "Maze Palace: Pedestal Item", lambda state: state.has("Maze Palace Key", world.player, 6) or state.has("Magical Key", world.player))
     apply_location_rules(world, "Maze Palace: Block Mountain Basement", lambda state: state.has("Handy Glove", world.player))
     apply_location_rules(world, "Maze Palace: Pillar Item", lambda state: (state.has("Maze Palace Key", world.player, 6) or state.has("Magical Key", world.player)) and state.has("Jump Spell", world.player))
     apply_location_rules(world, "Maze Palace: Carock Drop", lambda state: (state.has("Maze Palace Key", world.player, 6) or state.has("Magical Key", world.player)) and state.has("Reflect Spell", world.player))

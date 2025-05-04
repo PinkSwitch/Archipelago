@@ -64,6 +64,13 @@ def patch_rom(world, rom, player: int):
         rom.write_bytes(0x80D1, bytearray([tunic_color]))
         rom.write_bytes(0x80E1, bytearray([tunic_color]))
 
+        #rom.write_bytes(0x140B1, bytearray([tunic_color]))
+        rom.write_bytes(0x140C1, bytearray([tunic_color]))
+        #rom.write_bytes(0x140D1, bytearray([tunic_color]))
+        #rom.write_bytes(0x140E1, bytearray([tunic_color]))
+
+        rom.write_bytes(0x10EA, bytearray([tunic_color]))
+
     if world.options.random_palace_graphics:
         for i in range(6):
             base_color = world.random.randint(0x00, 0x0C)
@@ -74,7 +81,7 @@ def patch_rom(world, rom, player: int):
                 tertiary_color = 0x0F
             rom.write_bytes(0x10486 + (16 * i), bytearray([base_color, secondary_color]))
             rom.write_bytes(0x13F16 + (16 * i), bytearray([base_color, secondary_color]))
-            rom.write_bytes(0x13F05 + (16 * i), bytearray([tertiary_color]))
+            rom.write_bytes(0x13F15 + (16 * i), bytearray([tertiary_color]))
             rom.write_bytes(0x13F19 + (16 * i), bytearray([base_color]))
 
         palace_tilesets = [0, 1, 2, 5, 6, 7, 8]
