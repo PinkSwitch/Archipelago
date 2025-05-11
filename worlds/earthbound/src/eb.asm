@@ -50,7 +50,7 @@ db $00, $0A, $00, $61
 
 ORG $C4FD50
 NewSectorPointers:
-dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0,$FEEA,$FF00
+dw $FD80,$FD8E,$FD94,$FD9E,$FDA8,$FDC2,$FDD0,$FE74,$FE80,$FEE0,$FEEA,$FF00, $FF0A
 
 ORG $D5F880
 SpecialNameTable:
@@ -2001,7 +2001,7 @@ db $91, $91, $91, $91, $91, $a2, $a2, $a2, $a2, $97, $98, $51, $51, $03, $18, $0
 db $10, $30, $08, $40, $92, $fe, $00, $0a, $50, $2d, $c8; Dept store spook
 
 ORG $CFC51C
-db $C7
+db $91, $00, $02
 
 ORG $C86DFE
 db $14, $6E, $C8
@@ -6093,7 +6093,7 @@ ORG $C6DB04
 db $49
 
 ORG $C7C0CD
-db $D6, $C0; Fix rainy circle playing twice
+dd EndScript; Fix rainy circle playing twice
 
 ORG $C9D95E
 db $01, $01, $01
@@ -9003,6 +9003,35 @@ dl DenyHintsNoMoney
 
 ORG $CFA96E
 dd fixed_skyrunner_redirect
+
+ORG $C7C4D6
+dd EndScript
+
+ORG $C7C188
+dd EndScript
+
+ORG $C7C324
+dd EndScript
+
+ORG $CFC517
+dw $010D
+
+ORG $CF7E97
+db $B0, $90
+
+ORG $C4FF0A
+db $06, $00, $4f, $05, $40, $60, $50, $05, $60, $78, $53, $05, $68, $28, $51, $05
+db $68, $a0, $52, $05, $78, $60, $81, $03, $32, $74
+
+ORG $CF66D9
+dw $000D
+
+ORG $CFC51A
+dw $0284
+
+ORG $C37698
+db $03
+dd DisableCollAndAnim
 
 
 
@@ -17978,6 +18007,14 @@ db $1C, $02, $00
 db $0A
 dl LavaPantsUseTxt_DoorPantsTex
 
+EndScript:
+db $02
+
+DisableCollAndAnim:
+db $42
+dl $C0A82F
+db $03
+dl $C3A09F
 
 ;ORG $C62B87
 ;db $0a, $28, $ca, $ee ; Test, delete later

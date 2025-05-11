@@ -267,7 +267,7 @@ def initialize_enemies(world):
         "Criminal Caterpillar": 0x01A1,
         "Evil Eye": 0x0132,
         "Master Criminal Worm": 0x01CD,
-        "Loaded Dice (2)": 0x00C3,
+        "Loaded Dice 2": 0x00C3,
 }
 
     world.enemies = {
@@ -452,7 +452,7 @@ def initialize_enemies(world):
         "Trillionage Sprout (2)": EarthBoundEnemy("Trillionage Sprout (2)", 0x15dbab, 1048, 240, 30303, 1358, 16, 54, 88, 29, False),
         "Master Belch (2)": EarthBoundEnemy("Master Belch (2)", 0x15dc09, 650, 0, 12509, 664, 16, 50, 88, 27, False),
         "Master Barf (2)": EarthBoundEnemy("Master Barf (2)", 0x15dcc5, 1319, 0, 125056, 3536, 24, 136, 177, 60, False),
-        "Loaded Dice (2)": EarthBoundEnemy("Loaded Dice (2)", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
+        "Loaded Dice 2": EarthBoundEnemy("Loaded Dice 2", 0x15dd23, 307, 0, 10672, 703, 77, 146, 113, 59, False),
         "Boogey Tent (2)": EarthBoundEnemy("Boogey Tent (2)", 0x15dddf, 579, 56, 5500, 407, 10, 43, 69, 25, False),
         "Everdred (2)": EarthBoundEnemy("Everdred (2)", 0x15de9b, 182, 0, 986, 171, 6, 25, 35, 15, False),
         "Electro Specter (2)": EarthBoundEnemy("Electro Specter (2)", 0x15def9, 3092, 80, 261637, 6564, 29, 148, 203, 67, False),
@@ -498,7 +498,7 @@ def initialize_enemies(world):
         "Carbon Dog": world.enemies[world.boss_list[27]],  # This should be the enemy that gets shuffled WITH carbon dog, right? Fix???
         "Skate Punk": [shuffled_enemies["Pogo Punk"], shuffled_enemies["Yes Man Junior"]],
         "Loaded Dice": [shuffled_enemies["Care Free Bomb"], shuffled_enemies["Beautiful UFO"], shuffled_enemies["High-class UFO"]],
-        "Loaded Dice (2)": [shuffled_enemies["Electro Swoosh"], shuffled_enemies["Fobby"], shuffled_enemies["Uncontrollable Sphere"]]
+        "Loaded Dice 2": [shuffled_enemies["Electro Swoosh"], shuffled_enemies["Fobby"], shuffled_enemies["Uncontrollable Sphere"]]
     }
 
     world.regional_enemies = {"Northern Onett": {shuffled_enemies["Spiteful Crow"], shuffled_enemies["Runaway Dog"], shuffled_enemies["Coil Snake"]},
@@ -550,7 +550,7 @@ def initialize_enemies(world):
                               "Lumine Hall": {shuffled_enemies["Conducting Spirit"], shuffled_enemies["Fobby"], shuffled_enemies["Hyper Spinning Robo"], shuffled_enemies["Uncontrollable Sphere"], world.enemies[world.boss_list[22]]},
                               "Lost Underworld": {shuffled_enemies["Chomposaur"], shuffled_enemies["Ego Orb"], shuffled_enemies["Wetnosaur"]},
                               "Fire Spring": {shuffled_enemies["Evil Elemental"], shuffled_enemies["Major Psychic Psycho"], shuffled_enemies["Psychic Psycho"], shuffled_enemies["Soul Consuming Flame"], world.enemies[world.boss_list[23]]},
-                              "Magicant": {shuffled_enemies["Care Free Bomb"], shuffled_enemies["Electro Swoosh"], shuffled_enemies["French Kiss of Death"], shuffled_enemies["Loaded Dice"], shuffled_enemies["Mr. Molecule"], shuffled_enemies["Loaded Dice (2)"]},
+                              "Magicant": {shuffled_enemies["Care Free Bomb"], shuffled_enemies["Electro Swoosh"], shuffled_enemies["French Kiss of Death"], shuffled_enemies["Loaded Dice"], shuffled_enemies["Mr. Molecule"], shuffled_enemies["Loaded Dice 2"]},
                               "Sea of Eden": {world.enemies[world.boss_list[18]], world.enemies[world.boss_list[24]]},
                               "Cave of the Past": {shuffled_enemies["Bionic Kraken"], shuffled_enemies["Final Starman"], shuffled_enemies["Ghost of Starman"], shuffled_enemies["Nuclear Reactor Robot"], shuffled_enemies["Squatter Demon"],
                                                    shuffled_enemies["Ultimate Octobot"], shuffled_enemies["Wild 'n Wooly Shambler"]},
@@ -569,7 +569,7 @@ def initialize_enemies(world):
 
             if enemy.name in flunkies:
                 # Can I just always update instead of doing an add? Would probably need to make singulars a list of one item...
-                if enemy.name in ["Starman Deluxe", "Skate Punk", "Loaded Dice", "Loaded Dice (2)"]:
+                if enemy.name in ["Starman Deluxe", "Skate Punk", "Loaded Dice", "Loaded Dice 2"]:
                     updated_list.update(flunkies[enemy.name])
                 else:
                     updated_list.add(flunkies[enemy.name])
