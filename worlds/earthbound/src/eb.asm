@@ -3013,6 +3013,21 @@ db $00, $00, $00, $00, $00, $00, $00, $00, $00, $de, $00, $a0, $00, $e3, $04, $F
 db $7d, $91, $97, $99, $93, $91, $9e, $a4, $00, $00, $00, $00, $00, $00, $00, $00
 db $00, $00, $00, $00, $00, $00, $00, $00, $00, $df, $00, $f2, $02, $28, $02, $FF; Magicant Teleport
 
+ORG $F4B000
+ShopItemNamesDeluxe:
+.10:
+db $54, $61, $60, $00
+.100:
+db $54, $61, $60, $60, $00
+.1000:
+db $54, $61, $60, $60, $60, $00
+
+.MoneyNames:
+dw $0000
+dw .10
+dw .100
+dw .1000
+
 
 
 ORG $00F8D0
@@ -9042,6 +9057,12 @@ db $44
 ORG $DAB067
 db $44
 
+ORG $C14936
+JSL LeaveMoneyInMemory
+
+ORG $C17F21
+JML CheckExtraAddCommands
+
 
 
 ;New data table go here
@@ -11149,7 +11170,11 @@ LDA $F40003,X
 AND #$00FF
 STA $3274
 CMP #$0004
-BCS .GrabOffWorldItemName
+BEQ .GrabOffWorldItemName
+CMP #$0005
+BEQ .GrabOffWorldItemName
+CMP #$0006
+BEQ .GrabOffWorldItemName
 LDA $F40004,X
 STA $0734
 LDA $F40000,X
@@ -11227,6 +11252,9 @@ CMP #$0005
 BEQ .GetArchipelagoName
 CMP #$0006
 BEQ .GetPhotoName
+CMP #$0007
+BEQ .GetMoneyName
+
 .NormalItemName:
 PLA
 ADC $06
@@ -11279,6 +11307,18 @@ STA $0E
 LDA #$00F3
 STA $08
 JML $C19E29
+.GetMoneyName:
+PLA
+LDA $0732
+ASL
+TAX
+LDA ShopItemNamesDeluxe_MoneyNames,X
+STA $06
+STA $0E
+LDA #$00F4
+STA $08
+JML $C19E29
+
 
 CheckItemBoughtFlag:
 PHX
@@ -11420,7 +11460,7 @@ STZ $0736
 CMP #$0004
 BCC .DontDisplayPlayerName
 CMP #$0006
-BEQ .DontDisplayPlayerName
+BCS .DontDisplayPlayerName
 LDA #$0001
 STA $B573
 STA $0724
@@ -12546,6 +12586,30 @@ BRA .Loop
 .Reset:
 JML ReallyReset
 
+LeaveMoneyInMemory:
+LDA $B5EF
+BNE .KeepInMem
+JML $C22214
+.KeepInMem:
+STZ $B5EF
+LDA $06
+STA $97D0
+JML $C22214
+
+
+CheckExtraAddCommands:
+CMP #$0001
+BNE .NotOne
+JML $C18012
+.NotOne:
+CMP #$0025
+BEQ .SaveMoney
+JML $C17F29
+.SaveMoney:
+INC $B5EF
+JML $C1803C
+
+
 
 ;new code go here
 
@@ -12634,7 +12698,7 @@ ORG $C5E0F2
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-;db $05, $00, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
+db $05, $00, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
 ;db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
 ;db $96, $00, $00, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
@@ -12733,6 +12797,11 @@ dl .CheckSaturnText
 .NonSaturnTetx:
 db $83, $9f, $5c, $10, $02, $50, $a9, $9f, $a5, $50, $a7, $91, $9e, $a4, $50
 .BackSaturnText:
+db $1B, $06
+db $0B, $07
+db $1B, $03
+dd .Money
+
 db $1B, $06
 db $09, $05
 dd .Teleport
@@ -12877,6 +12946,23 @@ db $6F, $02
 
 .Photo:
 db $02
+
+.Money:
+db $1B, $01
+db $1B, $04
+db $09, $03
+dd ..10
+dd ..100
+dd ..1000
+db $02
+
+..10:
+db $54, $61, $60, $6F, $02
+..100:
+db $54, $61, $60, $60, $6F, $02
+..1000:
+db $54, $61, $60, $60, $60, $6F, $02
+
 
 .TeleportActiveSaturn:
 db $97, $9F, $50, $A4, $9F, $50
@@ -13105,12 +13191,14 @@ dl $C5E0DE
 .BoughtSpecialItemGiveToPlayer:
 db $1C, $20, $01
 db $04, $91, $02
-db $09, $05
+db $09, $07
 dd ..Teleport
 dd ..Character
 dd ..Error
 dd ..OffWorld
 dd ..RemoteLocal
+dd ..Error
+dd ..Money
 
 
 
@@ -13140,6 +13228,32 @@ dd UnderworldTeleTex+$1
 dd MagicantTeleTex+$1
 dd PooPsiTex+$1
 db $02
+
+..Money:
+db $10, $10
+db $1B, $01
+db $1B, $04
+db $09, $03
+dd ...10
+dd ...100
+dd ...1000
+db $02
+...10:
+db $1D, $25, $0A, $00
+db $08
+dd DisplayAndGetMoney
+db $02
+
+...100:
+db $1D, $25, $64, $00
+db $08
+dd DisplayAndGetMoney
+db $02
+
+...1000:
+db $1D, $25, $E8, $03
+db $08
+dd DisplayAndGetMoney
 
 ..Character:
 db $1B, $01
@@ -18025,6 +18139,9 @@ dl $C0A82F
 db $03
 dl $C3A09F
 
+;ORG $C7617D
+;dd DisplayAndGetMoney
+
 ;ORG $C62B87
 ;db $0a, $28, $ca, $ee ; Test, delete later
 
@@ -18426,6 +18543,35 @@ incbin CrashFont.bin
 ORG $F89200
 incbin crashscreen.bin
 
+ORG $F3F000
+DisplayAndGetMoney:
+db $1F, $02, $74
+db $18, $0A
+db $18, $03, $01
+db $10, $3C
+db $19, $10, $01
+db $1B, $04
+db $70, $58, $1C, $02, $00, $50, $97, $9F, $A4, $50, $54, $1B, $06
+db $1C, $0A, $00, $00, $00, $00
+db $5E, $59
+db $02
+
+DisplayAndGetMoneyPSI:
+db $18, $0A
+db $18, $03, $01
+db $19, $10, $01
+db $1B, $04
+db $70, $58, $1C, $02, $00, $50, $97, $9F, $A4, $50, $54, $1B, $06
+db $1C, $0A, $00, $00, $00, $00
+db $5E, $59
+db $1F, $02, $74
+db $10, $3C
+db $02
+
+ORG $EEAA08
+dd DisplayAndGetMoneyPSI
+
+
 
 ;todo, PSI rockin?
 
@@ -18460,3 +18606,24 @@ incbin crashscreen.bin
 ;B580 reserved for new names?
 ;;;;;;;;;;;;;;;;;;
 
+
+
+;ORG $C07482
+;JSL FixTentBug
+
+;ORG $FFFBE0
+;FixTentBug:
+;CMP #$0400
+;BCS .Bail
+;CPX #$0500
+;BCS .Bail
+;STY $10
+;STA $0E
+;RTL
+;.Bail:
+;SEP #$20
+;PLA
+;PLX
+;LDA #$FF
+;PLD
+;RTL

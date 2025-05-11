@@ -287,15 +287,19 @@ def patch_rom(world, rom, player: int):
                         rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, (special_name_table[item][0] + 1)]))
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
                     elif item in money_item_table:
-                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x1D, 0x08]))
+                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x1D, 0x25]))
                         rom.write_bytes(npc_locations[name][i] - 3, struct.pack("H", money_item_table[item]))
-                        # rom.write_bytes(npc_locations[name][i] + 2, bytearray([0x??, 0x??, 0x??]))
+                        rom.write_bytes(npc_locations[name][i] + 2, bytearray([0x00, 0xF0, 0xF3]))
 
             if name in psi_locations:
                 world.handled_locations.append(name)
                 if item in special_name_table and location.item.player == location.player and item != "Remote Item":
                     rom.write_bytes(psi_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder="little"))
                     rom.write_bytes(psi_locations[name][0] + 4, bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
+                elif item in money_item_table and location.item.player == location.player:
+                    rom.write_bytes(psi_locations[name][0] -1, bytearray([0x1D, 0x08]))
+                    rom.write_bytes(psi_locations[name][0] +1, struct.pack("H", money_item_table[item]))
+                    rom.write_bytes(psi_locations[name][0] +3, bytearray([0x08, 0x25, 0xF0, 0xF3, 0x00]))
                 else:
                     rom.write_bytes(psi_locations[name][0], bytearray(psi_locations[name][1:4]))
                     rom.write_bytes(psi_locations[name][4], bytearray([item_id]))
@@ -548,6 +552,8 @@ def patch_rom(world, rom, player: int):
 
         if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table and item.player == world.player:
             world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)
+        elif item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in money_item_table:
+            world.starting_money += money_item_table[item.name]
 
         # if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name == "Photograph":
             # rom.write_bytes(0x17FEA9, bytearray([0x01]))
@@ -578,6 +584,8 @@ def patch_rom(world, rom, player: int):
                 rom.write_bytes(0x17FC8D + starting_char, bytearray([party_id_nums[item.name]]))
                 starting_character_count.append(item.name)
                 starting_char += 1
+        elif item.name in money_item_table:
+            world.starting_money += money_item_table[item.name]
 
     if world.options.random_battle_backgrounds:
         bpp2_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 2]
@@ -668,6 +676,9 @@ def patch_rom(world, rom, player: int):
     world.badge_name = badge_names[world.franklin_protection]
     world.badge_name = text_encoder(world.badge_name, 23)
     world.badge_name.extend([0x00])
+    world.starting_money = min(world.starting_money, 99999)
+    world.starting_money = struct.pack('<I', world.starting_money)
+
     rom.write_bytes(0x17FCD0, world.starting_money)
     rom.write_bytes(0x17FCE0, world.prayer_player)
     rom.write_bytes(0x17FD00, world.credits_player)

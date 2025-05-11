@@ -410,7 +410,7 @@ def setup_gamevars(world):
     for char in lumine_str[:213]:
         world.lumine_text.extend(eb_text_table[char])
     world.lumine_text.extend([0x00])
-    world.starting_money = struct.pack('<I', world.options.starting_money.value)
+    world.starting_money = world.options.starting_money.value
 
     # todo; move to text converter
     prayer_player = world.multiworld.get_player_name(world.random.randint(1, world.multiworld.players))
