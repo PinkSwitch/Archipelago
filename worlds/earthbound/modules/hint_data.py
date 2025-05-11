@@ -300,10 +300,10 @@ def parse_hint_data(world, location, rom, hint, index):
                 if location.parent_region.name == "Menu":
                     area = ""
                 else:
-                    area = f"near {location.parent_region.name}"
+                    area = f" near {location.parent_region.name}"
             else:
-                area = f"near {world.random.choice(possible_location_groups)}"
-            location_text = text_encoder(f"@somewhere {area}.", 255)
+                area = f" near {world.random.choice(possible_location_groups)}"
+            location_text = text_encoder(f"@somewhere{area}.", 255)
             # your [item] can be found by [player] somewhere near [location group]
         text = item_text + player_text + location_text
         text.append(0x02)

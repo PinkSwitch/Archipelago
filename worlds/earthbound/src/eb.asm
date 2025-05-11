@@ -9033,6 +9033,15 @@ ORG $C37698
 db $03
 dd DisableCollAndAnim
 
+ORG $DA82A7
+db $44
+
+ORG $DAB4E7
+db $44
+
+ORG $DAB067
+db $44
+
 
 
 ;New data table go here
@@ -10567,7 +10576,7 @@ STA $97D0
 .ResetText:
 STZ $B5E9
 LDA $B622
-AND #$00FB
+AND #$FFFB
 STA $B622
 LDA $97D0
 STA $B5E7
