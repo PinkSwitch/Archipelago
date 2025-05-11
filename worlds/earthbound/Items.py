@@ -311,6 +311,10 @@ item_table: Dict[str, ItemData] = {
     "Ness": ItemData("Characters", 0xEB0112, ItemClassification.progression),
     "Photograph": ItemData("Photos", 0xEB0113, ItemClassification.trap, 0),
 
+    "$10": ItemData("Money", 0xEB0114, ItemClassification.filler, 0),
+    "$100": ItemData("Money", 0xEB0115, ItemClassification.filler, 0),
+    "$1000": ItemData("Money", 0xEB0116, ItemClassification.useful, 0),
+
     'Threed Tunnels Clear': ItemData('Events', None, ItemClassification.progression, 0),
     'Submarine to Deep Darkness': ItemData('Events', None, ItemClassification.progression, 0),
     'Melody': ItemData('Events', None, ItemClassification.progression, 0),

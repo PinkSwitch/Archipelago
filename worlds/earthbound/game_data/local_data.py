@@ -1390,6 +1390,12 @@ hint_bits = [
     0x80
 ]
 
+money_item_table = {
+    "$10": 10,
+    "$100": 100,
+    "$1000": 1000
+}
+
 # 0: Action pointer, call the actual item being given
 # 1: Sprite ID
 # 2: Secondary routine pointer, used for items and psi

@@ -180,6 +180,13 @@ class RareWeight(Range):
     range_end = 100
     default = 5
 
+class MoneyWeight(Range):
+    """Weight for placing money in the item pool."""
+    display_name = "Money Weight"
+    range_start = 0
+    range_end = 100
+    default = 0
+
 
 class ExperienceModifier(Range):
     """Percentage of EXP enemies give you. 100 is vanilla, after scaling, and 300 is x3."""
@@ -479,6 +486,7 @@ class EBOptions(PerGameCommonOptions):
     common_filler_weight: CommonWeight
     uncommon_filler_weight: UncommonWeight
     rare_filler_weight: RareWeight
+    money_weight: MoneyWeight
     plando_lumine_hall_text: PlandoLumineHallText
     no_free_sanctuaries: NoFreeSancs
     randomize_overworld_music: RandomizeOverworldMusic
@@ -512,6 +520,7 @@ eb_option_groups = [
         CommonWeight,
         UncommonWeight,
         RareWeight,
+        MoneyWeight,
         PreFixItems,
         PhotoCount
     ]),

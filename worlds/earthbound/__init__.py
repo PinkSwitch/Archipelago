@@ -243,6 +243,12 @@ class EarthBoundWorld(World):
             "Goddess Ribbon"
         ]
 
+        self.money = [
+            "$10",
+            "$100",
+            "$1000"
+        ]
+
     def generate_early(self) -> None:  # Todo: place locked items in generate_early
         self.starting_character = self.options.starting_character.current_key.capitalize()
         self.locals = []
@@ -460,7 +466,7 @@ class EarthBoundWorld(World):
     def get_filler_item_name(self) -> str:  # Todo: make this suck less
         weights = {"rare": self.options.rare_filler_weight.value, "uncommon": self.options.uncommon_filler_weight.value, "common": self.options.common_filler_weight.value,
                    "rare_gear": int(self.options.rare_filler_weight.value * 0.5), "uncommon_gear": int(self.options.uncommon_filler_weight.value * 0.5),
-                   "common_gear": int(self.options.common_filler_weight.value * 0.5)}
+                   "common_gear": int(self.options.common_filler_weight.value * 0.5), "money": self.options.money_weight.value}
         
         filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
         weight_table = {
@@ -469,7 +475,8 @@ class EarthBoundWorld(World):
             "uncommon": self.uncommon_items,
             "uncommon_gear": self.uncommon_gear,
             "rare": self.rare_items,
-            "rare_gear": self.rare_gear
+            "rare_gear": self.rare_gear,
+            "money": self.money
         }
         return self.random.choice(weight_table[filler_type])
 

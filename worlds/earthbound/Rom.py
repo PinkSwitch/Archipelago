@@ -53,6 +53,7 @@ protection_checks = local_data.protection_checks
 protection_text = local_data.protection_text
 nonlocal_present_types = local_data.nonlocal_present_types
 ap_text_pntrs = local_data.ap_text_pntrs
+money_item_table = local_data.money_item_table
 
 valid_hashes = ["a864b2e5c141d2dec1c4cbed75a42a85",  # Cartridge
                 "6d71ccc8e2afda15d011348291afdf4f"]  # VC
@@ -273,6 +274,9 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(present_locations[name], bytearray([psi_item_table[item], 0x00, 0x02]))
                 elif item in character_item_table:
                     rom.write_bytes(present_locations[name], bytearray([character_item_table[item][0], 0x00, 0x03]))
+                elif item in money_item_table:
+                    rom.write_bytes(present_locations[name], struct.pack("H", money_item_table[item]))
+                    rom.write_bytes(present_locations[name] + 2, bytearray([0x01]))
 
             if name in npc_locations:
                 world.handled_locations.append(name)
@@ -282,6 +286,10 @@ def patch_rom(world, rom, player: int):
                     elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x0E, 0x00, 0x0E, (special_name_table[item][0] + 1)]))
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
+                    elif item in money_item_table:
+                        rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x1D, 0x08]))
+                        rom.write_bytes(npc_locations[name][i] - 3, struct.pack("H", money_item_table[item]))
+                        # rom.write_bytes(npc_locations[name][i] + 2, bytearray([0x??, 0x??, 0x??]))
 
             if name in psi_locations:
                 world.handled_locations.append(name)
