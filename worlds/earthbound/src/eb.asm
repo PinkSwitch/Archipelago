@@ -3013,7 +3013,7 @@ db $00, $00, $00, $00, $00, $00, $00, $00, $00, $de, $00, $a0, $00, $e3, $04, $F
 db $7d, $91, $97, $99, $93, $91, $9e, $a4, $00, $00, $00, $00, $00, $00, $00, $00
 db $00, $00, $00, $00, $00, $00, $00, $00, $00, $df, $00, $f2, $02, $28, $02, $FF; Magicant Teleport
 
-ORG $F4B000
+ORG $F4C000
 ShopItemNamesDeluxe:
 .10:
 db $54, $61, $60, $00
@@ -12698,7 +12698,7 @@ ORG $C5E0F2
 
 ORG $F4002A
 ;Item ID, 2-byte price, Item Type, 2-bytelocation ID/flag number
-db $05, $00, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
+;db $05, $00, $00, $02, $00, $00; Non-remote local item. Franklin Badge.
 ;db $5A, $00, $00, $01, $01, $00; Non-remote local Teleport.
 ;db $96, $00, $00, $05, $02, $00; A remote regular item
 ;db $01, $ff, $ff, $02, $03, $00; Non-remote local Character
@@ -13254,6 +13254,7 @@ db $02
 db $1D, $25, $E8, $03
 db $08
 dd DisplayAndGetMoney
+db $02
 
 ..Character:
 db $1B, $01
@@ -18568,8 +18569,24 @@ db $1F, $02, $74
 db $10, $3C
 db $02
 
-ORG $EEAA08
-dd DisplayAndGetMoneyPSI
+DisplayAndGetMoneyPause:
+db $18, $0A
+db $18, $03, $01
+db $19, $10, $01
+db $1B, $04
+db $70, $58, $1C, $02, $00, $50, $97, $9F, $A4, $50, $54, $1B, $06
+db $1C, $0A, $00, $00, $00, $00
+db $5E, $59
+db $1F, $02, $74
+db $10, $3C
+db $03
+db $02
+
+;ORG $EEB0DA
+;dd DisplayAndGetMoneyPause
+
+;ORG $EEAA08
+;dd DisplayAndGetMoneyPSI
 
 
 

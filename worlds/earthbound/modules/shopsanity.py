@@ -342,8 +342,8 @@ def write_shop_checks(world, rom, shop_checks) -> None:
                         item_type = 0x02
                         item_id = character_item_table[location.item.name][0]
                     elif location.item.name in money_item_table:
-                        item_type == 0x07
-                        item_id = list(money_item_table).index(location.item.name)
+                        item_type = 0x07
+                        item_id = list(money_item_table).index(location.item.name) + 1
                     else:
                         item_type = 0x00
                         item_id = item_id_table[location.item.name] 
@@ -394,7 +394,7 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         # The player bought the item; set a flag and give it to them
         rom.write_bytes(0x05E0CE, struct.pack("I", 0xF493C30A))
         rom.write_bytes(0x05E0C8, struct.pack("I", 0xF493C3))
-        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF496130A))
+        rom.write_bytes(0x05DF1E, struct.pack("I", 0xF496140A))
         # Prevent the game from checking inventory space if not needed
         rom.write_bytes(0x05E029, struct.pack("I", 0xF496330A))
         rom.write_bytes(0x05E04C, struct.pack("I", 0xF496580A))
