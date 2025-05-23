@@ -4,7 +4,7 @@ import typing
 import time
 import uuid
 from struct import pack
-from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table
+from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table, money_item_table
 from .game_data.text_data import text_encoder
 from .gifting.gift_tags import gift_properties
 from .gifting.trait_parser import wanted_traits, trait_interpreter
@@ -33,6 +33,7 @@ ITEM_MODE = ROM_START + 0x04FD76
 ITEMQUEUE_HIGH = WRAM_START + 0xB576
 ITEM_RECEIVED = WRAM_START + 0xB570
 SPECIAL_RECEIVED = WRAM_START + 0xB572
+MONEY_RECIVED = WRAM_START + 0xB5F1
 SAVE_FILE = WRAM_START + 0xB4A1
 GIYGAS_CLEAR = WRAM_START + 0x9C11
 GAME_CLEAR = WRAM_START + 0x9C85
@@ -153,6 +154,7 @@ class EarthBoundClient(SNIClient):
         game_clear = await snes_read(ctx, GAME_CLEAR, 0x1)
         item_received = await snes_read(ctx, ITEM_RECEIVED, 0x1)
         special_received = await snes_read(ctx, SPECIAL_RECEIVED, 0x1)
+        money_received = await snes_read(ctx, MONEY_RECIVED, 0x2)
         save_num = await snes_read(ctx, SAVE_FILE, 0x1)
         text_open = await snes_read(ctx, OPEN_WINDOW, 1)
         melody_table = await snes_read(ctx, MELODY_TABLE, 2)
@@ -407,7 +409,7 @@ class EarthBoundClient(SNIClient):
             await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
             await snes_write(ctx, [(WRAM_START + 0x0770, bytes([0]))])
 
-        if item_received[0] or special_received[0] != 0x00:  # If processing any item from the server
+        if item_received[0] or special_received[0] != 0x00 or money_received[0] != 0x00:  # If processing any item from the server
             return
 
         is_energylink_enabled = await snes_read(ctx, IS_ENERGYLINK_ENABLED, 1)
@@ -475,6 +477,8 @@ class EarthBoundClient(SNIClient):
             snes_buffered_write(ctx, ITEMQUEUE_HIGH, pack("H", recv_index))
             if item_id <= 0xFD:
                 snes_buffered_write(ctx, WRAM_START + 0xB570, bytes([item_id]))
+            elif item.name in money_item_table:
+                snes_buffered_write(ctx, WRAM_START + 0xB5F1, bytes([list(money_item_table).index(item.name)]))
             else:
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
 

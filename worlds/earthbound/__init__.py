@@ -334,6 +334,15 @@ class EarthBoundWorld(World):
         fill_restrictive(self.multiworld, self.multiworld.get_all_state(False), prefill_locations, prefill_items, True, True)
         setup_hints(self)
 
+    def get_pre_fill_items(self):
+        characters = ["Ness", "Paula", "Jeff", "Poo"]
+        prefill_items = []
+        for character in characters:
+            if character != self.starting_character:
+                prefill_items.append(self.create_item(f"{character}"))     
+        return prefill_items
+
+
     @classmethod
     def stage_generate_output(cls, multiworld, output_directory):
         multiworld.eb_spheres = list(multiworld.get_spheres())

@@ -261,6 +261,8 @@ def patch_rom(world, rom, player: int):
                         rom.write_bytes(location_dialogue[name][i], bytearray([item_id]))
                     elif item in psi_item_table or item in character_item_table:
                         rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, special_name_table[item][0]]))
+                    elif item in money_item_table:
+                        rom.write_bytes(location_dialogue[name][i] - 1, bytearray([0x16, (0x16 + list(money_item_table).index(item))]))
 
             if name in present_locations:
                 world.handled_locations.append(name)
@@ -319,7 +321,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 elif item in money_item_table and location.item.player == location.player:
                     rom.write_bytes(character_locations[name][2] - 1, bytearray([0x1D, 0x08]))
-                    rom.write_bytes(character_locations[name][2] + 1, struct.pack("H", money_item_table[item.name]))
+                    rom.write_bytes(character_locations[name][2] + 1, struct.pack("H", money_item_table[item]))
                     rom.write_bytes(character_locations[name][0] - 2, bytearray([0x01]))
                     rom.write_bytes(character_locations[name][0], bytearray([0x4A, 0xF0, 0xF3]))
                 else:
@@ -558,7 +560,7 @@ def patch_rom(world, rom, player: int):
         if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in special_name_table and item.player == world.player:
             world.multiworld.push_precollected(world.multiworld.get_location("Poo - Starting Item", world.player).item)
         elif item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name in money_item_table:
-            world.starting_money += money_item_table[item.name]
+            world.starting_money += money_item_table[world.multiworld.get_location("Poo - Starting Item", world.player).item.name]
 
         # if item.name == "Poo" and world.multiworld.get_location("Poo - Starting Item", world.player).item.name == "Photograph":
             # rom.write_bytes(0x17FEA9, bytearray([0x01]))
@@ -590,7 +592,7 @@ def patch_rom(world, rom, player: int):
                 starting_character_count.append(item.name)
                 starting_char += 1
         elif item.name in money_item_table:
-            world.starting_money += money_item_table[item.name]
+            world.starting_money += money_item_table[item]
 
     if world.options.random_battle_backgrounds:
         bpp2_bgs = [bg_id for bg_id, bpp in battle_bg_bpp.items() if bpp == 2]
