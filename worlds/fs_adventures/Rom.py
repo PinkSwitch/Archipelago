@@ -91,17 +91,6 @@ class FSAPatchExtensions(APPatchExtension):
     @staticmethod
     def patch_files(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        version_check = rom.read_bytes(0x3FF0A0, 16)
-        version_check = version_check.split(b'\x00', 1)[0]
-        version_check_str = version_check.decode("ascii")
-        client_version = world_version
-        if client_version != version_check_str and version_check_str != "":
-            raise Exception(f"Error! Patch generated on EarthBound APWorld version {version_check_str} doesn't match client version {client_version}! " +
-                            f"Please use EarthBound APWorld version {version_check_str} for patching.")
-        elif version_check_str == "":
-            raise Exception(f"Error! Patch generated on old EarthBound APWorld version, doesn't match client version {client_version}! " +
-                            f"Please verify you are using the same APWorld as the generator.")
-
         gcm_local_var = GCM(r"C:\Path\To\ROM.iso")
         gcm_local_var.read_entire_disc()
         dol_local_var = DOL()

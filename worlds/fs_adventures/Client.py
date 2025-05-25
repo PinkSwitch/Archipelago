@@ -4,127 +4,45 @@ import typing
 import time
 import uuid
 from struct import pack
-from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table, money_item_table
-from .game_data.text_data import text_encoder
-from .gifting.gift_tags import gift_properties
-from .gifting.trait_parser import wanted_traits, trait_interpreter
+from CommonClient import ClientCommandProcessor, CommonContext
 
 from NetUtils import ClientStatus, color
-from worlds.AutoSNIClient import SNIClient
-
-if typing.TYPE_CHECKING:
-    from SNIClient import SNIContext
-else:
-    SNIContext = typing.Any
-
-snes_logger = logging.getLogger("SNES")
-
-ROM_START = 0x000000
-WRAM_START = 0xF50000
-WRAM_SIZE = 0x20000
-SRAM_START = 0xE00000
-
-EB_ROMHASH_START = 0x00FFC0
-WORLD_VERSION = 0x3FF0A0
-ROMHASH_SIZE = 0x15
-
-ITEM_MODE = ROM_START + 0x04FD76
-
-ITEMQUEUE_HIGH = WRAM_START + 0xB576
-ITEM_RECEIVED = WRAM_START + 0xB570
-SPECIAL_RECEIVED = WRAM_START + 0xB572
-MONEY_RECIVED = WRAM_START + 0xB5F1
-SAVE_FILE = WRAM_START + 0xB4A1
-GIYGAS_CLEAR = WRAM_START + 0x9C11
-GAME_CLEAR = WRAM_START + 0x9C85
-OPEN_WINDOW = WRAM_START + 0x8958
-MELODY_TABLE = WRAM_START + 0x9C1E
-EARTH_POWER_FLAG = WRAM_START + 0x9C82
-CUR_SCENE = WRAM_START + 0x97B8
-IS_IN_BATTLE = WRAM_START + 0x9643
-DEATHLINK_ENABLED = ROM_START + 0x04FD74
-DEATHLINK_TYPE = ROM_START + 0x04FD75
-IS_CURRENTLY_DEAD = WRAM_START + 0xB582
-GOT_DEATH_FROM_SERVER = WRAM_START + 0xB583
-PLAYER_JUST_DIED_SEND_DEATHLINK = WRAM_START + 0xB584
-IS_ABLE_TO_RECEIVE_DEATHLINKS = WRAM_START + 0xB585
-CHAR_COUNT = WRAM_START + 0x98A4
-OSS_FLAG = WRAM_START + 0x5D98
-HINT_SCOUNT_IDS = ROM_START + 0x310250
-SCOUTED_HINT_FLAGS = WRAM_START + 0xB621
-MONEY_IN_BANK = WRAM_START + 0x9835
-IS_ENERGYLINK_ENABLED = ROM_START + 0x04FD78
-already_tried_to_connect = False
 
 
-class EarthBoundClient(SNIClient):
-    game = "EarthBound"
-    patch_suffix = ".apeb"
+class FSACommandProcessor(ClientCommandProcessor):
+    """
+    Command Processor for Four Swords Adventures client commands.
+
+    This class handles commands specific to Four Swords Adventures.
+    """
+
+    def __init__(self, ctx: CommonContext):
+        """
+        Initialize the command processor with the provided context.
+
+        :param ctx: Context for the client.
+        """
+        super().__init__(ctx)
+
+    def _cmd_dolphin(self) -> None:
+        """
+        Display the current Dolphin emulator connection status.
+        """
+        if isinstance(self.ctx, TWWContext):
+            logger.info(f"Dolphin Status: {self.ctx.dolphin_status}")
+
+class FSAdventuresClient(CommonContext):
+    game = "The Legend of Zelda: Four Swords Adventures"
+    patch_suffix = ".apfsa"
     most_recent_connect: str = ""
     client_version = world_version
     hint_list = []
     hinted_shop_locations = []
 
-    async def deathlink_kill_player(self, ctx: "SNIContext") -> None:
-        from SNIClient import DeathState, snes_buffered_write, snes_flush_writes, snes_read
-        battle_hp = {
-            1: WRAM_START + 0x9FBF,
-            2: WRAM_START + 0xA00D,
-            3: WRAM_START + 0xA05B,
-            4: WRAM_START + 0xA0A9,
-        }
-
-        active_hp = {
-            1: WRAM_START + 0x9A15,
-            2: WRAM_START + 0x9A74,
-            3: WRAM_START + 0x9AD3,
-            4: WRAM_START + 0x9B32,
-        }
-
-        scrolling_hp = {
-            1: WRAM_START + 0x9A13,
-            2: WRAM_START + 0x9A72,
-            3: WRAM_START + 0x9AD1,
-            4: WRAM_START + 0x9B30,
-        }
-
-        deathlink_mode = await snes_read(ctx, DEATHLINK_TYPE, 1)
-        oss_flag = await snes_read(ctx, OSS_FLAG, 1)
-        is_currently_dead = await snes_read(ctx, IS_CURRENTLY_DEAD, 1)
-        can_receive_deathlinks = await snes_read(ctx, IS_ABLE_TO_RECEIVE_DEATHLINKS, 1)
-        is_in_battle = await snes_read(ctx, IS_IN_BATTLE, 1)
-        char_count = await snes_read(ctx, CHAR_COUNT, 1)
-        snes_buffered_write(ctx, GOT_DEATH_FROM_SERVER, bytes([0x01]))
-        text_open = await snes_read(ctx, OPEN_WINDOW, 1)
-
-        if is_currently_dead[0] != 0x00 or can_receive_deathlinks[0] == 0x00:
-            return
-
-        # If suppression is set and we're not in a battle dont do deathlinks
-        if oss_flag[0] != 0x00 and is_in_battle[0] == 0x00:
-            return
-
-        # Prevent overworld deaths while a menu is open
-        if not is_in_battle[0] and text_open[0] != 0xFF:
-            return
-
-        for i in range(char_count[0]):
-            w_cur_char = WRAM_START + 0x986F + i
-            current_char = await snes_read(ctx, w_cur_char, 1)
-            snes_buffered_write(ctx, active_hp[current_char[0]], bytes([0x00, 0x00]))
-            snes_buffered_write(ctx, battle_hp[i + 1], bytes([0x00, 0x00]))
-            if deathlink_mode[0] == 0 or is_in_battle[0] == 0:
-                # This should be the check for instant or mercy. Write the value, call it here
-                snes_buffered_write(ctx, scrolling_hp[current_char[0]], bytes([0x00, 0x00]))
-        await snes_flush_writes(ctx)
-        ctx.death_state = DeathState.dead
-        ctx.last_death_link = time.time()
-
     async def validate_rom(self, ctx):
         from SNIClient import snes_read
 
         rom_name = await snes_read(ctx, EB_ROMHASH_START, ROMHASH_SIZE)
-        apworld_version = await snes_read(ctx, WORLD_VERSION, 16)
 
         item_handling = await snes_read(ctx, ITEM_MODE, 1)
         if rom_name is None or rom_name[:6] != b"MOM2AP":

@@ -13,10 +13,14 @@ from .Items import get_item_names_per_category, filler_item_table, item_table
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import FSAOptions, fsa_option_groups
-# from .Client import EarthBoundClient
 from .Rules import set_location_rules
 from .Rom import patch_rom, get_base_rom_path, FSAProcPatch, valid_hashes
 from .static_location_data import location_ids
+
+def run_client(*args):
+    print("Running FSA Client")
+    from .Client import main
+    launch_subprocess(main, name="FSAdventuresClient", args=args)
 
 
 class FSASettings(settings.Group):
