@@ -16,11 +16,16 @@ from .Options import FSAOptions, fsa_option_groups
 from .Rules import set_location_rules
 from .Rom import patch_rom, get_base_rom_path, FSAProcPatch, valid_hashes
 from .static_location_data import location_ids
+from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
 
 def run_client(*args):
     print("Running FSA Client")
     from .Client import launch
     launch_subprocess(launch, name="FSAdventuresClient", args=args)
+
+components.append(
+    Component("Four Swords Adventures Client", func=run_client, component_type=Type.CLIENT, file_identifier=SuffixIdentifier(".apfsa"))
+)
 
 
 class FSASettings(settings.Group):
