@@ -19,8 +19,8 @@ from .static_location_data import location_ids
 
 def run_client(*args):
     print("Running FSA Client")
-    from .Client import main
-    launch_subprocess(main, name="FSAdventuresClient", args=args)
+    from .Client import launch
+    launch_subprocess(launch, name="FSAdventuresClient", args=args)
 
 
 class FSASettings(settings.Group):

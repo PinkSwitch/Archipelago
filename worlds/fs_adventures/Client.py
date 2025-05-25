@@ -36,8 +36,7 @@ class FSAdventuresClient(CommonContext):
     patch_suffix = ".apfsa"
     most_recent_connect: str = ""
     client_version = world_version
-    hint_list = []
-    hinted_shop_locations = []
+    ctx.items_handling = 0b011
 
     async def validate_rom(self, ctx):
         from SNIClient import snes_read
@@ -48,22 +47,10 @@ class FSAdventuresClient(CommonContext):
         if rom_name is None or rom_name[:6] != b"MOM2AP":
             return False
 
-        apworld_version = apworld_version.decode("utf-8").strip("\x00")
-        if apworld_version != self.most_recent_connect and apworld_version != self.client_version:
-            ctx.gui_error("Bad Version", f"EarthBound APWorld version {self.client_version} does not match generated version {apworld_version}")
-            self.most_recent_connect = apworld_version
-            return False
-
         ctx.game = self.game
-        if item_handling[0] == 0x00:
-            ctx.items_handling = 0b001
-        else:
-            ctx.items_handling = 0b111
         ctx.rom = rom_name
 
-        death_link = await snes_read(ctx, DEATHLINK_ENABLED, 1)
-        if death_link:
-            await ctx.update_death_link(bool(death_link[0] & 0b1))
+
         return True
 
     async def game_watcher(self, ctx):
@@ -403,9 +390,36 @@ class FSAdventuresClient(CommonContext):
         await snes_flush_writes(ctx)
 
 
-def get_alias(alias: str, slot_name: str):
-    try:
-        index = alias.index(f" ({slot_name}")
-    except ValueError:
-        return alias
-    return alias[:index]
+def launch(*launch_args: str) -> None:
+    async def main():
+        parser = get_base_parser()
+        parser.add_argument("patch_file", default="", type=str, nargs="?", help="Path to an Archipelago patch file")
+        args = parser.parse_args(launch_args)
+
+        if args.patch_file != "":
+            metadata = _patch_and_run_game(args.patch_file)
+            if "server" in metadata:
+                args.connect = metadata["server"]
+
+        ctx = FSAdventuresClient(args.connect, args.password)
+        ctx.server_task = asyncio.create_task(server_loop(ctx), name="ServerLoop")
+
+        if gui_enabled:
+            ctx.run_gui()
+        ctx.run_cli()
+
+        watcher_task = asyncio.create_task(_game_watcher(ctx), name="GameWatcher")
+
+        try:
+            await watcher_task
+        except Exception as e:
+            logger.exception(e)
+
+        await ctx.exit_event.wait()
+        await ctx.shutdown()
+
+    Utils.init_logging("Four Swords Adventures Client", exception_logger="Client")
+    import colorama
+    colorama.just_fix_windows_console()
+    asyncio.run(main())
+    colorama.deinit()
