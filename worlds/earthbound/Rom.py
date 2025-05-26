@@ -290,7 +290,7 @@ def patch_rom(world, rom, player: int):
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0xA5, 0xAA, 0xEE]))
                     elif item in money_item_table:
                         rom.write_bytes(npc_locations[name][i] - 3, bytearray([0x1D, 0x25]))
-                        rom.write_bytes(npc_locations[name][i] - 3, struct.pack("H", money_item_table[item]))
+                        rom.write_bytes(npc_locations[name][i] - 1, struct.pack("H", money_item_table[item]))
                         rom.write_bytes(npc_locations[name][i] + 2, bytearray([0x00, 0xF0, 0xF3]))
 
             if name in psi_locations:
@@ -355,6 +355,11 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(0x2EC618, bytearray([(special_name_table[item][0] + 1)]))
                     rom.write_bytes(0x2EC61A, bytearray([0xA5, 0xAA, 0xEE]))
                     rom.write_bytes(0x2EC613, bytearray([0x03, 0x01]))
+                
+                if item in money_item_table and location.item.player == location.player:
+                    rom.write_bytes(0x15F764, bytearray([0x1D, 0x08]))
+                    rom.write_bytes(0x15F766, struct.pack("H", money_item_table[item]))
+                    rom.write_bytes(0x15F768, bytearray([0x01]))
 
             if location.address >= 0xEB1000:
                 world.handled_locations.append(name)
