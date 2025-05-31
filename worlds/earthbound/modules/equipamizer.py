@@ -576,7 +576,7 @@ def randomize_armor(world, rom):
         else:
             names_to_try = armor_names[armor.equip_type].copy()
 
-        while pixel_length > 70 and armor.name in taken_names:
+        while pixel_length > 70 or armor.name in taken_names:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if first_armor is False:
                 armor.name = armor.name.replace(" ", " ")
@@ -888,7 +888,7 @@ def randomize_weapons(world, rom):
         else:
             names_to_try = weapon_names[weapon.can_equip].copy()
 
-        while pixel_length > 70 and weapon.name in taken_names:
+        while pixel_length > 70 or weapon.name in taken_names:
             # First we replace any spaces with half-width spaces, a common tech used in vanilla to fix long names
             if half_space is False:
                 weapon.name = weapon.name.replace(" ", " ")
@@ -907,7 +907,6 @@ def randomize_weapons(world, rom):
                 half_space = False
                 weapon.name = front_name + " " + back_name
             pixel_length = calc_pixel_width(weapon.name)
-
         rom.write_bytes(weapon.address + 28, bytearray([usage_bytes[weapon.can_equip]]))
         rom.write_bytes(weapon.address + 25, bytearray([type_bytes[weapon.equip_type]]))
         taken_names.append(weapon.name) # TEST THIS SOMEHOW

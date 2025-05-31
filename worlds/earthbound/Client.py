@@ -4,7 +4,7 @@ import typing
 import time
 import uuid
 from struct import pack
-from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table, money_item_table
+from .game_data.local_data import client_specials, world_version, hint_bits, item_id_table, money_id_table
 from .game_data.text_data import text_encoder
 from .gifting.gift_tags import gift_properties
 from .gifting.trait_parser import wanted_traits, trait_interpreter
@@ -345,19 +345,21 @@ class EarthBoundClient(SNIClient):
                 slot_id = (0xEB0FF9 + (shop_scout[0] * 7) + i)
                 if slot_id in ctx.server_locations and slot_id not in self.hinted_shop_locations:
                     shop_slots.append(slot_id)
-                    self.hinted_shop_locations.append(slot_id)
             
             if shop_slots:
                 if shop_scouts_enabled[0] == 2:
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 2}])
+                    await snes_write(ctx, [(WRAM_START + 0x0770, bytes([0x00]))])
                 else:
                     prog_shops = []
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": shop_slots, "create_as_hint": 0}])
                     for location in shop_slots:
                         if location in ctx.locations_info:
+                            self.hinted_shop_locations.append(location)
                             if ctx.locations_info[location].flags & 0x01:
                                 prog_shops.append(location)
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": prog_shops, "create_as_hint": 2}])
+
 
         await ctx.send_msgs([{
                     "cmd": "Set",
@@ -477,8 +479,8 @@ class EarthBoundClient(SNIClient):
             snes_buffered_write(ctx, ITEMQUEUE_HIGH, pack("H", recv_index))
             if item_id <= 0xFD:
                 snes_buffered_write(ctx, WRAM_START + 0xB570, bytes([item_id]))
-            elif item.name in money_item_table:
-                snes_buffered_write(ctx, WRAM_START + 0xB5F1, bytes([list(money_item_table).index(item.name)]))
+            elif item_id in money_id_table:
+                snes_buffered_write(ctx, WRAM_START + 0xB5F1, bytes([list(money_id_table).index(item_id) + 1]))
             else:
                 snes_buffered_write(ctx, WRAM_START + 0xB572, bytes([client_specials[item_id]]))
 

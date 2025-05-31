@@ -1,4 +1,4 @@
-world_version = "4.0.1"
+world_version = "4.1"
 
 check_table = {
     0xEB0000: [0x11, 3],
@@ -1394,6 +1394,12 @@ money_item_table = {
     "$10": 10,
     "$100": 100,
     "$1000": 1000
+}
+
+money_id_table = {
+    0x114: 10,
+    0x115: 100,
+    0x116: 1000
 }
 
 # 0: Action pointer, call the actual item being given

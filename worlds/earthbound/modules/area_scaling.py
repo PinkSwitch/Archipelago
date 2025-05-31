@@ -309,7 +309,7 @@ def calculate_scaling(world) -> None:
         "Monotoli Building": {"Monotoli Building": [["Nothing"]]},
 
         "Moonside": {"Moonside": [["Nothing"]],
-        "Global ATM Access": [["Nothing"]]},
+                     "Global ATM Access": [["Nothing"]]},
 
         "Fourside Dept. Store": {"Fourside Dept. Store": [["Nothing"]]},
 
@@ -372,7 +372,7 @@ def calculate_scaling(world) -> None:
         "Fire Spring": {"Fire Spring": [["Nothing"]]},
 
         "Magicant": {sea_of_eden: [["Ness"]],
-        "Global ATM Access": [["Nothing"]]},
+                     "Global ATM Access": [["Nothing"]]},
 
         "Sea of Eden": {"Sea of Eden": [["Nothing"]]},
 

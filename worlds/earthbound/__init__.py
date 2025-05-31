@@ -342,7 +342,6 @@ class EarthBoundWorld(World):
                 prefill_items.append(self.create_item(f"{character}"))     
         return prefill_items
 
-
     @classmethod
     def stage_generate_output(cls, multiworld, output_directory):
         multiworld.eb_spheres = list(multiworld.get_spheres())

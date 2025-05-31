@@ -180,6 +180,7 @@ class RareWeight(Range):
     range_end = 100
     default = 5
 
+
 class MoneyWeight(Range):
     """Weight for placing money in the item pool."""
     display_name = "Money Weight"

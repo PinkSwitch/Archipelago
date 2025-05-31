@@ -324,6 +324,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(character_locations[name][2] + 1, struct.pack("H", money_item_table[item]))
                     rom.write_bytes(character_locations[name][0] - 2, bytearray([0x01]))
                     rom.write_bytes(character_locations[name][0], bytearray([0x4A, 0xF0, 0xF3]))
+                    rom.write_bytes(character_locations[name][1], bytearray([0x97]))
                 else:
                     rom.write_bytes(character_locations[name][0], bytearray(character_locations[name][4:7]))
                     if location.item.name in ["Ness", "Paula", "Jeff", "Poo"]:

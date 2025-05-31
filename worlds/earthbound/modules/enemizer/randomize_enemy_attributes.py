@@ -124,8 +124,9 @@ def randomize_enemy_attributes(world, rom):
                 rom.write_bytes(address + 0x59, bytearray([status]))
                 rom.write_bytes(address + 0x5B, bytearray([row]))
                 rom.write_bytes(address + 0x5D, bytearray([mirror_chance]))
-            if world.enemies[enemy].attack_extensions > 1:
-                address = world.enemies[f"{enemy} ({i + 1})"].address
+                if world.enemies[enemy].attack_extensions > 1:
+                    address = world.enemies[f"{enemy} ({i + 2})"].address
+                    enemy = f"{enemy} ({i + 2})"
 
 
 def get_weakness(element, species) -> int:
