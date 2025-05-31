@@ -2,6 +2,7 @@ import os
 import typing
 import threading
 import pkgutil
+import json
 
 
 from typing import List, Set, Dict, TextIO
@@ -14,7 +15,7 @@ from .Locations import get_locations
 from .Regions import init_areas
 from .Options import FSAOptions, fsa_option_groups
 from .Rules import set_location_rules
-from .Rom import patch_rom, get_base_rom_path, FSAProcPatch, valid_hashes
+from .Rom import apply_patch
 from .static_location_data import location_ids
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
 
@@ -26,16 +27,6 @@ def run_client(*args):
 components.append(
     Component("Four Swords Adventures Client", func=run_client, component_type=Type.CLIENT, file_identifier=SuffixIdentifier(".apfsa"))
 )
-
-
-class FSASettings(settings.Group):
-    class RomFile(settings.SNESRomPath):
-        """File name of the Four Swords Adventures USA ROM"""
-        description = "Four Swords Adventures ROM File"
-        copy_to = "Legend of Zelda, The - Four Swords Adventures (USA).iso"
-        # md5s = valid_hashes
-
-    rom_file: RomFile = RomFile(RomFile.copy_to)
 
 
 class FSAWeb(WebWorld):
@@ -70,7 +61,6 @@ class FSAdventuresWorld(World):
     item_name_groups = get_item_names_per_category()
 
     web = FSAWeb()
-    settings: typing.ClassVar[FSASettings]
     # topology_present = True
 
     options_dataclass = FSAOptions
@@ -102,31 +92,17 @@ class FSAdventuresWorld(World):
         self.multiworld.completion_condition[self.player] = lambda state: True
         # self.multiworld.completion_condition[self.player] = lambda state: state.has('Saved Earth', self.player)
 
+    def generate_early(self):
+        self.maidens_required = json.dumps(self.options.maidens_required.value)
+
 
     def generate_output(self, output_directory: str) -> None:
-        try:
-            patch = FSAProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
-            # patch.write_file("earthbound_basepatch.bsdiff4", pkgutil.get_data(__name__, "earthbound_basepatch.bsdiff4"))
-            patch_rom(self, patch, self.player)
-
-            self.rom_name = patch.name
-
-            patch.write(os.path.join(output_directory,
-                                     f"{self.multiworld.get_out_file_name_base(self.player)}{patch.patch_file_ending}"))
-        except Exception:
-            raise
-        finally:
-            self.rom_name_available_event.set()  # make sure threading continues and errors are collected
-
-
-    def modify_multidata(self, multidata: dict) -> None:
-        import base64
-        # wait for self.rom_name to be available.
-        self.rom_name_available_event.wait()
-        rom_name = getattr(self, "rom_name", None)
-        if rom_name:
-            new_name = base64.b64encode(bytes(self.rom_name)).decode()
-            multidata["connect_names"][new_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
+        basepatch = pkgutil.get_data(__name__, "fsa.xml")
+        base_str = basepatch.decode("utf-8")
+        output_patch = apply_patch(self, base_str, output_directory)
+        output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
+        with open(output_file_path, "w") as file:
+            file.write(output_patch)
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

@@ -4,9 +4,12 @@ import typing
 import time
 import uuid
 from struct import pack
-from CommonClient import ClientCommandProcessor, CommonContext
+from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
+import Patch
 import Utils
 import asyncio
+from . import FSAdventuresWorld
+rom_file = FSAdventuresWorld.settings.iso_file
 
 from NetUtils import ClientStatus, color
 
@@ -30,10 +33,19 @@ class FSACommandProcessor(ClientCommandProcessor):
         """
         Display the current Dolphin emulator connection status.
         """
-        if isinstance(self.ctx, TWWContext):
+        if isinstance(self.ctx, FSAdventuresClients):
             logger.info(f"Dolphin Status: {self.ctx.dolphin_status}")
 
 class FSAdventuresClient(CommonContext):
+    if args.diff_file:
+        import Patch
+        logger.info("patch file was supplied - creating sms rom...")
+        meta, rom_file = Patch.create_rom_file(args.diff_file)
+        if "server" in meta:
+            args.connect = meta["server"]
+        logger.info(f"wrote rom file to {rom_file}")
+        
+
     game = "The Legend of Zelda: Four Swords Adventures"
     patch_suffix = ".apfsa"
     most_recent_connect: str = ""
@@ -128,7 +140,7 @@ class FSAdventuresClient(CommonContext):
 def _patch_and_run_game(patch_file: str):
     try:
         metadata, output_file = Patch.create_rom_file(patch_file)
-        Utils.async_start(_run_game(output_file))
+        # Utils.async_start(_run_game(output_file))
         return metadata
     except Exception as exc:
         logger.exception(exc)
