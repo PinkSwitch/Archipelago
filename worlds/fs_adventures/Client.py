@@ -1,15 +1,12 @@
 import logging
 import struct
 import typing
-import time
-import uuid
 from struct import pack
 from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
 import Patch
 import Utils
 import asyncio
 from . import FSAdventuresWorld
-rom_file = FSAdventuresWorld.settings.iso_file
 
 from NetUtils import ClientStatus, color
 
@@ -37,17 +34,7 @@ class FSACommandProcessor(ClientCommandProcessor):
             logger.info(f"Dolphin Status: {self.ctx.dolphin_status}")
 
 class FSAdventuresClient(CommonContext):
-    if args.diff_file:
-        import Patch
-        logger.info("patch file was supplied - creating sms rom...")
-        meta, rom_file = Patch.create_rom_file(args.diff_file)
-        if "server" in meta:
-            args.connect = meta["server"]
-        logger.info(f"wrote rom file to {rom_file}")
-        
-
     game = "The Legend of Zelda: Four Swords Adventures"
-    patch_suffix = ".apfsa"
     most_recent_connect: str = ""
     items_handling = 0b011
 
@@ -137,28 +124,12 @@ class FSAdventuresClient(CommonContext):
 
         await snes_flush_writes(ctx)
 
-def _patch_and_run_game(patch_file: str):
-    try:
-        metadata, output_file = Patch.create_rom_file(patch_file)
-        # Utils.async_start(_run_game(output_file))
-        return metadata
-    except Exception as exc:
-        logger.exception(exc)
-        Utils.messagebox("Error Patching Game", str(exc), True)
-        return {}
-
-
 
 def launch(*launch_args: str) -> None:
     async def main():
         parser = get_base_parser()
         parser.add_argument("patch_file", default="", type=str, nargs="?", help="Path to an Archipelago patch file")
         args = parser.parse_args(launch_args)
-
-        if args.patch_file != "":
-            metadata = _patch_and_run_game(args.patch_file)
-            if "server" in metadata:
-                args.connect = metadata["server"]
 
         ctx = FSAdventuresClient(args.connect, args.password)
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="ServerLoop")
