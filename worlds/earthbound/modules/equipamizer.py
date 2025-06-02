@@ -849,10 +849,13 @@ def randomize_weapons(world, rom):
         elif weapon.can_equip == "Jeff":
             progressive_guns.append(item)
 
-        if item == starting_weapon:  # Todo; remove not progressive weapons
+        if item == starting_weapon and not world.options.progressive_weapons:  # Todo; remove not progressive weapons
             weapon.offense = 10
         else:
-            weapon.offense = world.random.randint(1, weapon_cap)
+            if world.options.progressive_weapons:
+                weapon.offense = world.random.randint(1, weapon_cap)
+            else:
+                weapon.offense = world.random.randint(10, weapon_cap)
 
         if weapon.can_equip == "Poo":
             front_name = world.random.choice(weapon_names[weapon.can_equip])

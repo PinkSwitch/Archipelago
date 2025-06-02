@@ -24,7 +24,7 @@ map_palettes = {
     "Deep Darkness": 22,
     "Lilliput Steps Sanctuary": 23,
     "Milky Well": 24,
-    # "Deep Darkness Darkness": 25,
+    "Deep Darkness Darkness": 25,
     "Summers": 26,
     ##"Dusty Dunes Desert": 27,
     ##"The Sky": 28,
@@ -717,6 +717,9 @@ nice_palettes = {
         62,
         63,
         116,
+    ],
+    'Deep Darkness Darkness': [
+        25,
     ],
     'Summers': [
         14,
@@ -1639,6 +1642,9 @@ ugly_palettes = {
         82,
         107,
         146,
+    ],
+    'Deep Darkness Darkness': [
+        25,
     ],
     'Summers': [
         4,
@@ -2653,6 +2659,9 @@ nonsense_palettes = {
         126,
         131,
         133,
+    ],
+    'Deep Darkness Darkness': [
+        25,
     ],
     'Summers': [
         7,

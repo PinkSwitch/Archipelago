@@ -57,6 +57,9 @@ SpecialNameTable:
 dw $A810, $A81F, $A82F, $A84C, $A85C, $A873, $A888, $A89A, $A8AB, $A8BC, $A8CD, $A8DD, $A8F4, $A90B, $A924, $A938, $A93E, $A943, $A947, #SpecialTexMagicant
 dw #SpecialTexNess
 dw #SpecialTexPhotoGuy
+dw #DisplayDollars10
+dw #DisplayDollars100
+dw #DisplayDollars1000
 
 
 
@@ -321,6 +324,9 @@ JML HandleUnusableWarpPad
 
 ORG $C0089A
 JML LoadPhotoColor
+
+ORG $00FA22
+JML GetRemoteMoney
 
 ;new jmls
 
@@ -3200,7 +3206,7 @@ STZ $B572
 STZ $FF40
 LDA $006D
 AND #$A000
-JML $C0B8F4
+JML GetRemoteMoney
 
 UnlockCharacter:
 PHX
@@ -8383,6 +8389,12 @@ PhotoFlags:
 dw $02BA
 dw $02BB
 
+MoneyAmounts:
+dw $0000
+dw $000A
+dw $0064
+dw $03E8
+
 ORG $C3E2A8
 ;contemplate switching to 1
 dw $000C, $0010, $0013, $0004
@@ -9063,6 +9075,13 @@ JSL LeaveMoneyInMemory
 ORG $C17F21
 JML CheckExtraAddCommands
 
+ORG $C005EF
+LDA #$9900
+nop
+
+ORG $C005F5
+LDA #$00F8
+nop
 
 
 ;New data table go here
@@ -10106,6 +10125,15 @@ db $02
 SetNpcPooPSIFlag:
 db $04, $D1, $03
 db $1f, $71, $04, $02, $02
+
+DisplayDollars10:
+db $54, $61, $60, $00
+
+DisplayDollars100:
+db $54, $61, $60, $60, $00
+
+DisplayDollars1000:
+db $54, $61, $60, $60, $60, $00
 
 
 ;FOR TESTING!!!!
@@ -12169,7 +12197,7 @@ LDA $0780
 BEQ .NormalLoad
 LDA $AAB4
 CMP #$04
-BCC .NormalLoad
+BCS .NormalLoad
 PLA
 JSL $C085B7
 SEP #$20
@@ -12608,6 +12636,27 @@ JML $C17F29
 .SaveMoney:
 INC $B5EF
 JML $C1803C
+
+
+GetRemoteMoney:
+LDA $B5F1
+BEQ .Done
+PHA
+LDA #$0074
+JSL $C0ABE0
+PLA
+ASL
+TAX
+LDA MoneyAmounts,X
+STA $0E
+LDA #$0000
+STA $10
+JSL $C22214
+STZ $B5F1
+.Done:
+LDA $006D
+AND #$A000
+JML $C0B8F4
 
 
 

@@ -1,4 +1,11 @@
 from ..game_data.palettes_organized import map_palettes, nice_palettes, ugly_palettes, nonsense_palettes
+import struct
+
+event_palettes = {
+    "Happy-Happy Village": 0x8367,
+    "Threed": 0x85A7,
+    "Deep Darkness": 0x8F67
+    }
 
 def randomize_psi_palettes(world, rom):
     spell_palettes = []
@@ -35,4 +42,8 @@ def map_palette_shuffle(world, rom):
             choosable_palettes += nonsense_palettes[item]
         
         chosen_palette = world.random.choice(choosable_palettes)
-        rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))
+        if item in event_palettes:
+            rom.copy_bytes(0x381002 + (chosen_palette * 192), 189, 0x1A7CA9 + (map_palettes[item] * 192))
+            rom.write_bytes(0x1A7CC7 + (map_palettes[item] * 192), struct.pack("H", event_palettes[item]))
+        else:
+            rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))

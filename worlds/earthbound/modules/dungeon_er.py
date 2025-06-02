@@ -216,7 +216,7 @@ def write_dungeon_entrances(world, rom) -> None:
     rom.write_bytes(0x0F165B, struct.pack("H", 0x8091))  # Lock Cafe
     rom.write_bytes(0x0FC8C6, struct.pack("I", 0xF3120B))  # Everdred script
     rom.write_bytes(0x10784A, struct.pack("H", 0x0000))  # Mook spawn in stonehenge anteroom
-    rom.write_bytes(0x0FCF1E, bytearray([0x00])) # Moonside sparkle always active
+    rom.write_bytes(0x0FC51E, bytearray([0x00])) # Moonside sparkle always active
 
     rom.write_bytes(0x0FA4D6, bytearray([0xC7, 0x00, 0x01]))
 

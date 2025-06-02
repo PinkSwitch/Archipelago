@@ -90,6 +90,7 @@ def patch_rom(world, rom, player: int):
     rom.copy_bytes(0x34A040, 0x1F, 0x157A51)
     rom.copy_bytes(0x34A060, 0x3E, 0x1578FC)
     rom.copy_bytes(0x15ED4B, 0x06, 0x15F1FB)
+    rom.copy_bytes(0x1A7FA7, 0xBF, 0x389900)
 
     starting_area_coordinates = {
                     0: [0x50, 0x04, 0xB5, 0x1F],  # North Onett
@@ -299,9 +300,9 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(psi_locations[name][0], special_name_table[item][1].to_bytes(3, byteorder="little"))
                     rom.write_bytes(psi_locations[name][0] + 4, bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
                 elif item in money_item_table and location.item.player == location.player:
-                    rom.write_bytes(psi_locations[name][0] -1, bytearray([0x1D, 0x08]))
+                    rom.write_bytes(psi_locations[name][0] -1, bytearray([0x1D, 0x25]))
                     rom.write_bytes(psi_locations[name][0] +1, struct.pack("H", money_item_table[item]))
-                    rom.write_bytes(psi_locations[name][0] +3, bytearray([0x08, 0x25, 0xF0, 0xF3, 0x00]))
+                    rom.write_bytes(psi_locations[name][0] +3, bytearray([0x08, 0x25, 0xF0, 0xF3, 0x00, 0x03, 0x00]))
                 else:
                     rom.write_bytes(psi_locations[name][0], bytearray(psi_locations[name][1:4]))
                     rom.write_bytes(psi_locations[name][4], bytearray([item_id]))
@@ -320,7 +321,7 @@ def patch_rom(world, rom, player: int):
                     rom.write_bytes(character_locations[name][1], bytearray([0x62]))
                     rom.write_bytes(character_locations[name][2], bytearray([0x70, 0xF9, 0xD5]))
                 elif item in money_item_table and location.item.player == location.player:
-                    rom.write_bytes(character_locations[name][2] - 1, bytearray([0x1D, 0x08]))
+                    rom.write_bytes(character_locations[name][2] - 1, bytearray([0x1D, 0x25]))
                     rom.write_bytes(character_locations[name][2] + 1, struct.pack("H", money_item_table[item]))
                     rom.write_bytes(character_locations[name][0] - 2, bytearray([0x01]))
                     rom.write_bytes(character_locations[name][0], bytearray([0x4A, 0xF0, 0xF3]))
