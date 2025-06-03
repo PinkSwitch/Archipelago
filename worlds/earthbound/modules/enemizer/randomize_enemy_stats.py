@@ -1,7 +1,7 @@
 from .enemy_attributes import excluded_enemies
 
 class EnemyStatCopy:
-    def __init__(self, hp, exp, money, speed, offense, defense, level):
+    def __init__(self, hp, exp, money, speed, offense, defense, level, guts, luck):
         self.hp = hp
         self.exp = exp
         self.money = money
@@ -9,6 +9,8 @@ class EnemyStatCopy:
         self.offense = offense
         self.defense = defense
         self.level = level
+        self.guts = guts
+        self.luck = luck
 
 def randomize_enemy_stats(world, rom):
     stat_copies = {}
