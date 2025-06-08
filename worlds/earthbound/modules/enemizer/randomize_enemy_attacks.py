@@ -3,7 +3,7 @@ from .enemy_attributes import excluded_enemies
 from ..enemy_data import spell_breaks
 from ..enemy_shuffler import enemy_ids
 
-battle_actions = {
+battle_actions = { # Actions in camel case are scaled
     "Attack": 0x04,
     "Shoot": 0x05,
     "Spy": 0x06,

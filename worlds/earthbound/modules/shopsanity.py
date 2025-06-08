@@ -400,7 +400,7 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         rom.write_bytes(0x05E04C, struct.pack("I", 0xF496580A))
         rom.write_bytes(0x05E1AE, struct.pack("I", 0xF00EB8))  # Post-shop cleanup
 
-        rom.write_bytes(0x050A6A, struct.pack("I", 0xF4964C0A))
+        rom.write_bytes(0x050A6A, struct.pack("I", 0xF4964D0A))
         rom.write_bytes(0x050B4C, struct.pack("I", 0xF496500A))
         rom.write_bytes(0x050C2E, struct.pack("I", 0xF496540A))
 
@@ -411,13 +411,13 @@ def write_shop_checks(world, rom, shop_checks) -> None:
         rom.write_bytes(0x3407E0, bytearray([item_id_table[world.filler_shop[0]], 0x00, 0x00, 0x00, 0x49, 0x01]))
         rom.write_bytes(0x3407E6, bytearray([item_id_table[world.filler_shop[1]], 0x00, 0x00, 0x00, 0x4A, 0x01]))
 
-        rom.write_bytes(0x3408DC, bytearray([0xE0]))
-        rom.write_bytes(0x3408E2, bytearray([0x5D]))
-        rom.write_bytes(0x3408E8, bytearray([0x5A]))
-        rom.write_bytes(0x3408EE, bytearray([0x7F]))
-        rom.write_bytes(0x3408F4, bytearray([0x5F]))
-        rom.write_bytes(0x3408FA, bytearray([0x6C]))
-        rom.write_bytes(0x340900, bytearray([0x8C]))
+        rom.write_bytes(0x3408DC, bytearray([0xE0, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x3408E2, bytearray([0x5D, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x3408E8, bytearray([0x5A, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x3408EE, bytearray([0x7F, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x3408F4, bytearray([0x5F, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x3408FA, bytearray([0x6C, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
+        rom.write_bytes(0x340900, bytearray([0x8C, 0x00, 0x00, 0x00, 0xFF, 0xFF]))
 
 
 

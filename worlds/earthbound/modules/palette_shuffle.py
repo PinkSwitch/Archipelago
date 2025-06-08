@@ -44,6 +44,7 @@ def map_palette_shuffle(world, rom):
         chosen_palette = world.random.choice(choosable_palettes)
         if item in event_palettes:
             rom.copy_bytes(0x381002 + (chosen_palette * 192), 189, 0x1A7CA9 + (map_palettes[item] * 192))
-            rom.write_bytes(0x1A7CC7 + (map_palettes[item] * 192), struct.pack("H", event_palettes[item]))
+            #rom.write_bytes(0x1A7CC7 + (map_palettes[item] * 192), struct.pack("H", event_palettes[item]))
         else:
-            rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))
+            rom.copy_bytes(0x381002 + (chosen_palette * 192), 189, 0x1A7CA9 + (map_palettes[item] * 192))
+            #rom.copy_bytes(0x381000 + (chosen_palette * 192), 191, 0x1A7CA7 + (map_palettes[item] * 192))

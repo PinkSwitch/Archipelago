@@ -853,9 +853,9 @@ def randomize_weapons(world, rom):
             weapon.offense = 10
         else:
             if world.options.progressive_weapons:
-                weapon.offense = world.random.randint(1, weapon_cap)
-            else:
                 weapon.offense = world.random.randint(10, weapon_cap)
+            else:
+                weapon.offense = world.random.randint(1, weapon_cap)
 
         if weapon.can_equip == "Poo":
             front_name = world.random.choice(weapon_names[weapon.can_equip])
