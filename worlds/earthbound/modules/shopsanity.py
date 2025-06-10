@@ -325,7 +325,7 @@ def write_shop_checks(world, rom, shop_checks) -> None:
             flag = location.address - 0xEB1000
             if location.item.player == world.player:
                 if world.options.remote_items:
-                    if location.item.name in special_name_table:
+                    if location.item.name in special_name_table or location.item.name in money_item_table:
                         item_type = 0x04
                         item_id = 0xAD
                     else:

@@ -228,22 +228,11 @@ def patch_rom(world, rom, player: int):
             else:
                 item = location.item.name
             item_name_loc = (((location.address - 0xEB0000) * 128) + 0x3F0000)
-            item_text = bytearray(0)
-            player_text = bytearray(0)
             # todo; replace with the encoder function
-            for char in location.item.name[:128]:
-                if char in eb_text_table:
-                    item_text.extend(eb_text_table[char])
-                else:
-                    item_text.extend([0x6F])
+            item_text = text_encoder(location.item.name, 128)
             item_text.extend([0x00])
             player_name_loc = (((location.address - 0xEB0000) * 48) + 0x3F8000)
-            for char in receiver_name[:48]:
-                if char in eb_text_table:
-                    player_text.extend(eb_text_table[char])
-                else:
-                    player_text.extend([0x6F])
-            player_text.extend([0x00])
+            player_text = text_encoder(receiver_name, 48)
             # Locations over this address are Shopsanity locations and handled in the shopsanity module
             if location.address < 0xEB1000:
                 rom.write_bytes(item_name_loc, bytearray(item_text))

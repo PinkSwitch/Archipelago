@@ -360,7 +360,6 @@ class EarthBoundClient(SNIClient):
                                 prog_shops.append(location)
                     await ctx.send_msgs([{"cmd": "LocationScouts", "locations": prog_shops, "create_as_hint": 2}])
 
-
         await ctx.send_msgs([{
                     "cmd": "Set",
                     "key": f"{ctx.team}_{ctx.slot}_melody_status",
