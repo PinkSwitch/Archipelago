@@ -328,6 +328,9 @@ JML LoadPhotoColor
 ORG $00FA22
 JML GetRemoteMoney
 
+ORG $C2A03F
+JML ClearStatusVars
+
 ;new jmls
 
 
@@ -12657,6 +12660,13 @@ STZ $B5F1
 LDA $006D
 AND #$A000
 JML $C0B8F4
+
+ClearStatusVars:
+LDA #$766E
+STA $0E
+STZ $B587
+STZ $B588
+JML $C2A044
 
 
 
