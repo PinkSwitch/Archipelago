@@ -94,6 +94,7 @@ class FSAdventuresWorld(World):
 
     def generate_early(self):
         self.maidens_required = json.dumps(self.options.maidens_required.value)
+        self.patch_id = f"FSAP_{self.random.randint(1, 999999):06d}_{self.multiworld.get_player_name{self.player}}"
 
 
     def generate_output(self, output_directory: str) -> None:
