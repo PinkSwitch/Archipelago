@@ -1,10 +1,26 @@
 from typing import List, Dict, TYPE_CHECKING, Optional
-from BaseClasses import Region, Location
+from BaseClasses import Region, Location, MultiWorld
 from .Locations import LocationData
-from .Options import MagicantMode
-if TYPE_CHECKING:
-    from . import EarthBoundWorld
+from .Options import MagicantMode, EBOptions
 
+
+Starting_region_list = {
+        0: "Northern Onett",
+        1: "Onett",
+        2: "Twoson",
+        3: "Happy-Happy Village",
+        4: "Threed",
+        5: "Saturn Valley",
+        6: "Fourside",
+        7: "Winters",
+        8: "Summers",
+        9: "Dalaam",
+        10: "Scaraba",
+        11: "Deep Darkness",
+        12: "Tenda Village",
+        13: "Lost Underworld",
+        14: "Magicant"
+    }
 
 class EBLocation(Location):
     game: str = "EarthBound"
@@ -14,100 +30,97 @@ class EBLocation(Location):
         super().__init__(player, name, address, parent)
 
 
-def init_areas(world: "EarthBoundWorld", locations: List[LocationData]) -> None:
-    multiworld = world.multiworld
-    player = world.player
+def init_areas(multiworld: MultiWorld, player: int,
+               options: EBOptions, locations: List[LocationData]) -> None:
 
     locations_per_region = get_locations_per_region(locations)
 
     regions = [
-        create_region(world, player, locations_per_region, "Menu"),
-        create_region(world, player, locations_per_region, "Ness's Mind"),
-        create_region(world, player, locations_per_region, "Northern Onett"),
-        create_region(world, player, locations_per_region, "Onett"),
-        create_region(world, player, locations_per_region, "Arcade"),
-        create_region(world, player, locations_per_region, "Giant Step"),
-        create_region(world, player, locations_per_region, "Twoson"),
-        create_region(world, player, locations_per_region, "Everdred's House"),
-        create_region(world, player, locations_per_region, "Peaceful Rest Valley"),
-        create_region(world, player, locations_per_region, "Happy-Happy Village"),
-        create_region(world, player, locations_per_region, "Happy-Happy HQ"),
-        create_region(world, player, locations_per_region, "Lilliput Steps"),
-        create_region(world, player, locations_per_region, "Threed"),
-        create_region(world, player, locations_per_region, "Threed Underground"),
-        create_region(world, player, locations_per_region, "Boogey Tent"),
-        create_region(world, player, locations_per_region, "Grapefruit Falls"),
-        create_region(world, player, locations_per_region, "Belch's Factory"),
-        create_region(world, player, locations_per_region, "Saturn Valley"),
-        create_region(world, player, locations_per_region, "Upper Saturn Valley"),
-        create_region(world, player, locations_per_region, "Milky Well"),
-        create_region(world, player, locations_per_region, "Dusty Dunes Desert"),
-        create_region(world, player, locations_per_region, "Gold Mine"),
-        create_region(world, player, locations_per_region, "Monkey Caves"),
-        create_region(world, player, locations_per_region, "Fourside"),
-        create_region(world, player, locations_per_region, "Moonside"),
-        create_region(world, player, locations_per_region, "Fourside Dept. Store"),
-        create_region(world, player, locations_per_region, "Magnet Hill"),
-        create_region(world, player, locations_per_region, "Monotoli Building"),
-        create_region(world, player, locations_per_region, "Winters"),
-        create_region(world, player, locations_per_region, "Snow Wood Boarding School"),
-        create_region(world, player, locations_per_region, "Southern Winters"),
-        create_region(world, player, locations_per_region, "Brickroad Maze"),
-        create_region(world, player, locations_per_region, "Rainy Circle"),
-        create_region(world, player, locations_per_region, "Andonuts Lab Area"),
-        create_region(world, player, locations_per_region, "Stonehenge Base"),
-        create_region(world, player, locations_per_region, "Summers"),
-        create_region(world, player, locations_per_region, "Summers Museum"),
-        create_region(world, player, locations_per_region, "Dalaam"),
-        create_region(world, player, locations_per_region, "Pink Cloud"),
-        create_region(world, player, locations_per_region, "Scaraba"),
-        create_region(world, player, locations_per_region, "Pyramid"),
-        create_region(world, player, locations_per_region, "Southern Scaraba"),
-        create_region(world, player, locations_per_region, "Dungeon Man"),
-        create_region(world, player, locations_per_region, "Deep Darkness"),
-        create_region(world, player, locations_per_region, "Deep Darkness Darkness"),
-        create_region(world, player, locations_per_region, "Tenda Village"),
-        create_region(world, player, locations_per_region, "Lumine Hall"),
-        create_region(world, player, locations_per_region, "Lost Underworld"),
-        create_region(world, player, locations_per_region, "Fire Spring"),
-        create_region(world, player, locations_per_region, "Magicant"),
-        create_region(world, player, locations_per_region, "Sea of Eden"),
-        create_region(world, player, locations_per_region, "Cave of the Present"),
-        create_region(world, player, locations_per_region, "Global ATM Access"),
-        create_region(world, player, locations_per_region, "Common Condiment Shop")
+        create_region(multiworld, player, locations_per_region, "Menu"),
+        create_region(multiworld, player, locations_per_region, "Ness's Mind"),
+        create_region(multiworld, player, locations_per_region, "Northern Onett"),
+        create_region(multiworld, player, locations_per_region, "Onett"),
+        create_region(multiworld, player, locations_per_region, "Arcade"),
+        create_region(multiworld, player, locations_per_region, "Giant Step"),
+        create_region(multiworld, player, locations_per_region, "Twoson"),
+        create_region(multiworld, player, locations_per_region, "Everdred's House"),
+        create_region(multiworld, player, locations_per_region, "Peaceful Rest Valley"),
+        create_region(multiworld, player, locations_per_region, "Happy-Happy Village"),
+        create_region(multiworld, player, locations_per_region, "Happy-Happy HQ"),
+        create_region(multiworld, player, locations_per_region, "Lilliput Steps"),
+        create_region(multiworld, player, locations_per_region, "Threed"),
+        create_region(multiworld, player, locations_per_region, "Threed Underground"),
+        create_region(multiworld, player, locations_per_region, "Boogey Tent"),
+        create_region(multiworld, player, locations_per_region, "Grapefruit Falls"),
+        create_region(multiworld, player, locations_per_region, "Belch's Factory"),
+        create_region(multiworld, player, locations_per_region, "Saturn Valley"),
+        create_region(multiworld, player, locations_per_region, "Upper Saturn Valley"),
+        create_region(multiworld, player, locations_per_region, "Milky Well"),
+        create_region(multiworld, player, locations_per_region, "Dusty Dunes Desert"),
+        create_region(multiworld, player, locations_per_region, "Gold Mine"),
+        create_region(multiworld, player, locations_per_region, "Monkey Caves"),
+        create_region(multiworld, player, locations_per_region, "Fourside"),
+        create_region(multiworld, player, locations_per_region, "Moonside"),
+        create_region(multiworld, player, locations_per_region, "Fourside Dept. Store"),
+        create_region(multiworld, player, locations_per_region, "Magnet Hill"),
+        create_region(multiworld, player, locations_per_region, "Monotoli Building"),
+        create_region(multiworld, player, locations_per_region, "Winters"),
+        create_region(multiworld, player, locations_per_region, "Snow Wood Boarding School"),
+        create_region(multiworld, player, locations_per_region, "Southern Winters"),
+        create_region(multiworld, player, locations_per_region, "Brickroad Maze"),
+        create_region(multiworld, player, locations_per_region, "Rainy Circle"),
+        create_region(multiworld, player, locations_per_region, "Andonuts Lab Area"),
+        create_region(multiworld, player, locations_per_region, "Stonehenge Base"),
+        create_region(multiworld, player, locations_per_region, "Summers"),
+        create_region(multiworld, player, locations_per_region, "Summers Museum"),
+        create_region(multiworld, player, locations_per_region, "Dalaam"),
+        create_region(multiworld, player, locations_per_region, "Pink Cloud"),
+        create_region(multiworld, player, locations_per_region, "Scaraba"),
+        create_region(multiworld, player, locations_per_region, "Pyramid"),
+        create_region(multiworld, player, locations_per_region, "Southern Scaraba"),
+        create_region(multiworld, player, locations_per_region, "Dungeon Man"),
+        create_region(multiworld, player, locations_per_region, "Deep Darkness"),
+        create_region(multiworld, player, locations_per_region, "Deep Darkness Darkness"),
+        create_region(multiworld, player, locations_per_region, "Tenda Village"),
+        create_region(multiworld, player, locations_per_region, "Lumine Hall"),
+        create_region(multiworld, player, locations_per_region, "Lost Underworld"),
+        create_region(multiworld, player, locations_per_region, "Fire Spring"),
+        create_region(multiworld, player, locations_per_region, "Magicant"),
+        create_region(multiworld, player, locations_per_region, "Sea of Eden"),
+        create_region(multiworld, player, locations_per_region, "Cave of the Present"),
+        create_region(multiworld, player, locations_per_region, "Global ATM Access"),
+        create_region(multiworld, player, locations_per_region, "Common Condiment Shop")
 
     ]
-    if world.options.giygas_required:
+    if options.giygas_required:
         regions.extend([
-            create_region(world, player, locations_per_region, "Cave of the Past"),
-            create_region(world, player, locations_per_region, "Endgame")
+            create_region(multiworld, player, locations_per_region, "Cave of the Past"),
+            create_region(multiworld, player, locations_per_region, "Endgame")
         ])
     multiworld.regions += regions
 
-def connect_area_exits(world):
-    multiworld = world.multiworld
-    player = world.player
-
-    connect_menu_region(world)
-    arcade_connection = world.dungeon_connections["Arcade"]
-    giant_step_connection = world.dungeon_connections["Giant Step"]
-    lilliput_steps_connection = world.dungeon_connections["Lilliput Steps"]
-    happy_happy_hq_connection = world.dungeon_connections["Happy-Happy HQ"]
-    belch_factory_connection = world.dungeon_connections["Belch's Factory"]
-    milky_well_connection = world.dungeon_connections["Milky Well"]
-    gold_mine_connection = world.dungeon_connections["Gold Mine"]
-    moonside_connection = world.dungeon_connections["Moonside"]
-    monotoli_building_connection = world.dungeon_connections["Monotoli Building"]
-    magnet_hill_connection = world.dungeon_connections["Magnet Hill"]
-    pink_cloud_connection = world.dungeon_connections["Pink Cloud"]
-    pyramid_connection = world.dungeon_connections["Pyramid"]
-    dungeon_man_connection = world.dungeon_connections["Dungeon Man"]
-    rainy_circle_connection = world.dungeon_connections["Rainy Circle"]
-    stonehenge_connection = world.dungeon_connections["Stonehenge Base"]
-    lumine_hall_connection = world.dungeon_connections["Lumine Hall"]
-    fire_spring_connection = world.dungeon_connections["Fire Spring"]
-    sea_of_eden_connection = world.dungeon_connections["Sea of Eden"]
-    brickroad_maze_connection = world.dungeon_connections["Brickroad Maze"]
+def connect_area_exits(multiworld: MultiWorld, player: int, starting_region:str,
+                       options: EBOptions, dungeon_connections:dict[str,str]):
+    connect_menu_region(multiworld, player, starting_region)
+    arcade_connection = dungeon_connections["Arcade"]
+    giant_step_connection = dungeon_connections["Giant Step"]
+    lilliput_steps_connection = dungeon_connections["Lilliput Steps"]
+    happy_happy_hq_connection = dungeon_connections["Happy-Happy HQ"]
+    belch_factory_connection = dungeon_connections["Belch's Factory"]
+    milky_well_connection = dungeon_connections["Milky Well"]
+    gold_mine_connection = dungeon_connections["Gold Mine"]
+    moonside_connection = dungeon_connections["Moonside"]
+    monotoli_building_connection = dungeon_connections["Monotoli Building"]
+    magnet_hill_connection = dungeon_connections["Magnet Hill"]
+    pink_cloud_connection = dungeon_connections["Pink Cloud"]
+    pyramid_connection = dungeon_connections["Pyramid"]
+    dungeon_man_connection = dungeon_connections["Dungeon Man"]
+    rainy_circle_connection = dungeon_connections["Rainy Circle"]
+    stonehenge_connection = dungeon_connections["Stonehenge Base"]
+    lumine_hall_connection = dungeon_connections["Lumine Hall"]
+    fire_spring_connection = dungeon_connections["Fire Spring"]
+    sea_of_eden_connection = dungeon_connections["Sea of Eden"]
+    brickroad_maze_connection = dungeon_connections["Brickroad Maze"]
 
     multiworld.get_region("Ness's Mind", player).add_exits(["Onett", "Twoson", "Happy-Happy Village", "Threed", "Saturn Valley", "Dusty Dunes Desert", "Fourside", "Winters", "Summers", "Dalaam", "Scaraba", "Deep Darkness", "Tenda Village", "Lost Underworld", "Magicant"],
                 {"Onett": lambda state: state.has("Onett Teleport", player),
@@ -219,14 +232,14 @@ def connect_area_exits(world):
 
     multiworld.get_region("Lost Underworld", player).add_exits([fire_spring_connection])
 
-    if world.options.giygas_required:
+    if options.giygas_required:
         multiworld.get_region("Cave of the Present", player).add_exits(["Cave of the Past"],
                                                                     {"Cave of the Past": lambda state: state.has("Power of the Earth", player)})
 
         multiworld.get_region("Cave of the Past", player).add_exits(["Endgame"],
                                                                     {"Endgame": lambda state: state.has("Paula", player)})
 
-    if world.options.magicant_mode < MagicantMode.option_optional_boost:  # 3
+    if options.magicant_mode < MagicantMode.option_optional_boost:  # 3
         multiworld.get_region("Magicant", player).add_exits(["Global ATM Access", sea_of_eden_connection],
                                                             {sea_of_eden_connection: lambda state: state.has("Ness", player)})
 
@@ -238,8 +251,8 @@ def create_location(player: int, location_data: LocationData, region: Region) ->
     return location
 
 
-def create_region(world: "EarthBoundWorld", player: int, locations_per_region: Dict[str, List[LocationData]], name: str) -> Region:
-    region = Region(name, player, world.multiworld)
+def create_region(multiworld: MultiWorld, player: int, locations_per_region: Dict[str, List[LocationData]], name: str) -> Region:
+    region = Region(name, player, multiworld)
 
     if name in locations_per_region:
         for location_data in locations_per_region[name]:
@@ -258,27 +271,8 @@ def get_locations_per_region(locations: List[LocationData]) -> Dict[str, List[Lo
     return per_region
 
 
-def connect_menu_region(world: "EarthBoundWorld") -> None:
-    starting_region_list = {
-        0: "Northern Onett",
-        1: "Onett",
-        2: "Twoson",
-        3: "Happy-Happy Village",
-        4: "Threed",
-        5: "Saturn Valley",
-        6: "Fourside",
-        7: "Winters",
-        8: "Summers",
-        9: "Dalaam",
-        10: "Scaraba",
-        11: "Deep Darkness",
-        12: "Tenda Village",
-        13: "Lost Underworld",
-        14: "Magicant"
-    }
-
-    world.starting_region = starting_region_list[world.start_location]
-    world.multiworld.get_region("Menu", world.player).add_exits([world.starting_region, "Ness's Mind"],
-                          {"Ness's Mind": lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, world.player),
-                                world.starting_region: lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, world.player)})
+def connect_menu_region(multiworld: MultiWorld, player: int, starting_region: str) -> None:
+    multiworld.get_region("Menu", player).add_exits([starting_region, "Ness's Mind"],
+                          {"Ness's Mind": lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, player),
+                                starting_region: lambda state: state.has_any({"Ness", "Paula", "Jeff", "Poo"}, player)})
     
