@@ -11,7 +11,7 @@ import itertools
 import settings
 from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations
-from .Regions import init_areas, connect_area_exits
+from .Regions import init_areas, connect_area_exits, Starting_region_list
 from .Options import EBOptions, eb_option_groups
 from .setup_game import setup_gamevars, place_static_items
 from .modules.enemy_data import initialize_enemies
@@ -82,6 +82,35 @@ class EarthBoundWorld(World):
     locked_locations: List[str]
     location_cache: List[Location]
 
+    event_count: int
+    progressive_filler_bats: int
+    progressive_filler_pans: int
+    progressive_filler_guns: int
+    progressive_filler_bracelets: int
+    progressive_filler_other: int
+    world_version = world_version
+    armor_list: Dict[str, EBArmor]
+    weapon_list: Dict[str, EBWeapon]
+    boss_slots: Dict[str, SlotInfo]
+    boss_info: Dict[str, BossData]
+    starting_character = str | None
+    rom_name = str | None
+    starting_area_teleport = str | None
+    common_items: list[str]
+    uncommon_items: list[str]
+    rare_items: list[str]
+    common_gear: list[str]
+    uncommon_gear: list[str]
+    rare_gear: list[str]
+    money: list[str]
+    get_all_spheres: threading.Event
+    boss_list: List[str]
+    start_location: int
+    starting_region: str
+    dungeon_connections:dict[str,str]
+    slime_pile_wanted_item: str | None
+
+
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
         super().__init__(multiworld, player)
@@ -95,22 +124,14 @@ class EarthBoundWorld(World):
         self.progressive_filler_bracelets = 0
         self.progressive_filler_other = 0
         self.world_version = world_version
-        self.removed_teleports = []
-        self.armor_list: Dict[str, EBArmor]
-        self.weapon_list: Dict[str, EBWeapon]
-        self.boss_slots: Dict[str, SlotInfo]
-        self.boss_info: Dict[str, BossData]
         self.starting_character = None
-        self.locals = []
         self.rom_name = None
         self.starting_area_teleport = None
-        self.common_gear = []
-        self.uncommon_gear = []
-        self.rare_gear = []
         self.get_all_spheres = threading.Event()
-        self.boss_list: List[str] = []
-        self.starting_region = int
+        self.boss_list = []
+        self.starting_location = 0
         self.dungeon_connections = {}
+        self.slime_pile_wanted_item = None
 
         self.common_items = [
             "Cookie",
@@ -283,8 +304,9 @@ class EarthBoundWorld(World):
             self.options.local_items.value |= self.item_name_groups["PSI"]
 
     def create_regions(self) -> None:
-        init_areas(self, get_locations(self))
-        connect_area_exits(self)
+        self.starting_region = Starting_region_list[self.start_location]
+        init_areas(self.multiworld, self.player, self.options, get_locations(self.options))
+        connect_area_exits(self.multiworld, self.player, self.starting_region, self.options, self.dungeon_connections)
         place_static_items(self)
 
     def create_items(self) -> None:

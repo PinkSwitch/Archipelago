@@ -1,8 +1,5 @@
 from typing import List, Optional, NamedTuple, TYPE_CHECKING
-from .Options import MagicantMode, ShopRandomizer
-
-if TYPE_CHECKING:
-    from . import EarthBoundWorld
+from .Options import MagicantMode, ShopRandomizer, EBOptions
 
 
 class LocationData(NamedTuple):
@@ -11,7 +8,7 @@ class LocationData(NamedTuple):
     code: Optional[int]
 
 
-def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
+def get_locations(options: EBOptions) -> List[LocationData]:
 
     location_table: List[LocationData] = [
         LocationData("Northern Onett", "Onett - Tracy Gift", 0xEB0000),
@@ -273,28 +270,28 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
         LocationData("Global ATM Access", "Any ATM", None)
     ]
 
-    if world.options.giygas_required:
+    if options.giygas_required:
         location_table += [
             LocationData("Cave of the Past", "Cave of the Past - Present", 0xEB00F0),
             LocationData("Endgame", "Giygas", None),
         ]
 
-    if world.options.alternate_sanctuary_goal:
+    if options.alternate_sanctuary_goal:
         location_table += [
             LocationData("Ness's Mind", "+2 Sanctuaries", None)
         ]
 
-    if world.options.magicant_mode in range(1, 3):
+    if options.magicant_mode in range(1, 3):
         location_table += [
             LocationData("Sea of Eden", "Magicant - Ness's Nightmare", None),
         ]
 
-    if not world.options.magicant_mode:
+    if not options.magicant_mode:
         location_table += [
             LocationData("Sea of Eden", "Magicant - Ness's Nightmare", 0xEB00ED),
         ]
 
-    if world.options.magicant_mode < MagicantMode.option_alternate_goal:
+    if options.magicant_mode < MagicantMode.option_alternate_goal:
         location_table += [
             LocationData("Magicant", "Magicant - Ness's Gift", 0xEB00E8),
             LocationData("Magicant", "Magicant - Present Near Ness", 0xEB00E9),
@@ -303,12 +300,12 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
             LocationData("Magicant", "Magicant - Hills Present", 0xEB00EC),
             LocationData("Magicant", "Magicant - Town Present", 0xEB00FA)
         ]
-    if world.options.magicant_mode == MagicantMode.option_alternate_goal:
+    if options.magicant_mode == MagicantMode.option_alternate_goal:
         location_table += [
             LocationData("Ness's Mind", "+1 Sanctuary", None)
         ]
 
-    if world.options.shop_randomizer == ShopRandomizer.option_shopsanity:
+    if options.shop_randomizer == ShopRandomizer.option_shopsanity:
         location_table += [
             LocationData("Onett", "Onett Drugstore - Right Counter Slot 1", 0xeb1000),
             LocationData("Onett", "Onett Drugstore - Right Counter Slot 2", 0xeb1001),
@@ -585,7 +582,7 @@ def get_locations(world: "EarthBoundWorld") -> List[LocationData]:
             LocationData("Andonuts Lab Area", "Andonuts Lab - Caveman Shop Slot 5", 0xeb11c4)
         ]
 
-        if world.options.magicant_mode < MagicantMode.option_alternate_goal:
+        if options.magicant_mode < MagicantMode.option_alternate_goal:
             location_table += [
                 LocationData("Magicant", "Magicant - Shop Slot 1", 0xeb10f5),
                 LocationData("Magicant", "Magicant - Shop Slot 2", 0xeb10f6)
