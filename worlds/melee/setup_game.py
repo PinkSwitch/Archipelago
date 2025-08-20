@@ -28,7 +28,7 @@ def setup_gamevars(world) -> None:
 
     world.total_trophy_count = world.options.trophies_required + world.options.extra_trophies
     if world.total_trophy_count > 293:
-        logger.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is too high.
+        logging.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is too high.
                 Required: {world.options.trophies_required} | Extra: {world.options.extra_trophies}. This will be automatically capped.""")
         world.total_trophy_count = 293
         world.options.extra_trophies = 293 - world.options.trophies_required

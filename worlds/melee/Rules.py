@@ -112,6 +112,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
     good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda"}
     decent_combo_char = {"Yoshi", "Falco"}
 
+    event_chars = {"Mario", "Donkey Kong", "Ness", "Yoshi", "Kirby", "Samus", "Link", "Bowser", "Falco", "Captain Falcon", "Young Link", "Luigi", "Jigglypuff", "Marth", "Fox", "Mr. Game & Watch"}
+
     set_rule(world.multiworld.get_location("Event Match - Game & Watch Forever!", player), lambda state: state.has("Mr. Game & Watch", player))
 
     set_rule(world.multiworld.get_location("Mario - Adventure Trophy Unlock", player), lambda state: state.has("Mario", player))

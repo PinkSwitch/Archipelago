@@ -4,7 +4,7 @@ import threading
 import pkgutil
 import json
 import base64
-import logger
+import logging
 
 
 from typing import List, Set, Dict, TextIO
@@ -99,8 +99,10 @@ class SSBMWorld(World):
         excess_trophies = len(self.picked_trophies) - (self.location_count - self.required_item_count)
 
         if excess_trophies > 0:
-            logger.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is higher than the number of locations and required items.
+            logging.warning(f"""Warning: {self.multiworld.get_player_name(self.player)}'s generated Trophy Count is higher than the number of locations and required items.
                     Your Trophy counts have automatically been lowered as necessary.""")
+
+        #TODO; slice and shuffle this i guess? dont get it
         for i in range(excess_trophies):
             self.removed_list = list(self.picked_trophies)
             self.picked_trophies.remove(self.random.choice(self.removed_list))
@@ -145,6 +147,7 @@ class SSBMWorld(World):
         
         self.encoded_slot_name = self.player_name.encode("utf-8")
         self.encoded_slot_name = base64.b64encode(self.encoded_slot_name).decode("utf-8")
+        print(self.encoded_slot_name)
         output_patch = apply_patch(self, base_str, output_directory)
         output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
         with open(output_file_path, "w") as file:
