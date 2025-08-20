@@ -124,6 +124,7 @@ class SSBMOptions(PerGameCommonOptions):
     goal_all_events: GoalAllEvents
     goal_all_targets: GoalTargets
     solo_cstick_smash: SoloCSmash
+    start_inventory_from_pool: StartInventoryPool
 
 
 ssbm_option_groups = [

@@ -444,7 +444,7 @@ location_ids = {
     "Home Run Contest - 1,312 Ft.": 0x1AF,
     "Home Run Contest - 1,476 Ft.": 0x1B0,
 
-    "Game - Unlock All Stages": 0x1B1,
+    "Game - All Stages + Secret Characters": 0x1B1,
     "Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth": 0x1B2,
     "Game - Unlock Roy, Pichu, Ganondorf, Dr. Mario, Young Link, and Falco": 0x1B3,
     "Game - Have Birdo Trophy": 0x1B4,

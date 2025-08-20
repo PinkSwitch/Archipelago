@@ -220,7 +220,7 @@ item_table: Dict[str, ItemData] = {
     "Kirby Hat 4 (Trophy)": ItemData("Trophies", 0xCB, ItemClassification.progression_skip_balancing, 0),
     "Kirby Hat 5 (Trophy)": ItemData("Trophies", 0xCC, ItemClassification.progression_skip_balancing, 0),
     "Princess Peach's Castle (Trophy)": ItemData("Trophies", 0xCD, ItemClassification.progression_skip_balancing, 0),
-    "Banzai Bill": ItemData("Trophies", 0xCE, ItemClassification.progression_skip_balancing, 0),
+    "Banzai Bill (Trophy)": ItemData("Trophies", 0xCE, ItemClassification.progression_skip_balancing, 0),
     "Lakitu (Trophy)": ItemData("Trophies", 0xCF, ItemClassification.progression_skip_balancing, 0),
     "Pidgit (Trophy)": ItemData("Trophies", 0xD0, ItemClassification.progression_skip_balancing, 0),
     "Birdo (Trophy)": ItemData("Trophies", 0xD1, ItemClassification.progression),

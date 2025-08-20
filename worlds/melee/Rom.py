@@ -18,6 +18,8 @@ def apply_patch(world, basepatch, output):
     template = Template(basepatch)
     if world.options.lottery_pool_mode:
         disable_class_upgrades = True
+    else:
+        disable_class_upgrades = False
         
     result = template.render(
             PLAYER_NAME = world.player_name,

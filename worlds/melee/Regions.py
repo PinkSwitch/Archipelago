@@ -1,6 +1,7 @@
 from typing import List, Dict, TYPE_CHECKING
 from BaseClasses import Region, Location
 from .Locations import LocationData
+from .Rules import secret_characters
 if TYPE_CHECKING:
     from . import SSBMWorld
 
@@ -83,12 +84,12 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
                                                         "Lottery Secret Characters": lambda state: state.has("Progressive Lottery Pool", player, 3 or state.has("Lottery Pool Upgrade (Secret Characters)", player)),
                                                         "Lottery 250 Trophies": lambda state: state.has("Progressive Lottery Pool", player, 4) or state.has("Lottery Pool Upgrade (250 Trophies)", player)})
     else:
-        multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters", "Lottery 250 Trophies"],
-                                                        {"Lottery Adventure/Classic Clear": lambda state: state.has("Progressive Lottery Pool", player, 1),
-                                                        "Lottery Secret Characters": lambda state: state.has("Progressive Lottery Pool", player, 3)})
+        multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters"],
+                                                        {"Lottery Adventure/Classic Clear": lambda state: state.has_all({"Adventure Mode", "Classic Mode"}, player),
+                                                        "Lottery Secret Characters": lambda state: state.has_all(secret_characters, player)})
         if world.use_250_trophy_pool:
             multiworld.get_region("Lottery Base", player).add_exits(["Lottery 250 Trophies"],
-                                                            {"Lottery Adventure/Classic Clear": lambda state: state.has("Progressive Lottery Pool", player, 1)})
+                                                            {"Lottery Adventure/Classic Clear": lambda state: state.has_group_unique("Trophies", player, 250)})
 
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:

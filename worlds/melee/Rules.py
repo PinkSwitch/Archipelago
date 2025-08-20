@@ -89,6 +89,8 @@ allstar_trophies = {
     "Pichu (Smash Alt Trophy)",
     "Roy (Smash Alt Trophy)",}
 
+secret_characters = {"Dr. Mario", "Luigi", "Ganondorf", "Falco", "Marth", "Roy", "Jigglypuff", "Mewtwo", "Pichu", "Young Link", "Mr. Game & Watch"}
+
 
 def set_location_rules(world: "SSBMWorld") -> None:
     player = world.player
@@ -103,6 +105,12 @@ def set_location_rules(world: "SSBMWorld") -> None:
     regular_stages = {"Mushroom Kingdom II", "Poké Floats", "Big Blue", "Flat Zone", "Fourside", "Brinstar Depths"}
 
     base_characters = {"Mario", "Donkey Kong", "Bowser", "Peach", "Captain Falcon", "Yoshi", "Fox", "Ness", "Ice Climbers", "Kirby", "Samus", "Link", "Pikachu", "Zelda"}
+
+    good_hr_characters = {"Ganondorf", "Yoshi", "Jigglypuff", "Roy"} #Can get over 1,400
+    decent_hr_characters = {"Dr. Mario"} #Can get over 1,326 casually
+
+    good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda"}
+    decent_combo_char = {"Yoshi", "Falco"}
 
     set_rule(world.multiworld.get_location("Event Match - Game & Watch Forever!", player), lambda state: state.has("Mr. Game & Watch", player))
 
@@ -187,16 +195,16 @@ def set_location_rules(world: "SSBMWorld") -> None:
     set_rule(world.multiworld.get_location("Pichu - All-Star Trophy Unlock", player), lambda state: state.has("Pichu", player))
     set_rule(world.multiworld.get_location("Roy - All-Star Trophy Unlock", player), lambda state: state.has("Roy", player))
 
-    set_rule(world.multiworld.get_location("Training Mode - 125 Combined Combos", player), lambda state: state.has("????", player))
-    set_rule(world.multiworld.get_location("Training Mode - 10-Hit Combo", player), lambda state: state.has("????", player))
-    set_rule(world.multiworld.get_location("Training Mode - 20-Hit Combo", player), lambda state: state.has("????", player))
+    set_rule(world.multiworld.get_location("Training Mode - 125 Combined Combos", player), lambda state: state.has_all(good_combo_char, player) and state.has("Bowser", player))
+    set_rule(world.multiworld.get_location("Training Mode - 10-Hit Combo", player), lambda state: state.has_any(decent_combo_char, player) and state.has("Bowser", player))
+    set_rule(world.multiworld.get_location("Training Mode - 20-Hit Combo", player), lambda state: state.has_any(good_combo_char, player) and state.has("Bowser", player))
 
-    set_rule(world.multiworld.get_location("Home Run Contest - 16,404 Ft. Combined", player), lambda state: state.has("????", player))
-    set_rule(world.multiworld.get_location("Home Run Contest - 984 Ft.", player), lambda state: state.has("????", player))
-    set_rule(world.multiworld.get_location("Home Run Contest - 1,312 Ft.", player), lambda state: state.has("????", player))
-    set_rule(world.multiworld.get_location("Home Run Contest - 1,476 Ft.", player), lambda state: state.has("????", player))
+    set_rule(world.multiworld.get_location("Home Run Contest - 16,404 Ft. Combined", player), lambda state: state.has_group_unique("Characters", player, 16))
+    #set_rule(world.multiworld.get_location("Home Run Contest - 984 Ft.", player), lambda state: state.has("????", player)) expect everyone to get at least 1K
+    set_rule(world.multiworld.get_location("Home Run Contest - 1,312 Ft.", player), lambda state: state.has_any(decent_hr_characters, player) or state.has_any(good_hr_characters, player))
+    set_rule(world.multiworld.get_location("Home Run Contest - 1,476 Ft.", player), lambda state: state.has_any(good_hr_characters, player))
 
-    set_rule(world.multiworld.get_location("Game - Unlock All Stages", player), lambda state: state.has_group_unique("Stages", player, 11))
+    set_rule(world.multiworld.get_location("Game - All Stages + Secret Characters", player), lambda state: state.has_group_unique("Stages", player, 11) and state.has_all(secret_characters, player))
     set_rule(world.multiworld.get_location("Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth", player), lambda state: state.has_all({
         "Luigi", "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth"}, player))
 
@@ -279,11 +287,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.multiworld.get_location("Target Test - Roy", player), lambda state: state.has("Roy", player))
 
     if world.options.bonus_checks:
-        set_rule(world.multiworld.get_location("Bonus - Meteor Smash", player), lambda state: state.has_any({"Captain Falcon", "Donkey Kong", "Falco", "Fox", "Ganondorf",
-                                                                                                             "Ice Climbers", "Kirby", "Link", "Luigi", "Young Link",
-                                                                                                             "Mario", "Marth", "Mewtwo", "Mr. Game & Watch", "Ness",
-                                                                                                             "Peach", "Roy", "Samus", "Yoshi", "Zelda"}, player))
-                                                                                                             
+        set_rule(world.multiworld.get_location("Bonus - Meteor Smash", player), lambda state: state.has_any(can_meteor, player))
+                                                                                                            
         set_rule(world.multiworld.get_location("Bonus - Meteor Clear", player), lambda state: state.has_any(can_meteor, player))
         set_rule(world.multiworld.get_location("Bonus - Poser Power", player), lambda state: state.has("Luigi", player))
         set_rule(world.multiworld.get_location("Bonus - Poser KO", player), lambda state: state.has("Luigi", player))

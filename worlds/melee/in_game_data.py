@@ -11,7 +11,7 @@ global_trophy_table =["Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Al
                         "Mr. Game & Watch (Trophy)", "Mr. Game & Watch (Smash Trophy)", "Mr. Game & Watch (Smash Alt Trophy)", "Dr. Mario (Trophy)", "Dr. Mario (Smash Trophy)", "Dr. Mario (Smash Alt Trophy)",
                         "Ganondorf (Trophy)", "Ganondorf (Smash Trophy)", "Ganondorf (Smash Alt Trophy)", "Falco Lombardi (Trophy)", "Falco Lombardi (Smash Trophy)", "Falco Lombardi (Smash Alt Trophy)",
                         "Young Link (Trophy)", "Young Link (Smash Trophy)", "Young Link (Smash Alt Trophy)", "Pichu (Trophy)", "Pichu (Smash Trophy)", "Pichu (Smash Alt Trophy)",
-                        "Roy (Trophy)", "Roy (Smash Trophy)", "Roy (Smash Alt Trophy)", "Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Alt Trophy)",
+                        "Roy (Trophy)", "Roy (Smash Trophy)", "Roy (Smash Alt Trophy)",
                         "Male Wire Frame (Trophy)", "Female Wire Frame (Trophy)", "Fighting Wire Frame (Trophy)", "Giga Bowser (Trophy)", "Master Hand (Trophy)", "Crazy Hand (Trophy)",
                         "Food (Trophy)", "Maxim Tomato (Trophy)", "Heart Container (Trophy)", "Warp Star (Trophy)", "Ray Gun (Trophy)", "Super Scope (Trophy)",
                         "Fire Flower (Trophy)", "Lip's Stick (Trophy)", "Star Rod (Trophy)", "Beam Sword (Trophy)", "Home-Run Bat (Trophy)", "Fan (Trophy)",

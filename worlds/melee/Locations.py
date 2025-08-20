@@ -128,7 +128,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Home-Run Contest", "Home Run Contest - 1,312 Ft.", 0x1AF),
         LocationData("Home-Run Contest", "Home Run Contest - 1,476 Ft.", 0x1B0),
 
-        LocationData("Game Menu", "Game - Unlock All Stages", 0x1B1),
+        LocationData("Game Menu", "Game - All Stages + Secret Characters", 0x1B1),
         LocationData("Game Menu", "Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth", 0x1B2),
         LocationData("Game Menu", "Game - Unlock Roy, Pichu, Ganondorf, Dr. Mario, Young Link, and Falco", 0x1B3),
         LocationData("Game Menu", "Game - Have Birdo Trophy", 0x1B4),
@@ -326,7 +326,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     if world.all_adventure_trophies:
         location_table += [
-            LocationData("Adventure Mode", "Adventure Mode - All Character Trophies", 0x183)] #This should only be present if all the trophies exist
+            LocationData("Adventure Mode", "Adventure Mode - All Character Trophies", 0x17B)] #This should only be present if all the trophies exist
 
     if world.all_classic_trophies:
         location_table += [
@@ -334,7 +334,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     if world.all_allstar_trophies:
         location_table += [
-            LocationData("All-Star Mode", "All-Star Mode - All Character Trophies", 0x183)] #This should only be present if all the trophies exist
+            LocationData("All-Star Mode", "All-Star Mode - All Character Trophies", 0x180)] #This should only be present if all the trophies exist
 
     if world.options.goal_giga_bowser:
         world.goal_count += 1
@@ -388,7 +388,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Target Test", "Target Test - Mr. Game & Watch", 0x19A),
             LocationData("Target Test", "Target Test - Marth", 0x19B),
             LocationData("Target Test", "Target Test - Roy", 0x19C),
-
         ]
 
     if world.options.event_checks:
@@ -441,35 +440,42 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         ]
 
     if world.options.enable_rare_pokemon_checks:
+            location_table += [
             LocationData("Any Melee", "Melee - See Mew", 0x1A8),
-            LocationData("Any Melee", "Melee - See Celebi", 0x1A9),
+            LocationData("Any Melee", "Melee - See Celebi", 0x1A9)]
 
     if world.options.diskun_trophy_check:
-            LocationData("Any Melee", "Melee - All Bonuses", 0x1A4), # This needs logic....
+            location_table += [
+            LocationData("Any Melee", "Melee - All Bonuses", 0x1A4)] # This needs logic....
 
     if world.options.mewtwo_unlock_check:
-            LocationData("Any Melee", "Melee - Mewtwo Unlock Match", 0x1C0),
+            location_table += [
+            LocationData("Any Melee", "Melee - Mewtwo Unlock Match", 0x1C0)]
 
     if world.options.vs_count_checks:
+            location_table += [
             LocationData("Any Melee", "Melee - 10 VS. Matches", 0x1C4),
             LocationData("Any Melee", "Melee - 50 VS. Matches", 0x1C5),
             LocationData("Any Melee", "Melee - 100 VS. Matches", 0x1C6),
             LocationData("Any Melee", "Melee - 100 Coin Battles", 0x1C7),
             LocationData("Any Melee", "Melee - 150 VS. Matches", 0x1C8),
             LocationData("Any Melee", "Melee - 200 VS. Matches", 0x1C9),
-            LocationData("Any Melee", "Melee - 1000 VS. Matches", 0x1CA),
+            LocationData("Any Melee", "Melee - 1000 VS. Matches", 0x1CA)]
 
     if world.options.long_targettest_checks:
+            location_table += [
             LocationData("Target Test", "Target Test - All Characters, Sub 12:30 Total Time", 0x19D),
             LocationData("Target Test", "All Characters", 0x19E),
-            LocationData("Target Test", "All Characters, Sub 25 Minutes Total Time", 0x19F),
+            LocationData("Target Test", "All Characters, Sub 25 Minutes Total Time", 0x19F)]
 
     if world.options.enable_annoying_multiman_checks:
+        location_table += [
         LocationData("Multi Man Melee", "15 Minute Melee Clear", 0x1A0),
-        LocationData("Multi Man Melee", "Cruel Melee 5 KO's", 0x1A2),
+        LocationData("Multi Man Melee", "Cruel Melee 5 KO's", 0x1A2)]
 
 
     if world.options.bonus_checks:
+        location_table += [
         LocationData("Any Melee", "Bonus - Dedicated Specialist", 0x01),
         LocationData("Any Melee", "Bonus - One-Two Punch", 0x02),
         LocationData("Any Melee", "Bonus - First Strike", 0x03),
@@ -663,7 +669,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Adventure Mode", "Bonus - Goomba KO", 0xD0),
         LocationData("Adventure Mode", "Bonus - Koopa KO", 0xD1),
         LocationData("Any Melee", "Bonus - Beam Swordsman", 0xD2),
-        LocationData("Any Melee", "Bonus - Home-Run King", 0xD2),
+        LocationData("Any Melee", "Bonus - Home-Run King", 0xD3),
         LocationData("Any Melee", "Bonus - Laser Marksman", 0xD4),
         LocationData("Any Melee", "Bonus - Flame Thrower", 0xD5),
         LocationData("Any Melee", "Bonus - Headless Hammer", 0xD7),
@@ -694,10 +700,11 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Fall Guy", 0xF2),
         LocationData("Any Melee", "Bonus - Self-Destructor", 0xF3),
         LocationData("Any Melee", "Bonus - Master of Disaster", 0xF4),
-        LocationData("Any Main 1-P", "Bonus - No-Miss Clear", 0xF6),
+        LocationData("Any Main 1-P", "Bonus - No-Miss Clear", 0xF6)]
         
 
         if world.options.enable_hard_bonuses:
+            location_table += [
             LocationData("Any Melee", "Bonus - All Variations", 0x09),
             LocationData("Any Melee", "Bonus - All on One", 0x0A),
             LocationData("Any Melee", "Bonus - Lethal Weapon", 0x0B),
@@ -709,20 +716,22 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Any Melee", "Bonus - Poser Poseur", 0x52),
             LocationData("Any Melee", "Bonus - Pose Breaker", 0x54),
             LocationData("Any Melee", "Bonus - Quadruple KO", 0x62),
-            LocationData("Any Melee", "Bonus - Quintuple KO", 0x63),
+            LocationData("Any Melee", "Bonus - Quintuple KO", 0x63)]
 
 
         if world.options.enable_extreme_bonuses:
+            location_table += [
             LocationData("Any Melee", "Bonus - Power Shielder", 0x26),
             LocationData("Any Melee", "Bonus - Climactic Clash", 0x4E),
             LocationData("Any Melee", "Bonus - Button Masher", 0x56),
             LocationData("Any Melee", "Bonus - Hammer Throw", 0xD6),
             LocationData("Any Melee", "Bonus - Control Freak", 0xDA),
             LocationData("Any Main 1-P", "Bonus - Speedster", 0xEB),
-            LocationData("Any Main 1-P", "Bonus - No-Damage Clear", 0xF5),
+            LocationData("Any Main 1-P", "Bonus - No-Damage Clear", 0xF5)]
 
         if world.options.enable_rare_pokemon_checks:
+            location_table += [
             LocationData("Any Melee", "Bonus - Mew Catcher", 0xCE),
-            LocationData("Any Melee", "Bonus - Celebi Catcher", 0xCF),
+            LocationData("Any Melee", "Bonus - Celebi Catcher", 0xCF)]
 
     return location_table

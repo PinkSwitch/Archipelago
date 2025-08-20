@@ -4,6 +4,7 @@ import threading
 import pkgutil
 import json
 import base64
+import logger
 
 
 from typing import List, Set, Dict, TextIO
@@ -15,10 +16,10 @@ from .Items import get_item_names_per_category, filler_item_table, item_table
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import SSBMOptions, ssbm_option_groups
-from .Rules import set_location_rules, adventure_trophies, classic_trophies, allstar_trophies
+from .Rules import set_location_rules
 from .Rom import apply_patch
 from .static_location_data import location_ids
-from .setup_game import setup_gamevars, place_static_items
+from .setup_game import setup_gamevars, place_static_items, calculate_trophy_based_locations
 from .in_game_data import global_trophy_table
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
 
@@ -86,25 +87,36 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
+        self.location_count = 282
+        self.required_item_count = 54
 
     def create_regions(self) -> None:
-        if adventure_trophies.issubset(self.picked_trophies):
-            self.all_adventure_trophies = True
-
-        if classic_trophies.issubset(self.picked_trophies):
-            self.all_classic_trophies = True
-
-        if allstar_trophies.issubset(self.picked_trophies):
-            self.all_allstar_trophies = True
-
-        for item in self.multiworld.precollected_items[self.player]:
-            if item.name in global_trophy_table and item.name not in self.picked_trophies:
+        for item in self.multiworld.precollected_items[self.player]: #First add starting inventories to the Trophy Pool
+            if item.name in global_trophy_table:
                 self.picked_trophies.add(item.name)
 
-        if len(self.picked_trophies) >= 250 or self.options.lottery_pool_mode:
-            self.use_250_trophy_pool = True
-        else:
-            self.use_250_trophy_pool = False
+        calculate_trophy_based_locations(self) #Check if the current Trophy Pool will affect the location pool
+        excess_trophies = len(self.picked_trophies) - (self.location_count - self.required_item_count)
+
+        if excess_trophies > 0:
+            logger.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is higher than the number of locations and required items.
+                    Your Trophy counts have automatically been lowered as necessary.""")
+        for i in range(excess_trophies):
+            self.removed_list = list(self.picked_trophies)
+            self.picked_trophies.remove(self.random.choice(self.removed_list))
+            if self.options.extra_trophies:
+                self.options.extra_trophies.value -= 1
+            else:
+                self.options.trophies_required.value -= 1
+
+
+        calculate_trophy_based_locations(self) # If the Trophy Pool was adjusted, recalculate this to remove the locations
+
+        for trophy in self.picked_trophies:
+            if trophy not in self.multiworld.precollected_items[self.player]: #Don't create any extra trophies
+                self.multiworld.itempool.append(self.create_item(trophy))
+            self.extra_item_count += 1
+
         init_areas(self, get_locations(self))
         place_static_items(self)
 

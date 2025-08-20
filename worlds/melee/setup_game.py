@@ -1,4 +1,5 @@
 import logging
+from .Rules import adventure_trophies, classic_trophies, allstar_trophies
 
 def setup_gamevars(world) -> None:
     world.all_trophies.remove("Birdo (Trophy)")
@@ -39,8 +40,45 @@ def setup_gamevars(world) -> None:
             trophy = world.random.choice(world.all_trophies)
             world.all_trophies.remove(trophy)
             world.picked_trophies.add(trophy)
-            world.multiworld.itempool.append(world.create_item(trophy))
-            world.extra_item_count += 1
+
+    if world.options.lottery_pool_mode:
+        world.required_item_count += 4
+
+    if world.options.target_checks:
+        world.location_count += 25
+
+    if world.options.event_checks:
+        world.location_count += 45
+
+    if world.options.enable_rare_pokemon_checks:
+        world.location_count += 2
+
+    if world.options.diskun_trophy_check:
+        world.location_count += 1
+
+    if world.options.mewtwo_unlock_check:
+        world.location_count += 1
+
+    if world.options.vs_count_checks:
+        world.location_count += 7
+
+    if world.options.enable_annoying_multiman_checks:
+        world.location_count += 2
+
+    if world.options.long_targettest_checks:
+        world.location_count += 3
+
+    if world.options.bonus_checks:
+        world.location_count += 226
+        
+        if world.options.enable_rare_pokemon_checks:
+            world.location_count += 2 #Pokemon bonuses
+
+        if world.options.enable_hard_bonuses:
+            world.location_count += 12
+
+        if world.options.enable_extreme_bonuses:
+            world.location_count += 7
 
 
 
@@ -63,3 +101,24 @@ def place_static_items(world):
 
     if world.options.goal_all_targets:
         world.get_location("Goal: All Targets Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
+
+def calculate_trophy_based_locations(world):
+    if adventure_trophies.issubset(world.picked_trophies):
+        world.all_adventure_trophies = True
+    else:
+        world.all_adventure_trophies = False
+
+    if classic_trophies.issubset(world.picked_trophies):
+        world.all_classic_trophies = True
+    else:
+        world.all_classic_trophies = False
+
+    if allstar_trophies.issubset(world.picked_trophies):
+        world.all_allstar_trophies = True
+    else:
+        world.all_allstar_trophies = False
+
+    if len(world.picked_trophies) >= 250 or world.options.lottery_pool_mode:
+        world.use_250_trophy_pool = True
+    else:
+        world.use_250_trophy_pool = False
