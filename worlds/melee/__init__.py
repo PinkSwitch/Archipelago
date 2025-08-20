@@ -104,7 +104,7 @@ class SSBMWorld(World):
 
         #TODO; slice and shuffle this i guess? dont get it
         for i in range(excess_trophies):
-            self.removed_list = list(self.picked_trophies)
+            self.removed_list = sorted(self.picked_trophies)
             self.picked_trophies.remove(self.random.choice(self.removed_list))
             if self.options.extra_trophies:
                 self.options.extra_trophies.value -= 1
@@ -141,13 +141,17 @@ class SSBMWorld(World):
     def generate_output(self, output_directory: str) -> None:
         basepatch = pkgutil.get_data(__name__, "melee_base.xml")
         base_str = basepatch.decode("utf-8")
-        self.game_name = f"SSBM_{self.player}{self.player_name}{self.authentication_id}".encode("utf-8")
-        self.game_name = base64.b64encode(self.game_name).decode("utf-8")
-        self.game_name = self.game_name.encode("utf-8")
+        en_slot_num = f"{self.player:07d}"
+        en_slotid = f"{self.authentication_id:10d}"
+        self.game_name = f"SSBM_{en_slot_num}_{en_slotid}"
+        print(self.authentication_id)
+        self.game_name = "".join(f"{byte:02x}" for byte in self.game_name.encode("ascii")) + "00"
         
         self.encoded_slot_name = self.player_name.encode("utf-8")
         self.encoded_slot_name = base64.b64encode(self.encoded_slot_name).decode("utf-8")
-        print(self.encoded_slot_name)
+        self.encoded_slot_name = self.encoded_slot_name.encode("ascii")
+        self.encoded_slot_name = "".join(f"{byte:02x}" for byte in self.encoded_slot_name)
+
         output_patch = apply_patch(self, base_str, output_directory)
         output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
         with open(output_file_path, "w") as file:
@@ -157,14 +161,19 @@ class SSBMWorld(World):
 
     def fill_slot_data(self) -> Dict[str, typing.Any]:
         return {
-            "authentication_id": self.authentication_id
+            "authentication_id": self.authentication_id,
+            "giga_bowser_required": self.options.goal_giga_bowser.value,
+            "crazy_hand_required": self.options.goal_crazy_hand.value,
+            "goal_evn_51": self.options.goal_event_51.value,
+            "goal_all_events": self.options.goal_all_events.value,
+            "targets_required": self.options.goal_all_targets.value,
         }
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
         return Item(name, data.classification, data.code, self.player)
 
-    def get_filler_item_name(self) -> str:  # Todo: make this suck less
+    def get_filler_item_name(self) -> str:  #
         return self.random.choice(filler_item_table)
 
     def get_excluded_items(self) -> Set[str]:
