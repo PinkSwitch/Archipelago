@@ -320,7 +320,7 @@ item_table: Dict[str, ItemData] = {
     "Ryota Hayami (Trophy)": ItemData("Trophies", 0x12F, ItemClassification.progression_skip_balancing, 0),
     "Kensuke Kimachi (Trophy)": ItemData("Trophies", 0x130, ItemClassification.progression_skip_balancing, 0),
     "Love Giant (Trophy)": ItemData("Trophies", 0x131, ItemClassification.progression_skip_balancing, 0),
-    "Hate Giant (Trophy)": ItemData("Trophies", 0x32, ItemClassification.progression_skip_balancing, 0),
+    "Hate Giant (Trophy)": ItemData("Trophies", 0x132, ItemClassification.progression_skip_balancing, 0),
     "Ray Mk II (Trophy)": ItemData("Trophies", 0x133, ItemClassification.progression_skip_balancing, 0),
     "Bayonette (Trophy)": ItemData("Trophies", 0x134, ItemClassification.progression_skip_balancing, 0),
     "Annie (Trophy)": ItemData("Trophies", 0x135, ItemClassification.progression_skip_balancing, 0),
