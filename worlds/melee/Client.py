@@ -11,6 +11,7 @@ import asyncio
 from . import SSBMWorld
 import dolphin_memory_engine as dme
 from .Helper_Functions import StringByteFunction as sbf
+from typing import Optional
 
 from NetUtils import ClientStatus, color
 
@@ -20,9 +21,13 @@ CONNECTION_CONNECTED_STATUS = "Dolphin connected successfully."
 CONNECTION_INITIAL_STATUS = "Dolphin connection has not been initiated."
 
 AUTH_ID_ADDRESS = 0x803BAC5C #
+GAME_SEED_ADDRESS = 0x803BAC6A
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
+
+def read_bytearray(console_address: int, length: int):
+    return bytearray(dme.read_bytes(console_address, length))
 
 
 def read_table(console_address: int, length: int) -> list[int]:
@@ -74,6 +79,7 @@ class SSBMClient(CommonContext):
     game = "Super Smash Bros. Melee"
     patch_suffix = ".xml"
     items_handling = 0b111
+    slot_data: dict | None = {}
 
     def __init__(self, server_address, password):
         super().__init__(server_address, password)
@@ -88,7 +94,6 @@ class SSBMClient(CommonContext):
         ui = super().make_gui()
         ui.base_title = "Super Smash Bros. Melee Archipelago Client"
         return ui
-
 
     async def disconnect(self, allow_autoreconnect: bool = False):
         """
@@ -117,19 +122,28 @@ class SSBMClient(CommonContext):
             return
         await self.send_connect()
 
-    async def ssbm_check_locations(self):
+    async def ssbm_check_locations(self, auth):
         new_checks = []
         from . import in_game_data
         bonus_checks = in_game_data.bonus_checks
 
         bonus_table = read_table(0x8045C348, 0x20)
-        for location, (entry, bit) in bonus_checks.items():
-            if location not in self.locations_checked and bonus_table[entry] & bit:
-                new_checks.append(location)
-                        
-        for new_check_id in new_checks:
-            self.locations_checked.add(new_check_id)
-        print(self.locations_checked)
+        trophy_table = read_table(0x8045C394, 0x249)
+        auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
+        auth_id = auth_id.decode("ascii").rstrip("\x00")
+
+        if auth_id == auth:  #Authenticate we're in the same room so savestates don't override checks
+            for location, (entry, bit) in bonus_checks.items():
+                if location not in self.locations_checked and bonus_table[entry] & bit:
+                    new_checks.append(location)
+
+            for location in trophy_checks:
+                if trophy_table.index(location) & 0x80:
+                    new_checks.append(location) # I need to list all of the trophy locations in trophy order for this...
+                            
+            for new_check_id in new_checks:
+                self.locations_checked.add(new_check_id)
+                
         await self.check_locations(self.locations_checked)
 
 async def dolphin_sync_task(ctx: SSBMClient):
@@ -137,11 +151,12 @@ async def dolphin_sync_task(ctx: SSBMClient):
         try:
             if dme.is_hooked() and ctx.dolphin_status == CONNECTION_CONNECTED_STATUS:
                 if ctx.slot:
-                    await ctx.ssbm_check_locations()
+                    await ctx.ssbm_check_locations(ctx.auth)
                     #await ctx.lm_update_non_savable_ram()
                 else:
                     if not ctx.auth:
-                        ctx.auth = read_string(AUTH_ID_ADDRESS, 16)
+                        auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
+                        ctx.auth = auth_id.decode("ascii").rstrip("\x00")
                         if not ctx.auth:
                             ctx.auth = None
                             ctx.awaiting_rom = False

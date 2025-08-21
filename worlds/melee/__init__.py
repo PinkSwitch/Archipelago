@@ -143,10 +143,10 @@ class SSBMWorld(World):
         try:
             basepatch = pkgutil.get_data(__name__, "melee_base.xml")
             base_str = basepatch.decode("utf-8")
-            self.rom_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:27]
-            self.rom_name.extend([0] * (21 - len(self.rom_name)))
-            self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.rom_name)
+            self.encoded_slot_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:27]
+            self.rom_name = self.encoded_slot_name.decode("ascii").rstrip("\x00")
             print(self.rom_name)
+            self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.encoded_slot_name)
 
             output_patch = apply_patch(self, base_str, output_directory)
             output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
@@ -174,8 +174,7 @@ class SSBMWorld(World):
         self.rom_name_available_event.wait()
         rom_name = getattr(self, "rom_name", None)
         if rom_name:
-            new_name = base64.b64encode(bytes(self.rom_name)).decode()
-            multidata["connect_names"][new_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
+            multidata["connect_names"][self.rom_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
