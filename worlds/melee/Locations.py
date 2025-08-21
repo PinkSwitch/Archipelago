@@ -119,9 +119,9 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Melee - 50 KO's", 0x260),
         LocationData("Any Melee", "Melee - Walk 10,000 Meters", 0x1A7),
 
-        LocationData("Any Melee", "Training Mode - 125 Combined Combos", 0x1A8),
-        LocationData("Any Melee", "Training Mode - 10-Hit Combo", 0x1A9),
-        LocationData("Any Melee", "Training Mode - 20-Hit Combo", 0x1AA),
+        LocationData("Any Melee", "Training Mode - 125 Combined Combos", 0x1AA),
+        LocationData("Any Melee", "Training Mode - 10-Hit Combo", 0x1AB),
+        LocationData("Any Melee", "Training Mode - 20-Hit Combo", 0x1AC),
 
         LocationData("Home-Run Contest", "Home Run Contest - 16,404 Ft. Combined", 0x1AD),
         LocationData("Home-Run Contest", "Home Run Contest - 984 Ft.", 0x1AE),

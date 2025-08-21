@@ -406,16 +406,7 @@ trophy_checks = [
         "Pichu - Adventure Trophy Unlock",
         "Pichu - Classic Trophy Unlock",
         "Pichu - All-Star Trophy Unlock",
-
         "Roy - Adventure Trophy Unlock",
         "Roy - Classic Trophy Unlock",
         "Roy - All-Star Trophy Unlock",
 ]
-
-
-#Crash/Burn, byte 0
-#Poolshark, byte 6
-#deflector, byte 11
-#ricochet rifler, byte 11
-#barrel blast, byte 20
-#Green And red shell, byte 26
