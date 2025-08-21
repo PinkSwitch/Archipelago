@@ -23,11 +23,11 @@ def apply_patch(world, basepatch, output):
         
     result = template.render(
             PLAYER_NAME = world.player_name,
-            GAME_FILE_NAME = world.game_name,
+            GAME_FILE_NAME = world.encoded_slot_name,
             SLOT_NUM = world.player,
             AUTH_ID = world.authentication_id,
             CSTICK_SMASH_SOLO = world.options.solo_cstick_smash,
-            ENCODED_PLAYER_NAME = world.encoded_slot_name,
+            #ENCODED_PLAYER_NAME = world.encoded_slot_name,
             TROPHYCLASS_IN_POOl = disable_class_upgrades)
     return result
     

@@ -139,24 +139,22 @@ class SSBMWorld(World):
         #self.maidens_required = json.dumps(self.options.maidens_required.value)
 
     def generate_output(self, output_directory: str) -> None:
-        basepatch = pkgutil.get_data(__name__, "melee_base.xml")
-        base_str = basepatch.decode("utf-8")
-        en_slot_num = f"{self.player:07d}"
-        en_slotid = f"{self.authentication_id:10d}"
-        self.game_name = f"SSBM_{en_slot_num}_{en_slotid}"
-        print(self.authentication_id)
-        self.game_name = "".join(f"{byte:02x}" for byte in self.game_name.encode("ascii")) + "00"
-        
-        self.encoded_slot_name = self.player_name.encode("utf-8")
-        self.encoded_slot_name = base64.b64encode(self.encoded_slot_name).decode("utf-8")
-        self.encoded_slot_name = self.encoded_slot_name.encode("ascii")
-        self.encoded_slot_name = "".join(f"{byte:02x}" for byte in self.encoded_slot_name)
+        from Main import __version__
+        try:
+            basepatch = pkgutil.get_data(__name__, "melee_base.xml")
+            base_str = basepatch.decode("utf-8")
+            self.rom_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:21]
+            self.rom_name.extend([0] * (21 - len(self.rom_name)))
+            self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.rom_name)
 
-        output_patch = apply_patch(self, base_str, output_directory)
-        output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
-        with open(output_file_path, "w") as file:
-            file.write(output_patch)
-
+            output_patch = apply_patch(self, base_str, output_directory)
+            output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
+            with open(output_file_path, "w") as file:
+                file.write(output_patch)
+        except Exception:
+            raise
+        finally:
+            self.rom_name_available_event.set()
 
 
     def fill_slot_data(self) -> Dict[str, typing.Any]:
@@ -168,6 +166,15 @@ class SSBMWorld(World):
             "goal_all_events": self.options.goal_all_events.value,
             "targets_required": self.options.goal_all_targets.value,
         }
+
+    def modify_multidata(self, multidata: dict) -> None:
+        import base64
+        # wait for self.rom_name to be available.
+        self.rom_name_available_event.wait()
+        rom_name = getattr(self, "rom_name", None)
+        if rom_name:
+            new_name = base64.b64encode(bytes(self.rom_name)).decode()
+            multidata["connect_names"][new_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

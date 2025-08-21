@@ -16,7 +16,7 @@
 		<memory offset="0x803105A4" value="68000000" />
 		<memory offset="0x80310754" value="68000000" />
 		<memory offset="0x803BAC5C" value="{{ GAME_FILE_NAME}}" />
-		<memory offset="0x80001800" value="{{ ENCODED_PLAYER_NAME}}" />
+		<!--<memory offset="0x80001800" value="{{ ENCODED_PLAYER_NAME}}" />-->
 		{% if CSTICK_SMASH_SOLO %}<memory offset="0x8016B480" value="60000000" />{% endif %}
 
 		{% if TROPHYCLASS_IN_POOL %}
