@@ -4,8 +4,8 @@
 	</id>
 	<options>
 		<section name="SSBM Archipelago Mod">
-			<option name="Player: {{ PLAYER_NAME }} | Slot: {{ SLOT_NUM }} | Seed: {{AUTH_ID }}" id="ssbm" default="1">
-				<choice name="Enabled"><patch id="ssbm"/></choice>
+			<option name="Player: {{ PLAYER_NAME }} | Slot: {{ SLOT_NUM }} | Seed: {{AUTH_ID }}" id="SSBM" default="1">
+				<choice name="Enabled"><patch id="SSBMAP"/></choice>
 			</option>
 		</section>
 	</options>

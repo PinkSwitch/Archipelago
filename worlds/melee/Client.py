@@ -19,7 +19,7 @@ CONNECTION_FAILED_STATUS = "Unable to connect to Dolphin. Ensure Dolphin is runn
 CONNECTION_CONNECTED_STATUS = "Dolphin connected successfully."
 CONNECTION_INITIAL_STATUS = "Dolphin connection has not been initiated."
 
-AUTH_ID_ADDRESS = 0x80001b00 # Todo; update this when I make the actual mod
+AUTH_ID_ADDRESS = 0x803BAC5C #
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
@@ -49,9 +49,9 @@ async def write_bytes_and_validate(addr: int, ram_offset: list[str] | None, curr
 
 class SSBMCommandProcessor(ClientCommandProcessor):
     """
-    Command Processor for Four Swords Adventures client commands.
+    Command Processor for Melee client commands.
 
-    This class handles commands specific to Four Swords Adventures.
+    This class handles commands specific to Melee.
     """
 
     def __init__(self, ctx: CommonContext):
@@ -72,7 +72,7 @@ class SSBMCommandProcessor(ClientCommandProcessor):
 class SSBMClient(CommonContext):
     command_processor = SSBMCommandProcessor 
     game = "Super Smash Bros. Melee"
-    patch_suffix = ".apssbm"
+    patch_suffix = ".xml"
     items_handling = 0b111
 
     def __init__(self, server_address, password):

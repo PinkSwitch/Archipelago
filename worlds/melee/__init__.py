@@ -38,7 +38,7 @@ class SSBMWeb(WebWorld):
 
     setup_en = Tutorial(
         "Multiworld Setup Guide",
-        "A guide to setting up the FSA randomizer"
+        "A guide to setting up the Melee randomizer"
         "and connecting to an Archipelago server.",
         "English",
         "setup_en.md",
@@ -143,9 +143,10 @@ class SSBMWorld(World):
         try:
             basepatch = pkgutil.get_data(__name__, "melee_base.xml")
             base_str = basepatch.decode("utf-8")
-            self.rom_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:21]
+            self.rom_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:27]
             self.rom_name.extend([0] * (21 - len(self.rom_name)))
             self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.rom_name)
+            print(self.rom_name)
 
             output_patch = apply_patch(self, base_str, output_directory)
             output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")

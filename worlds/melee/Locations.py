@@ -665,7 +665,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Shy Guy KO", 0xCA),
         LocationData("Any Melee", "Bonus - First Place", 0xCB),
         LocationData("Any Melee", "Bonus - Bob-omb Squad", 0xCC),
-        LocationData("Any Melee", "Bonus - Pokemon KO", 0xCD),
+        LocationData("Any Melee", "Bonus - Pokémon KO", 0xCD),
         LocationData("Adventure Mode", "Bonus - Goomba KO", 0xD0),
         LocationData("Adventure Mode", "Bonus - Koopa KO", 0xD1),
         LocationData("Any Melee", "Bonus - Beam Swordsman", 0xD2),
