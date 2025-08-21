@@ -1,7 +1,7 @@
 import logging
 import struct
 import typing
-import time
+import traceback
 import uuid
 from struct import pack
 from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
@@ -19,6 +19,7 @@ CONNECTION_LOST_STATUS = "Dolphin connection was lost. Please restart your emula
 CONNECTION_FAILED_STATUS = "Unable to connect to Dolphin. Ensure Dolphin is running and SSBM is loaded."
 CONNECTION_CONNECTED_STATUS = "Dolphin connected successfully."
 CONNECTION_INITIAL_STATUS = "Dolphin connection has not been initiated."
+CONNECTION_REFUSED_GAME_STATUS = "Dolphin failed to connect. Ensure your randomized Melee patch is running. Trying again in 5 seconds..."
 
 AUTH_ID_ADDRESS = 0x803BAC5C #
 GAME_SEED_ADDRESS = 0x803BAC6A
@@ -126,6 +127,7 @@ class SSBMClient(CommonContext):
         new_checks = []
         from . import in_game_data
         bonus_checks = in_game_data.bonus_checks
+        trophy_checks = in_game_data.trophy_checks
 
         bonus_table = read_table(0x8045C348, 0x20)
         trophy_table = read_table(0x8045C394, 0x249)

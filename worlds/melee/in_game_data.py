@@ -330,6 +330,10 @@ bonus_checks = {
     0xF6: [31, 0x80]
 }
 
+trophy_checks = {
+    
+}
+
 
 #Crash/Burn, byte 0
 #Poolshark, byte 6
