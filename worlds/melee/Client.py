@@ -141,7 +141,7 @@ class SSBMClient(CommonContext):
 
             for location in trophy_checks:
                 if trophy_table.index(location) & 0x80:
-                    new_checks.append(location) # I need to list all of the trophy locations in trophy order for this...
+                    new_checks.append(trophy_checks.index(location) + 0x12A) # I need to list all of the trophy locations in trophy order for this...
                             
             for new_check_id in new_checks:
                 self.locations_checked.add(new_check_id)
