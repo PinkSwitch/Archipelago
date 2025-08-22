@@ -131,10 +131,12 @@ class SSBMClient(CommonContext):
         trophy_checks = in_game_data.trophy_checks
         event_checks = in_game_data.event_checks
         mode_clears = in_game_data.mode_clears
+        flag_checks = in_game_data.flag_checks
 
         bonus_table = read_table(0x8045C348, 0x20)
         trophy_table = read_table(0x8045C394, 0x249)
         event_table = read_table(0x8045C129, 0x7)
+        special_flag_table = read_table(0x8045C20C, 7)
         auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
         auth_id = auth_id.decode("ascii").rstrip("\x00")
 
@@ -156,6 +158,10 @@ class SSBMClient(CommonContext):
             for location in mode_clears:
                 target_check = read_bytes(mode_clears[location], 1)
                 if target_check & 0x80:
+                    new_checks.append(location)
+
+            for location, (entry, bit) in flag_checks.items():
+                if location not in self.locations_checked and special_flag_table[entry] & bit:
                     new_checks.append(location)
 
                             

@@ -391,6 +391,7 @@ location_ids = {
     "Classic Mode - 5 Minute Clear": 0x181,
     "Classic Mode - Hard/Continueless Clear": 0x182,
     "Classic Mode - All Character Trophies": 0x183,
+    "Classic Mode - Game & Watch Clear": 0x272,
 
     "Target Test - Mario": 0x184,
     "Target Test - Dr. Mario": 0x185,

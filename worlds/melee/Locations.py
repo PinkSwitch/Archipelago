@@ -110,6 +110,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
         LocationData("Classic Mode", "Classic Mode - 5 Minute Clear", 0x181),
         LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
+        LocationData("Classic Mode", "Classic Mode - Game & Watch Clear", 0x272),
 
         LocationData("Multi Man Melee", "Multi Man Melee - 100 Man Melee Sub 4 Minutes", 0x1A1),
         LocationData("Multi Man Melee", "Multi Man Melee - Endless Melee 100 KO's", 0x1A3),

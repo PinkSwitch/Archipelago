@@ -101,7 +101,7 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 282
+        self.location_count = 283
         self.required_item_count = 54
 
     def create_regions(self) -> None:

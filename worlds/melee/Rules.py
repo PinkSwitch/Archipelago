@@ -221,6 +221,9 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     set_rule(world.multiworld.get_location("Game - Unlock All Regular Stages", player), lambda state: state.has_all(regular_stages, player))
 
+    set_rule(world.multiworld.get_location("Classic Mode - Game & Watch Clear", player), lambda state: state.has("Mr. Game & Watch", player))
+    
+
     set_rule(world.multiworld.get_location("Any 1P - Dr. Mario Unlock Match", player), lambda state: state.has("Mario", player))
     set_rule(world.multiworld.get_location("Game - Marth Unlock Match", player), lambda state: state.has_all(base_characters, player))
     set_rule(world.multiworld.get_location("Any 1P - Young Link Unlock Match", player), lambda state: state.has_group_unique("Characters", player, 10))
