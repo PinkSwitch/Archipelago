@@ -102,6 +102,10 @@ class LongTargetChecks(Toggle):
     """Enables Target Test checks locked behind most or all characters."""
     display_name = "Long Target Test Checks"
 
+class DisableTapJump(Toggle):
+    """Removes the ability to jump by tapping Up on the control stick."""
+    display_name = "Disable Tap Jump"
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     trophies_required: TrophiesRequired
@@ -124,6 +128,7 @@ class SSBMOptions(PerGameCommonOptions):
     goal_all_events: GoalAllEvents
     goal_all_targets: GoalTargets
     solo_cstick_smash: SoloCSmash
+    disable_tap_jump: DisableTapJump
     start_inventory_from_pool: StartInventoryPool
 
 
@@ -159,6 +164,7 @@ ssbm_option_groups = [
     ]),
 
     OptionGroup("QOL Settings", [
-        SoloCSmash
+        SoloCSmash,
+        DisableTapJump
     ]),
 ]

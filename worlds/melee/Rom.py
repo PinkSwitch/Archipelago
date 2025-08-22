@@ -27,7 +27,7 @@ def apply_patch(world, basepatch, output):
             SLOT_NUM = world.player,
             AUTH_ID = world.authentication_id,
             CSTICK_SMASH_SOLO = world.options.solo_cstick_smash,
-            #ENCODED_PLAYER_NAME = world.encoded_slot_name,
+            DISABLE_TAP_JUMP = world.options.disable_tap_jump,
             TROPHYCLASS_IN_POOl = disable_class_upgrades)
     return result
     
