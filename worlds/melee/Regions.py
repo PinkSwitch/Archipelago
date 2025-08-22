@@ -80,8 +80,8 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
     if world.options.lottery_pool_mode:
         multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters", "Lottery 250 Trophies"],
                                                         {"Lottery Adventure/Classic Clear": lambda state: state.has("Progressive Lottery Pool", player, 1) or state.has("Lottery Pool Upgrade (Adventure/Classic Clear)", player),
-                                                        "Lottery 200 Vs. Matches": lambda state: state.has("Progressive Lottery Pool", player, 2 or state.has("Lottery Pool Upgrade (200 Vs. Matches)", player)),
-                                                        "Lottery Secret Characters": lambda state: state.has("Progressive Lottery Pool", player, 3 or state.has("Lottery Pool Upgrade (Secret Characters)", player)),
+                                                        "Lottery 200 Vs. Matches": lambda state: state.has("Progressive Lottery Pool", player, 2) or state.has("Lottery Pool Upgrade (200 Vs. Matches)", player),
+                                                        "Lottery Secret Characters": lambda state: state.has("Progressive Lottery Pool", player, 3) or state.has("Lottery Pool Upgrade (Secret Characters)", player),
                                                         "Lottery 250 Trophies": lambda state: state.has("Progressive Lottery Pool", player, 4) or state.has("Lottery Pool Upgrade (250 Trophies)", player)})
     else:
         multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters"],

@@ -132,6 +132,7 @@ class SSBMClient(CommonContext):
         event_checks = in_game_data.event_checks
         mode_clears = in_game_data.mode_clears
         flag_checks = in_game_data.flag_checks
+        trophy_owned_checks = in_game_data.trophy_owned_checks
 
         bonus_table = read_table(0x8045C348, 0x20)
         trophy_table = read_table(0x8045C394, 0x249)
@@ -164,7 +165,12 @@ class SSBMClient(CommonContext):
                 if location not in self.locations_checked and special_flag_table[entry] & bit:
                     new_checks.append(location)
 
-                            
+            for location in trophy_owned_checks:
+                check_id = location_ids[location]
+                trophy = trophy_table[((trophy_owned_checks[location] - 1) * 2) + 1]
+                if trophy:
+                    new_checks.append(check_id)
+
             for new_check_id in new_checks:
                 self.locations_checked.add(new_check_id)
                 

@@ -20,10 +20,10 @@ def setup_gamevars(world) -> None:
             world.multiworld.itempool.append(world.create_item("Progressive Lottery Pool"))
             world.extra_item_count += 1
     elif world.options.lottery_pool_mode == 2:
-        world.multiworld.itempool.extend[world.create_item("Lottery Pool Upgrade (Adventure/Classic Clear)"),
-                                         world.create_item("Lottery Pool Upgrade (Secret Characters)"),
-                                         world.create_item("Lottery Pool Upgrade (200 Vs. Matches)"),
-                                         world.create_item("Lottery Pool Upgrade (250 Trophies)"),]
+        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (Adventure/Classic Clear)")),
+        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (Secret Characters)")),
+        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (200 Vs. Matches)")),
+        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (250 Trophies)")),
         world.extra_item_count += 4
 
     world.total_trophy_count = world.options.trophies_required + world.options.extra_trophies

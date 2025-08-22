@@ -159,7 +159,6 @@ class SSBMWorld(World):
             base_str = basepatch.decode("utf-8")
             self.encoded_slot_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:27]
             self.rom_name = self.encoded_slot_name.decode("ascii").rstrip("\x00")
-            print(self.rom_name)
             self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.encoded_slot_name)
 
             output_patch = apply_patch(self, base_str, output_directory)

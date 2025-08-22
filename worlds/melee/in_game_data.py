@@ -737,3 +737,11 @@ flag_checks = {
     0x1BF: [3, 0x40],
     0x1BE: [3, 0x80]
 }
+
+trophy_owned_checks = {
+    "Game - Have Birdo Trophy": 166,
+    "Game - Have Kraid Trophy": 182,
+    "Game - Have Falcon Flyer Trophy": 175,
+    "Game - Have UFO Trophy": 186,
+    "Game - Have Sudowoodo Trophy": 141
+}
