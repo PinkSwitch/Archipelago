@@ -439,10 +439,10 @@ location_ids = {
     "Training Mode - 10-Hit Combo": 0x1AB,
     "Training Mode - 20-Hit Combo": 0x1AC,
 
-    "Home Run Contest - 16,404 Ft. Combined": 0x1AD,
-    "Home Run Contest - 984 Ft.": 0x1AE,
-    "Home Run Contest - 1,312 Ft.": 0x1AF,
-    "Home Run Contest - 1,476 Ft.": 0x1B0,
+    "Home-Run Contest - 16,404 Ft. Combined": 0x1AD,
+    "Home-Run Contest - 984 Ft.": 0x1AE,
+    "Home-Run Contest - 1,312 Ft.": 0x1AF,
+    "Home-Run Contest - 1,476 Ft.": 0x1B0,
 
     "Game - All Stages + Secret Characters": 0x1B1,
     "Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth": 0x1B2,
@@ -598,7 +598,7 @@ location_ids = {
     "Lottery (Classic + Adventure Clear) - Gooey": 0x241,
     "Lottery (Classic + Adventure Clear) - Great Fox": 0x242,
     "Lottery (Classic + Adventure Clear) - Hammer": 0x243,
-    "Lottery (Classic + Adventure Clear) - King DeDeDe": 0x244,
+    "Lottery (Classic + Adventure Clear) - King Dedede": 0x244,
     "Lottery (Classic + Adventure Clear) - Moon": 0x245,
     "Lottery (Classic + Adventure Clear) - Pak E. Derm": 0x246,
     "Lottery (Classic + Adventure Clear) - Pidgit": 0x247,
@@ -635,7 +635,7 @@ location_ids = {
     "Lottery (5 VS Matches) - Kensuke Kimachi": 0x265,
     "Lottery (5 VS Matches) - Lugia": 0x266,
     "Lottery (5 VS Matches) - Megavitamins": 0x267,
-    "Lottery (5 VS Matches) - Meta Knight": 0x268,
+    "Lottery (5 VS Matches) - Meta-Knight": 0x268,
     "Lottery (5 VS Matches) - Peppy Hare": 0x269,
     "Lottery (5 VS Matches) - Poison Mushroom": 0x26A,
     "Lottery (5 VS Matches) - Polar Bear": 0x26B,
@@ -645,8 +645,6 @@ location_ids = {
     "Lottery (5 VS Matches) - Togepi": 0x26F,
     "Lottery (5 VS Matches) - Totakeke": 0x270,
     "Lottery (5 VS Matches) - Vacuum Luigi": 0x271,
-
-    "Goal: Giga Bowser Defeated": None,
 
     #"Event Match Milestone - 6 Events Clear": 0xF7,
     #"Event Match Milestone - 10 Events Clear": 0xF8,

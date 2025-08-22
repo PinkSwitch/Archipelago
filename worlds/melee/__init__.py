@@ -67,6 +67,20 @@ class SSBMWorld(World):
     web = SSBMWeb()
     # topology_present = True
 
+#    @staticmethod
+ #   def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+  #      return slot_data
+
+   # ut_can_gen_without_yaml = True
+
+    #tracker_world: ClassVar = {
+     #   "map_page_folder": "ut_map_page",
+      #  "map_page_maps": "maps.json",
+       # "map_page_locations": "locations.json",
+        #"map_page_setting_key": "{player}_{team}_nine_sols_area",
+        #"map_page_index": map_page_index
+    #}
+
     options_dataclass = SSBMOptions
     options: SSBMOptions
 

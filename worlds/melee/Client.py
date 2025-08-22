@@ -126,6 +126,7 @@ class SSBMClient(CommonContext):
     async def ssbm_check_locations(self, auth):
         new_checks = []
         from . import in_game_data
+        from .static_location_data import location_ids
         bonus_checks = in_game_data.bonus_checks
         trophy_checks = in_game_data.trophy_checks
 
@@ -140,8 +141,10 @@ class SSBMClient(CommonContext):
                     new_checks.append(location)
 
             for location in trophy_checks:
-                if trophy_table.index(location) & 0x80:
-                    new_checks.append(trophy_checks.index(location) + 0x12A) # I need to list all of the trophy locations in trophy order for this...
+                check_id = location_ids[location]
+                trophy = trophy_table[(trophy_checks[location] - 1) * 2]
+                if trophy & 0x80:
+                    new_checks.append(check_id)
                             
             for new_check_id in new_checks:
                 self.locations_checked.add(new_check_id)

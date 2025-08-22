@@ -201,10 +201,10 @@ def set_location_rules(world: "SSBMWorld") -> None:
     set_rule(world.multiworld.get_location("Training Mode - 10-Hit Combo", player), lambda state: state.has_any(decent_combo_char, player) and state.has("Bowser", player))
     set_rule(world.multiworld.get_location("Training Mode - 20-Hit Combo", player), lambda state: state.has_any(good_combo_char, player) and state.has("Bowser", player))
 
-    set_rule(world.multiworld.get_location("Home Run Contest - 16,404 Ft. Combined", player), lambda state: state.has_group_unique("Characters", player, 16))
-    #set_rule(world.multiworld.get_location("Home Run Contest - 984 Ft.", player), lambda state: state.has("????", player)) expect everyone to get at least 1K
-    set_rule(world.multiworld.get_location("Home Run Contest - 1,312 Ft.", player), lambda state: state.has_any(decent_hr_characters, player) or state.has_any(good_hr_characters, player))
-    set_rule(world.multiworld.get_location("Home Run Contest - 1,476 Ft.", player), lambda state: state.has_any(good_hr_characters, player))
+    set_rule(world.multiworld.get_location("Home-Run Contest - 16,404 Ft. Combined", player), lambda state: state.has_group_unique("Characters", player, 16))
+    #set_rule(world.multiworld.get_location("Home-Run Contest - 984 Ft.", player), lambda state: state.has("????", player)) expect everyone to get at least 1K
+    set_rule(world.multiworld.get_location("Home-Run Contest - 1,312 Ft.", player), lambda state: state.has_any(decent_hr_characters, player) or state.has_any(good_hr_characters, player))
+    set_rule(world.multiworld.get_location("Home-Run Contest - 1,476 Ft.", player), lambda state: state.has_any(good_hr_characters, player))
 
     set_rule(world.multiworld.get_location("Game - All Stages + Secret Characters", player), lambda state: state.has_group_unique("Stages", player, 11) and state.has_all(secret_characters, player))
     set_rule(world.multiworld.get_location("Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth", player), lambda state: state.has_all({
