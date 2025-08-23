@@ -745,3 +745,23 @@ trophy_owned_checks = {
     "Game - Have UFO Trophy": 186,
     "Game - Have Sudowoodo Trophy": 141
 }
+
+coin_items = {
+    "Coin": 10,
+    "10 Coins": 100,
+    "20 Coins": 200
+}
+
+secret_characters = [
+    "Mr. Game & Watch",
+    "Luigi",
+    "Marth",
+    "Mewtwo",
+    "Jigglypuff",
+    "Falco",
+    "Young Link",
+    "Dr. Mario",
+    "Roy",
+    "Pichu",
+    "Ganondorf"
+]

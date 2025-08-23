@@ -3,7 +3,6 @@ import struct
 import typing
 import traceback
 import uuid
-from struct import pack
 from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
 import Patch
 import Utils
@@ -23,6 +22,10 @@ CONNECTION_REFUSED_GAME_STATUS = "Dolphin failed to connect. Ensure your randomi
 
 AUTH_ID_ADDRESS = 0x803BAC5C #
 GAME_SEED_ADDRESS = 0x803BAC6A
+LAST_RECV_ITEM_ADDR = 0x8045C368
+COIN_COUNTER = 0x8045C10A
+TROPHY_COUNT = 0x8045C390
+MENU_ID = 0x80479D30
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
@@ -176,13 +179,23 @@ class SSBMClient(CommonContext):
                 
         await self.check_locations(self.locations_checked)
 
+    async def give_majors(self, auth):
+        from .in_game_data import global_trophy_table, coin_items, secret_characters, base_characters
+        for item in self.items_received:
+            if item not in coin_items and item not in global_trophy_table:
+                #you are here
+
+                
+                
+        await self.check_locations(self.locations_checked)
+
 async def dolphin_sync_task(ctx: SSBMClient):
     while not ctx.exit_event.is_set():
         try:
             if dme.is_hooked() and ctx.dolphin_status == CONNECTION_CONNECTED_STATUS:
                 if ctx.slot:
                     await ctx.ssbm_check_locations(ctx.auth)
-                    #await ctx.lm_update_non_savable_ram()
+                    await ctx.give_majors(ctx.auth)
                 else:
                     if not ctx.auth:
                         auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
@@ -227,7 +240,47 @@ async def dolphin_sync_task(ctx: SSBMClient):
 
 
 async def give_player_items(ctx: SSBMClient):
-    print("nuh uh")
+    from .in_game_data import coin_items, global_trophy_table
+    async def wait_for_next_loop(time_to_wait: float):
+        await asyncio.sleep(time_to_wait)
+
+    while not ctx.exit_event.is_set():
+        if not (dme.is_hooked() and ctx.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            await wait_for_next_loop(5)
+            continue
+
+        menu_id = int.from_bytes(dme.read_bytes(MENU_ID, 1))
+        if menu_id == 0x0D:
+            continue
+
+        last_recv_idx = int.from_bytes(dme.read_bytes(LAST_RECV_ITEM_ADDR, 4))
+        if len(ctx.items_received) == last_recv_idx:
+            await wait_for_next_loop(0.5)
+            continue
+
+        recv_items = ctx.items_received[last_recv_idx:]
+        for item in recv_items:
+            name = ctx.item_names.lookup_in_game(item.item)
+            print(name)
+            if name in coin_items:
+                coin_count = int.from_bytes(dme.read_bytes(COIN_COUNTER, 2))
+                coin_count += coin_items[name]
+                coin_count = struct.pack(">H", coin_count)
+                dme.write_bytes(COIN_COUNTER, coin_count)
+            elif name in global_trophy_table:
+                trophy_index = global_trophy_table.index(name)
+                trophy_amount = int.from_bytes(dme.read_bytes(0x8045C395 + (trophy_index * 2), 1))
+                if not trophy_amount:
+                    trophy_counter = int.from_bytes(dme.read_bytes(TROPHY_COUNT, 2))
+                    trophy_counter += 1
+                    trophy_counter = struct.pack(">H", trophy_counter)
+                    dme.write_bytes(TROPHY_COUNT, trophy_counter)
+                trophy_amount = 1
+                dme.write_byte(0x8045C395 + (trophy_index * 2), trophy_amount)
+
+            last_recv_idx += 1
+            dme.write_word(LAST_RECV_ITEM_ADDR, last_recv_idx)
+        await wait_for_next_loop(0.5)
 
 
 def launch(connect=None, password=None):
