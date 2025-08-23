@@ -179,6 +179,7 @@ class SSBMWorld(World):
             "goal_evn_51": self.options.goal_event_51.value,
             "goal_all_events": self.options.goal_all_events.value,
             "targets_required": self.options.goal_all_targets.value,
+            "total_trophies_required": self.options.trophies_required.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:

@@ -89,6 +89,7 @@ class SSBMClient(CommonContext):
     patch_suffix = ".xml"
     items_handling = 0b111
     slot_data: dict | None = {}
+    trophy_total: "Label" = None
 
     def __init__(self, server_address, password):
         super().__init__(server_address, password)
@@ -103,6 +104,20 @@ class SSBMClient(CommonContext):
         ui = super().make_gui()
         ui.base_title = "Super Smash Bros. Melee Archipelago Client"
         return ui
+
+    async def draw_trophy_counter(self):
+        # KivyMD support, also keeps support with regular Kivy (hopefully)
+        try:
+            from kvui import MDLabel as Label
+        except ImportError:
+            from kvui import Label
+
+        if not self.trophy_total:
+            self.trophy_total = Label(text=f"", size_hint_x=None, width=120, halign="center")
+            self.ui.connect_layout.add_widget(self.trophy_total)
+
+        read_trophy_count = int.from_bytes(dme.read_bytes(TROPHY_COUNT, 2))
+        self.trophy_total.text = f"Trophies: {read_trophy_count}/50"
 
     async def disconnect(self, allow_autoreconnect: bool = False):
         """
@@ -130,6 +145,22 @@ class SSBMClient(CommonContext):
                 logger.info("A game is playing in dolphin, waiting to verify additional details...")
             return
         await self.send_connect()
+
+    def on_package(self, cmd: str, args: dict):
+        """
+        Handle incoming packages from the server.
+
+        :param cmd: The command received from the server.
+        :param args: The command arguments.
+        """
+        super().on_package(cmd, args)
+        if cmd == "Connected":  # On Connect
+            self.total_trophies_required = int(args["slot_data"]["trophies_required"])
+            self.giga_bowser_goal = bool(args["slot_data"]["giga_bowser_required"])
+            self.crazy_hand_required = bool(args["slot_data"]["crazy_hand_goal"])
+            self.event_51_required = bool(args["slot_data"]["goal_evn_51"])
+            self.all_events_required = bool(args["slot_data"]["goal_all_events"])
+            self.all_targets_required = bool(args["slot_data"]["targets_required"])
 
     async def ssbm_check_locations(self, auth):
         new_checks = []
@@ -227,6 +258,14 @@ class SSBMClient(CommonContext):
                     event_total = event_total.to_bytes(1, "big")
                     dme.write_bytes(AP_EVENT_COUNTER, event_total)
 
+                    lottery_total = 0
+                    lottery_bit = 0
+                    lottery_pool_total = sum(1 for item in self.items_received if item.item == 0x151)
+                    lottery_pool_total = min(lottery_pool_total, 4)
+                    for i in range(lottery_pool_total):
+                        lottery_bit |= 0x10 << lottery_pool_total
+                    lottery_total |= lottery_bit
+
                     if name in lottery_pool_static:
                         item_bit = (0x10 << lottery_pool_static.index(name))
                         lottery_pool = int.from_bytes(dme.read_bytes(LOTTERY_POOL_UPGRADES, 1))
@@ -246,6 +285,8 @@ async def dolphin_sync_task(ctx: SSBMClient):
         try:
             if dme.is_hooked() and ctx.dolphin_status == CONNECTION_CONNECTED_STATUS:
                 if ctx.slot:
+                    if ctx.ui:
+                        await ctx.draw_trophy_counter()
                     await ctx.ssbm_check_locations(ctx.auth)
                     await ctx.give_majors(ctx.auth)
                 else:
