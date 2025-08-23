@@ -765,3 +765,61 @@ secret_characters = [
     "Pichu",
     "Ganondorf"
 ]
+
+all_characters = [
+    "Dr. Mario",
+    "Mario",
+    "Luigi",
+    "Bowser",
+    "Peach",
+    "Yoshi",
+    "Donkey Kong",
+    "Captain Falcon",
+    "Ganondorf",
+    "Falco",
+    "Fox",
+    "Ness",
+    "Ice Climbers",
+    "Kirby",
+    "Samus",
+    "Zelda",
+    "Link",
+    "Young Link",
+    "Pichu",
+    "Pikachu",
+    "Jigglypuff",
+    "Mewtwo",
+    "Mr. Game & Watch",
+    "Marth",
+    "Roy"
+]
+
+secret_stages = [
+    "Brinstar Depths",
+    "Poké Floats",
+    "Big Blue",
+    "Fourside",
+    "Mushroom Kingdom II",
+    "Flat Zone",
+    "Battlefield",
+    "Final Destination",
+    "Dream Land (Past)",
+    "Yoshi's Island (Past)",
+    "Kongo Jungle (Past)"
+]
+
+mode_items = [
+    "Classic Mode",
+    "Adventure Mode",
+    "All-Star Mode",
+    "Target Test",
+    "Home-Run Contest",
+    "Multi-Man Melee"
+]
+
+lottery_pool_static = [
+    "Lottery Pool Upgrade (Adventure/Classic Clear)",
+    "Lottery Pool Upgrade (200 Vs. Matches)",
+    "Lottery Pool Upgrade (Secret Characters)",
+    "Lottery Pool Upgrade (250 Trophies)"
+]

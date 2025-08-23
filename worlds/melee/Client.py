@@ -26,6 +26,11 @@ LAST_RECV_ITEM_ADDR = 0x8045C368
 COIN_COUNTER = 0x8045C10A
 TROPHY_COUNT = 0x8045C390
 MENU_ID = 0x80479D30
+AP_CHAR_UNLOCKS = 0x80001e40 #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
+SECRET_CHAR_ADDRESS = 0x8045BF28
+SECRET_STAGE_ADDRESS = 0x8045BF2A
+AP_EVENT_COUNTER = 0x80001E0F  #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
+LOTTERY_POOL_UPGRADES = 0x80001e44 #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
@@ -180,9 +185,56 @@ class SSBMClient(CommonContext):
         await self.check_locations(self.locations_checked)
 
     async def give_majors(self, auth):
-        from .in_game_data import global_trophy_table, coin_items, secret_characters, base_characters
-        for item in self.items_received:
-            if item not in coin_items and item not in global_trophy_table:
+        from .in_game_data import global_trophy_table, coin_items, secret_characters, all_characters, secret_stages, mode_items, lottery_pool_static
+        current_menu = int.from_bytes(dme.read_bytes(MENU_ID, 1))
+        auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
+        auth_id = auth_id.decode("ascii").rstrip("\x00")
+        if current_menu != 0x0C and auth_id == auth:
+            event_packs = 0
+            for item in self.items_received:
+                name = self.item_names.lookup_in_game(item.item)
+                if name not in coin_items and name not in global_trophy_table:
+                    if name in secret_characters:
+                        item_bit = (1 << secret_characters.index(name))
+                        secret_chars = int.from_bytes(dme.read_bytes(SECRET_CHAR_ADDRESS, 2))
+                        secret_chars |= item_bit
+                        secret_chars = struct.pack(">H", secret_chars)
+                        dme.write_bytes(SECRET_CHAR_ADDRESS, secret_chars)
+
+                    if name in all_characters:
+                        item_bit = (1 << all_characters.index(name))
+                        unlocked_characters = int.from_bytes(dme.read_bytes(AP_CHAR_UNLOCKS, 4))
+                        unlocked_characters |= item_bit
+                        unlocked_characters = struct.pack(">I", unlocked_characters)
+                        dme.write_bytes(AP_CHAR_UNLOCKS, unlocked_characters)
+
+                    if name in secret_stages:
+                        item_bit = (1 << secret_stages.index(name))
+                        stages = int.from_bytes(dme.read_bytes(SECRET_STAGE_ADDRESS, 2))
+                        stages |= item_bit
+                        stages = struct.pack(">H", stages)
+                        dme.write_bytes(SECRET_STAGE_ADDRESS, stages)
+
+                    if name in mode_items:
+                        item_bit = (2 << mode_items.index(name))
+                        modes = int.from_bytes(dme.read_bytes(AP_CHAR_UNLOCKS, 1))
+                        modes |= item_bit
+                        modes = modes.to_bytes(1, "big")
+                        dme.write_bytes(AP_CHAR_UNLOCKS, modes)
+
+                    event_total = sum(1 for item in self.items_received if item.item == 0x2B)
+                    event_total = min(event_total, 8)
+                    event_total = event_total.to_bytes(1, "big")
+                    dme.write_bytes(AP_EVENT_COUNTER, event_total)
+
+                    if name in lottery_pool_static:
+                        item_bit = (0x10 << lottery_pool_static.index(name))
+                        lottery_pool = int.from_bytes(dme.read_bytes(LOTTERY_POOL_UPGRADES, 1))
+                        lottery_pool |= item_bit
+                        lottery_pool = lottery_pool.to_bytes(1, "big")
+                        dme.write_bytes(LOTTERY_POOL_UPGRADES, lottery_pool)
+
+
                 #you are here
 
                 
@@ -261,7 +313,6 @@ async def give_player_items(ctx: SSBMClient):
         recv_items = ctx.items_received[last_recv_idx:]
         for item in recv_items:
             name = ctx.item_names.lookup_in_game(item.item)
-            print(name)
             if name in coin_items:
                 coin_count = int.from_bytes(dme.read_bytes(COIN_COUNTER, 2))
                 coin_count += coin_items[name]
