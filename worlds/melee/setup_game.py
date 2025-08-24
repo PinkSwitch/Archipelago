@@ -31,7 +31,7 @@ def setup_gamevars(world) -> None:
         logging.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is too high.
                 Required: {world.options.trophies_required} | Extra: {world.options.extra_trophies}. This will be automatically capped.""")
         world.total_trophy_count = 293
-        world.options.extra_trophies = 293 - world.options.trophies_required
+        world.options.extra_trophies.value = 293 - world.options.trophies_required
 
     world.total_trophy_count = max(0, world.total_trophy_count - 5) #Don't create extras for the trophies that always exist
     for i in range(world.total_trophy_count):
@@ -98,7 +98,7 @@ def place_static_items(world):
         world.get_location("Goal: Event 51").place_locked_item(world.create_item("Sense of Accomplishment"))
 
     if world.options.goal_all_events:
-        world.get_location("Goal: All Events").place_locked_item(world.create_item("Sense of Accomplishment"))
+        world.get_location("Goal: All Events Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
 
     if world.options.goal_all_targets:
         world.get_location("Goal: All Targets Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
