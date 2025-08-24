@@ -33,6 +33,7 @@ def setup_gamevars(world) -> None:
         world.total_trophy_count = 293
         world.options.extra_trophies = 293 - world.options.trophies_required
 
+    world.total_trophy_count = max(0, world.total_trophy_count - 5) #Don't create extras for the trophies that always exist
     for i in range(world.total_trophy_count):
         if not world.all_trophies:
             break

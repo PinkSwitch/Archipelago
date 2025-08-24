@@ -112,8 +112,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
         LocationData("Classic Mode", "Classic Mode - Game & Watch Clear", 0x272),
 
-        LocationData("Multi Man Melee", "Multi Man Melee - 100 Man Melee Sub 4 Minutes", 0x1A1),
-        LocationData("Multi Man Melee", "Multi Man Melee - Endless Melee 100 KO's", 0x1A3),
+        LocationData("Multi-Man Melee", "Multi Man Melee - 100 Man Melee Sub 4 Minutes", 0x1A1),
+        LocationData("Multi-Man Melee", "Multi Man Melee - Endless Melee 100 KO's", 0x1A3),
 
         LocationData("Any Main 1-P", "Melee - 100 Coins", 0x1A5),
         LocationData("Any Melee", "Melee - 10 KO's", 0x1A6),
@@ -142,7 +142,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Main 1-P", "Any 1P - Jigglypuff Unlock Match", 0x1B9),
         LocationData("Any Main 1-P", "Any 1P - Dr. Mario Unlock Match", 0x1BA),
         LocationData("Events 31-39", "Event Match - Pichu Unlock Match", 0x1BB),
-        LocationData("Multi Man Melee", "Multi Man Melee - Falco Unlock Match", 0x1BC),
+        LocationData("Multi-Man Melee", "Multi Man Melee - Falco Unlock Match", 0x1BC),
         LocationData("Game Menu", "Game - Marth Unlock Match", 0x1BD),
         LocationData("Any Main 1-P", "Any 1P - Young Link Unlock Match", 0x1BE),
         LocationData("Events 26-29", "Event Match - Ganondorf Unlock Match", 0x1BF),
@@ -471,8 +471,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     if world.options.enable_annoying_multiman_checks:
         location_table += [
-        LocationData("Multi Man Melee", "15 Minute Melee Clear", 0x1A0),
-        LocationData("Multi Man Melee", "Cruel Melee 5 KO's", 0x1A2)]
+        LocationData("Multi-Man Melee", "15 Minute Melee Clear", 0x1A0),
+        LocationData("Multi-Man Melee", "Cruel Melee 5 KO's", 0x1A2)]
 
 
     if world.options.bonus_checks:
