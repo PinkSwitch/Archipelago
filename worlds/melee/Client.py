@@ -104,7 +104,7 @@ class SSBMClient(CommonContext):
     patch_suffix = ".xml"
     items_handling = 0b111
     slot_data: dict | None = {}
-    trophy_total: "Label" = None
+    trophy_total = None
 
     def __init__(self, server_address, password):
         super().__init__(server_address, password)

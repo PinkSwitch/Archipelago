@@ -93,7 +93,7 @@ class SSBMWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.world_version = "0.1"
+        self.world_version = "0.2"
         self.extra_item_count = 0
         self.goal_count = 1
         self.picked_trophies = set()
