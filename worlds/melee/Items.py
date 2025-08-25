@@ -362,6 +362,8 @@ item_table: Dict[str, ItemData] = {
     "10 Coins": ItemData("Filler", 0x157, ItemClassification.filler, 0),
     "20 Coins": ItemData("Filler", 0x158, ItemClassification.filler, 0),
 
+    "Pikmin Savefile": ItemData("Special", 0x159, ItemClassification.progression),
+
     "Sense of Accomplishment": ItemData("Events", None, ItemClassification.progression, 0),
 
     #"Food": ItemData("Item Unlocks", 0x01, ItemClassification.filler),

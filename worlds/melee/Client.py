@@ -381,7 +381,7 @@ class SSBMClient(CommonContext):
 
             if self.all_events_required:
                 all_events_check = int.from_bytes(dme.read_bytes(0x8045C213, 1))
-                if target_check & 0x20:
+                if all_events_check & 0x20:
                     self.all_events_complete = True
                 else:
                     self.all_events_complete = False
@@ -492,7 +492,7 @@ async def give_player_items(ctx: SSBMClient):
         if ctx.auth != auth_id:
             await wait_for_next_loop(0.5)
             continue
-            
+
         recv_items = ctx.items_received[last_recv_idx:]
         for item in recv_items:
             name = ctx.item_names.lookup_in_game(item.item)

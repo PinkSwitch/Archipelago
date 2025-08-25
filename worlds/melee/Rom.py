@@ -4,7 +4,7 @@ import typing
 import struct
 import settings
 import zipfile
-from worlds.Files import APAutoPatchInterface
+from worlds.Files import APPlayerContainer
 from typing import TYPE_CHECKING, Optional, Any
 from logging import warning
 from typing_extensions import override
@@ -28,6 +28,6 @@ def apply_patch(world, basepatch, output):
             AUTH_ID = world.authentication_id,
             CSTICK_SMASH_SOLO = world.options.solo_cstick_smash,
             DISABLE_TAP_JUMP = world.options.disable_tap_jump,
-            TROPHYCLASS_IN_POOl = disable_class_upgrades)
+            TROPHYCLASS_IN_POOL = disable_class_upgrades)
     return result
     
