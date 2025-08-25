@@ -116,6 +116,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     set_rule(world.multiworld.get_location("Event Match - Game & Watch Forever!", player), lambda state: state.has("Mr. Game & Watch", player))
 
+    set_rule(world.multiworld.get_location("Game - Pikmin Memory Card Data", player), lambda state: state.has("Pikmin Savefile", player))
+
     set_rule(world.multiworld.get_location("Mario - Adventure Trophy Unlock", player), lambda state: state.has("Mario", player))
     set_rule(world.multiworld.get_location("Donkey Kong - Adventure Trophy Unlock", player), lambda state: state.has("Donkey Kong", player))
     set_rule(world.multiworld.get_location("Link - Adventure Trophy Unlock", player), lambda state: state.has("Link", player))

@@ -106,7 +106,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         
         LocationData("All-Star Mode", "All-Star Mode - Clear", 0x17D),
         LocationData("All-Star Mode", "All-Star Mode - Continueless Clear", 0x17E),
-        LocationData("All-Star Mode", "All-Star Mode - Hard Clear", 0x17F),
 
         LocationData("Classic Mode", "Classic Mode - 5 Minute Clear", 0x181),
         LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
@@ -118,7 +117,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Main 1-P", "Melee - 100 Coins", 0x1A5),
         LocationData("Any Melee", "Melee - 10 KO's", 0x1A6),
         LocationData("Any Melee", "Melee - 50 KO's", 0x260),
-        LocationData("Any Melee", "Melee - Walk 10,000 Meters", 0x1A7),
+        LocationData("Any Melee", "Melee - Walk 100 Meters", 0x1A7),
 
         LocationData("Any Melee", "Training Mode - 125 Combined Combos", 0x1AA),
         LocationData("Any Melee", "Training Mode - 10-Hit Combo", 0x1AB),
@@ -315,8 +314,16 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Lottery Secret Characters", "Lottery (Secret Characters) - Raikou", 0x25A),
         LocationData("Lottery Secret Characters", "Lottery (Secret Characters) - Zapdos", 0x25B),
 
+        LocationData("Game Menu", "Game - Pikmin Memory Card Data", 0x1CB),
+
+
         LocationData("Game Menu", "Trophy Room - Admire Collection", None),
     ]
+
+    if world.options.hard_allstar_clear:
+        location_table += [
+            LocationData("All-Star Mode", "All-Star Mode - Hard Clear", 0x17F)
+        ]
 
     if world.use_250_trophy_pool:
         location_table += [
@@ -637,7 +644,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Flower Finish", 0xAD),
         LocationData("Any Melee", "Bonus - Super Scoper", 0xAE),
         LocationData("Any Melee", "Bonus - Screwed Up", 0xAF),
-        LocationData("Any Melee", "Bonus - Screw-Attack KO", 0xB0),
         LocationData("Any Melee", "Bonus - Warp-Star KO", 0xB1),
         LocationData("Any Melee", "Bonus - Mycologist", 0xB2),
         LocationData("Any Melee", "Bonus - Mario Maniac", 0xB3),
@@ -717,7 +723,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Any Melee", "Bonus - Poser Poseur", 0x52),
             LocationData("Any Melee", "Bonus - Pose Breaker", 0x54),
             LocationData("Any Melee", "Bonus - Quadruple KO", 0x62),
-            LocationData("Any Melee", "Bonus - Quintuple KO", 0x63)]
+            LocationData("Any Melee", "Bonus - Quintuple KO", 0x63),
+            LocationData("Any Melee", "Bonus - Screw-Attack KO", 0xB0)]
 
 
         if world.options.enable_extreme_bonuses:

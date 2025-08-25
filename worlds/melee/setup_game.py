@@ -7,12 +7,13 @@ def setup_gamevars(world) -> None:
     world.all_trophies.remove("UFO (Trophy)")
     world.all_trophies.remove("Falcon Flyer (Trophy)")
     world.all_trophies.remove("Sudowoodo (Trophy)")  # These are always in the pool and need to not be rolled randomly
+    character_selection = ["Dr. Mario", "Mario", "Luigi", "Bowser", "Peach",
+                            "Yoshi", "Donkey Kong", "Captain Falcon", "Ganondorf", "Falco",
+                            "Fox", "Ness", "Ice Climbers", "Kirby", "Samus",
+                            "Zelda", "Link", "Young Link", "Pichu", "Pikachu",
+                            "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth", "Roy"]
 
-    world.starting_character = world.random.choice(["Dr. Mario", "Mario", "Luigi", "Bowser", "Peach",
-                                                   "Yoshi", "Donkey Kong", "Captain Falcon", "Ganondorf", "Falco",
-                                                   "Fox", "Ness", "Ice Climbers", "Kirby", "Samus",
-                                                   "Zelda", "Link", "Young Link", "Pichu", "Pikachu",
-                                                   "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth", "Roy"])
+    world.starting_character = character_selection[world.options.starting_character]
     world.multiworld.push_precollected(world.create_item(world.starting_character))
 
     if world.options.lottery_pool_mode == 1:
@@ -70,13 +71,13 @@ def setup_gamevars(world) -> None:
         world.location_count += 3
 
     if world.options.bonus_checks:
-        world.location_count += 226
+        world.location_count += 225
         
         if world.options.enable_rare_pokemon_checks:
             world.location_count += 2 #Pokemon bonuses
 
         if world.options.enable_hard_bonuses:
-            world.location_count += 12
+            world.location_count += 13
 
         if world.options.enable_extreme_bonuses:
             world.location_count += 7

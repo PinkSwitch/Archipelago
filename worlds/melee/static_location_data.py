@@ -432,7 +432,7 @@ location_ids = {
     "Melee - 100 Coins": 0x1A5,
     "Melee - 10 KO's": 0x1A6,
     "Melee - 50 KO's": 0x260,
-    "Melee - Walk 10,000 Meters": 0x1A7,
+    "Melee - Walk 100 Meters": 0x1A7,
     "Melee - See Mew": 0x1A8,
     "Melee - See Celebi": 0x1A9,
 
@@ -474,7 +474,7 @@ location_ids = {
     "Melee - 150 VS. Matches": 0x1C8,
     "Melee - 200 VS. Matches": 0x1C9,
     "Melee - 1000 VS. Matches": 0x1CA,
-    "Game - Pikmin Savefile": 0x1CB,
+    "Game - Pikmin Memory Card Data": 0x1CB,
 
     "Base Trophy Pool - Andross (64)": 0x1CC,
     "Base Trophy Pool - Baby Bowser": 0x1CD,

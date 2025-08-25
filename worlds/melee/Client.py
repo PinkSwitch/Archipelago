@@ -88,6 +88,16 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.check_goal_data(), name="Check Goals")
 
+    def _cmd_check_characters(self):
+        """Checks unlocked characters"""
+        if isinstance(self.ctx, SSBMClient):
+            Utils.async_start(self.ctx.display_chars_obtained(), name="Check Characters Unlocked")
+
+    def _cmd_check_modes(self):
+        """Checks unlocked Modes"""
+        if isinstance(self.ctx, SSBMClient):
+            Utils.async_start(self.ctx.display_modes_obtained(), name="Check Modes Unlocked")
+
 class SSBMClient(CommonContext):
     command_processor = SSBMCommandProcessor 
     game = "Super Smash Bros. Melee"
@@ -117,6 +127,8 @@ class SSBMClient(CommonContext):
         self.all_events_complete = False
         self.event_51_complete = False
         self.all_targets_complete = False
+
+        self.lottery_pool = None
 
     def make_gui(self):
         ui = super().make_gui()
@@ -180,6 +192,40 @@ class SSBMClient(CommonContext):
             logger.info("All of your goals are COMPLETE! Enter the Trophy Collection room to complete your game!")
         return
 
+    async def display_chars_obtained(self):
+        from .in_game_data import all_characters
+
+        displayed_character_array = []
+        if not (dme.is_hooked() and self.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            logger.info("Please connect to the server and game.")
+            return
+
+        for item in self.items_received:
+            name = self.item_names.lookup_in_game(item.item)
+            if name in all_characters:
+                displayed_character_array.append(name)
+
+        logger.info(f"Characters Unlocked:")
+        logger.info(displayed_character_array)
+        return
+
+    async def display_modes_obtained(self):
+        from .in_game_data import mode_items
+
+        modes_array = []
+        if not (dme.is_hooked() and self.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            logger.info("Please connect to the server and game.")
+            return
+
+        for item in self.items_received:
+            name = self.item_names.lookup_in_game(item.item)
+            if name in mode_items:
+                modes_array.append(name)
+
+        logger.info(f"Modes Unlocked:")
+        logger.info(modes_array)
+        return
+
     async def disconnect(self, allow_autoreconnect: bool = False):
         """
         Disconnect the client from the server and reset game state variables.
@@ -222,6 +268,7 @@ class SSBMClient(CommonContext):
             self.event_51_required = bool(args["slot_data"]["goal_evn_51"])
             self.all_events_required = bool(args["slot_data"]["goal_all_events"])
             self.all_targets_required = bool(args["slot_data"]["targets_required"])
+            self.lottery_pool = str(args["slot_data"]["lottery_pool_mode"])
 
     async def ssbm_check_locations(self, auth):
         new_checks = []
@@ -319,6 +366,7 @@ class SSBMClient(CommonContext):
                     event_total = event_total.to_bytes(1, "big")
                     dme.write_bytes(AP_EVENT_COUNTER, event_total)
 
+
                     lottery_total = 0
                     lottery_bit = 0
                     lottery_pool_total = sum(1 for item in self.items_received if item.item == 0x151)
@@ -326,15 +374,17 @@ class SSBMClient(CommonContext):
                     for i in range(lottery_pool_total):
                         lottery_bit |= 0x10 << i
                     lottery_total |= lottery_bit
-                    lottery_total = lottery_total.to_bytes(1, "big")
-                    dme.write_bytes(LOTTERY_POOL_UPGRADES, lottery_total)
+                    if self.lottery_pool == "Progressive":
+                        lottery_total = lottery_total.to_bytes(1, "big")
+                        dme.write_bytes(LOTTERY_POOL_UPGRADES, lottery_total)
 
                     if name in lottery_pool_static:
                         item_bit = (0x10 << lottery_pool_static.index(name))
                         lottery_pool = int.from_bytes(dme.read_bytes(LOTTERY_POOL_UPGRADES, 1))
                         lottery_pool |= item_bit
                         lottery_pool = lottery_pool.to_bytes(1, "big")
-                        dme.write_bytes(LOTTERY_POOL_UPGRADES, lottery_pool)
+                        if self.lottery_pool == "Static":
+                            dme.write_bytes(LOTTERY_POOL_UPGRADES, lottery_pool)
 
                     if name in global_trophy_table:
                         trophy_id = global_trophy_table.index(name)
@@ -342,6 +392,12 @@ class SSBMClient(CommonContext):
                         item_count = 1
                         item_count = item_count.to_bytes(1, "big")
                         dme.write_bytes(trophy_address, item_count)
+
+                    if name == "Pikmin Savefile":
+                        trophy_address = 0x8045C5BA
+                        value = 0x80
+                        value = value.to_bytes(1, "big")
+                        dme.write_bytes(trophy_address, value)
 
                     trophy_count = len({item.item for item in self.items_received if item.item in range(0x2C, 0x151)})
                     trophy_count = struct.pack(">H", trophy_count)
@@ -468,7 +524,7 @@ async def dolphin_sync_task(ctx: SSBMClient):
 
 
 async def give_player_items(ctx: SSBMClient):
-    from .in_game_data import coin_items, global_trophy_table
+    from .in_game_data import coin_items, global_trophy_table, all_characters, mode_items
     async def wait_for_next_loop(time_to_wait: float):
         await asyncio.sleep(time_to_wait)
 
@@ -499,8 +555,14 @@ async def give_player_items(ctx: SSBMClient):
             if name in coin_items:
                 coin_count = int.from_bytes(dme.read_bytes(COIN_COUNTER, 2))
                 coin_count += coin_items[name]
+                if coin_count > 9999:
+                    coin_count = 9999
                 coin_count = struct.pack(">H", coin_count)
                 dme.write_bytes(COIN_COUNTER, coin_count)
+            elif name in all_characters:
+                logger.info(f"{name} has joined your roster!")
+            elif name in mode_items:
+                logger.info(f"You can now play {name}!")
             last_recv_idx += 1
             dme.write_word(LAST_RECV_ITEM_ADDR, last_recv_idx)
         await wait_for_next_loop(0.5)

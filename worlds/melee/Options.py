@@ -106,8 +106,43 @@ class DisableTapJump(Toggle):
     """Removes the ability to jump by tapping Up on the control stick."""
     display_name = "Disable Tap Jump"
 
+class HardAllStarClear(Toggle):
+    """Enables a check for completing All-Star on Hard or higher."""
+    display_name = "Hard All-Star Clear"
+
+class StartingCharacter(Choice):
+    """This is the character you will start with."""
+    display_name = "Starting Character"
+    option_dr_mario = 0
+    option_mario = 1
+    option_luigi = 2
+    option_bowser = 3
+    option_peach = 4
+    option_yoshi = 5
+    option_donkey_kong = 6
+    option_captain_falcon = 7
+    option_ganondorf = 8
+    option_falco = 9
+    option_fox = 10
+    option_ness = 11
+    option_ice_climbers = 12
+    option_kirby = 13
+    option_samus = 14
+    option_zelda = 15
+    option_link = 16
+    option_young_link = 17
+    option_pichu = 18
+    option_pikachu = 19
+    option_jigglypuff = 20
+    option_mewtwo = 21
+    option_mr_game_and_watch = 22
+    option_marth = 23
+    option_roy = 24
+    default = "random"
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
+    starting_character: StartingCharacter
     trophies_required: TrophiesRequired
     extra_trophies: TrophiesExtra
     bonus_checks: BonusSanity
@@ -119,6 +154,7 @@ class SSBMOptions(PerGameCommonOptions):
     diskun_trophy_check: DiskunTrophyCheck
     mewtwo_unlock_check: MewtwoUnlockCheck
     vs_count_checks: VsCountChecks
+    hard_allstar_clear: HardAllStarClear
     long_targettest_checks: LongTargetChecks
     lottery_pool_mode: LotteryPool
     event_checks: EventSanity
@@ -133,6 +169,10 @@ class SSBMOptions(PerGameCommonOptions):
 
 
 ssbm_option_groups = [
+    OptionGroup("Starting Options", [
+        StartingCharacter
+    ]),
+
     OptionGroup("Trophy Settings", [
         TrophiesRequired,
         TrophiesExtra,
@@ -152,7 +192,8 @@ ssbm_option_groups = [
         VsCountChecks,
         DiskunTrophyCheck,
         MewtwoUnlockCheck,
-        LongTargetChecks
+        LongTargetChecks,
+        HardAllStarClear
     ]),
 
     OptionGroup("Goal Settings", [

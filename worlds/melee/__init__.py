@@ -17,7 +17,7 @@ from .Locations import get_locations
 from .Regions import init_areas
 from .Options import SSBMOptions, ssbm_option_groups
 from .Rules import set_location_rules
-from .Rom import apply_patch
+from .Rom import apply_patch, MeleePlayerContainer
 from .static_location_data import location_ids
 from .setup_game import setup_gamevars, place_static_items, calculate_trophy_based_locations
 from .in_game_data import global_trophy_table
@@ -101,8 +101,8 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 291
-        self.required_item_count = 54
+        self.location_count = 290
+        self.required_item_count = 55
 
     def create_regions(self) -> None:
         for item in self.multiworld.precollected_items[self.player]: #First add starting inventories to the Trophy Pool
@@ -150,7 +150,6 @@ class SSBMWorld(World):
         setup_gamevars(self)
         
         self.authentication_id = self.random.getrandbits(32)
-        #self.maidens_required = json.dumps(self.options.maidens_required.value)
 
     def generate_output(self, output_directory: str) -> None:
         from Main import __version__
@@ -162,9 +161,14 @@ class SSBMWorld(World):
             self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.encoded_slot_name)
 
             output_patch = apply_patch(self, base_str, output_directory)
-            output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.xml")
-            with open(output_file_path, "w") as file:
-                file.write(output_patch)
+            output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.zip")
+            #with open(output_file_path, "w") as file:
+                #file.write(output_patch)
+            patch_name = f"{self.multiworld.get_out_file_name_base(self.player)}"
+            melee_container = MeleePlayerContainer(output_patch, output_file_path,
+                self.multiworld.player_name[self.player], self.player, patch_name)
+            melee_container.write()
+
         except Exception:
             raise
         finally:
@@ -172,6 +176,11 @@ class SSBMWorld(World):
 
 
     def fill_slot_data(self) -> Dict[str, typing.Any]:
+        if self.options.lottery_pool_mode == 2:
+            lottery_type = "Static"
+        elif self.options.lottery_pool_mode == 1:
+            lottery_type = "Progressive"
+
         return {
             "authentication_id": self.authentication_id,
             "giga_bowser_required": self.options.goal_giga_bowser.value,
@@ -179,7 +188,8 @@ class SSBMWorld(World):
             "goal_evn_51": self.options.goal_event_51.value,
             "goal_all_events": self.options.goal_all_events.value,
             "targets_required": self.options.goal_all_targets.value,
-            "total_trophies_required": self.options.trophies_required.value
+            "total_trophies_required": self.options.trophies_required.value,
+            "lottery_pool_mode": lottery_type
         }
 
     def modify_multidata(self, multidata: dict) -> None:

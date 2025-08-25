@@ -12,6 +12,21 @@ from typing_extensions import override
 if TYPE_CHECKING:
     from . import SSBMWorld
 
+class MeleePlayerContainer(APPlayerContainer):
+    game = "Super Smash Bros. Melee"
+    compression_method = zipfile.ZIP_DEFLATED
+    patch_file_ending = ".zip"
+
+    def __init__(self, output_patch, output_file_path: str, player_name: str, player: int, patch_name,
+        server: str = ""):
+        self.output_patch = output_patch
+        self.patch_name = patch_name
+        super().__init__(output_file_path, player, player_name, server)
+
+    def write_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
+        opened_zipfile.writestr(f"{self.patch_name}.xml", self.output_patch)
+        super().write_contents(opened_zipfile)
+
 
 def apply_patch(world, basepatch, output):
     from jinja2 import Template
