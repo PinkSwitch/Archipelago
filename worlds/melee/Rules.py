@@ -91,6 +91,33 @@ allstar_trophies = {
 
 secret_characters = {"Dr. Mario", "Luigi", "Ganondorf", "Falco", "Marth", "Roy", "Jigglypuff", "Mewtwo", "Pichu", "Young Link", "Mr. Game & Watch"}
 
+everyone_besides_gamewatch = {
+    "Dr. Mario",
+    "Mario",
+    "Luigi",
+    "Bowser",
+    "Peach",
+    "Yoshi",
+    "Donkey Kong",
+    "Captain Falcon",
+    "Ganondorf",
+    "Falco",
+    "Fox",
+    "Ness",
+    "Ice Climbers",
+    "Kirby",
+    "Samus",
+    "Zelda",
+    "Link",
+    "Young Link",
+    "Pichu",
+    "Pikachu",
+    "Jigglypuff",
+    "Mewtwo",
+    "Marth",
+    "Roy"
+}
+
 
 def set_location_rules(world: "SSBMWorld") -> None:
     player = world.player
@@ -105,6 +132,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
     regular_stages = {"Mushroom Kingdom II", "Poké Floats", "Big Blue", "Flat Zone", "Fourside", "Brinstar Depths"}
 
     base_characters = {"Mario", "Donkey Kong", "Bowser", "Peach", "Captain Falcon", "Yoshi", "Fox", "Ness", "Ice Climbers", "Kirby", "Samus", "Link", "Pikachu", "Zelda"}
+
+
 
     good_hr_characters = {"Ganondorf", "Yoshi", "Jigglypuff", "Roy"} #Can get over 1,400
     decent_hr_characters = {"Dr. Mario"} #Can get over 1,326 casually
@@ -230,9 +259,10 @@ def set_location_rules(world: "SSBMWorld") -> None:
     set_rule(world.multiworld.get_location("Game - Marth Unlock Match", player), lambda state: state.has_all(base_characters, player))
     set_rule(world.multiworld.get_location("Any 1P - Young Link Unlock Match", player), lambda state: state.has_group_unique("Characters", player, 10))
     set_rule(world.multiworld.get_location("Any 1P - Roy Unlock Match", player), lambda state: state.has("Marth", player))
-    set_rule(world.multiworld.get_location(
-        "Any 1P - Game & Watch Unlock Match", player), lambda state: state.has_group_unique("Characters", player, 24) and state.has_any({
+    set_rule(world.multiworld.get_location("Any 1P - Game & Watch Unlock Match", player), lambda state: state.has_all(everyone_besides_gamewatch, player) and state.has_any({
                                                                         "Adventure Mode", "All-Star Mode", "Classic Mode", "Target Test"}, player))
+
+    set_rule(world.multiworld.get_location("Event Match - Ganondorf Unlock Match", player), lambda state: state.has("Link", player))
 
     set_rule(world.multiworld.get_location("Trophy Room - Admire Collection", player), lambda state: state.has_group_unique("Trophies", player, world.options.trophies_required.value))
 
@@ -256,6 +286,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.multiworld.get_location("Event Match - Peach's Peril", player), lambda state: state.has("Mario", player))
         set_rule(world.multiworld.get_location("Event Match - Gargantuans", player), lambda state: state.has("Bowser", player))
         set_rule(world.multiworld.get_location("Event Match - Cold Armor", player), lambda state: state.has("Samus", player))
+        set_rule(world.multiworld.get_location("Event Match - Triforce Gathering", player), lambda state: state.has("Link", player))
         set_rule(world.multiworld.get_location("Event Match - Target Acquired", player), lambda state: state.has("Falco", player))
         set_rule(world.multiworld.get_location("Event Match - Lethal Marathon", player), lambda state: state.has("Captain Falcon", player))
         set_rule(world.multiworld.get_location("Event Match - Seven Years", player), lambda state: state.has("Young Link", player))
@@ -318,3 +349,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
     if world.options.goal_all_events:
         set_rule(world.multiworld.get_location("Goal: All Events Clear", player), lambda state: state.has_all(event_chars, player))
         
+
+    if world.options.long_targettest_checks:
+        set_rule(world.multiworld.get_location("Target Test - All Characters, Sub 12:30 Total Time", player), lambda state: state.has_group_unique("Characters", player, 25))
+        set_rule(world.multiworld.get_location("Target Test - All Characters, Sub 25 Minutes Total Time", player), lambda state: state.has_group_unique("Characters", player, 25))
+        set_rule(world.multiworld.get_location("Target Test - All Characters", player), lambda state: state.has_group_unique("Characters", player, 25))

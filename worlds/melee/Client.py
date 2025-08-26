@@ -419,7 +419,7 @@ class SSBMClient(CommonContext):
 
             if self.crazy_hand_required:
                 crazy_check = int.from_bytes(dme.read_bytes(0x8045C365, 1))
-                if bowser_check & 0x01:
+                if crazy_check & 0x01:
                     self.crazy_hand_complete = True
                 else:
                     self.crazy_hand_complete = False

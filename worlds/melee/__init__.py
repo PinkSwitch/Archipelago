@@ -93,7 +93,7 @@ class SSBMWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.world_version = "0.2"
+        self.world_version = "1.0.1.1"
         self.extra_item_count = 0
         self.goal_count = 1
         self.picked_trophies = set()
@@ -161,7 +161,7 @@ class SSBMWorld(World):
             self.encoded_slot_name = ''.join(f'{b:02X}' for b in self.encoded_slot_name)
 
             output_patch = apply_patch(self, base_str, output_directory)
-            output_file_path = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.zip")
+            output_file_path = os.path.join(output_directory, f"AP-{self.multiworld.seed_name}-P{self.player}-{self.multiworld.get_file_safe_player_name(self.player)}.zip")
             #with open(output_file_path, "w") as file:
                 #file.write(output_patch)
             patch_name = f"{self.multiworld.get_out_file_name_base(self.player)}"

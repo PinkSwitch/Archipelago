@@ -14,7 +14,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     location_table: List[LocationData] = [
         LocationData("Events 1-10", "Event Match - Bomb-fest", 0xF9),
-        LocationData("Events 1-10", "Event Match - Trophy Tussle 1", 0x104),
+        LocationData("Events 11-15", "Event Match - Trophy Tussle 1", 0x104),
         LocationData("Events 26-29", "Event Match - Trophy Tussle 2", 0x110),
         LocationData("Events 40-50", "Event Match - Game & Watch Forever!", 0x123),
         LocationData("Events 40-50", "Event Match - Trophy Tussle 3", 0x125),
@@ -473,8 +473,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
     if world.options.long_targettest_checks:
             location_table += [
             LocationData("Target Test", "Target Test - All Characters, Sub 12:30 Total Time", 0x19D),
-            LocationData("Target Test", "All Characters", 0x19E),
-            LocationData("Target Test", "All Characters, Sub 25 Minutes Total Time", 0x19F)]
+            LocationData("Target Test", "Target Test - All Characters", 0x19E),
+            LocationData("Target Test", "Target Test - All Characters, Sub 25 Minutes Total Time", 0x19F)]
 
     if world.options.enable_annoying_multiman_checks:
         location_table += [
