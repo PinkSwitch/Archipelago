@@ -109,7 +109,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
         LocationData("Classic Mode", "Classic Mode - 5 Minute Clear", 0x181),
         LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
-        LocationData("Classic Mode", "Classic Mode - Game & Watch Clear", 0x272),
+        LocationData("Any Main 1-P", "Any 1P - Game & Watch Clear", 0x272),
 
         LocationData("Multi-Man Melee", "Multi Man Melee - 100 Man Melee Sub 4 Minutes", 0x1A1),
         LocationData("Multi-Man Melee", "Multi Man Melee - Endless Melee 100 KO's", 0x1A3),
@@ -667,8 +667,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Adventure Mode", "Bonus - ReDead KO", 0xC5),
         LocationData("Adventure Mode", "Bonus - Like Like KO", 0xC6),
         LocationData("Adventure Mode", "Bonus - Octorok KO", 0xC7),
-        LocationData("Any Melee", "Bonus - Topi KO", 0xC8),
-        LocationData("Any Melee", "Bonus - Polar Bear KO", 0xC9),
+        LocationData("Adventure Mode", "Bonus - Topi KO", 0xC8),
+        LocationData("Adventure Mode", "Bonus - Polar Bear KO", 0xC9),
         LocationData("Any Melee", "Bonus - Shy Guy KO", 0xCA),
         LocationData("Any Melee", "Bonus - First Place", 0xCB),
         LocationData("Any Melee", "Bonus - Bob-omb Squad", 0xCC),
