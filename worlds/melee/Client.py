@@ -11,6 +11,7 @@ from . import SSBMWorld
 import dolphin_memory_engine as dme
 from .Helper_Functions import StringByteFunction as sbf
 from typing import Optional
+from .in_game_data import global_trophy_table
 
 from NetUtils import ClientStatus, color
 
@@ -31,6 +32,9 @@ SECRET_CHAR_ADDRESS = 0x8045BF28
 SECRET_STAGE_ADDRESS = 0x8045BF2A
 AP_EVENT_COUNTER = 0x80001804
 LOTTERY_POOL_UPGRADES = 0x80001808
+TROPHY_CLASS = 0x804A2853
+TROPHY_RIG_ADDRESS = 0x80001810
+LOTTO_PRIMED_ADDR = 0x80BEEBDE
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
@@ -101,8 +105,7 @@ class SSBMCommandProcessor(ClientCommandProcessor):
     def _cmd_rig(self, selected_trophy: str = ""):
         """Rigs the lottery to give a specific available Lottery check. Requires 30 coins to use."""
         if isinstance(self.ctx, SSBMClient):
-            p = rigged_trophy
-            Utils.async_start(self.ctx.rig_lottery(self, rigged_trophy), name="Lottery Rig")
+            Utils.async_start(self.ctx.rig_lottery(selected_trophy), name="Lottery Rig")
 
 class SSBMClient(CommonContext):
     command_processor = SSBMCommandProcessor 
@@ -233,18 +236,50 @@ class SSBMClient(CommonContext):
         return
 
     async def rig_lottery(self, rigged_trophy):
-        modes_array = []
+        from .in_game_data import lottery_adventure_classic, lottery_secret_chars, lottery_total_matches, lottery_total_trophies, base_lottery, trophy_tables
+        rigged_trophy_input = rigged_trophy.lower()
+        rigged_trophy_input = rigged_trophy_input.replace("poke", "poké")
+        rigged_trophy_input = rigged_trophy_input.replace(" and ", " & ") #Apply some common filters
+        insensitive_trophy_list = [t.lower() for t in global_trophy_table]
+
+        current_trophy_class = int.from_bytes(dme.read_bytes(TROPHY_CLASS, 1))
         if not (dme.is_hooked() and self.dolphin_status == CONNECTION_CONNECTED_STATUS):
             logger.info("Please connect to the server and game.")
             return
 
-        for item in self.items_received:
-            name = self.item_names.lookup_in_game(item.item)
-            if name in mode_items:
-                modes_array.append(name)
+        current_menu = int.from_bytes(dme.read_bytes(MENU_ID, 1))
+        if current_menu != 0x0C:
+            logger.info("The Rig command can only be used while in the Lottery menu.")
+            return
 
-        logger.info(f"Modes Unlocked:")
-        logger.info(modes_array)
+        coin_count = int.from_bytes(dme.read_bytes(COIN_COUNTER, 2))
+        if coin_count < 300:
+            logger.info(f"It costs 30 coins to rig the lottery. You have {max(0,int(coin_count / 10))} coins.")
+            return
+        
+        if f"{rigged_trophy_input} (trophy)" in insensitive_trophy_list:
+            selectable_trophies = []
+            selectable_trophies += base_lottery
+            for trophy_class in trophy_tables:
+                if trophy_class & current_trophy_class:
+                    selectable_trophies += trophy_tables[trophy_class]
+            if rigged_trophy_input in selectable_trophies:
+                rigged_trophy_index = struct.pack("H", (insensitive_trophy_list.index(f"{rigged_trophy_input} (trophy)") + 1))
+                coin_count = max(0, coin_count - 300)
+                coin_count = struct.pack(">H", coin_count)
+                primed_coins = 1
+                primed_coins = primed_coins.to_bytes(1, "big")
+                dme.write_bytes(LOTTO_PRIMED_ADDR, primed_coins)
+                dme.write_bytes(COIN_COUNTER, coin_count)
+                dme.write_bytes(TROPHY_RIG_ADDRESS, rigged_trophy_index)
+                logger.info(f"Lottery rigged successfully. The next trophy pulled from the lottery will be {rigged_trophy}.")
+            else:
+                logger.info(f"Error: Trophy {rigged_trophy} is valid but not in the current Trophy Pool!")
+        elif rigged_trophy == "":
+            logger.info(f"To use /rig, you must type /rig and the name of a trophy you want to rig the lottery for.")
+        else:
+            logger.info(f"Error: No Trophy found for input {rigged_trophy}.")
+
         return
 
     async def disconnect(self, allow_autoreconnect: bool = False):
@@ -352,7 +387,7 @@ class SSBMClient(CommonContext):
         await self.check_locations(self.locations_checked)
 
     async def give_majors(self, auth):
-        from .in_game_data import global_trophy_table, coin_items, secret_characters, all_characters, secret_stages, mode_items, lottery_pool_static
+        from .in_game_data import coin_items, secret_characters, all_characters, secret_stages, mode_items, lottery_pool_static
         current_menu = int.from_bytes(dme.read_bytes(MENU_ID, 1))
         auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
         auth_id = auth_id.decode("ascii").rstrip("\x00")
@@ -552,7 +587,7 @@ async def dolphin_sync_task(ctx: SSBMClient):
 
 
 async def give_player_items(ctx: SSBMClient):
-    from .in_game_data import coin_items, global_trophy_table, all_characters, mode_items
+    from .in_game_data import coin_items, all_characters, mode_items
     async def wait_for_next_loop(time_to_wait: float):
         await asyncio.sleep(time_to_wait)
 

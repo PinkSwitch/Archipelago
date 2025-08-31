@@ -342,7 +342,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.multiworld.get_location("Multi Man Melee - Samus 10-Man", player), lambda state: state.has("Samus", player))
         set_rule(world.multiworld.get_location("Multi Man Melee - Zelda 10-Man", player), lambda state: state.has("Zelda", player))
         set_rule(world.multiworld.get_location("Multi Man Melee - Link 10-Man", player), lambda state: state.has("Link", player))
-        set_rule(world.multiworld.get_location("Multi Man Melee - Yong Link 10-Man", player), lambda state: state.has("Young Link", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Young Link 10-Man", player), lambda state: state.has("Young Link", player))
         set_rule(world.multiworld.get_location("Multi Man Melee - Pichu 10-Man", player), lambda state: state.has("Pichu", player))
         set_rule(world.multiworld.get_location("Multi Man Melee - Pikachu 10-Man", player), lambda state: state.has("Pikachu", player))
         set_rule(world.multiworld.get_location("Multi Man Melee - Jigglypuff 10-Man", player), lambda state: state.has("Jigglypuff", player))
