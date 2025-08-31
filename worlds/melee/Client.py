@@ -264,7 +264,7 @@ class SSBMClient(CommonContext):
                 if trophy_class & current_trophy_class:
                     selectable_trophies += trophy_tables[trophy_class]
             if rigged_trophy_input in selectable_trophies:
-                rigged_trophy_index = struct.pack("H", (insensitive_trophy_list.index(f"{rigged_trophy_input} (trophy)") + 1))
+                rigged_trophy_index = struct.pack(">H", (insensitive_trophy_list.index(f"{rigged_trophy_input} (trophy)") + 1))
                 coin_count = max(0, coin_count - 300)
                 coin_count = struct.pack(">H", coin_count)
                 primed_coins = 1

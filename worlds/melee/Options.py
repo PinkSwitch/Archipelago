@@ -96,7 +96,7 @@ class SoloCSmash(DefaultOnToggle):
 
 class TargetSanity(Toggle):
     """Enables a check for every individual character's Target Test being cleared."""
-    display_name = "Pokemon Bonus Checks"
+    display_name = "Target Clear Checks"
 
 class LongTargetChecks(Toggle):
     """Enables Target Test checks locked behind most or all characters."""
