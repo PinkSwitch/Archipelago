@@ -26,11 +26,11 @@ LAST_RECV_ITEM_ADDR = 0x8045C368
 COIN_COUNTER = 0x8045C10A
 TROPHY_COUNT = 0x8045C390
 MENU_ID = 0x80479D30
-AP_CHAR_UNLOCKS = 0x80001e40 #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
+AP_CHAR_UNLOCKS = 0x80001800
 SECRET_CHAR_ADDRESS = 0x8045BF28
 SECRET_STAGE_ADDRESS = 0x8045BF2A
-AP_EVENT_COUNTER = 0x80001E0F  #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
-LOTTERY_POOL_UPGRADES = 0x80001e44 #TODO!!! MOVE THIS SOMEWHERE PERMANENT!
+AP_EVENT_COUNTER = 0x80001804
+LOTTERY_POOL_UPGRADES = 0x80001808
 
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
@@ -97,6 +97,12 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         """Checks unlocked Modes"""
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.display_modes_obtained(), name="Check Modes Unlocked")
+
+    def _cmd_rig(self, selected_trophy: str = ""):
+        """Rigs the lottery to give a specific available Lottery check. Requires 30 coins to use."""
+        if isinstance(self.ctx, SSBMClient):
+            p = rigged_trophy
+            Utils.async_start(self.ctx.rig_lottery(self, rigged_trophy), name="Lottery Rig")
 
 class SSBMClient(CommonContext):
     command_processor = SSBMCommandProcessor 
@@ -226,6 +232,21 @@ class SSBMClient(CommonContext):
         logger.info(modes_array)
         return
 
+    async def rig_lottery(self, rigged_trophy):
+        modes_array = []
+        if not (dme.is_hooked() and self.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            logger.info("Please connect to the server and game.")
+            return
+
+        for item in self.items_received:
+            name = self.item_names.lookup_in_game(item.item)
+            if name in mode_items:
+                modes_array.append(name)
+
+        logger.info(f"Modes Unlocked:")
+        logger.info(modes_array)
+        return
+
     async def disconnect(self, allow_autoreconnect: bool = False):
         """
         Disconnect the client from the server and reset game state variables.
@@ -278,8 +299,10 @@ class SSBMClient(CommonContext):
         trophy_checks = in_game_data.trophy_checks
         event_checks = in_game_data.event_checks
         mode_clears = in_game_data.mode_clears
+        target_clears = in_game_data.target_clears
         flag_checks = in_game_data.flag_checks
         trophy_owned_checks = in_game_data.trophy_owned_checks
+        ten_man_clears = in_game_data.ten_man_clears
 
         bonus_table = read_table(0x8045C348, 0x20)
         trophy_table = read_table(0x8045C394, 0x249)
@@ -303,9 +326,14 @@ class SSBMClient(CommonContext):
                 if location not in self.locations_checked and event_table[entry] & bit:
                     new_checks.append(location)
 
-            for location in mode_clears:
-                target_check = read_bytes(mode_clears[location], 1)
+            for i, location in enumerate(target_clears):
+                target_check = read_bytes(mode_clears[i], 1)
                 if target_check & 0x80:
+                    new_checks.append(location)
+
+            for i, location in enumerate(ten_man_clears):
+                tenman_check = read_bytes(mode_clears[i], 1)
+                if tenman_check & 0x40:
                     new_checks.append(location)
 
             for location, (entry, bit) in flag_checks.items():

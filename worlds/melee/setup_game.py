@@ -49,6 +49,9 @@ def setup_gamevars(world) -> None:
     if world.options.target_checks:
         world.location_count += 25
 
+    if world.options.ten_man_checks:
+        world.location_count += 25
+
     if world.options.event_checks:
         world.location_count += 45
 
@@ -64,6 +67,9 @@ def setup_gamevars(world) -> None:
     if world.options.vs_count_checks:
         world.location_count += 7
 
+    if world.options.hard_modes_clear:
+        world.location_count += 3
+
     if world.options.enable_annoying_multiman_checks:
         world.location_count += 2
 
@@ -71,7 +77,7 @@ def setup_gamevars(world) -> None:
         world.location_count += 3
 
     if world.options.bonus_checks:
-        world.location_count += 225
+        world.location_count += 224
         
         if world.options.enable_rare_pokemon_checks:
             world.location_count += 2 #Pokemon bonuses
@@ -81,7 +87,9 @@ def setup_gamevars(world) -> None:
 
         if world.options.enable_extreme_bonuses:
             world.location_count += 7
-
+        
+        if world.options.hard_modes_clear:
+            world.location_count += 1
 
 
 

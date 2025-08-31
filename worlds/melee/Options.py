@@ -106,9 +106,9 @@ class DisableTapJump(Toggle):
     """Removes the ability to jump by tapping Up on the control stick."""
     display_name = "Disable Tap Jump"
 
-class HardAllStarClear(Toggle):
-    """Enables a check for completing All-Star on Hard or higher."""
-    display_name = "Hard All-Star Clear"
+class HardModeClears(Toggle):
+    """Enables checks for completing the main 1-P Modes on Hard or higher."""
+    display_name = "Hard Mode Clears"
 
 class StartingCharacter(Choice):
     """This is the character you will start with."""
@@ -140,6 +140,10 @@ class StartingCharacter(Choice):
     option_roy = 24
     default = "random"
 
+class TenManSanity(Toggle):
+    """Enables a check for every individual character clearing 10-Man Melee"""
+    display_name = "Ten-Man Sanity"
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -147,6 +151,7 @@ class SSBMOptions(PerGameCommonOptions):
     extra_trophies: TrophiesExtra
     bonus_checks: BonusSanity
     target_checks: TargetSanity
+    ten_man_checks: TenManSanity
     enable_rare_pokemon_checks: RarePokemonChecks
     enable_hard_bonuses: HardBonuses
     enable_extreme_bonuses: ExtremeBonuses
@@ -154,7 +159,7 @@ class SSBMOptions(PerGameCommonOptions):
     diskun_trophy_check: DiskunTrophyCheck
     mewtwo_unlock_check: MewtwoUnlockCheck
     vs_count_checks: VsCountChecks
-    hard_allstar_clear: HardAllStarClear
+    hard_modes_clear: HardModeClears
     long_targettest_checks: LongTargetChecks
     lottery_pool_mode: LotteryPool
     event_checks: EventSanity
@@ -181,7 +186,8 @@ ssbm_option_groups = [
     OptionGroup("Check Settings", [
         BonusSanity,
         EventSanity,
-        TargetSanity
+        TargetSanity,
+        TenManSanity
     ]),
 
     OptionGroup("Annoying Checks", [
@@ -193,7 +199,7 @@ ssbm_option_groups = [
         DiskunTrophyCheck,
         MewtwoUnlockCheck,
         LongTargetChecks,
-        HardAllStarClear
+        HardModeClears
     ]),
 
     OptionGroup("Goal Settings", [

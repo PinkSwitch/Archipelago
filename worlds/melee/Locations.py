@@ -100,7 +100,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("All-Star Mode", "Roy - All-Star Trophy Unlock", 0x177),
 
         LocationData("Adventure Mode", "Adventure Mode - Sub 18:20 Clear", 0x178),
-        LocationData("Adventure Mode", "Adventure Mode - Hard/Continueless Clear", 0x179),
         LocationData("Adventure Mode", "Adventure Mode - Escape Brinstar", 0x17A),
         LocationData("Adventure Mode", "Adventure Mode - Giga Bowser Continueless", 0x17C),
         
@@ -108,7 +107,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("All-Star Mode", "All-Star Mode - Continueless Clear", 0x17E),
 
         LocationData("Classic Mode", "Classic Mode - 5 Minute Clear", 0x181),
-        LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
         LocationData("Any Main 1-P", "Any 1P - Game & Watch Clear", 0x272),
 
         LocationData("Multi-Man Melee", "Multi Man Melee - 100 Man Melee Sub 4 Minutes", 0x1A1),
@@ -320,9 +318,11 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Game Menu", "Trophy Room - Admire Collection", None),
     ]
 
-    if world.options.hard_allstar_clear:
+    if world.options.hard_modes_clear:
         location_table += [
-            LocationData("All-Star Mode", "All-Star Mode - Hard Clear", 0x17F)
+            LocationData("All-Star Mode", "All-Star Mode - Hard Clear", 0x17F),
+            LocationData("Classic Mode", "Classic Mode - Hard/Continueless Clear", 0x182),
+            LocationData("Adventure Mode", "Adventure Mode - Hard/Continueless Clear", 0x179),
         ]
 
     if world.use_250_trophy_pool:
@@ -396,6 +396,35 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Target Test", "Target Test - Mr. Game & Watch", 0x19A),
             LocationData("Target Test", "Target Test - Marth", 0x19B),
             LocationData("Target Test", "Target Test - Roy", 0x19C),
+        ]
+
+    if world.options.ten_man_checks:
+        location_table += [
+            LocationData("Multi-Man Melee", "Multi Man Melee - Mario 10-Man", 0x273),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Dr. Mario 10-Man", 0x274),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Luigi 10-Man", 0x275),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Bowser 10-Man", 0x276),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Peach 10-Man", 0x277),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Yoshi 10-Man", 0x278),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Donkey Kong 10-Man", 0x279),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Captain Falcon 10-Man", 0x27A),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Ganondorf 10-Man", 0x27B),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Falco 10-Man", 0x27C),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Fox 10-Man", 0x27D),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Ness 10-Man", 0x27E),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Ice Climbers 10-Man", 0x27F),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Kirby 10-Man", 0x280),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Samus 10-Man", 0x281),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Zelda 10-Man", 0x282),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Link 10-Man", 0x283),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Young Link 10-Man", 0x284),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Pichu 10-Man", 0x285),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Pikachu 10-Man", 0x286),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Jigglypuff 10-Man", 0x287),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Mewtwo 10-Man", 0x288),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Mr. Game & Watch 10-Man", 0x289),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Marth 10-Man", 0x28A),
+            LocationData("Multi-Man Melee", "Multi Man Melee - Roy 10-Man", 0x28B),
         ]
 
     if world.options.event_checks:
@@ -703,7 +732,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Classic Mode", "Bonus - Classic Clear", 0xEE),
         LocationData("Adventure Mode", "Bonus - Adventure Clear", 0xEF),
         LocationData("All-Star Mode", "Bonus - All-Star Clear", 0xF0),
-        LocationData("Any Main 1-P", "Bonus - Very Hard Clear", 0xF1),
         LocationData("Any Melee", "Bonus - Fall Guy", 0xF2),
         LocationData("Any Melee", "Bonus - Self-Destructor", 0xF3),
         LocationData("Any Melee", "Bonus - Master of Disaster", 0xF4),
@@ -741,5 +769,10 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             location_table += [
             LocationData("Any Melee", "Bonus - Mew Catcher", 0xCE),
             LocationData("Any Melee", "Bonus - Celebi Catcher", 0xCF)]
+
+        if world.options.hard_modes_clear:
+            location_table += [
+            LocationData("Any Main 1-P", "Bonus - Very Hard Clear", 0xF1),
+            ]
 
     return location_table

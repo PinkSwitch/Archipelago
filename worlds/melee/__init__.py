@@ -93,7 +93,7 @@ class SSBMWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.world_version = "1.0.1.1"
+        self.world_version = "1.1"
         self.extra_item_count = 0
         self.goal_count = 1
         self.picked_trophies = set()
@@ -101,7 +101,7 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 290
+        self.location_count = 287
         self.required_item_count = 55
 
     def create_regions(self) -> None:
@@ -180,6 +180,8 @@ class SSBMWorld(World):
             lottery_type = "Static"
         elif self.options.lottery_pool_mode == 1:
             lottery_type = "Progressive"
+        else:
+            lottery_type = "N/A"
 
         return {
             "authentication_id": self.authentication_id,

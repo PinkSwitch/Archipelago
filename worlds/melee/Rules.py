@@ -324,6 +324,34 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.multiworld.get_location("Target Test - Marth", player), lambda state: state.has("Marth", player))
         set_rule(world.multiworld.get_location("Target Test - Roy", player), lambda state: state.has("Roy", player))
 
+    if world.options.ten_man_checks:
+        set_rule(world.multiworld.get_location("Multi Man Melee - Mario 10-Man", player), lambda state: state.has("Mario", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Dr. Mario 10-Man", player), lambda state: state.has("Dr. Mario", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Luigi 10-Man", player), lambda state: state.has("Luigi", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Bowser 10-Man", player), lambda state: state.has("Bowser", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Peach 10-Man", player), lambda state: state.has("Peach", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Yoshi 10-Man", player), lambda state: state.has("Yoshi", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Donkey Kong 10-Man", player), lambda state: state.has("Donkey Kong", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Captain Falcon 10-Man", player), lambda state: state.has("Captain Falcon", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Ganondorf 10-Man", player), lambda state: state.has("Ganondorf", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Falco 10-Man", player), lambda state: state.has("Falco", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Fox 10-Man", player), lambda state: state.has("Fox", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Ness 10-Man", player), lambda state: state.has("Ness", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Ice Climbers 10-Man", player), lambda state: state.has("Ice Climbers", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Kirby 10-Man", player), lambda state: state.has("Kirby", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Samus 10-Man", player), lambda state: state.has("Samus", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Zelda 10-Man", player), lambda state: state.has("Zelda", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Link 10-Man", player), lambda state: state.has("Link", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Yong Link 10-Man", player), lambda state: state.has("Young Link", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Pichu 10-Man", player), lambda state: state.has("Pichu", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Pikachu 10-Man", player), lambda state: state.has("Pikachu", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Jigglypuff 10-Man", player), lambda state: state.has("Jigglypuff", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Mewtwo 10-Man", player), lambda state: state.has("Mewtwo", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Mr. Game & Watch 10-Man", player), lambda state: state.has("Mr. Game & Watch", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Marth 10-Man", player), lambda state: state.has("Marth", player))
+        set_rule(world.multiworld.get_location("Multi Man Melee - Roy 10-Man", player), lambda state: state.has("Roy", player))
+
+
     if world.options.bonus_checks:
         set_rule(world.multiworld.get_location("Bonus - Meteor Smash", player), lambda state: state.has_any(can_meteor, player))
                                                                                                             
