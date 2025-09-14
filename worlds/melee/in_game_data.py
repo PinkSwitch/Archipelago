@@ -45,7 +45,7 @@ global_trophy_table =["Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Al
                         "Misty (Trophy)", "ZERO-ONE (Trophy)", "Maruo Maruhige (Trophy)", "Ryota Hayami (Trophy)", "Kensuke Kimachi (Trophy)", "Love Giant (Trophy)",
                         "Hate Giant (Trophy)", "Ray Mk II (Trophy)", "Bayonette (Trophy)", "Annie (Trophy)", "Tom Nook (Trophy)", "Totakeke (Trophy)",
                         "Mr. Resetti (Trophy)", "Heririn (Trophy)", "Alpha (Trophy)", "Vacuum Luigi (Trophy)", "Pikmin (Trophy)", "Captain Olimar (Trophy)",
-                        "Excite Bike (Trophy)", "Tamagon (Trophy)", "Donkey Kong Junior (Trophy)", "Ducks (Trophy)", "Bubbles (Trophy)", "Eggplant Man (Trophy)",
+                        "Excitebike (Trophy)", "Tamagon (Trophy)", "Donkey Kong Junior (Trophy)", "Ducks (Trophy)", "Bubbles (Trophy)", "Eggplant Man (Trophy)",
                         "Mach Rider (Trophy)", "Balloon Fighter (Trophy)", "Stanley (Trophy)", "Pit (Trophy)", "Dr. Wright (Trophy)", "Donbe & Hikari (Trophy)",
                         "Ayumi Tachibana (Trophy)", "Monster (Trophy)", "Sheriff (Trophy)", "Diskun (Trophy)", "GCN (Trophy)"
                         ]
@@ -1015,7 +1015,7 @@ lottery_total_matches = [
     "kensuke kimachi",
     "lugia",
     "megavitamins",
-    "meta knight",
+    "meta-knight",
     "peppy hare",
     "poison mushroom",
     "polar bear",

@@ -144,6 +144,10 @@ class TenManSanity(Toggle):
     """Enables a check for every individual character clearing 10-Man Melee"""
     display_name = "Ten-Man Sanity"
 
+class AutoLCancel(Toggle):
+    """Automatically L-cancels aerial attacks."""
+    display_name = "Automatic L-Cancel"
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -170,6 +174,7 @@ class SSBMOptions(PerGameCommonOptions):
     goal_all_targets: GoalTargets
     solo_cstick_smash: SoloCSmash
     disable_tap_jump: DisableTapJump
+    automatic_l_cancel: AutoLCancel
     start_inventory_from_pool: StartInventoryPool
 
 

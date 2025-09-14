@@ -42,6 +42,7 @@ def apply_patch(world, basepatch, output):
             SLOT_NUM = world.player,
             AUTH_ID = world.authentication_id,
             CSTICK_SMASH_SOLO = world.options.solo_cstick_smash,
+            AUTO_L_CANCEL = world.options.automatic_l_cancel,
             DISABLE_TAP_JUMP = world.options.disable_tap_jump,
             TROPHYCLASS_IN_POOL = disable_class_upgrades)
     return result

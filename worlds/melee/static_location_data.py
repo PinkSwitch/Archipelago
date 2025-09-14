@@ -91,7 +91,7 @@ location_ids = {
     "Bonus - Rock Climber": 0x5B,
     "Bonus - Edge Hog": 0x5C,
     "Bonus - Cliffhanger": 0x5D,
-    "Bonus - Sacrifical KO": 0x5E,
+    "Bonus - Sacrificial KO": 0x5E,
     "Bonus - Avenger KO": 0x5F,
     "Bonus - Double KO": 0x60,
     "Bonus - Triple KO": 0x61,

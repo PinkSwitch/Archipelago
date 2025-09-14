@@ -138,7 +138,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
     good_hr_characters = {"Ganondorf", "Yoshi", "Jigglypuff", "Roy"} #Can get over 1,400
     decent_hr_characters = {"Dr. Mario"} #Can get over 1,326 casually
 
-    good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda"}
+    good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda", "Link", "Young Link"}
     decent_combo_char = {"Yoshi", "Falco"}
 
     event_chars = {"Mario", "Donkey Kong", "Ness", "Yoshi", "Kirby", "Samus", "Link", "Bowser", "Falco", "Captain Falcon", "Young Link", "Luigi", "Jigglypuff", "Marth", "Fox", "Mr. Game & Watch"}
@@ -229,7 +229,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
     set_rule(world.multiworld.get_location("Roy - All-Star Trophy Unlock", player), lambda state: state.has("Roy", player))
 
     set_rule(world.multiworld.get_location("Training Mode - 125 Combined Combos", player), lambda state: state.has_all(good_combo_char, player) and state.has("Bowser", player))
-    set_rule(world.multiworld.get_location("Training Mode - 10-Hit Combo", player), lambda state: state.has_any(decent_combo_char, player) and state.has("Bowser", player))
+    set_rule(world.multiworld.get_location("Training Mode - 10-Hit Combo", player), lambda state: (state.has_any(decent_combo_char, player) or state.has_any(good_combo_char, player)) and state.has("Bowser", player))
     set_rule(world.multiworld.get_location("Training Mode - 20-Hit Combo", player), lambda state: state.has_any(good_combo_char, player) and state.has("Bowser", player))
 
     set_rule(world.multiworld.get_location("Home-Run Contest - 16,404 Ft. Combined", player), lambda state: state.has_group_unique("Characters", player, 16))

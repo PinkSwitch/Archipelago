@@ -220,33 +220,33 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Lottery Base", "Base Trophy Pool - Wobbuffet", 0x212),
         LocationData("Lottery Base", "Base Trophy Pool - ZERO-ONE", 0x213),
 
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Ayumi Tachibana", 0x214),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Banzai Bill", 0x215),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Beam Sword", 0x216),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Charizard", 0x217),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Cleffa", 0x218),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Electrode", 0x219),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Fire Kirby", 0x21A),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Four Giants", 0x21B),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Freezie", 0x21C),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Goron", 0x21D),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Green Shell", 0x21E),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Koopa Paratroopa", 0x21F),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Like Like", 0x220),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Love Giant", 0x221),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Marill", 0x222),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Master Sword", 0x223),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Octorok", 0x224),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Parasol", 0x225),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Paula", 0x226),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Pit", 0x227),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Plum", 0x228),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - ReDead", 0x229),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Screw Attack", 0x22A),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Staryu", 0x22B),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Vegetable", 0x22C),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Viruses", 0x22D),
-        LocationData("Any Main 1-P (No All-Star)", "Any 1P Trophy - Warp Star", 0x22E),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Ayumi Tachibana", 0x214),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Banzai Bill", 0x215),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Beam Sword", 0x216),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Charizard", 0x217),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Cleffa", 0x218),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Electrode", 0x219),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Fire Kirby", 0x21A),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Four Giants", 0x21B),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Freezie", 0x21C),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Goron", 0x21D),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Green Shell", 0x21E),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Koopa Paratroopa", 0x21F),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Like Like", 0x220),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Love Giant", 0x221),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Marill", 0x222),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Master Sword", 0x223),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Octorok", 0x224),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Parasol", 0x225),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Paula", 0x226),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Pit", 0x227),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Plum", 0x228),
+        LocationData("Any Main 1-P", "Any 1P Trophy - ReDead", 0x229),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Screw Attack", 0x22A),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Staryu", 0x22B),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Vegetable", 0x22C),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Viruses", 0x22D),
+        LocationData("Any Main 1-P", "Any 1P Trophy - Warp Star", 0x22E),
         LocationData("Lottery Base", "Lottery - Bubbles", 0x22F),
         LocationData("Lottery Base", "Lottery - Chansey", 0x230),
         LocationData("Lottery Base", "Lottery - Dixie Kong", 0x231),
@@ -334,15 +334,15 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     if world.all_adventure_trophies:
         location_table += [
-            LocationData("Adventure Mode", "Adventure Mode - All Character Trophies", 0x17B)] #This should only be present if all the trophies exist
+            LocationData("Game Menu", "Adventure Mode - All Character Trophies", 0x17B)] #This should only be present if all the trophies exist
 
     if world.all_classic_trophies:
         location_table += [
-            LocationData("Classic Mode", "Classic Mode - All Character Trophies", 0x183)] #This should only be present if all the trophies exist
+            LocationData("Game Menu", "Classic Mode - All Character Trophies", 0x183)] #This should only be present if all the trophies exist
 
     if world.all_allstar_trophies:
         location_table += [
-            LocationData("All-Star Mode", "All-Star Mode - All Character Trophies", 0x180)] #This should only be present if all the trophies exist
+            LocationData("Game Menu", "All-Star Mode - All Character Trophies", 0x180)] #This should only be present if all the trophies exist
 
     if world.options.goal_giga_bowser:
         world.goal_count += 1
@@ -465,7 +465,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Events 31-39", "Event Match - Legendary Pokémon", 0x11B),
             LocationData("Events 31-39", "Event Match - Super Mario Bros. 2", 0x11C),
             LocationData("Events 31-39", "Event Match - Jigglypuff Live!", 0x11D),
-            LocationData("Events 40-50", "All-Star Match 4", 0x11E),
+            LocationData("Events 40-50", "Event Match - All-Star Match 4", 0x11E),
             LocationData("Events 40-50", "Event Match - En Garde!", 0x11F),
             LocationData("Events 40-50", "Event Match - Trouble King 2", 0x120),
             LocationData("Events 40-50", "Event Match - Birds of Prey", 0x121),

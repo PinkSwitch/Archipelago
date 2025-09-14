@@ -30,7 +30,6 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Home-Run Contest"),
         create_region(world, player, locations_per_region, "Multi-Man Melee"),
         create_region(world, player, locations_per_region, "Any Main 1-P"),
-        create_region(world, player, locations_per_region, "Any Main 1-P (No All-Star)"),
         create_region(world, player, locations_per_region, "Events 1-10"),
         create_region(world, player, locations_per_region, "Events 11-15"),
         create_region(world, player, locations_per_region, "Events 16-20"),
@@ -57,15 +56,14 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Game Menu", player).add_exits(["Any Melee", "Adventure Mode", "Classic Mode",
                                                     "All-Star Mode", "Event Match Mode", "Target Test",
                                                     "Home-Run Contest", "Multi-Man Melee", "Lottery Base",
-                                                    "Any Main 1-P", "Any Main 1-P (No All-Star)"],
+                                                    "Any Main 1-P"],
                                                     {"Adventure Mode": lambda state: state.has("Adventure Mode", player),
                                                      "Classic Mode": lambda state: state.has("Classic Mode", player),
                                                      "All-Star Mode": lambda state: state.has("All-Star Mode", player),
                                                      "Home-Run Contest": lambda state: state.has("Home-Run Contest", player),
                                                      "Target Test": lambda state: state.has("Target Test", player),
                                                      "Multi-Man Melee": lambda state: state.has("Multi-Man Melee", player),
-                                                     "Any Main 1-P": lambda state: state.has_any({"Adventure Mode", "Classic Mode", "All-Star Mode"}, player),
-                                                     "Any Main 1-P (No All-Star)": lambda state: state.has_any({"Adventure Mode", "Classic Mode"}, player)})
+                                                     "Any Main 1-P": lambda state: state.has_any({"Adventure Mode", "Classic Mode", "All-Star Mode"}, player)})
 
     multiworld.get_region("Event Match Mode", player).add_exits(["Events 1-10", "Events 11-15", "Events 16-20", "Events 21-25", "Events 26-29", "Event 30", "Events 31-39", "Events 40-50", "Event 51"],
                                                     {"Events 11-15": lambda state: state.has("Progressive Event Pack", player, 1),
