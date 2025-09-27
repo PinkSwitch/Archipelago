@@ -971,7 +971,7 @@ base_lottery = [
 
 lottery_adventure_classic = [
     "arwing",
-    "baby Mario",
+    "baby mario",
     "bayonette",
     "chozo statue",
     "ditto",

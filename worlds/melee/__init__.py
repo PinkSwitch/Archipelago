@@ -22,6 +22,7 @@ from .static_location_data import location_ids
 from .setup_game import setup_gamevars, place_static_items, calculate_trophy_based_locations
 from .in_game_data import global_trophy_table
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
+from Utils import local_path
 
 def run_client(*args):
     print("Running SSBM Client")
@@ -29,8 +30,10 @@ def run_client(*args):
     launch_subprocess(launch, name="SSBMClient", args=args)
 
 components.append(
-    Component("Super Smash Bros. Melee Client", func=run_client, component_type=Type.CLIENT, file_identifier=SuffixIdentifier(".apssbm"))
+    Component("Super Smash Bros. Melee Client", func=run_client, component_type=Type.CLIENT, icon="melee_ap_logo")
 )
+
+icon_paths["melee_ap_logo"] = local_path("worlds/melee/data", "melee_ap_logo.png")
 
 
 class SSBMWeb(WebWorld):
@@ -154,7 +157,7 @@ class SSBMWorld(World):
     def generate_output(self, output_directory: str) -> None:
         from Main import __version__
         try:
-            basepatch = pkgutil.get_data(__name__, "melee_base.xml")
+            basepatch = pkgutil.get_data(__name__, "data/melee_base.xml")
             base_str = basepatch.decode("utf-8")
             self.encoded_slot_name = bytearray(f'SSBM{__version__.replace(".", "")[0:3]}_{self.player:05d}_{self.authentication_id:09d}\0', "utf8")[:27]
             self.rom_name = self.encoded_slot_name.decode("ascii").rstrip("\x00")
@@ -212,6 +215,7 @@ class SSBMWorld(World):
     def get_excluded_items(self) -> Set[str]:
         excluded_items: Set[str] = set()
         excluded_items.add(self.starting_character)
+        #if not self.options.lock_items:
         return excluded_items
 
     def set_classifications(self, name: str) -> Item:

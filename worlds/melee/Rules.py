@@ -138,7 +138,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
     good_hr_characters = {"Ganondorf", "Yoshi", "Jigglypuff", "Roy"} #Can get over 1,400
     decent_hr_characters = {"Dr. Mario"} #Can get over 1,326 casually
 
-    good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda", "Link", "Young Link"}
+    good_combo_char = {"Kirby", "Fox", "Pichu", "Pikachu", "Zelda", "Link", "Young Link", "Mewtwo"}
     decent_combo_char = {"Yoshi", "Falco"}
 
     event_chars = {"Mario", "Donkey Kong", "Ness", "Yoshi", "Kirby", "Samus", "Link", "Bowser", "Falco", "Captain Falcon", "Young Link", "Luigi", "Jigglypuff", "Marth", "Fox", "Mr. Game & Watch"}

@@ -7,11 +7,12 @@ from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser,
 import Patch
 import Utils, NetUtils
 import asyncio
-from . import SSBMWorld
 import dolphin_memory_engine as dme
 from .Helper_Functions import StringByteFunction as sbf
 from typing import Optional
 from .in_game_data import global_trophy_table
+from . import SSBMWorld
+from MultiServer import mark_raw
 
 from NetUtils import ClientStatus, color
 
@@ -102,6 +103,7 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.display_modes_obtained(), name="Check Modes Unlocked")
 
+    @mark_raw
     def _cmd_rig(self, selected_trophy: str = ""):
         """Rigs the lottery to give a specific available Lottery check. Requires 30 coins to use."""
         if isinstance(self.ctx, SSBMClient):
@@ -451,9 +453,9 @@ class SSBMClient(CommonContext):
 
                     if name in global_trophy_table:
                         trophy_id = global_trophy_table.index(name)
-                        trophy_address = 0x8045C395 + (trophy_id * 2)
-                        item_count = 1
-                        item_count = item_count.to_bytes(1, "big")
+                        trophy_address = 0x8045C394 + (trophy_id * 2)
+                        item_count = 0x0201
+                        item_count = item_count.to_bytes(2, "big")
                         dme.write_bytes(trophy_address, item_count)
 
                     if name == "Pikmin Savefile":
