@@ -138,6 +138,7 @@ class SSBMClient(CommonContext):
         self.all_events_complete = False
         self.event_51_complete = False
         self.all_targets_complete = False
+        self.has_played_nag_message = False
 
         self.lottery_pool = None
 
@@ -527,13 +528,16 @@ class SSBMClient(CommonContext):
                 self.event_51_complete,
                 self.all_targets_complete,
                 total_trophy_count >= self.total_trophies_required,
-                current_menu == 0x0D
             ]) and not self.has_finished_game:
-                self.has_finished_game = True
-                await self.send_msgs([{
-                    "cmd": "StatusUpdate",
-                    "status": NetUtils.ClientStatus.CLIENT_GOAL,
-                }])
+                if current_menu == 0x0D:
+                    self.has_finished_game = True
+                    await self.send_msgs([{
+                        "cmd": "StatusUpdate",
+                        "status": NetUtils.ClientStatus.CLIENT_GOAL,
+                    }])
+                elif not self.has_played_nag_message:
+                    self.has_played_nag_message = True
+                    logger.info("Detected Goal eligibility. Go to the Trophy Collection room to finish your game.")
 
 async def dolphin_sync_task(ctx: SSBMClient):
     while not ctx.exit_event.is_set():

@@ -104,15 +104,15 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 287
-        self.required_item_count = 55
+        self.location_count = 282
+        self.required_item_count = 50
 
     def create_regions(self) -> None:
         for item in self.multiworld.precollected_items[self.player]: #First add starting inventories to the Trophy Pool
             if item.name in global_trophy_table:
                 self.picked_trophies.add(item.name)
 
-        calculate_trophy_based_locations(self) #Check if the current Trophy Pool will affect the location pool
+        calculate_trophy_based_locations(self)  # Check if the current Trophy Pool will affect the location pool
         excess_trophies = len(self.picked_trophies) - (self.location_count - self.required_item_count)
 
         if excess_trophies > 0:

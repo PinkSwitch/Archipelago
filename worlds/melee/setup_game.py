@@ -2,11 +2,6 @@ import logging
 from .Rules import adventure_trophies, classic_trophies, allstar_trophies
 
 def setup_gamevars(world) -> None:
-    world.all_trophies.remove("Birdo (Trophy)")
-    world.all_trophies.remove("Kraid (Trophy)")
-    world.all_trophies.remove("UFO (Trophy)")
-    world.all_trophies.remove("Falcon Flyer (Trophy)")
-    world.all_trophies.remove("Sudowoodo (Trophy)")  # These are always in the pool and need to not be rolled randomly
     character_selection = ["Dr. Mario", "Mario", "Luigi", "Bowser", "Peach",
                             "Yoshi", "Donkey Kong", "Captain Falcon", "Ganondorf", "Falco",
                             "Fox", "Ness", "Ice Climbers", "Kirby", "Samus",
@@ -34,12 +29,14 @@ def setup_gamevars(world) -> None:
         world.total_trophy_count = 293
         world.options.extra_trophies.value = 293 - world.options.trophies_required
 
-    world.total_trophy_count = max(0, world.total_trophy_count - 5) #Don't create extras for the trophies that always exist
+    world.total_trophy_count = max(0, world.total_trophy_count)
     for i in range(world.total_trophy_count):
         if not world.all_trophies:
             break
         else:
+            print(i)
             trophy = world.random.choice(world.all_trophies)
+            print(trophy)
             world.all_trophies.remove(trophy)
             world.picked_trophies.add(trophy)
 

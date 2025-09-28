@@ -244,11 +244,20 @@ def set_location_rules(world: "SSBMWorld") -> None:
     set_rule(world.multiworld.get_location("Game - Unlock Roy, Pichu, Ganondorf, Dr. Mario, Young Link, and Falco", player), lambda state: state.has_all({
         "Roy", "Pichu", "Ganondorf", "Dr. Mario", "Young Link", "Falco"}, player))
 
-    set_rule(world.multiworld.get_location("Game - Have Birdo Trophy", player), lambda state: state.has("Birdo (Trophy)", player))
-    set_rule(world.multiworld.get_location("Game - Have Kraid Trophy", player), lambda state: state.has("Kraid (Trophy)", player))
-    set_rule(world.multiworld.get_location("Game - Have Falcon Flyer Trophy", player), lambda state: state.has("Falcon Flyer (Trophy)", player))
-    set_rule(world.multiworld.get_location("Game - Have UFO Trophy", player), lambda state: state.has("UFO (Trophy)", player))
-    set_rule(world.multiworld.get_location("Game - Have Sudowoodo Trophy", player), lambda state: state.has("Sudowoodo (Trophy)", player))
+    if "Birdo (Trophy)" in world.picked_trophies:
+        set_rule(world.multiworld.get_location("Game - Have Birdo Trophy", player), lambda state: state.has("Birdo (Trophy)", player))
+
+    if "Kraid (Trophy)" in world.picked_trophies:
+        set_rule(world.multiworld.get_location("Game - Have Kraid Trophy", player), lambda state: state.has("Kraid (Trophy)", player))
+
+    if "Falcon Flyer (Trophy)" in world.picked_trophies:
+        set_rule(world.multiworld.get_location("Game - Have Falcon Flyer Trophy", player), lambda state: state.has("Falcon Flyer (Trophy)", player))
+
+    if "UFO (Trophy)" in world.picked_trophies:
+        set_rule(world.multiworld.get_location("Game - Have UFO Trophy", player), lambda state: state.has("UFO (Trophy)", player))
+
+    if "Sudowoodo (Trophy)" in world.picked_trophies:
+        set_rule(world.multiworld.get_location("Game - Have Sudowoodo Trophy", player), lambda state: state.has("Sudowoodo (Trophy)", player))
 
     set_rule(world.multiworld.get_location("Game - Unlock All Regular Stages", player), lambda state: state.has_all(regular_stages, player))
 

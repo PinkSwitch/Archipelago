@@ -129,11 +129,6 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Game Menu", "Game - All Stages + Secret Characters", 0x1B1),
         LocationData("Game Menu", "Game - Unlock Luigi, Jigglypuff, Mewtwo, Mr. Game & Watch, and Marth", 0x1B2),
         LocationData("Game Menu", "Game - Unlock Roy, Pichu, Ganondorf, Dr. Mario, Young Link, and Falco", 0x1B3),
-        LocationData("Game Menu", "Game - Have Birdo Trophy", 0x1B4),
-        LocationData("Game Menu", "Game - Have Kraid Trophy", 0x1B5),
-        LocationData("Game Menu", "Game - Have Falcon Flyer Trophy", 0x1B6),
-        LocationData("Game Menu", "Game - Have UFO Trophy", 0x1B7),
-        LocationData("Game Menu", "Game - Have Sudowoodo Trophy", 0x1B8),
         LocationData("Game Menu", "Game - Unlock All Regular Stages", 0x261),
 
         LocationData("Any Main 1-P", "Any 1P - Jigglypuff Unlock Match", 0x1B9),
@@ -476,6 +471,31 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
             LocationData("Events 40-50", "Event Match - Final Destination Match", 0x128),
         ]
 
+    if "Birdo (Trophy)" in world.picked_trophies:
+        location_table += [
+        LocationData("Game Menu", "Game - Have Birdo Trophy", 0x1B4)]
+        world.location_count += 1
+
+    if "Kraid (Trophy)" in world.picked_trophies:
+        location_table += [
+        LocationData("Game Menu", "Game - Have Kraid Trophy", 0x1B5)]
+        world.location_count += 1
+
+    if "Falcon Flyer (Trophy)" in world.picked_trophies:
+        location_table += [
+        LocationData("Game Menu", "Game - Have Falcon Flyer Trophy", 0x1B6)]
+        world.location_count += 1
+
+    if "UFO (Trophy)" in world.picked_trophies:
+        location_table += [
+        LocationData("Game Menu", "Game - Have UFO Trophy", 0x1B7)]
+        world.location_count += 1
+
+    if "Sudowoodo (Trophy)" in world.picked_trophies:
+        location_table += [
+        LocationData("Game Menu", "Game - Have Sudowoodo Trophy", 0x1B8)]
+        world.location_count += 1
+
     if world.options.enable_rare_pokemon_checks:
             location_table += [
             LocationData("Any Melee", "Melee - See Mew", 0x1A8),
@@ -735,7 +755,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Fall Guy", 0xF2),
         LocationData("Any Melee", "Bonus - Self-Destructor", 0xF3),
         LocationData("Any Melee", "Bonus - Master of Disaster", 0xF4),
-        LocationData("Any Main 1-P", "Bonus - No-Miss Clear", 0xF6)]
+        LocationData("Any Main 1-P", "Bonus - No-Miss Clear", 0xF6),]
         
 
         if world.options.enable_hard_bonuses:
