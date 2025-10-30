@@ -339,30 +339,35 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         location_table += [
             LocationData("Game Menu", "All-Star Mode - All Character Trophies", 0x180)] #This should only be present if all the trophies exist
 
-    if world.options.goal_giga_bowser:
+    if "Giga Bowser" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
            LocationData("Adventure Mode", "Goal: Giga Bowser Defeated", None)]
 
-    if world.options.goal_crazy_hand:
+    if "Crazy Hand" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
             LocationData("Classic Mode", "Goal: Crazy Hand Defeated", None)]
 
-    if world.options.goal_event_51:
+    if "Event 51" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
             LocationData("Event 51", "Goal: Event 51", None)]
 
-    if world.options.goal_all_events:
+    if "Other Events" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
-            LocationData("Event Match Mode", "Goal: All Events Clear", None)]
+            LocationData("Events 40-50", "Goal: Other Events Clear", None)]
 
-    if world.options.goal_all_targets:
+    if "All Targets" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
             LocationData("Event Match Mode", "Goal: All Targets Clear", None)]
+
+    if "Event 50" in world.options.goal_triggers:
+        world.goal_count += 1
+        location_table += [
+            LocationData("Events 40-50", "Goal: Event 50 Clear", None)]
 
     if world.options.target_checks:
         location_table += [
@@ -734,7 +739,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Peaceful Warrior", 0xDB),
         LocationData("Any Melee", "Bonus - Down, But Not Out", 0xDC),
         LocationData("Any Melee", "Bonus - Merciful Master", 0xDD),
-        LocationData("Any Melee", "Bonus - Rocket KO", 0xDE),
+        LocationData("Any Main 1-P", "Bonus - Rocket KO", 0xDE),
         LocationData("Any Melee", "Bonus - Minimalist", 0xDF),
         LocationData("Any Melee", "Bonus - Materialist", 0xE0),
         LocationData("Classic Mode", "Bonus - Collector", 0xE1),

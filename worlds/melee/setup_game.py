@@ -34,9 +34,7 @@ def setup_gamevars(world) -> None:
         if not world.all_trophies:
             break
         else:
-            print(i)
             trophy = world.random.choice(world.all_trophies)
-            print(trophy)
             world.all_trophies.remove(trophy)
             world.picked_trophies.add(trophy)
 
@@ -94,20 +92,24 @@ def setup_gamevars(world) -> None:
 def place_static_items(world):
     world.get_location("Trophy Room - Admire Collection").place_locked_item(world.create_item("Sense of Accomplishment"))
 
-    if world.options.goal_giga_bowser:
+
+    if "Giga Bowser" in world.options.goal_triggers:
         world.get_location("Goal: Giga Bowser Defeated").place_locked_item(world.create_item("Sense of Accomplishment"))
 
-    if world.options.goal_crazy_hand:
+    if "Crazy Hand" in world.options.goal_triggers:
         world.get_location("Goal: Crazy Hand Defeated").place_locked_item(world.create_item("Sense of Accomplishment"))
 
-    if world.options.goal_event_51:
+    if "Event 51" in world.options.goal_triggers:
         world.get_location("Goal: Event 51").place_locked_item(world.create_item("Sense of Accomplishment"))
 
-    if world.options.goal_all_events:
-        world.get_location("Goal: All Events Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
+    if "Other Events" in world.options.goal_triggers:
+        world.get_location("Goal: Other Events Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
 
-    if world.options.goal_all_targets:
+    if "All Targets" in world.options.goal_triggers:
         world.get_location("Goal: All Targets Clear").place_locked_item(world.create_item("Sense of Accomplishment"))
+
+    if "Event 50" in world.options.goal_triggers:
+        world.get_location("Goal: Event 50").place_locked_item(world.create_item("Sense of Accomplishment"))
 
 def calculate_trophy_based_locations(world):
     if adventure_trophies.issubset(world.picked_trophies):

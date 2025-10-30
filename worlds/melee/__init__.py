@@ -132,9 +132,9 @@ class SSBMWorld(World):
         calculate_trophy_based_locations(self) # If the Trophy Pool was adjusted, recalculate this to remove the locations
 
         for trophy in self.picked_trophies:
-            if trophy not in self.multiworld.precollected_items[self.player]: #Don't create any extra trophies
+            if trophy not in self.options.start_inventory: # Don't create any extra trophies that are in start inventory
                 self.multiworld.itempool.append(self.create_item(trophy))
-            self.extra_item_count += 1
+                self.extra_item_count += 1
 
         init_areas(self, get_locations(self))
         place_static_items(self)
@@ -188,11 +188,7 @@ class SSBMWorld(World):
 
         return {
             "authentication_id": self.authentication_id,
-            "giga_bowser_required": self.options.goal_giga_bowser.value,
-            "crazy_hand_required": self.options.goal_crazy_hand.value,
-            "goal_evn_51": self.options.goal_event_51.value,
-            "goal_all_events": self.options.goal_all_events.value,
-            "targets_required": self.options.goal_all_targets.value,
+            "goal_triggers": self.options.goal_triggers.value,
             "total_trophies_required": self.options.trophies_required.value,
             "lottery_pool_mode": lottery_type
         }

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (Toggle, Range, PerGameCommonOptions, StartInventoryPool,
-                     OptionGroup, FreeText, Visibility, DefaultOnToggle, Choice)
+                     OptionGroup, FreeText, Visibility, DefaultOnToggle, Choice, OptionSet)
 
 
 class TrophiesRequired(Range):
@@ -148,6 +148,23 @@ class AutoLCancel(Toggle):
     """Automatically L-cancels aerial attacks."""
     display_name = "Automatic L-Cancel"
 
+class GoalTriggers(OptionSet):
+    """
+    Set which goal triggers are active. You will need to complete ALL of the specified goals and collect the required amount of Trophies
+    in order to complete the game. You can check your Goal Trigger progress in-game by using the command /check_goals in the client.
+
+    Available Triggers: 
+        Giga Bowser: Defeat Giga Bowser at the end of Adventure Mode
+        Crazy Hand: Defeat Crazy Hand at the end of Classic Mode
+        All Targets: Complete Target Test with every character
+        Other Events: Complete Event Matches 1-49
+        Event 50: Complete Event 50
+        Event 51: Complete Event 51
+    """
+    display_name = "Goal Triggers"
+    default = {"Giga Bowser"}
+    valid_keys = {"Giga Bowser", "Crazy Hand", "Event 51", "All Targets", "All Events", "Other Events", "Event 50"}
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -172,6 +189,7 @@ class SSBMOptions(PerGameCommonOptions):
     goal_event_51: GoalEvent51
     goal_all_events: GoalAllEvents
     goal_all_targets: GoalTargets
+    goal_triggers: GoalTriggers
     solo_cstick_smash: SoloCSmash
     disable_tap_jump: DisableTapJump
     automatic_l_cancel: AutoLCancel
@@ -212,7 +230,8 @@ ssbm_option_groups = [
         GoalCrazyHand,
         GoalEvent51,
         GoalAllEvents,
-        GoalTargets
+        GoalTargets,
+        GoalTriggers
     ]),
 
     OptionGroup("QOL Settings", [

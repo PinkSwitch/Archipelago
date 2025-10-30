@@ -126,19 +126,15 @@ class SSBMClient(CommonContext):
         self.awaiting_rom = False
         self.locations_checked = set()
         self.total_trophies_required = 0
-        self.giga_bowser_required = False
-        self.crazy_hand_required = False
-        self.all_targets_required = False
-        self.all_events_required = False
-        self.event_51_required = False
         self.has_finished_game = False
 
         self.giga_bowser_complete = False
         self.crazy_hand_complete = False
-        self.all_events_complete = False
+        self.other_events_complete = False
         self.event_51_complete = False
         self.all_targets_complete = False
         self.has_played_nag_message = False
+        self.event_50_complete = False
 
         self.lottery_pool = None
 
@@ -167,40 +163,54 @@ class SSBMClient(CommonContext):
             return
 
         logger.info("GOALS: ")
-        if self.giga_bowser_required:
+        if "Giga Bowser" in self.active_goals:
             if self.giga_bowser_complete:
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
             logger.info(f"Defeat Giga Bowser: {message}")
 
-        if self.crazy_hand_required:
+        if "Crazy Hand" in self.active_goals:
             if self.crazy_hand_complete:
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
             logger.info(f"Defeat Crazy Hand: {message}")
-        if self.all_events_required:
-            if self.all_events_complete:
+        if "Other Events" in self.active_goals:
+            if self.other_events_complete:
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
             logger.info(f"Complete All Events: {message}")
-        if self.all_targets_required:
+        if "All Targets" in self.active_goals:
             if self.all_targets_complete:
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
             logger.info(f"Complete All Target Tests: {message}")
-        if self.event_51_required:
+        if "Event 51" in self.active_goals:
             if self.event_51_complete:
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
             logger.info(f"Complete Event 51: {message}")
+
+        if "Event 50" in self.active_goals:
+            if self.event_50_complete:
+                message = "COMPLETE"
+            else:
+                message = "INCOMPLETE"
+            logger.info(f"Complete Event 50: {message}")
         total_trophy_count = int.from_bytes(dme.read_bytes(TROPHY_COUNT, 2))
         logger.info(f"Trophy Hunting: {total_trophy_count}/{self.total_trophies_required}")
-        if self.giga_bowser_complete and self.crazy_hand_complete and self.all_events_complete and self.event_51_complete and self.all_targets_complete and total_trophy_count >= self.total_trophies_required:
+        if all([
+            self.giga_bowser_complete,
+            self.crazy_hand_complete,
+            self.other_events_complete,
+            self.event_51_complete,
+            self.event_50_complete,
+            self.all_targets_complete,
+            total_trophy_count >= self.total_trophies_required]):
             logger.info("All of your goals are COMPLETE! Enter the Trophy Collection room to complete your game!")
         return
 
@@ -322,12 +332,8 @@ class SSBMClient(CommonContext):
         super().on_package(cmd, args)
         if cmd == "Connected":  # On Connect
             self.total_trophies_required = int(args["slot_data"]["total_trophies_required"])
-            self.giga_bowser_required = bool(args["slot_data"]["giga_bowser_required"])
-            self.crazy_hand_required = bool(args["slot_data"]["crazy_hand_required"])
-            self.event_51_required = bool(args["slot_data"]["goal_evn_51"])
-            self.all_events_required = bool(args["slot_data"]["goal_all_events"])
-            self.all_targets_required = bool(args["slot_data"]["targets_required"])
             self.lottery_pool = str(args["slot_data"]["lottery_pool_mode"])
+            self.active_goals = set(args["slot_data"]["goal_triggers"])
 
     async def ssbm_check_locations(self, auth):
         new_checks = []
@@ -455,7 +461,7 @@ class SSBMClient(CommonContext):
                     if name in global_trophy_table:
                         trophy_id = global_trophy_table.index(name)
                         trophy_address = 0x8045C394 + (trophy_id * 2)
-                        item_count = 0x0201
+                        item_count = 1
                         item_count = item_count.to_bytes(2, "big")
                         dme.write_bytes(trophy_address, item_count)
 
@@ -474,7 +480,7 @@ class SSBMClient(CommonContext):
         auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
         auth_id = auth_id.decode("ascii").rstrip("\x00")
         if auth_id == auth:
-            if self.giga_bowser_required:
+            if "Giga Bowser" in self.active_goals:
                 bowser_check = int.from_bytes(dme.read_bytes(0x8045C365, 1))
                 if bowser_check & 0x20:
                     self.giga_bowser_complete = True
@@ -483,7 +489,7 @@ class SSBMClient(CommonContext):
             else:
                 self.giga_bowser_complete = True
 
-            if self.crazy_hand_required:
+            if "Crazy Hand" in self.active_goals:
                 crazy_check = int.from_bytes(dme.read_bytes(0x8045C365, 1))
                 if crazy_check & 0x01:
                     self.crazy_hand_complete = True
@@ -492,7 +498,7 @@ class SSBMClient(CommonContext):
             else:
                 self.crazy_hand_complete = True
 
-            if self.all_targets_required:
+            if "All Targets" in self.active_goals:
                 target_check = int.from_bytes(dme.read_bytes(0x8045C213, 1))
                 if target_check & 0x40:
                     self.all_targets_complete = True
@@ -501,16 +507,16 @@ class SSBMClient(CommonContext):
             else:
                 self.all_targets_complete = True
 
-            if self.all_events_required:
-                all_events_check = int.from_bytes(dme.read_bytes(0x8045C213, 1))
-                if all_events_check & 0x20:
-                    self.all_events_complete = True
+            if "Other Events" in self.active_goals:
+                other_events_check = int.from_bytes(dme.read_table(0x8045C129, 7))
+                if other_events_check & 0x1ffffffffffff == 0x1ffffffffffff:
+                    self.other_events_complete = True
                 else:
-                    self.all_events_complete = False
+                    self.other_events_complete = False
             else:
-                self.all_events_complete = True
+                self.other_events_complete = True
 
-            if self.event_51_required:
+            if "Event 51" in self.active_goals:
                 event_51_check = int.from_bytes(dme.read_bytes(0x8045C129, 1))
                 if event_51_check & 0x04:
                     self.event_51_complete = True
@@ -519,14 +525,24 @@ class SSBMClient(CommonContext):
             else:
                 self.event_51_complete = True
 
+            if "Event 50" in self.active_goals:
+                event_50_check = int.from_bytes(dme.read_bytes(0x8045C129, 1))
+                if event_50_check & 0x02: #CHECK THESE!!!
+                    self.event_50_complete = True
+                else:
+                    self.event_50_complete = False
+            else:
+                self.event_50_complete = True
+
             current_menu = int.from_bytes(dme.read_bytes(MENU_ID, 1))
             total_trophy_count = int.from_bytes(dme.read_bytes(TROPHY_COUNT, 2))
             if all([
                 self.giga_bowser_complete,
                 self.crazy_hand_complete,
-                self.all_events_complete,
+                self.other_events_complete,
                 self.event_51_complete,
                 self.all_targets_complete,
+                self.event_50_complete,
                 total_trophy_count >= self.total_trophies_required,
             ]) and not self.has_finished_game:
                 if current_menu == 0x0D:
@@ -632,10 +648,16 @@ async def give_player_items(ctx: SSBMClient):
                 logger.info(f"{name} has joined your roster!")
             elif name in mode_items:
                 logger.info(f"You can now play {name}!")
+            elif name in global_trophy_table:
+                trophy_id = global_trophy_table.index(name)
+                trophy_address = 0x8045C394 + (trophy_id * 2)
+                current_flags = int.from_bytes(dme.read_bytes(trophy_address, 1))
+                current_flags = struct.pack(">H", (current_flags | 0x02))
+
+                dme.write_bytes(0x8045C394, current_flags)
             last_recv_idx += 1
             dme.write_word(LAST_RECV_ITEM_ADDR, last_recv_idx)
         await wait_for_next_loop(0.5)
-
 
 def launch(connect=None, password=None):
     server_address: str = ""

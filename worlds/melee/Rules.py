@@ -380,11 +380,11 @@ def set_location_rules(world: "SSBMWorld") -> None:
     if world.options.diskun_trophy_check:
         set_rule(world.multiworld.get_location("Melee - All Bonuses", player), lambda state: state.has_all({"Adventure Mode", "All-Star Mode", "Classic Mode", "Luigi"}, player) and state.has_any(can_meteor, player) and state.has_any(can_reflect, player))
 
-    if world.options.goal_all_targets:
+    if "All Targets" in world.options.goal_triggers:
         set_rule(world.multiworld.get_location("Goal: All Targets Clear", player), lambda state: state.has_group_unique("Characters", player, 25))
 
-    if world.options.goal_all_events:
-        set_rule(world.multiworld.get_location("Goal: All Events Clear", player), lambda state: state.has_all(event_chars, player))
+    if "Other Events" in world.options.goal_triggers:
+        set_rule(world.multiworld.get_location("Goal: Other Events Clear", player), lambda state: state.has_all(event_chars, player))
         
 
     if world.options.long_targettest_checks:
