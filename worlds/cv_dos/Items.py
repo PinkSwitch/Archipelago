@@ -101,7 +101,7 @@ item_table: Dict[str, ItemData] = {
     "Great Sword": ItemData("Weapons", 0x31F, ItemClassification.filler, 0),
     "Durandal": ItemData("Weapons", 0x320, ItemClassification.useful, 0),
     "Dainslef": ItemData("Weapons", 0x321, ItemClassification.useful, 0),
-    "Ascalon": ItemData("Weapons", 0x323, ItemClassification.useful, 0),
+    "Ascalon": ItemData("Weapons", 0x322, ItemClassification.useful, 0),
     "Balmung": ItemData("Weapons", 0x323, ItemClassification.useful, 0),
     "Final Sword": ItemData("Weapons", 0x324, ItemClassification.useful, 0),
     "Claimh Solais": ItemData("Weapons", 0x325, ItemClassification.useful, 0),
