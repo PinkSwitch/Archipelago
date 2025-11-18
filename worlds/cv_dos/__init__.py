@@ -1,0 +1,190 @@
+import os
+import typing
+import threading
+import pkgutil
+import json
+import base64
+import logging
+
+
+from typing import List, Set, Dict, TextIO
+from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
+from Fill import fill_restrictive
+from worlds.AutoWorld import World, WebWorld
+import settings
+from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, weapon_table, money_table, armor_table
+from .Locations import get_locations
+from .Regions import init_areas
+from .Options import DoSOptions, dos_option_groups
+from .Rules import set_location_rules
+from .Client import DoSClient
+from .Rom import DoSProcPatch, patch_rom
+from .static_location_data import location_ids
+from .setup_game import place_static_items, setup_game
+from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
+from Utils import local_path
+
+class DoSWeb(WebWorld):
+    theme = "ocean"
+
+    setup_en = Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up the Dawn of Sorrow randomizer"
+        "and connecting to an Archipelago server.",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["Pink Switch"]
+    )
+
+    option_groups = dos_option_groups
+    tutorials = [setup_en]
+
+class DoSSettings(settings.Group):
+    class RomFile(settings.UserFilePath):
+        """File name of the Castlevania: Dawn of Sorrow ROM file."""
+        description = "Dawn of Sorrow ROM File"
+        copy_to = "CASTLEVANIA1_ACVEA4_00.nds"
+        md5 = "cc0f25b8783fb83cb4588d1c111bdc18"
+
+    rom_file: RomFile = RomFile(RomFile.copy_to)
+
+
+class DoSWorld(World):
+    """Bottom text"""
+    
+    game = "Castlevania: Dawn of Sorrow"
+    option_definitions = DoSOptions
+    data_version = 1
+    required_client_version = (0, 6, 1)
+    origin_region_name = "Lost Village Upper"
+
+    item_name_to_id = {item: item_table[item].code for item in item_table}
+    location_name_to_id = location_ids
+    item_name_groups = get_item_names_per_category()
+
+    web = DoSWeb()
+    settings: typing.ClassVar[DoSSettings]
+    # topology_present = True
+
+#    @staticmethod
+ #   def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
+  #      return slot_data
+
+   # ut_can_gen_without_yaml = True
+
+    #tracker_world: ClassVar = {
+     #   "map_page_folder": "ut_map_page",
+      #  "map_page_maps": "maps.json",
+       # "map_page_locations": "locations.json",
+        #"map_page_setting_key": "{player}_{team}_nine_sols_area",
+        #"map_page_index": map_page_index
+    #}
+
+    options_dataclass = DoSOptions
+    options: DoSOptions
+
+    locked_locations: List[str]
+    location_cache: List[Location]
+
+    def __init__(self, multiworld: MultiWorld, player: int):
+        self.rom_name_available_event = threading.Event()
+        super().__init__(multiworld, player)
+
+        self.locked_locations = []
+        self.location_cache = []
+        self.world_version = "1.0"
+        self.extra_item_count = 0
+        self.has_tried_chaos_ring = False
+
+    def generate_early(self) -> None:
+        setup_game(self)
+        self.auth_id = self.random.getrandbits(32)
+
+    def create_regions(self) -> None:
+        init_areas(self, get_locations(self))
+        place_static_items(self)
+
+    def create_items(self) -> None:
+        pool = self.get_item_pool(self.get_excluded_items())
+        self.generate_filler(pool)
+
+        self.multiworld.itempool += pool
+
+    def set_rules(self) -> None:
+        set_location_rules(self)
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Menace Defeated", self.player)
+
+    def generate_output(self, output_directory: str) -> None:
+        self.has_generated_output = True  # Make sure data defined in generate output doesn't get added to spoiler only mode
+        try:
+            code_patch = pkgutil.get_data(__name__, "src/overlay_41.bin")
+            patch = DoSProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
+            patch.write_file("dos_base.bsdiff4", pkgutil.get_data(__name__, "src/dos_base.bsdiff4"))
+            patch_rom(self, patch, self.player, code_patch)
+
+            self.rom_name = patch.name
+
+            patch.write(os.path.join(output_directory,
+                                     f"{self.multiworld.get_out_file_name_base(self.player)}{patch.patch_file_ending}"))
+        except Exception:
+            raise
+        finally:
+            self.rom_name_available_event.set()  # make sure threading continues and errors are collected
+
+    def modify_multidata(self, multidata: dict) -> None:
+        import base64
+        # wait for self.rom_name to be available.
+        self.rom_name_available_event.wait()
+        rom_name = getattr(self, "rom_name", None)
+        if rom_name:
+            multidata["connect_names"][self.rom_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
+
+    def create_item(self, name: str) -> Item:
+        data = item_table[name]
+        return Item(name, data.classification, data.code, self.player)
+
+    def get_filler_item_name(self) -> str:
+        weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
+        filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
+        weight_table = {
+            "soul": soul_filler_table,
+            "weapon": weapon_table,
+            "armor": armor_table,
+            "money": money_table,
+            "consumable": consumable_table,
+        }
+
+        filler_item = self.random.choice(weight_table[filler_type])
+        
+        if not self.has_tried_chaos_ring:
+            self.has_tried_chaos_ring = True
+            if self.random.randint(0, 100) == 0: # Chaos ring should have a single 1/100 chance to be placed
+                filler_item = "Chaos Ring"
+
+        return filler_item
+
+    def get_excluded_items(self) -> Set[str]:
+        excluded_items: Set[str] = set()
+        return excluded_items
+
+    def set_classifications(self, name: str) -> Item:
+        data = item_table[name]
+        item = Item(name, data.classification, data.code, self.player)
+        return item
+
+    def generate_filler(self, pool: List[Item]) -> None:
+        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.extra_item_count):  # Change to fix event count
+            item = self.set_classifications(self.get_filler_item_name())
+            pool.append(item)
+
+    def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
+        pool: List[Item] = []
+
+        for name, data in item_table.items():
+            if name not in excluded_items:
+                for _ in range(data.amount):
+                    item = self.set_classifications(name)
+                    pool.append(item)
+
+        return pool
