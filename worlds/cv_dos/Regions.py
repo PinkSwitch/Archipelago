@@ -23,7 +23,6 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Lost Village Upper"),
         create_region(world, player, locations_per_region, "Lost Village Upper Doorway"),
         create_region(world, player, locations_per_region, "Lost Village Lower"),
-        create_region(world, player, locations_per_region, "Lost Village Underground"),
         create_region(world, player, locations_per_region, "Lost Village Underground Bottom"), 
         create_region(world, player, locations_per_region, "Lost Village Underground Middle"), 
         create_region(world, player, locations_per_region, "Lost Village Underground Top"),
