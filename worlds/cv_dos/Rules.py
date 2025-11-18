@@ -94,7 +94,8 @@ def set_location_rules(world: "DoSWorld") -> None:
         set_rule(world.multiworld.get_location("Aguni Soul", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player))
         set_rule(world.multiworld.get_location("Death Soul", player), lambda state: state.has("Magic Seal 5", player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)))
     else:
-        add_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has("Magic Seal 5", player))
+        add_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has("Magic Seal 4", player))
 
     if world.options.goal == 2:
         add_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has("Aguni Defeated", player))
+        set_rule(world.multiworld.get_location("The Pinnacle: Throne Room", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player))
