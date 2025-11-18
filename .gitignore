@@ -26,6 +26,7 @@
 *.wixobj
 *.lck
 *.db3
+*.ds
 *multidata
 *multisave
 *.archipelago
