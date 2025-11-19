@@ -29,6 +29,9 @@
 .org 0x020111B8
     bl @SaveAPData
 
+.org 0x020103A4
+    bl @CopyAPData
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -225,7 +228,7 @@ b @CeliaEventHandler
     ;Dedicate 0x20 bytes to the AP rom name.
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
-    @ToggleSoulFlag:
+@ToggleSoulFlag:
     push r0 ;Backup the ID number
     push r1
     push lr
@@ -241,17 +244,9 @@ b @CeliaEventHandler
     bx lr
     .pool
 
-    @ToggleSoulFlagDummyChange:
-    ldr r12, =@SoulFlagTable
-    str r1,[r12,r0,lsl 2h]
-    ldr r12, =0x020F70D0
-    str r1,[r12,r0,lsl 2h]
-    bx lr
-    .pool
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
     ;Returns the index and bit to check from the soul table
-    @GetSoulFlagFromID:
+@GetSoulFlagFromID:
     push lr
     ldr r1, =0x08
     bl 0x02075B28 ; Divide soul id by 8
@@ -485,6 +480,17 @@ b @CeliaEventHandler
     ldr r0, =0x02
     ldr r1, =0x2B
     bl 0x021E78F0
+@ClearAPMemory:
+    push r2
+    ldr r0, =0x00
+    ldr r1, =@SoulFlagTable
+@ClearAPLoop:
+    str r0, [r1, 0]
+    add r1, 4
+    add r2, 1
+    cmp r2, 9
+    bne @ClearAPLoop
+    pop r2
     ldr r0, =0x020F7420 ;Starting weapon
     ldrb r1, [r0, 0]
     ldr r0, =0x03
@@ -523,6 +529,7 @@ b @CeliaEventHandler
     pop r0-r3
     b 0x2011F3C
     .pool
+    
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;Activates Ability Souls when getting them
@@ -611,7 +618,24 @@ b @CeliaEventHandler
 @CeliaEnd:
     b 0x021CEC08
     .pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;Loads AP data from the current file so it can be cleanly copied
+@CopyAPData:
+    push r0-r4
+    push lr
+    bl @LoadAPData ;WriteToSaveData
+    pop lr
+    pop r0-r4
+    b 0x020110FC
+    .pool
+
     .close
+
+
+
+;If I'm right. 0x020103A4 is calling a Copy File routine. r0 is source file, r4 is destination
+;This is correct.
 
 ;TODO. make sure Return Gems dont work in bosses
 
