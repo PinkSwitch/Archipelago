@@ -17,6 +17,8 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Lost Village: Mirror Room Right", player), lambda state: state.has("Paranoia Soul", player))
     set_rule(world.multiworld.get_location("Lost Village: Above Guest House Entrance", player), lambda state: state.has_any(big_uppies, player))
 
+    set_rule(world.multiworld.get_location("Lost Village: Moat Drain Switch", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Flying Armor Soul", "Puppet Master Soul"}, player))
+
     ###Wizardry Lab
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror Room", player), lambda state: state.has("Balore Soul", player))
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror World", player), lambda state: state.has_all({"Balore Soul", "Paranoia Soul"}, player))
