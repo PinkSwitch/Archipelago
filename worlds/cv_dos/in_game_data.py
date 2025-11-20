@@ -13,7 +13,7 @@ location_ram_table = {
     "Lost Village: West Building Lower": [0x03, 0x80],
     "Lost Village: Central Building": [0x04, 0x01],
     "Lost Village: East Plaza": [0x00, 0x80],
-    "Lost Village: Hidden Floor Room 1": [0x04, 0x01],
+    "Lost Village: Hidden Floor Room 1": [0x04, 0x02],
     "Lost Village: Hidden Floor Room 2": [0x05, 0x08],
     "Lost Village: Mirror Room Left": [0x09, 0x80],
     "Lost Village: Mirror Room Right": [0x0C, 0x01],
