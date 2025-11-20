@@ -178,10 +178,6 @@ class DoSPatchExtensions(APPatchExtension):
     def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
 
-        for action_number in range(0x013F):
-            current_action = rom.read_bytes(0x157B68 + (12 * action_number), 12)
-            rom.write_bytes(0x3FAFB0 + (12 * action_number), current_action)
-
         for check in base_check_address_table:
             address = base_check_address_table[check]
             item_type = int.from_bytes(rom.read_bytes(address + 6, 1))
@@ -211,9 +207,9 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
     return base_rom_bytes
 
 def get_base_rom_path(file_name: str = "") -> str:
-    options: settings.Settings = settings.get_settings()
+    from worlds.cv_dos import DoSWorld
     if not file_name:
-        file_name = options["dos_options"]["rom_file"]
+        file_name = DoSWorld.settings.rom_file
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
