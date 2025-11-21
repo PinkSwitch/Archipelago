@@ -420,6 +420,7 @@ soul_filler_table = [
     "Golem Soul",
     "Bone Pillar Soul",
     "Lilith Soul",
+    "Ghost Dancer Soul",
     "Tanjelly Soul",
     "Bugbear Soul",
     "Arc Demon Soul",
