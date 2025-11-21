@@ -33,6 +33,7 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     set_rule(world.multiworld.get_location("Garden of Madness: Hidden Room", player), lambda state: state.has_any(big_uppies, player))
     set_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has_all({"Mina's Talisman", "Magic Seal 5"}, player))
+    set_rule(world.multiworld.get_location("Garden of Madness: Underground Room", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
 
     set_rule(world.multiworld.get_location("Demon Guest House: Secret Room", player), lambda state: state.has_any(big_uppies, player))
 

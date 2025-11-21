@@ -96,6 +96,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xBEE21, bytearray([0x00]))
         rom.write_bytes(0xBEE8D, bytearray([0x00]))
         rom.write_bytes(0xBEFC5, bytearray([0x00]))
+        rom.write_bytes(0xB84A9, bytearray([0x00]))
 
     if not world.options.goal: #Remove the better ending trigger and replace Dario with Menace
         rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))
