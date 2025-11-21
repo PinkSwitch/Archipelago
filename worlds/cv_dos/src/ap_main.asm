@@ -32,6 +32,10 @@
 .org 0x020103A4
     bl @CopyAPData
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02024D78
+    b @PreventPlayerFromCorruptingData
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -232,12 +236,14 @@ b @CeliaEventHandler
     push r0 ;Backup the ID number
     push r1
     push lr
+    push r11-r12
     bl @GetSoulFlagFromID
     ldr r11, =@SoulFlagTable
     mov r12, r0
     ldrb r0, [r11, r0]; The divided soul id is the index
     orr r0, r0, r1
     strb r0, [r11, r12]
+    pop r11-r12
     pop lr
     pop r1
     pop r0
@@ -309,8 +315,10 @@ b @CeliaEventHandler
     bgt @GetMagicSeal
 @CheckForSeal:
     push r0-r1
+    cmp r1, #0x39 ;Is a special item
+    bgt @SkipGivingSpecialItem
     bl 0x021E7870 ;GiveItem
-
+@SkipGivingSpecialItem:
     pop r0-r1
     bl 0x021E7AB4 ;GetGlobalItemID+1
     ldr r1, =0xF0
@@ -628,6 +636,18 @@ b @CeliaEventHandler
     pop lr
     pop r0-r4
     b 0x020110FC
+    .pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;Prevents the game from writing map exploration data while out of bounds, which corrupts memory
+@PreventPlayerFromCorruptingData:
+    tst r7, 0x80000000
+    bne @PlayerOutofBounds
+    sub r13, r13, 0x04
+    b 0x02024D7C
+    @PlayerOutofBounds:
+    pop r14
+    b 0x02022764
     .pool
 
     .close
