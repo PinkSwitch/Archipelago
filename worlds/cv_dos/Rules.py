@@ -41,13 +41,13 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Demon Guest House: Number 9 Room", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
     set_rule(world.multiworld.get_location("Demon Guest House: Number 12 Room", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
     set_rule(world.multiworld.get_location("Demon Guest House: Mirror Room", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
-    set_rule(world.multiworld.get_location("Demon Guest House: Mirror World", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player) and state.has("Paranoia Soul", player))
+    set_rule(world.multiworld.get_location("Demon Guest House: Mirror World", player), lambda state: (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)) and state.has("Paranoia Soul", player))
 
     set_rule(world.multiworld.get_location("Demon Guest House: West Wing Left", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
     set_rule(world.multiworld.get_location("Demon Guest House: West Wing Right", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
     set_rule(world.multiworld.get_location("Puppet Master Soul", player), lambda state: (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)) and state.has("Magic Seal 3", player))
     set_rule(world.multiworld.get_location("Demon Guest House: Ice Block Room Left", player), lambda state: state.has_any(small_uppies, player) and state.has("Balore Soul", player))
-    set_rule(world.multiworld.get_location("Demon Guest House: Ice Block Room Left", player), lambda state: state.has_any(small_uppies, player) and state.has("Balore Soul", player))
+    set_rule(world.multiworld.get_location("Demon Guest House: Ice Block Room Right", player), lambda state: state.has_any(small_uppies, player) and state.has("Balore Soul", player))
 
     set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has("Magic Seal 4", player) and (state.can_reach("Subterranean Hell Shaft Bottom", "Region", player) or state.can_reach("Subterranean Hell Central Exit","Region", player))) #Need to get Ukoback soul
     set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and (state.can_reach("Subterranean Hell Shaft Bottom", "Region", player) or state.can_reach("Subterranean Hell Central Exit","Region", player)))

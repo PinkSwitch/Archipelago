@@ -81,6 +81,13 @@ bl @GetItemFromSpecial
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .org 0x021CEBEC
 b @CeliaEventHandler
+
+;;;;;;;;;;;;;;
+    ;Skip Ability souls activating normally
+.org 0x0220F77C
+    mov r0, 1
+
+
 .close
 .open "ftc/overlay9_41", @Overlay41Start
 
@@ -313,10 +320,12 @@ b @CeliaEventHandler
     bne @CheckForSeal
     cmp r1, #0x3C
     bgt @GetMagicSeal
-@CheckForSeal:
     push r0-r1
     cmp r1, #0x39 ;Is a special item
     bgt @SkipGivingSpecialItem
+    pop r0-r1
+@CheckForSeal:
+    push r0-r1
     bl 0x021E7870 ;GiveItem
 @SkipGivingSpecialItem:
     pop r0-r1
@@ -532,6 +541,7 @@ b @CeliaEventHandler
     add r0, r0, r2
     ldr r1, =@SoulFlagTable
     ldr r2, = 0x20
+    ldr r3, =0x00
     bl 0x02068410
     pop lr
     pop r0-r3
