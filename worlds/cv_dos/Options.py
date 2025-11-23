@@ -53,6 +53,10 @@ class RevealBreakableWalls(Toggle):
     """Automatically destroys/reveals all breakable walls"""
     display_name = "Reveal Hidden Walls"
 
+class BoostSpeed(Toggle):
+    """Increases Soma's base walking speed by 33%"""
+    display_name = "Boost Speed"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -64,6 +68,7 @@ class DoSOptions(PerGameCommonOptions):
     starting_weapon: StartingWeapon
     reveal_hidden_walls: RevealBreakableWalls
     fix_luck: FixLuck
+    boost_speed: BoostSpeed
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -83,6 +88,7 @@ dos_option_groups = [
         DisableBossSeals,
         RevealMap,
         RevealBreakableWalls,
-        FixLuck
+        FixLuck,
+        BoostSpeed
     ])
 ]

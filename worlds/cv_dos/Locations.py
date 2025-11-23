@@ -67,7 +67,7 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Demon Guest House Main", "Demon Guest House: Lower Main Chamber Bottom Room", 0x2E),
         LocationData("Demon Guest House Puppet Wall Right", "Demon Guest House: Puppet Hole", 0x2F),
 
-        LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 1 Room", 0x30),
+        LocationData("Demon Guest House Number Puzzle West", "Demon Guest House: Number 1 Room", 0x30),
         LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 5 Room", 0x31),
         LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 8 Room", 0x32),
         LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 9 Room", 0x33),
@@ -104,9 +104,9 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Dark Chapel", "Dark Chapel: Post-Dimitrii Room", 0x60),
         LocationData("Dark Chapel", "Malphas Soul", 0x61),
 
-        LocationData("Dark Chapel", "Dark Chapel: Big Room Top Right", 0x4E),
-        LocationData("Dark Chapel", "Dark Chapel: Big Room Central", 0x4F),
-        LocationData("Dark Chapel", "Dark Chapel: Big Room Lower", 0x50),
+        LocationData("Dark Chapel Big Room", "Dark Chapel: Big Room Top Right", 0x4E),
+        LocationData("Dark Chapel Big Room", "Dark Chapel: Big Room Central", 0x4F),
+        LocationData("Dark Chapel Big Room", "Dark Chapel: Big Room Lower", 0x50),
 
         LocationData("Condemned Tower Bottom", "Condemned Tower: 1F West", 0x51),
         LocationData("Condemned Tower Bottom", "Condemned Tower: 1F East", 0x52),

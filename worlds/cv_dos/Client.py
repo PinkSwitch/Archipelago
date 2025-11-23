@@ -30,7 +30,6 @@ class DoSClient(BizHawkClient):
             base_rom_name = rom_names[0].decode("ascii")
             
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
-                logger.info("ERROR: Rom is not valid!")
                 return False
         except UnicodeDecodeError:
             return False
