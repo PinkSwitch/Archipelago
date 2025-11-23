@@ -84,8 +84,8 @@ b @CeliaEventHandler
 
 ;;;;;;;;;;;;;;
     ;Skip Ability souls activating normally
-.org 0x0220F77C
-    mov r0, 1
+.org 0x021E96EC
+    nop
 
 
 .close
