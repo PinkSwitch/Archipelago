@@ -109,7 +109,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DD48, bytearray([0x01]))
 
     if world.options.boost_speed:
-        rom.write_bytes(0x15B2A8, bytearray([0x20]))
+        rom.write_bytes(0x15B2A9, bytearray([0x20]))
         
     soul_check_table = 0x2F6DC50
 

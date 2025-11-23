@@ -93,7 +93,7 @@ class DoSWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.world_version = "1.0"
+        self.world_version = "1.0.1"
         self.extra_item_count = 0
         self.has_tried_chaos_ring = False
 
