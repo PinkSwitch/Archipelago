@@ -22,7 +22,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     ###Wizardry Lab
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror Room", player), lambda state: state.has("Balore Soul", player))
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror World", player), lambda state: state.has_all({"Balore Soul", "Paranoia Soul"}, player))
-    set_rule(world.multiworld.get_location("Wizardry Lab: Ceiling Secret Room", player), lambda state: state.has("Balore Soul", player))
+    set_rule(world.multiworld.get_location("Wizardry Lab: Ceiling Secret Room", player), lambda state: state.has_any({"Balore Soul", "Bat Company Soul"}, player))
 
     set_rule(world.multiworld.get_location("Balore Soul", player), lambda state: state.has("Magic Seal 1", player))
 
