@@ -12,7 +12,7 @@ from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
 import settings
-from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, weapon_table, money_table, armor_table
+from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, money_table
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import DoSOptions, dos_option_groups
@@ -97,6 +97,147 @@ class DoSWorld(World):
         self.extra_item_count = 0
         self.has_tried_chaos_ring = False
 
+        self.armor_table = [
+            "Casual Clothes",
+            "Cloth Tunic",
+            "Gym Clothes",
+            "Kung Fu Suit",
+            "Biker Jacket",
+            "War Fatigues",
+            "Ninja Suit",
+            "Three 7s",
+            "Justaucorps",
+            "Army Jacket",
+            "Pitch Black Suit",
+            "Olrox's Suit",
+            "Dracula's Tunic",
+            "Leather Armor",
+            "Breastplate",
+            "Ring Mail",
+            "Scale Mail",
+            "Chain Mail",
+            "Hauberk",
+            "Cuirass",
+            "Blocking Mail",
+            "Eversing",
+            "Demon's Mail",
+            "Silk Robe",
+            "Mage Robe",
+            "Elfin Robe",
+            "Wyrm Robe",
+            "Aquarius",
+            "Serenity Robe",
+            "Death's Robe",
+            "Cape",
+            "Traveler Cape",
+            "Crimson Cloak",
+            "Black Cloak",
+            "Pendant",
+            "Heart Pendant",
+            "Skull Necklace",
+            "Flame Necklace",
+            "Rosary",
+            "Scarf",
+            "Red Scarf",
+            "Neck Warmer",
+            "Power Belt",
+            "Black Belt",
+            "Megingiord",
+            "Hoop Earring",
+            "Turquoise Stud",
+            "Silver Stud",
+            "Gold Stud",
+            "Bloody Stud",
+            "Platinum Stud",
+            "Tear Of Blood",
+            "Lucky Charm",
+            "Satan's Ring",
+            "Rare Ring",
+            "Soul Eater Ring",
+            "Rune Ring",
+            "Shaman Ring",
+            "Gold Ring"
+        ]
+
+        self.weapon_table = [
+            "Knife",
+            "Combat Knife",
+            "Baselard",
+            "Cutall",
+            "Cinquedia",
+            "Rapier",
+            "Fleuret",
+            "Main Gauche",
+            "Small Sword",
+            "Estoc",
+            "Whip Sword",
+            "Garian Sword",
+            "Kris Naga",
+            "Nebula",
+            "Short Sword",
+            "Cutlass",
+            "Long Sword",
+            "Fragarach",
+            "Hrunting",
+            "Mystletain",
+            "Joyeuse",
+            "Milican's Sword",
+            "Ice Brand",
+            "Laevatain",
+            "Burtgang",
+            "Kaladbolg",
+            "Valmanway",
+            "Claymore",
+            "Falchion",
+            "Great Sword",
+            "Durandal",
+            "Dainslef",
+            "Ascalon",
+            "Balmung",
+            "Final Sword",
+            "Claimh Solais",
+            "Spear",
+            "Partizan",
+            "Halberd",
+            "Lance",
+            "Trident",
+            "Brionac",
+            "Geiborg",
+            "Longinus",
+            "Gungner",
+            "Mace",
+            "Morgenstern",
+            "Mjollnjr",
+            "Axe",
+            "Battle Axe",
+            "Bhuj",
+            "Great Axe",
+            "Golden Axe",
+            "Death Scythe",
+            "Blunt Sword",
+            "Katana",
+            "Kotetsu",
+            "Masamune",
+            "Osafune",
+            "Kunitsuna",
+            "Yasutsuna",
+            "Muramasa",
+            "Brass Knuckles",
+            "Cestus",
+            "Whip Knuckle",
+            "Mach Punch",
+            "Kaiser Knuckle",
+            "Handgun",
+            "Silver Gun",
+            "Boomerang",
+            "Chakram",
+            "Tomahawk",
+            "Throwing Sickle",
+            "RPG",
+            "Terror Bear",
+            "Nunchakus"
+        ]
+
     def generate_early(self) -> None:
         setup_game(self)
         self.auth_id = self.random.getrandbits(32)
@@ -146,16 +287,29 @@ class DoSWorld(World):
 
     def get_filler_item_name(self) -> str:
         weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
+
+        # If these pools have been exhausted, set their weights to 0
+        if not self.weapon_table:
+            weights[weapon] = 0
+
+        if not self.armor_table:
+            weights[armor] = 0
+        
         filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
         weight_table = {
             "soul": soul_filler_table,
-            "weapon": weapon_table,
-            "armor": armor_table,
+            "weapon": self.weapon_table,
+            "armor": self.armor_table,
             "money": money_table,
             "consumable": consumable_table,
         }
 
         filler_item = self.random.choice(weight_table[filler_type])
+
+        if filler_item in self.weapon_table:
+            self.weapon_table.remove(filler_item)
+        elif filler_item in self.armor_table:
+            self.armor_table.remove(filler_item)
         
         if not self.has_tried_chaos_ring:
             self.has_tried_chaos_ring = True
