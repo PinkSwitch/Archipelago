@@ -36,6 +36,13 @@
 .org 0x02024D78
     b @PreventPlayerFromCorruptingData
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02030010
+    bl @OneScreenLowerMapOnBottom
+
+.org 0x02030138
+    bl @MapInit_CloseMapAndReset
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -86,6 +93,28 @@ b @CeliaEventHandler
     ;Skip Ability souls activating normally
 .org 0x021E96EC
     nop
+
+;;;;;;;;;;;;;;;;;
+.org 0x021BD16C
+    b @MapInit_SkipActingLikeWarpRoom
+
+.org 0x021BD074
+    bl @MapInit_SkipGroundCheck
+
+.org 0x021BD138
+    bl @MapInit_LoadPlayerCoordinates
+
+.org 0x021BD080
+    bl @MapInit_ContinueCurAnim
+
+.org 0x021BC93C
+    bl @MapInit_AllocateWarpSpaceSelect
+
+.org 0x021BCB70
+    bl @MapInit_DisableTouchControls
+
+.org 0x021BC8E4
+    bl @MapInit_CloseWithBorSel
 
 
 .close
@@ -222,6 +251,12 @@ b @CeliaEventHandler
 @OptionFlag_FightMenace:
     .db 0x00
 .align 4
+
+@OptionFlag_OneScreenMode:
+    .db 0x01 ;REMOVE THIS AFTERWARDS
+@RAMFlag_IsPausedOpenMap:
+    .db 0x00
+.align 4
 ;;;;;;;;;;;;;;
 @Romname_AP:
     .dh 0xFFFF
@@ -236,6 +271,10 @@ b @CeliaEventHandler
     .dh 0xFFFF
     .dh 0xFFFF
 .align 4
+
+@Fillerspace_fakewarp:
+    .fill 0x10
+
     ;Dedicate 0x20 bytes to the AP rom name.
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
@@ -660,8 +699,161 @@ b @CeliaEventHandler
     b 0x02022764
     .pool
 
-    .close
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;One-screen mode. Pulls up the Map on bottom screen when Select is pressed.
+@OneScreenLowerMapOnBottom:
+    push r0
+    ands r0, r0, 0x08
+    bne @OpenMenu
+    b @CheckMap
+@OpenMenu:
+    pop r0
+    b 0x02030018
+@CheckMap:
+    pop r0
+    ands r0, r0, 0x04
+    bne @ExitMapSkip
+@ExitMap:
+    b 0x0203008C
+@ExitMapSkip:
+    ldr r0, =@OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @ExitMap
+@LoadMap:
+    ldr r1, =0x1
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    strb r1, [r0]
+    ldr r0, =0x020D21F0
+    ldr r1, =0x0223085C
+    str r0, [r1]
+    push r4-r8, r14
+    sub r13,r13,0x20
+    bl 0x021BD074
+    b 0x0203008C
+    .pool
 
+;0x021BD074
+@MapInit_SkipGroundCheck:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_SkipGround
+    b 0x021F6588
+@_SkipGround:
+    bx lr
+    .pool
+
+;0x021BD16C
+@MapInit_SkipActingLikeWarpRoom:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_SkipJump
+    b 0x021BD608
+@_SkipJump:
+    b 0x021BD7D4
+    .pool
+
+;0x021BD138
+@MapInit_LoadPlayerCoordinates:
+    push r0
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_LoadPlayer
+    pop r0
+    b 0x02021714
+@_LoadPlayer:
+    pop r0
+    ldr r0, =0x0210F018
+    ldrb r0, [r0]
+    ldr r1, =0x0210f014
+    ldrb r1, [r1]
+    b 0x02021714
+    .pool
+
+@MapInit_CloseMapAndReset:
+    push r0-r5, r14
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    bne @_SkipMapClose
+    mov r0, 0
+    mov r1, 0
+    bl 0x020073F0
+    ldr r1, =0x020F6DFC
+    ldrb r0, [r1]
+    and r0, r0, 0xFE
+    strb r0, [r1]
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldr r1, =0
+    strb r1, [r0]
+@_SkipMapClose:
+    pop r0-r5, r14
+    strb r0, [r5, 0x04]
+    bx lr
+    .pool
+
+;0x021BD080
+@MapInit_ContinueCurAnim:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_SkipMapAnim
+    b 0x021F68F8
+@_SkipMapAnim:
+    bx lr
+    .pool
+
+@MapInit_AllocateWarpSpaceSelect:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    bne @_WarpRoomSel
+    ldr r5, =@Fillerspace_fakewarp
+    mov r0, 0
+@_WarpRoomSel:
+    ldrb r0, [r5, 0x04]
+    bx lr
+    .pool
+
+@MapInit_DisableTouchControls:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    bne @_WarpRoomTouch
+    mov r0, 0
+    bx lr
+@_WarpRoomTouch:
+    ldrb r0, [r11, 0x01]
+    bx lr
+    .pool
+
+;0x021BC8E4
+@MapInit_CloseWithBorSel:
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_WarpRoomClose
+    ands r0, r1, 0x02
+    bx lr
+@_WarpRoomClose:
+    ldr r0, =0x020CA38C
+    ldr r5, =@Fillerspace_fakewarp
+    ldrb r0, [r0]
+    and r0, 0x06
+    cmp r0, 0
+    bx lr
+    .pool
+
+
+;021BD0BC
+;If MapFlag is 1, load 0 to 3
+;else load 1 to 3
+
+
+  .close
 
 
 ;If I'm right. 0x020103A4 is calling a Copy File routine. r0 is source file, r4 is destination

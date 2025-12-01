@@ -21,7 +21,7 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Lost Village Upper", "Lost Village: Above Drawbridge", 0x06),
         LocationData("Lost Village Upper", "Lost Village: In Moat", 0x07),
         LocationData("Lost Village Upper", "Flying Armor Soul", 0x08),
-        LocationData("Lost Village Upper", "Lost Village: Above Guest House Entrance", 0x15),
+        LocationData("Lost Village Courtyard", "Lost Village: Above Guest House Entrance", 0x15),
 
         LocationData("Lost Village Lower", "Lost Village: Flying Armor Indoor Room", 0x09),
         LocationData("Lost Village Lower", "Lost Village: West Plaza", 0x0A),

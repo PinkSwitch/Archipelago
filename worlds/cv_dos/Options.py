@@ -57,6 +57,28 @@ class BoostSpeed(Toggle):
     """Increases Soma's base walking speed by 33%"""
     display_name = "Boost Speed"
 
+class OneScreenMode(Toggle):
+    """Allows the entire game to be played with only the bottom screen. Press Select to view the map."""
+    display_name = "One-Screen Mode"
+
+class SoulRandomizer(Choice):
+    """Randomizes Enemy souls.
+        Shuffled: Shuffles which soul enemies drop.
+        Soulsanity Simple:"""
+    option_normal = 0
+    option_shuffled = 1
+    option_soulsanity = 2
+    default = 0
+
+class SoulSanityLevel(Choice):
+    """Randomizes Enemy souls.
+        Shuffled: Shuffles which soul enemies drop.
+        Soulsanity Simple:"""
+    option_normal = 0
+    option_shuffled = 1
+    option_soulsanity = 2
+    default = 0
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -69,11 +91,18 @@ class DoSOptions(PerGameCommonOptions):
     reveal_hidden_walls: RevealBreakableWalls
     fix_luck: FixLuck
     boost_speed: BoostSpeed
+    soul_randomizer: Soulsanity
+    one_screen_mode: OneScreenMode
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
         Goal,
         ReplaceMenaceWithSoma
+
+    ]),
+
+    OptionGroup("Soul Randomization", [
+        Soulsanity
 
     ]),
 
@@ -89,6 +118,7 @@ dos_option_groups = [
         RevealMap,
         RevealBreakableWalls,
         FixLuck,
-        BoostSpeed
+        BoostSpeed,
+        OneScreenMode
     ])
 ]

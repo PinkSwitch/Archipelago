@@ -26,6 +26,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Lost Village Underground Bottom"), 
         create_region(world, player, locations_per_region, "Lost Village Underground Middle"), 
         create_region(world, player, locations_per_region, "Lost Village Underground Top"),
+        create_region(world, player, locations_per_region, "Lost Village Courtyard"),
 
         create_region(world, player, locations_per_region, "Wizardry Lab Main"),
         create_region(world, player, locations_per_region, "Wizardry Lab West Gate"),
@@ -92,11 +93,13 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     ########################################
 
     #Lost Village
-    multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower", "Wizardry Lab Main", "Demon Guest House Lower", "Lost Village Upper Doorway"],
+    multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower", "Wizardry Lab Main", "Lost Village Upper Doorway", "Lost Village Courtyard"],
                                                     {"Lost Village Lower": lambda state: state.has("Magic Seal 1", player),
                                                      "Wizardry Lab Main": lambda state: state.has("Moat Drained", player),
-                                                     "Demon Guest House Lower": lambda state: state.has_any(small_uppies, player),
-                                                     "Lost Village Upper Doorway": lambda state: state.has_all({"Puppet Master Soul", "Flying Armor Soul"}, player) or state.has_any(small_uppies, player)})
+                                                     "Lost Village Courtyard": lambda state: state.has_any(small_uppies, player),
+                                                     "Lost Village Upper Doorway": lambda state: state.has_all({"Puppet Master Soul", "Flying Armor Soul"}, player) or state.has_any(small_uppies, player) or state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player)}) #Is the ape trick hard? Can be done without ape if speedboost on
+
+    multiworld.get_region("Lost Village Courtyard", player).add_exits(["Lost Village Upper", "Demon Guest House Lower"])
 
     multiworld.get_region("Lost Village Upper Doorway", player).add_exits(["Lost Village Upper", "Demon Guest House Number Puzzle West"])
 
@@ -174,7 +177,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     ##########################################################################################################
     #Condemned Tower
     multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Top", "Mine of Judgment"],
-                                                                    {"Condemned Tower Top": lambda state: state.has_any(big_uppies, player) or (state.has("Flying Armor Soul", player) and state.has_any({"Malphas Soul", "Puppet Master Soul"}, player)),
+                                                                    {"Condemned Tower Top": lambda state: state.has_any(big_uppies, player) or (state.has("Flying Armor Soul", player) and state.has_any({"Malphas Soul", "Puppet Master Soul"}, player)) or (state.has("Black Panther Soul", player)),
                                                                      "Dark Chapel Big Room": lambda state: state.has_any(small_uppies, player),
                                                                      "Mine of Judgment": lambda state: state.has_all(mine_conditions, player)})
 
@@ -188,9 +191,8 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                                     {"Cursed Clock Tower Central": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                                      "Condemned Tower Top": lambda state: state.has("Tower Key", player)})
 
-    multiworld.get_region("Cursed Clock Tower Central", player).add_exits(["Cursed Clock Tower Entrance", "Cursed Clock Tower Boss Area", "Cursed Clock Tower Central"],
-                                                                    {"Cursed Clock Tower Central": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
-                                                                     "Cursed Clock Tower Boss Area": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
+    multiworld.get_region("Cursed Clock Tower Central", player).add_exits(["Cursed Clock Tower Entrance", "Cursed Clock Tower Boss Area"],
+                                                                    {"Cursed Clock Tower Boss Area": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
     multiworld.get_region("Cursed Clock Tower Boss Area", player).add_exits(["Cursed Clock Tower Central", "Cursed Clock Tower Exit", "Warp Room"],
                                                                     {"Cursed Clock Tower Exit": lambda state: state.has_all({"Bat Company Soul", "Magic Seal 4"}, player),
@@ -213,7 +215,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Subterranean Hell Central Upper", player).add_exits(["Subterranean Hell Central/East Connection", "Subterranean Hell Central Exit", "Subterranean Hell Central Lower"],
                                                 {"Subterranean Hell Central/East Connection": lambda state: state.has_any({"Rahab Soul", "Malphas Soul"}, player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)),
-                                                "Subterranean Hell Central Exit": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
+                                                "Subterranean Hell Central Exit": lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player)})
 
     multiworld.get_region("Subterranean Hell Central Exit", player).add_exits(["Subterranean Hell Central Upper", "Garden of Madness Water Blocked"],
                                                 {"Subterranean Hell Central Upper": lambda state: state.has_any({"Rahab Soul", "Malphas Soul"}, player)})
@@ -230,10 +232,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Subterranean Hell Shaft Bottom", player).add_exits(["Subterranean Hell Central Lower", "Subterranean Hell Spike Room East", "Silenced Ruins Antechamber"],
                                                 {"Subterranean Hell Shaft Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Subterranean Hell Spike Room East": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
-                                                 "Silenced Ruins Antechamber": lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Flying Armor Soul"}, player)})
+                                                 "Silenced Ruins Antechamber": lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Flying Armor Soul", "Black Panther Soul"}, player)})
 
     multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Spike Room West", "Subterranean Hell Shaft Bottom"],
-                                                {"Subterranean Hell Spike Room West": lambda state: state.has_all({"Rahab Soul", "Puppet Master Soul"}, player) and state.can_reach("Garden of Madness Lower", 'Region', player)})
+                                                {"Subterranean Hell Spike Room West": lambda state: state.has_all({"Rahab Soul", "Puppet Master Soul"}, player) and state.can_reach("Garden of Madness Lower", 'Region', player)}) # Or bone ark...
 
     multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Wizardry Lab Sunken East Door", "Subterranean Hell Spike Room East"],
                                                 {"Subterranean Hell Spike Room East": lambda state: state.has_all({"Rahab Soul", "Puppet Master Soul"}, player) and state.can_reach("Garden of Madness Lower", 'Region', player)})
@@ -248,7 +250,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                 {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player),
                                                  "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies, player)})
 
-    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins"]) #Connects to part of Sub. hell but im tired rn
+    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins", "Subterranean Hell East"])
 
     ###############################
     #The Pinnacle
