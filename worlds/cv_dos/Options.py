@@ -70,7 +70,7 @@ class SoulRandomizer(Choice):
     option_soulsanity = 2
     default = 0
 
-class SoulSanityLevel(Choice):
+class SoulSanityMode(Choice):
     """Randomizes Enemy souls.
         Shuffled: Shuffles which soul enemies drop.
         Soulsanity Simple:"""

@@ -43,6 +43,23 @@
 .org 0x02030138
     bl @MapInit_CloseMapAndReset
 
+.org 0x02021A40
+    bl @MapInit_SkipWarpRoomCheck
+
+.org 0x02039910
+    bl @OneScreen_DisableScreenSwap
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02020CE8
+    bl @SetCanColor_Page
+
+.org 0x02020D38
+    bl @SetCanColor_Item
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x0202DFB8
+    b @LoadAPNameColor
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -115,6 +132,13 @@ b @CeliaEventHandler
 
 .org 0x021BC8E4
     bl @MapInit_CloseWithBorSel
+
+.org 0x021C852C
+    bl @OneScreen_SetFirstScreenEnemy
+
+;;;;;;;;;;;;;;;;;;;;;
+.org 0x021E860C
+    bl @SetSoulPerPickup
 
 
 .close
@@ -253,9 +277,10 @@ b @CeliaEventHandler
 .align 4
 
 @OptionFlag_OneScreenMode:
-    .db 0x01 ;REMOVE THIS AFTERWARDS
+    .db 0x00
 @RAMFlag_IsPausedOpenMap:
     .db 0x00
+    
 .align 4
 ;;;;;;;;;;;;;;
 @Romname_AP:
@@ -274,6 +299,12 @@ b @CeliaEventHandler
 
 @Fillerspace_fakewarp:
     .fill 0x10
+
+@RAMFlag_CurrentSpawnedSoulColor:
+    .db 0xFF
+@RAMFlag_APItemColor:
+    .db 0xFF
+.align 4
 
     ;Dedicate 0x20 bytes to the AP rom name.
 
@@ -457,7 +488,7 @@ b @CeliaEventHandler
     blt @GiveNormal ;Only 3A-3C are Special items.
     cmp r1, 0x3C
     beq @GiveSoulCan
-    b 0x021E8988 ;AP items dont go into the inventory, so we skip adding them
+    b @SetAPNameColor ;AP items dont go into the inventory, so we skip adding them
 @GiveSoulCan:
     ldrb r1, [r9, 0x026F] ; The high byte of the item's flag is used as the soul ID
     bl @GetSoulArbitrary
@@ -716,6 +747,10 @@ b @CeliaEventHandler
 @ExitMap:
     b 0x0203008C
 @ExitMapSkip:
+    ldr r0, =0x020F6DFC
+    ldrb r0, [r0]
+    ands r0, r0, 0x01
+    bne @ExitMap
     ldr r0, =@OptionFlag_OneScreenMode
     ldrb r0, [r0]
     cmp r0, 0
@@ -734,6 +769,7 @@ b @CeliaEventHandler
     .pool
 
 ;0x021BD074
+;Skip a state check for opening the map
 @MapInit_SkipGroundCheck:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -745,6 +781,7 @@ b @CeliaEventHandler
     .pool
 
 ;0x021BD16C
+;Skip MOST of the code related to handling warp rooms
 @MapInit_SkipActingLikeWarpRoom:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -756,6 +793,7 @@ b @CeliaEventHandler
     .pool
 
 ;0x021BD138
+;Make the drawn map load the current Map Block position
 @MapInit_LoadPlayerCoordinates:
     push r0
     ldr r0, =@RAMFlag_IsPausedOpenMap
@@ -770,9 +808,22 @@ b @CeliaEventHandler
     ldrb r0, [r0]
     ldr r1, =0x0210f014
     ldrb r1, [r1]
+    push r2
+    ldr r2, =0x020F70A6
+    ldrb r2, [r2]
+    cmp r2, 0x0A
+    blt @NotInAbyss
+    cmp r2, 0x0B
+    bgt @NotInAbyss ;Julius throne room, other maps
+    add r0, r0, 0x14
+    add r1, r1, 0x0A
+
+@NotInAbyss:
+    pop r2
     b 0x02021714
     .pool
 
+;Close the map and reset the map opened flag
 @MapInit_CloseMapAndReset:
     push r0-r5, r14
     ldr r0, =@RAMFlag_IsPausedOpenMap
@@ -796,6 +847,7 @@ b @CeliaEventHandler
     .pool
 
 ;0x021BD080
+;Don't zero out the player's animation
 @MapInit_ContinueCurAnim:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -806,6 +858,7 @@ b @CeliaEventHandler
     bx lr
     .pool
 
+;Set R5 to be dummy data, so the "warp room" used by the map doesn't intersect anything
 @MapInit_AllocateWarpSpaceSelect:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -818,6 +871,7 @@ b @CeliaEventHandler
     bx lr
     .pool
 
+;Prevent the player from closing the map by touching something
 @MapInit_DisableTouchControls:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -831,6 +885,7 @@ b @CeliaEventHandler
     .pool
 
 ;0x021BC8E4
+;Close the map when B or Select is pressed
 @MapInit_CloseWithBorSel:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -847,22 +902,123 @@ b @CeliaEventHandler
     bx lr
     .pool
 
+;Don't show warp rooms as unlocked when opening the map
+@MapInit_SkipWarpRoomCheck:
+    push r0
+    ldr r0, =@RAMFlag_IsPausedOpenMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @_SkipWarpRooms
+    pop r0
+    ldr r0, [r0, 0x09C8]
+    bx lr
+@_SkipWarpRooms:
+    pop r0
+    mov r0, 0
+    bx lr
+    .pool
 
-;021BD0BC
-;If MapFlag is 1, load 0 to 3
-;else load 1 to 3
+;If using one-screen mode, we don't want Map on the top
+@OneScreen_DisableScreenSwap:
+    ldr r0, =@OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x0203BE9C
+    bx lr
+    .pool
 
+;If one-screen mode, set the initial screen to Enemy Data
+@OneScreen_SetFirstScreenEnemy:
+    ldr r0, =@OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    ldr r1, =0x020F7251
+    strb r0, [r1]
+    b 0x0203B998
+    .pool
 
-  .close
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@SetSoulPerPickup:
+    cmp r7, 0x3C
+    beq @Setpickup_SoulID
+    mov r5, 0xFF
+@ExitSoulPickup:
+    push r0
+    ldr r0, =@RAMFlag_CurrentSpawnedSoulColor
+    strb r5, [r0]
+    pop r0
+    cmp r8, 0xFF
+    mov r5, 0
+    bx lr
+@Setpickup_SoulID:
+    ldrb r5, [r0, 0x6F]
+    b @ExitSoulPickup
+    .pool
 
+@SetCanColor_Page:
+    push r1
+    ldr r1, =@RAMFlag_CurrentSpawnedSoulColor
+    ldrb r1, [r1]
+    cmp r1, 0xFF
+    beq @SkipCanColor_Page
+    cmp r1, 0x34
+    bgt @SkipCanColor_Page
+    mov r0, 0x7F
+@SkipCanColor_Page:
+    pop r1
+    mov r0, r0, asr 0x06
+    bx lr
+    .pool
 
-;If I'm right. 0x020103A4 is calling a Copy File routine. r0 is source file, r4 is destination
-;This is correct.
+@SetCanColor_Item:
+    ldr r0, [r0]
+    push r0
+    push r1
+    ldr r1, =@RAMFlag_CurrentSpawnedSoulColor
+    ldrb r0, [r1]
+    cmp r0, 0xFF
+    beq @SkipCanColorItem
+    mov r2, 0x7F ;Bullet Soul
+    cmp r0, 0x35
+    blt @SkipCanColorItem
+    mov r2, 0x82 ;Guardian Soul
+    cmp r0, 0x59
+    blt @SkipCanColorItem
+    mov r2, 0x80 ;Enchant Soul
+    cmp r0, 0x74
+    blt @SkipCanColorItem
+    mov r2, 0x81 ;Ability Soul
+@SkipCanColorItem:
+    mov r0, 0xFF
+    strb r0, [r1]
+    pop r1
+    pop r0
+    bx lr
+    .pool
 
-;TODO. make sure Return Gems dont work in bosses
+;;;;;;;;;;;;;;;;
+;Initialize the AP color variable
+@SetAPNameColor:
+    ldrb r1, [r9, 0x026F]
+    ldr r0, =@RAMFlag_APItemColor
+    strb r1, [r0]
+    b 0x021E8988
+    .pool
 
-;Todo. maybe kill the player if they go out of bounds
-;If map coordinates (y anyways) are > A0, kill player
+@LoadAPNameColor:
+    push r1
+    ldr r1, =@RAMFlag_APItemColor
+    ldrb r0, [r1]
+    cmp r0, 0
+    beq @EndAPName
+    mov r6, r0
+    mov r0, 0
+    strb r0, [r1] ;Get rid of the color flag afterwards
+@EndAPName:
+    pop r1
+    b 0x0202DFF4
+    .pool
+
+.close
 
 
 

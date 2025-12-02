@@ -108,6 +108,9 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.goal == 2:
         rom.write_bytes(0x2F6DD48, bytearray([0x01]))
 
+    if world.options.one_screen_mode:
+        rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
+
     if world.options.boost_speed:
         rom.write_bytes(0x15B2A9, bytearray([0x20]))
         
