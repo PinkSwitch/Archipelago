@@ -10,7 +10,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     player = world.player
 
     ###Lost Village
-    set_rule(world.multiworld.get_location("Lost Village: Above Entrance", player), lambda state: state.has_any(big_uppies, player))
+    set_rule(world.multiworld.get_location("Lost Village: Above Entrance", player), lambda state: state.has_any(big_uppies, player) or state.has_all({"Malphas Soul", "Pupper Master Soul"}, player))
     set_rule(world.multiworld.get_location("Lost Village: Above Drawbridge", player), lambda state: state.has_any(small_uppies, player))
     set_rule(world.multiworld.get_location("Lost Village: In Moat", player), lambda state: (state.has_any(big_uppies, player) and state.has("Moat Drained", player))) #state.has("Rahab Soul", player) this is permanently missable
     set_rule(world.multiworld.get_location("Flying Armor Soul", player), lambda state: state.has("Magic Seal 1", player))
@@ -20,7 +20,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     ###Wizardry Lab
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror Room", player), lambda state: state.has("Balore Soul", player))
     set_rule(world.multiworld.get_location("Wizardry Lab: Mirror World", player), lambda state: state.has_all({"Balore Soul", "Paranoia Soul"}, player))
-    set_rule(world.multiworld.get_location("Wizardry Lab: Ceiling Secret Room", player), lambda state: (state.has("Balore Soul", player)) or (state.has("Bat Company Soul", player)) or (state.has("Puppet Master Soul", player) and state.has_any({"Malphas Soul", "Hippogryph Soul", player})))
+    set_rule(world.multiworld.get_location("Wizardry Lab: Ceiling Secret Room", player), lambda state: (state.has("Balore Soul", player)) or (state.has("Bat Company Soul", player)) or (state.has("Puppet Master Soul", player) and state.has_any({"Malphas Soul", "Hippogryph Soul"}, player)))
 
     set_rule(world.multiworld.get_location("Balore Soul", player), lambda state: state.has("Magic Seal 1", player))
 
@@ -106,3 +106,7 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     if not world.options.boost_speed:
         set_rule(world.multiworld.get_location("Lost Village: Moat Drain Switch", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Flying Armor Soul", "Puppet Master Soul", "Black Panther Soul"}, player))
+
+    if world.options.soul_randomizer == 2 and world.options.soulsanity_level == 2:
+        for location in world.rare_souls:
+            set_rule(world.multiworld.get_location(location, player), lambda state: state.has("Soul Eater Ring", player))

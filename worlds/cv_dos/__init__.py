@@ -15,12 +15,13 @@ import settings
 from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, money_table
 from .Locations import get_locations
 from .Regions import init_areas
-from .Options import DoSOptions, dos_option_groups
+from .Options import DoSOptions, dos_option_groups, SoulsanityLevel, SoulRandomizer
 from .Rules import set_location_rules
 from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids
 from .setup_game import place_static_items, setup_game
+from .enemy_data import important_souls
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
 from Utils import local_path
 
@@ -238,6 +239,109 @@ class DoSWorld(World):
             "Nunchakus"
         ]
 
+        self.common_souls = {
+            "Axe Armor Soul",
+            "Warg Soul",
+            "Spin Devil Soul",
+            "Slime Soul",
+            "Corpseweed Soul",
+            "Yeti Soul",
+            "Flying Humanoid Soul",
+            "Buer Soul",
+            "Guillotiner Soul",
+            "Cave Troll Soul",
+            "Merman Soul",
+            "Homunculus Soul",
+            "Decarabia Soul",
+            "Dead Mate Soul",
+            "Mothman Soul"
+
+        }
+
+        self.uncommon_souls = {
+            "Zombie Soul",
+            "Bat Soul",
+            "Skeleton Soul",
+            "Skull Archer Soul",
+            "Armor Knight Soul",
+            "Student Witch Soul",
+            "Slaughterer Soul",
+            "Bomber Armor Soul",
+            "Golem Soul",
+            "Une Soul",
+            "Manticore Soul",
+            "Mollusca Soul",
+            "Rycuda Soul",
+            "Mandragora Soul",
+            "Yorick Soul",
+            "Catoblepas Soul",
+            "Ghost Dancer Soul",
+            "Mini Devil Soul",
+            "Quetzalcoatl Soul",
+            "Amalaric Sniper Soul",
+            "Great Armor Soul",
+            "Waiter Skeleton Soul",
+            "Persephone Soul",
+            "Witch Soul",
+            "Lilith Soul",
+            "Killer Clown Soul",
+            "Skelerang Soul",
+            "Fleaman Soul",
+            "Devil Soul",
+            "Needles Soul",
+            "Hell Boar Soul",
+            "White Dragon Soul",
+            "Wakwak Tree Soul",
+            "Imp Soul",
+            "Harpy Soul",
+            "Malachi Soul",
+            "Larva Soul",
+            "Fish Head Soul",
+            "Ukoback Soul",
+            "Killer Fish Soul",
+            "Dead Pirate Soul",
+            "Frozen Shade Soul",
+            "Disc Armor Soul",
+            "Alura Une Soul",
+            "Mushussu Soul",
+            "Succubus Soul",
+            "Werewolf Soul",
+            "Flame Demon Soul",
+            "Alastor Soul"
+
+        }
+
+        self.rare_souls = {
+            "Ghost Soul",
+            "Ouija Table Soul",
+            "Peeping Eye Soul",
+            "Skeleton Ape Soul",
+            "Skeleton Farmer Soul",
+            "The Creature Soul",
+            "Ghoul Soul",
+            "Tombstone Soul",
+            "Treant Soul",
+            "Valkyrie Soul",
+            "Killer Doll Soul",
+            "Draghignazzo Soul",
+            "Bone Pillar Soul",
+            "Barbariccia Soul",
+            "Heart Eater Soul",
+            "Medusa Head Soul",
+            "Mimic Soul",
+            "Bugbear Soul",
+            "Procel Soul",
+            "Bone Ark Soul",
+            "Gorgon Soul",
+            "Great Axe Armor Soul",
+            "Dead Crusader Soul",
+            "Dead Warrior Soul",
+            "Erinys Soul",
+            "Tanjelly Soul",
+            "Final Guard Soul",
+            "Iron Golem Soul"
+        }
+
     def generate_early(self) -> None:
         setup_game(self)
         self.auth_id = self.random.getrandbits(32)
@@ -283,7 +387,16 @@ class DoSWorld(World):
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
-        return Item(name, data.classification, data.code, self.player)
+        
+        if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+            if (name in important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
+                classification = ItemClassification.progression
+            else:
+                classification = data.classification
+        else:
+            classification = data.classification
+
+        return Item(name, classification, data.code, self.player)
 
     def get_filler_item_name(self) -> str:
         weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}

@@ -63,20 +63,20 @@ class OneScreenMode(Toggle):
 
 class SoulRandomizer(Choice):
     """Randomizes Enemy souls.
-        Shuffled: Shuffles which soul enemies drop.
-        Soulsanity Simple:"""
-    option_normal = 0
+            Disabled: Enemy souls are unchanged.
+            Shuffled: Enemy souls will be shuffled amongst each other. Souls that unlock things are unchanged.
+            Soulsanity: Enemy soul drops can be anything, even important items or non-souls. You can change the expected soul rarity with Soulsanity level."""
+    option_disabled = 0
     option_shuffled = 1
     option_soulsanity = 2
     default = 0
 
-class SoulSanityMode(Choice):
-    """Randomizes Enemy souls.
-        Shuffled: Shuffles which soul enemies drop.
-        Soulsanity Simple:"""
-    option_normal = 0
-    option_shuffled = 1
-    option_soulsanity = 2
+class SoulsanityLevel(Choice):
+    """The maximum tier of soul rarity that have Locations on them.
+       Rare souls always expect you to have the Soul Eater Ring."""
+    option_simple = 0
+    option_medium = 1
+    option_rare = 2
     default = 0
 
 @dataclass
@@ -91,8 +91,9 @@ class DoSOptions(PerGameCommonOptions):
     reveal_hidden_walls: RevealBreakableWalls
     fix_luck: FixLuck
     boost_speed: BoostSpeed
-    soul_randomizer: Soulsanity
     one_screen_mode: OneScreenMode
+    soul_randomizer: SoulRandomizer
+    soulsanity_level: SoulsanityLevel
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -101,8 +102,9 @@ dos_option_groups = [
 
     ]),
 
-    OptionGroup("Soul Randomization", [
-        Soulsanity
+    OptionGroup("Soul Settings", [
+        SoulRandomizer,
+        SoulsanityLevel
 
     ]),
 

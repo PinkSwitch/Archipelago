@@ -1,4 +1,5 @@
 from typing import List, Optional, NamedTuple, TYPE_CHECKING
+from .static_location_data import location_ids
 
 if TYPE_CHECKING:
     from . import DoSWorld
@@ -167,5 +168,20 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         location_table += [
             LocationData("The Pinnacle Throne Room", "Abyss Center", None),
         ]
+
+    if world.options.soul_randomizer == 2:
+        for soul in world.common_souls:
+            location_table.append(
+            LocationData(soul, soul, location_ids[soul]))
+
+        if world.options.soulsanity_level:
+            for soul in world.uncommon_souls:
+                location_table.append(
+                LocationData(soul, soul, location_ids[soul]))
+
+        if world.options.soulsanity_level == 2:
+            for soul in world.rare_souls:
+                location_table.append(
+                LocationData(soul, soul, location_ids[soul]))
 
     return location_table

@@ -191,7 +191,7 @@ global_soul_table = [
     "Mushussu Soul",
     "White Dragon Soul",
     "Catoblepas Soul",
-    "Goron Soul",
+    "Gorgon Soul",
     "Persephone Soul",
     "Flying Humanoid Soul",
     "Devil Soul",
