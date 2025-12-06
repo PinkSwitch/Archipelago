@@ -2,44 +2,14 @@ import logging
 from .Options import SoulsanityLevel, SoulRandomizer
 from .Items import soul_filler_table, item_table
 from BaseClasses import ItemClassification
+guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
+                      "Rycuda Soul", "Waiter Skeleton Soul"}
 
 def setup_game(world):
-    soul_location_count = 0
-
-    if world.options.goal:
-        world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
-        world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
-        world.uncommon_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
-
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1
 
-    if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-        world.multiworld.itempool.append(world.create_item("Skeleton Soul"))
-        world.multiworld.itempool.append(world.create_item("Axe Armor Soul"))
-        world.multiworld.itempool.append(world.create_item("Killer Clown Soul"))
-        world.multiworld.itempool.append(world.create_item("Ukoback Soul"))
-        world.multiworld.itempool.append(world.create_item("Skeleton Ape Soul"))
-        world.multiworld.itempool.append(world.create_item("Bone Ark Soul"))
-        world.multiworld.itempool.append(world.create_item("Mandragora Soul"))
-        world.multiworld.itempool.append(world.create_item("Rycuda Soul"))
-        world.multiworld.itempool.append(world.create_item("Waiter Skeleton Soul"))
-        soul_location_count += (len(world.common_souls) - 9)
-        world.extra_item_count += 9
-
-        if world.options.soulsanity_level:
-            soul_location_count += len(world.uncommon_souls)
-
-        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
-            world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
-            world.multiworld.itempool.append(world.create_item("Soul Eater Ring"))
-            world.multiworld.itempool.append(world.create_item("Imp Soul"))
-            soul_location_count += (len(world.rare_souls) - 2)
-            world.extra_item_count += 2
-
-        for i in range(soul_location_count):
-            world.multiworld.itempool.append(world.create_item(world.random.choice(soul_filler_table)))
-            world.extra_item_count += 1
+    place_souls(world)
 
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
@@ -48,3 +18,46 @@ def place_static_items(world):
 
     if world.options.goal:
         world.get_location("The Pinnacle: Throne Room").place_locked_item(world.create_item("Aguni Defeated"))
+
+
+def place_souls(world):
+    soul_location_count = 0
+    extra_souls = 0
+
+    for soul in world.options.guaranteed_souls:
+        world.multiworld.itempool.append(world.create_item(soul))
+        world.extra_item_count += 1
+
+    if world.options.goal:
+        world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
+        world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
+        world.uncommon_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
+
+    if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        for soul in guaranteed_commons:
+            if soul not in world.options.guaranteed_souls:
+                extra_souls += 1
+                world.multiworld.itempool.append(world.create_item(soul))
+
+        soul_location_count += (len(world.common_souls) - extra_souls)
+        world.extra_item_count += extra_souls
+
+        if world.options.soulsanity_level:
+            soul_location_count += len(world.uncommon_souls)
+
+        # These items are only important on Rare tier
+        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
+            world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
+            world.multiworld.itempool.append(world.create_item("Soul Eater Ring"))
+
+            extra_souls = 0
+            if "Imp Soul" not in world.options.guaranteed_souls:
+                world.multiworld.itempool.append(world.create_item("Imp Soul"))
+                extra_souls += 1
+                
+            soul_location_count += (len(world.rare_souls) - (1 + extra_souls))
+            world.extra_item_count += (1 + extra_souls)
+
+        for i in range(soul_location_count):
+            world.multiworld.itempool.append(world.create_item(world.random.choice(soul_filler_table)))
+            world.extra_item_count += 1

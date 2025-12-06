@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from Options import (Toggle, Range, PerGameCommonOptions, StartInventoryPool,
-                     OptionGroup, DefaultOnToggle, Choice, TextChoice)
+                     OptionGroup, DefaultOnToggle, Choice, TextChoice, OptionSet)
+from .Items import soul_filler_table
 
 
 class Goal(Choice):
@@ -79,6 +80,12 @@ class SoulsanityLevel(Choice):
     option_rare = 2
     default = 0
 
+class GuaranteedSouls(OptionSet):
+    """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool."""
+    display_name = "Goal Triggers"
+    default = {"Procel Soul", "Mud Demon Soul", "Black Panther Soul"}
+    valid_keys = soul_filler_table
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -94,6 +101,7 @@ class DoSOptions(PerGameCommonOptions):
     one_screen_mode: OneScreenMode
     soul_randomizer: SoulRandomizer
     soulsanity_level: SoulsanityLevel
+    guaranteed_souls: GuaranteedSouls
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -104,7 +112,8 @@ dos_option_groups = [
 
     OptionGroup("Soul Settings", [
         SoulRandomizer,
-        SoulsanityLevel
+        SoulsanityLevel,
+        GuaranteedSouls
 
     ]),
 
