@@ -415,10 +415,10 @@ class DoSWorld(World):
 
         # If these pools have been exhausted, set their weights to 0
         if not self.weapon_table:
-            weights[weapon] = 0
+            weights["weapon"] = 0
 
         if not self.armor_table:
-            weights[armor] = 0
+            weights["armor"] = 0
         
         filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
         weight_table = {

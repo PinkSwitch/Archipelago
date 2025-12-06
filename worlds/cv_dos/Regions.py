@@ -116,7 +116,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Lost Village Upper Doorway", player).add_exits(["Lost Village Upper", "Demon Guest House Number Puzzle West"])
 
-    multiworld.get_region("Lost Village Lower", player).add_exits(["Lost Village Upper"],
+    multiworld.get_region("Lost Village Lower", player).add_exits(["Lost Village Upper", "Warp Room"],
                                                     {"Lost Village Upper": lambda state: state.has("Magic Seal 1", player)})
 
     multiworld.get_region("Lost Village Underground Bottom", player).add_exits(["Lost Village Underground Middle", "Wizardry Lab Sunken"],
