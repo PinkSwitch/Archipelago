@@ -60,6 +60,10 @@
 .org 0x0202DFB8
     b @LoadAPNameColor
 
+;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02034244
+    nop ;Disable Soul Release
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -140,6 +144,11 @@ b @CeliaEventHandler
 .org 0x021E860C
     bl @SetSoulPerPickup
 
+;;;;;;;;;;;;;;;;;;;;;
+.org 0x021F6054
+    bl @InitStartingWarpRoom
+
+;;;;;;;;;;;;;;;;
 
 .close
 .open "ftc/overlay9_41", @Overlay41Start
@@ -280,6 +289,9 @@ b @CeliaEventHandler
     .db 0x00
 @RAMFlag_IsPausedOpenMap:
     .db 0x00
+
+@Option_StartingWarpRoom:
+    .dh 0x0001
     
 .align 4
 ;;;;;;;;;;;;;;
@@ -1016,6 +1028,17 @@ b @CeliaEventHandler
 @EndAPName:
     pop r1
     b 0x0202DFF4
+    .pool
+
+;;;;;;;;;;;;;;;;;
+;Change the starting unlocked warp room
+@InitStartingWarpRoom:
+    push r2
+    ldr r2, =@Option_StartingWarpRoom
+    ldrh r2, [r2]
+    orr r3, r3, r2
+    pop r2
+    bx lr
     .pool
 
 .close
