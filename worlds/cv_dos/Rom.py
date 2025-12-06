@@ -74,6 +74,9 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x260C7, bytearray([0xE1, 0x00, 0x00, 0xA0, 0xE1]))
         rom.write_bytes(0x28BE8, bytearray([0x00, 0x00, 0xE0, 0xE3, 0x1E, 0xFF, 0x2F]))
 
+    if world.options.open_drawbridge:
+        rom.write_bytes(0x0CF046, bytearray([0xA0, 0xE1]))  # Make the drawbridge always be down
+
     if world.options.fix_luck:
         rom.write_bytes(0xF087D, bytearray([0x22]))
         rom.write_bytes(0xF0888, bytearray([0x02, 0x70]))

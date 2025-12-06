@@ -90,6 +90,10 @@ class RandomizeStartingWarp(Toggle):
     """Randomizes which Warp Room is unlocked by default."""
     display_name = "Random Starting Warp Room"
 
+class OpenDrawbridge(Toggle):
+    """If enabled, the drawbridge in Lost Village will start open instead of closed."""
+    display_name = "Open Drawbridge"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -107,6 +111,7 @@ class DoSOptions(PerGameCommonOptions):
     soulsanity_level: SoulsanityLevel
     guaranteed_souls: GuaranteedSouls
     shuffle_starting_warp_room: RandomizeStartingWarp
+    open_drawbridge: OpenDrawbridge
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -129,7 +134,8 @@ dos_option_groups = [
     ]),
 
     OptionGroup("World Settings", [
-        RandomizeStartingWarp
+        RandomizeStartingWarp,
+        OpenDrawbridge
 
     ]),
 
