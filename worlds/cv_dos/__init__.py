@@ -377,6 +377,14 @@ class DoSWorld(World):
         finally:
             self.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
+    def fill_slot_data(self) -> Dict[str, typing.Any]:
+        return {
+            "goal": self.options.goal.value,
+            #"starting_warp": self.starting_warp_room,
+            "soul_randomizer": self.options.soul_randomizer.value,
+            "soulsanity_level": self.options.soulsanity_level.value,
+        }
+
     def modify_multidata(self, multidata: dict) -> None:
         import base64
         # wait for self.rom_name to be available.

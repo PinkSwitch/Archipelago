@@ -288,9 +288,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Warp Room"])
 
     multiworld.get_region("Warp Room", player).add_exits(["Lost Village Lower"])
-    #Paranoia; If not soulsanity, ADD the can_reach rules
     #Maybe I should make Bone Ark progression anyways? So you can be expected to use it from the left side...
-    #Also, ukoback. Receiving Ukoback should always be an alternative to reaching. Oh I can do an or if not soulsanity, and it is the only one if soulsanity
 
     if world.options.soul_randomizer == 2:
         multiworld.get_region("Lost Village Upper", player).add_exits(["Yeti Soul", "Axe Armor Soul", "Warg Soul", "Spin Devil Soul"],
