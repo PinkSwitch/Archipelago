@@ -380,7 +380,7 @@ class DoSWorld(World):
     def fill_slot_data(self) -> Dict[str, typing.Any]:
         return {
             "goal": self.options.goal.value,
-            #"starting_warp": self.starting_warp_room,
+            "starting_warp": self.starting_warp_room,
             "soul_randomizer": self.options.soul_randomizer.value,
             "soulsanity_level": self.options.soulsanity_level.value,
         }
@@ -392,6 +392,10 @@ class DoSWorld(World):
         rom_name = getattr(self, "rom_name", None)
         if rom_name:
             multidata["connect_names"][self.rom_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
+
+    def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
+        if self.options.shuffle_starting_warp_room:
+            spoiler_handle.write(f"\Default Warp Room:    {self.starting_warp_room}\n")
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]

@@ -86,6 +86,10 @@ class GuaranteedSouls(OptionSet):
     default = {"Procel Soul", "Mud Demon Soul", "Black Panther Soul"}
     valid_keys = soul_filler_table
 
+class RandomizeStartingWarp(Toggle):
+    """Randomizes which Warp Room is unlocked by default."""
+    display_name = "Random Starting Warp Room"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -102,6 +106,7 @@ class DoSOptions(PerGameCommonOptions):
     soul_randomizer: SoulRandomizer
     soulsanity_level: SoulsanityLevel
     guaranteed_souls: GuaranteedSouls
+    shuffle_starting_warp_room: RandomizeStartingWarp
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -120,6 +125,11 @@ dos_option_groups = [
     OptionGroup("Item Options", [
         StartingWeapon,
         EarlySeal1
+
+    ]),
+
+    OptionGroup("World Settings", [
+        RandomizeStartingWarp
 
     ]),
 

@@ -1,6 +1,7 @@
 import logging
 from .Options import SoulsanityLevel, SoulRandomizer
 from .Items import soul_filler_table, item_table
+from .in_game_data import warp_room_regions, warp_room_table
 from BaseClasses import ItemClassification
 guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
                       "Rycuda Soul", "Waiter Skeleton Soul"}
@@ -8,6 +9,13 @@ guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "U
 def setup_game(world):
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1
+
+    if world.options.shuffle_starting_warp_room:
+        world.starting_warp_room = world.random.choice(warp_room_table)
+    else:
+        world.starting_warp_room = "Lost Village"
+
+    world.starting_warp_region = warp_room_regions[world.starting_warp_room]
 
     place_souls(world)
 

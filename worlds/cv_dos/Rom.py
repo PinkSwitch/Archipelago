@@ -7,7 +7,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from BaseClasses import ItemClassification
 import settings
 from typing import TYPE_CHECKING, Sequence
-from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table
+from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table, warp_room_bits
 from Options import OptionError
 from .Options import StartingWeapon
 from BaseClasses import ItemClassification
@@ -54,6 +54,9 @@ def patch_rom(world, rom, player: int, code_patch):
 
     #Options handling
     rom.write_bytes(0x122E88, bytearray([starting_weapon]))
+
+    warp_room = warp_room_bits[world.starting_warp_room]
+    rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  #The initial warp room bit
 
     if world.options.replace_menace_with_soma:
         rom.write_bytes(0xC2418, bytearray([0x03]))
@@ -151,7 +154,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.name = (f"{world.player}_{world.auth_id}")
     patch_name = rom.name + "\0"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
-    rom.write_bytes(0x2F6DD4C, patch_name)
+    rom.write_bytes(0x2F6DD50, patch_name)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 

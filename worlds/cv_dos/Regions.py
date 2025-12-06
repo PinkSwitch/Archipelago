@@ -59,6 +59,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Cursed Clock Tower Entrance"),
         create_region(world, player, locations_per_region, "Cursed Clock Tower Central"),
         create_region(world, player, locations_per_region, "Cursed Clock Tower Boss Area"), #if i do warp room swap i need to make pre and post boss
+        create_region(world, player, locations_per_region, "Cursed Clock Tower Post-Boss"),
         create_region(world, player, locations_per_region, "Cursed Clock Tower Exit"),
 
         create_region(world, player, locations_per_region, "Subterranean Hell Top Entrance"),
@@ -209,12 +210,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Cursed Clock Tower Central", player).add_exits(["Cursed Clock Tower Entrance", "Cursed Clock Tower Boss Area"],
                                                                     {"Cursed Clock Tower Boss Area": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
-    multiworld.get_region("Cursed Clock Tower Boss Area", player).add_exits(["Cursed Clock Tower Central", "Cursed Clock Tower Exit", "Warp Room"],
-                                                                    {"Cursed Clock Tower Exit": lambda state: state.has_all({"Bat Company Soul", "Magic Seal 4"}, player),
-                                                                     "Warp Room": lambda state: state.has("Magic Seal 4", player)})
+    multiworld.get_region("Cursed Clock Tower Boss Area", player).add_exits(["Cursed Clock Tower Central", "Cursed Clock Tower Post-Boss"],
+                                                                    {"Cursed Clock Tower Post-Boss": lambda state: state.has("Magic Seal 4", player)})
 
-    multiworld.get_region("Cursed Clock Tower Exit", player).add_exits(["Cursed Clock Tower Boss Area", "The Pinnacle Lower"],
-                                                                    {"Cursed Clock Tower Boss Area": lambda state: state.has_all({"Bat Company Soul", "Magic Seal 4"}, player)})
+    multiworld.get_region("Cursed Clock Tower Post-Boss", player).add_exits(["Cursed Clock Tower Boss Area", "Cursed Clock Tower Exit", "Cursed Clock Tower Central", "Warp Room"],
+                                                                    {"Cursed Clock Tower Boss Area": lambda state: state.has("Magic Seal 4", player),
+                                                                     "Cursed Clock Tower Exit": lambda state: state.has("Bat Company Soul", player)})
+
+    multiworld.get_region("Cursed Clock Tower Exit", player).add_exits(["Cursed Clock Tower Post-Boss", "The Pinnacle Lower"],
+                                                                    {"Cursed Clock Tower Post-Boss": lambda state: state.has("Bat Company Soul", player)})
     ####################################################################################
     #Subterranean Hell
     multiworld.get_region("Subterranean Hell Top Entrance", player).add_exits(["Dark Chapel Catacombs Exit", "Subterranean Hell East"],
@@ -287,7 +291,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Warp Room"])
 
-    multiworld.get_region("Warp Room", player).add_exits(["Lost Village Lower"])
+    multiworld.get_region("Warp Room", player).add_exits([world.starting_warp_region])
     #Maybe I should make Bone Ark progression anyways? So you can be expected to use it from the left side...
 
     if world.options.soul_randomizer == 2:

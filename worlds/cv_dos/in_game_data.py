@@ -549,12 +549,40 @@ easter_egg_table = {
     "Cursed Clock Tower: Spike Room Secret": [0xBCEE3, 0x158C54]
 }
 
+warp_room_table = {
+    "Lost Village",
+    "Wizardry Lab",
+    "Garden of Madness",
+    "Dark Chapel",
+    "Demon Guest House",
+    "Subterranean Hell",
+    "Silenced Ruins",
+    "Cursed Clock Tower"
+    # Maybe add Condemned Tower?
+}
 
-#Todo; client
-#todo; item weights
-#TODO; make sure that my SRAM checks can survive the player suspending
-#TODO; test my invalid weapon error
-#URGENT: I picked up a random drop and froze. Check this out.
-#URGENT: figure out what I'm gonna do with the ROM name... Please.
-#It's not JUST getting a tunic, I did some other stuff
-#Okay yeah any item after getting a Soul can.
+warp_room_regions = {
+    "Lost Village": "Lost Village Lower",
+    "Wizardry Lab": "Wizardry Lab Main",
+    "Garden of Madness": "Garden of Madness Lower",
+    "Dark Chapel": "Dark Chapel",
+    "Demon Guest House": "Demon Guest House West Wing",
+    "Subterranean Hell": "Subterranean Hell Central Upper",
+    "Silenced Ruins": "Silenced Ruins",
+    "Cursed Clock Tower": "Cursed Clock Tower Post-Boss"
+}
+
+warp_room_bits = {
+    "Lost Village": 0x01,
+    "Demon Guest House": 0x02,
+    "Wizardry Lab": 0x04,
+    "Garden of Madness": 0x08,
+    "Dark Chapel": 0x10,
+    # "Condemned Tower": 0x20,
+    # "Mine of Judgment": 0x40,
+    "Subterranean Hell": 0x80,
+    "Silenced Ruins": 0x0100,
+    "Cursed Clock Tower": 0x0200,
+    #"The Pinnacle": 0x0400,
+    #"The Abyss": 0x0800
+}

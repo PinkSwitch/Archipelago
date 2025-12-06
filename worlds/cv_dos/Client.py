@@ -43,7 +43,7 @@ class DoSClient(BizHawkClient):
     async def set_auth(self, ctx: "BizHawkClientContext") -> None:
 
         slot_name_bytes = await bizhawk.read(
-            ctx.bizhawk_ctx, [(0x2F6DD4C, 0x14, "ROM")])
+            ctx.bizhawk_ctx, [(0x2F6DD50, 0x14, "ROM")])
 
         slot_name_bytes = slot_name_bytes[0].rstrip(b'\xFF')
         ctx.auth = slot_name_bytes.decode("ascii")
