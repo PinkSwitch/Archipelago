@@ -58,7 +58,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
         create_region(world, player, locations_per_region, "Cursed Clock Tower Entrance"),
         create_region(world, player, locations_per_region, "Cursed Clock Tower Central"),
-        create_region(world, player, locations_per_region, "Cursed Clock Tower Boss Area"), #if i do warp room swap i need to make pre and post boss
+        create_region(world, player, locations_per_region, "Cursed Clock Tower Boss Area"),  # if i do warp room swap i need to make pre and post boss
         create_region(world, player, locations_per_region, "Cursed Clock Tower Post-Boss"),
         create_region(world, player, locations_per_region, "Cursed Clock Tower Exit"),
 
@@ -541,6 +541,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
         multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Subterranean Hell Spike Room East"])
 
+
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
     location = DoSLocation(player, location_data.name, location_data.code, region)
     location.region = location_data.region
@@ -568,4 +569,4 @@ def get_locations_per_region(locations: List[LocationData]) -> Dict[str, List[Lo
     return per_region
     
 
-#TODO; Skeletone Ape in tower with speedboost on
+# TODO; Skeletone Ape in tower with speedboost on

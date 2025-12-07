@@ -1,12 +1,12 @@
-import logging
 from .Options import SoulsanityLevel, SoulRandomizer
-from .Items import soul_filler_table, item_table
+from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
 from BaseClasses import ItemClassification
 guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
                       "Rycuda Soul", "Waiter Skeleton Soul"}
 
 world_version = "1.1"
+
 
 def setup_game(world):
     if world.options.early_seal_1:
@@ -20,6 +20,7 @@ def setup_game(world):
     world.starting_warp_region = warp_room_regions[world.starting_warp_room]
 
     place_souls(world)
+
 
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))

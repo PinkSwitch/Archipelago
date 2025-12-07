@@ -6,10 +6,11 @@ if TYPE_CHECKING:
 big_uppies = {"Hippogryph Soul", "Bat Company Soul"}
 small_uppies = {"Hippogryph Soul", "Bat Company Soul", "Malphas Soul"}
 
+
 def set_location_rules(world: "DoSWorld") -> None:
     player = world.player
 
-    ###Lost Village
+    ### Lost Village
     set_rule(world.multiworld.get_location("Lost Village: Above Entrance", player), lambda state: state.has_any(big_uppies, player) or state.has_all({"Malphas Soul", "Pupper Master Soul"}, player))
     set_rule(world.multiworld.get_location("Lost Village: Above Drawbridge", player), lambda state: state.has_any(small_uppies, player))
     set_rule(world.multiworld.get_location("Lost Village: In Moat", player), lambda state: (state.has_any(big_uppies, player) and state.has("Moat Drained", player))) #state.has("Rahab Soul", player) this is permanently missable
@@ -53,7 +54,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Dark Chapel: Catacombs Mirror World", player), lambda state: state.has("Paranoia Soul", player))
     set_rule(world.multiworld.get_location("Dark Chapel: Big Square Room Alcove", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
     set_rule(world.multiworld.get_location("Dark Chapel: Bell Room In Bell", player), lambda state: state.has("Hippogryph Soul", player))
-    #If soulsanity, the Soul Barrier needs Skeleton
+    # If soulsanity, the Soul Barrier needs Skeleton
 
     set_rule(world.multiworld.get_location("Dark Chapel: Bell Room Right", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
 

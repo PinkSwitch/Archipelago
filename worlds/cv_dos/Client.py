@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from NetUtils import ClientStatus
-from .in_game_data import location_ram_table, global_soul_table
+from .in_game_data import location_ram_table, global_soul_table, world_version
 from .static_location_data import location_ids
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
@@ -16,6 +16,8 @@ class DoSClient(BizHawkClient):
     game = "Castlevania: Dawn of Sorrow"
     system = ("NDS")
     patch_suffix = ".apcvdos"
+    most_recent_connect: str = ""
+    client_version: str = world_version
 
     def __init__(self) -> None:
         super().__init__()
@@ -27,10 +29,21 @@ class DoSClient(BizHawkClient):
             rom_names = await bizhawk.read(ctx.bizhawk_ctx, [(0x0, 18, "ROM"), # Original ROM name
                                                             (0x308A6C, 0x14, "Main RAM")]) # AP ROM name
 
+            patch_data = await bizhawk.read(ctx.bizhawk_ctx, [(???, 15, "ROM")])  # APworld version in the patch
+
             base_rom_name = rom_names[0].decode("ascii")
-            
+            patch_version = patch_data[0].rstrip(b"\x69")
+            patch_version = patch_version.decode("ascii")
+
+            if patch_version != self.most_recent_connect and patch_version != self.client_version:
+                ctx.gui_error("Bad Version", f"Installed Dawn of Sorrow APworld version {self.client_version} does not match patch version {patch_version}")
+                self.most_recent_connect = apworld_version
+                return False
+
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
                 return False
+
+            
         except UnicodeDecodeError:
             return False
         except bizhawk.RequestFailedError:

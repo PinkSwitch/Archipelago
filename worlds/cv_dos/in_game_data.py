@@ -585,6 +585,6 @@ warp_room_bits = {
     "Subterranean Hell": 0x80,
     "Silenced Ruins": 0x0100,
     "Cursed Clock Tower": 0x0200,
-    #"The Pinnacle": 0x0400,
-    #"The Abyss": 0x0800
+    # "The Pinnacle": 0x0400,
+    # "The Abyss": 0x0800
 }

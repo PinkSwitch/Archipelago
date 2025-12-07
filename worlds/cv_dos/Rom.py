@@ -4,15 +4,16 @@ import Utils
 import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
-from BaseClasses import ItemClassification
 from typing import Sequence
-from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table, warp_room_bits, world_version
+from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
+                           base_check_address_table, easter_egg_table, warp_room_bits, world_version)
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
+
 
 class LocalRom(object):
 
@@ -32,6 +33,7 @@ class LocalRom(object):
     def get_bytes(self) -> bytes:
         return bytes(self.file)
 
+
 def patch_rom(world, rom, player: int, code_patch):
     # This is the entirety of the patched code
     rom.write_bytes(0x2F6DC50, code_patch)
@@ -41,8 +43,6 @@ def patch_rom(world, rom, player: int, code_patch):
     if isinstance(weapon, str):
         if weapon not in global_weapon_table:
             raise OptionError(f"Error generating for player {world.player_name}. Attempted to set an invalid starting weapon: {weapon}.")
-        else:
-            starting_weapon = global_weapon_table.index(weapon)
     else:
         if weapon == StartingWeapon.option_random_base:
             weapon = world.random.choice(base_weapons)
@@ -50,13 +50,12 @@ def patch_rom(world, rom, player: int, code_patch):
             weapon = world.random.choice(valid_random_starting_weapons)
 
     starting_weapon = global_weapon_table.index(weapon)
-    
 
-    #Options handling
+    # Options handling
     rom.write_bytes(0x122E88, bytearray([starting_weapon]))
 
     warp_room = warp_room_bits[world.starting_warp_room]
-    rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  #The initial warp room bit
+    rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  # The initial warp room bit
 
     if world.options.replace_menace_with_soma:
         rom.write_bytes(0xC2418, bytearray([0x03]))
@@ -104,7 +103,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xBEFC5, bytearray([0x00]))
         rom.write_bytes(0xB84A9, bytearray([0x00]))
 
-    if not world.options.goal: #Remove the better ending trigger and replace Dario with Menace
+    if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
         rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))
         rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
@@ -125,7 +124,7 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
         shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]
-        souls_output = {key: key for key in soul_filler_table.copy()} # this is assuming all vanilla souls are in soul_filler_table
+        souls_output = {key: key for key in soul_filler_table.copy()}  # this is assuming all vanilla souls are in soul_filler_table
         shuffled_vals = world.random.sample(shuffled_keys, k=len(shuffled_keys))
         for key, val in zip(shuffled_keys, shuffled_vals):
             souls_output[key] = val
@@ -138,10 +137,10 @@ def patch_rom(world, rom, player: int, code_patch):
         item_type = 0
         item_id = 0
         if location.address:
-            if location.item.player == world.player: #If this is an item for the player, we need to extract it's Type and ID
+            if location.item.player == world.player:   # If this is an item for the player, we need to extract it's Type and ID
                 item_type = (location.item.code & 0xFF00) >> 8
                 item_id = location.item.code & 0x00FF
-            else: #AP items are item type 2 and then use ID for progression.
+            else:  # AP items are item type 2 and then use ID for progression.
                 item_type = 2
                 if ItemClassification.progression in location.item.classification:
                     item_id = 0x0C3B
@@ -152,7 +151,7 @@ def patch_rom(world, rom, player: int, code_patch):
                 else:
                     item_id = 0x093A
 
-        if location.address: #Filter out events
+        if location.address:  # Filter out events
             if location.name in global_soul_table:
                 if location.item.player != world.player:
                     # AP items on souls can use the Type as the color
@@ -168,13 +167,12 @@ def patch_rom(world, rom, player: int, code_patch):
                 # Regular item checks
                 address = base_check_address_table[location.name]
                 if location.item.name in global_soul_table and location.item.player == world.player:
-                    rom.write_bytes(address + 9, bytearray([item_id])) #High byte of the flag is used as Soul /Color ID
+                    rom.write_bytes(address + 9, bytearray([item_id]))  # High byte of the flag is used as Soul /Color ID
                     rom.write_bytes(address + 10, bytearray([0x3C]))
                     item_type = 2
                 else:
                     rom.write_bytes(address + 9, struct.pack(">H", item_id))
                 rom.write_bytes(address + 6, bytearray([item_type]))
-
 
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = rom.name + "\0"
@@ -207,12 +205,19 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
+
 class DoSPatchExtensions(APPatchExtension):
     game = "Castlevania: Dawn of Sorrow"
 
     @staticmethod
     def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
+        version_check = rom.read_bytes(0x2F6DD7C, 15)
+        version = version_check.rstrip(b"\x69")
+        version = version.decode("ascii")
+        if version != world_version:  # Installed world is different from generated world
+            raise Exception(f"Error! this patch was generated on Dawn of Sorrow APworld version: {version}, but installed APworld is version: {world_version}. " +
+                            f"Please use APWorld version {version} to patch your game.")
 
         for check in base_check_address_table:
             address = base_check_address_table[check]
@@ -223,8 +228,6 @@ class DoSPatchExtensions(APPatchExtension):
                 y_pos = int.from_bytes(rom.read_bytes(address + 2, 2), byteorder="little")
                 y_pos -= 10
                 rom.write_bytes(address + 2, struct.pack("H", y_pos))
-            version_check = rom.read_bytes(0x2F6DD7C, 15)
-            print(version_check)
 
         return rom.get_bytes()
 
@@ -243,6 +246,7 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
     return base_rom_bytes
 
+
 def get_base_rom_path(file_name: str = "") -> str:
     from worlds.cv_dos import DoSWorld
     if not file_name:
@@ -250,5 +254,3 @@ def get_base_rom_path(file_name: str = "") -> str:
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
-
-

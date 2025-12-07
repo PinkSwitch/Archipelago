@@ -2,14 +2,10 @@ import os
 import typing
 import threading
 import pkgutil
-import json
-import base64
-import logging
 
 
 from typing import List, Set, Dict, TextIO
 from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
-from Fill import fill_restrictive
 from worlds.AutoWorld import World, WebWorld
 import settings
 from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, money_table
@@ -22,8 +18,7 @@ from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids
 from .setup_game import place_static_items, setup_game
 from .enemy_data import important_souls
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
-from Utils import local_path
+
 
 class DoSWeb(WebWorld):
     theme = "ocean"
@@ -40,6 +35,7 @@ class DoSWeb(WebWorld):
 
     option_groups = dos_option_groups
     tutorials = [setup_en]
+
 
 class DoSSettings(settings.Group):
     class RomFile(settings.UserFilePath):
@@ -68,20 +64,6 @@ class DoSWorld(World):
     settings: typing.ClassVar[DoSSettings]
     # topology_present = True
     ut_can_gen_without_yaml = True
-
-#    @staticmethod
- #   def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
-  #      return slot_data
-
-   # ut_can_gen_without_yaml = True
-
-    #tracker_world: ClassVar = {
-     #   "map_page_folder": "ut_map_page",
-      #  "map_page_maps": "maps.json",
-       # "map_page_locations": "locations.json",
-        #"map_page_setting_key": "{player}_{team}_nine_sols_area",
-        #"map_page_index": map_page_index
-    #}
 
     options_dataclass = DoSOptions
     options: DoSOptions
@@ -345,7 +327,7 @@ class DoSWorld(World):
     def generate_early(self) -> None:
         setup_game(self)
 
-        if hasattr(self.multiworld, "re_gen_passthrough"): # If UT
+        if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
            if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
            passthrough = self.multiworld.re_gen_passthrough["Castlevania: Dawn of Sorrow"]
            self.options.goal = passthrough["goal"]
@@ -396,7 +378,6 @@ class DoSWorld(World):
         }
 
     def modify_multidata(self, multidata: dict) -> None:
-        import base64
         # wait for self.rom_name to be available.
         self.rom_name_available_event.wait()
         rom_name = getattr(self, "rom_name", None)
@@ -405,7 +386,7 @@ class DoSWorld(World):
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         if self.options.shuffle_starting_warp_room:
-            spoiler_handle.write(f"\Default Warp Room:    {self.starting_warp_room}\n")
+            spoiler_handle.write(f"Default Warp Room:    {self.starting_warp_room}\n")
 
     def create_item(self, name: str) -> Item:
         data = item_table[name]
@@ -448,7 +429,7 @@ class DoSWorld(World):
         
         if not self.has_tried_chaos_ring:
             self.has_tried_chaos_ring = True
-            if self.random.randint(0, 100) == 0: # Chaos ring should have a single 1/100 chance to be placed
+            if self.random.randint(0, 100) == 0:  # Chaos ring should have a single 1/100 chance to be placed
                 filler_item = "Chaos Ring"
 
         return filler_item
