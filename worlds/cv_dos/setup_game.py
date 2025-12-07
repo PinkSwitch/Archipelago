@@ -6,6 +6,8 @@ from BaseClasses import ItemClassification
 guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
                       "Rycuda Soul", "Waiter Skeleton Soul"}
 
+world_version = "1.1"
+
 def setup_game(world):
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1

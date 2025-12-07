@@ -5,11 +5,11 @@ import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from BaseClasses import ItemClassification
-import settings
-from typing import TYPE_CHECKING, Sequence
+from typing import Sequence
 from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table, warp_room_bits
 from Options import OptionError
-from .Options import StartingWeapon
+from .Options import StartingWeapon, SoulRandomizer
+from .Items import soul_filler_table
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
@@ -122,7 +122,21 @@ def patch_rom(world, rom, player: int, code_patch):
         
     soul_check_table = 0x2F6DC50
 
+    if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
+        vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
+        shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]
+        souls_output = {key: key for key in soul_filler_table.copy()} # this is assuming all vanilla souls are in soul_filler_table
+        shuffled_vals = world.random.sample(shuffled_keys, k=len(shuffled_keys))
+        for key, val in zip(shuffled_keys, shuffled_vals):
+            souls_output[key] = val
+
+        for soul in souls_output:
+            soul_data = bytearray([global_soul_table.index(souls_output[soul]), 0x05])
+            rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
+
     for location in world.multiworld.get_locations(player):
+        item_type = 0
+        item_id = 0
         if location.address:
             if location.item.player == world.player: #If this is an item for the player, we need to extract it's Type and ID
                 item_type = (location.item.code & 0xFF00) >> 8
@@ -130,12 +144,19 @@ def patch_rom(world, rom, player: int, code_patch):
             else: #AP items are item type 2 and then use ID for progression.
                 item_type = 2
                 if ItemClassification.progression in location.item.classification:
-                    item_id = 0x3B
+                    item_id = 0x0C3B
+                elif ItemClassification.useful in location.item.classification:
+                    item_id = 0x073A
+                elif ItemClassification.trap in location.item.classification:
+                    item_id = 0x063A
                 else:
-                    item_id = 0x3A
+                    item_id = 0x093A
 
         if location.address: #Filter out events
             if location.name in global_soul_table:
+                if location.item.player != world.player:
+                    # AP items on souls can use the Type as the color
+                    item_type = (item_id & 0xFF00) >> 8
                 item_struct = (item_type << 8) | item_id
                 index = (global_soul_table.index(location.name) * 2)
                 rom.write_bytes(soul_check_table + index, struct.pack("H", item_struct))
@@ -145,7 +166,7 @@ def patch_rom(world, rom, player: int, code_patch):
             else:
                 address = base_check_address_table[location.name]
                 if location.item.name in global_soul_table and location.item.player == world.player:
-                    rom.write_bytes(address + 9, bytearray([item_id])) #High byte of the flag is used as Soul ID
+                    rom.write_bytes(address + 9, bytearray([item_id])) #High byte of the flag is used as Soul /Color ID
                     rom.write_bytes(address + 10, bytearray([0x3C]))
                     item_type = 2
                 else:
@@ -153,8 +174,7 @@ def patch_rom(world, rom, player: int, code_patch):
                 rom.write_bytes(address + 6, bytearray([item_type]))
 
 
-    from Utils import __version__
-    rom.name = (f"{world.player}_{world.auth_id}")
+    rom.name = f"{world.player}_{world.auth_id}"
     patch_name = rom.name + "\0"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
     rom.write_bytes(0x2F6DD50, patch_name)

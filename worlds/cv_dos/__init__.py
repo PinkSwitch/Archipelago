@@ -67,6 +67,7 @@ class DoSWorld(World):
     web = DoSWeb()
     settings: typing.ClassVar[DoSSettings]
     # topology_present = True
+    ut_can_gen_without_yaml = True
 
 #    @staticmethod
  #   def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
@@ -344,6 +345,15 @@ class DoSWorld(World):
 
     def generate_early(self) -> None:
         setup_game(self)
+
+        if hasattr(self.multiworld, "re_gen_passthrough"): # If UT
+           if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
+           passthrough = self.multiworld.re_gen_passthrough["Castlevania: Dawn of Sorrow"]
+           self.options.goal = passthrough["goal"]
+           self.options.soul_randomizer = passthrough["soul_randomizer"]
+           self.options.soulsanity_level = passthrough["soulsanity_level"]
+           self.starting_warp_room = passthrough["starting_warp"]
+
         self.auth_id = self.random.getrandbits(32)
 
     def create_regions(self) -> None:
@@ -383,6 +393,7 @@ class DoSWorld(World):
             "starting_warp": self.starting_warp_room,
             "soul_randomizer": self.options.soul_randomizer.value,
             "soulsanity_level": self.options.soulsanity_level.value,
+            "open_drawbridge": self.options.open_drawbridge.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:
