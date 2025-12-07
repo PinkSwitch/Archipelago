@@ -26,23 +26,23 @@ class DoSClient(BizHawkClient):
 
         try:
             # Check ROM name/patch version
-            rom_names = await bizhawk.read(ctx.bizhawk_ctx, [(0x0, 18, "ROM"), # Original ROM name
-                                                            (0x308A6C, 0x14, "Main RAM")]) # AP ROM name
-
-            patch_data = await bizhawk.read(ctx.bizhawk_ctx, [(???, 15, "ROM")])  # APworld version in the patch
-
-            base_rom_name = rom_names[0].decode("ascii")
-            patch_version = patch_data[0].rstrip(b"\x69")
-            patch_version = patch_version.decode("ascii")
-
-            if patch_version != self.most_recent_connect and patch_version != self.client_version:
-                ctx.gui_error("Bad Version", f"Installed Dawn of Sorrow APworld version {self.client_version} does not match patch version {patch_version}")
-                self.most_recent_connect = apworld_version
-                return False
+            rom_name = await bizhawk.read(ctx.bizhawk_ctx, [(0x0, 18, "ROM")]) # AP ROM name
+            base_rom_name = rom_name[0].decode("ascii")
 
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
                 return False
 
+            # This is a DoS ROM
+            patch_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x02F6DD7C, 16, "ROM")])  # APworld version in the patch
+            patch_version = patch_data[0].rstrip(b"\x69")
+            patch_version = patch_version.decode("ascii")
+
+            if patch_version != self.client_version:
+                if patch_version != self.most_recent_connect:
+                    # We only want to display this error once
+                    ctx.gui_error("Bad Version", f"Installed Dawn of Sorrow APworld version {self.client_version} does not match patch version {patch_version}")
+                    self.most_recent_connect = patch_version
+                return False
             
         except UnicodeDecodeError:
             return False
@@ -112,7 +112,6 @@ class DoSClient(BizHawkClient):
                     index = global_soul_table.index(location_name)
                     bit = 1 << (index % 8)
                     offset = int(index / 8)
-                    print(f"We are using {offset}")
                     location = soul_flag_table[offset]
                 else:
                     pointer = location_ram_table[location_name][0]
