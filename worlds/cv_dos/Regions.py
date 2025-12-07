@@ -258,13 +258,11 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                  "Subterranean Hell Spike Room East": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Silenced Ruins Antechamber": lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Flying Armor Soul", "Black Panther Soul"}, player)})
 
-    multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Spike Room West", "Subterranean Hell Shaft Bottom"],
-                                                {"Subterranean Hell Spike Room West": lambda state: state.has_all({"Rahab Soul", "Puppet Master Soul"}, player) and state.can_reach("Garden of Madness Lower", 'Region', player)}) # Or bone ark...
+    multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Shaft Bottom"])
 
-    multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Wizardry Lab Sunken East Door", "Subterranean Hell Spike Room East"],
-                                                {"Subterranean Hell Spike Room East": lambda state: state.has_all({"Rahab Soul", "Puppet Master Soul"}, player) and state.can_reach("Garden of Madness Lower", 'Region', player)})
+    multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Wizardry Lab Sunken East Door"])
 
-    multiworld.register_indirect_condition(world.get_region("Garden of Madness Lower"), world.get_entrance("Demon Guest House Lower -> Garden of Madness Lower"))
+    #multiworld.register_indirect_condition(world.get_region("Garden of Madness Lower"), world.get_entrance("Demon Guest House Lower -> Garden of Madness Lower"))
     #####################################################
     #Silenced Ruins
     multiworld.get_region("Silenced Ruins Antechamber", player).add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins"],
@@ -301,6 +299,12 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     #Maybe I should make Bone Ark progression anyways? So you can be expected to use it from the left side...
 
     if world.options.soul_randomizer == 2:
+        multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Spike Room West"],
+                                {"Subterranean Hell Spike Room West": lambda state: state.has("Rahab Soul", player) and (state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player) or state.has("Bone Ark Soul", player))})
+
+        multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Subterranean Hell Spike Room East"],
+                                {"Subterranean Hell Spike Room East": lambda state: state.has("Rahab Soul", player) and (state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player) or state.has("Bone Ark Soul", player))})
+
         multiworld.get_region("Lost Village Upper", player).add_exits(["Yeti Soul", "Axe Armor Soul", "Warg Soul", "Spin Devil Soul"],
         {"Spin Devil Soul": lambda state: state.has("Moat Drained", player),
          "Yeti Soul": lambda state: state.has("Waiter Skeleton Soul", player)})
@@ -530,20 +534,12 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
                 multiworld.get_region("The Abyss", player).add_exits(["Arc Demon Soul", "Erinys Soul", "Heart Eater Soul", "Stolas Soul", "Final Guard Soul"])
 
-                multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Iron Golem Soul"])            
+                multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Iron Golem Soul"])
+    else:
+        # If no soulsanity you can grind Bone ark for this
+        multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Spike Room West"]) # Or bone ark...
 
-
-
-
-
-
-
-
-
-
-
-
-
+        multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Subterranean Hell Spike Room East"])
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
     location = DoSLocation(player, location_data.name, location_data.code, region)
