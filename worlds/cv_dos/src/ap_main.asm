@@ -315,10 +315,26 @@ b @CeliaEventHandler
 @RAMFlag_CurrentSpawnedSoulColor:
     .db 0xFF
 @RAMFlag_APItemColor:
-    .db 0xFF
+    .db 0x00
 .align 4
 
-    ;Dedicate 0x20 bytes to the AP rom name.
+@AP_VersionChecker:
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
+    .db 0x69
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
 @ToggleSoulFlag:
@@ -478,6 +494,17 @@ b @CeliaEventHandler
 @FilterItemFlagHigh:
     and r3, r3, 0xFF
     mov r1, 0x01
+    cmp r3, 0x01 ; The Mina's talisman check
+    beq @SetHammerFlag2
+    bx lr
+@SetHammerFlag2:
+    push r1-r2
+    ldr r1, =0x020F7189
+    ldrb r2, [r1]
+    orr r2, r2, 0x02
+    strb r2, [r1]
+    pop r1-r2
+    .pool
     bx lr
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -564,6 +591,8 @@ b @CeliaEventHandler
     lsr r0, r0, 8
     cmp r0, #0x05
     beq @GetSoulSoul
+    bgt @SetSoulColor
+@APColorSoulDone:
     bl @GetItemArbitrary
     b @SoulGetFinish
 @GetSoulSoul:
@@ -571,6 +600,13 @@ b @CeliaEventHandler
 @SoulGetFinish:
     pop lr
     b 0x021E96B0
+
+@SetSoulColor:
+    ldr r1, =@RAMFlag_APItemColor
+    strb r0, [r1]
+    ldr r1, =0x3A ; this only runs for AP items
+    mov r0, 0x02
+    b @APColorSoulDone
     .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;Give the starting weapon + Return Gem
@@ -1042,8 +1078,3 @@ b @CeliaEventHandler
     .pool
 
 .close
-
-
-
-;AP todo. Options, make a basepathc,
-;todo. determine we're actually in-game

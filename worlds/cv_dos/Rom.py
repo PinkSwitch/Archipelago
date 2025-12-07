@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from BaseClasses import ItemClassification
 from typing import Sequence
-from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table, warp_room_bits
+from .in_game_data import global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table, base_check_address_table, easter_egg_table, warp_room_bits, world_version
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -157,20 +157,22 @@ def patch_rom(world, rom, player: int, code_patch):
                 if location.item.player != world.player:
                     # AP items on souls can use the Type as the color
                     item_type = (item_id & 0xFF00) >> 8
+                    item_id = item_id & 0xFF
                 item_struct = (item_type << 8) | item_id
                 index = (global_soul_table.index(location.name) * 2)
                 rom.write_bytes(soul_check_table + index, struct.pack("H", item_struct))
             elif location.name in easter_egg_table:
                 rom.write_bytes(easter_egg_table[location.name][0], bytearray([item_type]))
-                rom.write_bytes(easter_egg_table[location.name][1], bytearray([item_id]))
+                rom.write_bytes(easter_egg_table[location.name][1], struct.pack(">H", item_id))
             else:
+                # Regular item checks
                 address = base_check_address_table[location.name]
                 if location.item.name in global_soul_table and location.item.player == world.player:
                     rom.write_bytes(address + 9, bytearray([item_id])) #High byte of the flag is used as Soul /Color ID
                     rom.write_bytes(address + 10, bytearray([0x3C]))
                     item_type = 2
                 else:
-                    rom.write_bytes(address + 10, bytearray([item_id]))
+                    rom.write_bytes(address + 9, struct.pack(">H", item_id))
                 rom.write_bytes(address + 6, bytearray([item_type]))
 
 
@@ -178,6 +180,7 @@ def patch_rom(world, rom, player: int, code_patch):
     patch_name = rom.name + "\0"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
     rom.write_bytes(0x2F6DD50, patch_name)
+    rom.write_bytes(0x2F6DD7C, world_version.encode("ascii"))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -220,7 +223,8 @@ class DoSPatchExtensions(APPatchExtension):
                 y_pos = int.from_bytes(rom.read_bytes(address + 2, 2), byteorder="little")
                 y_pos -= 10
                 rom.write_bytes(address + 2, struct.pack("H", y_pos))
-            version_check = rom.read_bytes(0x3FF0A0, 16)
+            version_check = rom.read_bytes(0x2F6DD7C, 15)
+            print(version_check)
 
         return rom.get_bytes()
 

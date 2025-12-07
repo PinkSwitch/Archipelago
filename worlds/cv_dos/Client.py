@@ -80,7 +80,7 @@ class DoSClient(BizHawkClient):
         game_timer = int.from_bytes(read_state[3], "little")
         ap_data = bytearray(read_state[4])
 
-        soul_flag_table = list(ap_data[:0x0F])
+        soul_flag_table = list(ap_data[:0x10])
         current_received_item = ap_data[0x10]
         total_items_received = int.from_bytes(ap_data[0x1E:0x20], "little")
 
@@ -99,6 +99,7 @@ class DoSClient(BizHawkClient):
                     index = global_soul_table.index(location_name)
                     bit = 1 << (index % 8)
                     offset = int(index / 8)
+                    print(f"We are using {offset}")
                     location = soul_flag_table[offset]
                 else:
                     pointer = location_ram_table[location_name][0]

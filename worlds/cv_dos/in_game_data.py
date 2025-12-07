@@ -1,3 +1,5 @@
+world_version = "1.1"
+
 location_ram_table = {
     "Lost Village: Above Entrance": [0x05, 0x10],
     "Lost Village: Upper Big Room Corner": [0x01, 0x08],
@@ -549,7 +551,7 @@ easter_egg_table = {
     "Cursed Clock Tower: Spike Room Secret": [0xBCEE3, 0x158C54]
 }
 
-warp_room_table = {
+warp_room_table = [
     "Lost Village",
     "Wizardry Lab",
     "Garden of Madness",
@@ -559,7 +561,7 @@ warp_room_table = {
     "Silenced Ruins",
     "Cursed Clock Tower"
     # Maybe add Condemned Tower?
-}
+]
 
 warp_room_regions = {
     "Lost Village": "Lost Village Lower",

@@ -41,7 +41,7 @@ def place_souls(world):
     if world.options.goal:
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
-        world.uncommon_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
+        world.rare_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in guaranteed_commons:
