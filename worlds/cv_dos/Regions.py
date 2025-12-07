@@ -369,7 +369,8 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
         if world.options.soulsanity_level:
             multiworld.get_region("Lost Village Upper", player).add_exits(["Skeleton Soul", "Bat Soul", "Armor Knight Soul", "Zombie Soul"],
-            {"Spin Devil Soul": lambda state: state.has("Moat Drained", player)})
+            {"Spin Devil Soul": lambda state: state.has("Moat Drained", player),
+             "Armor Knight Soul": lambda state: state.has_any(big_uppies, player)})
 
             multiworld.get_region("Lost Village Upper Doorway", player).add_exits(["Skelerang Soul"])
 

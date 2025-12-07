@@ -79,6 +79,7 @@ class DoSWorld(World):
         self.location_cache = []
         self.extra_item_count = 0
         self.has_tried_chaos_ring = False
+        self.default_warp_room = None
 
         self.armor_table = [
             "Casual Clothes",
@@ -325,8 +326,6 @@ class DoSWorld(World):
         }
 
     def generate_early(self) -> None:
-        setup_game(self)
-
         if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
            if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
            passthrough = self.multiworld.re_gen_passthrough["Castlevania: Dawn of Sorrow"]
@@ -334,6 +333,7 @@ class DoSWorld(World):
            self.options.soul_randomizer = passthrough["soul_randomizer"]
            self.options.soulsanity_level = passthrough["soulsanity_level"]
            self.starting_warp_room = passthrough["starting_warp"]
+        setup_game(self)
 
         self.auth_id = self.random.getrandbits(32)
 

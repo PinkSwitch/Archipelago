@@ -9,10 +9,11 @@ def setup_game(world):
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1
 
-    if world.options.shuffle_starting_warp_room:
-        world.starting_warp_room = world.random.choice(warp_room_table)
-    else:
-        world.starting_warp_room = "Lost Village"
+    if world.starting_warp_room is None:  # UT will have already grabbed it
+        if world.options.shuffle_starting_warp_room:
+            world.starting_warp_room = world.random.choice(warp_room_table)
+        else:
+            world.starting_warp_room = "Lost Village"
 
     world.starting_warp_region = warp_room_regions[world.starting_warp_room]
 
