@@ -929,6 +929,7 @@ b @CeliaEventHandler
     bx lr
 @_WarpRoomTouch:
     ldrb r0, [r11, 0x01]
+    cmp r0, 0
     bx lr
     .pool
 

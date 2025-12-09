@@ -334,6 +334,7 @@ class DoSWorld(World):
            self.options.soulsanity_level = passthrough["soulsanity_level"]
            self.starting_warp_room = passthrough["starting_warp"]
            self.options.open_drawbridge = passthrough["open_drawbridge"]
+           self.options.boost_speed = passthrough["speed_boost"]
         setup_game(self)
 
         self.auth_id = self.random.getrandbits(32)
@@ -375,7 +376,8 @@ class DoSWorld(World):
             "starting_warp": self.starting_warp_room,
             "soul_randomizer": self.options.soul_randomizer.value,
             "soulsanity_level": self.options.soulsanity_level.value,
-            "open_drawbridge": self.options.open_drawbridge.value
+            "open_drawbridge": self.options.open_drawbridge.value,
+            "speed_boost": self.options.boost_speed.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:
