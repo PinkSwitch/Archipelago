@@ -156,6 +156,7 @@ b @CeliaEventHandler
 .org @FreeSpace
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     @SoulTypeTable:
+ ; Table used to override soul gets. This is used to define ANY item a Soul could give you.
     .dh 0x500
     .dh 0x501
     .dh 0x502
@@ -498,6 +499,8 @@ b @CeliaEventHandler
     beq @SetHammerFlag2
     bx lr
 @SetHammerFlag2:
+    ;If we're spawning the Mina's Talisman spot, set the flag for shop 2
+    ;this is basically the same trigger as vanilla without the cutscene
     push r1-r2
     ldr r1, =0x020F7189
     ldrb r2, [r1]
@@ -525,7 +528,7 @@ b @CeliaEventHandler
 @GiveSpecial:
     cmp r1, 0x3A
     blt @GiveNormal ;Only 3A-3C are Special items.
-    cmp r1, 0x3C
+    cmp r1, 0x3C ; AP items have Color data defined
     beq @GiveSoulCan
     b @SetAPNameColor ;AP items dont go into the inventory, so we skip adding them
 @GiveSoulCan:
@@ -700,6 +703,8 @@ b @CeliaEventHandler
     lsr r3, r3, 0x08
     cmp r3, #5
     beq @GetSpecialSoul
+    bgt @GetSpecialAPColor
+@SpecialAPColorDone:
     mov r0, r3
     bl @GetItemArbitrary
     b @SpecialCleanup
@@ -863,7 +868,7 @@ b @CeliaEventHandler
     blt @NotInAbyss
     cmp r2, 0x0B
     bgt @NotInAbyss ;Julius throne room, other maps
-    add r0, r0, 0x14
+    add r0, r0, 0x14 ; Abyss maps use offset positions
     add r1, r1, 0x0A
 
 @NotInAbyss:
@@ -907,6 +912,7 @@ b @CeliaEventHandler
     .pool
 
 ;Set R5 to be dummy data, so the "warp room" used by the map doesn't intersect anything
+;I found that warp room data intersects boss doors by default. there may be more.
 @MapInit_AllocateWarpSpaceSelect:
     ldr r0, =@RAMFlag_IsPausedOpenMap
     ldrb r0, [r0]
@@ -1065,6 +1071,14 @@ b @CeliaEventHandler
 @EndAPName:
     pop r1
     b 0x0202DFF4
+    .pool
+
+@GetSpecialAPColor:
+    ldr r1, =@RAMFlag_APItemColor
+    strb r3, [r1]
+    mov r1, 0x3A
+    mov r3, 0x02
+    b @SpecialAPColorDone
     .pool
 
 ;;;;;;;;;;;;;;;;;

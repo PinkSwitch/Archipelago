@@ -161,8 +161,11 @@ def patch_rom(world, rom, player: int, code_patch):
                 index = (global_soul_table.index(location.name) * 2)
                 rom.write_bytes(soul_check_table + index, struct.pack("H", item_struct))
             elif location.name in easter_egg_table:
+                if item_id > 0xFF: # If this has a color
+                    item_type = (item_id & 0xFF00) >> 8 # Replace the type with the color if it has one
+                    item_id = item_id & 0xFF
                 rom.write_bytes(easter_egg_table[location.name][0], bytearray([item_type]))
-                rom.write_bytes(easter_egg_table[location.name][1], struct.pack(">H", item_id))
+                rom.write_bytes(easter_egg_table[location.name][1], bytearray([item_id]))
             else:
                 # Regular item checks
                 address = base_check_address_table[location.name]
