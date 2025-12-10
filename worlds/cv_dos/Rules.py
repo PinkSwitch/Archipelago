@@ -108,6 +108,7 @@ def set_location_rules(world: "DoSWorld") -> None:
         if world.options.soulsanity_level == 2:
             for location in world.rare_souls:
                 set_rule(world.multiworld.get_location(location, player), lambda state: state.has("Soul Eater Ring", player))
+            set_rule(world.multiworld.get_location("Iron Golem Soul", player), lambda state: state.has("Imp Soul", player))
 
         set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has_all({"Ukoback Soul", "Axe Armor Soul", "Killer Clown Soul", "Magic Seal 4"}, player)) #Need to get Ukoback soul
         set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Ukoback Soul", "Axe Armor Soul", "Killer Clown Soul", "Magic Seal 4", "Paranoia Soul"}, player))
