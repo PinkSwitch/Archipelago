@@ -94,6 +94,10 @@ class OpenDrawbridge(Toggle):
     """If enabled, the drawbridge in Lost Village will start open instead of closed."""
     display_name = "Open Drawbridge"
 
+class ShopRandomizer(Toggle):
+    """Randomizes Hammer's shop items."""
+    display_name = "Shop Randomizer"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -112,6 +116,7 @@ class DoSOptions(PerGameCommonOptions):
     guaranteed_souls: GuaranteedSouls
     shuffle_starting_warp_room: RandomizeStartingWarp
     open_drawbridge: OpenDrawbridge
+    shop_randomizer: ShopRandomizer
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -129,7 +134,8 @@ dos_option_groups = [
 
     OptionGroup("Item Options", [
         StartingWeapon,
-        EarlySeal1
+        EarlySeal1,
+        ShopRandomizer
 
     ]),
 

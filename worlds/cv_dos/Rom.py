@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
-                           base_check_address_table, easter_egg_table, warp_room_bits, world_version)
+                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, shop_pool)
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -132,6 +132,29 @@ def patch_rom(world, rom, player: int, code_patch):
         for soul in souls_output:
             soul_data = bytearray([global_soul_table.index(souls_output[soul]), 0x05])
             rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
+
+    if world.options.shop_randomizer:
+        current_shop_pool = shop_pool.copy()
+        for i in range(10):
+            # Shop pool 2
+            item = world.random.choice(current_shop_pool)
+            rom.write_bytes(0xA1F14 + i, bytearray([global_item_table.index(item) + 1]))
+            current_shop_pool.remove(item)
+
+        for i in range(18):
+            # Shop pool 1
+            item = world.random.choice(current_shop_pool)
+            rom.write_bytes(0xA1F38 + i, bytearray([global_item_table.index(item) + 1]))
+            current_shop_pool.remove(item)
+
+        for i in range(19):
+            # Starting shop
+            item = world.random.choice(current_shop_pool)
+            rom.write_bytes(0xA1F4F + i, bytearray([global_item_table.index(item) + 1]))
+            current_shop_pool.remove(item)
+
+        # Claymore should always be available for breakable walls
+        rom.write_bytes(0xA1F4E, bytearray([global_item_table.index("Claymore") + 1]))
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
