@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (Toggle, Range, PerGameCommonOptions, StartInventoryPool,
-                     OptionGroup, DefaultOnToggle, Choice, TextChoice, OptionSet)
+                     OptionGroup, DefaultOnToggle, Choice, TextChoice, OptionSet, DeathLink)
 from .Items import soul_filler_table
 
 
@@ -117,6 +117,7 @@ class DoSOptions(PerGameCommonOptions):
     shuffle_starting_warp_room: RandomizeStartingWarp
     open_drawbridge: OpenDrawbridge
     shop_randomizer: ShopRandomizer
+    death_link: DeathLink
 
 dos_option_groups = [
     OptionGroup("Goal Options", [

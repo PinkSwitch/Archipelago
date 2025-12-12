@@ -118,6 +118,9 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.boost_speed:
         rom.write_bytes(0x15B2A9, bytearray([0x20]))
+
+    if world.options.death_link:
+        rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
         
     soul_check_table = 0x2F6DC50
 

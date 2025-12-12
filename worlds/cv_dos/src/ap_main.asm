@@ -64,6 +64,13 @@
 .org 0x02034244
     nop ;Disable Soul Release
 
+;;;;;;;;;;;;;;;;;;;;;;
+.org 0x0203000C
+    bl @CheckIfDeathReceived
+
+.org 0x0202C63C
+    b @SkipSoulPopupIfDead
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -149,6 +156,9 @@ b @CeliaEventHandler
     bl @InitStartingWarpRoom
 
 ;;;;;;;;;;;;;;;;
+.org 0x021AF5CC
+    .dw 0x022C4684 ; Set the easter egg items to always use the full item palette
+
 
 .close
 .open "ftc/overlay9_41", @Overlay41Start
@@ -336,6 +346,12 @@ b @CeliaEventHandler
     .db 0x69
     .db 0x69
     .db 0x69
+;;;;;;;;;;;;;;;
+@AP_DiedFromDeathLink:
+    .db 0x00
+@OptionFlag_DeathLinkEnabled:
+    .db 0x00
+.align 4
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
 @ToggleSoulFlag:
@@ -382,6 +398,11 @@ b @CeliaEventHandler
     ldrb r0, [r0, 0]
     cmp r0, #1 ;This usually means we're in text or something
     beq @GetItemFinished
+    ldr r0, =0x020C07F0
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @GetItemFinished ; Don't get items if we're currently in a mini text prompt
+
     ldr r0, =0x020F6DFC
     ldr r0, [r0, 0]
     and r0, r0, 0xFFFFFFF6 ;Dont check items in events or getting a Seal
@@ -1090,6 +1111,54 @@ b @CeliaEventHandler
     orr r3, r3, r2
     pop r2
     bx lr
+    .pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Deathlink
+@CheckIfDeathReceived:
+    push r0
+    ldr r0, =@AP_DiedFromDeathLink
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @RemoteKillPlayer
+@CantKillPlayer:
+    pop r0
+    ldr r0,[r0, 0x0BAC]
+    bx lr
+@RemoteKillPlayer:
+    ldr r0, =0x020F6DFC
+    ldr r0, [r0]
+    ands r0, r0, 0x000000C1 ; Control + Dead
+    bne @CantKillPlayer
+    ldr r0, =0x020C07F0 ; Don't kill the player during a text prompt
+    ldrb r0, [r0]
+
+    ldr r0, =@AP_DiedFromDeathLink
+    mov r1, 0
+    strb r1, [r0] ; Reset the value
+    ldr r0, =0x020C07F1 ; CanPauseGame
+    strb r1, [r0]
+    pop r0
+    ldr r1, =0x020F738E
+    mov r0, 6
+    strb r0, [r1] ;Register that we took a hit
+    ldr r1, =0x20F7410
+    mov r0, 0
+    strh r0, [r1] ;Zero out the player's health
+    mov r0, 0
+    bx lr
+    .pool
+
+@SkipSoulPopupIfDead:
+    ; Prevent the game from playing a soul popup and interrupting the death sequence
+    ldr r0, =0x020F6DFC
+    ldrb r0, [r0]
+    ands r0, r0, 0x40 ;Is the player dead
+    mov r0, r1, lsl 0x1C
+    bne @SkipPopup
+    b 0x0202C640
+@SkipPopup:
+    b 0x0202C724
     .pool
 
 .close

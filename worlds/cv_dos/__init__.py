@@ -48,12 +48,14 @@ class DoSSettings(settings.Group):
 
 
 class DoSWorld(World):
-    """Bottom text"""
+    """One year after the events of Aria, Soma is targetted by a recently emerged cult.
+       Having rejected his fate, the cult seeks to create a new Dark Lord in his stead.
+       Explore a new castle and defeat the Dark Lord Candidates!"""
     
     game = "Castlevania: Dawn of Sorrow"
     option_definitions = DoSOptions
     data_version = 1
-    required_client_version = (0, 6, 1)
+    required_client_version = (0, 6, 0)
     origin_region_name = "Lost Village Upper"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
