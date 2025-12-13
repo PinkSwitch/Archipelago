@@ -165,12 +165,19 @@ def patch_rom(world, rom, player: int, code_patch):
         for enemy in enemy_table:
             if enemy in boss_list:  # We don't want to shuffle drops for bosses
                 continue
+
             index = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
-            drop_1 = index + 8
-            drop_2 = index + 10
-            # Chance for it to be drop 2? hmm.
-            # I should get the percent of enemies that have an item, and  that have an Item2, and use those percentts here
-        print("Glorp")
+            common_drop_address = index + 8
+            rare_drop_address = index + 10
+            if world.random.randint(0, 99) < 45:
+                # Common drop
+                item = world.random.choice(drop_pool)
+                rom.write_bytes(common_drop_address, bytearray([global_item_table.index(item) + 1]))
+
+            if world.random.randint(0, 99) < 29:
+                # Rare drop
+                item = world.random.choice(drop_pool)
+                rom.write_bytes(rare_drop_address, bytearray([global_item_table.index(item) + 1]))
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
