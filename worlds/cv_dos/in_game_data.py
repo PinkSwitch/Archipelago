@@ -981,7 +981,6 @@ common_filler_pool = [
     "Platinum Stud",
     "Tear Of Blood",
     "Lucky Charm",
-    "Mina's Talisman",
     "Satan's Ring",
     "Rare Ring",
     "Soul Eater Ring",

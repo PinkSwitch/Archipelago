@@ -15,6 +15,9 @@ from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
+base_enemy_address = 0x7CCAC
+soul_check_table = 0x2F6DC50
+
 
 class LocalRom(object):
 
@@ -38,8 +41,6 @@ class LocalRom(object):
 def patch_rom(world, rom, player: int, code_patch):
     # This is the entirety of the patched code
     rom.write_bytes(0x2F6DC50, code_patch)
-    soul_check_table = 0x2F6DC50
-    base_enemy_address = 0x7CCAC
 
     weapon = world.options.starting_weapon.value
 
@@ -125,6 +126,8 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.death_link:
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
 
+    rom.write_bytes(0x2F6DD8E, bytearray([world.options.experience_percentage]))
+
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
         shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]
@@ -172,12 +175,19 @@ def patch_rom(world, rom, player: int, code_patch):
             if world.random.randint(0, 99) < 45:
                 # Common drop
                 item = world.random.choice(drop_pool)
-                rom.write_bytes(common_drop_address, bytearray([global_item_table.index(item) + 1]))
+                common_item = global_item_table.index(item) + 1
+            else:
+                common_item = 0
 
             if world.random.randint(0, 99) < 29:
                 # Rare drop
                 item = world.random.choice(drop_pool)
-                rom.write_bytes(rare_drop_address, bytearray([global_item_table.index(item) + 1]))
+                rare_item = global_item_table.index(item) + 1
+            else:
+                rare_item = 0
+
+            rom.write_bytes(common_drop_address, bytearray([common_item]))
+            rom.write_bytes(rare_drop_address, bytearray([rare_item]))
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
@@ -241,7 +251,8 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
     procedure = [
         ("apply_bsdiff4", ["dos_base.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"]),
-        ("adjust_item_positions", [])
+        ("adjust_item_positions", []),
+        ("apply_modifiers", [])
     ]
 
     @classmethod
@@ -279,6 +290,21 @@ class DoSPatchExtensions(APPatchExtension):
                 rom.write_bytes(address + 2, struct.pack("H", y_pos))
 
         return rom.get_bytes()
+
+    @staticmethod
+    def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        exp_multiplier = struct.unpack("H", rom.read_bytes(0x2F6DD8E, 2))[0]  # Read the multiplier
+        exp_multiplier = 200 / 100
+        for enemy in enemy_table:
+            address = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
+            address += 18  # Offset where EXP is stored
+            exp = rom.read_bytes(address, 2)
+            exp = struct.unpack("H", exp)[0]
+            exp = int(exp * exp_multiplier)
+            rom.write_bytes(address, struct.pack("H", exp))
+        return rom.get_bytes()
+
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:

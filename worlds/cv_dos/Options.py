@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from Options import (Toggle, Range, PerGameCommonOptions, StartInventoryPool,
-                     OptionGroup, DefaultOnToggle, Choice, TextChoice, OptionSet, DeathLink)
+from Options import (Toggle, PerGameCommonOptions, StartInventoryPool,
+                     OptionGroup, DefaultOnToggle, Choice, TextChoice, OptionSet, DeathLink, NamedRange)
 from .Items import soul_filler_table
 
 
@@ -102,6 +102,19 @@ class ShuffleDrops(Toggle):
     """Randomizes items dropped by enemies"""
     display_name = "Drop Shuffle"
 
+class ExperiencePercent(NamedRange):
+    """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
+    display_name = "Experience Percentage"
+    range_start = 50
+    range_end = 500
+    default = 100
+    special_range_names = {
+        "half": 50,
+        "normal": 100,
+        "double": 200,
+        "quadruple": 400
+    }
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -124,6 +137,7 @@ class DoSOptions(PerGameCommonOptions):
     death_link: DeathLink
     start_inventory_from_pool: StartInventoryPool
     shuffle_enemy_drops: ShuffleDrops
+    experience_percentage: ExperiencePercent
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -153,7 +167,8 @@ dos_option_groups = [
     ]),
 
     OptionGroup("Enemy Settings", [
-        ShuffleDrops
+        ShuffleDrops,
+        ExperiencePercent
 
     ]),
 
