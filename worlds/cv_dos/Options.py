@@ -103,6 +103,19 @@ class ShuffleDrops(Toggle):
     display_name = "Drop Shuffle"
 
 class ExperiencePercent(NamedRange):
+    """Percentage applied to an enemy's base chance of dropping their soul."""
+    display_name = "Soul Drop Percentage"
+    range_start = 50
+    range_end = 500
+    default = 100
+    special_range_names = {
+        "half": 50,
+        "normal": 100,
+        "double": 200,
+        "quadruple": 400
+    }
+
+class SoulDropPercent(NamedRange):
     """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
     display_name = "Experience Percentage"
     range_start = 50
@@ -112,7 +125,7 @@ class ExperiencePercent(NamedRange):
         "half": 50,
         "normal": 100,
         "double": 200,
-        "quadruple": 400
+        "triple": 300
     }
 
 @dataclass
@@ -138,6 +151,7 @@ class DoSOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     shuffle_enemy_drops: ShuffleDrops
     experience_percentage: ExperiencePercent
+    soul_drop_percentage: SoulDropPercent
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -149,7 +163,8 @@ dos_option_groups = [
     OptionGroup("Soul Settings", [
         SoulRandomizer,
         SoulsanityLevel,
-        GuaranteedSouls
+        GuaranteedSouls,
+        SoulDropPercent
 
     ]),
 

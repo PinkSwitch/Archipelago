@@ -351,6 +351,10 @@ b @CeliaEventHandler
     .db 0x00
 @OptionFlag_DeathLinkEnabled:
     .db 0x00
+@OptionFlag_EXPMult:
+    .dh 0x0000
+@OptionFlag_SoulMult:
+    .dh 0x0000
 .align 4
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once

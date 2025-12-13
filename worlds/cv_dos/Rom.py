@@ -128,6 +128,8 @@ def patch_rom(world, rom, player: int, code_patch):
 
     rom.write_bytes(0x2F6DD8E, bytearray([world.options.experience_percentage]))
 
+    rom.write_bytes(0x2F6DD90, bytearray([world.options.soul_drop_percentage]))
+
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
         shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]
@@ -295,14 +297,26 @@ class DoSPatchExtensions(APPatchExtension):
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_bytes(0x2F6DD8E, 2))[0]  # Read the multiplier
-        exp_multiplier = 200 / 100
+        exp_multiplier = exp_multiplier / 100
+
+        soul_chance_multiplier = struct.unpack("H", rom.read_bytes(0x2F6DD90, 2))[0]
+        soul_chance_multiplier = soul_chance_multiplier / 100
+
         for enemy in enemy_table:
             address = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
-            address += 18  # Offset where EXP is stored
-            exp = rom.read_bytes(address, 2)
+            exp_address = address + 18  # Offset where EXP is stored
+            exp = rom.read_bytes(exp_address, 2)
             exp = struct.unpack("H", exp)[0]
             exp = int(exp * exp_multiplier)
-            rom.write_bytes(address, struct.pack("H", exp))
+            rom.write_bytes(exp_address, struct.pack("H", exp))
+
+            soul_chance_address = address + 20
+            soul_chance = int.from_bytes(rom.read_bytes(soul_chance_address, 1))
+            if soul_chance:  # Only modify non-guaranteed Souls
+                soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
+                print(f"{enemy} now has {hex(soul_chance)}")
+                rom.write_bytes(soul_chance_address, bytearray([soul_chance]))
+
         return rom.get_bytes()
 
 
