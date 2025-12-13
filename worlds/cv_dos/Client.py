@@ -165,6 +165,7 @@ class DoSClient(BizHawkClient):
             else:  # Received death is false, meaning the player actually died here
                 if self.has_reset_from_death: # We only want this to run once per death
                     await ctx.send_death(f"{ctx.player_names[ctx.slot]} died!")
+                    self.has_reset_from_death = False
         else:
             if self.has_received_death:
                 # Kill the player

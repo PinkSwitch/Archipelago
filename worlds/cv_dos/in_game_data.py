@@ -798,7 +798,7 @@ global_item_table = [
     "Chaos Ring"
 ]
 
-shop_pool = [
+common_filler_pool = [
     "Potion",
     "High Potion",
     "Super Potion",

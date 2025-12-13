@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
-                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, shop_pool)
+                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool)
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -37,6 +37,8 @@ class LocalRom(object):
 def patch_rom(world, rom, player: int, code_patch):
     # This is the entirety of the patched code
     rom.write_bytes(0x2F6DC50, code_patch)
+    soul_check_table = 0x2F6DC50
+    base_enemy_address = 0x7CCAC
 
     weapon = world.options.starting_weapon.value
 
@@ -121,8 +123,6 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.death_link:
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
-        
-    soul_check_table = 0x2F6DC50
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
@@ -137,27 +137,36 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
 
     if world.options.shop_randomizer:
-        current_shop_pool = shop_pool.copy()
+        shop_pool = common_filler_pool.copy()
         for i in range(10):
             # Shop pool 2
-            item = world.random.choice(current_shop_pool)
+            item = world.random.choice(shop_pool)
             rom.write_bytes(0xA1F14 + i, bytearray([global_item_table.index(item) + 1]))
-            current_shop_pool.remove(item)
+            shop_pool.remove(item)
 
         for i in range(18):
             # Shop pool 1
-            item = world.random.choice(current_shop_pool)
+            item = world.random.choice(shop_pool)
             rom.write_bytes(0xA1F38 + i, bytearray([global_item_table.index(item) + 1]))
-            current_shop_pool.remove(item)
+            shop_pool.remove(item)
 
         for i in range(19):
             # Starting shop
-            item = world.random.choice(current_shop_pool)
+            item = world.random.choice(shop_pool)
             rom.write_bytes(0xA1F4F + i, bytearray([global_item_table.index(item) + 1]))
-            current_shop_pool.remove(item)
+            shop_pool.remove(item)
 
         # Claymore should always be available for breakable walls
         rom.write_bytes(0xA1F4E, bytearray([global_item_table.index("Claymore") + 1]))
+
+    if world.options.shuffle_enemy_drops:
+        for enemy in enemy_list:
+            index = (enemy_table_base + (enemy_table.index(enemy)) * 0x24)
+            drop_1 = index + 8
+            drop_2 = index + 10
+            # Chance for it to be drop 2? hmm.
+            # I should get the percent of enemies that have an item, and  that have an Item2, and use those percentts here
+        print("Glorp")
 
     for location in world.multiworld.get_locations(player):
         item_type = 0

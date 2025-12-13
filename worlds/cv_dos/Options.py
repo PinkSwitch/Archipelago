@@ -98,6 +98,10 @@ class ShopRandomizer(Toggle):
     """Randomizes Hammer's shop items."""
     display_name = "Shop Randomizer"
 
+class ShuffleDrops(Toggle):
+    """Randomizes items dropped by enemies"""
+    display_name = "Drop Shuffle"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -118,6 +122,8 @@ class DoSOptions(PerGameCommonOptions):
     open_drawbridge: OpenDrawbridge
     shop_randomizer: ShopRandomizer
     death_link: DeathLink
+    start_inventory_from_pool: StartInventoryPool
+    shuffle_enemy_drops: ShuffleDrops
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -143,6 +149,11 @@ dos_option_groups = [
     OptionGroup("World Settings", [
         RandomizeStartingWarp,
         OpenDrawbridge
+
+    ]),
+
+    OptionGroup("Enemy Settings", [
+        ShuffleDrops
 
     ]),
 
