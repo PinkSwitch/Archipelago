@@ -6,7 +6,8 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
-                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool)
+                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
+                           boss_list, enemy_table)
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -160,8 +161,11 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xA1F4E, bytearray([global_item_table.index("Claymore") + 1]))
 
     if world.options.shuffle_enemy_drops:
-        for enemy in enemy_list:
-            index = (enemy_table_base + (enemy_table.index(enemy)) * 0x24)
+        drop_pool = common_filler_pool.copy()
+        for enemy in enemy_table:
+            if enemy in boss_list:  # We don't want to shuffle drops for bosses
+                continue
+            index = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
             drop_1 = index + 8
             drop_2 = index + 10
             # Chance for it to be drop 2? hmm.
