@@ -127,9 +127,9 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.death_link:
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
 
-    rom.write_bytes(0x2F6DD8E, bytearray([world.options.experience_percentage]))
+    rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
-    rom.write_bytes(0x2F6DD90, bytearray([world.options.soul_drop_percentage]))
+    rom.write_bytes(0x2F6DD90, struct.pack("H", world.options.soul_drop_percentage))
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
@@ -196,10 +196,10 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(rare_drop_address, bytearray([rare_item]))
 
     if world.options.area_music_randomizer:
-        shuffle_area_music(world, rom)
+        area_music_randomizer(world, rom)
 
     if world.options.boss_music_randomizer:
-        shuffle_boss_music(world, rom)
+        boss_music_randomizer(world, rom)
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
@@ -324,7 +324,6 @@ class DoSPatchExtensions(APPatchExtension):
             soul_chance = int.from_bytes(rom.read_bytes(soul_chance_address, 1))
             if soul_chance:  # Only modify non-guaranteed Souls
                 soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
-                print(f"{enemy} now has {hex(soul_chance)}")
                 rom.write_bytes(soul_chance_address, bytearray([soul_chance]))
 
         return rom.get_bytes()
