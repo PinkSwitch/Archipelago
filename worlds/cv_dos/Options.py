@@ -82,9 +82,10 @@ class SoulsanityLevel(Choice):
 
 class GuaranteedSouls(OptionSet):
     """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool."""
-    display_name = "Goal Triggers"
+    display_name = "Guranteed Souls"
     default = {"Procel Soul", "Mud Demon Soul", "Black Panther Soul"}
-    valid_keys = soul_filler_table
+    valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
+    valid_keys_casefold = True
 
 class RandomizeStartingWarp(Toggle):
     """Randomizes which Warp Room is unlocked by default."""

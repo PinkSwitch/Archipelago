@@ -33,14 +33,34 @@ def place_souls(world):
     soul_location_count = 0
     extra_souls = 0
 
-    for soul in world.options.guaranteed_souls:
-        world.multiworld.itempool.append(world.create_item(soul))
-        world.extra_item_count += 1
-
     if world.options.goal:
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
         world.rare_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
+    
+    world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
+    # Conver this to proper casing
+    if "Common" in world.options.guaranteed_souls:
+        for soul in world.common_souls:
+            if soul not in world.options.guaranteed_souls.value:
+                world.options.guaranteed_souls.value.add(soul)
+        world.options.guaranteed_souls.value.remove("Common")
+
+    if "Uncommon" in world.options.guaranteed_souls.value:
+        for soul in world.uncommon_souls:
+            if soul not in world.options.guaranteed_souls.value:
+                world.options.guaranteed_souls.value.add(soul)
+        world.options.guaranteed_souls.value.remove("Uncommon")
+
+    if "Rare" in world.options.guaranteed_souls.value:
+        for soul in world.rare_souls:
+            if soul not in world.options.guaranteed_souls.value:
+                world.options.guaranteed_souls.value.add(soul)
+        world.options.guaranteed_souls.value.remove("Rare")
+
+    for soul in world.options.guaranteed_souls:
+        world.multiworld.itempool.append(world.create_item(soul))
+        world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in guaranteed_commons:
