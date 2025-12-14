@@ -104,7 +104,7 @@ class ShuffleDrops(Toggle):
 
 class ExperiencePercent(NamedRange):
     """Percentage applied to an enemy's base chance of dropping their soul."""
-    display_name = "Soul Drop Percentage"
+    display_name = "Experience Percentage"
     range_start = 50
     range_end = 500
     default = 100
@@ -117,7 +117,7 @@ class ExperiencePercent(NamedRange):
 
 class SoulDropPercent(NamedRange):
     """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
-    display_name = "Experience Percentage"
+    display_name = "Soul Drop Percentage"
     range_start = 50
     range_end = 500
     default = 100
@@ -127,6 +127,14 @@ class SoulDropPercent(NamedRange):
         "double": 200,
         "triple": 300
     }
+
+class AreaMusicShuffle(Toggle):
+    """Randomizes area music."""
+    display_name = "Area Music Randomizer"
+
+class BossMusicShuffle(Toggle):
+    """Randomizes boss music."""
+    display_name = "Boss Music Randomizer"
 
 @dataclass
 class DoSOptions(PerGameCommonOptions):
@@ -152,6 +160,8 @@ class DoSOptions(PerGameCommonOptions):
     shuffle_enemy_drops: ShuffleDrops
     experience_percentage: ExperiencePercent
     soul_drop_percentage: SoulDropPercent
+    area_music_randomizer: AreaMusicShuffle
+    boss_music_randomizer: BossMusicShuffle
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -195,5 +205,11 @@ dos_option_groups = [
         FixLuck,
         BoostSpeed,
         OneScreenMode
-    ])
+    ]),
+
+    OptionGroup("Music Randomizer", [
+        AreaMusicShuffle,
+        BossMusicShuffle
+
+    ]),
 ]

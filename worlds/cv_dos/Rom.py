@@ -8,6 +8,7 @@ from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
                            boss_list, enemy_table)
+from .music_randomizer import area_music_randomizer, boss_music_randomizer
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -193,6 +194,12 @@ def patch_rom(world, rom, player: int, code_patch):
 
             rom.write_bytes(common_drop_address, bytearray([common_item]))
             rom.write_bytes(rare_drop_address, bytearray([rare_item]))
+
+    if world.options.area_music_randomizer:
+        shuffle_area_music(world, rom)
+
+    if world.options.boss_music_randomizer:
+        shuffle_boss_music(world, rom)
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
