@@ -144,6 +144,7 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
 
     elif world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        # This is crashing when I enter the second room. I wonder why?
         rom.write_bytes(0x2F6DD49, bytearray([0x01]))
 
     if world.options.shop_randomizer:
