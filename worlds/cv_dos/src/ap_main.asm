@@ -170,6 +170,10 @@ b @CeliaEventHandler
 .org 0x021ED0B4
     bl @Soulsanity_SoulCheck
 
+;;;;;;;;;;;;;;;;;
+.org 0x021E8984
+    nop
+
 
 .close
 .open "ftc/overlay9_41", @Overlay41Start
@@ -307,6 +311,7 @@ b @CeliaEventHandler
     .db 0x00
 
 @OptionFlag_Soulsanity:
+    .db 0x00
 .align 4
 
 @OptionFlag_OneScreenMode:
@@ -1188,9 +1193,11 @@ b @CeliaEventHandler
     cmp r0, 0
     beq @GetSoulCount
     pop r0, r1
-    push r1, r2, lr
+    push r1, r2, r3
+    push r11, lr
     bl @CheckIfSoulChecked
-    pop r1, r2, lr
+    pop r11, lr
+    pop r1, r2, r3
     beq @Bestiary_NoSoul
     mov r0, 1
     bx lr
