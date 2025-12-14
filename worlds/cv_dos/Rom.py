@@ -142,6 +142,9 @@ def patch_rom(world, rom, player: int, code_patch):
             soul_data = bytearray([global_soul_table.index(souls_output[soul]), 0x05])
             rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
 
+    elif world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        rom.write_bytes(0x2F6DD49, bytearray([0x01]))
+
     if world.options.shop_randomizer:
         shop_pool = common_filler_pool.copy()
         for i in range(10):

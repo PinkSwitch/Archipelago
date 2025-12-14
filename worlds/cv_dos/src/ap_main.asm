@@ -71,6 +71,10 @@
 .org 0x0202C63C
     b @SkipSoulPopupIfDead
 
+;;;;;;;;;;;;;;;;;;;;;;
+.org 0x0203AC68
+    bl @Soulsanity_SoulCheck
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -158,6 +162,13 @@ b @CeliaEventHandler
 ;;;;;;;;;;;;;;;;
 .org 0x021AF5CC
     .dw 0x022C4684 ; Set the easter egg items to always use the full item palette
+
+;;;;;;;;;;;;;;;;;;
+.org 0x0220ED90
+    bl @Soulsanity_SoulCheck
+
+.org 0x021ED0B4
+    bl @Soulsanity_SoulCheck
 
 
 .close
@@ -294,6 +305,8 @@ b @CeliaEventHandler
 ;;;;;;;;;;;;;;;;
 @OptionFlag_FightMenace:
     .db 0x00
+
+@OptionFlag_Soulsanity:
 .align 4
 
 @OptionFlag_OneScreenMode:
@@ -1163,6 +1176,40 @@ b @CeliaEventHandler
     b 0x0202C640
 @SkipPopup:
     b 0x0202C724
+    .pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; Replace the check for soul count in the Bestiary with the soul flag table, if soulsanity
+    ; 0x0220ED90
+@Soulsanity_SoulCheck:
+    push r0, r1
+    ldr r0, =@OptionFlag_Soulsanity
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @GetSoulCount
+    pop r0, r1
+    push r1, r2, lr
+    bl @CheckIfSoulChecked
+    pop r1, r2, lr
+    beq @Bestiary_NoSoul
+    mov r0, 1
+    bx lr
+@Bestiary_NoSoul:
+    mov r0, 0
+    bx lr
+@GetSoulCount:
+    pop r0, r1
+    b 0x0221029C
+    .pool
+
+@CheckIfSoulChecked:
+    push lr
+    bl @GetSoulFlagFromID
+    pop lr
+    ldr r2, =@SoulFlagTable
+    ldrb r0, [r2, r0]
+    ands r0, r0, r1
+    bx lr
     .pool
 
 .close
