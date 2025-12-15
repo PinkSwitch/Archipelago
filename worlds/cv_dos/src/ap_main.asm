@@ -798,6 +798,10 @@ b @CeliaEventHandler
     beq @DeleteCelia
     b 0x021CEC08
 @DeleteCelia:
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, 0x7F ; Restore the hud bit
+    strb r1, [r0]
     b 0x021CEBF4
 @CeliaEnd:
     b 0x021CEC08
