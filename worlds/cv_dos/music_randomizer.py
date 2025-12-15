@@ -49,7 +49,7 @@ boss_song_addresses = [
 
 def area_music_randomizer(world, rom):
     music_pool = valid_area_music.copy()
-    for i in range(0x10):
+    for i in range(0x11):
         if i in {0x0C, 0x0D, 0x0E, 0x0F}:
             continue  # Areas where music isn't used
         song = world.random.choice(music_pool)

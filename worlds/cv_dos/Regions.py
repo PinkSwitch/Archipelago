@@ -275,7 +275,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                 {"Silenced Ruins": lambda state: state.has("Zephyr Soul", player)})
 
     multiworld.get_region("Silenced Ruins", player).add_exits(["Silenced Ruins Back Exit", "Silenced Ruins Antechamber", "Warp Room"],
-                                                {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player),
+                                                {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player) and state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies, player)})
 
     multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins", "Subterranean Hell East"])

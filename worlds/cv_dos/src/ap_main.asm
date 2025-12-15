@@ -171,7 +171,7 @@ b @CeliaEventHandler
     bl @Soulsanity_SoulCheck
 
 ;;;;;;;;;;;;;;;;;
-.org 0x021E8984
+.org 0x021E8984  ; Don't stop from getting 9 items
     nop
 
 

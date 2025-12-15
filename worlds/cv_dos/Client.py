@@ -113,7 +113,8 @@ class DoSClient(BizHawkClient):
         soul_flag_table = list(ap_data[:0x10])
         current_received_item = ap_data[0x10]
         total_items_received = int.from_bytes(ap_data[0x1E:0x20], "little")
-        await self.handle_deathlink(death_state, ctx)
+        if "DeathLink" in ctx.tags:
+            await self.handle_deathlink(death_state, ctx)
 
         new_checks = []
 

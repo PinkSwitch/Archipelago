@@ -81,7 +81,8 @@ class SoulsanityLevel(Choice):
     default = 0
 
 class GuaranteedSouls(OptionSet):
-    """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool."""
+    """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool.
+       You can also use Common, Uncommon, or Rare to add all souls of that rarity."""
     display_name = "Guranteed Souls"
     default = {"Procel Soul", "Mud Demon Soul", "Black Panther Soul"}
     valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
@@ -104,7 +105,7 @@ class ShuffleDrops(Toggle):
     display_name = "Drop Shuffle"
 
 class ExperiencePercent(NamedRange):
-    """Percentage applied to an enemy's base chance of dropping their soul."""
+    """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
     display_name = "Experience Percentage"
     range_start = 50
     range_end = 500
@@ -117,7 +118,7 @@ class ExperiencePercent(NamedRange):
     }
 
 class SoulDropPercent(NamedRange):
-    """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
+    """Percentage applied to an enemy's base chance of dropping their soul."""
     display_name = "Soul Drop Percentage"
     range_start = 50
     range_end = 500

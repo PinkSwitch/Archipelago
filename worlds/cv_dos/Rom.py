@@ -149,6 +149,7 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.shop_randomizer:
         shop_pool = common_filler_pool.copy()
+        shop_pool = [item for item in shop_pool if item not in ["Potion", "Mind Up", "Claymore"]]
         for i in range(10):
             # Shop pool 2
             item = world.random.choice(shop_pool)

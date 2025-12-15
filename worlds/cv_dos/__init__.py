@@ -37,6 +37,10 @@ class DoSWeb(WebWorld):
     tutorials = [setup_en]
 
 
+class CVDoSItem(Item):
+    game: str = "Castlevania: Dawn of Sorrow"
+
+
 class DoSSettings(settings.Group):
     class RomFile(settings.UserFilePath):
         """File name of the Castlevania: Dawn of Sorrow ROM file."""
@@ -393,7 +397,7 @@ class DoSWorld(World):
         if self.options.shuffle_starting_warp_room:
             spoiler_handle.write(f"Default Warp Room:    {self.starting_warp_room}\n")
 
-    def create_item(self, name: str) -> Item:
+    def create_item(self, name: str) -> CVDoSItem:
         data = item_table[name]
         
         if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
@@ -404,7 +408,7 @@ class DoSWorld(World):
         else:
             classification = data.classification
 
-        return Item(name, classification, data.code, self.player)
+        return CVDoSItem(name, classification, data.code, self.player)
 
     def get_filler_item_name(self) -> str:
         weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
@@ -446,6 +450,12 @@ class DoSWorld(World):
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
+
+        # We need to do this again because this doesn't run through create_item
+        if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+            if (name in important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
+                item.classification = ItemClassification.progression
+
         return item
 
     def generate_filler(self, pool: List[Item]) -> None:
