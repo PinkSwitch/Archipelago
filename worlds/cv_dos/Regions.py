@@ -445,7 +445,9 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
             multiworld.get_region("Subterranean Hell Central Lower", player).add_exits(["Frozen Shade Soul", "Dead Pirate Soul"])
 
-            multiworld.get_region("Subterranean Hell Central Upper", player).add_exits(["Ukoback Soul", "Frozen Shade Soul", "Dead Pirate Soul", "Killer Fish Soul", "Needles Soul"])
+            multiworld.get_region("Subterranean Hell Central Upper", player).add_exits(["Ukoback Soul", "Frozen Shade Soul", "Dead Pirate Soul", "Killer Fish Soul", "Needles Soul"],
+                               {"Needles Soul": lambda state: state.has("Rahab Soul", player),
+                                "Killer Fish Soul": lambda state: state.has("Rahab Soul", player)})
 
             multiworld.get_region("Subterranean Hell Central Exit", player).add_exits(["Ukoback Soul", "Frozen Shade Soul"])
             ####S ILENCED RUINS #####
