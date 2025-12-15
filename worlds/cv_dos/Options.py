@@ -134,6 +134,10 @@ class AreaMusicShuffle(Toggle):
     """Randomizes area music."""
     display_name = "Area Music Randomizer"
 
+class BossMusicShuffle(Toggle):
+    """Randomizes boss music."""
+    display_name = "Boss Music Randomizer"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
