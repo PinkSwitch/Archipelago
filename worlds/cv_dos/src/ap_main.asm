@@ -800,7 +800,7 @@ b @CeliaEventHandler
 @DeleteCelia:
     ldr r0, =0x020F6DFC
     ldrb r1, [r0]
-    and r1, 0x7F ; Restore the hud bit
+    and r1, 0x7E ; Restore the hud and event bit
     strb r1, [r0]
     b 0x021CEBF4
 @CeliaEnd:
