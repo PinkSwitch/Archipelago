@@ -399,16 +399,8 @@ class DoSWorld(World):
 
     def create_item(self, name: str) -> CVDoSItem:
         data = item_table[name]
-        
-        if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-            if (name in important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
-                classification = ItemClassification.progression
-            else:
-                classification = data.classification
-        else:
-            classification = data.classification
 
-        return CVDoSItem(name, classification, data.code, self.player)
+        return CVDoSItem(name, data.classification, data.code, self.player)
 
     def get_filler_item_name(self) -> str:
         weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}

@@ -59,14 +59,14 @@ def place_souls(world):
         world.options.guaranteed_souls.value.remove("Rare")
 
     for soul in world.options.guaranteed_souls:
-        world.multiworld.itempool.append(world.create_item(soul))
+        world.multiworld.itempool.append(world.set_classifications(soul))
         world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in guaranteed_commons:
             if soul not in world.options.guaranteed_souls:
                 extra_souls += 1
-                world.multiworld.itempool.append(world.create_item(soul))
+                world.multiworld.itempool.append(world.set_classifications(soul))
 
         soul_location_count += (len(world.common_souls) - extra_souls)
         world.extra_item_count += extra_souls
