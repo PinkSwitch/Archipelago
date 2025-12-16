@@ -127,7 +127,8 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                     {"Lost Village Upper": lambda state: state.has("Magic Seal 1", player)})
 
     multiworld.get_region("Lost Village Underground Bottom", player).add_exits(["Lost Village Underground Middle", "Wizardry Lab Sunken"],
-                                                    {"Lost Village Underground Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
+                                                    {"Lost Village Underground Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
+                                                     "Wizardry Lab Sunken": lambda state: state.has("Rahab Soul", player)})
 
     multiworld.get_region("Lost Village Underground Middle", player).add_exits(["Lost Village Underground Top", "Wizardry Lab West Gate", "Lost Village Underground Bottom"],
                                                     {"Lost Village Underground Top": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
@@ -325,7 +326,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
         multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Cave Troll Soul"])
 
-        multiworld.get_region("Wizardry Lab Sunken", player).add_exits(["Homunculus Soul"])
+        multiworld.get_region("Wizardry Lab Sunken", player).add_exits(["Homunculus Soul", "Killer Fish Soul"])
         ####### GARDEN OF MADNESS ######
         multiworld.get_region("Garden of Madness Lower", player).add_exits(["Corpseweed Soul"])
 

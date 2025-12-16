@@ -77,16 +77,16 @@ def place_souls(world):
         # These items are only important on Rare tier
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
-            world.multiworld.itempool.append(world.create_item("Soul Eater Ring"))
+            world.multiworld.itempool.append(world.set_classifications("Soul Eater Ring"))
 
             extra_souls = 0
             if "Imp Soul" not in world.options.guaranteed_souls:
-                world.multiworld.itempool.append(world.create_item("Imp Soul"))
+                world.multiworld.itempool.append(world.set_classifications("Imp Soul"))
                 extra_souls += 1
                 
             soul_location_count += (len(world.rare_souls) - (1 + extra_souls))
             world.extra_item_count += (1 + extra_souls)
 
         for i in range(soul_location_count):
-            world.multiworld.itempool.append(world.create_item(world.random.choice(soul_filler_table)))
+            world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1

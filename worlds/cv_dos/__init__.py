@@ -351,7 +351,7 @@ class DoSWorld(World):
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())
-        self.generate_filler(pool)
+        self.fill_pool(pool)
 
         self.multiworld.itempool += pool
 
@@ -450,7 +450,7 @@ class DoSWorld(World):
 
         return item
 
-    def generate_filler(self, pool: List[Item]) -> None:
+    def fill_pool(self, pool: List[Item]) -> None:
         for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.extra_item_count):  # Change to fix event count
             item = self.set_classifications(self.get_filler_item_name())
             pool.append(item)

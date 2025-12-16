@@ -130,6 +130,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
     rom.write_bytes(0x2F6DD90, struct.pack("H", world.options.soul_drop_percentage))
+    print(len(world.common_souls) + len(world.uncommon_souls) + len(world.rare_souls))  # Fill the necessary table with soul ids for each soul that has a check
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
@@ -206,6 +207,9 @@ def patch_rom(world, rom, player: int, code_patch):
     for location in world.multiworld.get_locations(player):
         item_type = 0
         item_id = 0
+        if location.item.name == "Bone Ark Soul":
+            print(location.item.classification)
+        
         if location.address:
             if location.item.player == world.player:   # If this is an item for the player, we need to extract it's Type and ID
                 item_type = (location.item.code & 0xFF00) >> 8
