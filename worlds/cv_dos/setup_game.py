@@ -1,6 +1,7 @@
 from .Options import SoulsanityLevel, SoulRandomizer
 from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
+from .bullet_wall_randomizer import set_souls_for_walls
 from BaseClasses import ItemClassification
 guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
                       "Rycuda Soul", "Waiter Skeleton Soul"}
@@ -17,6 +18,7 @@ def setup_game(world):
 
     world.starting_warp_region = warp_room_regions[world.starting_warp_room]
 
+    set_souls_for_walls(world)
     place_souls(world)
 
 

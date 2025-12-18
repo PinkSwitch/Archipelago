@@ -331,6 +331,20 @@ class DoSWorld(World):
             "Iron Golem Soul"
         }
 
+        self.red_soul_walls = []
+
+        self.important_souls = {
+            "Skeleton Soul",
+            "Axe Armor Soul",
+            "Killer Clown Soul",
+            "Mandragora Soul",
+            "Waiter Skeleton Soul",
+            "Rycuda Soul",
+            "Bone Ark Soul"
+        }
+
+        #TODO; Skeleton Ape, Bone Ark are always important...? Mandrag/Waiter/Rycuda are ALWAYS important, but only on soulsanity. FIGURE THIS SHIT OUT.
+
     def generate_early(self) -> None:
         if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
            if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
@@ -445,7 +459,7 @@ class DoSWorld(World):
 
         # We need to do this again because this doesn't run through create_item
         if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-            if (name in important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
+            if (name in self.important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
                 item.classification = ItemClassification.progression
 
         return item
