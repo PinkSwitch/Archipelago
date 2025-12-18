@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 viable_wall_souls = [
     "Skeleton Soul",
     "Zombie Soul",
@@ -47,51 +49,6 @@ class SpriteData:
     height: int
     mirror_sprite: bool = False  # Sprites that need to be horizontally flipped
 
-
-enem_sprite_data_table = {
-    "Skeleton Soul": SpriteData(0x16F00C0, 40, True),
-    "Zombie Soul": SpriteData(0x163F680, 38, True),
-    "Axe Armor Soul": SpriteData(0x10888F0, 26),
-    "Student Witch Soul": SpriteData(0x13860B0, 37, True),
-    "Warg Soul": SpriteData(0x11F58C0, 27, True),
-    "Bomber Armor Soul": SpriteData(0x10CF520, 17),
-    "Amalaric Sniper Soul": SpriteData(0x152A010, 64),
-    "Cave Troll Soul": SpriteData(0x16BE040, 38, True),
-    "Waiter Skeleton Soul": SpriteData(0x152CF00, 11),
-    "Slime Soul": SpriteData(0x1488200, 16),
-    "Yorick Soul": SpriteData(0x14F8D00, 8),
-    "Une Soul": SpriteData(0x16EA720, 16),
-    "Mandragora Soul": SpriteData(0x138C8C0, 26),
-    "Rycuda Soul": SpriteData(0x1504DA0, 59, True),
-    "Fleaman Soul": SpriteData(0x16E9520, 16, True),
-    "Ripper Soul": SpriteData(0x1535D90, 4),
-    "Guillotiner Soul": SpriteData(0x12B4040, 30),
-    "Killer Clown Soul": SpriteData(0x10ED100, 58, True),
-    "Malachi Soul": SpriteData(0x16D2E70, 46, True),
-    "Disc Armor Soul": SpriteData(0x114B4F0, 42),
-    "Great Axe Armor Soul": SpriteData(0x125C150, 80, True),
-    "Slaughterer Soul": SpriteData(0x11DE000, 32, True),
-    "Hell Boar Soul": SpriteData(0x12CE0C0, 34, True),
-    "Frozen Shade Soul": SpriteData(0x13D4140, 53, True),
-    "Merman Soul": SpriteData(0x16D6100, 52, True),
-    "Larva Soul": SpriteData(0x132E100, 16),
-    "Ukoback Soul": SpriteData(0x16EE880, 27, True),
-    "Decarabia Soul": SpriteData(0x112A040, 46),
-    "Succubus Soul": SpriteData(0x1463000, 32, True),
-    "Slogra Soul": SpriteData(0x10A5110, 25, True),
-    "Erinys Soul": SpriteData(0x11AFB30, 38, True),
-    "Homunculus Soul": SpriteData(0x12D60C0, 50),
-    "Witch Soul": SpriteData(0x1384000, 48, True),
-    "Fish Head Soul": SpriteData(0x16DA040, 23, True),
-    "Mollusca Soul": SpriteData(0x1263640, 38, True),
-    "Dead Mate Soul": SpriteData(0x12BC710, 41, True),
-    "Malacoda Soul": SpriteData(0x13DA000, 64, True),
-    "Flame Demon Soul": SpriteData(0x12100A0, 21, True),
-    "Aguni Soul": SpriteData(0x1060080, 43, True),
-    "Abaddon Soul": SpriteData(0x1051870, 14, True),
-}
-
-# TODO! FINISH THIS TABLE!
 # TODO! If this is done as a proc, there IS no world here. GET THESE IN THE ROM!
 # I know what to do. In the ROM, I can read the Soul value used to Destroy the wall, and THAT can be written in the main rom file
 
@@ -106,6 +63,49 @@ def set_souls_for_walls(world):
 
 
 def apply_souls_and_gfx(world, rom):
+    enem_sprite_data_table = {
+        "Skeleton Soul": SpriteData(0x16F00C0, 40, True),
+        "Zombie Soul": SpriteData(0x163F680, 38, True),
+        "Axe Armor Soul": SpriteData(0x10888F0, 26),
+        "Student Witch Soul": SpriteData(0x13860B0, 37, True),
+        "Warg Soul": SpriteData(0x11F58C0, 27, True),
+        "Bomber Armor Soul": SpriteData(0x10CF520, 17),
+        "Amalaric Sniper Soul": SpriteData(0x152A010, 64),
+        "Cave Troll Soul": SpriteData(0x16BE040, 38, True),
+        "Waiter Skeleton Soul": SpriteData(0x152CF00, 11),
+        "Slime Soul": SpriteData(0x1488200, 16),
+        "Yorick Soul": SpriteData(0x14F8D00, 8),
+        "Une Soul": SpriteData(0x16EA720, 16),
+        "Mandragora Soul": SpriteData(0x138C8C0, 26),
+        "Rycuda Soul": SpriteData(0x1504DA0, 59, True),
+        "Fleaman Soul": SpriteData(0x16E9520, 16, True),
+        "Ripper Soul": SpriteData(0x1535D90, 4),
+        "Guillotiner Soul": SpriteData(0x12B4040, 30),
+        "Killer Clown Soul": SpriteData(0x10ED100, 58, True),
+        "Malachi Soul": SpriteData(0x16D2E70, 46, True),
+        "Disc Armor Soul": SpriteData(0x114B4F0, 42),
+        "Great Axe Armor Soul": SpriteData(0x125C150, 80, True),
+        "Slaughterer Soul": SpriteData(0x11DE000, 32, True),
+        "Hell Boar Soul": SpriteData(0x12CE0C0, 34, True),
+        "Frozen Shade Soul": SpriteData(0x13D4140, 53, True),
+        "Merman Soul": SpriteData(0x16D6100, 52, True),
+        "Larva Soul": SpriteData(0x132E100, 16),
+        "Ukoback Soul": SpriteData(0x16EE880, 27, True),
+        "Decarabia Soul": SpriteData(0x112A040, 46),
+        "Succubus Soul": SpriteData(0x1463000, 32, True),
+        "Slogra Soul": SpriteData(0x10A5110, 25, True),
+        "Erinys Soul": SpriteData(0x11AFB30, 38, True),
+        "Homunculus Soul": SpriteData(0x12D60C0, 50),
+        "Witch Soul": SpriteData(0x1384000, 48, True),
+        "Fish Head Soul": SpriteData(0x16DA040, 23, True),
+        "Mollusca Soul": SpriteData(0x1263640, 38, True),
+        "Dead Mate Soul": SpriteData(0x12BC710, 41, True),
+        "Malacoda Soul": SpriteData(0x13DA000, 64, True),
+        "Flame Demon Soul": SpriteData(0x12100A0, 21, True),
+        "Aguni Soul": SpriteData(0x1060080, 43, True),
+        "Abaddon Soul": SpriteData(0x1051870, 14, True),
+    }
+
     for i in range(0x1801):
         rom.write_bytes(0x10D6000, bytearray([0xFF]))  # Blank out the original graphic
 

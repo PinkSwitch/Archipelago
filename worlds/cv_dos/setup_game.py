@@ -3,8 +3,6 @@ from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
 from .bullet_wall_randomizer import set_souls_for_walls
 from BaseClasses import ItemClassification
-guaranteed_commons = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul",
-                      "Rycuda Soul", "Waiter Skeleton Soul"}
 
 def setup_game(world):
     if world.options.early_seal_1:
@@ -65,6 +63,9 @@ def place_souls(world):
         world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        guaranteed_commons = {"Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul", "Rycuda Soul", "Waiter Skeleton Soul"}
+        guaranteed_commons.update(world.red_soul_walls)
+
         for soul in guaranteed_commons:
             if soul not in world.options.guaranteed_souls:
                 extra_souls += 1

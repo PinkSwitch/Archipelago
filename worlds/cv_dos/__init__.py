@@ -17,7 +17,6 @@ from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids
 from .setup_game import place_static_items, setup_game
-from .enemy_data import important_souls
 
 
 class DoSWeb(WebWorld):

@@ -9,6 +9,7 @@ small_uppies = {"Hippogryph Soul", "Bat Company Soul", "Malphas Soul"}
 
 def set_location_rules(world: "DoSWorld") -> None:
     player = world.player
+    paranoia_souls = {wall for i, wall in enumerate(world.red_soul_walls) if i != 2}
 
     ### Lost Village
     set_rule(world.multiworld.get_location("Lost Village: Above Entrance", player), lambda state: state.has_any(big_uppies, player) or state.has_all({"Malphas Soul", "Pupper Master Soul"}, player))
@@ -110,13 +111,8 @@ def set_location_rules(world: "DoSWorld") -> None:
                 set_rule(world.multiworld.get_location(location, player), lambda state: state.has("Soul Eater Ring", player))
             set_rule(world.multiworld.get_location("Iron Golem Soul", player), lambda state: state.has("Imp Soul", player))
 
-        set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has_all({"Ukoback Soul", "Axe Armor Soul", "Killer Clown Soul", "Magic Seal 4"}, player)) #Need to get Ukoback soul
-        set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Ukoback Soul", "Axe Armor Soul", "Killer Clown Soul", "Magic Seal 4", "Paranoia Soul"}, player))
-        set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has_all({"Ukoback Soul", "Axe Armor Soul", "Killer Clown Soul", "Magic Seal 4"}, player))
-        set_rule(world.multiworld.get_location("Dark Chapel: Catacombs Soul Barrier", player), lambda state: state.has("Skeleton Soul", player))
-            
-    else:
-        #If souls are Vanilla, expect the player to be able to grind them
-        set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has("Magic Seal 4", player) and ((state.can_reach("Subterranean Hell Shaft Bottom", "Region", player) or state.can_reach("Subterranean Hell Central Exit","Region", player)) or state.has("Ukoback Soul", player))) #Need to get Ukoback soul
-        set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and ((state.can_reach("Subterranean Hell Shaft Bottom", "Region", player) or state.can_reach("Subterranean Hell Central Exit","Region", player)) or state.has("Ukoback Soul", player)))
-        set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has("Magic Seal 4", player) and ((state.can_reach("Subterranean Hell Shaft Bottom", "Region", player) or state.can_reach("Subterranean Hell Central Exit","Region", player)) or state.has("Ukoback Soul", player)))
+    set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has("Magic Seal 4", player) and state.has_all(paranoia_souls, player))
+    set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
+    set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
+    set_rule(world.multiworld.get_location("Dark Chapel: Catacombs Soul Barrier", player), lambda state: state.has(world.red_soul_walls[2], player))
+        

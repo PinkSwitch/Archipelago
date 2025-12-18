@@ -238,7 +238,7 @@ item_table: Dict[str, ItemData] = {
     "Frozen Shade Soul": ItemData("Bullet Souls", 0x51B, ItemClassification.filler, 0),
     "Merman Soul": ItemData("Bullet Souls", 0x51C, ItemClassification.filler, 0),
     "Larva Soul": ItemData("Bullet Souls", 0x51D, ItemClassification.filler, 0),
-    "Ukoback Soul": ItemData("Bullet Souls", 0x51E, ItemClassification.progression, 0),
+    "Ukoback Soul": ItemData("Bullet Souls", 0x51E, ItemClassification.filler, 0),
     "Decarabia Soul": ItemData("Bullet Souls", 0x51F, ItemClassification.filler, 0),
     "Succubus Soul": ItemData("Bullet Souls", 0x520, ItemClassification.useful, 0),
     "Slogra Soul": ItemData("Bullet Souls", 0x521, ItemClassification.filler, 0),
