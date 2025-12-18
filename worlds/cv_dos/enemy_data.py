@@ -7,3 +7,4 @@ important_souls = {
     "Rycuda Soul",
     "Bone Ark Soul"
 }
+

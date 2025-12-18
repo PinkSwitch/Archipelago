@@ -130,7 +130,9 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
     rom.write_bytes(0x2F6DD90, struct.pack("H", world.options.soul_drop_percentage))
-    print(len(world.common_souls) + len(world.uncommon_souls) + len(world.rare_souls))  # Fill the necessary table with soul ids for each soul that has a check
+    soul_total = list(world.common_souls | world.uncommon_souls | world.rare_souls)
+    for i, soul in enumerate(soul_total):  # Fill IDs of souls in the loc pool
+        rom.write_bytes(0x2F6DD94 + i, bytearray([global_soul_table.index(soul)]))
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = {"Skeleton Soul", "Axe Armor Soul", "Killer Clown Soul", "Ukoback Soul", "Skeleton Ape Soul", "Bone Ark Soul"}
@@ -145,7 +147,6 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
 
     elif world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-        # This is crashing when I enter the second room. I wonder why?
         rom.write_bytes(0x2F6DD49, bytearray([0x01]))
 
     if world.options.shop_randomizer:
@@ -207,8 +208,6 @@ def patch_rom(world, rom, player: int, code_patch):
     for location in world.multiworld.get_locations(player):
         item_type = 0
         item_id = 0
-        if location.item.name == "Bone Ark Soul":
-            print(location.item.classification)
         
         if location.address:
             if location.item.player == world.player:   # If this is an item for the player, we need to extract it's Type and ID
@@ -323,7 +322,7 @@ class DoSPatchExtensions(APPatchExtension):
             exp_address = address + 18  # Offset where EXP is stored
             exp = rom.read_bytes(exp_address, 2)
             exp = struct.unpack("H", exp)[0]
-            exp = int(exp * exp_multiplier)
+            exp = int(min(0xFF, (exp * exp_multiplier)))
             rom.write_bytes(exp_address, struct.pack("H", exp))
 
             soul_chance_address = address + 20

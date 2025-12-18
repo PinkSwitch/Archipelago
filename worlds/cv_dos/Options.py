@@ -138,6 +138,10 @@ class BossMusicShuffle(Toggle):
     """Randomizes boss music."""
     display_name = "Boss Music Randomizer"
 
+class SoulWallRandomizer(Toggle):
+    """Randomizes which souls are needed to break the red Soul Barriers."""
+    display_name = "Soul Wall Randomizer"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -164,6 +168,7 @@ class DoSOptions(PerGameCommonOptions):
     soul_drop_percentage: SoulDropPercent
     area_music_randomizer: AreaMusicShuffle
     boss_music_randomizer: BossMusicShuffle
+    randomize_red_soul_walls: SoulWallRandomizer
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -189,7 +194,8 @@ dos_option_groups = [
 
     OptionGroup("World Settings", [
         RandomizeStartingWarp,
-        OpenDrawbridge
+        OpenDrawbridge,
+        SoulWallRandomizer
 
     ]),
 
