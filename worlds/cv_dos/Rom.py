@@ -9,6 +9,7 @@ from .in_game_data import (global_weapon_table, base_weapons, valid_random_start
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
                            boss_list, enemy_table)
 from .music_randomizer import area_music_randomizer, boss_music_randomizer
+from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer
 from .Items import soul_filler_table
@@ -206,6 +207,14 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.boss_music_randomizer:
         boss_music_randomizer(world, rom)
 
+    if world.options.randomize_red_soul_walls:
+        rom.write_bytes(0x2F6DE06, bytearray([0x01])) #Tell the rom we have this on
+
+        rom.write_bytes(0x158BC0, bytearray([global_soul_table.index(world.red_soul_walls[0])]))
+        rom.write_bytes(0x158BBA, bytearray([global_soul_table.index(world.red_soul_walls[1])]))
+        rom.write_bytes(0x158BB4, bytearray([global_soul_table.index(world.red_soul_walls[2])]))
+        rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
+
     for location in world.multiworld.get_locations(player):
         item_type = 0
         item_id = 0
@@ -270,7 +279,8 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
         ("apply_bsdiff4", ["dos_base.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"]),
         ("adjust_item_positions", []),
-        ("apply_modifiers", [])
+        ("apply_modifiers", []),
+        ("modify_soulwall_gfx", [])
     ]
 
     @classmethod
@@ -332,6 +342,12 @@ class DoSPatchExtensions(APPatchExtension):
                 soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
                 rom.write_bytes(soul_chance_address, bytearray([soul_chance]))
 
+        return rom.get_bytes()
+
+    @staticmethod
+    def modify_soulwall_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        apply_souls_and_gfx(rom)
         return rom.get_bytes()
 
 

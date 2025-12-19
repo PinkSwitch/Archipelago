@@ -62,7 +62,7 @@ def set_souls_for_walls(world):
 
 
 
-def apply_souls_and_gfx(world, rom):
+def apply_souls_and_gfx(rom):
     enem_sprite_data_table = {
         "Skeleton Soul": SpriteData(0x16F00C0, 40, True),
         "Zombie Soul": SpriteData(0x163F680, 38, True),
