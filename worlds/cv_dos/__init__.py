@@ -365,6 +365,8 @@ class DoSWorld(World):
         place_static_items(self)
         if self.options.soul_randomizer != SoulRandomizer.option_soulsanity:
             place_static_souls(self)
+        if self.options.soul_randomizer != SoulRandomizer.option_soulsanity or self.options.soulsanity_level < SoulsanityLevel.option_medium:
+            self.get_location("Imp Soul").place_locked_item(self.create_static_soul("Imp Soul"))
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())

@@ -136,7 +136,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DD94 + i, bytearray([global_soul_table.index(soul)]))
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
-        vanilla_souls = [soul for soul in world.important_souls if x not in world.excluded_static_souls]
+        vanilla_souls = [soul for soul in world.important_souls if soul not in world.excluded_static_souls]
 
         shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]  # Will this break with Aguni/Abaddon since they're not filler?
         souls_output = {key: key for key in soul_filler_table.copy()}  # this is assuming all vanilla souls are in soul_filler_table

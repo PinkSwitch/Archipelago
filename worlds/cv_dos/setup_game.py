@@ -34,6 +34,8 @@ def place_souls(world):
     extra_souls = 0
 
     world.important_souls.update(world.red_soul_walls)
+    if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        world.important_souls.add("Imp Soul")
 
     if world.options.goal:
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
@@ -69,15 +71,7 @@ def place_souls(world):
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
             world.multiworld.itempool.append(world.set_classifications("Soul Eater Ring"))
-            world.important_souls.update("Imp Soul")
-
-            extra_souls = 0
-            if "Imp Soul" not in world.options.guaranteed_souls:
-                world.multiworld.itempool.append(world.set_classifications("Imp Soul"))
-                extra_souls += 1
-                
-            soul_location_count += (len(world.rare_souls) - (1 + extra_souls))
-            world.extra_item_count += (1 + extra_souls)
+            world.extra_item_count += 1
 
         for soul in world.important_souls:
             if soul not in world.options.guaranteed_souls:

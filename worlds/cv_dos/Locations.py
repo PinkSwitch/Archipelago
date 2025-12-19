@@ -178,12 +178,15 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
             for soul in world.uncommon_souls:
                 location_table.append(
                  LocationData(soul, soul, location_ids[soul]))
+        else:
+            location_table.append(LocationData("Imp Soul", "Imp Soul", None))
 
         if world.options.soulsanity_level == 2:
             for soul in world.rare_souls:
                 location_table.append(
                  LocationData(soul, soul, location_ids[soul]))
     else:
+        location_table.append(LocationData("Imp Soul", "Imp Soul", None))
         for soul in world.important_souls:
             if soul not in world.excluded_static_souls:  # Boss souls that are always in the pool
                 location_table.append(LocationData(soul, soul, None))
