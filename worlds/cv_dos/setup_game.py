@@ -65,8 +65,6 @@ def place_souls(world):
         world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-        world.important_souls.update(["Mandragora Soul", "Rycuda Soul", "Waiter Skeleton Soul"])
-        # These are required to unlock certain OTHER soul checks
 
         for soul in world.important_souls:
             if soul not in world.options.guaranteed_souls:
