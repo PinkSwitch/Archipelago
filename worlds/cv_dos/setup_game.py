@@ -93,8 +93,15 @@ def place_souls(world):
         for i in range(soul_location_count):
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1
+    else:
+        if not world.options.goal:
+            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible on Throne goal
+            world.excluded_static_souls.update(goal_locked_enemies)
+            for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
+                world.multiworld.itempool.append(world.set_classifications(soul))
+                world.extra_item_count += 1
 
 def place_static_souls(world):
     for soul in world.important_souls:
-        if soul not in {"Aguni Soul", "Abaddon Soul"}:
+        if soul not in world.excluded_static_souls:
             world.get_location(soul).place_locked_item(world.create_static_soul(soul))

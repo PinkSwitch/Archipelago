@@ -341,6 +341,11 @@ class DoSWorld(World):
         }
         # These souls are always required for movment logic
 
+        self.excluded_static_souls = {
+            "Aguni Soul",
+            "Abaddon Soul"
+        }
+
     def generate_early(self) -> None:
         if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
            if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
