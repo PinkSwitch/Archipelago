@@ -65,6 +65,19 @@ def place_souls(world):
         world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        # These items are only important on Rare tier
+        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
+            world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
+            world.multiworld.itempool.append(world.set_classifications("Soul Eater Ring"))
+            world.important_souls.update("Imp Soul")
+
+            extra_souls = 0
+            if "Imp Soul" not in world.options.guaranteed_souls:
+                world.multiworld.itempool.append(world.set_classifications("Imp Soul"))
+                extra_souls += 1
+                
+            soul_location_count += (len(world.rare_souls) - (1 + extra_souls))
+            world.extra_item_count += (1 + extra_souls)
 
         for soul in world.important_souls:
             if soul not in world.options.guaranteed_souls:
@@ -77,23 +90,11 @@ def place_souls(world):
         if world.options.soulsanity_level:
             soul_location_count += len(world.uncommon_souls)
 
-        # These items are only important on Rare tier
-        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
-            world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
-            world.multiworld.itempool.append(world.set_classifications("Soul Eater Ring"))
-
-            extra_souls = 0
-            if "Imp Soul" not in world.options.guaranteed_souls:
-                world.multiworld.itempool.append(world.set_classifications("Imp Soul"))
-                extra_souls += 1
-                
-            soul_location_count += (len(world.rare_souls) - (1 + extra_souls))
-            world.extra_item_count += (1 + extra_souls)
-
         for i in range(soul_location_count):
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1
 
 def place_static_souls(world):
     for soul in world.important_souls:
-        world.get_location(soul).place_locked_item(world.create_static_soul(soul))
+        if soul not in {"Aguni Soul", "Abaddon Soul"}:
+            world.get_location(soul).place_locked_item(world.create_static_soul(soul))

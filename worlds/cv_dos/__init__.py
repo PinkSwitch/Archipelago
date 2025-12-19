@@ -454,10 +454,11 @@ class DoSWorld(World):
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
         item = Item(name, data.classification, data.code, self.player)
+        if name in self.important_souls:
+            item.classification = ItemClassification.progression
 
-        # We need to do this again because this doesn't run through create_item
         if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-            if (name in self.important_souls) or (name in {"Soul Eater Ring", "Imp Soul"} and self.options.soulsanity_level == SoulsanityLevel.option_rare):
+            if name == "Soul Eater Ring" and self.options.soulsanity_level == SoulsanityLevel.option_rare:
                 item.classification = ItemClassification.progression
 
         return item

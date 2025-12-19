@@ -185,6 +185,7 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
                  LocationData(soul, soul, location_ids[soul]))
     else:
         for soul in world.important_souls:
-            location_table.append(LocationData(soul, soul, None))
+            if soul not in {"Aguni Soul", "Abaddon Soul"}:  # Boss souls that are always in the pool
+                location_table.append(LocationData(soul, soul, None))
 
     return location_table
