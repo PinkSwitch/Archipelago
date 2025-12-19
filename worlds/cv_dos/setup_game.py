@@ -33,6 +33,8 @@ def place_souls(world):
     soul_location_count = 0
     extra_souls = 0
 
+    world.important_souls.update(world.red_soul_walls)
+
     if world.options.goal:
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
@@ -63,10 +65,10 @@ def place_souls(world):
         world.extra_item_count += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-        guaranteed_commons = {"Skeleton Ape Soul", "Bone Ark Soul", "Mandragora Soul", "Rycuda Soul", "Waiter Skeleton Soul"}
-        guaranteed_commons.update(world.red_soul_walls)
+        world.important_souls.update(["Mandragora Soul", "Rycuda Soul", "Waiter Skeleton Soul"])
+        # These are required to unlock certain OTHER soul checks
 
-        for soul in guaranteed_commons:
+        for soul in world.important_souls:
             if soul not in world.options.guaranteed_souls:
                 extra_souls += 1
                 world.multiworld.itempool.append(world.set_classifications(soul))
@@ -93,3 +95,7 @@ def place_souls(world):
         for i in range(soul_location_count):
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1
+
+def place_static_souls(world):
+    for soul in world.important_souls:
+        world.get_location(soul).place_locked_item(world.create_static_soul(soul))

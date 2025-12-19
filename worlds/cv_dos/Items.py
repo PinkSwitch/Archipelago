@@ -304,7 +304,7 @@ item_table: Dict[str, ItemData] = {
     "Treant Soul": ItemData("Enchantment Souls", 0x563, ItemClassification.useful, 0),
     "Ghoul Soul": ItemData("Enchantment Souls", 0x564, ItemClassification.useful, 0),
     "Skelerang Soul": ItemData("Enchantment Souls", 0x565, ItemClassification.filler, 0),
-    "Skeleton Ape Soul": ItemData("Enchantment Souls", 0x566, ItemClassification.progression, 0),
+    "Skeleton Ape Soul": ItemData("Enchantment Souls", 0x566, ItemClassification.filler, 0),
     "Dead Warrior Soul": ItemData("Enchantment Souls", 0x567, ItemClassification.useful, 0),
     "Dead Pirate Soul": ItemData("Enchantment Souls", 0x568, ItemClassification.filler, 0),
     "Draghignazzo Soul": ItemData("Enchantment Souls", 0x569, ItemClassification.useful, 0),

@@ -16,7 +16,7 @@ from .Rules import set_location_rules
 from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids
-from .setup_game import place_static_items, setup_game
+from .setup_game import place_static_items, setup_game, place_static_souls
 
 
 class DoSWeb(WebWorld):
@@ -333,16 +333,10 @@ class DoSWorld(World):
         self.red_soul_walls = []
 
         self.important_souls = {
-            "Skeleton Soul",
-            "Axe Armor Soul",
-            "Killer Clown Soul",
-            "Mandragora Soul",
-            "Waiter Skeleton Soul",
-            "Rycuda Soul",
-            "Bone Ark Soul"
+            "Bone Ark Soul",
+            "Skeleton Ape Soul"
         }
-
-        #TODO; Skeleton Ape, Bone Ark are always important...? Mandrag/Waiter/Rycuda are ALWAYS important, but only on soulsanity. FIGURE THIS SHIT OUT.
+        # These souls are always required for movment logic
 
     def generate_early(self) -> None:
         if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
@@ -361,6 +355,8 @@ class DoSWorld(World):
     def create_regions(self) -> None:
         init_areas(self, get_locations(self))
         place_static_items(self)
+        if self.options.soul_randomizer != SoulRandomizer.option_soulsanity:
+            place_static_souls(self)
 
     def create_items(self) -> None:
         pool = self.get_item_pool(self.get_excluded_items())
@@ -478,3 +474,8 @@ class DoSWorld(World):
                     pool.append(item)
 
         return pool
+
+    def create_static_soul(self, soul):
+        data = item_table[soul]
+        item = Item(soul, ItemClassification.progression, None, self.player)  # Create an event item of the soul
+        return item
