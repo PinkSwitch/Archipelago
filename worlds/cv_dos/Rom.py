@@ -347,7 +347,9 @@ class DoSPatchExtensions(APPatchExtension):
     @staticmethod
     def modify_soulwall_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        apply_souls_and_gfx(rom)
+        soul_wall_randomizer = int.from_bytes(rom.read_bytes(0x2F6DE06, 1))
+        if soul_wall_randomizer:
+            apply_souls_and_gfx(rom)
         return rom.get_bytes()
 
 

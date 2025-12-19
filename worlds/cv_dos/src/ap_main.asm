@@ -165,9 +165,11 @@ b @CeliaEventHandler
 
 ;;;;;;;;;;;;;;;;;;
 .org 0x0220ED90
+    ; Soul percent display
     bl @Soulsanity_SoulCheck
 
 .org 0x021ED0B4
+    ;Bestiary count
     bl @Soulsanity_SoulCheck
 
 ;;;;;;;;;;;;;;;;;
@@ -311,7 +313,7 @@ b @CeliaEventHandler
     .db 0x00
 
 @OptionFlag_Soulsanity:
-    .db 0x00
+    .db 0x00 ; TESTING, REMOVE THIS!!!!
 .align 4
 
 @OptionFlag_OneScreenMode:
@@ -373,6 +375,16 @@ b @CeliaEventHandler
     .dh 0x0000
 @OptionFlag_SoulMult:
     .dh 0x0000
+.align 4
+
+@IncludedSouls:
+.fill 0x66, 0xFF
+;Boss Souls
+.db 0x00, 0x01, 0x02, 0x2B, 0x2C, 0x35, 0x36, 0x57, 0x58, 0x74, 0x75, 0x77
+.align 4
+
+@OptionFlag_RandomizeSoulWalls:
+.db 0x00
 .align 4
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
@@ -1198,6 +1210,17 @@ b @CeliaEventHandler
     beq @GetSoulCount
     pop r0, r1
     push r1, r2, r3
+    ldr r1, =@IncludedSouls
+    mov r2, 0
+@SoulSanity_CheckIfIncluded:
+    ldrb r3, [r1, r2] ; Check the included table
+    cmp r0, r3
+    beq @Soulsanity_IncludeSoul
+    cmp r2, 0x7A ; We've exhausted the entire table
+    beq @Soulsanity_SoulDisabled
+    add r2, r2, 1
+    b @SoulSanity_CheckIfIncluded
+@Soulsanity_IncludeSoul:
     push r11, lr
     bl @CheckIfSoulChecked
     pop r11, lr
@@ -1211,7 +1234,11 @@ b @CeliaEventHandler
 @GetSoulCount:
     pop r0, r1
     b 0x0221029C
-    .pool
+@Soulsanity_SoulDisabled:
+    pop r1, r2, r3
+    mov r0, 0x0F
+    bx lr
+.pool
 
 @CheckIfSoulChecked:
     push lr
@@ -1223,4 +1250,18 @@ b @CeliaEventHandler
     bx lr
     .pool
 
+@BestiaryConvertToSymbol:
+    cmp r4, 0x0F
+    beq @Bestiary_ShowDisabled
+    cmp r4, 0x0E
+    beq @Bestiary_ShowObtained
+    ldr r4, =0x3B0
+    bx lr
+@Bestiary_ShowDisabled:
+    ldr r4, =0x03F3
+    bx lr
+@Bestiary_ShowObtained:
+    ldr r4, =0x3EF
+    bx lr
+    .pool
 .close
