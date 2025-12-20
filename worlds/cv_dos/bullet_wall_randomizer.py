@@ -76,32 +76,32 @@ def apply_souls_and_gfx(rom):
         "Bomber Armor Soul": SpriteData(0x10CF520, 0x1EA924, 17, 8, False, False, False), # Looks fine, but consider palette matching if we get the rock texture to load. though id need to figure out transp. hmmm
         "Amalaric Sniper Soul": SpriteData(0x152A010, 0xFFFFFFFF, 64, 16, False, False, False),
         "Cave Troll Soul": SpriteData(0x16BE040, 0x1EA010, 38, 0x0C),
-        "Waiter Skeleton Soul": SpriteData(0x152CF00, 0x1E94F8, 11, 8, False), # Waiter needs a proper palette
+        "Waiter Skeleton Soul": SpriteData(0x152CF00, 0x1E94F8, 11, 8, False),
         "Slime Soul": SpriteData(0x1488200, 0x1E7A18, 16),
         "Yorick Soul": SpriteData(0x14F8D00, 0x1E9724, 8, 8),
         "Une Soul": SpriteData(0x16EA124, 0x1E82D4, 16, 16, False),
         "Mandragora Soul": SpriteData(0x138C8C0, 0x1E7B24, 26, 8, False),
-        "Rycuda Soul": SpriteData(0x1504DA0, 0x1ED270, 59, 16, True),
-        "Fleaman Soul": SpriteData(0x16E952A, 0x1EA60C, 16, 8, True, True),
-        "Ripper Soul": SpriteData(0x1535D90, 0x1EA60C, 4, 16, True, True),
-        "Guillotiner Soul": SpriteData(0x12B4040, 0xFFFFFFFF, 30, 16, False, True),
-        "Killer Clown Soul": SpriteData(0x10ED100, 0xFFFFFFFF, 58, 16, True),
-        "Malachi Soul": SpriteData(0x16D2E70, 0xFFFFFFFF, 46, 16, True, True),
-        "Disc Armor Soul": SpriteData(0x114B4F0, 0xFFFFFFFF, 42),
-        "Great Axe Armor Soul": SpriteData(0x125C150, 0xFFFFFFFF, 80, 16, True),
-        "Slaughterer Soul": SpriteData(0x11DE000, 0xFFFFFFFF, 32, 16, True),
-        "Hell Boar Soul": SpriteData(0x12CE0C0, 0xFFFFFFFF, 34, 16, True),
-        "Frozen Shade Soul": SpriteData(0x13D4140, 0xFFFFFFFF, 53, 16, True),
-        "Merman Soul": SpriteData(0x16D6100, 0xFFFFFFFF, 52, 16, True),
-        "Larva Soul": SpriteData(0x132E100, 0xFFFFFFFF, 16),
-        "Ukoback Soul": SpriteData(0x16EE880, 0xFFFFFFFF, 27, True),
-        "Decarabia Soul": SpriteData(0x112A040, 0xFFFFFFFF, 46),
-        "Succubus Soul": SpriteData(0x1463000, 0xFFFFFFFF, 32, True),
-        "Slogra Soul": SpriteData(0x10A5110, 0xFFFFFFFF, 25, True),
-        "Erinys Soul": SpriteData(0x11AFB30, 0xFFFFFFFF, 38, True),
+        "Rycuda Soul": SpriteData(0x1504DA0, 0x1ED270, 59, 16),
+        "Fleaman Soul": SpriteData(0x16E952A, 0x1EA60C, 16, 8),
+        "Ripper Soul": SpriteData(0x1535D90, 0x1EA60C, 4, 16),
+        "Guillotiner Soul": SpriteData(0x12B4040, 0x1ED84C, 30, 16, False),
+        "Killer Clown Soul": SpriteData(0x10ED100, 0x1ED2B4, 58, 16),
+        "Malachi Soul": SpriteData(0x16D2E70, 0x1EA118, 46, 16),
+        "Disc Armor Soul": SpriteData(0x114B4F0, 0xFFFFFFFF, 42, 16, False, False, False),
+        "Great Axe Armor Soul": SpriteData(0x125C150, 0xFFFFFFFF, 80, 16, True, False, False),
+        "Slaughterer Soul": SpriteData(0x11DE000, 0x1ED914, 32, 16),
+        "Hell Boar Soul": SpriteData(0x12CE0C0, 0x1ED998, 34, 16),
+        "Frozen Shade Soul": SpriteData(0x13D4140, 0x1EBCFC, 53, 8, True, False, False),
+        "Merman Soul": SpriteData(0x16D6100, 0x1EA9CC, 52, 16),
+        "Larva Soul": SpriteData(0x132E100, 0x1ED6DC, 16, 14, False),
+        "Ukoback Soul": SpriteData(0x16EE880, 0x1EA96C, 27, 16, True, False, False),
+        "Decarabia Soul": SpriteData(0x112A040, 0xFFFFFFFF, 46, 16, True, False, False),
+        "Succubus Soul": SpriteData(0x1463000, 0x1E99C8, 32),
+        "Slogra Soul": SpriteData(0x10A5110, 0xFFFFFFFF, 25),
+        "Erinys Soul": SpriteData(0x11AFB30, 0x1ED4C8, 38),
         "Homunculus Soul": SpriteData(0x12D60C0, 0xFFFFFFFF, 50, 16),
-        "Witch Soul": SpriteData(0x1384000, 0xFFFFFFFF, 48, True),
-        "Fish Head Soul": SpriteData(0x16DA040, 0xFFFFFFFF, 23, True),
+        "Witch Soul": SpriteData(0x1384000, 0xFFFFFFFF, 48),
+        "Fish Head Soul": SpriteData(0x16DA040, 0x1E8EE4, 23),
         "Mollusca Soul": SpriteData(0x1263640, 38, True),
         "Dead Mate Soul": SpriteData(0x12BC710, 41, True),
         "Malacoda Soul": SpriteData(0x13DA000, 64, True),
@@ -110,6 +110,11 @@ def apply_souls_and_gfx(rom):
         "Abaddon Soul": SpriteData(0x1051870, 0xFFFFFFFF, 14, 16, True),
     }
     # TODO; FINISH THIS TABLE! Colors and width! And palettes!
+    # TODO;! Copy rock graphics, and fix the transparency! If not pixel, pixel = the pixel that was behind it.
+    # What I can do is I can read the row before we modify it. At the start, instead of blanking it out, copy rocks over it.
+    # Pass the old row to the transparency function
+    # TODO! If the sprite is one of the vanilla ones, don't do any copying and just use THAT
+    # TODO! Check my Frozen Shade sprite. There's some overlap? ALso figure out Larva.
 
     soul_wall_1 = int.from_bytes(rom.read_bytes(0x158BC0, 1))
     soul_wall_2 = int.from_bytes(rom.read_bytes(0x158BBA, 1))
@@ -123,10 +128,10 @@ def apply_souls_and_gfx(rom):
     global_soul_table[soul_wall_4],
         ]
     soul_walls = [
-        "Waiter Skeleton Soul",
-        "Guilltoiner Soul",
-        "Killer Clown Soul",
-        "Malachi Soul",
+        "Ukoback Soul",
+        "Frozen Shade Soul",
+        "Decarabia Soul",
+        "Larva Soul",
     ]
 
     for i in range(0x1801):
