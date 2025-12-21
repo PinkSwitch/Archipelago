@@ -109,7 +109,6 @@ def apply_souls_and_gfx(rom):
         "Aguni Soul": SpriteData(0x1060080, 0x1EAC54, 43, 16, True, False, False),
         "Abaddon Soul": SpriteData(0x1051870, 0x1E906C, 14, 8, True, False, True),
     }
-    # TODO; FINISH THIS TABLE! Colors and width! And palettes!
     # TODO;! Copy rock graphics, and fix the transparency! If not pixel, pixel = the pixel that was behind it.
     # What I can do is I can read the row before we modify it. At the start, instead of blanking it out, copy rocks over it.
     # Pass the old row to the transparency function
@@ -126,15 +125,14 @@ def apply_souls_and_gfx(rom):
     global_soul_table[soul_wall_3],
     global_soul_table[soul_wall_4],
         ]
-    soul_walls = [
-        "Aguni Soul",
-        "Succubus Soul",
-        "Flame Demon Soul",
-        "Abaddon Soul",
-    ]
 
-    for i in range(0x1800):
-        rom.write_bytes(0x10D6000 + i, bytearray([0xFF]))  # Blank out the original graphic
+    rock_texture = []
+    for i in range(0x23):
+        rock_row = rom.read_bytes(0x10D6F70 + (i * 0x40), 0x10)
+        rock_texture += rock_row  # Read the rock texture
+
+    print(rock_texture)
+    rom.write_bytes(0x10D6000, bytearray(rock_texture))  # Blank out the original graphic
 
     for i, soul in enumerate(soul_walls):
         height = enem_sprite_data_table[soul].height
@@ -148,11 +146,12 @@ def apply_souls_and_gfx(rom):
 
         for j in range (height + 1):
             tile_row = rom.read_bytes(address + (0x40 * j), width)  # Read each row of the image
+            wall_row = rom.read_bytes((0x10D6000 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), 0x10)
 
             if enem_sprite_data_table[soul].convert_to_gradient:
                 tile_row = convert_sprite_to_new_palette(tile_row, palette, palette_sorted)
 
-            tile_row = convert_transparency_and_colors(tile_row, color_invert)
+            tile_row = convert_transparency_and_colors(tile_row, color_invert, wall_row)
 
             if enem_sprite_data_table[soul].mirror_sprite:
                 tile_row = mirror_tiles(tile_row)  # Sprites should face right. If they're not, mirror the image
@@ -169,17 +168,28 @@ def mirror_tiles(tile_row) -> bytearray:
     tile_row = [((tile & 0x0F) << 4) | (tile >> 4) for tile in tile_row]  # Invert the nybbles of each byte
     return bytearray(tile_row)
 
-def convert_transparency_and_colors(tile_row, color_invert) -> bytearray:
+def convert_transparency_and_colors(tile_row, color_invert, wall_row) -> bytearray:
     pix_row = list(tile_row)
+    original_wall = list(wall_row)
     new_row = []
-    for pixel in pix_row:
-        if color_invert:
-            pixel = pixel ^ 0xFF # Invert the bits
+    for k, pixel in enumerate(pix_row):
 
-        pixel = (
-            ((pixel & 0xF0) or 0xF0) |
-            ((pixel & 0x0F) or 0x0F)
-        )
+        pixel_high = pixel & 0xF0
+        pixel_low  = pixel & 0x0F
+
+        if not pixel_high:
+            pixel_high = original_wall[k] & 0xF0
+        else:
+            if color_invert:
+                pixel_high = max(1, pixel_high ^0xF0 )
+
+        if not pixel_low:
+            pixel_low = original_wall[k] & 0x0F
+        else:
+            if color_invert:
+                pixel_low = max(1, pixel_low ^ 0x0F)
+
+        pixel = pixel_high | pixel_low
         
         new_row.append(pixel)
     return bytearray(new_row)

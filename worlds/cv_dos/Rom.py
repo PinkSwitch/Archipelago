@@ -333,7 +333,7 @@ class DoSPatchExtensions(APPatchExtension):
             exp_address = address + 18  # Offset where EXP is stored
             exp = rom.read_bytes(exp_address, 2)
             exp = struct.unpack("H", exp)[0]
-            exp = int(min(0xFF, (exp * exp_multiplier)))
+            exp = int(min(0xFFFF, (exp * exp_multiplier)))
             rom.write_bytes(exp_address, struct.pack("H", exp))
 
             soul_chance_address = address + 20
