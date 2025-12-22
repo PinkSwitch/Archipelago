@@ -55,8 +55,6 @@ class SpriteData:
     swap_colors: bool = True
     convert_to_gradient: bool = True  # Convert most sprites to use a gradient
 
-    #TODO! I wonder if, instead of filling the initial wall with 0xFF, we instead copy bytes from the original wall and build it out of that?
-
 def set_souls_for_walls(world):
     if world.options.randomize_red_soul_walls:
         world.red_soul_walls = world.random.sample(viable_wall_souls, 4)
@@ -68,7 +66,7 @@ def set_souls_for_walls(world):
 
 def apply_souls_and_gfx(rom):
     enem_sprite_data_table = {
-        "Skeleton Soul": SpriteData(0x16F00C0, 0x1E9724, 40),
+        "Skeleton Soul": SpriteData(0x16F00C0, 0x1E9724, 40, 16),
         "Zombie Soul": SpriteData(0x163F680, 0x1E8D74, 37, 0x0B),
         "Axe Armor Soul": SpriteData(0x10888F0, 0xFFFFFFFF, 26, 16, False, False, False), #Try with palette
         "Student Witch Soul": SpriteData(0x13860B0, 0x1ECD28, 37),
@@ -110,6 +108,9 @@ def apply_souls_and_gfx(rom):
         "Abaddon Soul": SpriteData(0x1051870, 0x1E906C, 14, 8, True, False, True),
     }
     # TODO! If the sprite is one of the vanilla ones, don't do any copying and just use THAT
+    # TODO! The rock texture works but some sprites look AWFUL against it. Worse than the 0xFF background.
+    # Can I outline sprites? Instead of converting transparency, only convert bytes that are 0x00? If they're not 0x00,
+    # convert them to 0x01?
 
     soul_wall_1 = int.from_bytes(rom.read_bytes(0x158BC0, 1))
     soul_wall_2 = int.from_bytes(rom.read_bytes(0x158BBA, 1))
@@ -123,15 +124,32 @@ def apply_souls_and_gfx(rom):
     global_soul_table[soul_wall_4],
         ]
 
+    soul_walls = [
+        "Skeleton Soul",
+        "Zombie Soul",
+        "Axe Armor Soul",
+        "Student Witch Soul"
+    ]
+
     rock_texture = []
     for i in range(0x1E):
         rock_row = rom.read_bytes(0x10D6F30 + (i * 0x40), 0x10)
         rock_texture += rock_row  # Read the rock texture
 
-    for k in range(4):
-        for j in range(3):
-            for i in range(0x1E):
-                rom.write_bytes(0x10D62E0 + (i * 0x40) + (j * 0x780) + (k * 0x10), rock_texture[0x10 * i:0x10 * (i + 1)])
+        #for i, pixel in enumerate(rock_texture):
+            # Sprites are too hard to see against the texture so we brighten it a bit
+        #   pixel_high = (pixel & 0xF0) >> 4
+        #  pixel_low = pixel & 0x0F
+
+    #        pixel_high = pixel_high  >> 1
+    #       pixel_low  = pixel_low  >> 1
+    #      pixel = (pixel_high << 4) | pixel_low
+    #     rock_texture[i] = pixel
+
+    for k in range(4):  # 4 Columns
+        for j in range(4): # Copy the rock 3 times per column
+            for i in range(0x1E): # rock is 0x1E tiles tall
+                rom.write_bytes(0x10D6000 + (i * 0x40) + (j * 0x780) + (k * 0x10), rock_texture[0x10 * i:0x10 * (i + 1)])
 
     for i, soul in enumerate(soul_walls):
         height = enem_sprite_data_table[soul].height
@@ -148,7 +166,7 @@ def apply_souls_and_gfx(rom):
             wall_row = rom.read_bytes((0x10D6000 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), 0x10)
 
             if enem_sprite_data_table[soul].convert_to_gradient:
-                tile_row = convert_sprite_to_new_palette(tile_row, palette, palette_sorted)
+                tile_row = convert_sprite_to_new_palette(tile_row, palette, palette_sorted)  # Ramp the colors of sprites against the original texture
 
             tile_row = convert_transparency_and_colors(tile_row, color_invert, wall_row)
 
@@ -177,13 +195,13 @@ def convert_transparency_and_colors(tile_row, color_invert, wall_row) -> bytearr
         pixel_low  = pixel & 0x0F
 
         if not pixel_high:
-            pixel_high = original_wall[k] & 0xF0
+            pixel_high = 0xF0 # original_wall[k] & 0xF0
         else:
             if color_invert:
                 pixel_high = max(1, pixel_high ^0xF0 )
 
         if not pixel_low:
-            pixel_low = original_wall[k] & 0x0F
+            pixel_low = 0x0F #original_wall[k] & 0x0F
         else:
             if color_invert:
                 pixel_low = max(1, pixel_low ^ 0x0F)
