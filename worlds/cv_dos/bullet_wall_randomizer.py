@@ -106,12 +106,9 @@ def apply_souls_and_gfx(rom):
         "Dead Mate Soul": SpriteData(0x12BC718, 0x1E80A8, 41),
         "Malacoda Soul": SpriteData(0x13DA000, 0x1EA860, 64),
         "Flame Demon Soul": SpriteData(0x12100A4, 0x1E7CF8, 21, 16, True, False, False),
-        "Aguni Soul": SpriteData(0x1060080, 0x1EAC54, 43, 16, True, False, False),
+        # "Aguni Soul": SpriteData(0x1060080, 0x1EAC54, 43, 16, True, False, False), Aguni's projectile dissipates without colliding
         "Abaddon Soul": SpriteData(0x1051870, 0x1E906C, 14, 8, True, False, True),
     }
-    # TODO;! Copy rock graphics, and fix the transparency! If not pixel, pixel = the pixel that was behind it.
-    # What I can do is I can read the row before we modify it. At the start, instead of blanking it out, copy rocks over it.
-    # Pass the old row to the transparency function
     # TODO! If the sprite is one of the vanilla ones, don't do any copying and just use THAT
 
     soul_wall_1 = int.from_bytes(rom.read_bytes(0x158BC0, 1))
@@ -127,12 +124,14 @@ def apply_souls_and_gfx(rom):
         ]
 
     rock_texture = []
-    for i in range(0x23):
-        rock_row = rom.read_bytes(0x10D6F70 + (i * 0x40), 0x10)
+    for i in range(0x1E):
+        rock_row = rom.read_bytes(0x10D6F30 + (i * 0x40), 0x10)
         rock_texture += rock_row  # Read the rock texture
 
-    print(rock_texture)
-    rom.write_bytes(0x10D6000, bytearray(rock_texture))  # Blank out the original graphic
+    for k in range(4):
+        for j in range(3):
+            for i in range(0x1E):
+                rom.write_bytes(0x10D62E0 + (i * 0x40) + (j * 0x780) + (k * 0x10), rock_texture[0x10 * i:0x10 * (i + 1)])
 
     for i, soul in enumerate(soul_walls):
         height = enem_sprite_data_table[soul].height
