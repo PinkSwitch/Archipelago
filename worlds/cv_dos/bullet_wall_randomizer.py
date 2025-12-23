@@ -41,7 +41,7 @@ viable_wall_souls = [
     "Dead Mate Soul",
     "Malacoda Soul",
     "Flame Demon Soul",
-    "Aguni Soul",
+    #"Aguni Soul",
     "Abaddon Soul",
 ]
 
@@ -123,13 +123,6 @@ def apply_souls_and_gfx(rom):
     global_soul_table[soul_wall_3],
     global_soul_table[soul_wall_4],
         ]
-
-    soul_walls = [
-        "Skeleton Soul",
-        "Zombie Soul",
-        "Axe Armor Soul",
-        "Student Witch Soul"
-    ]
 
     rock_texture = []
     for i in range(0x1E):

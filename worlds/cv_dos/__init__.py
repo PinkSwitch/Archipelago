@@ -416,8 +416,15 @@ class DoSWorld(World):
         if self.options.shuffle_starting_warp_room:
             spoiler_handle.write(f"Default Warp Room:    {self.starting_warp_room}\n")
 
+        if self.options.randomize_red_soul_walls:
+            spoiler_handle.write(f"Soul Barriers:\n")
+            spoiler_handle.write(f"Paranoia 1:  {self.red_soul_walls[1]}\n")
+            spoiler_handle.write(f"Paranoia 2:  {self.red_soul_walls[0]}\n")
+            spoiler_handle.write(f"Paranoia 3:  {self.red_soul_walls[3]}\n")
+            spoiler_handle.write(f"Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
+
     def create_item(self, name: str) -> CVDoSItem:
-        data = item_table[name]
+        data = self.set_classifications(name)
 
         return CVDoSItem(name, data.classification, data.code, self.player)
 
@@ -460,7 +467,7 @@ class DoSWorld(World):
 
     def set_classifications(self, name: str) -> Item:
         data = item_table[name]
-        item = Item(name, data.classification, data.code, self.player)
+        item = CVDoSItem(name, data.classification, data.code, self.player)
         if name in self.important_souls:
             item.classification = ItemClassification.progression
 

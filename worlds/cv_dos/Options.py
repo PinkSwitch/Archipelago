@@ -142,6 +142,10 @@ class SoulWallRandomizer(Toggle):
     """Randomizes which souls are needed to break the red Soul Barriers."""
     display_name = "Soul Wall Randomizer"
 
+class RandomizeSynthSouls(Toggle):
+    """Randomizes which souls are required for Synthesis crafting."""
+    display_name = "Shuffle Synthesis Souls"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -169,6 +173,7 @@ class DoSOptions(PerGameCommonOptions):
     area_music_randomizer: AreaMusicShuffle
     boss_music_randomizer: BossMusicShuffle
     randomize_red_soul_walls: SoulWallRandomizer
+    randomize_synthesis_souls: RandomizeSynthSouls
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -189,6 +194,11 @@ dos_option_groups = [
         StartingWeapon,
         EarlySeal1,
         ShopRandomizer
+
+    ]),
+
+    OptionGroup("Weapon Synth Settings", [
+        RandomizeSynthSouls,
 
     ]),
 

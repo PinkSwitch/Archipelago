@@ -34,6 +34,8 @@ class DoSClient(BizHawkClient):
             base_rom_name = validation_data[0].decode("ascii") # AP ROM name
 
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
+                print("A!!!!")
+                print(base_rom_name)
                 return False
 
             # This is a DoS ROM
