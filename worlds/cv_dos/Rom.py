@@ -12,7 +12,7 @@ from .music_randomizer import area_music_randomizer, boss_music_randomizer
 from .synthesis_randomizer import write_synthesis
 from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
-from .Options import StartingWeapon, SoulRandomizer
+from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel
 from .Items import soul_filler_table
 from BaseClasses import ItemClassification
 
@@ -139,7 +139,14 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
     rom.write_bytes(0x2F6DD90, struct.pack("H", world.options.soul_drop_percentage))
-    soul_total = list(world.common_souls | world.uncommon_souls | world.rare_souls)
+    soul_total = set(world.common_souls)
+    if world.options.soulsanity_level:
+        soul_total |= world.uncommon_souls
+
+    if world.options.soulsanity_level == SoulsanityLevel.option_rare:
+        soul_total |= world.rare_souls
+    soul_total = list(soul_total)
+
     for i, soul in enumerate(soul_total):  # Fill IDs of souls in the loc pool
         rom.write_bytes(0x2F6DD94 + i, bytearray([global_soul_table.index(soul)]))
 

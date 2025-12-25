@@ -418,10 +418,10 @@ class DoSWorld(World):
 
         if self.options.randomize_red_soul_walls:
             spoiler_handle.write(f"Soul Barriers:\n")
-            spoiler_handle.write(f"Paranoia 1:  {self.red_soul_walls[1]}\n")
-            spoiler_handle.write(f"Paranoia 2:  {self.red_soul_walls[0]}\n")
-            spoiler_handle.write(f"Paranoia 3:  {self.red_soul_walls[3]}\n")
-            spoiler_handle.write(f"Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
+            spoiler_handle.write(f" Paranoia 1:  {self.red_soul_walls[1]}\n")
+            spoiler_handle.write(f" Paranoia 2:  {self.red_soul_walls[0]}\n")
+            spoiler_handle.write(f" Paranoia 3:  {self.red_soul_walls[3]}\n")
+            spoiler_handle.write(f" Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
 
     def create_item(self, name: str) -> CVDoSItem:
         data = self.set_classifications(name)
@@ -457,7 +457,6 @@ class DoSWorld(World):
         if not self.has_tried_chaos_ring:
             self.has_tried_chaos_ring = True
             if self.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
-                print("YEAH WOO YEAAAAAH")
                 filler_item = "Chaos Ring"
 
         return filler_item
