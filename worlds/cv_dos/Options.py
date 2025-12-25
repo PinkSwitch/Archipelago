@@ -146,6 +146,10 @@ class RandomizeSynthSouls(Toggle):
     """Randomizes which souls are required for Synthesis crafting."""
     display_name = "Shuffle Synthesis Souls"
 
+class FreeBat(Toggle):
+    """Removes Bat Company's MP cost"""
+    display_name = "Free Bat"
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -174,6 +178,7 @@ class DoSOptions(PerGameCommonOptions):
     boss_music_randomizer: BossMusicShuffle
     randomize_red_soul_walls: SoulWallRandomizer
     randomize_synthesis_souls: RandomizeSynthSouls
+    no_mp_bat: FreeBat
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -222,7 +227,8 @@ dos_option_groups = [
         RevealBreakableWalls,
         FixLuck,
         BoostSpeed,
-        OneScreenMode
+        OneScreenMode,
+        FreeBat
     ]),
 
     OptionGroup("Music Randomizer", [

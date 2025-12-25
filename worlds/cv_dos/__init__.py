@@ -456,7 +456,8 @@ class DoSWorld(World):
         
         if not self.has_tried_chaos_ring:
             self.has_tried_chaos_ring = True
-            if self.random.randint(0, 100) == 0:  # Chaos ring should have a single 1/100 chance to be placed
+            if self.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
+                print("YEAH WOO YEAAAAAH")
                 filler_item = "Chaos Ring"
 
         return filler_item

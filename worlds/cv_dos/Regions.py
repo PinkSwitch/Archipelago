@@ -105,7 +105,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     ########################################
 
     #Lost Village
-    multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower", "Wizardry Lab Main", "Lost Village Upper Doorway"],
+    multiworld.get_region("Lost Village Upper", player).add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway"],
                                                     {"Lost Village Lower": lambda state: state.has("Magic Seal 1", player),
                                                      "Wizardry Lab Main": lambda state: state.has("Moat Drained", player),
                                                      "Lost Village Upper Doorway": lambda state: state.has_all({"Puppet Master Soul", "Flying Armor Soul"}, player) or state.has_any(small_uppies, player) or state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player)}) #Is the ape trick hard? Can be done without ape if speedboost on
@@ -306,6 +306,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Subterranean Hell Spike Room East"],
                             {"Subterranean Hell Spike Room East": lambda state: state.has("Rahab Soul", player) and (state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player) or state.has("Bone Ark Soul", player))})
+
+    if world.options.boost_speed:
+        multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower"], {
+            "Lost Village Lower": lambda state: state.has("Magic Seal 1", player)
+        })
+    else:
+        multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower"], {
+            "Lost Village Lower": lambda state: state.has("Magic Seal 1", player) and (state.has_any(small_uppies, player) or state.has_any({"Black Panther Soul", "Puppet Master Soul", "Flying Armor Soul"}, player))
+        })
 
     create_soul_regions(world)
 

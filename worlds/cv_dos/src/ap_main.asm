@@ -1251,22 +1251,6 @@ b @CeliaEventHandler
     bx lr
     .pool
 
-;Shows Y/N on the bestiary. never found a spot to put this in.
-;@BestiaryConvertToSymbol:
- ;   cmp r4, 0x0F
-  ;  beq @Bestiary_ShowDisabled
-   ; cmp r4, 0x0E
-    ;beq @Bestiary_ShowObtained
-    ;ldr r4, =0x3B0
-    ;bx lr
-;@Bestiary_ShowDisabled:
- ;   ldr r4, =0x03F3
-  ;  bx lr
-;@Bestiary_ShowObtained:
- ;   ldr r4, =0x3EF
-  ;  bx lr
-   ; .pool
-
 @EnemySouls_TopScreen:
     push r0, r1
     ldr r1, =@OptionFlag_Soulsanity

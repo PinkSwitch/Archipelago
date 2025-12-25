@@ -117,6 +117,10 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xC1C38, bytearray([0xD0]))
         rom.write_bytes(0xB05A1, bytearray([0x00]))
 
+        rom.write_bytes(0x2F6DDFD, bytearray([0xFF])) # Remove Death, Abaddon, and Aguni from the Soulstiary
+        rom.write_bytes(0x2F6DDFE, bytearray([0xFF]))
+        rom.write_bytes(0x2F6DE02, bytearray([0xFF]))
+
     if world.options.goal == 2:
         rom.write_bytes(0x2F6DD48, bytearray([0x01]))
 
@@ -128,6 +132,9 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.death_link:
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
+
+    if world.options.no_mp_bat:
+        rom.write_bytes(0x9D782, bytearray([0x00])) # Zero the Bat's MP cost
 
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
