@@ -314,7 +314,7 @@ b @CeliaEventHandler
     .db 0x00
 
 @OptionFlag_Soulsanity:
-    .db 0x01 ; TESTING, REMOVE THIS!!!!
+    .db 0x00 ; TESTING, REMOVE THIS!!!!
 .align 4
 
 @OptionFlag_OneScreenMode:

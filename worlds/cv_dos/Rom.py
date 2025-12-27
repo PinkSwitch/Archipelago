@@ -134,7 +134,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
 
     if world.options.no_mp_bat:
-        rom.write_bytes(0x9D782, bytearray([0x00])) # Zero the Bat's MP cost
+        rom.write_bytes(0xA1782, bytearray([0x00])) # Zero the Bat's MP cost
 
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 
