@@ -113,7 +113,7 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     set_rule(world.multiworld.get_location("Paranoia Soul", player), lambda state: state.has("Magic Seal 4", player) and state.has_all(paranoia_souls, player))
     set_rule(world.multiworld.get_location("Demon Guest House: Paranoia Mirror", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
-    set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has_all({"Magic Seal 4", "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
+    set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has("Magic Seal 4", player) and state.has_all(paranoia_souls, player))
     set_rule(world.multiworld.get_location("Dark Chapel: Catacombs Soul Barrier", player), lambda state: state.has(world.red_soul_walls[2], player))
 
     #if world.options.hidden_wall_status == RevealBreakableWalls.option_eye_spy:

@@ -56,10 +56,11 @@ class SpriteData:
     convert_to_gradient: bool = True  # Convert most sprites to use a gradient
 
 def set_souls_for_walls(world):
-    if world.options.randomize_red_soul_walls:
-        world.red_soul_walls = world.random.sample(viable_wall_souls, 4)
-    else:
-        world.red_soul_walls = ["Killer Clown Soul", "Axe Armor Soul", "Skeleton Soul", "Ukoback Soul"]
+    if not world.red_soul_walls:
+        if world.options.randomize_red_soul_walls:
+            world.red_soul_walls = world.random.sample(viable_wall_souls, 4)
+        else:
+            world.red_soul_walls = ["Killer Clown Soul", "Axe Armor Soul", "Skeleton Soul", "Ukoback Soul"]
     
     world.important_souls.update(world.red_soul_walls)  # All of these souls instantly become important
 
