@@ -150,6 +150,17 @@ class FreeBat(Toggle):
     """Removes Bat Company's MP cost"""
     display_name = "Free Bat"
 
+#class RevealBreakableWalls(Choice):
+ #   """Controls how breakable walls act.
+  #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
+   #    Revealed: All breakable walls are already broken
+    #   Eye Spy: Breakable walls are breakable, you require Peeping Eye's soul to break them at all."""
+    #display_name = "Breakable Walls"
+    #option_normal = 0
+    #option_revealed = 1
+    #option_eye_spy = 2
+    #default = 0
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -210,7 +221,7 @@ dos_option_groups = [
     OptionGroup("World Settings", [
         RandomizeStartingWarp,
         OpenDrawbridge,
-        SoulWallRandomizer
+        SoulWallRandomizer,
 
     ]),
 
