@@ -133,7 +133,7 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Bottom Right", 0x66),
         LocationData("Subterranean Hell Central Exit", "Subterranean Hell: Near Save Room", 0x67),
         LocationData("Subterranean Hell Central Lower", "Subterranean Hell: Central Lower Room", 0x68),
-        LocationData("Subterranean Hell Central Lower", "Subterranean Hell: Central Upper Room", 0x69),
+        LocationData("Subterranean Hell Central Upper", "Subterranean Hell: Central Upper Room", 0x69),
         LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Behind Waterfall", 0x6A),
         LocationData("Subterranean Hell Shaft Bottom Stairs", "Subterranean Hell: Waterfall Room Lower", 0x6B),
         LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Middle", 0x6C),

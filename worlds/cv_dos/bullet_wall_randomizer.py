@@ -103,7 +103,7 @@ def apply_souls_and_gfx(rom):
         "Fish Head Soul": SpriteData(0x16DA040, 0x1E8EE4, 23),
         "Mollusca Soul": SpriteData(0x1263640, 0x1ED338, 38),
         "Dead Mate Soul": SpriteData(0x12BC718, 0x1E80A8, 41),
-        "Malacoda Soul": SpriteData(0x13DA000, 0x1EA860, 64),
+        "Malacoda Soul": SpriteData(0x13DF028, 0x1F12B0, 64),
         "Flame Demon Soul": SpriteData(0x12100A4, 0x1E7CF8, 21, 16, True, False, False),
         # "Aguni Soul": SpriteData(0x1060080, 0x1EAC54, 43, 16, True, False, False), Aguni's projectile dissipates without colliding
         "Abaddon Soul": SpriteData(0x1051870, 0x1E906C, 14, 8, True, False, True),

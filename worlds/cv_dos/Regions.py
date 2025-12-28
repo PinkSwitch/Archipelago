@@ -69,6 +69,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Subterranean Hell Central Upper"),
         create_region(world, player, locations_per_region, "Subterranean Hell Central Exit"),
         create_region(world, player, locations_per_region, "Subterranean Hell Central Lower"),
+        create_region(world, player, locations_per_region, "Subterranean Hell Central/Shaft Divide"),
         create_region(world, player, locations_per_region, "Subterranean Hell Shaft Middle"),
         create_region(world, player, locations_per_region, "Subterranean Hell Shaft Top"),
         create_region(world, player, locations_per_region, "Subterranean Hell Shaft Bottom"),
@@ -245,7 +246,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Subterranean Hell Central Exit", player).add_exits(["Subterranean Hell Central Upper", "Garden of Madness Water Blocked"],
                                                 {"Subterranean Hell Central Upper": lambda state: state.has_any({"Rahab Soul", "Malphas Soul"}, player)})
 
-    multiworld.get_region("Subterranean Hell Central Lower", player).add_exits(["Subterranean Hell Central Upper", "Subterranean Hell Shaft Bottom Stairs", "Warp Room", "Subterranean Hell Shaft Middle"],
+    multiworld.get_region("Subterranean Hell Central Lower", player).add_exits(["Subterranean Hell Central Upper", "Subterranean Hell Central/Shaft Divide", "Warp Room", "Subterranean Hell Shaft Middle"],
                                                 {"Subterranean Hell Central Upper": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                 "Subterranean Hell Shaft Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
@@ -261,13 +262,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                  "Subterranean Hell Spike Room East": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Silenced Ruins Antechamber": lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Flying Armor Soul", "Black Panther Soul"}, player)})
 
-    multiworld.get_region("Subterranean Hell Shaft Bottom Stairs", player).add_exits(["Subterranean Hell Shaft Bottom", "Subterranean Hell Central Lower"])
+    multiworld.get_region("Subterranean Hell Shaft Bottom Stairs", player).add_exits(["Subterranean Hell Shaft Bottom", "Subterranean Hell Central/Shaft Divide"],
+                                                                                    {"Subterranean Hell Central/Shaft Divide": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
     multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Shaft Bottom"])
 
     multiworld.get_region("Subterranean Hell Spike Room West", player).add_exits(["Wizardry Lab Sunken East Door"])
 
-    #multiworld.register_indirect_condition(world.get_region("Garden of Madness Lower"), world.get_entrance("Demon Guest House Lower -> Garden of Madness Lower"))
+    multiworld.get_region("Subterranean Hell Central/Shaft Divide", player).add_exits(["Subterranean Hell Central Lower", "Subterranean Hell Shaft Bottom Stairs"])
+
     #####################################################
     #Silenced Ruins
     multiworld.get_region("Silenced Ruins Antechamber", player).add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins"],
