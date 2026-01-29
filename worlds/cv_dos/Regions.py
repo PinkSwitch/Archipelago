@@ -107,8 +107,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     #Lost Village
     multiworld.get_region("Lost Village Upper", player).add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway"],
-                                                    {"Lost Village Lower": lambda state: state.has("Magic Seal 1", player),
-                                                     "Wizardry Lab Main": lambda state: state.has("Moat Drained", player),
+                                                    {"Wizardry Lab Main": lambda state: state.has("Moat Drained", player),
                                                      "Lost Village Upper Doorway": lambda state: state.has_all({"Puppet Master Soul", "Flying Armor Soul"}, player) or state.has_any(small_uppies, player) or state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}, player)}) #Is the ape trick hard? Can be done without ape if speedboost on
 
     if world.options.open_drawbridge:
