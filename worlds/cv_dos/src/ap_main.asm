@@ -6,9 +6,11 @@
 @FreeSpace equ @Overlay41Start + 0x50
 
 @SoulFlagTable equ 0x02308930
-@ServerItemType equ 0x02308940
-@SkipNameShowFlag equ 0x02308942
-@TotalItemsReceived equ 0x0230894E
+@ServerItemType equ 0x02308940 ; 2 bytes
+@SkipNameShowFlag equ 0x02308942 ; 1 byte
+@TotalItemsReceived equ 0x0230894E ; 2 bytes
+@GateKeys equ 0x02308943 ; 1 byte
+@DoorKeys equ 0x02308944 ; 2 bytes ; Also includes the Chapel Gate
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -75,6 +77,17 @@
 .org 0x0203AC60
     ; Enemies on topscreen
     b @EnemySouls_TopScreen
+
+;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02042834
+    ; Extended text pointers
+    b @RepointExtendedTexIDs
+
+.org 0x0202DF6C
+    b @ShowItem_ExpandPointers
+
+.org 0x0202DF68
+    b @DisplayExpandedItemNames
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -177,6 +190,38 @@ b @CeliaEventHandler
 .org 0x021E8984  ; Don't stop from getting 9 items
     nop
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x021A748C
+    b @GateSanity_CheckGateButtons ; Get items from the regular Gates
+
+.org 0x021A737C
+    ;Makes the Button go down based on the flag
+    bl @GateSanity_CheckIfPressed
+
+.org 0x021A7354
+    ;Button collision- makes it not pressable
+    bl @GateSanity_CheckIfPressed
+
+.org 0x021EE7C0
+    cmp r6, 0x47 ; Add 5 new items CHANGE WHEN ADDING DOOR LOCKS
+
+.org 0x021EE784
+    bl @ExtendedInv_SkipCountingItems
+
+.org 0x021EE7AC
+    bl @LoadExtendedItemNames
+
+.org 0x021EE574
+    bl @DrawExtendedNames_MenuHover
+
+.org 0x021EE794
+    bl @ExtendedInv_ShiftIDs
+
+.org 0x021E7A88
+    b @ExtendedInv_PointToData
+
+.org 0x021E787C
+    b @GiveExpandedItems
 
 .close
 .open "ftc/overlay9_41", @Overlay41Start
@@ -370,7 +415,7 @@ b @CeliaEventHandler
 ;;;;;;;;;;;;;;;
 @AP_DiedFromDeathLink:
     .db 0x00
-@OptionFlag_DeathLinkEnabled:
+@OptionFlag_DeathLinkEnabled: ; used exclusively by the AP client
     .db 0x00
 @OptionFlag_EXPMult:
     .dh 0x0000
@@ -386,6 +431,74 @@ b @CeliaEventHandler
 
 @OptionFlag_RandomizeSoulWalls:
 .db 0x00
+
+@OptionFlag_GateRando:
+.db 0x00
+.align 4
+
+@ButtonItemTable:
+;ID, Type, Color
+.db 0x00, 0x00, 0x00, 0x00 ;
+.db 0x00, 0x00, 0x00, 0x00 ;
+.db 0x00, 0x00, 0x00, 0x00 ;
+.db 0x00, 0x00, 0x00, 0x00 ; WizLab West
+.db 0x00, 0x00, 0x00, 0x00 ; Chapel
+
+
+;EXPANDED TEXT STUFF
+@ExpandedTexPointers:
+.dh @ItemName_LabKeyWest
+.dh @ItemName_LabKeyEast
+.dh @ItemName_GardenKey
+.dh @ItemName_CaveKey
+
+@ItemName_LabKeyWest:
+.db 0x01, 0x00, 0x37, 0x45, 0x53, 0x54, 0x00, 0x2C, 0x41, 0x42, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
+
+@ItemName_LabKeyEast:
+.db 0x01, 0x00, 0x25, 0x41, 0x53, 0x54, 0x00, 0x2C, 0x41, 0x42, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
+
+@ItemName_GardenKey:
+.db 0x01, 0x00, 0x27, 0x41, 0x52, 0x44, 0x45, 0x4E, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
+
+@ItemName_CaveKey:
+.db 0x01, 0x00, 0x23, 0x41, 0x56, 0x45, 0x52, 0x4E, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
+
+@ExtendedItemData:
+@ItemData_LabKeyWest:
+.dh 0x00CE ; ID
+.dh 0x007E ; Icon/Palette
+.dw 0 ; Price
+.dh 0x0004 ; Item type
+.dh 0x0000 ; Var a
+.dw 0
+
+@ItemData_LabKeyEast:
+.dh 0x00CF ; ID
+.dh 0x007E ; Icon/Palette
+.dw 0 ; Price
+.dh 0x0004 ; Item type
+.dh 0x0000
+.dw 0
+
+@ItemData_GardenKey:
+.dh 0x00D0 ; ID
+.dh 0x007E ; Icon/Palette
+.dw 0 ; Price
+.dh 0x0004 ; Item type
+.dh 0x0000
+.dw 0
+
+@ItemData_CaveKey:
+.dh 0x00D1 ; ID
+.dh 0x007E ; Icon/Palette
+.dw 0 ; Price
+.dh 0x0004 ; Item type
+.dh 0x0000
+.dw 0
+
+
+
 .align 4
 
 ;   Convert souls to a Bitfield table to indicate that that soul has been obtained once
@@ -508,6 +621,8 @@ b @CeliaEventHandler
     b @PlaySoundFromItem
     .pool
 @GetMagicSeal:
+    cmp r1, 0x41
+    bgt @CheckForSeal
     push r0-r1
     sub r1, r1, 0x3D
     ldr r0, =0x01 
@@ -586,6 +701,8 @@ b @CeliaEventHandler
     blt @GiveNormal ;Only 3A-3C are Special items.
     cmp r1, 0x3C ; AP items have Color data defined
     beq @GiveSoulCan
+    cmp r1, 0xCD
+    bgt @GiveNormal
     b @SetAPNameColor ;AP items dont go into the inventory, so we skip adding them
 @GiveSoulCan:
     ldrb r1, [r9, 0x026F] ; The high byte of the item's flag is used as the soul ID
@@ -1055,6 +1172,7 @@ b @CeliaEventHandler
 @SetSoulPerPickup:
     cmp r7, 0x3C
     beq @Setpickup_SoulID
+@SetNormalPickup:
     mov r5, 0xFF
 @ExitSoulPickup:
     push r0
@@ -1065,6 +1183,8 @@ b @CeliaEventHandler
     mov r5, 0
     bx lr
 @Setpickup_SoulID:
+    cmp r8, 0x02
+    bne @SetNormalPickup
     ldrb r5, [r0, 0x6F]
     b @ExitSoulPickup
     .pool
@@ -1269,5 +1389,250 @@ b @CeliaEventHandler
     cmp r0, 0
     b 0x0203AC64
     .pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;Grant items based on pressing the button
+    ;0x021A748C
+@GateSanity_CheckGateButtons:
+    ldr r0, =@OptionFlag_GateRando
+    ldrb r0,[r0] ; Check the flag for gates being checks
+    cmp r0, 0
+    add r0, r4, 0x200
+    beq 0x021A7490 ; If it's off, go back to the Gate Open code
+    ldrb r1, [r0, 0x6E] ; We use the Gate Type as the item
+;Set the Obtained flag here
+    push r1
+    ldr r0, =@GateKeys
+    ldr r2, = 0x01
+    lsl r2, r2, r1
+    ldrb r1, [r0] ; The chapel key is different and manually checks the next byte
+    orr r2, r2, r1
+    strb r2, [r0]
+    pop r1
+;Give the item here
+    lsl r1, r1, 2
+    ldr r0, =@ButtonItemTable
+    add r0, r0, r1
+    ldrb r2, [r0, 2] ; Load the item color
+    ldrb r1, [r0, 1] ;Load the ID
+    ldrb r0, [r0] ; Load the item Type
+    push lr
+    bl @GiveItem_Any
+    pop lr
+    b 0x021A7584
+    .pool
+
+
+@GateSanity_CheckIfPressed:
+    ;0x021A737C
+    ldr r0, = @OptionFlag_GateRando
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @Button_CheckNormal
+    add r0, r5, 0x200
+    ldrb r1, [r0, 0x6E] ; make sure we get the type of gate
+    ldr r0, =@GateKeys
+    ldr r2, = 0x01
+    lsl r2, r2, r1 ; Convert the gate type into a Bit
+    ldrb r1, [r0]
+    ands r0, r1, r2
+    bx lr
+@Button_CheckNormal:
+    ldrb r0, [r5, 0x0E]
+    bx lr
+    .pool
+
+;@GateSanity_FlagChecker:
+    ;Can i do the 0x6E thing on the Chapel. check that.
+
+;Make a subroutine for Gate stuff?
+
+
+;;;;;;;;;;;;;;;;;
+;Grants an item
+@GiveItem_Any:
+    push lr
+    cmp r0, 5 ; Soul
+    beq @GiveAny_soul
+    push r1
+    ldr r1, =@RAMFlag_APItemColor
+    strb r2, [r1]
+    pop r1
+    bl @GetItemArbitrary
+    pop lr
+    bx lr
+
+@GiveAny_Soul:
+    mov r0, r1
+    bl @GetSoulArbitrary
+    pop lr
+    bx lr
+    .pool
+;;;;;;;;;;;;;;;;;;
+; Checks items above 42 differently
+;0x021EE784
+@ExtendedInv_SkipCountingItems:
+    cmp r6, 0x42
+    blt @CountItem_Normal
+    sub r3, r6, 0x42 ; Bring down to their new IDs
+    mov r0, 0x10
+    lsl r3, r0, r3
+
+    ldr r0, =@GateKeys ; TODO. Increase for Door Keys
+    ldrb r0, [r0] ; Load the high byte too probably
+    ands r0, r0, r3
+    beq @ExpandedInv_End
+    mov r0, 1
+@ExpandedInv_End:
+    bx lr
+@CountItem_Normal:
+    push lr
+    bl 0x021E79CC
+    pop lr
+    bx lr
+    .pool
+
+;;;;;;;;;;;;;;;;;;;;
+    ;Shifts item IDs if over 0x42
+    ;021EE7AC
+@LoadExtendedItemNames:
+    cmp r6, 0x42
+    blt @ExtendedName_End
+    sub r2, r6, 0x42 ; Convert, etc
+    add r2, r2, 0x0500 ;Extended Text IDs
+    add r2, r2, 0x0B
+    ;mov r6, r2
+@ExtendedName_End:
+    push lr
+    bl 0x021EE620
+    pop lr
+    bx lr
+    .pool
+;;;;;;;;;;;;;;;;;;;;;
+    ;0x02042834
+    ; Loads text IDs above 0x050A by repointing them
+@RepointExtendedTexIDs:
+    push r3
+    sub r3, r3, 0x500
+    cmp r3, 0x0B
+    blt @GetNormalText
+    sub r3, r3, 0x0B
+    ldr r0, =@ExpandedTexPointers
+    lsl r3, r3, 1
+    ldrh r3, [r0, r3]
+    ldr r0, =0x02300000
+    add r0, r0, r3
+    pop r3
+    b 0x02042838
+@GetNormalText:
+    pop r3
+    ldr r0, [r0, r3, lsl 0x02]
+    b 0x02042838
+    .pool
+;;;;;;;;;;;;;;;;;;
+;0x021EE574, draws names when hovering over them
+@DrawExtendedNames_MenuHover:
+    cmp r2, 0xCE
+    blt @MenuHover_NormalName
+    sub r2, r2, 0xCE
+    add r2, r2, 0x0500
+    add r2, r2, 0x0B
+    bx lr
+@MenuHover_NormalName:
+    add r2, r2, 0x0C
+    bx lr
+.pool
+
+;;;;;;;;;;;;;;;;
+    ; 0x021EE794 Set extended item ids to 0xCE and above when handling menus
+@ExtendedInv_ShiftIDs:
+    push r6
+    cmp r6, 0x42
+    blt @InvShiftNormal
+    sub r6, r6, 0x42
+    add r6, r6, 0xCE
+@InvShiftNormal:
+    strb r6, [r7]
+    pop r6
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;
+    ;0x021E7A88
+    ; Loads extended pointer for extended IDs
+@ExtendedInv_PointToData:
+    push lr
+    bl @GetExtendedItemPointer
+    pop lr
+    b 0x021E7A8C
+
+@GetExtendedItemPointer:
+    cmp r1, 0xCE
+    blt @InvPoint_Normal
+    ldr r0, =@ExtendedItemData
+    sub r1, r1, 0xCE
+    bx lr
+@InvPoint_Normal:
+    ldr r0, =0x0209BA68
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;
+    ; 0x021E787C Set the Expanded Item bits if necessary
+@GiveExpandedItems:
+    mov r4, r1
+    cmp r1, 0xCE
+    blt @GiveNormalItem
+    sub r1, r1, 0xCE
+    cmp r1, 3
+    bgt @GiveDoorKeys
+    mov r0, 0x10
+    lsl r1, r0, r1 ; Shift to get the bit
+    ldr r0, =@GateKeys
+    strb r1, [r0]
+    b 0x021E78B0
+@GiveDoorKeys:
+    mov r0, 1
+    lsl r1, r0, r1
+    ldr r0, =@DoorKeys
+    str r1, [r0]
+    b 0x021E78B0
+@GiveNormalItem:
+    b 0x021E7880
+.pool
+
+;;;;;;;;;;;;;;;;;;;;
+    ;Displays expanded item names
+    ;0x0202DF6C
+@ShowItem_ExpandPointers:
+    push r2
+    sub r2, r2, 0x500
+    cmp r2, 0x0B
+    blt @GetNormalTextDisplay
+    sub r2, r2, 0x0B
+    ldr r0, =@ExpandedTexPointers
+    lsl r2, r2, 1
+    ldrh r2, [r0, r2]
+    ldr r0, =0x02300000
+    add r0, r0, r2
+    pop r2
+    b 0x0202DF70
+@GetNormalTextDisplay:
+    pop r2
+    ldr r0, [r0, r2, lsl 0x02]
+    b 0x0202DF70
+.pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@DisplayExpandedItemNames:
+    cmp r8, 0xCE
+    blt @DisplayExpanded_Normal
+    sub r2, r8, 0xCE
+    add r2, r2, 0x0500 ;Extended Text IDs
+    add r2, r2, 0x0B
+
+@DisplayExpanded_Normal:
+    add r2, r8, r2
+    b 0x0202DF6C
+.pool
+
 
 .close

@@ -76,6 +76,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Subterranean Hell Shaft Bottom Stairs"),
         create_region(world, player, locations_per_region, "Subterranean Hell Spike Room West"),
         create_region(world, player, locations_per_region, "Subterranean Hell Spike Room East"),
+        create_region(world, player, locations_per_region, "Subterranean Hell Button Gate Room"),
 
         create_region(world, player, locations_per_region, "Silenced Ruins Antechamber"),
         create_region(world, player, locations_per_region, "Silenced Ruins"),
@@ -135,12 +136,14 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     #######################
     #Wizardry Lab
 
-    multiworld.get_region("Wizardry Lab Main", player).add_exits(["Lost Village Lower", "Garden of Madness Lower", "Warp Room"],
+    multiworld.get_region("Wizardry Lab Main", player).add_exits(["Lost Village Lower", "Garden of Madness Lower", "Warp Room", "Wizardry Lab West Gate", "Wizardry Lab East Gate"],
                                                     {"Lost Village Lower": lambda state: state.has("Moat Drained", player),
-                                                     "Garden of Madness Lower": lambda state: state.has("Balore Soul", player) or state.has_any(small_uppies, player)})
+                                                     "Garden of Madness Lower": lambda state: state.has("Balore Soul", player) or state.has_any(small_uppies, player),
+                                                     "Wizardry Lab West Gate": lambda state: state.has("West Lab Gate Key", player),
+                                                     "Wizardry Lab East Gate": lambda state: state.has("East Lab Gate Key", player)})
 
-    multiworld.get_region("Wizardry Lab West Gate", player).add_exits(["Wizardry Lab Main", "Lost Village Underground Middle"])
-    multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Wizardry Lab Main", "Subterranean Hell Shaft Top"])
+    multiworld.get_region("Wizardry Lab West Gate", player).add_exits(["Lost Village Underground Middle"])
+    multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Subterranean Hell Shaft Top"])
     multiworld.get_region("Wizardry Lab Sunken West Door", player).add_exits(["Lost Village Underground Bottom", "Wizardry Lab Sunken"],
                                                     {"Wizardry Lab Sunken": lambda state: state.has("Rahab Soul", player)})
 
@@ -149,6 +152,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Wizardry Lab Sunken East Door", player).add_exits(["Wizardry Lab Sunken", "Subterranean Hell Spike Room West"],
                                                 {"Wizardry Lab Sunken": lambda state: state.has("Rahab Soul", player)})
+    
+    if world.options.gate_items < GateItems.option_buttonsanity:
+        multiworld.get_region("Wizardry Lab West Gate", player).add_exits(["Wizardry Lab Main"])
+        multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Wizardry Lab Main"])
+    else:
+        multiworld.get_region("Wizardry Lab West Gate", player).add_exits(["Wizardry Lab Main"],
+                                                                         {"Wizardry Lab Main": lambda state: state.has("West Lab Gate Key", player)})
+        multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Wizardry Lab Main"],
+                                                                         {"Wizardry Lab Main": lambda state: state.has("East Lab Gate Key", player)})
     ##########################
     #Garden of Madness
     multiworld.get_region("Garden of Madness Lower", player).add_exits(["Wizardry Lab Main", "Garden of Madness Water Blocked", "Demon Guest House Lower", "Garden of Madness Upper", "Dark Chapel", "Warp Room"],
@@ -161,10 +173,16 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Garden of Madness Upper", player).add_exits(["Garden of Madness Lower", "Garden of Madness Post-Boss"],
                                                     {"Garden of Madness Post-Boss": lambda state: state.has("Magic Seal 2", player)})
 
-    multiworld.get_region("Garden of Madness Post-Boss", player).add_exits(["Garden of Madness Upper", "Demon Guest House Main"],
-                                                    {"Garden of Madness Upper": lambda state: state.has("Magic Seal 2", player)})
+    multiworld.get_region("Garden of Madness Post-Boss", player).add_exits(["Garden of Madness Upper", "Demon Guest House Main", "Garden of Madness East Gate"],
+                                                    {"Garden of Madness Upper": lambda state: state.has("Magic Seal 2", player),
+                                                     "Garden of Madness East Gate": lambda state: state.has("Garden Gate Key", player)})
 
-    multiworld.get_region("Garden of Madness East Gate", player).add_exits(["Garden of Madness Post-Boss", "Cursed Clock Tower Entrance"])
+    multiworld.get_region("Garden of Madness East Gate", player).add_exits(["Cursed Clock Tower Entrance"])
+    if world.options.gate_items < GateItems.option_buttonsanity:
+        multiworld.get_region("Garden of Madness East Gate", player).add_exits(["Garden of Madness Post-Boss"])
+    else:
+        multiworld.get_region("Garden of Madness East Gate", player).add_exits(["Garden of Madness Post-Boss"],
+                                                                               {"Garden of Madness Post-Boss": lambda state: state.has("Garden Gate Key", player)})
     #############################
     #Demon Guest House
     multiworld.get_region("Demon Guest House Main", player).add_exits(["Garden of Madness Post-Boss", "Demon Guest House Puppet Wall Right", "Demon Guest House Number Puzzle", "Demon Guest House West Wing"],
@@ -230,7 +248,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Subterranean Hell Top Entrance", player).add_exits(["Dark Chapel Catacombs Exit", "Subterranean Hell East"],
                                                 {"Subterranean Hell East": lambda state: state.has_all({"Rahab Soul", "Magic Seal 3"}, player)})
 
-    multiworld.get_region("Subterranean Hell East", player).add_exits(["Subterranean Hell Top Entrance", "Subterranean Hell Central/East Connection"],
+    multiworld.get_region("Subterranean Hell East", player).add_exits(["Subterranean Hell Top Entrance", "Subterranean Hell Central/East Connection", "Subterranean Hell Button Gate Room"],
                                                 {"Subterranean Hell Top Entrance": lambda state: state.has_all({"Rahab Soul", "Magic Seal 3"}, player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)),
                                                  "Subterranean Hell Central/East Connection": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
@@ -270,6 +288,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Subterranean Hell Central/Shaft Divide", player).add_exits(["Subterranean Hell Central Lower", "Subterranean Hell Shaft Bottom Stairs"])
 
+    multiworld.get_region("Subterranean Hell Button Gate Room", player).add_exits(["Subterranean Hell East", "Silenced Ruins Back Exit"],
+                                                                                 {"Subterranean Hell East": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
+                                                                                  "Silenced Ruins Back Exit": lambda state: state.has("Cavern Gate Key", player)})
+
     #####################################################
     #Silenced Ruins
     multiworld.get_region("Silenced Ruins Antechamber", player).add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins"],
@@ -279,7 +301,12 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                 {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player) and state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies, player)})
 
-    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins", "Subterranean Hell East"])
+    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins"])
+    if world.options.gate_items < GateItems.option_buttonsanity:
+        multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Subterranean Hell Button Gate Room"])
+    else:
+        multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Subterranean Hell Button Gate Room"],
+                                                                            {"Subterranean Hell Button Gate Room": lambda state: state.has("Cavern Gate Key", player)})
 
     ###############################
     #The Pinnacle

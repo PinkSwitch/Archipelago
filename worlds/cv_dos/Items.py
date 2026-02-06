@@ -67,6 +67,10 @@ item_table: Dict[str, ItemData] = {
     "Magic Seal 3": ItemData("Magic Seals", 0x23F, ItemClassification.progression),
     "Magic Seal 4": ItemData("Magic Seals", 0x240, ItemClassification.progression),
     "Magic Seal 5": ItemData("Magic Seals", 0x241, ItemClassification.progression),
+    "West Lab Gate Key": ItemData("Key Items", 0x2CE, ItemClassification.progression, 0),
+    "East Lab Gate Key": ItemData("Key Items", 0x2CF, ItemClassification.progression, 0),
+    "Garden Gate Key": ItemData("Key Items", 0x2D0, ItemClassification.progression, 0),
+    "Cavern Gate Key": ItemData("Key Items", 0x2D1, ItemClassification.progression, 0),
 
     "Knife": ItemData("Weapons", 0x301, ItemClassification.filler, 0),
     "Combat Knife": ItemData("Weapons", 0x302, ItemClassification.filler, 0),

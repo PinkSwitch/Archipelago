@@ -17,6 +17,13 @@ def setup_game(world):
 
     world.starting_warp_region = warp_room_regions[world.starting_warp_room]
 
+    if world.options.gate_items:
+        world.multiworld.itempool.append(world.set_classifications("West Lab Gate Key"))
+        world.multiworld.itempool.append(world.set_classifications("East Lab Gate Key"))
+        world.multiworld.itempool.append(world.set_classifications("Garden Gate Key"))
+        world.multiworld.itempool.append(world.set_classifications("Cavern Gate Key"))
+        world.extra_item_count += 4
+
     set_souls_for_walls(world)
     place_souls(world)
     randomize_synthesis(world)

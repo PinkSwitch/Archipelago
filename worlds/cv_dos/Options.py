@@ -150,6 +150,21 @@ class FreeBat(Toggle):
     """Removes Bat Company's MP cost"""
     display_name = "Free Bat"
 
+class PassiveSoulEaterRing(Toggle):  # TODO! IMPLEMENT
+    """If enabled, you will gain the bonus from the Soul Eater Ring without needing to equip it
+       as long as you have at least one in your inventory."""
+    display_name = "Passive Soul Eater Ring"
+
+class GateItems(Choice):  # TODO! IMPLEMENT
+    """Defines how the 4 metal switch gates act.
+       Normal: Normal behavior. Gates can only be opened by pressing the respective button.
+       Add Keys: The same as normal behavior, but also adds keys to the item pool that can open the gate from the other side.
+       Buttonsanity: Adds keys to each gate, and the corresponding button will grant a check."""
+    option_normal = 0
+    option_add_keys = 1
+    option_buttonsanity = 2
+    default = 0
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -190,6 +205,8 @@ class DoSOptions(PerGameCommonOptions):
     randomize_red_soul_walls: SoulWallRandomizer
     randomize_synthesis_souls: RandomizeSynthSouls
     no_mp_bat: FreeBat
+    passive_soul_eater_rign: PassiveSoulEaterRing
+    gate_items: GateItems
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -222,6 +239,7 @@ dos_option_groups = [
         RandomizeStartingWarp,
         OpenDrawbridge,
         SoulWallRandomizer,
+        GateItems
 
     ]),
 
@@ -239,7 +257,8 @@ dos_option_groups = [
         FixLuck,
         BoostSpeed,
         OneScreenMode,
-        FreeBat
+        FreeBat,
+        PassiveSoulEaterRing
     ]),
 
     OptionGroup("Music Randomizer", [
