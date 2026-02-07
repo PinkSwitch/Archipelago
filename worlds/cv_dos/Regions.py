@@ -3,6 +3,7 @@ from BaseClasses import Region, Location
 from .Locations import LocationData
 from .Rules import small_uppies, big_uppies
 from .soul_regions import create_soul_regions
+from .Options import GateItems
 if TYPE_CHECKING:
     from . import DoSWorld
 
@@ -81,6 +82,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Silenced Ruins Antechamber"),
         create_region(world, player, locations_per_region, "Silenced Ruins"),
         create_region(world, player, locations_per_region, "Silenced Ruins Back Exit"),
+        create_region(world, player, locations_per_region, "Silenced Ruins Upper Entrance"),
 
         create_region(world, player, locations_per_region, "The Pinnacle"),
         create_region(world, player, locations_per_region, "The Pinnacle Throne Room"),
