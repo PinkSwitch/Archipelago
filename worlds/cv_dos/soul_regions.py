@@ -93,9 +93,10 @@ def create_soul_regions(world):
 
     ####S ILENCED RUINS #####
     multiworld.get_region("Silenced Ruins", player).add_exits(["Dead Mate Soul", "Skeleton Soul", "Bat Soul", "Skull Archer Soul", "Devil Soul", "Larva Soul", "Skelerang Soul",
-                                                               "Ghoul Soul", "Peeping Eye Soul", "Dead Crusader Soul", "Bone Ark Soul"],
+                                                               "Ghoul Soul", "Dead Crusader Soul", "Bone Ark Soul"],
     {"Devil Soul": lambda state: state.has("Balore Soul", player)})
-    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Waiter Skeleton Soul", "Gorgon Soul"])
+    multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Waiter Skeleton Soul"])
+    multiworld.get_region("Silenced Ruins Upper Entrance", player).add_exits(["Waiter Skeleton Soul", "Peeping Eye Soul"])
 
     ##### PINNACLE #####
     multiworld.get_region("The Pinnacle", player).add_exits(["Guillotiner Soul", "Mothman Soul", "Werewolf Soul", "Mushussu Soul", "Alastor Soul",

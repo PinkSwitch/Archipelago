@@ -294,12 +294,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     #####################################################
     #Silenced Ruins
-    multiworld.get_region("Silenced Ruins Antechamber", player).add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins"],
-                                                {"Silenced Ruins": lambda state: state.has("Zephyr Soul", player)})
+    multiworld.get_region("Silenced Ruins Antechamber", player).add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins Upper Entrance"],
+                                                {"Silenced Ruins Upper Entrance": lambda state: state.has("Zephyr Soul", player)})
 
-    multiworld.get_region("Silenced Ruins", player).add_exits(["Silenced Ruins Back Exit", "Silenced Ruins Antechamber", "Warp Room"],
-                                                {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player) and state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
-                                                 "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies, player)})
+    multiworld.get_region("Silenced Ruins Upper Entrance", player).add_exits(["Silenced Ruins Antechamber", "Silenced Ruins"],
+                                                {"Silenced Ruins Antechamber": lambda state: state.has("Zephyr Soul", player)})
+
+    multiworld.get_region("Silenced Ruins", player).add_exits(["Silenced Ruins Back Exit", "Silenced Ruins Upper Entrance", "Warp Room"],
+                                                {"Silenced Ruins Upper Entrance": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
+                                                 "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies, player) or state.has_all({"Puppet Master Soul", "Black Panther Soul"}, player)})
 
     multiworld.get_region("Silenced Ruins Back Exit", player).add_exits(["Silenced Ruins"])
     if world.options.gate_items < GateItems.option_buttonsanity:
