@@ -26,7 +26,7 @@ def create_soul_regions(world):
     multiworld.get_region("Wizardry Lab West Gate", player).add_exits(["Great Axe Armor Soul", "Heart Eater Soul"])
     multiworld.get_region("Wizardry Lab East Gate", player).add_exits(["Cave Troll Soul", "Mimic Soul"])
     multiworld.get_region("Wizardry Lab Sunken", player).add_exits(["Homunculus Soul", "Killer Fish Soul", "Larva Soul", "Mimic Soul"])  # Should this mimic be here? ghosts aren't? Hmmm
-    multiworld.get_region("Wizardry Lab Sunken West Door", player).add_exits(["Iron Golem Soul"])
+    multiworld.get_region("Wizardry Lab Sunken West Door", player).add_exits(["Iron Golem Soul", "Ghost Soul"])
 
     ####### GARDEN OF MADNESS ######
 
@@ -52,7 +52,7 @@ def create_soul_regions(world):
 
     multiworld.get_region("Dark Chapel", player).add_exits(["Guillotiner Soul", "Witch Soul", "Mini Devil Soul", "Amalaric Sniper Soul", "Ghost Dancer Soul", "Hell Boar Soul",
                                                             "White Dragon Soul", "Great Armor Soul", "Quetzalcoatl Soul", "Ghoul Soul", "The Creature Soul", "Bone Pillar Soul",
-                                                            "Barbariccia Soul", "Valkyrie Soul", "Ghost Soul", "Tombstone Soul"],
+                                                            "Barbariccia Soul", "Valkyrie Soul", "Ghost Soul", "Tombstone Soul"], # Is ghost here? double check this
                         {"Quetzalcoatl Soul": lambda state: state.has("Magic Seal 2", player)})
 
     multiworld.get_region("Dark Chapel Big Room", player).add_exits(["Mini Devil Soul", "Quetzalcoatl Soul", "Valkyrie Soul"])
