@@ -165,6 +165,11 @@ class GateItems(Choice):  # TODO! IMPLEMENT
     option_buttonsanity = 2
     default = 0
 
+class FreeBat(Toggle):  # TODO! IMPLEMENT!
+    """Puts the game in Hard Mode. Enemies are tougher, sometimes have additional properties, but drop rates are increased.
+       There are no checks exclusive to Hard Mode."""
+    display_name = "Hard Mode"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -207,6 +212,7 @@ class DoSOptions(PerGameCommonOptions):
     no_mp_bat: FreeBat
     passive_soul_eater_rign: PassiveSoulEaterRing
     gate_items: GateItems
+    hard_mode: HardMode
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -226,7 +232,8 @@ dos_option_groups = [
     OptionGroup("Item Options", [
         StartingWeapon,
         EarlySeal1,
-        ShopRandomizer
+        ShopRandomizer,
+        GateItems
 
     ]),
 
@@ -238,14 +245,14 @@ dos_option_groups = [
     OptionGroup("World Settings", [
         RandomizeStartingWarp,
         OpenDrawbridge,
-        SoulWallRandomizer,
-        GateItems
+        SoulWallRandomizer
 
     ]),
 
     OptionGroup("Enemy Settings", [
         ShuffleDrops,
-        ExperiencePercent
+        ExperiencePercent,
+        HardMode
 
     ]),
 
