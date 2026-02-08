@@ -1787,6 +1787,17 @@ b @CeliaEventHandler
     cmp r3, r1
     blt @@Gate_NoVertColl
     ; This should run when we are NOT above the gate
+    add r0, r4, 0x0200
+    add r0, r0, 0x70
+    ldrb r0, [r0] ; Gate type
+    sub r0, r0, 0x28
+    mov r1, 0x10
+    lsl r0, r1, r0 ; Get the bit for the key
+    ldr r1, =@GateKeys
+    ldrb r1, [r1]
+    ands r1, r1, r0
+    beq @@Gate_NoVertColl 
+    ;If we have the key, unlock the gate!
     pop r0-r3
     add r0, r4, 0x0200
     b 0x021A7490
