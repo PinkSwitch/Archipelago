@@ -164,8 +164,9 @@ class GateItems(Choice):  # TODO! IMPLEMENT
     option_add_keys = 1
     option_buttonsanity = 2
     default = 0
+    display_name = "Gate Items"
 
-class FreeBat(Toggle):  # TODO! IMPLEMENT!
+class HardMode(Toggle):  # TODO! IMPLEMENT!
     """Puts the game in Hard Mode. Enemies are tougher, sometimes have additional properties, but drop rates are increased.
        There are no checks exclusive to Hard Mode."""
     display_name = "Hard Mode"
@@ -210,7 +211,7 @@ class DoSOptions(PerGameCommonOptions):
     randomize_red_soul_walls: SoulWallRandomizer
     randomize_synthesis_souls: RandomizeSynthSouls
     no_mp_bat: FreeBat
-    passive_soul_eater_rign: PassiveSoulEaterRing
+    passive_soul_eater_ring: PassiveSoulEaterRing
     gate_items: GateItems
     hard_mode: HardMode
 

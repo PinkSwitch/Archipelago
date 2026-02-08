@@ -171,10 +171,11 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         ]
 
     if world.options.gate_items == GateItems.option_buttonsanity:
+        location_table += [
         LocationData("Wizardry Lab West Gate", "Wizardry Lab: West Gate Button", 0xE3),
         LocationData("Wizardry Lab East Gate", "Wizardry Lab: East Gate Button", 0xE4),
         LocationData("Garden of Madness East Gate", "Garden of Madness: Gate Button", 0xE5),
-        LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button", 0xE6),
+        LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button", 0xE6)]
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in world.common_souls:

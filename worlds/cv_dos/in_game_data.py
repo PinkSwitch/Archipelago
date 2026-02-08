@@ -1129,3 +1129,10 @@ boss_list = {
     "Soma",
     "Dracula"
 }
+
+button_item_table = [
+    "Wizardry Lab: East Gate Button",
+    "Garden of Madness: Gate Button",
+    "Subterranean Hell: Gate Button",
+    "Wizardry Lab: West Gate Button"
+]

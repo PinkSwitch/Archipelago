@@ -7,7 +7,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
-                           boss_list, enemy_table)
+                           boss_list, enemy_table, button_item_table)
 from .music_randomizer import area_music_randomizer, boss_music_randomizer
 from .synthesis_randomizer import write_synthesis
 from .bullet_wall_randomizer import apply_souls_and_gfx
@@ -20,6 +20,7 @@ hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
 base_enemy_address = 0x7CCAC
 soul_check_table = 0x2F6DC50
+button_check_table = 0x2F6DE0C
 
 
 class LocalRom(object):
@@ -46,6 +47,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_bytes(0x2F6DC50, code_patch)
 
     weapon = world.options.starting_weapon.value
+
 
     if isinstance(weapon, str):
         if weapon not in global_weapon_table:
@@ -225,15 +227,15 @@ def patch_rom(world, rom, player: int, code_patch):
         boss_music_randomizer(world, rom)
 
     if world.options.randomize_red_soul_walls:
-        rom.write_bytes(0x2F6DE06, bytearray([0x01])) # Tell the rom we have this on
+        rom.write_bytes(0x2F6DE08, bytearray([0x01])) # Tell the rom we have this on
 
         rom.write_bytes(0x158BC0, bytearray([global_soul_table.index(world.red_soul_walls[0])]))
         rom.write_bytes(0x158BBA, bytearray([global_soul_table.index(world.red_soul_walls[1])]))
         rom.write_bytes(0x158BB4, bytearray([global_soul_table.index(world.red_soul_walls[2])]))
         rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
 
-    if world.options.gate_items == GateOptions.option_buttonsanity:
-        rom.write_bytes(0x2F6DE07, bytearray([0x01])) # Enables Button Check Mode
+    if world.options.gate_items == GateItems.option_buttonsanity:
+        rom.write_bytes(0x2F6DE09, bytearray([0x01])) # Enables Button Check Mode
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
@@ -269,6 +271,13 @@ def patch_rom(world, rom, player: int, code_patch):
                     item_id = item_id & 0xFF
                 rom.write_bytes(easter_egg_table[location.name][0], bytearray([item_type]))
                 rom.write_bytes(easter_egg_table[location.name][1], bytearray([item_id]))
+            elif location.name in button_item_table:
+                address = button_check_table + (button_item_table.index(location.name) * 4) # Set the address
+                item_id = 0x0C3B
+                item_color = item_id >> 8
+                item_id = item_id & 0xFF
+                rom.write_bytes(address, bytearray([item_type, item_id, item_color]))
+
             else:
                 # Regular item checks
                 address = base_check_address_table[location.name]
@@ -367,7 +376,7 @@ class DoSPatchExtensions(APPatchExtension):
     @staticmethod
     def modify_soulwall_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        soul_wall_randomizer = int.from_bytes(rom.read_bytes(0x2F6DE06, 1))
+        soul_wall_randomizer = int.from_bytes(rom.read_bytes(0x2F6DE08, 1))
         if soul_wall_randomizer:
             apply_souls_and_gfx(rom)
         return rom.get_bytes()
