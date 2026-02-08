@@ -150,7 +150,7 @@ class FreeBat(Toggle):
     """Removes Bat Company's MP cost"""
     display_name = "Free Bat"
 
-class PassiveSoulEaterRing(Toggle):  # TODO! IMPLEMENT
+class PassiveSoulEaterRing(Toggle):
     """If enabled, you will gain the bonus from the Soul Eater Ring without needing to equip it
        as long as you have at least one in your inventory."""
     display_name = "Passive Soul Eater Ring"
@@ -166,7 +166,7 @@ class GateItems(Choice):  # TODO! IMPLEMENT
     default = 0
     display_name = "Gate Items"
 
-class HardMode(Toggle):  # TODO! IMPLEMENT!
+class HardMode(Toggle):
     """Puts the game in Hard Mode. Enemies are tougher, sometimes have additional properties, but drop rates are increased.
        There are no checks exclusive to Hard Mode."""
     display_name = "Hard Mode"

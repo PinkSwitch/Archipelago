@@ -235,6 +235,10 @@ b @CeliaEventHandler
 
 .org 0x021A73FC
     b @OpenGatesWithKeys
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; Passive Soul eater
+.org 0x021C3AA0
+    bl @CheckPassiveSoulEaterRing
 
 .close
 .open "ftc/overlay9_41", @Overlay41Start
@@ -452,7 +456,7 @@ b @CeliaEventHandler
 @OptionFlag_HardMode:
 .db 0x00
 
-@OptionFlag_PassiveSoulEaster:
+@OptionFlag_PassiveSoulEater:
 .db 0x00
 
 @ButtonItemTable:
@@ -1818,7 +1822,32 @@ b @CeliaEventHandler
     cmp r2, 0
     b 0x021A7400
     .pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;0x021C3AA0
+@CheckPassiveSoulEaterRing:
+    push r2,r3
+    ldr r2, =@OptionFlag_PassiveSoulEater
+    ldrb r3, [r2]
+    cmp r3, 0
+    beq @NormalSoulRing
+    ldr r2, =0x020F7224
+    ldrb r2, [r2]
+    ands r2, r2, 0x0F
+    beq @NoulEaterRing
+    mov r2, 0
+    cmp r2, 0
+    pop r2,r3
+    bx lr
+@NoulEaterRing:
+    cmp r2, 0xFF
+    pop r2,r3
+    bx lr
 
+@NormalSoulRing:
+    pop r2,r3
+    cmp r2, 0x38
+    bx lr
+.pool
 
 .endarea
 .close
