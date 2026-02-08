@@ -100,8 +100,8 @@ def apply_souls_and_gfx(rom):
         "Erinys Soul": SpriteData(0x11AC840, 0x1ED4C8, 46, 0x0C),
         "Homunculus Soul": SpriteData(0x12D60C0, 0x1ECB5C, 50, 16, False),
         "Witch Soul": SpriteData(0x1384000, 0x1E7F10, 48),
-        # "Fish Head Soul": SpriteData(0x16DA040, 0x1E8EE4, 23), sad this one doesnt hit
-        "Mollusca Soul": SpriteData(0x1263640, 0x1ED338, 38),
+        "Fish Head Soul": SpriteData(0x16DA040, 0x1E8EE4, 23),
+        # "Mollusca Soul": SpriteData(0x1263640, 0x1ED338, 38),
         "Dead Mate Soul": SpriteData(0x12BC718, 0x1E80A8, 41),
         # "Malacoda Soul": SpriteData(0x13DF028, 0x1F12B0, 64), Lmao nice hitbox idiot
         "Flame Demon Soul": SpriteData(0x12100A4, 0x1E7CF8, 21, 16, True, False, False),

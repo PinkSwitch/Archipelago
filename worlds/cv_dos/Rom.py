@@ -279,7 +279,6 @@ def patch_rom(world, rom, player: int, code_patch):
                 rom.write_bytes(easter_egg_table[location.name][1], bytearray([item_id]))
             elif location.name in button_item_table:
                 address = button_check_table + (button_item_table.index(location.name) * 4) # Set the address
-                item_id = 0x0C3B
                 item_color = item_id >> 8
                 item_id = item_id & 0xFF
                 rom.write_bytes(address, bytearray([item_type, item_id, item_color]))
