@@ -237,6 +237,12 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.gate_items == GateItems.option_buttonsanity:
         rom.write_bytes(0x2F6DE09, bytearray([0x01])) # Enables Button Check Mode
 
+    if world.options.hard_mode:
+        rom.write_bytes(0x2F6DE0A, bytearray([0x01])) # Hard mode set
+
+    if world.options.passive_soul_eater_ring:
+        rom.write_bytes(0x2F6DE0B, bytearray([0x01])) # Passive souls
+
     for location in world.multiworld.get_locations(player):
         item_type = 0
         item_id = 0

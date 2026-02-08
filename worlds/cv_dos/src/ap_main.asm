@@ -447,8 +447,13 @@ b @CeliaEventHandler
 .db 0x00
 
 @OptionFlag_GateRando:
-.db 0x01
-.align 4
+.db 0x00
+
+@OptionFlag_HardMode:
+.db 0x00
+
+@OptionFlag_PassiveSoulEaster:
+.db 0x00
 
 @ButtonItemTable:
 ;ID, Type, Color
@@ -456,7 +461,6 @@ b @CeliaEventHandler
 .db 0x00, 0x00, 0x00, 0x00 ;
 .db 0x00, 0x00, 0x00, 0x00 ;
 .db 0x00, 0x00, 0x00, 0x00 ; WizLab West
-.db 0x00, 0x00, 0x00, 0x00 ; Chapel
 
 
 ;EXPANDED TEXT STUFF
@@ -834,6 +838,11 @@ b @CeliaEventHandler
     ;Give the starting weapon + Return Gem
 @GiveStartingInventory:
     bl 0x021E78F0 ;Set Item Count
+    ldr r0, =@OptionFlag_HardMode
+    ldrb r0, [r0]
+    ldr r1, =0x020F7259 ; Hard mode address
+    strb r0, [r1]
+
     ldr r0, =0x02
     ldr r1, =0x2B
     bl 0x021E78F0
