@@ -155,7 +155,7 @@ class PassiveSoulEaterRing(Toggle):
        as long as you have at least one in your inventory."""
     display_name = "Passive Soul Eater Ring"
 
-class GateItems(Choice):  # TODO! IMPLEMENT
+class GateItems(Choice):
     """Defines how the 4 metal switch gates act.
        Normal: Normal behavior. Gates can only be opened by pressing the respective button.
        Add Keys: The same as normal behavior, but also adds keys to the item pool that can open the gate from the other side.

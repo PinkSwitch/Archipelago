@@ -406,7 +406,7 @@ class DoSWorld(World):
             "open_drawbridge": self.options.open_drawbridge.value,
             "speed_boost": self.options.boost_speed.value,
             "soul_walls": self.red_soul_walls,
-            "buttonsaity": self.options.gate_items.value
+            "buttonsanity": self.options.gate_items.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:
