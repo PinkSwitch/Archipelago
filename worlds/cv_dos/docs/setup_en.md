@@ -1,12 +1,12 @@
-# Super Smash Bros. Melee Archipelago Randomizer Setup Guide
+# Castlevania: Dawn of Sorrow Archipelago Randomizer Setup Guide
 
 ## Required Software
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases).
 
 
-- Dolphin    
-- A legally obtained ISO of Super Smash Bros. Melee, Revision 2, USA release.
+- BizHawk version 2.10 or newer    
+- A legally obtained US ROM of Castlevania: Dawn of Sorrow. The MD5 hash should be cc0f25b8783fb83cb4588d1c111bdc18.
 
 ## Installation Procedures
 
@@ -21,10 +21,10 @@
 See the guide on setting up a basic YAML at the Archipelago setup
 guide: [Basic Multiworld Setup Guide](/tutorial/Archipelago/setup/en)
 
-### Where do I get a config file?
+### Where do I get an options file?
 
 The Player Options page on the website allows you to configure your personal options and export a config file from
-them.
+them. You can also create one with your local Archipelago install.
 
 ### Verifying your config file
 
@@ -33,46 +33,24 @@ validator page: [YAML Validation page](/mysterycheck)
 
 ## Joining a MultiWorld Game
 
-### Obtain your patch file and create your ROM
+### Generating and Patching a Game
+1. Follow the general Archipelago instructions for generating a game. This will generate an output file for you. Your patch file will have the .apcvdos file extension.
+   Open ArchipelagoLauncher.exe
+2. Select "Open Patch" on the left side and select your patch file. Alternatively, you can open the ArchipelagoBizhawkClient with your patch file.
+3. If this is your first time patching, you will be prompted to locate your vanilla ROM.
+4. A patched .nds file will be created in the same place as the patch file.
+5. On your first time opening a patch with BizHawk Client, you will also be asked to locate EmuHawk.exe in your BizHawk install.
 
-When you join a multiworld game, you will be asked to provide your config file to whomever is hosting. Once that is done,
-the room will provide you with either a link to download your patch file, or with a zip file containing everyone's patch
-files. Your patch file should have a `.xml` extension.
+If you are playing offline, you can simply run your ROM at this point. For Multiworld play, see the following section.
 
-In Dolphin, Melee should be located in the Games list in the main window. Select the game with right click, and select "Start with Riivolution Patches"
-In this menu, use "Open Riivolution XML" and select your patch file. For convenience, you can place the patch in Dolphin Emulator/Load/Riivolution, as it will automatically open this folder when selecting a patch.
-You should see a mod labeled the "SSBM Archipelago Mod", some data about the multiworld, and it should be enabled. Click Start.
-If it is your first time launching this patch, it should prompt you to make a new save file. You are now playing successfully.
+### Connecting to a Server
+By default, opening a patch file will do steps 1-5 below for you automatically. Even so, keep them in your memory just in case you have to close and reopen a window mid-game for some reason.
 
-NOTE: Different seeds will have different save files, but not different savestates.
-
-### Connect to the client
-Launch the Super Smash Bros. Melee Client from the Archipelago Launcher. If your game is running from the previous step, it should automatically connect.
-Then, input and connect to your multiworld room.
-
-
-
-### Connect to the Archipelago Server
-
-The patch file which launched your client should have automatically connected you to the AP Server. There are a few
-reasons this may not happen however, including if the game is hosted on the website but was generated elsewhere. If the
-client window shows "Server Status: Not Connected", simply ask the host for the address of the server, and copy/paste it
-into the "Server" input field then press enter.
-
-The client will attempt to reconnect to the new server address, and should momentarily show "Server Status: Connected".
-
-## Hosting a MultiWorld game
-
-The recommended way to host a game is to use our hosting service. The process is relatively simple:
-
-1. Collect config files from your players.
-2. Create a zip file containing your players' config files.
-3. Upload that zip file to the Generate page above.
-    - Generate page: [WebHost Seed Generation Page](/generate)
-4. Wait a moment while the seed is generated.
-5. When the seed is generated, you will be redirected to a "Seed Info" page.
-6. Click "Create New Room". This will take you to the server page. Provide the link to this page to your players, so
-   they may download their patch files from there.
-7. Note that a link to a MultiWorld Tracker is at the top of the room page. The tracker shows the progress of all
-   players in the game. Any observers may also be given the link to this page.
-8. Once all players have joined, you may begin playing.
+1. This game uses Archipelago's BizHawk Client. If the client isn't still open from when you patched your game, you can re-open it from the launcher.
+2. Ensure EmuHawk is running the patched ROM.
+3. In EmuHawk, go to Tools > Lua Console. This window must stay open while playing.
+4. In the Lua Console window, go to Script > Open Script….
+5. Navigate to your Archipelago install folder and open data/lua/connector_bizhawk_generic.lua.
+6. The emulator may freeze every few seconds until it manages to connect to the client. This is expected. The BizHawk Client window should indicate that it connected and recognized the game.
+7. To connect the client to the server, enter your room's address and port (e.g. archipelago.gg:38281) into the top text field of the client and click Connect.
+8. You should now be able to receive and send items. You'll need to do these steps every time you want to reconnect. It is perfectly safe to make progress offline; everything will re-sync when you reconnect.

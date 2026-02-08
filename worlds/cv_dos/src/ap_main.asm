@@ -1,6 +1,7 @@
 .nds
 .relativeinclude on
 .erroronwarning on
+;.loadtable "dos_text.tbl"
 
 @Overlay41Start equ 0x02308920
 @FreeSpace equ @Overlay41Start + 0x50
@@ -88,6 +89,9 @@
 
 .org 0x0202DF68
     b @DisplayExpandedItemNames
+
+.org 0x0204263C
+    b @ExpandTextPointers_Menus
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -223,10 +227,20 @@ b @CeliaEventHandler
 .org 0x021E787C
     b @GiveExpandedItems
 
+.org 0x021EE5D8
+    bl @LoadExpandedDescriptions
+
+.org 0x021E7B40
+    b @FixExpandedItemTypes
+
+.org 0x021A73FC
+    b @OpenGatesWithKeys
+
 .close
 .open "ftc/overlay9_41", @Overlay41Start
 
 .org @FreeSpace
+.area 0xC000 ; Maximum overlay space, failsafe if too big
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     @SoulTypeTable:
  ; Table used to override soul gets. This is used to define ANY item a Soul could give you.
@@ -433,7 +447,7 @@ b @CeliaEventHandler
 .db 0x00
 
 @OptionFlag_GateRando:
-.db 0x00
+.db 0x01
 .align 4
 
 @ButtonItemTable:
@@ -447,10 +461,18 @@ b @CeliaEventHandler
 
 ;EXPANDED TEXT STUFF
 @ExpandedTexPointers:
+@ItemNames:
 .dh @ItemName_LabKeyWest
 .dh @ItemName_LabKeyEast
 .dh @ItemName_GardenKey
 .dh @ItemName_CaveKey
+
+;Descriptions start here
+@ItemDescriptions:
+.dh @ItemDescription_LabKeyWest
+.dh @ItemDescription_LabKeyEast
+.dh @ItemDescription_GardenKey
+.dh @ItemDescription_CaveKey
 
 @ItemName_LabKeyWest:
 .db 0x01, 0x00, 0x37, 0x45, 0x53, 0x54, 0x00, 0x2C, 0x41, 0x42, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
@@ -463,6 +485,30 @@ b @CeliaEventHandler
 
 @ItemName_CaveKey:
 .db 0x01, 0x00, 0x23, 0x41, 0x56, 0x45, 0x52, 0x4E, 0x00, 0x27, 0x41, 0x54, 0x45, 0x00, 0x2B, 0x45, 0x59, 0xEA
+
+;Opens a metal gate in the Wizardry Lab.
+@ItemDescription_LabKeyWest:
+.db 0x01, 0x00, 0x2F, 0x50, 0x45, 0x4E, 0x53, 0x00, 0x41, 0x00, 0x4D, 0x45, 0x54, 0x41, 0x4C, 0x00, 0x47
+.db 0x41, 0x54, 0x45, 0x00, 0x49, 0x4E, 0x00, 0x54, 0x48, 0x45, 0xE6, 0x37, 0x49, 0x5A, 0x41, 0x52, 0x44
+.db 0x52, 0x59, 0x00, 0x2C, 0x41, 0x42, 0x0E, 0xEA
+
+;Opens a metal gate in the Wizardry Lab.
+@ItemDescription_LabKeyEast:
+.db 0x01, 0x00, 0x2F, 0x50, 0x45, 0x4E, 0x53, 0x00, 0x41, 0x00, 0x4D, 0x45, 0x54, 0x41, 0x4C, 0x00, 0x47
+.db 0x41, 0x54, 0x45, 0x00, 0x49, 0x4E, 0x00, 0x54, 0x48, 0x45, 0xE6, 0x37, 0x49, 0x5A, 0x41, 0x52, 0x44
+.db 0x52, 0x59, 0x00, 0x2C, 0x41, 0x42, 0x0E, 0xEA
+
+;Opens a metal gate in the Garden of Madness.
+@ItemDescription_GardenKey:
+.db 0x01, 0x00, 0x2F, 0x50, 0x45, 0x4E, 0x53, 0x00, 0x41, 0x00, 0x4D, 0x45, 0x54, 0x41, 0x4C, 0x00, 0x47
+.db 0x41, 0x54, 0x45, 0x00, 0x49, 0x4E, 0x00, 0x54, 0x48, 0x45, 0xE6, 0x27, 0x41, 0x52, 0x44, 0x45, 0x4E
+.db 0x00, 0x4F, 0x46, 0x00, 0x2D, 0x41, 0x44, 0x4E, 0x45, 0x53, 0x53, 0x0E, 0xEA
+
+;Opens a metal gate in the Subterranean Hell.
+@ItemDescription_CaveKey:
+.db 0x01, 0x00, 0x2F, 0x50, 0x45, 0x4E, 0x53, 0x00, 0x41, 0x00, 0x4D, 0x45, 0x54, 0x41, 0x4C, 0x00, 0x47
+.db 0x41, 0x54, 0x45, 0x00, 0x49, 0x4E, 0x00, 0x54, 0x48, 0x45, 0xE6, 0x33, 0x55, 0x42, 0x54, 0x45, 0x52
+.db 0x52, 0x41, 0x4E, 0x45, 0x41, 0x4E, 0x00, 0x28, 0x45, 0x4C, 0x4C, 0x0E, 0xEA
 
 @ExtendedItemData:
 @ItemData_LabKeyWest:
@@ -1587,6 +1633,10 @@ b @CeliaEventHandler
     mov r0, 0x10
     lsl r1, r0, r1 ; Shift to get the bit
     ldr r0, =@GateKeys
+    push r2
+    ldrb r2, [r0]
+    orr r1, r2, r1
+    pop r2
     strb r1, [r0]
     b 0x021E78B0
 @GiveDoorKeys:
@@ -1628,11 +1678,127 @@ b @CeliaEventHandler
     sub r2, r8, 0xCE
     add r2, r2, 0x0500 ;Extended Text IDs
     add r2, r2, 0x0B
-
+    mov r8, 0
 @DisplayExpanded_Normal:
     add r2, r8, r2
     b 0x0202DF6C
 .pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;0x0204263C
+    ; Expands pointers for menu text
+@ExpandTextPointers_Menus:
+    push r1
+    sub r1, r1, 0x500
+    cmp r1, 0x0B
+    blt @NormalDescription
+    pop r8 ; get rid of the stored r1
+    sub r1, r1, 0x0B
+    ldr r0, =@ExpandedTexPointers
+    lsl r1, r1, 1
+    ldrh r1, [r0, r1]
+    ldr r0, =0x02300000
+    add r0, r0, r1
+    b 0x02042640
+@NormalDescription:
+    pop r1
+    ldr r0, [r0, r1, lsl 2]
+    b 0x02042640
+.pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;0x021EE5D8
+    ; Loads description numbers for expanded items
+@LoadExpandedDescriptions:
+    @@DescriptionsStart equ ((@ItemDescriptions - @ExpandedTexPointers) / 2)
+    cmp r3, 0xCE ; is this an expanded item
+    blt @@NormalDesc
+    ldr r4, =0x050B
+    sub r3, r3, 0xCE
+    add r4, r4, @@DescriptionsStart
+    add r4, r4, r3
+    bx lr
+@@NormalDesc:
+    add r4, r3, 0xDA
+    bx lr 
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;0x021E7B40
+    ; Changes expanded items to type 2 so they don't cause invalid writes
+@FixExpandedItemTypes:
+    cmp r0, 0xCE ; Expanded item ids
+    blt @@NormalItem
+    mov r1, 2
+    b 0x021E7B60
+@@NormalItem:
+    cmp r0, 0x42
+    b 0x021E7B44
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;0x021A73FC
+@OpenGatesWithKeys:
+    push r0-r3
+    push r1
+    add r0, r4, 0x0200 ; Gate data pointer
+    add r0, r0, 0x6E ; Gate type
+    ldrb r2, [r0, 2] ; Grab the flag of the gate
+    ldrb r0, [r0] ; Grab the Type of the gate.
+    sub r2, r2, 0x28
+
+    mov r3, 1
+    lsl r1, r3, r2 ; Get the bit of the gate
+    ldr r3, =0x020F7185
+    ldrb r3, [r3] ; Event flags for the gates being opened
+    ands r3, r3, r1
+    bne @@Gate_Nocollision ; If this gate is already open, skip the rest entirely
 
 
+    ldr r2, [r5, 0x2C] ; Load the Button's position
+    ldr r3, = 0x40000 ; Distance from the button to the gate
+    cmp r0, 2
+    bne @@NormalGate
+    lsr r3, r3, 1 ; Gate 2 specifically has a halved position
+@@NormalGate:
+    cmp r0, 1
+    bgt @@LeftButton
+@@RightButton:
+    rsb r3, r3, 0 ; If the button is on the right, invert the distance
+@@LeftButton:
+    add r2, r2, r3 ; Add button position + distance to get the gate's position
+
+    sub r1, r2, 0x15000
+    cmp r0, 0
+    bne @@SkipLeftButtonExtraGate
+    sub r1, r1, 0x10000
+@@SkipLeftButtonExtraGate:
+    cmp r12, r1
+    blt @@Gate_NoCollision
+    add r1, r2, 0x17000
+    cmp r0, 3
+    bne @@SkipRightButtonExtraGate
+    add r1, r1, 0x17000
+@@SkipRightButtonExtraGate:
+    cmp r12, r1
+    bgt @@Gate_Nocollision
+    ; We have collided with the gate's X-position
+    pop r1
+    ldr r3, [r1, 0x30] ; Soma Y-pos
+    ldr r1, [r5, 0x30] ; Button Y-pos
+    sub r1, r1, 0x20000
+    cmp r3, r1
+    blt @@Gate_NoVertColl
+    ; This should run when we are NOT above the gate
+    pop r0-r3
+    add r0, r4, 0x0200
+    b 0x021A7490
+@@Gate_Nocollision:
+    pop r1
+@@Gate_NoVertColl:
+    pop r0-r3
+    ldr r3, [r1, 0x30]
+    cmp r2, 0
+    b 0x021A7400
+    .pool
+
+
+.endarea
 .close

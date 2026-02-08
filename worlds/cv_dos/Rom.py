@@ -12,7 +12,7 @@ from .music_randomizer import area_music_randomizer, boss_music_randomizer
 from .synthesis_randomizer import write_synthesis
 from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
-from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel
+from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
 from BaseClasses import ItemClassification
 
@@ -225,12 +225,15 @@ def patch_rom(world, rom, player: int, code_patch):
         boss_music_randomizer(world, rom)
 
     if world.options.randomize_red_soul_walls:
-        rom.write_bytes(0x2F6DE06, bytearray([0x01])) #Tell the rom we have this on
+        rom.write_bytes(0x2F6DE06, bytearray([0x01])) # Tell the rom we have this on
 
         rom.write_bytes(0x158BC0, bytearray([global_soul_table.index(world.red_soul_walls[0])]))
         rom.write_bytes(0x158BBA, bytearray([global_soul_table.index(world.red_soul_walls[1])]))
         rom.write_bytes(0x158BB4, bytearray([global_soul_table.index(world.red_soul_walls[2])]))
         rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
+
+    if world.options.gate_items == GateOptions.option_buttonsanity:
+        rom.write_bytes(0x2F6DE07, bytearray([0x01])) # Enables Button Check Mode
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
@@ -380,7 +383,7 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
         if hash_us != basemd5.hexdigest():
-            raise Exception('Supplied Base Rom does not match known MD5 for US(1.0) release. '
+            raise Exception('Supplied Base Rom does not match known MD5 for US release. '
                             'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
     return base_rom_bytes
