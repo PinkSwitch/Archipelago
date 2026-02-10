@@ -3,6 +3,7 @@ from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
 from .bullet_wall_randomizer import set_souls_for_walls
 from .synthesis_randomizer import randomize_synthesis
+from .boss_randomizer import randomize_bosses
 from BaseClasses import ItemClassification
 
 def setup_game(world):
@@ -27,6 +28,9 @@ def setup_game(world):
     set_souls_for_walls(world)
     place_souls(world)
     randomize_synthesis(world)
+
+    if world.options.boss_shuffle:
+        randomize_bosses(world)
 
 
 def place_static_items(world):

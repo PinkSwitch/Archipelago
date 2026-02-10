@@ -241,6 +241,78 @@ b @CeliaEventHandler
     bl @CheckPassiveSoulEaterRing
 
 .close
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;BOSS FLAGS GO HERE
+.open "ftc/overlay9_23", 0x022FF9C0
+    .org 0x02300834
+        bl @SetFlag_Balore
+.close
+
+.open "ftc/overlay9_1", 0x02230A00
+    .org 0x0225B3D4
+        bl @SetFlag_Dario
+
+    .org 0x02243FC8
+        bl @SetFlag_Aguni
+.close
+
+.open "ftc/overlay9_25", 0x022FF9C0
+    .org 0x022FFDC4
+        bl @SetFlag_PuppetMaster
+.close
+
+.open "ftc/overlay9_26", 0x022FF9C0
+    .org 0x022FFD0C
+        bl @SetFlag_Rahab
+.close
+
+.open "ftc/overlay9_29", 0x022FF9C0
+    .org 0x02300CE0
+        bl @SetFlag_Malphas
+.close
+
+.open "ftc/overlay9_30", 0x022FF9C0
+    .org 0x02300BB8
+        b @SetFlag_FlyingArmor
+.close
+
+.open "ftc/overlay9_33", 0x022FF9C0
+    .org 0x02301558
+        bl @SetFlag_Zephyr
+.close
+
+.open "ftc/overlay9_34", 0x022FF9C0
+    .org 0x02302388
+        bl @SetFlag_Death
+.close
+
+.open "ftc/overlay9_35", 0x022FF9C0
+    .org 0x02305728
+        bl @SetFlag_Paranoia
+.close
+
+.open "ftc/overlay9_36", 0x022FF9C0
+    .org 0x022FFFE0
+        bl @SetFlag_Gergoth
+.close
+
+.open "ftc/overlay9_37", 0x022FF9C0
+    .org 0x022FFF38
+        bl @SetFlag_BatCompany
+.close
+
+.open "ftc/overlay9_39", 0x022FF9C0
+    .org 0x02300364
+        bl @SetFlag_Abaddon
+.close
+
+.open "ftc/overlay9_40", 0x022FF9C0
+    .org 0x02300D0C
+        bl @SetFlag_Dimitrii
+.close
+    
+
 .open "ftc/overlay9_41", @Overlay41Start
 
 .org @FreeSpace
@@ -551,6 +623,34 @@ b @CeliaEventHandler
 .dh 0x0000
 .dw 0
 
+@BossFlag_FlyingArmor:
+.dh 0x0002 ; Flying Armor
+@BossFlag_Balore:
+.dh 0x0004 ; Balore
+@BossFlag_Dimitrii:
+.dh 0x0008 ; Dimitrii
+@BossFlag_Malphas:
+.dh 0x0010 ; Malphas
+@BossFlag_Dario:
+.dh 0x0020 ; Dario 1
+@BossFlag_PuppetMaster:
+.dh 0x0040 ; Puppet Master
+@BossFlag_Gergoth:
+.dh 0x0080 ; Gergoth
+@BossFlag_Rahab:
+.dh 0x0100 ; Rahab
+@BossFlag_Zephyr:
+.dh 0x0200 ; Zephyr
+@BossFlag_BatCompany:
+.dh 0x0400 ; Bat Company
+@BossFlag_Paranoia:
+.dh 0x1000
+@BossFlag_Aguni:
+.dh 0x0800
+@BossFlag_Death:
+.dh 0x2000
+@BossFlag_Abaddon:
+.dh 0x8000
 
 
 .align 4
@@ -1848,6 +1948,119 @@ b @CeliaEventHandler
     cmp r2, 0x38
     bx lr
 .pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@SetFlag_FlyingArmor:
+    push r1
+    ldr r1, = @BossFlag_FlyingArmor
+    ldrh r1, [r1]
+    orr r14, r14, r1
+    pop r1
+    b 0x02300BBC
+@SetFlag_Balore:
+    push r1
+    ldr r1, = @BossFlag_Balore
+    ldrh r1, [r1]
+    orr r8, r8, r1
+    pop r1
+    bx lr
+
+@SetFlag_Dimitrii:
+    push r1
+    ldr r1, = @BossFlag_Dimitrii
+    ldrh r1, [r1]
+    orr r2, r2, r1
+    pop r1
+    bx lr
+
+@SetFlag_Malphas:
+    push r1
+    ldr r1, = @BossFlag_Malphas
+    ldrh r1, [r1]
+    orr r4, r4, r1
+    pop r1
+    bx lr
+
+@SetFlag_Dario:
+    push r2
+    ldr r2, = @BossFlag_Dario
+    ldrh r2, [r2]
+    orr r1, r1, r2
+    pop r2
+    bx lr
+
+@SetFlag_PuppetMaster:
+    push r2
+    ldr r2, = @BossFlag_PuppetMaster
+    ldrh r2, [r2]
+    orr r1, r1, r2
+    pop r2
+    bx lr
+
+@SetFlag_Gergoth:
+    push r2
+    ldr r2, = @BossFlag_Gergoth
+    ldrh r2, [r2]
+    orr r6, r6, r2
+    pop r2
+    bx lr
+
+@SetFlag_Rahab:
+    push r2
+    ldr r2, = @BossFlag_Rahab
+    ldrh r2, [r2]
+    orr r1, r1, r2
+    pop r2
+    bx lr
+
+@SetFlag_Zephyr:
+    push r1
+    ldr r1, = @BossFlag_Rahab
+    ldrh r1, [r1]
+    orr r2, r2, r1
+    pop r1
+    bx lr
+
+@SetFlag_BatCompany:
+    push r1
+    ldr r1, = @BossFlag_BatCompany
+    ldrh r1, [r1]
+    orr r12, r12, r1
+    pop r1
+    bx lr
+
+@SetFlag_Paranoia:
+    push r1
+    ldr r1, = @BossFlag_Paranoia
+    ldrh r1, [r1]
+    orr r5, r5, r1
+    pop r1
+    bx lr
+
+@SetFlag_Aguni:
+    push r2
+    ldr r2, = @BossFlag_Aguni
+    ldrh r2, [r2]
+    orr r1, r1, r2
+    pop r2
+    bx lr
+
+@SetFlag_Death:
+    push r2
+    ldr r2, = @BossFlag_Death
+    ldrh r2, [r2]
+    orr r7, r7, r2
+    pop r2
+    bx lr
+
+@SetFlag_Abaddon:
+    push r2
+    ldr r2, = @BossFlag_Abaddon
+    ldrh r2, [r2]
+    orr r3, r3, r2
+    pop r2
+    bx lr
+.pool
+
 
 .endarea
 .close

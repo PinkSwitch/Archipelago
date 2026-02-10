@@ -171,6 +171,10 @@ class HardMode(Toggle):
        There are no checks exclusive to Hard Mode."""
     display_name = "Hard Mode"
 
+class BossShuffle(Toggle):
+    """Randomizes boss fights."""
+    display_name = "Boss Shuffle"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -214,6 +218,7 @@ class DoSOptions(PerGameCommonOptions):
     passive_soul_eater_ring: PassiveSoulEaterRing
     gate_items: GateItems
     hard_mode: HardMode
+    boss_shuffle: BossShuffle
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -253,7 +258,8 @@ dos_option_groups = [
     OptionGroup("Enemy Settings", [
         ShuffleDrops,
         ExperiencePercent,
-        HardMode
+        HardMode,
+        BossShuffle
 
     ]),
 
