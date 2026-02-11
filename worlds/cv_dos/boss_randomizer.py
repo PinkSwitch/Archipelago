@@ -30,7 +30,6 @@ def randomize_bosses(world):
     }
       # TODO! Have bosses check the NEW flag when spawning, as well as when being defeated
       # Instead of what I was doing before. Have a list of all the bosses in order. Use the index, and have a Base Address where the flags START.
-      # Did Puppet Master set his flag TWICE?
 
 
 
@@ -52,7 +51,6 @@ def randomize_bosses(world):
 # - Puppet master needs to be in a 2-tile wide room
 # - Rahab needs to be in a 2-tile wide room
 # - Malphas, Dimitrii, Dario, Gergoth, Zephy, Paranoia, and Abaddon sink in Rahab's room.
-# - I need to change the Defeat flag to the ORIGINAL boss's defeat flag so that I don't have to change the door at all
 # - Apparently Puppet master's wall is too thick for some bosses, so it needs to be thinned out. Figure out what DSVania does in move_puppet_master_wall
 # - Implement the code that moves and changes balore to face the player
 # - game.fs.write(0x0225A988, [0xE1A00000].pack("V")) # nop Dario 1 might trigger the Aguni fight in a mirror. Will this affect any boss rooms?
@@ -69,10 +67,21 @@ def randomize_bosses(world):
 # Death is really really fucked up and i might need to delete objects from any room he spawns in
 # ON second thought, it might be that Dimitrii/Dario's rooms don't open after beating them. I wonder if maybe I can hook into the Julius Mode check that skips their cutscenes
 # Consider NOPing out 0x02300808, which creates Balore's ice blocks after defeat
-
+# Dario 2 probably SPAWNS aguni manually, and the one in the room is probably used for Julius mode. yes. aguni isnt even in.
+# I just realized having a different boss in the mirror is going to fuck with the overlays REALLY REALLY BAD. FIGURE THAT OUT.
+# Set SPAWN flags
+# Balore in LV is WEIRD, he tries to spawn on the left side of the room, the camera's fucked up. hmm. can i fix this?
+# There's code called LoadOverlay. Maybe I can call this during the Mirror transition?
 
 # CURRENT NOTES!
-# I have all of the boss Set flags done. I need to test that they all work. Going down the list, I'm at Puppet master currently.
-# Puppet master sets flag 0x40 AFTER the call, so im gonna need to fix that. Maybe I can just NOP it and be fine? 022FFF4C
+# Aguni sets the flag twice. Check thsi again after finishing the rest
+# Aguni reads the flag oddly. Make sure Throne Dario doesn't interfere with this?
+# I may need to adjust Dario's code PROPERLY, to make sure Throne Room dario doesn't get fucked with. He reads the same block, so I can't hardcode the Dario flag there like I normally can.
+# Dario's flag is read from a var in r2. Figure out where that's coming from originally.
+# For EVERY OTHER BOSS (except paranoia), the input flag is in r1. I can use this to calculate what boss it is for sure. that's my next goal.
+
 # I just realized I'm going to need to go through every. single. boss. again. And make sure they're CHECKING the new flag when spawning.
 # I should make THAT into a subroutine
+# Most bosses use r1 (except dario.) Gergoth can't change r2 though
+# I need to figure out a list/how to change the flag now that i have static non-encoded flags
+# Check EVERY COMBINATION OF BOSSES for oddities. MANUALLY.
