@@ -1,4 +1,4 @@
-
+from dataclasses import dataclass
 
 @dataclass
 class DoSBoss:
@@ -6,37 +6,97 @@ class DoSBoss:
     assigned_soul: int # Which Soul is assigned to the SLOT's original boss. Soul randomization reworks how souls are given so this needs to stay the same.
     floor_height: int # The SLOT's room floor height
     room_width: int # The SLOT's room width
-    flag_address_pointer: int # Pointer to where the boss's Death Flag is applied
     boss_address_pointer: int # Which adress we write to to place the boss
-    old_boss: str # The SLOT's original boss
-    new_boss: str = "NULL" # Which boss has been randomized to be here
+    new_boss: str = "None" # Which boss has been randomized to be here
 
 def randomize_bosses(world):
+    boss_pool = [
+        "Flying Armor",
+        "Balore",
+        "Dimitrii",
+        "Malphas",
+        "Dario",
+        "Puppet Master",
+        "Gergoth",
+        "Zephyr",
+        "Rahab",
+        "Bat Company",
+        "Paranoia",
+        "Aguni",
+        "Death",
+        "Abaddon"
+    ]
+
+    available_boss_slots = [
+        "Lost Village",
+        "Wizardry Lab",
+        "Dark Chapel",
+        "Dark Chapel 2",
+        "Garden of Madness",
+        "Demon Guest House",
+        "Condemned Tower",
+        "Cursed Clock Tower",
+        "Subterranean Hell",
+        "Silenced Ruins",
+        "Demon Guest House Upper",
+        "The Pinnacle",
+        "Mine of Judgement",
+        "The Abyss"
+    ]
+
+
     world.boss_slots = {
-        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0x3817F8, 0x, "Flying Armor"),  # Flying Armor
-        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0x364874, 0x, "Balore"),  # Balore
-        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0x3B3B4C, 0x, "Dimitrii"), # Dimitrii
-        "Dark Chapel 2": DoSBoss(0x10, 0x75, 2, 2, 0x37E920, 0x, "Malphas"),  # Malphas
-        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0x187FD4, 0x, "Dario"),  # Dario 1 Make sure this is the right address for the flag. Seems low.
-        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0x36AA04, 0x, "Puppet Master"),  # Puppet Master
-        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0x30E920, 0x, "Gergoth"),  # Gergoth
-        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0x38D198, 0x, "Zephyr"),  # Zephyr | 2C
-        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0x37054C, 0x, "Rahab"),  # Rahab | 1C
-        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0x, 0x, "Bat Company"),  # Bat Company
-        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0x, 0x, "Paranoia"), # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x, 0x, "Aguni"), # Aguni, not Dario 2
-        "Mine of Judgement": DoSBoss(0x2000, 0x58, 1, 2, 0x, 0x, "Death"), # Death
-        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0x, 0x, "Abaddon") # Abaddon
+        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8),  # Flying Armor
+        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0xAD0B0),  # Balore
+        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58), # Dimitrii
+        "Dark Chapel 2": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04),  # Malphas
+        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500),  # Dario 1 Make sure this is the right address for the flag. Seems low.
+        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0),  # Puppet Master
+        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0),  # Gergoth
+        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0),  # Zephyr
+        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C),  # Rahab
+        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0),  # Bat Company
+        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8), # Paranoia
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x0), # Aguni, not Dario 2
+        "Mine of Judgement": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360), # Death
+        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260) # Abaddon
     }
-      # TODO! Have bosses check the NEW flag when spawning, as well as when being defeated
-      # Instead of what I was doing before. Have a list of all the bosses in order. Use the index, and have a Base Address where the flags START.
+
+    rahab_boss = world.random.choice([
+        "Flying Armor",
+        "Balore",
+        "Puppet Master",
+        "Rahab",
+        "Bat Company",
+        "Aguni",
+        "Death"
+    ])
+
+    world.boss_slots["Subterranean Hell"].new_boss = rahab_boss  # Any other boss in Rahab's room will sink below the water level
+    boss_pool.remove(rahab_boss)
+
+    for boss in boss_pool:
+        if boss == "Balore":
+            # Balore needs to have a room with a 1-tile floor height, or there won't be room to dodge his laser attack
+            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].floor_height == 1]
+        elif boss in ["Puppet Master", "Rahab"]:
+             # Puppet Master and Rahab need to be in a room that is 2-tiles wide.
+            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 2]
+        else:
+            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
+            
+        new_room = world.random.choice(valid_rooms)
+        world.boss_slots[new_room] = boss  # All other combinations are valid
+    print(world.boss_slots)
 
 
 
     # Balore needs to have a 1-tile floor
     # Puppet master needs a 2-tile room
     # Rahab needs a 2-tile room
-    # Malphas, Dimitrii, Dario, Gergoth, Zephyr, Paranoia, and Abaddon cannot spawn in Rahab's room
+
+    # TODO! Have bosses check the NEW flag when spawning, as well as when being defeated
+    # Instead of what I was doing before. Have a list of all the bosses in order. Use the index, and have a Base Address where the flags START.
 
 
 # NOTES!
@@ -72,16 +132,33 @@ def randomize_bosses(world):
 # Set SPAWN flags
 # Balore in LV is WEIRD, he tries to spawn on the left side of the room, the camera's fucked up. hmm. can i fix this?
 # There's code called LoadOverlay. Maybe I can call this during the Mirror transition?
+# For room-center bosses, X pos is room_with * 100 / 2
 
 # CURRENT NOTES!
 # Aguni sets the flag twice. Check thsi again after finishing the rest
-# Aguni reads the flag oddly. Make sure Throne Dario doesn't interfere with this?
-# I may need to adjust Dario's code PROPERLY, to make sure Throne Room dario doesn't get fucked with. He reads the same block, so I can't hardcode the Dario flag there like I normally can.
-# Dario's flag is read from a var in r2. Figure out where that's coming from originally.
-# For EVERY OTHER BOSS (except paranoia), the input flag is in r1. I can use this to calculate what boss it is for sure. that's my next goal.
+# Boss spawn flags are now SET correctly.
+# Dario loads his flag dynamically. I need to figure out where that comes from and make sure I only change the flag for Dario 1, and leave Dario 2 alone.
 
-# I just realized I'm going to need to go through every. single. boss. again. And make sure they're CHECKING the new flag when spawning.
-# I should make THAT into a subroutine
-# Most bosses use r1 (except dario.) Gergoth can't change r2 though
-# I need to figure out a list/how to change the flag now that i have static non-encoded flags
+
 # Check EVERY COMBINATION OF BOSSES for oddities. MANUALLY.
+
+
+
+#TESTED COMBINATIONS;
+
+#Flying Armor ROOM
+# Flying Armor - ✓
+# Balore - ✓
+# Dimitrii - 
+# Malphas - 
+# Dario - 
+# Puppet Master -
+# Gergoth - 
+# Zephyr - 
+# Rahab - 
+# Bat Company - 
+# Paranoia - 
+# Aguni - 
+# Death - 
+# Abaddon - 
+
