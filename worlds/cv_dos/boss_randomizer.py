@@ -119,9 +119,10 @@ def write_bosses(world, rom):
 
     for room in world.boss_slots:
         slot = world.boss_slots[room]
-        boss = world.boss_data[slot.new_boss]
-        rom.write_bytes(slot.boss_address_pointer + 6, bytearray([boss.enemy_id])) # Write the new boss into the room
-        rom.write_bytes(0x2F6DE1C + boss.flag_index, struct.pack("H", slot.flag)) # Write the room's flag onto the new boss so the room still works properly
+        boss = slot.new_boss
+        data = world.boss_data[boss]
+        rom.write_bytes(slot.boss_address_pointer + 6, bytearray([data.enemy_id])) # Write the new boss into the room
+        rom.write_bytes(0x2F6DE1C + data.flag_index, struct.pack("H", slot.flag)) # Write the room's flag onto the new boss so the room still works properly
         var_a = 0
         var_b = 0
         x_pos = 0
@@ -139,7 +140,7 @@ def write_bosses(world, rom):
         elif boss == "Malphas":
             x_pos = (slot.room_width * 0x100) / 2 # Center horizontally
         elif boss == "Dario":
-            if room.room_width == 1:
+            if slot.room_width == 1:
                 rom.write_bytes(0x18876C, struct.pack("I", 0xE1A02800)) # Halve Dario's teleport range so he doesn't go OOB.
 
         elif boss == "Puppet Master":
@@ -152,7 +153,7 @@ def write_bosses(world, rom):
                 y_pos = 0x70 # Move him down a bit so he's easier to hit in the tall room
 
             if room != "Demon Guest House": # Update hardcoded position for some extra entities
-                print("WHAT!?")
+                ????
         elif boss == "Gergoth":
             if room == "Condemned Tower":
                 var_a = 1 # Falling Gergoth, for breaking the tower floors
@@ -176,7 +177,8 @@ def write_bosses(world, rom):
             var_a = 1
             x_pos = 0x80
             y_pos = 0xB0
-        
+
+        x_pos = int(x_pos) # Convert if it was centered
         # The X/Y pos here are overrides. If none is specified, use the vanilla value
         if x_pos:
             rom.write_bytes(slot.boss_address_pointer, struct.pack("H", x_pos))
