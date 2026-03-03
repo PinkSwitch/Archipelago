@@ -14,6 +14,7 @@ class Goal(Choice):
     option_abyss = 1
     option_abyss_plus = 2
     default = 0
+    display_name = "Goal"
 
 class ReplaceMenaceWithSoma(Toggle):
     """Replaces Menace with Soma-Dracula"""
@@ -43,6 +44,7 @@ class StartingWeapon(TextChoice):
     option_random_base = 0
     option_random_any = 1
     default = "Knife"
+    display_name = "Starting Weapon"
 
 class FixLuck(DefaultOnToggle):
     """Fixes how the Luck stat is applied.
@@ -71,6 +73,7 @@ class SoulRandomizer(Choice):
     option_shuffled = 1
     option_soulsanity = 2
     default = 0
+    display_name = "Soul Randomizer"
 
 class SoulsanityLevel(Choice):
     """The maximum tier of soul rarity that have Locations on them.
@@ -79,6 +82,7 @@ class SoulsanityLevel(Choice):
     option_medium = 1
     option_rare = 2
     default = 0
+    display_name = "Soulsanity Level"
 
 class GuaranteedSouls(OptionSet):
     """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool.

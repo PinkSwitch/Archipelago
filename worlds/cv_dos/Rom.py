@@ -9,6 +9,7 @@ from .in_game_data import (global_weapon_table, base_weapons, valid_random_start
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
                            boss_list, enemy_table, button_item_table)
 from .music_randomizer import area_music_randomizer, boss_music_randomizer
+from .boss_randomizer import write_bosses
 from .synthesis_randomizer import write_synthesis
 from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
@@ -219,6 +220,9 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(rare_drop_address, bytearray([rare_item]))
 
     write_synthesis(world, rom)
+
+    if world.options.boss_shuffle:
+        write_bosses(world, rom)
 
     if world.options.area_music_randomizer:
         area_music_randomizer(world, rom)
