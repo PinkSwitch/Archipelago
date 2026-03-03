@@ -153,7 +153,53 @@ def write_bosses(world, rom):
                 y_pos = 0x70 # Move him down a bit so he's easier to hit in the tall room
 
             if room != "Demon Guest House": # Update hardcoded position for some extra entities
-                ????
+                # Iron maidens------------------------------------------
+                rom.write_bytes(0x36FF90, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FF92, struct.pack("H", y_pos - 0x38))
+
+                rom.write_bytes(0x36FF94, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FF96, struct.pack("H", y_pos + 0x38))
+
+                rom.write_bytes(0x36FF98, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FF9A, struct.pack("H", y_pos - 0x38))
+
+                rom.write_bytes(0x36FF9C, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FF9F, struct.pack("H", y_pos + 0x38))
+                # Platforms----------------------------------------------
+                rom.write_bytes(0x36FF24, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FF26, struct.pack("H", y_pos - 0x18))
+
+                rom.write_bytes(0x36FF28, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FF2A, struct.pack("H", y_pos - 0x18))
+                # Player Teleport----------------------------------------
+                rom.write_bytes(0x36FFB0, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FFB2, struct.pack("H", y_pos - 0x38 + 0x17))
+
+                rom.write_bytes(0x36FFB4, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FFB6, struct.pack("H", y_pos + 0x38 + 0x17))
+
+                rom.write_bytes(0x36FFB8, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FFBA, struct.pack("H", y_pos - 0x38 + 0x17))
+
+                rom.write_bytes(0x36FFBC, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FFBF, struct.pack("H", y_pos + 0x38 + 0x17))
+                # Player damage effect------------------------------------
+                rom.write_bytes(0x36FFD0, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FFD2, struct.pack("H", y_pos - 0x38 + 0x14))
+
+                rom.write_bytes(0x36FFD4, struct.pack("H", x_pos + 0x68))
+                rom.write_bytes(0x36FFD6, struct.pack("H", y_pos + 0x38 + 0x14))
+
+                rom.write_bytes(0x36FFD8, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FFDA, struct.pack("H", y_pos - 0x38 + 0x14))
+
+                rom.write_bytes(0x36FFDC, struct.pack("H", x_pos - 0x68))
+                rom.write_bytes(0x36FFDF, struct.pack("H", y_pos + 0x38 + 0x14))
+
+                # NOP out P.M's camera lock in other rooms
+                rom.write_bytes(0x36A85C, struct.pack("I", 0xE1A00000))
+                rom.write_bytes(0x36A680, struct.pack("I", 0xE1A00000))
+
         elif boss == "Gergoth":
             if room == "Condemned Tower":
                 var_a = 1 # Falling Gergoth, for breaking the tower floors
