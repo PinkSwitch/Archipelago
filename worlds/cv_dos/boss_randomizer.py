@@ -56,35 +56,35 @@ def randomize_bosses(world):
     world.boss_slots = {
         "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8, 1),  # Flying Armor
         "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0xAD0B0, 2),  # Balore
-        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, ?), # Dimitrii
-        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, ?),  # Malphas
-        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, ?),  # Dario 1 Make sure this is the right address for the flag. Seems low.
-        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0, ?),  # Puppet Master
-        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0, ?),  # Gergoth
-        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0, ?),  # Zephyr
-        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, ?),  # Rahab
-        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, ?),  # Bat Company
-        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, ?), # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, ?), # Aguni, not Dario 2
-        "Mine of Judgement": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, ?), # Death
-        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, ?) # Abaddon
+        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, 3), # Dimitrii
+        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, 4),  # Malphas
+        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, 5),  # Dario 1 Make sure this is the right address for the flag. Seems low.
+        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0, 6),  # Puppet Master
+        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0, 7),  # Gergoth
+        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0, 9),  # Zephyr
+        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, 8),  # Rahab
+        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10),  # Bat Company
+        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12), # Paranoia
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, 11), # Aguni, not Dario 2
+        "Mine of Judgement": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13), # Death
+        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15) # Abaddon
     }
 
     world.boss_data = {
         "Flying Armor": DoSBossData(0x65, 0, [0x3807BC, 0x381764]),
-        "Balore": DoSBossData(0x66, 2),
-        "Malphas": DoSBossData(0x67, 6),
-        "Dimitrii": DoSBossData(0x68, 4),
-        "Dario": DoSBossData(0x69, 8),
-        "Puppet Master": DoSBossData(0x6A, 10),
-        "Rahab": DoSBossData(0x6B, 14),
-        "Gergoth": DoSBossData(0x6C, 12),
-        "Zephyr": DoSBossData(0x6D, 16),
-        "Bat Company": DoSBossData(0x6E, 18),
-        "Paranoia": DoSBossData(0x6F, 22),
-        "Aguni": DoSBossData(0x70, 20),
-        "Death": DoSBossData(0x71, 24),
-        "Abaddon": DoSBossData(0x72, 26)
+        "Balore": DoSBossData(0x66, 2, [0x363D30, 0x364708]),
+        "Malphas": DoSBossData(0x67, 6, [0x37D72C, 0x37E884]),
+        "Dimitrii": DoSBossData(0x68, 4, [0]),
+        "Dario": DoSBossData(0x69, 8, [0]),
+        "Puppet Master": DoSBossData(0x6A, 10, [0x36A860, 0x36A958]),
+        "Rahab": DoSBossData(0x6B, 14, [0x370388, 0x3704A0]),
+        "Gergoth": DoSBossData(0x6C, 12, [0x39DAF0, 0x39EE40]),
+        "Zephyr": DoSBossData(0x6D, 16, [0x38B740, 0x38D108]),
+        "Bat Company": DoSBossData(0x6E, 18, [0x3A6AAC, 0x3A7370]),
+        "Paranoia": DoSBossData(0x6F, 22, [0x39D630, 0x39A7B8]),
+        "Aguni": DoSBossData(0x70, 20, [0x170994, 0x170B04]),
+        "Death": DoSBossData(0x71, 24, [0x390100, 0x392920]),
+        "Abaddon": DoSBossData(0x72, 26, [0x3B0EB0, 0x3B16FC])
     }
 
     rahab_boss = world.random.choice([
@@ -116,8 +116,9 @@ def randomize_bosses(world):
         world.boss_slots[new_room].new_boss = boss
 
 def write_bosses(world, rom):
-    rom.write_bytes(0xAD0C1, bytearray([0x00])) # Delete the Balore pre-boss cutscene, it breaks the game
-    rom.write_bytes(0xB2B69, bytearray([0x00])) # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
+    rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
+    rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
+    rom.write_bytes(0x, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
 
     copy_boss_stats(world, rom)
 
@@ -240,8 +241,11 @@ def write_bosses(world, rom):
 
         rom.write_bytes(slot.boss_address_pointer + 8, var_a)
         rom.write_bytes(slot.boss_address_pointer + 10, var_b)
-        for pointer in data.seal_index_pointers:
-            rom.write_bytes(pointer, slot.seal_index)
+        for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
+            if pointer:
+                rom.write_bytes(pointer, slot.seal_index) # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
+
+        rom.copy_bytes(0x3FFFCC0 + (int((data.flag_index / 2) * 9)), 9, address + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
     
     for i in range(126):
         rom.write_bytes(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
@@ -259,9 +263,7 @@ def copy_boss_stats(world, rom):
 
 # NOTES!
 # Bosses need to check the new flag when spawning, too...
-# - i should think of how I want to handle Boss Seals. Should I change the seal on the boss, or neither? Seals should match the doors. Make sure to handle this for Seal Rando
 # - Flying Armor (and maybe other bosses) apparently require a soul drop, so they might not work in Dimitrii/Dario room
-# - Scale stats for what area they're in? I can maybe do order math here. Just replace them with the original boss's stats
 # - Apparently Puppet master's wall is too thick for some bosses, so it needs to be thinned out. Figure out what DSVania does in move_puppet_master_wall
 # Bosses in the tower need to only spawn in the top floor room
 # ON second thought, it might be that Dimitrii/Dario's rooms don't open after beating them. I wonder if maybe I can hook into the Julius Mode check that skips their cutscenes
@@ -269,10 +271,7 @@ def copy_boss_stats(world, rom):
 # Boss Rush versions don't play music. Hmmm?
 # - Delete the Right boss door in th e Throne room
 # Set the Boss THrone flag
-# Consider the fact that I want to handle Seals through this. I should always run this code, just make sure bosses are vanilla if off.
-# Have a different function that writes seals, yes
 # I want to check the cutscene actors for Dario/Dimitrii's fight. I want to add a condition where if Boss Shuffle is on, unset the boss flag if the defeat flag is set.
-# BossData can have a SealAddress pointer, and we right world.boss_seals[boss] to it.
 # Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
 # OBSERVATION! I can maybe fix my flag issues by bailing out of Object69Create in its ENTIRETY, after setting the InThroneFlag.
 # MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
@@ -280,13 +279,13 @@ def copy_boss_stats(world, rom):
 # Open the second boss door in the throne room if the player doesn't have Paranoia
 # Reset the InThroneRoom flag when leaving
 # Fix the pre-boss flags, maybe stop the eventcreate from running at all
+# Put the shuffled bosses in the spoiler log
 
 # CURRENT NOTES!
 # Dario loads his flag dynamically. I need to figure out where that comes from and make sure I only change the flag for Dario 1, and leave Dario 2 alone.
 
 # - Fix the flags. The first one (whatever address) should be 0x02 specifically to fix the battle
 # - Make sure to reset the InBoss flag and the BossThrone flag when leaving the room
-# - Failsafe for the orb to spawn near Soma if the actual coordinates didn't load
 # - I need to get rid of the left wall in P.M's room
 
 
@@ -296,13 +295,11 @@ def copy_boss_stats(world, rom):
     # Fix Dario flag
     # Fix throne room
     # Fix Puppet Master's wall if needed
-    # Move orb spawn coords
     # Test every boss in every slot.
 
 
 #SEAL DATA;
-# I need to find addresses for both preload AND load. ANd make sure r1 is 1 and not copied from r0.
 # Flying Armor - 0222F294, seal pointer 0222F290, index 1, 02300B24, 022FFB7C
 # Balore - 0222F298, index 2, 023006C8
-# Okay I see how this is going. I need to change each BOSS's seal Index.
 #OK!!!!!!!!!!! I change the Seal Index for each boss as part of boss rando, but change the seal NUMBER for seal rando.
+# 0222F290 is the SealTable

@@ -93,6 +93,52 @@
 .org 0x0204263C
     b @ExpandTextPointers_Menus
 
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;Boss pointers
+.org 0x02079AE4
+    .dw @Tryspawn_FlyingArmor
+
+.org 0x02079B08
+    .dw @Tryspawn_Balore
+
+.org 0x02079B2C
+    .dw @Tryspawn_Malphas
+
+.org 0x02079B50
+    .dw @Tryspawn_Dimitrii
+
+.org 0x02079B74
+    .dw @Tryspawn_Dario
+
+.org 0x02079B98
+    .dw @Tryspawn_PuppetMaster
+
+.org 0x02079BBC
+    .dw @Tryspawn_Rahab
+
+.org 0x02079BE0
+    .dw @Tryspawn_Gergoth
+
+.org 0x02079C04
+    .dw @Tryspawn_Zephyr
+
+.org 0x02079C28
+    .dw @Tryspawn_BatCompany
+
+.org 0x02079C4C
+    .dw @Tryspawn_Paranoia
+
+.org 0x02079C70
+    .dw @Tryspawn_Aguni
+
+.org 0x02079C94
+    .dw @Tryspawn_Death
+
+.org 0x02079CB8
+    .dw @Tryspawn_Abaddon
+
+
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -239,6 +285,32 @@ b @CeliaEventHandler
     ; Passive Soul eater
 .org 0x021C3AA0
     bl @CheckPassiveSoulEaterRing
+;;;;;;;;;;;;;;;;;;;;
+
+.org 0x02215800 ; Remove the failsafe for Magic Seals not loading
+    nop ; Death doesn't have room, and failing this
+    nop ; causes a softlock when randomized.
+
+.org 0x022153DC
+    nop ; Checks seal assets for the post-boss scene. If this fails, the orb never spawns, so delete it
+
+.org 0x021CD6F0
+    bl @ThroneEvent_Skipper
+
+.org 0x0222CA94
+    .dw @ThroneEvent_manager ; Event 69's update code
+
+.org 0x0220F378
+    bl @EndThroneEvent ; Spawns Dario
+
+;.org 0x0219F08C ; Near the end of the create function for object 18 (tower floors)
+ ; b @LoadOrUnloadTowerBoss
+
+ .org 0x0222CA80
+    .dw @DarioEvent_Update
+
+.org 0x0222C8A4
+    .dw @DarioEvent_Create
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -247,6 +319,16 @@ b @CeliaEventHandler
 .open "ftc/overlay9_23", 0x022FF9C0
     .org 0x02300834
         bl @SetFlag_Balore
+
+    .org 0x022FFBA8
+        bl @CheckFlag_Balore
+
+    .org 0x022FFD44
+        b @BaloreFacePlayer
+
+    .org 0x02300808 ; Prevent Balore from spawning ice blocks
+        nop
+
 .close
 
 .open "ftc/overlay9_1", 0x02230A00
@@ -255,61 +337,131 @@ b @CeliaEventHandler
 
     .org 0x02243FC8
         bl @SetFlag_Aguni
+
+    .org 0x0225A684
+        b @CheckFlag_Dario
+
+    .org 0x02243C24
+        bl @CheckFlag_Aguni
+
+    .org 0x02244680
+        nop ; Sets the flag twice?
 .close
 
 .open "ftc/overlay9_25", 0x022FF9C0
     .org 0x022FFDC4
         bl @SetFlag_PuppetMaster
+
+    .org 0x022FFA10
+        bl @CheckFlag_PuppetMaster
+
+    .org 0x022FFF48
+        nop ; Sets the flag twice?
 .close
 
 .open "ftc/overlay9_26", 0x022FF9C0
     .org 0x022FFD0C
         bl @SetFlag_Rahab
+
+    .org 0x022FF9F4
+        bl @CheckFlag_Rahab
+
+    .org 0x022FFE74
+        nop; Sets the flag twice
 .close
 
 .open "ftc/overlay9_29", 0x022FF9C0
     .org 0x02300CE0
         bl @SetFlag_Malphas
+
+    .org 0x022FF9DC
+        bl @CheckFlag_Malphas
 .close
 
 .open "ftc/overlay9_30", 0x022FF9C0
     .org 0x02300BB8
         b @SetFlag_FlyingArmor
+
+    .org 0x022FF9DC
+        bl @CheckFlag_FlyingArmor
+
+    .org 0x02300B28
+        mov r1, 1 ; Make this not copied from r0
 .close
 
 .open "ftc/overlay9_33", 0x022FF9C0
     .org 0x02301558
         bl @SetFlag_Zephyr
+
+    .org 0x022FF9DC
+        bl @CheckFlag_Zephyr
 .close
 
 .open "ftc/overlay9_34", 0x022FF9C0
     .org 0x02302388
         bl @SetFlag_Death
+
+    .org 0x022FF9DC
+        bl @CheckFlag_Death
+
+    .org 0x0230282C
+        mov r6, 0x180 ; Update Death's area detection
+
+    .org 0x02302838
+        mvn r2, 0x180
 .close
 
 .open "ftc/overlay9_35", 0x022FF9C0
     .org 0x02305728
         bl @SetFlag_Paranoia
+
+    .org 0x02305B1C
+        bl @CheckFlag_Paranoia
 .close
 
 .open "ftc/overlay9_36", 0x022FF9C0
     .org 0x022FFFE0
         bl @SetFlag_Gergoth
+
+    .org 0x022FF9DC
+        bl @CheckFlag_Gergoth
+
+    .org 0x022FFAF0 ; Code in Gergoth's initialization that normally floors him in different ways depending on his var A.
+    ; First we simplify the flooring code (to make room for new code) by always doing the same thing instead of having 4 different possibilities for 4 different var As.
+    mov r0, 0B0000h
+    str r0, [r5, 30h] ; Set Gergoth's Y pos to 0xB0.
+    
+    ldr r0, =020CA95Ch
+    ldr r0, [r0] ; Load player's X pos.
+    cmp r0, 80000h ; Check if player came in on the left half of the room.
+    movlt r0, 0C0000h
+    strlt r0, [r5, 2Ch] ; Move Gergoth's X pos to 0xC0, close to the right wall.
+    b 022FFB48h
+    .pool
 .close
 
 .open "ftc/overlay9_37", 0x022FF9C0
     .org 0x022FFF38
         bl @SetFlag_BatCompany
+
+    .org 0x022FF9E0
+        bl @CheckFlag_BatCompany
 .close
 
 .open "ftc/overlay9_39", 0x022FF9C0
     .org 0x02300364
         bl @SetFlag_Abaddon
+
+    .org 0x022FF9DC
+        bl @CheckFlag_Abaddon
 .close
 
 .open "ftc/overlay9_40", 0x022FF9C0
     .org 0x02300D0C
         bl @SetFlag_Dimitrii
+
+    .org 0x022FF9E0
+        bl @CheckFlag_Dimitrii
 .close
     
 
@@ -538,6 +690,48 @@ b @CeliaEventHandler
 .db 0x00, 0x00, 0x00, 0x00 ;
 .db 0x00, 0x00, 0x00, 0x00 ; WizLab West
 
+;;;;;;;;;;;;;;;;;
+@BossFlag_FlyingArmor:
+.dh 0x0002 ; Flying Armor
+@BossFlag_Balore:
+.dh 0x0004 ; Balore
+@BossFlag_Dimitrii:
+.dh 0x0008 ; Dimitrii
+@BossFlag_Malphas:
+.dh 0x0010 ; Malphas
+@BossFlag_Dario:
+.dh 0x0020 ; Dario 1
+@BossFlag_PuppetMaster:
+.dh 0x0040 ; Puppet Master
+@BossFlag_Gergoth:
+.dh 0x0080 ; Gergoth
+@BossFlag_Rahab:
+.dh 0x0100 ; Rahab
+@BossFlag_Zephyr:
+.dh 0x0200 ; Zephyr
+@BossFlag_BatCompany:
+.dh 0x0400 ; Bat Company
+@BossFlag_Aguni:
+.dh 0x0000
+@BossFlag_Paranoia:
+.dh 0x1000
+@BossFlag_Death:
+.dh 0x2000
+@BossFlag_Abaddon:
+.dh 0x8000
+
+@GameFlag_ThroneIsShuffled: ; RESET
+.db 0x01
+
+@RamFlag_ThroneSpecial:
+.db 0x00
+
+@RamFlag_NumBossDoors:
+.db 0x00 ; Tracks if we've spawned a boss door yet
+
+
+.align 4
+
 
 ;EXPANDED TEXT STUFF
 @ExpandedTexPointers:
@@ -622,36 +816,6 @@ b @CeliaEventHandler
 .dh 0x0004 ; Item type
 .dh 0x0000
 .dw 0
-
-@BossFlag_FlyingArmor:
-.dh 0x0002 ; Flying Armor
-@BossFlag_Balore:
-.dh 0x0004 ; Balore
-@BossFlag_Dimitrii:
-.dh 0x0008 ; Dimitrii
-@BossFlag_Malphas:
-.dh 0x0010 ; Malphas
-@BossFlag_Dario:
-.dh 0x0020 ; Dario 1
-@BossFlag_PuppetMaster:
-.dh 0x0040 ; Puppet Master
-@BossFlag_Gergoth:
-.dh 0x0080 ; Gergoth
-@BossFlag_Rahab:
-.dh 0x0100 ; Rahab
-@BossFlag_Zephyr:
-.dh 0x0200 ; Zephyr
-@BossFlag_BatCompany:
-.dh 0x0400 ; Bat Company
-@BossFlag_Paranoia:
-.dh 0x1000
-@BossFlag_Aguni:
-.dh 0x0800
-@BossFlag_Death:
-.dh 0x2000
-@BossFlag_Abaddon:
-.dh 0x8000
-
 
 .align 4
 
@@ -2014,7 +2178,7 @@ b @CeliaEventHandler
 
 @SetFlag_Zephyr:
     push r1
-    ldr r1, = @BossFlag_Rahab
+    ldr r1, = @BossFlag_Zephyr
     ldrh r1, [r1]
     orr r2, r2, r1
     pop r1
@@ -2059,7 +2223,373 @@ b @CeliaEventHandler
     orr r3, r3, r2
     pop r2
     bx lr
+;;;;;;;;;;;;;;;;;;;
+@CheckFlag_FlyingArmor:
+    push r2
+    ldr r2, = @BossFlag_FlyingArmor
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Balore:
+    push r2
+    ldr r2, = @BossFlag_Balore
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Dimitrii:
+    push r2
+    ldr r2, = @BossFlag_Dimitrii
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Malphas:
+    push r2
+    ldr r2, = @BossFlag_Malphas
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Dario: ; TODO! Not this. Dario loads his flag dynamically. find out where.
+    beq @@Dario2
+    ldr r0, [r0]
+    ldr r2, = @BossFlag_Dario
+    ldrh r2, [r2] ; I think this is it?
+    b 0x0225A690
+    ; TODO. figure out what to do/check Dario flag from hyere
+
+@@Dario2:
+    mov r2, 0x0B
+    b 0x0225A688
+
+@CheckFlag_PuppetMaster:
+    push r2
+    ldr r2, = @BossFlag_PuppetMaster
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Gergoth:
+    push r2
+    ldr r2, = @BossFlag_Gergoth
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Zephyr:
+    push r2
+    ldr r2, = @BossFlag_Zephyr
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Rahab:
+    push r2
+    ldr r2, = @BossFlag_Rahab
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_BatCompany:
+    push r2
+    ldr r2, = @BossFlag_BatCompany
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Aguni:
+    push r2
+    ldr r2, = @BossFlag_Aguni
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Paranoia:
+    ldr r2, = @BossFlag_Paranoia
+    ldrh r2, [r2]
+    ands r0, r0, r2
+    bx lr
+
+@CheckFlag_Death:
+    push r2
+    ldr r2, = @BossFlag_Death
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
+
+@CheckFlag_Abaddon:
+    push r2
+    ldr r2, = @BossFlag_Abaddon
+    ldrh r2, [r2]
+    ands r1, r1, r2
+    pop r2
+    bx lr
 .pool
+
+;;;;;;;;;;;;;;;;;;
+;0x021CCb28
+; Skips the Throne Room intro event
+@ThroneEvent_Skipper:
+    push r3, r4
+    ldr r4, =@GameFlag_ThroneIsShuffled
+    ldrb r4, [r4]
+    cmp r4, 0 ; Throne room has dario 2/aguni
+    beq @@PlayNormal
+    ldr r3, =@RamFlag_ThroneSpecial
+    mov r4, 1 ; This controller will be used by enemies
+    strb r4, [r3]
+    ldr r4, = 0x04000300
+    str r4, [r0, 0x0C]
+    pop r3, r4
+    bx lr
+@@PlayNormal:
+    pop r3, r4
+    b 0x021D9CEC
+.pool
+
+; Prevent the throne room event from activating until after the boss is defeated
+;021CCA10
+@ThroneEvent_manager:
+    push r5
+    ldr r5, = @RamFlag_ThroneSpecial
+    ldrb r5, [r5]
+    cmp r5, 0
+    beq @@ThroneEv_End
+    pop r5
+    bx lr
+@@ThroneEv_End:
+    pop r5
+    b 0x021CCA10
+.pool
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ALL boss directs.
+@Tryspawn_FlyingArmor:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFDE8
+    bx lr
+
+@Tryspawn_Balore:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFE48
+    bx lr
+
+@Tryspawn_Malphas:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFB40
+    bx lr
+
+@Tryspawn_Dimitrii:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFC20
+    bx lr
+
+@Tryspawn_Dario:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x0225A930
+    bx lr
+
+@Tryspawn_PuppetMaster:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFC88
+    bx lr
+
+@Tryspawn_Rahab:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFBD0
+    bx lr
+
+@Tryspawn_Gergoth:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFDC8
+    bx lr
+
+@Tryspawn_Zephyr:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFC7C
+    bx lr
+
+@Tryspawn_BatCompany:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFB98
+    bx lr
+
+@Tryspawn_Paranoia:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x02304560
+    bx lr
+
+@Tryspawn_Aguni:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x02243E1C
+    bx lr
+
+@Tryspawn_Death:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFB9C
+    bx lr
+
+@Tryspawn_Abaddon:
+    push lr
+    bl @ThroneBossCheck
+    pop lr
+    beq 0x022FFB78
+    bx lr
+
+; Check if the throne condition is on, and if it is, check the Mirror Flag
+@ThroneBossCheck:
+    push r0
+    ldr r0, =@RamFlag_ThroneSpecial
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End ; If this is zero, we can just ignore this entirely
+    ldr r0, = 0x020F6DF9
+    ldrb r0, [r0] ; Spawn the entity if we're in the mirror world
+    cmp r0, 3
+@@End:
+    pop r0
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;;;;    
+@EndThroneEvent:
+    strb r3, [r5, 0x09]
+    push r0-r4, lr
+    ldr r0, =@RamFlag_ThroneSpecial
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, =0x020F7189 ; Load the story flag that gets set by beating Dario, and set it 
+    ldrb r1, [r0]
+    mov r2, 0xA0
+    orr r2, r2, r1
+    strb r2, [r0]
+    mov r1, 0
+    ldr r0, =0x020D2730
+    str r1, [r0] ; Zro out the cutscene data
+    ldr r0, =@RamFlag_ThroneSpecial
+    strb r1, [r0] ; Zero out this flag
+@@End:
+    pop r0-r4, lr
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;;;
+    ; Sets Balore to always face the player depending on entrance direction
+@BaloreFacePlayer:
+  mov r0, r5
+  bl 021C3278h ; GetPlayerXPos
+  cmp r0, 80000h ; X pos 0x80, halfway through the leftmost screen
+  bge @BaloreFaceRight
+@BaloreFaceLeft:
+  mov r0, 0h ; Var A
+  mov r1, 0F0000h ; X pos
+  str r1, [r5, 2Ch]
+  b @BaloreFacePlayerEnd
+@BaloreFaceRight:
+  mov r0, 1h ; Var A
+  ; We don't set X pos here because we assume Balore's X pos was already properly set for facing right.
+@BaloreFacePlayerEnd:
+  ; Go back to Balore's normal code to set the direction he faces
+  ; We make sure r0 has Var A in it - but not Balore's real Var A, just the one to check for the purposes of deciding the direction he faces.
+  b 0x022FFD48
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+@LoadOrUnloadTowerBoss:
+  ldr r1, =020F70CCh ; Pointer to the current room's entity list
+  ldr r1, [r1]
+  add r1, r1, 11h ; Add 0x11 (0xC + 0x5) to the start of the entity list to get a pointer to the type byte of the second entity in the list, which is the boss entity.
+  
+  ; The last check done before the custom code was checking if r0 is equal to 0. If it is it means the player is on the top floor of the tower, so the boss should be loaded.
+  beq @AllowTowerBossToBeLoaded
+@DoNotAllowTowerBossToBeLoaded:
+  mov r0, 0h ; Set the type of the boss entity to 0, so it's doesn't load any entity in.
+  b @FinishLoadingOrUnloadingTowerBoss
+@AllowTowerBossToBeLoaded:
+  mov r0, 1h ; Set the type of the boss entity to 0, so it works properly as an enemy.
+@FinishLoadingOrUnloadingTowerBoss:
+  strb r0, [r1] ; Store the type to the entity list.
+  
+  ; Replace the code we overwrote to jump here.
+  beq 0x0219F0AC ; Return from function if on the top floor.
+  b 0x0219F098 ; If not on the top floor, do some other stuff before returning.
+.pool
+;;;;;;;;;;;;;;;;
+; Open Dario's boss doors if the flag is set
+@DarioEvent_Update:
+    push r0,r1
+    ldr r0, = @GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, =0x020F7038 ; Boss flags
+    ldrb r0, [r0]
+    ands r0, r0, 0x20
+    beq @@SkipEvent
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, r1, 0xFD ; Get rid of the InBoss flag
+    strb r1, [r0]
+@@SkipEvent:
+    pop r0,r1
+    bx lr
+@@End:
+    pop r0,r1
+    b 0x021CA7CC
+.pool
+
+@DarioEvent_Create:
+    push r0
+    ldr r0, = @GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    pop r0
+    bx lr
+@@End:
+    pop r0
+    b 0x021CB584
+.pool
+
+
+;;:TODO! Throne event skipper needs to re-enable the HUD and make sure it doesnt break Suspend files
 
 
 .endarea
