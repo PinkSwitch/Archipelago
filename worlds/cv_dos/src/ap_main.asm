@@ -294,17 +294,14 @@ b @CeliaEventHandler
 .org 0x022153DC
     nop ; Checks seal assets for the post-boss scene. If this fails, the orb never spawns, so delete it
 
-.org 0x021CD6F0
-    bl @ThroneEvent_Skipper
+.org 0x0222C8B8
+    .dw @ThroneEvent_Skipper
 
 .org 0x0222CA94
     .dw @ThroneEvent_manager ; Event 69's update code
 
 .org 0x0220F378
     bl @EndThroneEvent ; Spawns Dario
-
-;.org 0x0219F08C ; Near the end of the create function for object 18 (tower floors)
- ; b @LoadOrUnloadTowerBoss
 
  .org 0x0222CA80
     .dw @DarioEvent_Update
@@ -317,6 +314,9 @@ b @CeliaEventHandler
 
 .org 0x0222CA7C
     .dw @DimitriiEvent_Update
+
+;.org 0x021AA348
+ ;   bl @CheckFlag_Dario
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -338,14 +338,11 @@ b @CeliaEventHandler
 .close
 
 .open "ftc/overlay9_1", 0x02230A00
-    .org 0x0225B3D4
+    .org 0x0225B5B8
         bl @SetFlag_Dario
 
     .org 0x02243FC8
         bl @SetFlag_Aguni
-
-    .org 0x0225A684
-        b @CheckFlag_Dario
 
     .org 0x02243C24
         bl @CheckFlag_Aguni
@@ -718,7 +715,7 @@ b @CeliaEventHandler
 @BossFlag_BatCompany:
 .dh 0x0400 ; Bat Company
 @BossFlag_Aguni:
-.dh 0x0000
+.dh 0x0800
 @BossFlag_Paranoia:
 .dh 0x1000
 @BossFlag_Death:
@@ -731,10 +728,6 @@ b @CeliaEventHandler
 
 @RamFlag_ThroneSpecial:
 .db 0x00
-
-@RamFlag_NumBossDoors:
-.db 0x00 ; Tracks if we've spawned a boss door yet
-
 
 .align 4
 
@@ -2262,18 +2255,6 @@ b @CeliaEventHandler
     pop r2
     bx lr
 
-@CheckFlag_Dario: ; TODO! Not this. Dario loads his flag dynamically. find out where.
-    beq @@Dario2
-    ldr r0, [r0]
-    ldr r2, = @BossFlag_Dario
-    ldrh r2, [r2] ; I think this is it?
-    b 0x0225A690
-    ; TODO. figure out what to do/check Dario flag from hyere
-
-@@Dario2:
-    mov r2, 0x0B
-    b 0x0225A688
-
 @CheckFlag_PuppetMaster:
     push r2
     ldr r2, = @BossFlag_PuppetMaster
@@ -2357,13 +2338,11 @@ b @CeliaEventHandler
     ldr r3, =@RamFlag_ThroneSpecial
     mov r4, 1 ; This controller will be used by enemies
     strb r4, [r3]
-    ldr r4, = 0x04000300
-    str r4, [r0, 0x0C]
     pop r3, r4
     bx lr
 @@PlayNormal:
     pop r3, r4
-    b 0x021D9CEC
+    b 0x021CD6D4
 .pool
 
 ; Prevent the throne room event from activating until after the boss is defeated
@@ -2538,25 +2517,6 @@ b @CeliaEventHandler
   b 0x022FFD48
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-@LoadOrUnloadTowerBoss:
-  ldr r1, =020F70CCh ; Pointer to the current room's entity list
-  ldr r1, [r1]
-  add r1, r1, 11h ; Add 0x11 (0xC + 0x5) to the start of the entity list to get a pointer to the type byte of the second entity in the list, which is the boss entity.
-  
-  ; The last check done before the custom code was checking if r0 is equal to 0. If it is it means the player is on the top floor of the tower, so the boss should be loaded.
-  beq @AllowTowerBossToBeLoaded
-@DoNotAllowTowerBossToBeLoaded:
-  mov r0, 0h ; Set the type of the boss entity to 0, so it's doesn't load any entity in.
-  b @FinishLoadingOrUnloadingTowerBoss
-@AllowTowerBossToBeLoaded:
-  mov r0, 1h ; Set the type of the boss entity to 0, so it works properly as an enemy.
-@FinishLoadingOrUnloadingTowerBoss:
-  strb r0, [r1] ; Store the type to the entity list.
-  
-  ; Replace the code we overwrote to jump here.
-  beq 0x0219F0AC ; Return from function if on the top floor.
-  b 0x0219F098 ; If not on the top floor, do some other stuff before returning.
-.pool
 ;;;;;;;;;;;;;;;;
 ; Open Dario's boss doors if the flag is set
 @DarioEvent_Update:

@@ -17,6 +17,8 @@ class DoSBossData:
     flag_index: int # Index used for writing boss flags
     seal_index_pointers: list[int] # Addresses for the seal index
 
+base_enemy_address = 0x7CCAC  # I can't import this
+
 def randomize_bosses(world):
     boss_pool = [
         "Flying Armor",
@@ -262,35 +264,31 @@ def copy_boss_stats(world, rom):
 
 
 # NOTES!
-# Bosses need to check the new flag when spawning, too...
-# - Flying Armor (and maybe other bosses) apparently require a soul drop, so they might not work in Dimitrii/Dario room
 # - Apparently Puppet master's wall is too thick for some bosses, so it needs to be thinned out. Figure out what DSVania does in move_puppet_master_wall
 # Bosses in the tower need to only spawn in the top floor room
-# ON second thought, it might be that Dimitrii/Dario's rooms don't open after beating them. I wonder if maybe I can hook into the Julius Mode check that skips their cutscenes
-# Set SPAWN flags
 # Boss Rush versions don't play music. Hmmm?
 # - Delete the Right boss door in th e Throne room
 # Set the Boss THrone flag
-# I want to check the cutscene actors for Dario/Dimitrii's fight. I want to add a condition where if Boss Shuffle is on, unset the boss flag if the defeat flag is set.
 # Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
-# OBSERVATION! I can maybe fix my flag issues by bailing out of Object69Create in its ENTIRETY, after setting the InThroneFlag.
+# OBSERVATION! I can maybe fix my flag issues by bailing out of Object69Create in its ENTIRETY, after setting the InThroneFlag. Nope. Only the ones for the HUD.
 # MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
 # TODO! Implement the code for the boss music fix. However, instead of hardcoding the music ID, get it from what I wrote using Music Rando
 # Open the second boss door in the throne room if the player doesn't have Paranoia
 # Reset the InThroneRoom flag when leaving
 # Fix the pre-boss flags, maybe stop the eventcreate from running at all
+# Check if the ROOM is 7. If it is, if the Y pos is < 0xC0, spawn the boss. Else, do not. I can't do that.
+# Ignore spawn if y pos is > 0x150. Check the PLAYER's Y-pos? check if it's the top screen? Gergoth/the boss doors might be doing this, INVESTIGATE THEM.
+# I should make sure you can't leave before you get dario/dimitrii's soul
 
 # CURRENT NOTES!
-# Dario loads his flag dynamically. I need to figure out where that comes from and make sure I only change the flag for Dario 1, and leave Dario 2 alone.
 # - Fix the flags. The first one (whatever address) should be 0x02 specifically to fix the battle
 # - Make sure to reset the InBoss flag and the BossThrone flag when leaving the room
 # - I need to get rid of the left wall in P.M's room
+# FLags are still very fucked up.
 
 
 
 # TODO!
-    # Fix Dario/Dimitrii's room to open the doors anyways?
-    # Fix Dario flag
     # Fix throne room
     # Fix Puppet Master's wall if needed
     # Test every boss in every slot.
