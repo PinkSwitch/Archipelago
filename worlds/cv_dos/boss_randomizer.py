@@ -279,11 +279,9 @@ def copy_boss_stats(world, rom):
 # Open the second boss door in the throne room if the player doesn't have Paranoia
 # Reset the InThroneRoom flag when leaving
 # Fix the pre-boss flags, maybe stop the eventcreate from running at all
-# Put the shuffled bosses in the spoiler log
 
 # CURRENT NOTES!
 # Dario loads his flag dynamically. I need to figure out where that comes from and make sure I only change the flag for Dario 1, and leave Dario 2 alone.
-
 # - Fix the flags. The first one (whatever address) should be 0x02 specifically to fix the battle
 # - Make sure to reset the InBoss flag and the BossThrone flag when leaving the room
 # - I need to get rid of the left wall in P.M's room

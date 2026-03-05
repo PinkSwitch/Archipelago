@@ -312,6 +312,12 @@ b @CeliaEventHandler
 .org 0x0222C8A4
     .dw @DarioEvent_Create
 
+.org 0x0222C8A0
+    .dw @DimitriiEventCreate
+
+.org 0x0222CA7C
+    .dw @DimitriiEvent_Update
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -2586,6 +2592,41 @@ b @CeliaEventHandler
 @@End:
     pop r0
     b 0x021CB584
+.pool
+
+@DimitriiEventCreate:
+    push r0
+    ldr r0, = @GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    pop r0
+    bx lr
+@@End:
+    pop r0
+    b 0x021CA748
+.pool
+
+@DimitriiEvent_Update:
+    push r0,r1
+    ldr r0, = @GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, =0x020F7038 ; Boss flags
+    ldrb r0, [r0]
+    ands r0, r0, 0x08
+    beq @@SkipEvent
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, r1, 0xFD ; Get rid of the InBoss flag
+    strb r1, [r0]
+@@SkipEvent:
+    pop r0,r1
+    bx lr
+@@End:
+    pop r0,r1
+    b 0x021CA074
 .pool
 
 

@@ -427,6 +427,11 @@ class DoSWorld(World):
             spoiler_handle.write(f" Paranoia 3:  {self.red_soul_walls[3]}\n")
             spoiler_handle.write(f" Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
 
+        if self.options.boss_shuffle:
+            spoiler_handle.write(f"Bosses:\n")
+            for boss in world.boss_slots:
+                spoiler_handle.write(f" {slot}:  {world.boss_slots[slot].new_boss}\n")
+
     def create_item(self, name: str) -> CVDoSItem:
         data = self.set_classifications(name)
 
