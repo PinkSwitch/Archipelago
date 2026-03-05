@@ -179,6 +179,11 @@ class BossShuffle(Toggle):
     """Randomizes boss fights."""
     display_name = "Boss Shuffle"
 
+class SealShuffle(Toggle):
+    """Randomizes which seal is required for each boss/door.
+       Early Seal 1 will guarantee Flying Armor to always use Seal 1."""
+    display_name = "Seal Shuffle"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -223,6 +228,7 @@ class DoSOptions(PerGameCommonOptions):
     gate_items: GateItems
     hard_mode: HardMode
     boss_shuffle: BossShuffle
+    seal_shuffle: SealShuffle
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -263,7 +269,8 @@ dos_option_groups = [
         ShuffleDrops,
         ExperiencePercent,
         HardMode,
-        BossShuffle
+        BossShuffle,
+        SealShuffle
 
     ]),
 
