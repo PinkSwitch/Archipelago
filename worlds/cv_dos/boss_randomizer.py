@@ -121,8 +121,13 @@ def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
     rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
     rom.write_bytes(0x2F6DE38, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
-
     copy_boss_stats(world, rom)
+
+    if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
+        # Puppet master's wall is too thick for normal bosses to function
+        for i in range(12):
+            rom.copy_bytes(0x2A6472 + (0x40 * i), 0x14, 0x2A6460 + (0x40 * i)) # Layer 0
+            rom.copy_bytes(0x2A67D2 + (0x40 * i), 0x12, 0x2A67B2 + (0x40 * i)) # layer 1
 
     for room in world.boss_slots:
         slot = world.boss_slots[room]
