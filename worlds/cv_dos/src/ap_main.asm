@@ -137,7 +137,9 @@
 .org 0x02079CB8
     .dw @Tryspawn_Abaddon
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x02027300
+    bl @ClearRAMFlagOnTrans
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2483,6 +2485,10 @@ b @CeliaEventHandler
     ldr r0, = 0x020F6DF9
     ldrb r0, [r0] ; Spawn the entity if we're in the mirror world
     cmp r0, 3
+    push lr
+    bl @SetMirrorEntity
+    pop lr
+    cmp r0, 3
 @@End:
     pop r0
     bx lr
@@ -2605,32 +2611,72 @@ b @CeliaEventHandler
 ; Normally this deletes Boss Door type 3 during certain behaviors.
 ; This causes the Condemned Tower doors to be deleted too early
 @DontDespawnTowerDoors:
-push r4
-ldr r4, =0x020F6DFC ; Get the current game state
-ldrb r4, [r4]
-ands r4, r4, 0x02
-bne @@End ; Don't delete the boss door if the player is still flagged as in a boss fight
-push lr
-bl 0x02012ADC
-pop lr
+    push r4
+    ldr r4, =0x020F6DFC ; Get the current game state
+    ldrb r4, [r4]
+    ands r4, r4, 0x02
+    bne @@End ; Don't delete the boss door if the player is still flagged as in a boss fight
+    push lr
+    bl 0x02012ADC
+    pop lr
 @@End:
-pop r4
-bx lr
+    pop r4
+    bx lr
 .pool
 ;;;;;;;;;;;;;;;;;;;
+; Delete all Boss entities if the player's Y-value is ABOVE a certain height
+; used to control spawning in Condemned Tower
 @DespawnTowerBosses:
-cmp r3, 0x65
-blt @@End ; We only want to check this for boss entities
-cmp r3, 0x72
-bgt @@End ; Don't trigger for the final bosses tho
-ldr r3, = 0x020CA960 ; Y pos
-ldr r3, [r3]
-cmp r3, 0x0C0000 ; If the player is higher than this position, despawn the boss
-blt @@End
-mov r1, 0
-b 0x021D7A54 ; Set the type to None and check again
+    cmp r3, 0x65
+    blt @@End ; We only want to check this for boss entities
+    cmp r3, 0x72
+    bgt @@End ; Don't trigger for the final bosses tho
+    ldr r3, = 0x020CA960 ; Y pos
+    ldr r3, [r3]
+    cmp r3, 0x0C0000 ; If the player is higher than this position, despawn the boss
+    blt @@End
+    mov r1, 0
+    b 0x021D7A54 ; Set the type to None and check again
 @@End:
-b 0x021D7A7C
+    b 0x021D7A7C
+.pool
+;;;;;;;;;;;;;;;;;;;;;;
+; Wipe out the throne room ram flag during a room transition
+@ClearRAMFlagOnTrans:
+    ldr r2, = @RamFlag_ThroneSpecial
+    ldrb r0, [r2]
+    cmp r0, 0
+    beq @@End
+    mov r0, 0
+    strb r0, [r2]
+    ldr r2, =0x020F6DFC
+    ldrb r0, [r2]
+    and r0, r0, 0xFD ; Clear the InBoss flag
+    strb r0, [r2]
+    push r0,r1,lr
+    bl 0x020299B0 ; Reset the music
+    pop r0,r1,lr
+@@End:
+    ldr r2,[r3]
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;
+; Sets the Mirrored effect on the enemy's sprite
+@SetMirrorEntity:
+    push r0, r1
+    ldr r1, = 0x020D2C74
+    beq @@MirrorWorld
+    ldr r0, = 0x02244504
+    push r0,r1,lr
+    bl 0x020299B0 ; Reset the music
+    pop r0,r1,lr
+    b @@NormalWorld
+@@MirrorWorld:
+    ldr r0, =0x021C52EC
+@@NormalWorld:
+    str r0,[r1] 
+    pop r0,r1
+    bx lr
 .pool
 
 

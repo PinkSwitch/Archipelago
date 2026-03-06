@@ -121,10 +121,11 @@ def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
     rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
     rom.write_bytes(0x2F6DE38, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
+    rom.write_bytes(0xBEDCD, bytearray([0x00]))  # Delete the right boss door in the Throne Room; the fight is in the Mirror World so it's okay.
     copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
-        # Puppet master's wall is too thick for normal bosses to function
+        # Puppet master's wall is too thick for normal bosses to function, so we move it over
         for i in range(12):
             rom.copy_bytes(0x2A6472 + (0x40 * i), 0x14, 0x2A6460 + (0x40 * i)) # Layer 0
             rom.copy_bytes(0x2A67D2 + (0x40 * i), 0x12, 0x2A67B2 + (0x40 * i)) # layer 1
@@ -217,6 +218,8 @@ def write_bosses(world, rom):
         elif boss == "Gergoth":
             if room == "Condemned Tower":
                 var_a = 1 # Falling Gergoth, for breaking the tower floors
+            elif room == "The Pinnacle":
+                x_pos = 0x40 # Outside mirror range
         elif boss == "Zephyr":
             x_pos = (slot.room_width * 0x100) / 2 # Center horizontally
             if slot.room_width > 1:
@@ -269,30 +272,23 @@ def copy_boss_stats(world, rom):
 
 
 # NOTES!
-# - Apparently Puppet master's wall is too thick for some bosses, so it needs to be thinned out. Figure out what DSVania does in move_puppet_master_wall
+# Current issue; Some bosses in the throne room STILL play music. I don't know what I can do about this, cleanly...
 # Boss Rush versions don't play music. Hmmm?
-# - Delete the Right boss door in th e Throne room
 # Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
-# OBSERVATION! I can maybe fix my flag issues by bailing out of Object69Create in its ENTIRETY, after setting the InThroneFlag. Nope. Only the ones for the HUD.
 # MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
 # TODO! Implement the code for the boss music fix. However, instead of hardcoding the music ID, get it from what I wrote using Music Rando
-# Open the second boss door in the throne room if the player doesn't have Paranoia
-# Reset the InThroneRoom flag when leaving
-# Fix the pre-boss flags, maybe stop the eventcreate from running at all
 # I should make sure you can't leave before you get dario/dimitrii's soul
 
 # CURRENT NOTES!
-# - Fix the flags. The first one (whatever address) should be 0x02 specifically to fix the battle
-# - Make sure to reset the InBoss flag and the BossThrone flag when leaving the room
-# - I need to get rid of the left wall in P.M's room
-# FLags are still very fucked up.
-
-
-
-# TODO!
-    # Fix throne room
-    # Fix Puppet Master's wall if needed
-    # Test every boss in every slot.
+# Test all bosses on all slots
+# THRONE ROOM NOTES!
+# I CAN set them to a layer, but it doesnt always work. Death it does, gergoth it does... not.
+# Gergoth plays boss music. Can I reset the music? I want music to be normal if not in the mirror world.
+#ldr r0, 2244504 for In Mirror
+#mov r1, 0x78000
+#str r0, [r5, 0x04]
+#r5 = 020D2C70
+#021C52EC for normal vis
 
 
 #SEAL DATA;
