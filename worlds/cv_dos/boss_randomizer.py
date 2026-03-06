@@ -120,7 +120,7 @@ def randomize_bosses(world):
 def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
     rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
-    rom.write_bytes(0x, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
+    rom.write_bytes(0x2F6DE38, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
 
     copy_boss_stats(world, rom)
 
@@ -265,10 +265,8 @@ def copy_boss_stats(world, rom):
 
 # NOTES!
 # - Apparently Puppet master's wall is too thick for some bosses, so it needs to be thinned out. Figure out what DSVania does in move_puppet_master_wall
-# Bosses in the tower need to only spawn in the top floor room
 # Boss Rush versions don't play music. Hmmm?
 # - Delete the Right boss door in th e Throne room
-# Set the Boss THrone flag
 # Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
 # OBSERVATION! I can maybe fix my flag issues by bailing out of Object69Create in its ENTIRETY, after setting the InThroneFlag. Nope. Only the ones for the HUD.
 # MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
@@ -276,8 +274,6 @@ def copy_boss_stats(world, rom):
 # Open the second boss door in the throne room if the player doesn't have Paranoia
 # Reset the InThroneRoom flag when leaving
 # Fix the pre-boss flags, maybe stop the eventcreate from running at all
-# Check if the ROOM is 7. If it is, if the Y pos is < 0xC0, spawn the boss. Else, do not. I can't do that.
-# Ignore spawn if y pos is > 0x150. Check the PLAYER's Y-pos? check if it's the top screen? Gergoth/the boss doors might be doing this, INVESTIGATE THEM.
 # I should make sure you can't leave before you get dario/dimitrii's soul
 
 # CURRENT NOTES!

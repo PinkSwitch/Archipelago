@@ -315,9 +315,19 @@ b @CeliaEventHandler
 .org 0x0222CA7C
     .dw @DimitriiEvent_Update
 
+.org 0x021A9C78
+    bl @DontDespawnTowerDoors
+
+.org 0x021A9C70
+    nop ; Door collision delete
+
+.org 0x021D7A64
+    b @DespawnTowerBosses
+
 ;.org 0x021AA348
  ;   bl @CheckFlag_Dario
 
+;overlay 9 0
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -428,6 +438,9 @@ b @CeliaEventHandler
 
     .org 0x022FF9DC
         bl @CheckFlag_Gergoth
+
+    .org 0x022FFF1C
+        nop ; Gergoth sets the flag again here
 
     .org 0x022FFAF0 ; Code in Gergoth's initialization that normally floors him in different ways depending on his var A.
     ; First we simplify the flooring code (to make room for new code) by always doing the same thing instead of having 4 different possibilities for 4 different var As.
@@ -2587,6 +2600,37 @@ b @CeliaEventHandler
 @@End:
     pop r0,r1
     b 0x021CA074
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Normally this deletes Boss Door type 3 during certain behaviors.
+; This causes the Condemned Tower doors to be deleted too early
+@DontDespawnTowerDoors:
+push r4
+ldr r4, =0x020F6DFC ; Get the current game state
+ldrb r4, [r4]
+ands r4, r4, 0x02
+bne @@End ; Don't delete the boss door if the player is still flagged as in a boss fight
+push lr
+bl 0x02012ADC
+pop lr
+@@End:
+pop r4
+bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;
+@DespawnTowerBosses:
+cmp r3, 0x65
+blt @@End ; We only want to check this for boss entities
+cmp r3, 0x72
+bgt @@End ; Don't trigger for the final bosses tho
+ldr r3, = 0x020CA960 ; Y pos
+ldr r3, [r3]
+cmp r3, 0x0C0000 ; If the player is higher than this position, despawn the boss
+blt @@End
+mov r1, 0
+b 0x021D7A54 ; Set the type to None and check again
+@@End:
+b 0x021D7A7C
 .pool
 
 

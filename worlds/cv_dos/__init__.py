@@ -429,8 +429,8 @@ class DoSWorld(World):
 
         if self.options.boss_shuffle:
             spoiler_handle.write(f"Bosses:\n")
-            for boss in world.boss_slots:
-                spoiler_handle.write(f" {slot}:  {world.boss_slots[slot].new_boss}\n")
+            for boss in self.boss_slots:
+                spoiler_handle.write(f" {boss}:  {self.boss_slots[boss].new_boss}\n")
 
     def create_item(self, name: str) -> CVDoSItem:
         data = self.set_classifications(name)
