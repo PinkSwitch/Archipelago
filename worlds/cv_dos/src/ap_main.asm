@@ -349,6 +349,9 @@ b @CeliaEventHandler
 .org 0x021D784C ; Don't get rid of the high stuff
     .db 0xBC, 0x00, 0xF7, 0xE1;ldrh r3, [r2, #0x0C]!
 
+.org 0x021D7668 ; Don't get rid of the high stuff
+    .db 0xBC, 0x00, 0xF5, 0xE1;ldrh r3, [r2, #0x0C]!
+
 .org 0x021D75F8
     ldrh r1, [r9, r0]
 

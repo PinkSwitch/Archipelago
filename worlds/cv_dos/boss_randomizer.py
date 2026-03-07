@@ -269,27 +269,13 @@ def copy_boss_stats(world, rom):
         address = base_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 
-
-
-
-
 # NOTES!
-# Test the music patch. F.Armor, Di/Dari,Zephyr,Aguni
-# Current issue; Some bosses in the throne room STILL play music. I don't know what I can do about this, cleanly...
-# Boss Rush versions don't play music. Hmmm?
-# Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
-# MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
-# TODO! Implement the code for the boss music fix. However, instead of hardcoding the music ID, get it from what I wrote using Music Rando
 # I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
+# Flying armor cutscene radius for Rahab's room?
 
 # CURRENT NOTES!
 # Test all bosses on all slots
 # Gergoth plays boss music. Can I reset the music? I want music to be normal if not in the mirror world.
-
-
-# TODO!
-# Fix the new boss door. I need to update the LoadPickup function to ALSO ignore the expanded stuff.
-# For some reason the door is using seal 1...
 
 #SEAL DATA;
 # Flying Armor - 0222F294, seal pointer 0222F290, index 1, 02300B24, 022FFB7C
