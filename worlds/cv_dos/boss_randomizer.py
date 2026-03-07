@@ -269,6 +269,52 @@ def copy_boss_stats(world, rom):
         address = base_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 
+def set_seals(world):
+    seals = [
+        "Magic Seal 1",
+        "Magic Seal 2",
+        "Magic Seal 3",
+        "Magic Seal 4",
+        "Magic Seal 5"
+    ]
+
+    placed_seals = []
+
+    world.magic_seal_table = {
+        "Lost Village": "Magic Seal 1",
+        "Wizardry Lab": "Magic Seal 1",
+        "Dark Chapel": "Magic Seal 2",
+        "Dark Chapel Inner": "Magic Seal 2",
+        "Garden of Madness": "Magic Seal 2",  # Dario
+        "Demon Guest House": "Magic Seal 3",
+        "Subterranean Hell": "Magic Seal 3",
+        "Condemned Tower": "Magic Seal 3",
+        "Cursed Clock Tower": "Magic Seal 4",
+        "Silenced Ruins": "Magic Seal 4",
+        "Demon Guest House Upper": "Magic Seal 4",
+        "The Pinnacle": "Magic Seal 4",
+        "Castle Center": "Magic Seal 5",
+        "Mine of Judgment": "Magic Seal 5",
+        "The Abyss": "Magic Seal 5"
+    }
+
+    if world.options.seal_shuffle:
+        for seal in world.magic_seal_table:
+            world.magic_seal_table[seal] = world.random.choice(seals) # Randomize the list
+
+        if world.options.early_seal_1:
+            world.magic_seal_table["Lost Village"] = "Magic Seal 1"  # We still want to set this early so the player doesn't get stuck
+
+    for seal in world.magic_seal_table:
+        if world.magic_seal_table[seal] not in placed_seals:
+            world.multiworld.itempool.append(world.set_classifications(world.magic_seal_table[seal]))  # Create the seal items if necessary
+            world.extra_item_count += 1
+            placed_seals.append(world.magic_seal_table[seal])
+    
+
+def write_seals(world, rom):
+    print("AAAAAAAAAAAA")
+
 # NOTES!
 # I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
 # Flying armor cutscene radius for Rahab's room?
@@ -282,3 +328,11 @@ def copy_boss_stats(world, rom):
 # Balore - 0222F298, index 2, 023006C8
 #OK!!!!!!!!!!! I change the Seal Index for each boss as part of boss rando, but change the seal NUMBER for seal rando.
 # 0222F290 is the SealTable
+
+
+# SEAL NOTES;
+# Update logic for all seals
+# Randomize/set them
+# Write them
+# Update boss door text per seal
+# Consider only handling seals used in the game/ignoring endgame seals if not goal
