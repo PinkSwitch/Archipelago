@@ -140,6 +140,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .org 0x02027300
     bl @ClearRAMFlagOnTrans
+;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x020B1BD4
+    .dh 0x8000
+
+.org 0x020B1A60
+    .dh 0x8001
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -323,11 +329,39 @@ b @CeliaEventHandler
 .org 0x021A9C70
     nop ; Door collision delete
 
+;;;;;;;;;;;;;;;;;;;;;
 .org 0x021D7A64
     b @DespawnTowerBosses
+;;;;;;;;;;
+; Expand entities
+.org 0x021D748C
+    b @ExtendEntityInfo
 
-;.org 0x021AA348
- ;   bl @CheckFlag_Dario
+.org 0x021D7604
+    b @ExtendEntityInfo2
+
+.org 0x021D747C ; Don't get rid of the high stuff
+    .db 0xBC, 0x30, 0xF2 ;ldrh r3, [r2, #0x0C]!
+
+.org 0x021D7770 ; Don't get rid of the high stuff
+    .db 0xBC, 0x30, 0xF2, 0xE1;ldrh r3, [r2, #0x0C]!
+
+.org 0x021D784C ; Don't get rid of the high stuff
+    .db 0xBC, 0x00, 0xF7, 0xE1;ldrh r3, [r2, #0x0C]!
+
+.org 0x021D75F8
+    ldrh r1, [r9, r0]
+
+.org 0x021BAA5C
+    b @ChapelButton_IgnoreStateA
+
+.org 0x021BAB80
+    bl @ChapelButton_SwapFlag
+
+.org 0x0219EF3C
+    b @TowerFloorLoadNewFlag
+
+
 
 ;overlay 9 0
 .close
@@ -361,6 +395,12 @@ b @CeliaEventHandler
 
     .org 0x02244680
         nop ; Sets the flag twice?
+
+    .org 0x0225A714
+        bl @FixDarioMusic
+
+    .org 0x02243C98
+    bl @InitializeEnemyAndOverridePlayBossMusicForAguni
 .close
 
 .open "ftc/overlay9_25", 0x022FF9C0
@@ -402,6 +442,9 @@ b @CeliaEventHandler
 
     .org 0x02300B28
         mov r1, 1 ; Make this not copied from r0
+
+    .org 0x022FFA50
+        bl @InitializeEnemyAndOverridePlayBossMusicForFlyingArmor
 .close
 
 .open "ftc/overlay9_33", 0x022FF9C0
@@ -410,6 +453,9 @@ b @CeliaEventHandler
 
     .org 0x022FF9DC
         bl @CheckFlag_Zephyr
+
+    .org 0x022FFA80
+    bl @InitializeEnemyAndOverridePlayBossMusicForZephyr
 .close
 
 .open "ftc/overlay9_34", 0x022FF9C0
@@ -443,6 +489,9 @@ b @CeliaEventHandler
 
     .org 0x022FFF1C
         nop ; Gergoth sets the flag again here
+
+    .org 0x02300E74
+        bl @GergothBreakTowerFlag
 
     .org 0x022FFAF0 ; Code in Gergoth's initialization that normally floors him in different ways depending on his var A.
     ; First we simplify the flooring code (to make room for new code) by always doing the same thing instead of having 4 different possibilities for 4 different var As.
@@ -480,6 +529,9 @@ b @CeliaEventHandler
 
     .org 0x022FF9E0
         bl @CheckFlag_Dimitrii
+
+    .org 0x022FFA54
+        bl @FixDimitriiMusic
 .close
     
 
@@ -2667,9 +2719,6 @@ b @CeliaEventHandler
     ldr r1, = 0x020D2C74
     beq @@MirrorWorld
     ldr r0, = 0x02244504
-    push r0,r1,lr
-    bl 0x020299B0 ; Reset the music
-    pop r0,r1,lr
     b @@NormalWorld
 @@MirrorWorld:
     ldr r0, =0x021C52EC
@@ -2678,10 +2727,192 @@ b @CeliaEventHandler
     pop r0,r1
     bx lr
 .pool
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+@InitializeEnemyAndOverridePlayBossMusic:
+  push r14
+  push r1 ; Preserve the music ID
+  
+  bl 021C34A8h ; InitializeEnemy (replaces the line we overwrote to call this custom function)
+  
+  pop r0 ; Get the music ID out of the stack
+  bl 0202991Ch ; PlaySong
+  
+  ; Set bit to make the song that was set override the BGM.
+  ldr r0, =020F6DFCh
+  ldr r1, [r0]
+  orr r1, r1, 00040000h
+  str r1, [r0]
+  
+  pop r15
+
+@InitializeEnemyAndOverridePlayBossMusicForFlyingArmor:
+  push r14
+  ldr r1, =0x02300D38
+    ldrh r1, [r1]
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  pop r15
+
+@InitializeEnemyAndOverridePlayBossMusic2ForDmitriiAndDario:
+  push r14
+  ldr r1, =1005h ; Music ID for Scarlet Battle Soul
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  pop r15
+
+@InitializeEnemyAndOverridePlayBossMusicForZephyr:
+  push r14
+  
+  add r1, r10, 200h
+  ldr r1, [r1, 6Eh] ; Read Zephyr's Var A
+  cmp r1, 1h ; Normal Zephyr
+  beq @ZephyrOnlyInitializeEnemy
+  
+  ; For boss rush Zephyr, we want to play the music immediately.
+  ldr r1, = 0x023029B4
+  ldrh r1, [r1]
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  b @ZephyrInitializeEnemyEnd
+  
+  @ZephyrOnlyInitializeEnemy:
+  ; For normal Zephyr, we don't want to play music on initialization, or it will bug out because of how he starts the music later.
+  bl 021C34A8h ; InitializeEnemy
+  
+  @ZephyrInitializeEnemyEnd:
+  pop r15
+
+@InitializeEnemyAndOverridePlayBossMusicForAguni:
+  push r14
+  ldr r1, =0x0225B208
+  ldrh r1, [r1]
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  pop r15
+
+@FixDarioMusic:
+  push r14
+  ldr r1, = 0x021CB574
+  ldrh r1, [r1]
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  pop r15
+
+@FixDimitriiMusic:
+  push r14
+  ldr r1, =0x021CA738
+  ldrh r1, [r1]
+  bl @InitializeEnemyAndOverridePlayBossMusic
+  pop r15
+.pool
+;;;;;;;;;;;;;;
+; Repoints entity lists to NEW lists if the end flag is X greater than 0x7FFF
+@ExtendedEntityList:
+.dw @ExtEnt_TowerButton
+.dw @ExtEnt_TowerBackBossDoor
+
+@ExtendEntityInfo:
+    push r3
+    sub r3, r3, 0x8000
+    cmp r3, 0 ; Only check this for entries above 0x7FFF
+    blt @@End
+    ldr r2, =@ExtendedEntityList
+    ldr r2, [r2, r3, lsl 2]
+    pop r3
+    b 0x021D7404
+@@End:
+    pop r3
+    ldrsh r1,[r9]
+    b 0x021D7490
+
+@ExtendEntityInfo2:
+    blt 0x021D74C0 ; back to normal code if not 7ffff
+    push r1
+    sub r1, r1, 0x8000
+    cmp r1, 0 ; Only check this for entries above 0x7FFF
+    blt @@End
+    ldr r9, =@ExtendedEntityList
+    ldr r9, [r9, r1, lsl 2]
+    mov r7, 0
+    pop r1
+    b 0x021D74C0
+@@End:
+    pop r1
+    b 0x021D7608
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+; 0x021BAA5C
+; Ignore the pressed state when loading the room if Var a is nonzero
+@ChapelButton_IgnoreStateA:
+    cmp r12, 0x44
+    beq 0x021BAA64
+@@NormalButton:
+    ldr r0,[r0, 0x9A0]
+    b 0x021BAA60
+
+@ChapelButton_SwapFlag:
+; 0x021BAB80
+    cmp r12, 0x44
+    beq @@InvertFlag
+    orr r0, r2, r1, lsl r0
+    bx lr
+@@InvertFlag:
+    eor r0, r2, 0x10
+    bx lr
+.pool
+
+@ExtEnt_TowerButton:
+;;;;;;;;;;;;;;;;;;;;;;
+; Entity hider, hides the button until Gergoth's flag is set.
+.dh 0x0000
+.dh 0x0000
+.db 0x00
+.db 0x06 ; Hider
+.db 0x07 ; Gergoth flag
+.db 0x00
+.dh 0x0000 ; Boss flag
+.dh 0x0000 ; Despawn if not set
 
 
-;;:TODO! Throne event skipper needs to re-enable the HUD and make sure it doesnt break Suspend files
-
+;Button. Triggers the tower floors on/off.
+.dh 0x0080
+.dh 0x0160
+.db 0x00
+.db 0x02
+.db 0x28 ; Chapel button
+.db 0x00
+.dh 0x0000 
+.dh 0x0044 ; Flag for the tower, (020F7188, 0x10)
+.dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@ExtEnt_TowerBackBossDoor:
+; Boss door for Gergoth, left side
+.dh 0x00F0
+.dh 0x0080
+.db 0x00
+.db 0x02
+.db 0x25 ; Boss Door
+.db 0x00
+.dh 0x0000
+.dh 0x0007 ; Gergoth door
+.dw 0x7FFF7FFF
+.align 4
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Set the tower to use a main flag instead of Gergoth's flag
+@TowerFloorLoadNewFlag:
+    push r0
+    ldr r0, =0x020F7188
+    ldrb r0,[r0]
+    ands r0,r0,0x10
+    pop r0
+    b 0x0219EF48
+.pool
+;;;;;;;;;;;;;;;;;;;;;
+@GergothBreakTowerFlag:
+    push r1
+    ldr r0, =0x020F7188
+    ldrb r1,[r0]
+    orr r1,r1,0x10
+    strb r1,[r0]
+    pop r1
+    add r0,r12,0x1B000
+    bx lr
+.pool
 
 .endarea
 .close

@@ -155,9 +155,11 @@ def write_bosses(world, rom):
         elif boss == "Malphas":
             x_pos = (slot.room_width * 0x100) / 2 # Center horizontally
         elif boss == "Dario":
+            x_pos = (slot.room_width * 0x100) / 2 # Center horizontally
             if slot.room_width == 1:
                 rom.write_bytes(0x18876C, struct.pack("I", 0xE1A02800)) # Halve Dario's teleport range so he doesn't go OOB.
-
+        elif boss == "Dimitrii":
+            x_pos = (slot.room_width * 0x100) / 2 # Center horizontally
         elif boss == "Puppet Master":
             var_a = 1
             x_pos = 0x100
@@ -272,24 +274,22 @@ def copy_boss_stats(world, rom):
 
 
 # NOTES!
+# Test the music patch. F.Armor, Di/Dari,Zephyr,Aguni
 # Current issue; Some bosses in the throne room STILL play music. I don't know what I can do about this, cleanly...
 # Boss Rush versions don't play music. Hmmm?
 # Fix Zephyr, Dimitrii, Dario boss rush versions not playing their boss music, since they're used in the rando
 # MAKE SURE DIMITRI'S STILL WORKS WITH MUSIC RANDO
 # TODO! Implement the code for the boss music fix. However, instead of hardcoding the music ID, get it from what I wrote using Music Rando
-# I should make sure you can't leave before you get dario/dimitrii's soul
+# I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
 
 # CURRENT NOTES!
 # Test all bosses on all slots
-# THRONE ROOM NOTES!
-# I CAN set them to a layer, but it doesnt always work. Death it does, gergoth it does... not.
 # Gergoth plays boss music. Can I reset the music? I want music to be normal if not in the mirror world.
-#ldr r0, 2244504 for In Mirror
-#mov r1, 0x78000
-#str r0, [r5, 0x04]
-#r5 = 020D2C70
-#021C52EC for normal vis
 
+
+# TODO!
+# Fix the new boss door. I need to update the LoadPickup function to ALSO ignore the expanded stuff.
+# For some reason the door is using seal 1...
 
 #SEAL DATA;
 # Flying Armor - 0222F294, seal pointer 0222F290, index 1, 02300B24, 022FFB7C

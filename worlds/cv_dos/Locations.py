@@ -113,10 +113,10 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Condemned Tower Bottom", "Condemned Tower: 1F West", 0x51),
         LocationData("Condemned Tower Bottom", "Condemned Tower: 1F East", 0x52),
         LocationData("Condemned Tower Bottom", "Condemned Tower: 2F East", 0x53),
-        LocationData("Condemned Tower Top", "Condemned Tower: 5F West", 0x54),
-        LocationData("Condemned Tower Top", "Condemned Tower: 7F West", 0x55),
+        LocationData("Condemned Tower Main", "Condemned Tower: 5F West", 0x54),
+        LocationData("Condemned Tower Main", "Condemned Tower: 7F West", 0x55),
         LocationData("Condemned Tower Top", "Condemned Tower: Top of the Tower", 0x56),
-        LocationData("Condemned Tower Top", "Gergoth Soul", 0x57),
+        LocationData("Condemned Tower Main", "Gergoth Soul", 0x57),
 
         LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Money Gate", 0x58),
         LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Lower Corner Room", 0x59),

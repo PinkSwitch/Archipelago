@@ -56,6 +56,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "Dark Chapel Catacombs Exit"),
 
         create_region(world, player, locations_per_region, "Condemned Tower Bottom"),
+        create_region(world, player, locations_per_region, "Condemned Tower Main"),
         create_region(world, player, locations_per_region, "Condemned Tower Top"),
 
         create_region(world, player, locations_per_region, "Cursed Clock Tower Entrance"),
@@ -218,14 +219,17 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     {"Dark Chapel": lambda state: state.has_any({"Puppet Master Soul", "Bat Company Soul"}, player)})
     ##########################################################################################################
     #Condemned Tower
-    multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Top", "Mine of Judgment"],
-                                                                    {"Condemned Tower Top": lambda state: state.has_any(big_uppies, player) or (state.has("Flying Armor Soul", player) and state.has_any({"Malphas Soul", "Puppet Master Soul"}, player)) or (state.has("Black Panther Soul", player)),
+    multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Main", "Mine of Judgment"],
+                                                                    {"Condemned Tower Main": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                                      "Dark Chapel Big Room": lambda state: state.has_any(small_uppies, player),
                                                                      "Mine of Judgment": lambda state: state.has_all(mine_conditions, player)})
 
-    multiworld.get_region("Condemned Tower Top", player).add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Warp Room"],
+    multiworld.get_region("Condemned Tower Main", player).add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Condemned Tower Top"],
                                                                     {"Cursed Clock Tower Entrance": lambda state: state.has("Tower Key", player),
-                                                                     "Warp Room": lambda state: state.has("Magic Seal 3", player)})
+                                                                     "Condemned Tower Top": lambda state: state.has("Magic Seal 3", player)})
+
+    multiworld.get_region("Condemned Tower Top", player).add_exits(["Condemned Tower Main", "Warp Room"],
+                                                                    {"Condemned Tower Main": lambda state: state.has("Magic Seal 3", player)})
                                                                     
     ################################
     #Cursed Clock Tower

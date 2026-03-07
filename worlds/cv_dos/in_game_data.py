@@ -559,8 +559,8 @@ warp_room_table = [
     "Demon Guest House",
     "Subterranean Hell",
     "Silenced Ruins",
-    "Cursed Clock Tower"
-    # Maybe add Condemned Tower?
+    "Cursed Clock Tower",
+    "Condemned Tower"
 ]
 
 warp_room_regions = {
@@ -571,7 +571,8 @@ warp_room_regions = {
     "Demon Guest House": "Demon Guest House West Wing",
     "Subterranean Hell": "Subterranean Hell Central Upper",
     "Silenced Ruins": "Silenced Ruins",
-    "Cursed Clock Tower": "Cursed Clock Tower Post-Boss"
+    "Cursed Clock Tower": "Cursed Clock Tower Post-Boss",
+    "Condemned Tower": "Condemned Tower Top"
 }
 
 warp_room_bits = {
@@ -580,7 +581,7 @@ warp_room_bits = {
     "Wizardry Lab": 0x04,
     "Garden of Madness": 0x08,
     "Dark Chapel": 0x10,
-    # "Condemned Tower": 0x20,
+    "Condemned Tower": 0x20,
     # "Mine of Judgment": 0x40,
     "Subterranean Hell": 0x80,
     "Silenced Ruins": 0x0100,

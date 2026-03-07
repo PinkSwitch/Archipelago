@@ -59,7 +59,7 @@ def create_soul_regions(world):
     multiworld.get_region("Dark Chapel Catacombs Exit", player).add_exits(["Catoblepas Soul"])
     #####CONDEMNED TOWER #####
     multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Draghignazzo Soul", "Skeleton Ape Soul", "Great Axe Armor Soul"])
-    multiworld.get_region("Condemned Tower Top", player).add_exits(["Buer Soul", "Disc Armor Soul", "Werewolf Soul", "Fleaman Soul"])
+    multiworld.get_region("Condemned Tower Main", player).add_exits(["Buer Soul", "Disc Armor Soul", "Werewolf Soul", "Fleaman Soul"])
 
     ##### CURSED CLOCK TOWER ######
     multiworld.get_region("Cursed Clock Tower Entrance", player).add_exits(["Harpy Soul", "Catoblepas Soul", "Imp Soul", "Malachi Soul", "Dead Pirate Soul",
