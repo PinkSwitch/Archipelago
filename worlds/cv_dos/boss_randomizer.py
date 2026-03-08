@@ -318,6 +318,7 @@ def write_seals(world, rom):
 # NOTES!
 # I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
 # Flying armor cutscene radius for Rahab's room?
+# FLying armor kinda broken. Rahab's room cutscene breaks. I probably need to use Boss Rush in certain rooms. Find them.
 
 # CURRENT NOTES!
 # Test all bosses on all slots
@@ -336,3 +337,4 @@ def write_seals(world, rom):
 # Write them
 # Update boss door text per seal
 # Consider only handling seals used in the game/ignoring endgame seals if not goal
+# My text expander isn't working, it's garbage. Investigate.
