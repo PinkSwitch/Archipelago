@@ -358,6 +358,7 @@ class DoSWorld(World):
            self.options.boost_speed = passthrough["speed_boost"]
            self.red_soul_walls = passthrough["soul_walls"]
            self.options.gate_items = passthrough["buttonsanity"]
+           self.magic_seal_table = passthrough["seals"]
         setup_game(self)
 
         self.auth_id = self.random.getrandbits(32)
@@ -406,7 +407,8 @@ class DoSWorld(World):
             "open_drawbridge": self.options.open_drawbridge.value,
             "speed_boost": self.options.boost_speed.value,
             "soul_walls": self.red_soul_walls,
-            "buttonsanity": self.options.gate_items.value
+            "buttonsanity": self.options.gate_items.value,
+            "seals": self.magic_seal_table
         }
 
     def modify_multidata(self, multidata: dict) -> None:
@@ -431,6 +433,11 @@ class DoSWorld(World):
             spoiler_handle.write(f"Bosses:\n")
             for boss in self.boss_slots:
                 spoiler_handle.write(f" {boss}:  {self.boss_slots[boss].new_boss}\n")
+
+        if self.options.seal_shuffle:
+            spoiler_handle.write(f"Magic Seals:\n")
+            for seal in self.magic_seal_table:
+                spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
 
     def create_item(self, name: str) -> CVDoSItem:
         data = self.set_classifications(name)

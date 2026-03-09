@@ -4,6 +4,7 @@ from .in_game_data import warp_room_regions, warp_room_table
 from .bullet_wall_randomizer import set_souls_for_walls
 from .synthesis_randomizer import randomize_synthesis
 from .boss_randomizer import randomize_bosses
+from .seal_shuffle import set_seals
 from BaseClasses import ItemClassification
 
 def setup_game(world):
@@ -25,6 +26,7 @@ def setup_game(world):
         world.multiworld.itempool.append(world.set_classifications("Cavern Gate Key"))
         world.extra_item_count += 4
 
+    set_seals(world)
     set_souls_for_walls(world)
     place_souls(world)
     randomize_synthesis(world)
