@@ -423,19 +423,19 @@ class DoSWorld(World):
             spoiler_handle.write(f"Default Warp Room:    {self.starting_warp_room}\n")
 
         if self.options.randomize_red_soul_walls:
-            spoiler_handle.write(f"Soul Barriers:\n")
+            spoiler_handle.write(f"\nSoul Barriers:\n")
             spoiler_handle.write(f" Paranoia 1:  {self.red_soul_walls[1]}\n")
             spoiler_handle.write(f" Paranoia 2:  {self.red_soul_walls[0]}\n")
             spoiler_handle.write(f" Paranoia 3:  {self.red_soul_walls[3]}\n")
             spoiler_handle.write(f" Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
 
         if self.options.boss_shuffle:
-            spoiler_handle.write(f"Bosses:\n")
+            spoiler_handle.write(f"\nBosses:\n")
             for boss in self.boss_slots:
                 spoiler_handle.write(f" {boss}:  {self.boss_slots[boss].new_boss}\n")
 
         if self.options.seal_shuffle:
-            spoiler_handle.write(f"Magic Seals:\n")
+            spoiler_handle.write(f"\nMagic Seals:\n")
             for seal in self.magic_seal_table:
                 spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
 

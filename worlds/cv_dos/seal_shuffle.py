@@ -42,13 +42,10 @@ def set_seals(world):
         "Silenced Ruins": "Magic Seal 4",
         "Demon Guest House Upper": "Magic Seal 4",
         "The Pinnacle": "Magic Seal 4",
-        "Castle Center": "Magic Seal 5"
+        "Mine of Judgment": "Magic Seal 5",
+        "Castle Center": "Magic Seal 5",
+        "The Abyss": "Magic Seal 5"
     }
-
-    if world.options.goal:
-        world.magic_seal_table["Mine of Judgment"] = "Magic Seal 5"
-        world.magic_seal_table["The Abyss"] = "Magic Seal 5"
-
 
     if world.options.seal_shuffle:
         for seal in world.magic_seal_table:
