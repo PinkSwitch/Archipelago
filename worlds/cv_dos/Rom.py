@@ -15,6 +15,7 @@ from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
+from .seal_shuffle import write_seals
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
@@ -220,6 +221,7 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_bytes(rare_drop_address, bytearray([rare_item]))
 
     write_synthesis(world, rom)
+    write_seals(world, rom)
 
     if world.options.boss_shuffle:
         write_bosses(world, rom)

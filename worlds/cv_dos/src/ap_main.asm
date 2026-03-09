@@ -456,8 +456,11 @@ b @CeliaEventHandler
     .org 0x02300B28
         mov r1, 1 ; Make this not copied from r0
 
-    .org 0x022FFA50
-        bl @InitializeEnemyAndOverridePlayBossMusicForFlyingArmor
+    .org 0x02300CE0
+        mov r4, 0x180 ; Flying Armor's cutscene radius- same thing as Death
+
+    ;.org 0x022FFA50
+        ;bl @InitializeEnemyAndOverridePlayBossMusicForFlyingArmor
 .close
 
 .open "ftc/overlay9_33", 0x022FF9C0
@@ -1475,7 +1478,7 @@ b @CeliaEventHandler
     ldr r1, =0x0210f014
     ldrb r1, [r1]
     push r2
-    ldr r2, =0x020F70A6
+    ldr r2, =0x0211504C
     ldrb r2, [r2]
     cmp r2, 0x0A
     blt @NotInAbyss
@@ -1773,7 +1776,7 @@ b @CeliaEventHandler
     ldrb r3, [r1, r2] ; Check the included table
     cmp r0, r3
     beq @Soulsanity_IncludeSoul
-    cmp r2, 0x7A ; We've exhausted the entire table
+    cmp r2, 0x72 ; We've exhausted the entire table
     beq @Soulsanity_SoulDisabled
     add r2, r2, 1
     b @SoulSanity_CheckIfIncluded
@@ -2790,13 +2793,6 @@ b @CeliaEventHandler
   orr r1, r1, 00040000h
   str r1, [r0]
   
-  pop r15
-
-@InitializeEnemyAndOverridePlayBossMusicForFlyingArmor:
-  push r14
-  ldr r1, =0x02300D38
-    ldrh r1, [r1]
-  bl @InitializeEnemyAndOverridePlayBossMusic
   pop r15
 
 @InitializeEnemyAndOverridePlayBossMusic2ForDmitriiAndDario:

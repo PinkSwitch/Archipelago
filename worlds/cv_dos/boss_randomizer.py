@@ -269,32 +269,11 @@ def copy_boss_stats(world, rom):
         address = base_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 
-# NOTES!
-# What do I do now?
-# - Swap/reload the room when entering the Mirror World.
-# Make sure the game isnt playing/relaoding music on the way out
-# Make sure to set the event flags when this is all over.
-
-
-
-# I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
-# Flying armor cutscene radius for Rahab's room?
-# FLying armor kinda broken. Rahab's room cutscene breaks. I probably need to use Boss Rush in certain rooms. Find them.
-
 # CURRENT NOTES!
 # Test all bosses on all slots
+# I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
 
 #SEAL DATA;
-# Flying Armor - 0222F294, seal pointer 0222F290, index 1, 02300B24, 022FFB7C
-# Balore - 0222F298, index 2, 023006C8
 #OK!!!!!!!!!!! I change the Seal Index for each boss as part of boss rando, but change the seal NUMBER for seal rando.
-# 0222F290 is the SealTable
 
-
-# SEAL NOTES;
-# Update logic for all seals
-# Randomize/set them
 # Write them
-# Update boss door text per seal
-# Consider only handling seals used in the game/ignoring endgame seals if not goal
-# My text expander isn't working, it's garbage. Investigate.
