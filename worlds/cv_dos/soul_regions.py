@@ -53,7 +53,7 @@ def create_soul_regions(world):
     multiworld.get_region("Dark Chapel", player).add_exits(["Guillotiner Soul", "Witch Soul", "Mini Devil Soul", "Amalaric Sniper Soul", "Ghost Dancer Soul", "Hell Boar Soul",
                                                             "White Dragon Soul", "Great Armor Soul", "Quetzalcoatl Soul", "Ghoul Soul", "The Creature Soul", "Bone Pillar Soul",
                                                             "Barbariccia Soul", "Valkyrie Soul", "Ghost Soul", "Tombstone Soul"], # Is ghost here? double check this
-                        {"Quetzalcoatl Soul": lambda state: state.has("Magic Seal 2", player)})
+                        {"Quetzalcoatl Soul": lambda state: state.has(world.magic_seal_table["Dark Chapel"], player)})
 
     multiworld.get_region("Dark Chapel Big Room", player).add_exits(["Mini Devil Soul", "Quetzalcoatl Soul", "Valkyrie Soul"])
     multiworld.get_region("Dark Chapel Catacombs Exit", player).add_exits(["Catoblepas Soul"])
@@ -71,7 +71,7 @@ def create_soul_regions(world):
     ##### SUBTERRANEAN HELL #####
 
     multiworld.get_region("Subterranean Hell Top Entrance", player).add_exits(["Cave Troll Soul", "Decarabia Soul", "Une Soul", "Dead Pirate Soul"],
-    {"Decarabia Soul": lambda state: state.has("Magic Seal 3", player)})
+    {"Decarabia Soul": lambda state: state.has(world.magic_seal_table["Subterranean Hell"], player)})
 
     multiworld.get_region("Subterranean Hell East", player).add_exits(["Decarabia Soul", "Merman Soul", "Fish Head Soul", "Needles Soul", "Frozen Shade Soul", "Killer Fish Soul",
                                                                        "Mimic Soul", "Procel Soul"],

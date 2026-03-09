@@ -126,7 +126,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld.get_region("Lost Village Upper Doorway", player).add_exits(["Lost Village Upper", "Demon Guest House Number Puzzle West"])
 
     multiworld.get_region("Lost Village Lower", player).add_exits(["Lost Village Upper", "Warp Room"],
-                                                    {"Lost Village Upper": lambda state: state.has("Magic Seal 1", player)})
+                                                    {"Lost Village Upper": lambda state: state.has(world.magic_seal_table["Lost Village"], player)})
 
     multiworld.get_region("Lost Village Underground Bottom", player).add_exits(["Lost Village Underground Middle", "Wizardry Lab Sunken"],
                                                     {"Lost Village Underground Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
@@ -174,10 +174,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                     {"Garden of Madness Lower": lambda state: state.has("Rahab Soul", player)})
 
     multiworld.get_region("Garden of Madness Upper", player).add_exits(["Garden of Madness Lower", "Garden of Madness Post-Boss"],
-                                                    {"Garden of Madness Post-Boss": lambda state: state.has("Magic Seal 2", player)})
+                                                    {"Garden of Madness Post-Boss": lambda state: state.has(world.magic_seal_table["Garden of Madness"], player)})
 
     multiworld.get_region("Garden of Madness Post-Boss", player).add_exits(["Garden of Madness Upper", "Demon Guest House Main", "Garden of Madness East Gate"],
-                                                    {"Garden of Madness Upper": lambda state: state.has("Magic Seal 2", player),
+                                                    {"Garden of Madness Upper": lambda state: state.has(world.magic_seal_table["Garden of Madness"], player),
                                                      "Garden of Madness East Gate": lambda state: state.has("Garden Gate Key", player)})
 
     multiworld.get_region("Garden of Madness East Gate", player).add_exits(["Cursed Clock Tower Entrance"])
@@ -226,10 +226,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     multiworld.get_region("Condemned Tower Main", player).add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Condemned Tower Top"],
                                                                     {"Cursed Clock Tower Entrance": lambda state: state.has("Tower Key", player),
-                                                                     "Condemned Tower Top": lambda state: state.has("Magic Seal 3", player)})
+                                                                     "Condemned Tower Top": lambda state: state.has(world.magic_seal_table["Condemned Tower"], player)})
 
     multiworld.get_region("Condemned Tower Top", player).add_exits(["Condemned Tower Main", "Warp Room"],
-                                                                    {"Condemned Tower Main": lambda state: state.has("Magic Seal 3", player)})
+                                                                    {"Condemned Tower Main": lambda state: state.has(world.magic_seal_table["Condemned Tower"], player)})
                                                                     
     ################################
     #Cursed Clock Tower
@@ -241,10 +241,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                                     {"Cursed Clock Tower Boss Area": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
     multiworld.get_region("Cursed Clock Tower Boss Area", player).add_exits(["Cursed Clock Tower Central", "Cursed Clock Tower Post-Boss"],
-                                                                    {"Cursed Clock Tower Post-Boss": lambda state: state.has("Magic Seal 4", player)})
+                                                                    {"Cursed Clock Tower Post-Boss": lambda state: state.has(world.magic_seal_table["Cursed Clock Tower"], player)})
 
     multiworld.get_region("Cursed Clock Tower Post-Boss", player).add_exits(["Cursed Clock Tower Boss Area", "Cursed Clock Tower Exit", "Cursed Clock Tower Central", "Warp Room"],
-                                                                    {"Cursed Clock Tower Boss Area": lambda state: state.has("Magic Seal 4", player),
+                                                                    {"Cursed Clock Tower Boss Area": lambda state: state.has(world.magic_seal_table["Cursed Clock Tower"], player),
                                                                      "Cursed Clock Tower Exit": lambda state: state.has("Bat Company Soul", player)})
 
     multiworld.get_region("Cursed Clock Tower Exit", player).add_exits(["Cursed Clock Tower Post-Boss", "The Pinnacle Lower"],
@@ -252,10 +252,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     ####################################################################################
     #Subterranean Hell
     multiworld.get_region("Subterranean Hell Top Entrance", player).add_exits(["Dark Chapel Catacombs Exit", "Subterranean Hell East"],
-                                                {"Subterranean Hell East": lambda state: state.has_all({"Rahab Soul", "Magic Seal 3"}, player)})
+                                                {"Subterranean Hell East": lambda state: state.has_all({"Rahab Soul", world.magic_seal_table["Subterranean Hell"]}, player)})
 
     multiworld.get_region("Subterranean Hell East", player).add_exits(["Subterranean Hell Top Entrance", "Subterranean Hell Central/East Connection", "Subterranean Hell Button Gate Room"],
-                                                {"Subterranean Hell Top Entrance": lambda state: state.has_all({"Rahab Soul", "Magic Seal 3"}, player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)),
+                                                {"Subterranean Hell Top Entrance": lambda state: state.has_all({"Rahab Soul", world.magic_seal_table["Subterranean Hell"]}, player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)),
                                                  "Subterranean Hell Central/East Connection": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})
 
     multiworld.get_region("Subterranean Hell Central/East Connection", player).add_exits(["Subterranean Hell Central Upper", "Subterranean Hell East"],
@@ -330,11 +330,11 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     ###############################
     #Mine of Judgment
     multiworld.get_region("Mine of Judgment", player).add_exits(["The Abyss", "Warp Room"],
-                                                                 {"The Abyss": lambda state: state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player) and state.has("Magic Seal 5", player)})
+                                                                 {"The Abyss": lambda state: state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player) and state.has(world.magic_seal_table["Mine of Judgment"], player)})
 
     multiworld.get_region("The Abyss", player).add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
                                                         {"Mine of Judgment": lambda state: state.has_any(small_uppies, player),
-                                                         "The Abyss Beyond Abaddon": lambda state: state.has_any(big_uppies, player) and state.has("Magic Seal 5", player)})
+                                                         "The Abyss Beyond Abaddon": lambda state: state.has_any(big_uppies, player) and state.has(world.magic_seal_table["The Abyss"], player)})
 
     multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Warp Room"])
 
@@ -347,11 +347,11 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     if world.options.boost_speed:
         multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower"], {
-            "Lost Village Lower": lambda state: state.has("Magic Seal 1", player)
+            "Lost Village Lower": lambda state: state.has(world.magic_seal_table["Lost Village"], player)
         })
     else:
         multiworld.get_region("Lost Village Upper", player).add_exits(["Lost Village Lower"], {
-            "Lost Village Lower": lambda state: state.has("Magic Seal 1", player) and (state.has_any(small_uppies, player) or state.has_any({"Black Panther Soul", "Puppet Master Soul", "Flying Armor Soul"}, player))
+            "Lost Village Lower": lambda state: state.has(world.magic_seal_table["Lost Village"], player) and (state.has_any(small_uppies, player) or state.has_any({"Black Panther Soul", "Puppet Master Soul", "Flying Armor Soul"}, player))
         })
 
     create_soul_regions(world)
