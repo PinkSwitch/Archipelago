@@ -272,6 +272,7 @@ def copy_boss_stats(world, rom):
 # CURRENT NOTES!
 # Test all bosses on all slots
 # I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
+# I'm in boss rush and the seal graphic on boss death is invisible. Make sure i didnt delete it completely in the normal game
 
 #SEAL DATA;
 #OK!!!!!!!!!!! I change the Seal Index for each boss as part of boss rando, but change the seal NUMBER for seal rando.

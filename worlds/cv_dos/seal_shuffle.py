@@ -1,11 +1,31 @@
+seal_list = [
+    "Lost Village",
+    "Wizardry Lab",
+    "Dark Chapel",
+    "Dark Chapel Inner",
+    "Garden of Madness",
+    "Demon Guest House",
+    "Condemned Tower",
+    "Subterranean Hell",
+    "Cursed Clock Tower",
+    "Silenced Ruins",
+    "The Pinnacle",
+    "Demon Guest House Upper",
+    "Mine of Judgment",
+    "Castle Center",
+    "The Abyss"
+]
+
+seals = [
+    "Magic Seal 1",
+    "Magic Seal 2",
+    "Magic Seal 3",
+    "Magic Seal 4",
+    "Magic Seal 5"
+]
+
 def set_seals(world):
-    seals = [
-        "Magic Seal 1",
-        "Magic Seal 2",
-        "Magic Seal 3",
-        "Magic Seal 4",
-        "Magic Seal 5"
-    ]
+    #0222f294 + 4 * index
 
     placed_seals = []
 
@@ -45,4 +65,5 @@ def set_seals(world):
     
 
 def write_seals(world, rom):
-    print("AAAAAAAAAAAA")
+    for index, seal in enumerate(seal_list):
+        rom.write_bytes(0x15C0B4 + (index * 4), bytearray([seals.index(world.magic_seal_table[seal])]))
