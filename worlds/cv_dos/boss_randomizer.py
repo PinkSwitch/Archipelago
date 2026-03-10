@@ -269,8 +269,5 @@ def copy_boss_stats(world, rom):
         address = base_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 
-# CURRENT NOTES!
+
 # Test all bosses on all slots
-# I want to do a test in Bizhawk to make sure it (especially the death fix) doesnt just crash
-# I'm in boss rush and the seal graphic on boss death is invisible. Make sure i didnt delete it completely in the normal game
-# It is invisible. Ugh. FIX THAT!!!!!!!!!!!!!! Make sure it's only invisible if the load FAILED?

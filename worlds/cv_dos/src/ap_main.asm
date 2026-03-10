@@ -305,8 +305,9 @@ b @CeliaEventHandler
     nop ; Death doesn't have room, and failing this
     nop ; causes a softlock when randomized.
 
-.org 0x022153DC
-    nop ; Checks seal assets for the post-boss scene. If this fails, the orb never spawns, so delete it
+.org 0x022153E0
+    cmp r0, 0 ; This is a failsafe for the seal not loading
+    beq @ReloadSealSlot ; We need to reload the entity without the GFX if this happens
 
 .org 0x0222C8B8
     .dw @ThroneEvent_Skipper
@@ -807,7 +808,7 @@ b @CeliaEventHandler
 .dh 0x8000
 
 @GameFlag_ThroneIsShuffled: ; RESET
-.db 0x01
+.db 0x00
 
 @RamFlag_ThroneSpecial:
 .db 0x00
@@ -3021,6 +3022,16 @@ b @CeliaEventHandler
     pop r10
     ldr r0, [r0, r10, lsl 2]
     bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;;;
+;Pretend to get the entity slot
+;This loads some data required for the Orb drop. If it fails, it gets deleted, so we need to put it back for the game to function
+@ReloadSealSlot:
+    mov r0, 0xF5
+    mov r1, r0
+    ldr r2, =0x022154C4
+    bl 0x02012B10
+    b 0x02215404
 .pool
 .endarea
 .close
