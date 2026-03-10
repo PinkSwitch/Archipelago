@@ -437,7 +437,10 @@ class DoSWorld(World):
         if self.options.seal_shuffle:
             spoiler_handle.write(f"\nMagic Seals:\n")
             for seal in self.magic_seal_table:
-                spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
+                if seal in ["Mine of Judgment", "The Abyss"] and not self.options.goal:
+                    continue
+                else:
+                    spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
 
     def create_item(self, name: str) -> CVDoSItem:
         data = self.set_classifications(name)

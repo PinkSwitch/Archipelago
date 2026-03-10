@@ -55,10 +55,13 @@ def set_seals(world):
             world.magic_seal_table["Lost Village"] = "Magic Seal 1"  # We still want to set this early so the player doesn't get stuck
 
     for seal in world.magic_seal_table:
-        if world.magic_seal_table[seal] not in placed_seals:
-            world.multiworld.itempool.append(world.set_classifications(world.magic_seal_table[seal]))  # Create the seal items if necessary
-            world.extra_item_count += 1
-            placed_seals.append(world.magic_seal_table[seal])
+        if seal in ["Mine of Judgment", "The Abyss"] and not world.options.goal:
+            continue
+        else:
+            if world.magic_seal_table[seal] not in placed_seals:
+                world.multiworld.itempool.append(world.set_classifications(world.magic_seal_table[seal]))  # Create the seal items if necessary
+                world.extra_item_count += 1
+                placed_seals.append(world.magic_seal_table[seal])
     
 
 def write_seals(world, rom):

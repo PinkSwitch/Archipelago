@@ -50,7 +50,7 @@ def randomize_bosses(world):
         "Silenced Ruins",
         "Demon Guest House Upper",
         "The Pinnacle",
-        "Mine of Judgement",
+        "Mine of Judgment",
         "The Abyss"
     ]
 
@@ -68,7 +68,7 @@ def randomize_bosses(world):
         "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10),  # Bat Company
         "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12), # Paranoia
         "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, 11), # Aguni, not Dario 2
-        "Mine of Judgement": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13), # Death
+        "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13), # Death
         "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15) # Abaddon
     }
 
@@ -89,7 +89,7 @@ def randomize_bosses(world):
         "Abaddon": DoSBossData(0x72, 26, [0x3B0EB0, 0x3B16FC])
     }
 
-    rahab_boss = world.random.choice([
+    rahab_pool = [
         "Flying Armor",
         "Balore",
         "Puppet Master",
@@ -97,8 +97,18 @@ def randomize_bosses(world):
         "Bat Company",
         "Aguni",
         "Death"
-    ])
+    ]
 
+    if not world.options.goal:
+        #  Remove endgame stuff
+        rahab_pool.remove("Death")
+        boss_pool.remove("Death")
+        boss_pool.remove("Abaddon")
+        world.boss_slots.pop("Mine of Judgment")
+        world.boss_slots.pop("The Abyss")
+
+    rahab_boss = world.random.choice(rahab_pool)
+    
     world.boss_slots["Subterranean Hell"].new_boss = rahab_boss  # Any other boss in Rahab's room will sink below the water level
     boss_pool.remove(rahab_boss)
 
