@@ -15,7 +15,7 @@ from .bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
-from .seal_shuffle import write_seals
+from .seal_shuffle import write_seals, randomize_seal_patterns
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
@@ -126,7 +126,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DE02, bytearray([0xFF]))
 
     if world.options.goal == 2:
-        rom.write_bytes(0x2F6DD48, bytearray([0x01]))
+        rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
 
     if world.options.one_screen_mode:
         rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
@@ -139,6 +139,9 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.no_mp_bat:
         rom.write_bytes(0xA1782, bytearray([0x00])) # Zero the Bat's MP cost
+        
+    if world.options.randomize_seal_patterns:
+        randomize_seal_patterns(world, rom)
 
     rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
 

@@ -115,6 +115,9 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Demon Guest House: Beyond Paranoia", player), lambda state: state.has(world.magic_seal_table["Demon Guest House Upper"], player) and state.has_all(paranoia_souls, player))
     set_rule(world.multiworld.get_location("Dark Chapel: Catacombs Soul Barrier", player), lambda state: state.has(world.red_soul_walls[2], player))
 
+    if not world.options.replace_menace_with_soma:
+        set_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has_any(big_uppies, player))
+
     #if world.options.hidden_wall_status == RevealBreakableWalls.option_eye_spy:
      #   add_rule(world.multiworld.get_location("Lost Village: Hidden Floor Room 1", player), lambda state: state.has("Peeping Eye Soul", player))
       #  add_rule(world.multiworld.get_location("Lost Village: Hidden Floor Room 2", player), lambda state: state.has("Peeping Eye Soul", player))

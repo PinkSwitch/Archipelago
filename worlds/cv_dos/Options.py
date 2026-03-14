@@ -184,6 +184,10 @@ class SealShuffle(Toggle):
        Early Seal 1 will guarantee Flying Armor to always use Seal 1."""
     display_name = "Seal Shuffle"
 
+class RandomizeSealPatterns(Toggle):
+    """Randomizes the drawn pattern for Magic Seals, as well as their rotation."""
+    display_name = "Randomize Seal Patterns"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -229,6 +233,7 @@ class DoSOptions(PerGameCommonOptions):
     hard_mode: HardMode
     boss_shuffle: BossShuffle
     seal_shuffle: SealShuffle
+    randomize_seal_patterns: RandomizeSealPatterns
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
@@ -247,10 +252,16 @@ dos_option_groups = [
 
     OptionGroup("Item Options", [
         StartingWeapon,
-        EarlySeal1,
         ShopRandomizer,
         GateItems
 
+    ]),
+
+    OptionGroup("Seal Settings", [
+        DisableBossSeals,
+        EarlySeal1,
+        SealShuffle,
+        RandomizeSealPatterns
     ]),
 
     OptionGroup("Weapon Synth Settings", [
@@ -269,14 +280,12 @@ dos_option_groups = [
         ShuffleDrops,
         ExperiencePercent,
         HardMode,
-        BossShuffle,
-        SealShuffle
+        BossShuffle
 
     ]),
 
     OptionGroup("Quality of Life", [
         RemoveMoneyGates,
-        DisableBossSeals,
         RevealMap,
         RevealBreakableWalls,
         FixLuck,

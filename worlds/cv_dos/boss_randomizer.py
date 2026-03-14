@@ -9,6 +9,7 @@ class DoSBoss:
     room_width: int # The SLOT's room width
     boss_address_pointer: int # Which adress we write to to place the boss
     seal_index: int # Which seal this slot uses
+    old_boss: str # Which boss is normally here
     new_boss: str = "None" # Which boss has been randomized to be here
 
 @dataclass
@@ -56,20 +57,20 @@ def randomize_bosses(world):
 
 
     world.boss_slots = {
-        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8, 1),  # Flying Armor
-        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0xAD0B0, 2),  # Balore
-        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, 3), # Dimitrii
-        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, 4),  # Malphas
-        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, 5),  # Dario 1 Make sure this is the right address for the flag. Seems low.
-        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0, 6),  # Puppet Master
-        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0, 7),  # Gergoth
-        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0, 9),  # Zephyr
-        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, 8),  # Rahab
-        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10),  # Bat Company
-        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12), # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, 11), # Aguni, not Dario 2
-        "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13), # Death
-        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15) # Abaddon
+        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8, 1, "Flying Armor"),  # Flying Armor
+        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0xAD0B0, 2, "Balore"),  # Balore
+        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, 3, "Dimitrii"), # Dimitrii
+        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, 4, "Malphas"),  # Malphas
+        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, 5, "Dario"),  # Dario 1 Make sure this is the right address for the flag. Seems low.
+        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0, 6, "Puppet Master"),  # Puppet Master
+        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0, 7, "Gergoth"),  # Gergoth
+        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0, 9, "Zephyr"),  # Zephyr
+        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, 8, "Rahab"),  # Rahab
+        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10, "Bat Company"),  # Bat Company
+        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12, "Paranoia"), # Paranoia
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, 11, "Aguni"), # Aguni, not Dario 2
+        "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13, "Death"), # Death
+        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15, "Abaddon") # Abaddon
     }
 
     world.boss_data = {
@@ -101,14 +102,19 @@ def randomize_bosses(world):
 
     if not world.options.goal:
         #  Remove endgame stuff
+        rahab_pool.remove("Aguni")
         rahab_pool.remove("Death")
+
+        boss_pool.remove("Aguni")
         boss_pool.remove("Death")
         boss_pool.remove("Abaddon")
+
+        world.boss_slots.pop("The Pinnacle")
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
 
     rahab_boss = world.random.choice(rahab_pool)
-    
+
     world.boss_slots["Subterranean Hell"].new_boss = rahab_boss  # Any other boss in Rahab's room will sink below the water level
     boss_pool.remove(rahab_boss)
 
@@ -267,7 +273,9 @@ def write_bosses(world, rom):
             if pointer:
                 rom.write_bytes(pointer, slot.seal_index) # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
 
-        rom.copy_bytes(0x3FFFCC0 + (int((data.flag_index / 2) * 9)), 9, address + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
+
+        index = int(world.boss_data[slot.old_boss].flag_index / 2)
+        rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
     
     for i in range(126):
         rom.write_bytes(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
@@ -281,3 +289,10 @@ def copy_boss_stats(world, rom):
 
 
 # Test all bosses on all slots
+# Stat copying does NOT work at all.
+# The addresses look correct. Maybe it's the data flag index that's wrong?
+# I have some things i want to try cross-referencing. maybe don't clean up afterwards and make sure the right data is getting copied?
+# Throne goal should also remove Aguni
+# This is still all weirdly wrong and I'm not sure why? It's like it's copying Gergoth's data? EXP is entirely fucked. Scrap this and start over, basically.
+# Also I think I might lock the throne door until you have paranoia
+# I can override the seal door code and have it store 6 instead of the seal.
