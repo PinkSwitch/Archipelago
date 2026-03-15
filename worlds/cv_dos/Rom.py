@@ -115,14 +115,23 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xB84A9, bytearray([0x00]))
 
     if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
-        rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))
+        rom.write_bytes(0xBD508, bytearray([0x60, 0xDC])) #  ???
         rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
         rom.write_bytes(0xC1C38, bytearray([0xD0]))
-        rom.write_bytes(0xB05A1, bytearray([0x00]))
+        #rom.write_bytes(0xB05A1, bytearray([0x00]))
+
+        ####  Wall off the final boss door in the Abyss
+        rom.write_bytes(0x2DE0DC, bytearray([0x2F]))
+        rom.write_bytes(0x2DE11C, bytearray([0x3F]))
+        rom.write_bytes(0x2DE15C, bytearray([0x4F]))
+        rom.write_bytes(0x2DE19C, bytearray([0x5F]))
+        rom.write_bytes(0x2DE1DC, bytearray([0x5F]))
+        rom.write_bytes(0x2DE21C, bytearray([0x41]))
+        ######
 
         rom.write_bytes(0x2F6DDFD, bytearray([0xFF])) # Remove Death, Abaddon, and Aguni from the Soulstiary
-        rom.write_bytes(0x2F6DDFE, bytearray([0xFF]))
+        rom.write_bytes(0x2F6DDFE, bytearray([0xFF])) # IF MINE IS REMOVED!!!!
         rom.write_bytes(0x2F6DE02, bytearray([0xFF]))
 
     if world.options.goal == 2:

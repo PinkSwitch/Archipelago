@@ -100,8 +100,8 @@ def randomize_bosses(world):
         "Death"
     ]
 
-    if not world.options.goal:
-        #  Remove endgame stuff
+    if world.mine_status == "Disabled":
+        #  Remove endgame bosses
         rahab_pool.remove("Aguni")
         rahab_pool.remove("Death")
 
@@ -292,7 +292,6 @@ def copy_boss_stats(world, rom):
 # Stat copying does NOT work at all.
 # The addresses look correct. Maybe it's the data flag index that's wrong?
 # I have some things i want to try cross-referencing. maybe don't clean up afterwards and make sure the right data is getting copied?
-# Throne goal should also remove Aguni
 # This is still all weirdly wrong and I'm not sure why? It's like it's copying Gergoth's data? EXP is entirely fucked. Scrap this and start over, basically.
 # Also I think I might lock the throne door until you have paranoia
 # I can override the seal door code and have it store 6 instead of the seal.

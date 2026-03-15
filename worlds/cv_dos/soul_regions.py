@@ -105,7 +105,7 @@ def create_soul_regions(world):
     multiworld.get_region("The Pinnacle Lower", player).add_exits(["Guillotiner Soul", "Succubus Soul", "Malachi Soul", "Mushussu Soul", "Werewolf Soul", "Flame Demon Soul",
                                                                    "Bugbear Soul", "Dead Warrior Soul", "Erinys Soul"])
 
-    if world.options.goal:
+    if world.mine_status != "Disabled":
         multiworld.get_region("Mine of Judgment", player).add_exits(["Slogra Soul", "Ripper Soul", "Gaibon Soul", "Tanjelly Soul", "Giant Slug Soul", "Bugbear Soul"])
         multiworld.get_region("The Abyss", player).add_exits(["Alastor Soul", "Mud Demon Soul", "Frozen Shade Soul", "Malachi Soul", "White Dragon Soul", "Malacoda Soul",
                                                               "Arc Demon Soul", "Erinys Soul", "Heart Eater Soul", "Stolas Soul", "Final Guard Soul"])

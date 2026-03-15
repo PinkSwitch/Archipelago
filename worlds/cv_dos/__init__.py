@@ -437,7 +437,7 @@ class DoSWorld(World):
         if self.options.seal_shuffle:
             spoiler_handle.write(f"\nMagic Seals:\n")
             for seal in self.magic_seal_table:
-                if seal in ["Mine of Judgment", "The Abyss"] and not self.options.goal:
+                if seal in ["Mine of Judgment", "The Abyss"] and self.mine_status == "Disabled":  # Ignore Magic Seals that are past the endgame trigger
                     continue
                 else:
                     spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")

@@ -1,5 +1,11 @@
 world_version = "2.0"
 
+goal_triggers == {
+    "Throne": ("Aguni Defeated"),
+    "Garden": ("Power of Darkness"),
+    "Bosses": ("Boss Defeated")
+}
+
 location_ram_table = {
     "Lost Village: Above Entrance": [0x05, 0x10],
     "Lost Village: Upper Big Room Corner": [0x01, 0x08],

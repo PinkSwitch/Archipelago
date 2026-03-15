@@ -8,6 +8,18 @@ from .seal_shuffle import set_seals
 from BaseClasses import ItemClassification
 
 def setup_game(world):
+    world.mine_status = None
+    if not world.options.goal:
+        if world.options.mine_condition == "Throne" or (world.options.mine_condition == "Garden" and world.options.garden_condition == "Throne"):
+            world.mine_status = "Disabled"  # Make sure we don't generate Mine checks if the Mine is unreachable.
+
+    if not world.mine_status:  # If we didn't just disable it, set the status here
+        if world.options.mine_condition != "None":
+            world.mine_status == "Locked"
+        else:
+            world.mine_status == "Open"
+
+
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1
 
@@ -52,7 +64,7 @@ def place_souls(world):
     if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         world.important_souls.add("Imp Soul")
 
-    if world.options.goal:
+    if world.mine_status != "Disabled":
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
         world.rare_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
@@ -103,8 +115,8 @@ def place_souls(world):
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1
     else:
-        if not world.options.goal:
-            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible on Throne goal
+        if world.mine_status == "Disabled":
+            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
             world.excluded_static_souls.update(goal_locked_enemies)
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 world.multiworld.itempool.append(world.set_classifications(soul))

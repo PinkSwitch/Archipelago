@@ -64,7 +64,7 @@ def set_seals(world):
             world.magic_seal_table["Lost Village"] = "Magic Seal 1"  # We still want to set this early so the player doesn't get stuck
 
     for seal in world.magic_seal_table:
-        if seal in ["Mine of Judgment", "The Abyss"] and not world.options.goal:
+        if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":
             continue
         else:
             if world.magic_seal_table[seal] not in placed_seals:

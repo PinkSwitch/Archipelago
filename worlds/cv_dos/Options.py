@@ -188,6 +188,44 @@ class RandomizeSealPatterns(Toggle):
     """Randomizes the drawn pattern for Magic Seals, as well as their rotation."""
     display_name = "Randomize Seal Patterns"
 
+class MenaceCondition(Choice):
+    """This Condition is required to be met before you can fight Menace.
+       None: None
+       Throne Room: Defeat Aguni in the Throne Room (If Goal is set to throne room, this will be set to None.)
+       Garden: Avoid the bad ending in the Garden of Madness
+       Bosses: Defeat all available bosses"""
+    display_name = "Menace Condition"
+    option_none = 0
+    option_throne_room = 1
+    option_garden = 2
+    option_bosses = 3
+    default = 0
+
+class MineCondition(Choice):
+    """This Condition is required to be met before you can enter the Mine of Judgment.
+       None: None
+       Throne Room: Defeat Aguni in the Throne Room (If Goal is set to throne room, the mine and the Abyss will be inaccessible.)
+       Garden: Avoid the bad ending in the Garden of Madness
+       Bosses: Defeat all available bosses"""
+    display_name = "Mine Condition"
+    option_none = 0
+    option_throne_room = 1
+    option_garden = 2
+    option_bosses = 3
+    default = 0
+
+class GardenCondition(Choice):
+    """This Condition is required to be met before Celia appears in the Garden of Madness.
+       None: None
+       Throne Room: Defeat Aguni in the Throne Room (This condition is considered unreachable if Goal is set to throne room)
+       Bosses: Defeat all available bosses"""
+    display_name = "Garden Condition"
+    option_none = 0
+    option_throne_room = 1
+    option_bosses = 2
+    default = 0
+    display_name = "Garden Condition"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -234,10 +272,16 @@ class DoSOptions(PerGameCommonOptions):
     boss_shuffle: BossShuffle
     seal_shuffle: SealShuffle
     randomize_seal_patterns: RandomizeSealPatterns
+    menace_condition: MenaceCondition
+    mine_condition: MineCondition
+    garden_condition: GardenCondition
 
 dos_option_groups = [
     OptionGroup("Goal Options", [
         Goal,
+        MenaceCondition,
+        MineCondition,
+        GardenCondition,
         ReplaceMenaceWithSoma
 
     ]),

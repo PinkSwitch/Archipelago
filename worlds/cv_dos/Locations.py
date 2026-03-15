@@ -154,21 +154,23 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Right", 0x77),
     ]
 
-    if world.options.goal:
+    if world.options.goal:  # Add the checks in the Throne Room
         location_table += [
             LocationData("The Pinnacle Throne Room", "The Pinnacle: Beyond Throne Room", 0x78),
             LocationData("The Pinnacle Throne Room", "Aguni Soul", 0x79),
+        ]
+    else:
+        location_table += [
+            LocationData("The Pinnacle Throne Room", "Abyss Center", None),
+        ]
+
+    if world.mine_status != "Disabled":  # Add the Mine/Abyss checks
             LocationData("Mine of Judgment", "Death Soul", 0x7A),
             LocationData("The Abyss", "The Abyss: Sand Area", 0x7B),
             LocationData("The Abyss", "The Abyss: Ice Area", 0x7C),
             LocationData("The Abyss Beyond Abaddon", "Abaddon Soul", 0x7D),
             LocationData("The Pinnacle Throne Room", "The Pinnacle: Throne Room", None),
             LocationData("The Abyss Beyond Abaddon", "Abyss Center", None),
-        ]
-    else:
-        location_table += [
-            LocationData("The Pinnacle Throne Room", "Abyss Center", None),
-        ]
 
     if world.options.gate_items == GateItems.option_buttonsanity:
         location_table += [
