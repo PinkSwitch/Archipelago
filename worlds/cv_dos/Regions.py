@@ -3,6 +3,7 @@ from BaseClasses import Region, Location
 from .Locations import LocationData
 from .Rules import small_uppies, big_uppies
 from .soul_regions import create_soul_regions
+#from .in_game_data import goal_triggers
 from .Options import GateItems
 if TYPE_CHECKING:
     from . import DoSWorld
@@ -19,7 +20,8 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld = world.multiworld
     player = world.player
     locations_per_region = get_locations_per_region(locations)
-    mine_conditions = {"Power of Darkness"}
+    if world.mine_status == "Locked":
+        mine_conditions = {world.goal_triggers[world.options.mine_condition.current_key]}
 
     regions = [
         create_region(world, player, locations_per_region, "Lost Village Upper"),
@@ -89,13 +91,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         create_region(world, player, locations_per_region, "The Pinnacle Throne Room"),
         create_region(world, player, locations_per_region, "The Pinnacle Lower"),
 
-        create_region(world, player, locations_per_region, "Mine of Judgment"),
-
-        create_region(world, player, locations_per_region, "The Abyss"),
-        create_region(world, player, locations_per_region, "The Abyss Beyond Abaddon"),
-
         create_region(world, player, locations_per_region, "Warp Room"),
     ]
+
+    if world.mine_status != "Disabled":
+        regions.extend([
+        create_region(world, player, locations_per_region, "Mine of Judgment"),
+        create_region(world, player, locations_per_region, "The Abyss"),
+        create_region(world, player, locations_per_region, "The Abyss Beyond Abaddon")
+        ])
 
     for region in world.common_souls:
         regions.append(create_region(world, player, locations_per_region, region))
@@ -219,10 +223,16 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     {"Dark Chapel": lambda state: state.has_any({"Puppet Master Soul", "Bat Company Soul"}, player)})
     ##########################################################################################################
     #Condemned Tower
-    multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Main", "Mine of Judgment"],
+    multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Main"],
                                                                     {"Condemned Tower Main": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
-                                                                     "Dark Chapel Big Room": lambda state: state.has_any(small_uppies, player),
-                                                                     "Mine of Judgment": lambda state: state.has_all(mine_conditions, player)})
+                                                                     "Dark Chapel Big Room": lambda state: state.has_any(small_uppies, player)})
+    if world.mine_status != "Disabled":
+        if not world.mine_status:
+            multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"])  # Add a ruleless connector here
+        else:
+            print(world.mine_status)
+            multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"],
+                                                                            {"Mine of Judgment": lambda state: state.has_all_counts(mine_conditions, player)})
 
     multiworld.get_region("Condemned Tower Main", player).add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Condemned Tower Top"],
                                                                     {"Cursed Clock Tower Entrance": lambda state: state.has("Tower Key", player),

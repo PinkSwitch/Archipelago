@@ -94,10 +94,6 @@ def set_location_rules(world: "DoSWorld") -> None:
     else:
         add_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has(world.magic_seal_table["The Pinnacle"], player))
 
-    if world.options.goal == 2:
-        add_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has("Aguni Defeated", player))
-        set_rule(world.multiworld.get_location("The Pinnacle: Throne Room", player), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
-
     if not world.options.boost_speed:
         # These jumps are trivial with the speedboost option on
         set_rule(world.multiworld.get_location("Lost Village: Moat Drain Switch", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Flying Armor Soul", "Puppet Master Soul", "Black Panther Soul"}, player))
@@ -119,7 +115,7 @@ def set_location_rules(world: "DoSWorld") -> None:
         set_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has_any(big_uppies, player))
 
     if world.options.menace_condition:
-        add_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has_all_counts(goal_triggers[world.options.menace_condition]))
+        add_rule(world.multiworld.get_location("Abyss Center", player), world.goal_triggers[world.options.menace_condition.current_key])
 
     #if world.options.hidden_wall_status == RevealBreakableWalls.option_eye_spy:
      #   add_rule(world.multiworld.get_location("Lost Village: Hidden Floor Room 1", player), lambda state: state.has("Peeping Eye Soul", player))
@@ -131,3 +127,4 @@ def set_location_rules(world: "DoSWorld") -> None:
         #add_rule(world.multiworld.get_location("Subterranean Hell: Giant Underwater Room Bottom Right", player), lambda state: state.has("Peeping Eye Soul", player))
         #add_rule(world.multiworld.get_location("Subterranean Hell: Giant Underwater Room Bottom Right", player), lambda state: state.has("Peeping Eye Soul", player))
         #add_rule(world.multiworld.get_location("Subterranean Hell: Giant Underwater Room Bottom Right", player), lambda state: state.has("Peeping Eye Soul", player))
+        # 021A3278 for this

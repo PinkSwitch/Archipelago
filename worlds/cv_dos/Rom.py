@@ -134,8 +134,8 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DDFE, bytearray([0xFF])) # IF MINE IS REMOVED!!!!
         rom.write_bytes(0x2F6DE02, bytearray([0xFF]))
 
-    if world.options.goal == 2:
-        rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
+    #if world.options.goal == 2:
+        #rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
 
     if world.options.one_screen_mode:
         rom.write_bytes(0x2F6DD4C, bytearray([0x01]))

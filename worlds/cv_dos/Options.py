@@ -7,14 +7,11 @@ from .Items import soul_filler_table
 class Goal(Choice):
     """The goal for your game.
        Throne Room: Get to the Throne Room and defeat Menace there.
-       Abyss: Open the path to the Mine of Judgment, then defeat Menace in the Abyss.
-       Abyss Plus: Defeat Aguni at the throne room, then open the path to the Mine of Judgment and defeat Menace in the Abyss."""
+       Abyss: Open the path to the Mine of Judgment, then defeat Menace in the Abyss."""
     display_name = "Goal"
     option_throne_room = 0
     option_abyss = 1
-    option_abyss_plus = 2
     default = 0
-    display_name = "Goal"
 
 class ReplaceMenaceWithSoma(Toggle):
     """Replaces Menace with Soma-Dracula"""
@@ -212,7 +209,7 @@ class MineCondition(Choice):
     option_throne_room = 1
     option_garden = 2
     option_bosses = 3
-    default = 0
+    default = 2
 
 class GardenCondition(Choice):
     """This Condition is required to be met before Celia appears in the Garden of Madness.
