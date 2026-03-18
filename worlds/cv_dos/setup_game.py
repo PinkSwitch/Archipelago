@@ -5,6 +5,7 @@ from .bullet_wall_randomizer import set_souls_for_walls
 from .synthesis_randomizer import randomize_synthesis
 from .boss_randomizer import randomize_bosses
 from .seal_shuffle import set_seals
+from .set_goals import set_goal_triggers
 from BaseClasses import ItemClassification
 
 def setup_game(world):
@@ -49,59 +50,33 @@ def setup_game(world):
     if world.options.boss_shuffle:
         randomize_bosses(world)
 
-    menace_bosses = 13
-    mine_bosses = 11
-    garden_bosses = 13
-
-    if world.mine_status == "Disabled":  # Remove the post-Mine bosses
-        menace_bosses -= 2
-        garden_bosses -= 2
-
-    if not world.options.goal:  # Remove Aguni
-        menace_bosses -= 1
-        mine_bosses -= 1
-        garden_bosses -= 1
-
-    world.menace_triggers = {
-        "throne_room": lambda state: state.has("Aguni Defeated", world.player),
-        "garden": lambda state: state.has("Power of Darkness", world.player),
-        "bosses": lambda state: state.has("Boss Defeated", menace_bosses, world.player)
-    }
-
-    world.mine_triggers = {
-        "throne_room": lambda state: state.has("Aguni Defeated", world.player),
-        "garden": lambda state: state.has("Power of Darkness", world.player),
-        "bosses": lambda state: state.has("Boss Defeated", mine_bosses, world.player)
-    }
-
-    world.garden_triggers = {
-        "throne_room": lambda state: state.has("Aguni Defeated", world.player),
-        "bosses": lambda state: state.has("Boss Defeated", garden_bosses, world.player)
-    }
+    world.menace_triggers = set_goal_triggers(world, world.options.menace_condition.current_key, "Menace")
+    world.garden_triggers = set_goal_triggers(world, world.options.garden_condition.current_key, "Garden")
+    world.mine_triggers = set_goal_triggers(world, world.options.mine_condition.current_key, "Mine")
 
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
     world.get_location("Garden of Madness: Central Chamber").place_locked_item(world.create_item("Power of Darkness"))
     world.get_location("Abyss Center").place_locked_item(world.create_item("Menace Defeated"))
 
-    world.get_location("Lost Village: Flying Armor").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Wizardry Lab: Balore").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Dark Chapel: Dimitrii").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Dark Chapel Inner: Malphas").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Garden of Madness: Dario").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Demon Guest House: Puppet Master").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Subterranean Hell: Rahab").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Condemned Tower: Gergoth").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Cursed Clock Tower: Zephyr").place_locked_item(world.create_item("Boss Defeated"))
-    world.get_location("Silenced Ruins: Bat Company").place_locked_item(world.create_item("Boss Defeated"))
+    world.get_location("Lost Village: Boss Room").place_locked_item(world.create_item("Village Boss Clear"))
+    world.get_location("Wizardry Lab: Boss Room").place_locked_item(world.create_item("Lab Boss Clear"))
+    world.get_location("Dark Chapel: Boss Room").place_locked_item(world.create_item("Chapel Boss Clear"))
+    world.get_location("Dark Chapel: Inner Chapel Boss Room").place_locked_item(world.create_item("Inner Chapel Boss Clear"))
+    world.get_location("Garden of Madness: Boss Room").place_locked_item(world.create_item("Garden Boss Clear"))
+    world.get_location("Demon Guest House: Boss Room").place_locked_item(world.create_item("Guest House Boss Clear"))
+    world.get_location("Subterranean Hell: Boss Room").place_locked_item(world.create_item("Subterranean Hell Boss Clear"))
+    world.get_location("Condemned Tower: Boss Room").place_locked_item(world.create_item("Tower Boss Clear"))
+    world.get_location("Cursed Clock Tower: Boss Room").place_locked_item(world.create_item("Clock Tower Boss Clear"))
+    world.get_location("Silenced Ruins: Boss Room").place_locked_item(world.create_item("Ruins Boss Clear"))
+    world.get_location("Upper Guest House: Boss Room").place_locked_item(world.create_item("Upper Guest House Boss Clear"))
 
     if world.options.goal:
         world.get_location("The Pinnacle: Throne Room").place_locked_item(world.create_item("Aguni Defeated"))
-        world.get_location("The Pinnacle: Aguni").place_locked_item(world.create_item("Boss Defeated"))
 
     if world.mine_status != "Disabled":
-        world.get_location("The Abyss: Abaddon").place_locked_item(world.create_item("Boss Defeated"))
-        world.get_location("Mine of Judgment: Death").place_locked_item(world.create_item("Boss Defeated"))
+        world.get_location("The Abyss: Boss Room").place_locked_item(world.create_item("Abyss Boss Clear"))
+        world.get_location("Mine of Judgment: Boss Room").place_locked_item(world.create_item("Mine Boss Clear"))
 
 
 def place_souls(world):

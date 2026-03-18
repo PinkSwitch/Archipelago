@@ -335,6 +335,20 @@ item_table: Dict[str, ItemData] = {
     "Aguni Defeated": ItemData("Events", None, ItemClassification.progression, 0),
     "Power of Darkness": ItemData("Events", None, ItemClassification.progression, 0),
     "Menace Defeated": ItemData("Events", None, ItemClassification.progression, 0),
+
+    "Village Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Lab Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Chapel Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Inner Chapel Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Garden Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Guest House Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Tower Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Subterranean Hell Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Clock Tower Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Ruins Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Upper Guest House Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Mine Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Abyss Boss Clear": ItemData("Events", None, ItemClassification.progression, 0),
 }
 
 
