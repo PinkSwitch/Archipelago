@@ -12,7 +12,7 @@ class LocationData(NamedTuple):
     code: Optional[int]
 
 
-def get_locations(world: "DosWorld") -> List[LocationData]:
+def get_locations(world: "DoSWorld") -> List[LocationData]:
 
     location_table: List[LocationData] = [
         LocationData("Lost Village Upper", "Lost Village: Above Entrance", 0x01),

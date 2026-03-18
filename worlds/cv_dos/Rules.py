@@ -58,7 +58,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Dark Chapel: Bell Room In Bell", player), lambda state: state.has("Hippogryph Soul", player))
     # If soulsanity, the Soul Barrier needs Skeleton
 
-    set_rule(world.multiworld.get_location("Dark Chapel: Bell Room Right", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
+    set_rule(world.multiworld.get_location("Dark Chapel: Bell Room Right", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player))
 
     set_rule(world.multiworld.get_location("Dark Chapel: Big Room Top Right", player), lambda state: state.has_any(big_uppies, player) or (state.has("Puppet Master Soul", player) and state.has("Malphas Soul", player)))
     set_rule(world.multiworld.get_location("Dark Chapel: Big Room Lower", player), lambda state: state.has_any(big_uppies, player))

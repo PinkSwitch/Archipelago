@@ -359,6 +359,9 @@ class DoSWorld(World):
            self.red_soul_walls = passthrough["soul_walls"]
            self.options.gate_items = passthrough["buttonsanity"]
            self.magic_seal_table = passthrough["seals"]
+           self.options.menace_condition = passthrough["menace_condition"]
+           self.options.mine_condition = passthrough["mine_condition"]
+           self.options.garden_condition = passthrough["garden_condition"]
         setup_game(self)
 
         self.auth_id = self.random.getrandbits(32)
@@ -408,7 +411,10 @@ class DoSWorld(World):
             "speed_boost": self.options.boost_speed.value,
             "soul_walls": self.red_soul_walls,
             "buttonsanity": self.options.gate_items.value,
-            "seals": self.magic_seal_table
+            "seals": self.magic_seal_table,
+            "menace_condition": self.options.menace_condition.value,
+            "garden_condition": self.options.garden_condition.value,
+            "mine_condition": self.options.mine_condition.value
         }
 
     def modify_multidata(self, multidata: dict) -> None:
