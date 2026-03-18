@@ -232,7 +232,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         else:
             print(world.mine_status)
             multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"],
-                                                                            {"Mine of Judgment": lambda state: state.has_all_counts(mine_conditions, player)})
+                                                                            {"Mine of Judgment": lambda state: state.has_all(world.mine_triggers, player)})
 
     multiworld.get_region("Condemned Tower Main", player).add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Condemned Tower Top"],
                                                                     {"Cursed Clock Tower Entrance": lambda state: state.has("Tower Key", player),
@@ -339,14 +339,15 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
 
     ###############################
     #Mine of Judgment
-    multiworld.get_region("Mine of Judgment", player).add_exits(["The Abyss", "Warp Room"],
-                                                                 {"The Abyss": lambda state: state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player) and state.has(world.magic_seal_table["Mine of Judgment"], player)})
+    if world.mine_status != "Disabled":
+        multiworld.get_region("Mine of Judgment", player).add_exits(["The Abyss", "Warp Room"],
+                                                                    {"The Abyss": lambda state: state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player) and state.has(world.magic_seal_table["Mine of Judgment"], player)})
 
-    multiworld.get_region("The Abyss", player).add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
-                                                        {"Mine of Judgment": lambda state: state.has_any(small_uppies, player),
-                                                         "The Abyss Beyond Abaddon": lambda state: state.has_any(big_uppies, player) and state.has(world.magic_seal_table["The Abyss"], player)})
+        multiworld.get_region("The Abyss", player).add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
+                                                            {"Mine of Judgment": lambda state: state.has_any(small_uppies, player),
+                                                            "The Abyss Beyond Abaddon": lambda state: state.has_any(big_uppies, player) and state.has(world.magic_seal_table["The Abyss"], player)})
 
-    multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Warp Room"])
+        multiworld.get_region("The Abyss Beyond Abaddon", player).add_exits(["Warp Room"])
 
     multiworld.get_region("Warp Room", player).add_exits([world.starting_warp_region])
     multiworld.get_region("Subterranean Hell Spike Room East", player).add_exits(["Subterranean Hell Spike Room West"],

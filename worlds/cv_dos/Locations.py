@@ -64,7 +64,6 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
         LocationData("Garden of Madness Lower", "Garden of Madness: Money Gate", 0x29),
         LocationData("Garden of Madness Water Blocked", "Garden of Madness: Underground Room", 0x2A),
         LocationData("Garden of Madness East Gate", "Garden of Madness: East Alcove", 0x2B),
-        LocationData("Garden of Madness Lower", "Garden of Madness: Central Chamber", None),
         LocationData("Garden of Madness Post-Boss", "Garden of Madness: Boss Room", None),
 
         LocationData("Demon Guest House Main", "Demon Guest House: Secret Room", 0x2C),
@@ -175,6 +174,11 @@ def get_locations(world: "DosWorld") -> List[LocationData]:
     else:
         location_table += [
             LocationData("The Pinnacle Throne Room", "Abyss Center", None),
+        ]
+
+    if world.garden_chamber_available:
+        location_table += [
+            LocationData("Garden of Madness Lower", "Garden of Madness: Central Chamber", None),
         ]
 
     if world.mine_status != "Disabled":  # Add the Mine/Abyss checks

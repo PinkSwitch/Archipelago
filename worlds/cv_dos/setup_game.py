@@ -1,4 +1,4 @@
-from .Options import SoulsanityLevel, SoulRandomizer, MineCondition, GardenCondition
+from .Options import SoulsanityLevel, SoulRandomizer, MineCondition, GardenCondition, MenaceCondition
 from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
 from .bullet_wall_randomizer import set_souls_for_walls
@@ -9,13 +9,22 @@ from .set_goals import set_goal_triggers
 from BaseClasses import ItemClassification
 
 def setup_game(world):
+    world.extra_soul_slots = 99  # Locations that can be filled by guaranteed souls
 
     world.mine_status = None
+    world.garden_chamber_available = True
     if not world.options.goal:
-        if world.options.mine_condition == MineCondition.option_throne_room or (
+        if world.options.mine_condition == MineCondition.option_throne_room or ( 
                     world.options.mine_condition == MineCondition.option_garden and 
                     world.options.garden_condition == GardenCondition.option_throne_room):
             world.mine_status = "Disabled"  # Make sure we don't generate Mine checks if the Mine is unreachable.
+
+        if world.options.menace_condition == MenaceCondition.option_throne_room or (
+            world.options.menace_condition == MenaceCondition.option_garden and world.options.garden_condition == GardenCondition.option_throne_room):
+            world.options.menace_condition.value = MenaceCondition.option_none  # This would be impossible so we switch it to no condition
+            
+        if world.options.garden_condition == GardenCondition.option_throne_room:
+            world.garden_chamber_available = False
 
     if not world.mine_status:  # If we didn't just disable it, set the status here
         if world.options.mine_condition != MineCondition.option_none:
@@ -56,7 +65,6 @@ def setup_game(world):
 
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
-    world.get_location("Garden of Madness: Central Chamber").place_locked_item(world.create_item("Power of Darkness"))
     world.get_location("Abyss Center").place_locked_item(world.create_item("Menace Defeated"))
 
     world.get_location("Lost Village: Boss Room").place_locked_item(world.create_item("Village Boss Clear"))
@@ -78,10 +86,14 @@ def place_static_items(world):
         world.get_location("The Abyss: Boss Room").place_locked_item(world.create_item("Abyss Boss Clear"))
         world.get_location("Mine of Judgment: Boss Room").place_locked_item(world.create_item("Mine Boss Clear"))
 
+    if world.garden_chamber_available:
+        world.get_location("Garden of Madness: Central Chamber").place_locked_item(world.create_item("Power of Darkness"))
+
 
 def place_souls(world):
     soul_location_count = 0
     extra_souls = 0
+    souls_added = 0
 
     world.important_souls.update(world.red_soul_walls)
     if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
@@ -112,9 +124,30 @@ def place_souls(world):
                 world.options.guaranteed_souls.value.add(soul)
         world.options.guaranteed_souls.value.remove("Rare")
 
+    if world.mine_status != "Disabled":
+        world.extra_soul_slots += 4  # Mine checks count
+
+    if world.options.gate_items == 1:
+        world.extra_soul_slots -= 4  # We need space for the keys
+
+    if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        world.extra_soul_slots += len(world.common_souls)
+
+        if world.options.soulsanity_level:
+            world.extra_soul_slots += len(world.uncommon_souls)
+
+        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
+            world.extra_soul_slots += len(world.rare_souls)
+
     for soul in world.options.guaranteed_souls:
-        world.multiworld.itempool.append(world.set_classifications(soul))
-        world.extra_item_count += 1
+        world.extra_soul_slots -= 1
+        if not world.extra_soul_slots:
+            print("CHANGE TO A WARNING WEEWOO")
+            break  # Bail if we're out of room for more souls
+        else:
+            world.multiworld.itempool.append(world.set_classifications(soul))
+            world.extra_item_count += 1
+            souls_added += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         # These items are only important on Rare tier
@@ -134,7 +167,10 @@ def place_souls(world):
         if world.options.soulsanity_level:
             soul_location_count += len(world.uncommon_souls)
 
-        for i in range(soul_location_count):
+        if world.options.soulsanity_level == SoulsanityLevel.option_rare:
+            soul_location_count += len(world.rare_souls)
+
+        for i in range(soul_location_count - souls_added):
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
             world.extra_item_count += 1
     else:

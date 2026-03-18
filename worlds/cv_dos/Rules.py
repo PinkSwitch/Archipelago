@@ -34,7 +34,6 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.multiworld.get_location("Wizardry Lab: Underwater Right", player), lambda state: state.has("Rahab Soul", player))
 
     set_rule(world.multiworld.get_location("Garden of Madness: Hidden Room", player), lambda state: state.has_any(big_uppies, player))
-    set_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has_all({"Mina's Talisman", world.magic_seal_table["Castle Center"]}, player))
     set_rule(world.multiworld.get_location("Garden of Madness: Underground Room", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player))
     set_rule(world.multiworld.get_location("Garden of Madness: Boss Room", player), lambda state: state.has(world.magic_seal_table["Garden of Madness"], player))
 
@@ -132,6 +131,11 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     if world.options.menace_condition:
         add_rule(world.multiworld.get_location("Abyss Center", player), lambda state: state.has_all(world.menace_triggers, player))
+
+    if world.garden_chamber_available:
+        set_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has_all({"Mina's Talisman", world.magic_seal_table["Castle Center"]}, player))
+        if world.options.garden_condition:
+            add_rule(world.multiworld.get_location("Garden of Madness: Central Chamber", player), lambda state: state.has_all(world.garden_triggers, player))
 
     #if world.options.hidden_wall_status == RevealBreakableWalls.option_eye_spy:
      #   add_rule(world.multiworld.get_location("Lost Village: Hidden Floor Room 1", player), lambda state: state.has("Peeping Eye Soul", player))

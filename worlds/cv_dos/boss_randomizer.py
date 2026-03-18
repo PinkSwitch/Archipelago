@@ -22,15 +22,15 @@ base_enemy_address = 0x7CCAC  # I can't import this
 
 def randomize_bosses(world):
     boss_pool = [
-        "Flying Armor",
+        "Puppet Master",
+        "Rahab",  # We want to place these bosses first so that they can be fulfilled first
         "Balore",
+        "Flying Armor",
         "Dimitrii",
         "Malphas",
         "Dario",
-        "Puppet Master",
         "Gergoth",
         "Zephyr",
-        "Rahab",
         "Bat Company",
         "Paranoia",
         "Aguni",
@@ -100,16 +100,18 @@ def randomize_bosses(world):
         "Death"
     ]
 
+    if not world.options.goal:
+        rahab_pool.remove("Aguni")
+        boss_pool.remove("Aguni")
+        world.boss_slots.pop("The Pinnacle")
+
     if world.mine_status == "Disabled":
         #  Remove endgame bosses
-        rahab_pool.remove("Aguni")
         rahab_pool.remove("Death")
 
-        boss_pool.remove("Aguni")
         boss_pool.remove("Death")
         boss_pool.remove("Abaddon")
 
-        world.boss_slots.pop("The Pinnacle")
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
 

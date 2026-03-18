@@ -1,4 +1,5 @@
 import itertools
+import struct
 from dataclasses import dataclass
 seal_list = [
     "Lost Village",
