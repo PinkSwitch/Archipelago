@@ -66,7 +66,7 @@ def setup_game(world):
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
     world.get_location("Abyss Center").place_locked_item(world.create_item("Menace Defeated"))
-
+    # Place boss kill checks
     world.get_location("Lost Village: Boss Room").place_locked_item(world.create_item("Village Boss Clear"))
     world.get_location("Wizardry Lab: Boss Room").place_locked_item(world.create_item("Lab Boss Clear"))
     world.get_location("Dark Chapel: Boss Room").place_locked_item(world.create_item("Chapel Boss Clear"))

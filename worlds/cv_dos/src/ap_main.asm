@@ -153,6 +153,12 @@
 .org 0x020B1A60
     .dh 0x8001
 
+.org 0x020AC5C0
+    .dh 0x8002
+
+.org 0x020BE41C
+    .dh 0x8003
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0219E3E0h
@@ -196,8 +202,6 @@ nop
 bl @GetItemFromSpecial
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
-.org 0x021CEBEC
-b @CeliaEventHandler
 
 ;;;;;;;;;;;;;;
     ;Skip Ability souls activating normally
@@ -376,6 +380,59 @@ b @CeliaEventHandler
 
 .org 0x021AA244
     bl @DisplayTextPerSeal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x021BA1DC
+    bl @HammerShop_SkipMusic
+
+.org 0x021BA1B8
+    bl @HammerShop_Spawn
+
+.org 0x021B9F20
+    bl @HammerShop_SceneSkip
+
+.org 0x021BA3C0
+    bl @HammerShop_Dialogue
+
+.org 0x021BA450 ; Watched dialogue
+    bl @HammerShop_SkipShopMenu
+
+.org 0x021BA99C ; Skip scene
+    bl @HammerShop_SkipShopMenu
+
+.org 0x021B9EFC
+    b @HammerShop_CheckConditions
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+.org 0x021AF1B4
+    b @CheckGoalCon_Menace
+
+.org 0x0219E6FC
+    b @CheckGoalCon_Mine
+
+.org 0x021CEBEC
+    b @CheckGoalCon_Garden
+
+.org 0x021CEBE0
+    mov r1, 0x14 ; Change the garden flag to menace's event flag so it always goes off
+
+.org 0x02230310  ; Goal text ptrs
+    .dw 0x02223B4F
+    .dw 0x02223D4F
+    .dw 0x02223F4F
+;;;;;;;;;;;;;;;;;;;;;;;
+; Goal Conditionals
+.org 0x02227127
+    .db 0x01, 0xFF, 0x0FF ;FOR TESTING ONLY
+
+.org 0x02227137
+    .db 0x01, 0xFF, 0x0FF
+
+.org 0x02227147
+    .db 0x01, 0xFF, 0x0FF
+
+    
+
 
 ;overlay 9 0
 .close
@@ -812,7 +869,6 @@ b @CeliaEventHandler
 
 @RamFlag_ThroneSpecial:
 .db 0x00
-
 .align 4
 
 
@@ -1351,32 +1407,6 @@ b @CeliaEventHandler
     pop r0-r1
     b 0x021E8AAC
     .pool
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-@CeliaEventHandler:
-    cmp r0, 0x0
-    beq @DeleteCelia
-    ldr r1, =@OptionFlag_FightMenace
-    ldrb r1, [r1, 0]
-    cmp r1, #0 ;Menace+ is disabled
-    beq @CeliaEnd
-@CheckMenacePlus:
-    ldr r1, =0x20F7039
-    ldrb r0, [r1, 0]
-    and r0, r0, 0x08 ;Is Aguni defeated?
-    cmp r0, #0
-    beq @DeleteCelia
-    b 0x021CEC08
-@DeleteCelia:
-    ldr r0, =0x020F6DFC
-    ldrb r1, [r0]
-    and r1, 0x7E ; Restore the hud and event bit
-    strb r1, [r0]
-    b 0x021CEBF4
-@CeliaEnd:
-    b 0x021CEC08
-    .pool
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;Loads AP data from the current file so it can be cleanly copied
 @CopyAPData:
@@ -2849,6 +2879,8 @@ b @CeliaEventHandler
 @ExtendedEntityList:
 .dw @ExtEnt_TowerButton
 .dw @ExtEnt_TowerBackBossDoor
+.dw @ExtEnt_GardenConDisplay
+.dw @ExtEnt_MenaceConDisplay
 
 @ExtendEntityInfo:
     push r3
@@ -2934,6 +2966,39 @@ b @CeliaEventHandler
 .db 0x00
 .dh 0x0000
 .dh 0x0007 ; Gergoth door
+.dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;;;;;;;
+@ExtEnt_GardenConDisplay:
+; Hammer Goal NPC for garden of madness event
+.dh 0x0160
+.dh 0x00B0
+.db 0x00
+.db 0x02
+.db 0x47 ; NPC Hammer
+.db 0x00
+.dh 0x0001 ; Garden Goal condition
+.dh 0x0000 ; Gergoth door
+.dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;;;;;;;;;
+@ExtEnt_MenaceConDisplay:
+; Font loader entity
+.dh 0x0000
+.dh 0x0000
+.db 0x00
+.db 0x07
+.db 0x00
+.db 0x00
+.dh 0x0000
+.dh 0x0000
+; Menace warp - Put this here because we need Hammer to load FIRST
+.dh 0x0080
+.dh 0x0060
+.db 0x00
+.db 0x02
+.db 0x32 ; Abyss teleporter
+.db 0x00
+.dh 0x0002 ; Menace
+.dh 0x0000
 .dw 0x7FFF7FFF
 .align 4
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3032,6 +3097,209 @@ b @CeliaEventHandler
     ldr r2, =0x022154C4
     bl 0x02012B10
     b 0x02215404
+
+;;;;;;;;;;;;
+; Skip playing the Shop music if varA is set.
+@HammerShop_SkipMusic: ; TODO. if r5 is consistent, make a subroutine out of the varA check
+    push r5
+    add r5, r5, 0x0200
+    add r5, r5, 0x06E
+    ldrb r5, [r5]
+    cmp r5, 0 ; Normal shop
+    bne @@End
+    push lr
+    bl 0x02029A1C
+    pop lr
+@@End:
+    pop r5
+    bx lr
+
+; Changes hammer so that if varA is set, we load his actual position
+; instead of hardcoding it
+@HammerShop_Spawn:
+    ldrb r3, [r6, 8] ; Get the varA
+    cmp r3, 0
+    beq @@End
+    ldrh r3, [r6] ; Get the actual coordinates he's set to
+    ldrh r4, [r6, 2]
+    bx lr
+@@End:
+    mov r3, 0xB8
+    bx lr
+
+; Don't play the opening cutscene for the shop if varA is set
+@HammerShop_SceneSkip:
+    push r5
+    add r5, r5, 0x200
+    add r5, r5, 0x6E
+    ldrb r12, [r5] ; Get the vara
+    cmp r12, 0
+    beq @@End
+    mov r2, 1 ; Make this check always succeed
+@@End:
+    ands r12, r2, 1
+    pop r5
+    bx lr
+
+;Play specific dialogue for the Shop depending on vara
+@HammerShop_Dialogue:
+    pop r0, r1 ; Get the r5 thing back in here
+    push r0, r1
+    add r1, r1, 0x200
+    ldrb r1, [r1, 0x6E] ; Read the varA
+    cmp r1, 0
+    beq @@End
+    ; Update the cutscene camera coordinates to the player's pos
+    push lr
+    push r0-r2
+    bl 0x021C3250 ; Get y position
+    str r0, [r4, 4]
+    bl 0x021C3278 ; Get X position
+    str r0, [r4]
+    pop r0-r2
+    pop lr
+    ldr r0, = 0x0403 ; Base pointers/IDs for the GoalCon text
+    add r1, r0, r1 ; Add varA to it
+    bx lr
+@@End:
+    ldrh r1, [r4, 0x46]
+    bx lr
+
+;Prevent the game from opening the shop menu
+@HammerShop_SkipShopMenu:
+    push r5
+    add r5, r5, 0x0200
+    ldrb r5, [r5, 0x6E] ; Check var A
+    cmp r5, 0
+    bne @@EndFixVol ; Skip this entirely if varA is set
+    pop r5
+    push lr
+    bl 0x02014510
+    pop lr
+    bx lr
+@@EndFixVol:
+    ldr r0, =0x2115670
+    ldr r0, [r0]
+    add r0, r0, 0x1C
+    mov r5, 0x7F00
+    strh r5, [r0, 0x04] ; Fix the volume post-scene
+    pop r5
+    bx lr
+
+;Despawn the condition hammer if varA goal condition has been met
+@HammerShop_CheckConditions:
+    add r1, r5, 0x0200
+    push r0
+    ldrb r0, [r1, 0x6E]
+    sub r0, r0, 1
+    bl @CheckGoal_Sub
+    cmp r0, 0 ; Goal is NOT met
+    pop r0
+    bne 0x021B9EEC
+    mov r1, 0
+    b 0x021B9F00
+.pool
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+;R0 = goal ID
+;0 - garden
+; 1 - mine
+; 2 - menace
+@CheckGoal_Sub:
+    ldr r1, =0x02227127
+@@CountPointer:
+    cmp r0, 0
+    beq @@EndMathLoop
+    sub r0, r0, 1
+    add r1, r1, 0x10 ; Add 10 to the pointer
+    b @@CountPointer
+@@EndMathLoop:
+    ldrb r0, [r1] ; Check the goal number
+    cmp r0, 0
+    beq @@Goal_None
+    cmp r0, 1
+    beq @@Goal_Aguni
+    cmp r0, 2
+    beq @@Goal_Garden
+    cmp r0, 3
+    beq @@Goal_Bosses
+    bx lr
+@@Goal_None:
+; No condition; always true
+    mov r0, 1
+    bx lr
+@@Goal_Aguni:
+; Checks the Flag for the event at the throne room ; set after defeating the Mirror boss there
+    ldr r1, =0x20F7039 ; Check event flags
+    ldrb r0, [r1, 0]
+    ands r0, r0, 0x08 ;Event flag for the top floor boss fight
+    bx lr 
+@@Goal_Garden:
+; Checks the Flag for the garden of madness/bad ending event
+    ldr r1, =0x20F7039 ; Check event flags
+    ldrb r0, [r1, 0]
+    ands r0, r0, 0x40 ;Event flag for the garden of madness event
+    bx lr
+@@Goal_Bosses:
+; Compare the player's Boss Defeat flags with pointer + 1 boss defeat flags
+    ldrh r1, [r1, 1] ; 1 byte after the goal is the Boss Bitfield
+    ldr r0, = 0x020F7038
+    ldrh r0, [r0] ; Get the boss flags
+    ands r0, r0, r1 ; AND the required flags and the boss flags
+    cmp r0, r1 ; If equal, all of the corresponding bits are set
+    beq @@BossGoalSet
+    mov r0, 0
+    bx lr
+    @@BossGoalSet:
+    mov r0, 1
+    bx lr
+;;;;;;;;;;;;;;;;;;
+@CheckGoalCon_Menace:
+    add r0, r5, 0x0200
+    ldrb r0, [r0, 0x6E] ; Get varA
+    cmp r0, 2 ; Is this the Menace warp?
+    bne @@End
+    mov r0, 2
+    bl @CheckGoal_Sub
+    cmp r0, 0 ; Is the goal complete?
+    beq 0x021AF1F0
+@@End:
+    mov r0, 1
+    b 0x021AF1B8
+
+@CheckGoalCon_Mine:
+    ands r0, r0, 0x800000 ; Check the dark gate's original flag. we don't want to do any of this again if the gate is already open
+    bne 0x0219E780
+    mov r0, 1
+    bl @CheckGoal_Sub
+    cmp r0, 0 ; Goal is NOT met
+    beq @@Exit
+    mov r0, 1
+    ldr r1, = 0x020F718A
+    strb r0, [r1] ; Set the flag to prime the mine cutscene
+@@Exit:
+    b 0x0219E704 ; Go back to normal but create the gate for the scene
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+@CheckGoalCon_Garden:
+    cmp r0, 0x0
+    beq 0x021CEBF4 ; Vanilla condition. checks the flag
+    ldr r0, =0x020F7039
+    ldrb r0, [r0]
+    ands r0, r0, 0x40
+    bne @@End ; Boss flag that we've done the garden scene already
+    mov r0, 0
+    bl @CheckGoal_Sub
+    cmp r0, 0
+    bne 0x021CEC08 ; Resume the event as normal
+@@End:
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, 0x7E ; Remove the bits for HUD display and inScene
+    strb r1, [r0]
+    b 0x021CEBF4
 .pool
 .endarea
 .close

@@ -17,3 +17,6 @@ def set_goal_triggers(world, condition, area):
         goal = None
     
     return goal
+
+def write_goal_triggers(world, rom):
+    print("AAAAAAAAAAAAAAAAAAAAAAA")
