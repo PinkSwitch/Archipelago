@@ -16,6 +16,7 @@ from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
 from .seal_shuffle import write_seals, randomize_seal_patterns
+from .set_goals import write_goal_triggers
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
@@ -47,6 +48,8 @@ class LocalRom(object):
 def patch_rom(world, rom, player: int, code_patch):
     # This is the entirety of the patched code
     rom.write_bytes(0x2F6DC50, code_patch)
+
+    write_goal_triggers(world, rom)
 
     weapon = world.options.starting_weapon.value
 
