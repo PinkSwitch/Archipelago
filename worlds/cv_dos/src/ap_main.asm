@@ -416,6 +416,12 @@ bl @GetItemFromSpecial
 .org 0x021CEBE0
     mov r1, 0x14 ; Change the garden flag to menace's event flag so it always goes off
 
+.org 0x021D43BC ; Set the flag back to off during the bad ending
+    bic r2, r2, 0x100000
+
+.org 0x021CEB54
+    bl @ResetGardenFlags
+
 .org 0x02230310  ; Goal text ptrs
     .dw 0x02223B4F
     .dw 0x02223D4F
@@ -3300,6 +3306,13 @@ bl @GetItemFromSpecial
     and r1, 0x7E ; Remove the bits for HUD display and inScene
     strb r1, [r0]
     b 0x021CEBF4
+
+@ResetGardenFlags:
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, 0x7E ; Remove the bits for HUD display and inScene
+    strb r1, [r0]
+    bx lr
 .pool
 .endarea
 .close
