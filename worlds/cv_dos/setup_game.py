@@ -7,6 +7,7 @@ from .boss_randomizer import randomize_bosses
 from .seal_shuffle import set_seals
 from .set_goals import set_goal_triggers
 from BaseClasses import ItemClassification
+from logging import warning
 
 def setup_game(world):
     world.extra_soul_slots = 99  # Locations that can be filled by guaranteed souls
@@ -51,7 +52,8 @@ def setup_game(world):
         world.multiworld.itempool.append(world.set_classifications("Cavern Gate Key"))
         world.extra_item_count += 4
 
-    set_seals(world)
+    if not world.magic_seal_table:  # If not doing UT passthrough
+        set_seals(world)
     set_souls_for_walls(world)
     place_souls(world)
     randomize_synthesis(world)
@@ -142,7 +144,7 @@ def place_souls(world):
     for soul in world.options.guaranteed_souls:
         world.extra_soul_slots -= 1
         if not world.extra_soul_slots:
-            print("CHANGE TO A WARNING WEEWOO")
+            warning("WARNING: More Guranteed Souls exist than can be placed, no more Guaranteed Souls will be placed.")
             break  # Bail if we're out of room for more souls
         else:
             world.multiworld.itempool.append(world.set_classifications(soul))

@@ -331,6 +331,7 @@ class DoSWorld(World):
         }
 
         self.red_soul_walls = []
+        self.magic_seal_table = []
 
         self.important_souls = {
             "Bone Ark Soul",
