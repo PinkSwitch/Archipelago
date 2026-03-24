@@ -89,12 +89,12 @@ def randomize_seal_patterns(world, rom):
 
 
     for index, seal in enumerate(seals):
-        seal_array = []
         rotation = world.random.randint(0, 0xFFFF)
         valid_lines = {}
         data = seal_data[seal]
         built_seal = False
         while not built_seal:
+            seal_array = []
             valid_edges = {a: [] for a in range(data.nodes)}
             for a, edge_list in valid_edges.items():
                 for b in range(data.nodes):

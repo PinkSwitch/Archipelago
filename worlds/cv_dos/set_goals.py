@@ -107,12 +107,12 @@ def write_goal_triggers(world, rom):
                 required_flags |= boss_flags[flag]
         rom.write_bytes(0x153F48 + 0x10 * index, struct.pack("H", required_flags))
 
-        condition_text = "Yo, I got some intel for you.\nTo access this area, your goal is to"
+        condition_text = "Yo, I've got some intel for you.\nTo access this area, you need to\n"
 
         if condition == "throne_room":
-            condition_text += " defeat whatever's in the throne room mirror."
+            condition_text += "defeat whatever's in the throne room."
         elif condition == "garden":
-            condition_text += " repel the power of darkness at the center of the castle."
+            condition_text += "reject the power of darkness."
         elif condition in ["bosses"]:
             condition_text += " defeat the bosses of these areas.\v"
             for index, flag in enumerate(condition_list):

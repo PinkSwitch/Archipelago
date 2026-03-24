@@ -20,8 +20,6 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld = world.multiworld
     player = world.player
     locations_per_region = get_locations_per_region(locations)
-    if world.mine_status == "Locked":
-        mine_conditions = {world.goal_triggers[world.options.mine_condition.current_key]}
 
     regions = [
         create_region(world, player, locations_per_region, "Lost Village Upper"),
@@ -230,7 +228,6 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
         if not world.mine_status:
             multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"])  # Add a ruleless connector here
         else:
-            print(world.mine_status)
             multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"],
                                                                             {"Mine of Judgment": lambda state: state.has_all(world.mine_triggers, player)})
 

@@ -29,9 +29,9 @@ def setup_game(world):
 
     if not world.mine_status:  # If we didn't just disable it, set the status here
         if world.options.mine_condition != MineCondition.option_none:
-            world.mine_status == "Locked"
+            world.mine_status = "Locked"
         else:
-            world.mine_status == "Open"
+            world.mine_status = "Open"
 
 
     if world.options.early_seal_1:

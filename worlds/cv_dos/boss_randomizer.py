@@ -269,11 +269,11 @@ def write_bosses(world, rom):
         if y_pos:
             rom.write_bytes(slot.boss_address_pointer + 2, struct.pack("H", y_pos))
 
-        rom.write_bytes(slot.boss_address_pointer + 8, var_a)
-        rom.write_bytes(slot.boss_address_pointer + 10, var_b)
+        rom.write_bytes(slot.boss_address_pointer + 8, bytearray([var_a]))
+        rom.write_bytes(slot.boss_address_pointer + 10, bytearray([var_b]))
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
-                rom.write_bytes(pointer, slot.seal_index) # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
+                rom.write_bytes(pointer, bytearray([slot.seal_index])) # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
 
 
         index = int(world.boss_data[slot.old_boss].flag_index / 2)
