@@ -422,6 +422,12 @@ bl @GetItemFromSpecial
 .org 0x021CEB54
     bl @ResetGardenFlags
 
+.org 0x021CBEB8
+    bl @ResetMineFlags ; Watched scene ver
+
+.org 0x021CBF38
+    bl @ResetMineFlags ;Skipped ver
+
 .org 0x02230310  ; Goal text ptrs
     .dw 0x02223B4F
     .dw 0x02223D4F
@@ -3312,6 +3318,26 @@ bl @GetItemFromSpecial
     ldrb r1, [r0]
     and r1, 0x7E ; Remove the bits for HUD display and inScene
     strb r1, [r0]
+    bx lr
+.pool
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Prevent the game from unloading stuff and crashing after the first Julius cutscene at the mine
+@ResetMineFlags:
+    ldr r0, =0x020F6DFC
+    ldrb r1, [r0]
+    and r1, 0x7E ; Remove the bits for HUD display and inScene
+    strb r1, [r0]
+
+    ldr r0, =0x020F7189
+    ldrb r1, [r0]
+    orr r1, r1, 0x04 ; set the flag for having viewed this scene
+    strb r1, [r0]
+
+    ldr r0, =0x2115670
+    ldr r0, [r0]
+    add r0, r0, 0x1C
+    mov r1, 0x7F00
+    strh r1, [r0, 0x04] ; Fix the volume post-scene
     bx lr
 .pool
 .endarea
