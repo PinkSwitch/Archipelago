@@ -32,7 +32,7 @@ def set_goal_triggers(world, condition, area):
         goal = {"Village Boss Clear", "Lab Boss Clear", "Chapel Boss Clear", "Inner Chapel Boss Clear", "Garden Boss Clear", "Guest House Boss Clear",
                "Subterranean Hell Boss Clear", "Tower Boss Clear", "Clock Tower Boss Clear", "Ruins Boss Clear", "Aguni Defeated", "Upper Guest House Boss Clear",
                "Mine Boss Clear", "Abyss Boss Clear"}
-        if area == "Mine" or world.mine_status == "Disabled":
+        if area == "Mine" or world.mine_status == "Disabled" or (world.mine_status == "Locked" and area in world.mine_requisites):
             goal.remove("Mine Boss Clear")
             goal.remove("Abyss Boss Clear")
         if not world.options.goal:

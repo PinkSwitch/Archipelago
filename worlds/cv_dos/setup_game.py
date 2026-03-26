@@ -14,6 +14,16 @@ def setup_game(world):
 
     world.mine_status = None
     world.garden_chamber_available = True
+    world.mine_requisites = None
+
+    if world.options.mine_condition == MineCondition.option_garden:
+        if world.options.garden_condition == GardenCondition.option_throne_room:
+            world.mine_requisites = "Throne Room"
+        else:
+            world.mine_requisites = "Garden"
+    elif world.options.mine_condition == MineCondition.option_throne_room:
+        world.mine_requisites = "Throne Room"
+
     if not world.options.goal:
         if world.options.mine_condition == MineCondition.option_throne_room or ( 
                     world.options.mine_condition == MineCondition.option_garden and 

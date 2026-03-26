@@ -68,7 +68,7 @@ def randomize_bosses(world):
         "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, 8, "Rahab"),  # Rahab
         "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10, "Bat Company"),  # Bat Company
         "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12, "Paranoia"), # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0xBEDD4, 11, "Aguni"), # Aguni, not Dario 2
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x153FA8, 11, "Aguni"), # Aguni, not Dario 2
         "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13, "Death"), # Death
         "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15, "Abaddon") # Abaddon
     }
@@ -134,6 +134,13 @@ def randomize_bosses(world):
             
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
+        
+    desired_test = "The Pinnacle"
+    for boss in world.boss_slots:
+        if boss == desired_test:
+            world.boss_slots[boss].new_boss = "Flying Armor"
+        else:
+            world.boss_slots[boss].new_boss = "Balore"
 
 def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
@@ -291,9 +298,3 @@ def copy_boss_stats(world, rom):
 
 
 # Test all bosses on all slots
-# Stat copying does NOT work at all.
-# The addresses look correct. Maybe it's the data flag index that's wrong?
-# I have some things i want to try cross-referencing. maybe don't clean up afterwards and make sure the right data is getting copied?
-# This is still all weirdly wrong and I'm not sure why? It's like it's copying Gergoth's data? EXP is entirely fucked. Scrap this and start over, basically.
-# Also I think I might lock the throne door until you have paranoia
-# I can override the seal door code and have it store 6 instead of the seal.
