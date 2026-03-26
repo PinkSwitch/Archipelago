@@ -58,7 +58,7 @@ def randomize_bosses(world):
 
     world.boss_slots = {
         "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8, 1, "Flying Armor"),  # Flying Armor
-        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0xAD0B0, 2, "Balore"),  # Balore
+        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 3, 0xAD0B0, 2, "Balore"),  # Balore
         "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, 3, "Dimitrii"), # Dimitrii
         "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, 4, "Malphas"),  # Malphas
         "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, 5, "Dario"),  # Dario 1 Make sure this is the right address for the flag. Seems low.
@@ -92,7 +92,7 @@ def randomize_bosses(world):
 
     rahab_pool = [
         "Flying Armor",
-        "Balore",
+        # "Balore",  Removed for having too many graphical glitches
         "Puppet Master",
         "Rahab",
         "Bat Company",
@@ -135,18 +135,17 @@ def randomize_bosses(world):
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
         
-    desired_test = "The Pinnacle"
+    desired_test = "Lost Village"
     for boss in world.boss_slots:
         if boss == desired_test:
-            world.boss_slots[boss].new_boss = "Flying Armor"
+            world.boss_slots[boss].new_boss = "Dimitrii"
         else:
-            world.boss_slots[boss].new_boss = "Balore"
+            world.boss_slots[boss].new_boss = "Flying Armor"
 
 def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
     rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
     rom.write_bytes(0x2F6DE38, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
-    rom.write_bytes(0xBEDCD, bytearray([0x00]))  # Delete the right boss door in the Throne Room; the fight is in the Mirror World so it's okay.
     copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":

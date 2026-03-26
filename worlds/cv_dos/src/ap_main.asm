@@ -100,64 +100,23 @@
     bl @ExpandTextPointers_Popups
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-;;;Boss pointers
-.org 0x02079AE4
-    .dw @Tryspawn_FlyingArmor
-
-.org 0x02079B08
-    .dw @Tryspawn_Balore
-
-.org 0x02079B2C
-    .dw @Tryspawn_Malphas
-
-.org 0x02079B50
-    .dw @Tryspawn_Dimitrii
-
-.org 0x02079B74
-    .dw @Tryspawn_Dario
-
-.org 0x02079B98
-    .dw @Tryspawn_PuppetMaster
-
-.org 0x02079BBC
-    .dw @Tryspawn_Rahab
-
-.org 0x02079BE0
-    .dw @Tryspawn_Gergoth
-
-.org 0x02079C04
-    .dw @Tryspawn_Zephyr
-
-.org 0x02079C28
-    .dw @Tryspawn_BatCompany
-
-.org 0x02079C4C
-    .dw @Tryspawn_Paranoia
-
-.org 0x02079C70
-    .dw @Tryspawn_Aguni
-
-.org 0x02079C94
-    .dw @Tryspawn_Death
-
-.org 0x02079CB8
-    .dw @Tryspawn_Abaddon
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-.org 0x02027300
-    bl @ClearRAMFlagOnTrans
 ;;;;;;;;;;;;;;;;;;;;;;;
 .org 0x020B1BD4
-    .dh 0x8000
+    .dh 0x8000 ; tower
 
 .org 0x020B1A60
-    .dh 0x8001
+    .dh 0x8001 ; twwarp
 
 .org 0x020AC5C0
-    .dh 0x8002
+    .dh 0x8002 ; garden
 
 .org 0x020BE41C
-    .dh 0x8003
+    .dh 0x8003 ; menace
+
+;;;;;;;;;;;;;;;;;;;;
+.org 0x0202682C
+    bl @ThroneBoss_MirrorEntities
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -313,15 +272,6 @@ bl @GetItemFromSpecial
     cmp r0, 0 ; This is a failsafe for the seal not loading
     beq @ReloadSealSlot ; We need to reload the entity without the GFX if this happens
 
-.org 0x0222C8B8
-    .dw @ThroneEvent_Skipper
-
-.org 0x0222CA94
-    .dw @ThroneEvent_manager ; Event 69's update code
-
-.org 0x0220F378
-    bl @EndThroneEvent ; Spawns Dario
-
  .org 0x0222CA80
     .dw @DarioEvent_Update
 
@@ -344,6 +294,66 @@ bl @GetItemFromSpecial
 .org 0x021D7A64
     b @DespawnTowerBosses
 ;;;;;;;;;;
+
+.org 0x0220F29C
+    bl @ThroneBoss_ReloadRoom
+
+.org 0x0220F378
+    bl @ThroneBoss_LeaveMirror
+
+
+.org 0x02227158 ; Replacement throne room entity list
+@EntList_MirrorThrone:
+    ; Boss door
+    .dh 0x0000
+    .dh 0x0080
+    .db 0x00
+    .db 0x02
+    .db 0x25
+    .db 0x00
+    .dh 0x0001 
+    .dh 0x000B
+    ;;;;;;;;
+    .dh 0x01F0
+    .dh 0x00B0
+    .db 0x00
+    .db 0x02
+    .db 0x25
+    .db 0x00
+    .dh 0x0001 
+    .dh 0x0000
+    ;;;;;;;;
+    ; Mirror world
+    .dh 0x0000
+    .dh 0x0000
+    .db 0x00
+    .db 0x02
+    .db 0x0B
+    .db 0x00
+    .dh 0x0000
+    .dh 0x0000
+    ;;;;;;;;;;
+    ;Mirror
+    .dh 0x0100
+    .dh 0x0070
+    .db 0x00
+    .db 0x02
+    .db 0x0A
+    .db 0x00
+    .dh 0x0001
+    .dh 0x0000
+    ;;;;;;;;;;;;
+    ;Aguni
+    .dh 0x0100
+    .dh 0x0060
+    .db 0x00
+    .db 0x01
+    .db 0x70
+    .db 0x00
+    .dh 0x0000
+    .dh 0x0000
+    .dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;
 ; Expand entities
 .org 0x021D748C
     b @ExtendEntityInfo
@@ -483,7 +493,10 @@ bl @GetItemFromSpecial
         bl @FixDarioMusic
 
     .org 0x02243C98
-    bl @InitializeEnemyAndOverridePlayBossMusicForAguni
+        bl @InitializeEnemyAndOverridePlayBossMusicForAguni
+
+    .org 0x0225A9E0
+        b @ThroneBoss_HideAguniSpawn
 .close
 
 .open "ftc/overlay9_25", 0x022FF9C0
@@ -879,8 +892,6 @@ bl @GetItemFromSpecial
 @GameFlag_ThroneIsShuffled: ; RESET
 .db 0x00
 
-@RamFlag_ThroneSpecial:
-.db 0x00
 .align 4
 
 
@@ -2487,179 +2498,7 @@ bl @GetItemFromSpecial
 .pool
 
 ;;;;;;;;;;;;;;;;;;
-;0x021CCb28
-; Skips the Throne Room intro event
-@ThroneEvent_Skipper:
-    push r3, r4
-    ldr r4, =@GameFlag_ThroneIsShuffled
-    ldrb r4, [r4]
-    cmp r4, 0 ; Throne room has dario 2/aguni
-    beq @@PlayNormal
-    ldr r3, =@RamFlag_ThroneSpecial
-    mov r4, 1 ; This controller will be used by enemies
-    strb r4, [r3]
-    pop r3, r4
-    bx lr
-@@PlayNormal:
-    pop r3, r4
-    b 0x021CD6D4
-.pool
-
-; Prevent the throne room event from activating until after the boss is defeated
-;021CCA10
-@ThroneEvent_manager:
-    push r5
-    ldr r5, = @RamFlag_ThroneSpecial
-    ldrb r5, [r5]
-    cmp r5, 0
-    beq @@ThroneEv_End
-    pop r5
-    bx lr
-@@ThroneEv_End:
-    pop r5
-    b 0x021CCA10
-.pool
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ALL boss directs.
-@Tryspawn_FlyingArmor:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFDE8
-    bx lr
-
-@Tryspawn_Balore:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFE48
-    bx lr
-
-@Tryspawn_Malphas:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFB40
-    bx lr
-
-@Tryspawn_Dimitrii:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFC20
-    bx lr
-
-@Tryspawn_Dario:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x0225A930
-    bx lr
-
-@Tryspawn_PuppetMaster:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFC88
-    bx lr
-
-@Tryspawn_Rahab:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFBD0
-    bx lr
-
-@Tryspawn_Gergoth:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFDC8
-    bx lr
-
-@Tryspawn_Zephyr:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFC7C
-    bx lr
-
-@Tryspawn_BatCompany:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFB98
-    bx lr
-
-@Tryspawn_Paranoia:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x02304560
-    bx lr
-
-@Tryspawn_Aguni:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x02243E1C
-    bx lr
-
-@Tryspawn_Death:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFB9C
-    bx lr
-
-@Tryspawn_Abaddon:
-    push lr
-    bl @ThroneBossCheck
-    pop lr
-    beq 0x022FFB78
-    bx lr
-
-; Check if the throne condition is on, and if it is, check the Mirror Flag
-@ThroneBossCheck:
-    push r0
-    ldr r0, =@RamFlag_ThroneSpecial
-    ldrb r0, [r0]
-    cmp r0, 0
-    beq @@End ; If this is zero, we can just ignore this entirely
-    ldr r0, = 0x020F6DF9
-    ldrb r0, [r0] ; Spawn the entity if we're in the mirror world
-    cmp r0, 3
-    push lr
-    bl @SetMirrorEntity
-    pop lr
-    cmp r0, 3
-@@End:
-    pop r0
-    bx lr
-.pool
-;;;;;;;;;;;;;;;;;;;;;;    
-@EndThroneEvent:
-    strb r3, [r5, 0x09]
-    push r0-r4, lr
-    ldr r0, =@RamFlag_ThroneSpecial
-    ldrb r0, [r0]
-    cmp r0, 0
-    beq @@End
-    ldr r0, =0x020F7189 ; Load the story flag that gets set by beating Dario, and set it 
-    ldrb r1, [r0]
-    mov r2, 0xA0
-    orr r2, r2, r1
-    strb r2, [r0]
-    mov r1, 0
-    ldr r0, =0x020D2730
-    str r1, [r0] ; Zro out the cutscene data
-    ldr r0, =@RamFlag_ThroneSpecial
-    strb r1, [r0] ; Zero out this flag
-@@End:
-    pop r0-r4, lr
-    bx lr
-.pool
 ;;;;;;;;;;;;;;;;;;
     ; Sets Balore to always face the player depending on entrance direction
 @BaloreFacePlayer:
@@ -2785,41 +2624,81 @@ bl @GetItemFromSpecial
 @@End:
     b 0x021D7A7C
 .pool
-;;;;;;;;;;;;;;;;;;;;;;
-; Wipe out the throne room ram flag during a room transition
-@ClearRAMFlagOnTrans:
-    ldr r2, = @RamFlag_ThroneSpecial
-    ldrb r0, [r2]
+;;;;;;;;;;;;;;;;;;;
+@ThroneBoss_ReloadRoom:
+    strb r0, [r5, 0x09] ; Store the mirror flag here
+    ldr r0, = 0x020F7039
+    ldrb r0, [r0] ; Get the boss event flags
+    ands r0, r0, 0x08
+    bne @@End ; If we've already defeated the throne boss, just don't do this part
+
+    ldr r0, =0x0211504C ; Check the current area
+    ldrb r0, [r0]
+    cmp r0, 9
+    bne @@End  ; We only do this in the Pinnacle
+
+    ldr r0, = @GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End ; Don't re-wardp if boss shuffle is off
+    push r0-r4, lr
+    ldr r0, =0x020CA95E
+    ldrh r2, [r0]
+    lsl r2, r2, 4
+    ldrh r3, [r0, 0x04]
+    lsl r3, r3, 4
+    mov r0, 0x09
+    ldr r1, =0x01
+    bl 0x02026AD0 ;Set Warp Dest
+    pop r0-r4, lr
+  ldr r1, =020F6DF4h
+  mov r0, 0x0006
+  strh r0, [r1] ; We set the current type of transition mode (020F6DF4) to 6, meaning a warp of some kind.
+@@End:
+    bx lr
+.pool
+
+@ThroneBoss_LeaveMirror:
+    strb r3, [r5, 0x09]
+    ldr r1, =@GameFlag_ThroneIsShuffled
+    ldrb r1, [r1]
+    cmp r1, 0
+    beq @@End
+    ldr r1, =0x0211504C
+    ldrb r1, [r1]
+    cmp r1, 9 ; Don't reload unless we're in the Pinnacle's mirror...
+    bne @@End
+    ldr r1, =0x020F7189
+    ldrb r4, [r1] ; Get the game flags
+    ands r2, r4, 0xA0 ; Have we done this yet?
+    bne @@End
+
+    ldr r2, = 0xA0
+    orr r2, r2, r4 ; Set the flags
+    strb r2, [r1]
+    push lr
+    bl 0x020298A0
+    pop lr
+@@End:    
+    bx lr
+.pool
+
+;Get rid of the sound/init code for spawning Aguni. This is done to hide the room transition
+@ThroneBoss_HideAguniSpawn:
+push r0
+    ldr r0, =@GameFlag_ThroneIsShuffled
+    ldrb r0, [r0]
     cmp r0, 0
     beq @@End
-    mov r0, 0
-    strb r0, [r2]
-    ldr r2, =0x020F6DFC
-    ldrb r0, [r2]
-    and r0, r0, 0xFD ; Clear the InBoss flag
-    strb r0, [r2]
-    push r0,r1,lr
-    bl 0x020299B0 ; Reset the music
-    pop r0,r1,lr
+    pop r0
+    b 0x0225AA10
+
 @@End:
-    ldr r2,[r3]
-    bx lr
+    pop r0
+    bl 0x02243C04
+    b 0x0225A9E4
 .pool
-;;;;;;;;;;;;;;;;;;;
-; Sets the Mirrored effect on the enemy's sprite
-@SetMirrorEntity:
-    push r0, r1
-    ldr r1, = 0x020D2C74
-    beq @@MirrorWorld
-    ldr r0, = 0x02244504
-    b @@NormalWorld
-@@MirrorWorld:
-    ldr r0, =0x021C52EC
-@@NormalWorld:
-    str r0,[r1] 
-    pop r0,r1
-    bx lr
-.pool
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 @InitializeEnemyAndOverridePlayBossMusic:
   push r14
@@ -2828,8 +2707,10 @@ bl @GetItemFromSpecial
   bl 021C34A8h ; InitializeEnemy (replaces the line we overwrote to call this custom function)
   
   pop r0 ; Get the music ID out of the stack
+  cmp r0, 0xFF
+  beq @@SkipSong ; For dario throne room
   bl 0202991Ch ; PlaySong
-  
+  @@SkipSong:
   ; Set bit to make the song that was set override the BGM.
   ldr r0, =020F6DFCh
   ldr r1, [r0]
@@ -2867,23 +2748,46 @@ bl @GetItemFromSpecial
 
 @InitializeEnemyAndOverridePlayBossMusicForAguni:
   push r14
+  ldr r1, =0x0211504C
+  ldrb r1, [r1]
+  cmp r1, 9
+  bne @@PlayMusic
+  ldr r1, = 0x020F6DF9
+  ldrb r1, [r1]
+  cmp r1, 3 ; If we're in the throne room, don't play Aguni's music unless we're in the Mirror World
+  bne @@End
+@@PlayMusic:
   ldr r1, =0x0225B208
   ldrh r1, [r1]
   bl @InitializeEnemyAndOverridePlayBossMusic
+@@End:
   pop r15
 
 @FixDarioMusic:
   push r14
+  add r1, r0, 0x200
+  ldrh r1, [r1, 0x70]  ; Get Dario's VarB
+  cmp r1, 1 ; Throne room dario
+  bne @@LoadSong
+  mov r1, 0xFF
+  b @@PlayMusic  ; We load 0xFF as the song so it knows not to play it
+@@LoadSong:
   ldr r1, = 0x021CB574
   ldrh r1, [r1]
+@@PlayMusic:
   bl @InitializeEnemyAndOverridePlayBossMusic
   pop r15
 
 @FixDimitriiMusic:
   push r14
+  ldr r1, =@GameFlag_ThroneIsShuffled
+  ldrb r1, [r1]
+  cmp r1, 0
+  beq @@End
   ldr r1, =0x021CA738
   ldrh r1, [r1]
   bl @InitializeEnemyAndOverridePlayBossMusic
+@@End:
   pop r15
 .pool
 ;;;;;;;;;;;;;;
@@ -3339,6 +3243,20 @@ bl @GetItemFromSpecial
     mov r1, 0x7F00
     strh r1, [r0, 0x04] ; Fix the volume post-scene
     bx lr
+.pool
+
+;Load a different, static entity list if we're in the Mirror World
+@ThroneBoss_MirrorEntities:
+    ldr r0, =0x020F6DF9
+    ldrb r0, [r0]
+    cmp r0, 3 ; Are we in the mirror world fully?
+    bne @@End
+    ldr r0, = @EntList_MirrorThrone
+    bx lr
+@@End:
+    ldr r0,[r5, 0x14]
+    bx lr
+
 .pool
 .endarea
 .close

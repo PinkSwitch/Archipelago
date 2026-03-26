@@ -115,10 +115,10 @@ def write_goal_triggers(world, rom):
             condition_text += "reject the power of darkness."
         elif condition in ["bosses"]:
             condition_text += " defeat the bosses of these areas.\v"
-            for index, flag in enumerate(condition_list):
-                if (index + 1) & 1:
+            for con_index, flag in enumerate(condition_list):
+                if (con_index + 1) & 1:
                     condition_text += f"-{boss_text[flag]}   "
-                elif not (index + 1) % 6:
+                elif not (con_index + 1) % 6:
                     condition_text += f"-{boss_text[flag]}\v" # line break after doing 3 lines
                 else:
                     condition_text += f"-{boss_text[flag]}\n"
@@ -129,5 +129,7 @@ def write_goal_triggers(world, rom):
             else:
                 string_array.append(dawn_text_map[char])
 
-        string_array.extend([0xE5, 0xE4, 0xEA])  # Close out the textbox
+        if string_array[len(string_array) - 1] != 0xE9:
+            string_array.append(0xE5)  # Add a button press to close out the text
+        string_array.extend([0xE4, 0xEA])  # Close out the textbox
         rom.write_bytes(0x15096F + (0x200 * index), bytearray(string_array))
