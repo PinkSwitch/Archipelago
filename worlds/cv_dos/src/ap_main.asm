@@ -2299,11 +2299,18 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Dimitrii:
-    push r1
+    push r0-r3,lr
     ldr r1, = @BossFlag_Dimitrii
     ldrh r1, [r1]
     orr r2, r2, r1
-    pop r1
+
+    ldr r0, =@GameFlag_ThroneIsShuffled
+    ldrb r0, [r0] ; is boss shuffle on
+    cmp r0, 0
+    beq @@End
+    bl 0x020298A0 ; Mute the music when dimitrii dies
+@@End:
+    pop r0-r3,lr
     bx lr
 
 @SetFlag_Malphas:
@@ -2676,9 +2683,9 @@ bl @GetItemFromSpecial
     ldr r2, = 0xA0
     orr r2, r2, r4 ; Set the flags
     strb r2, [r1]
-    push lr
+    push r0-r3,lr
     bl 0x020298A0
-    pop lr
+    pop r0-r3,lr
 @@End:    
     bx lr
 .pool
@@ -2783,12 +2790,15 @@ push r0
   ldr r1, =@GameFlag_ThroneIsShuffled
   ldrb r1, [r1]
   cmp r1, 0
-  beq @@End
+  beq @@skipsong
   ldr r1, =0x021CA738
   ldrh r1, [r1]
+@@SkipProperly:
   bl @InitializeEnemyAndOverridePlayBossMusic
-@@End:
   pop r15
+@@skipsong:
+    mov r1, 0xFF
+    b @@SkipProperly
 .pool
 ;;;;;;;;;;;;;;
 ; Repoints entity lists to NEW lists if the end flag is X greater than 0x7FFF
