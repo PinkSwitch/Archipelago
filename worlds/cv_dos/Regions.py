@@ -225,7 +225,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                                     {"Condemned Tower Main": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                                      "Dark Chapel Big Room": lambda state: state.has_any(small_uppies, player)})
     if world.mine_status != "Disabled":
-        if not world.mine_status:
+        if not world.mine_status or world.mine_status == "Open":
             multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"])  # Add a ruleless connector here
         else:
             multiworld.get_region("Condemned Tower Bottom", player).add_exits(["Mine of Judgment"],
