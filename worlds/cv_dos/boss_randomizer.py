@@ -134,13 +134,6 @@ def randomize_bosses(world):
             
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
-        
-    desired_test = "Lost Village"
-    for boss in world.boss_slots:
-        if boss == desired_test:
-            world.boss_slots[boss].new_boss = "Dimitrii"
-        else:
-            world.boss_slots[boss].new_boss = "Flying Armor"
 
 def write_bosses(world, rom):
     rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
@@ -194,6 +187,9 @@ def write_bosses(world, rom):
                 y_pos = 0x70 # Move him down a bit so he's easier to hit in the tall room
 
             if room != "Demon Guest House": # Update hardcoded position for some extra entities
+                # Arms--------------------------------------------------
+                rom.write_bytes(0x36FEF0, struct.pack("H", x_pos))
+                rom.write_bytes(0x36FEF2, struct.pack("H", y_pos))
                 # Iron maidens------------------------------------------
                 rom.write_bytes(0x36FF90, struct.pack("H", x_pos + 0x68))
                 rom.write_bytes(0x36FF92, struct.pack("H", y_pos - 0x38))
@@ -205,7 +201,7 @@ def write_bosses(world, rom):
                 rom.write_bytes(0x36FF9A, struct.pack("H", y_pos - 0x38))
 
                 rom.write_bytes(0x36FF9C, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FF9F, struct.pack("H", y_pos + 0x38))
+                rom.write_bytes(0x36FF9E, struct.pack("H", y_pos + 0x38))
                 # Platforms----------------------------------------------
                 rom.write_bytes(0x36FF24, struct.pack("H", x_pos + 0x68))
                 rom.write_bytes(0x36FF26, struct.pack("H", y_pos - 0x18))
@@ -223,7 +219,7 @@ def write_bosses(world, rom):
                 rom.write_bytes(0x36FFBA, struct.pack("H", y_pos - 0x38 + 0x17))
 
                 rom.write_bytes(0x36FFBC, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFBF, struct.pack("H", y_pos + 0x38 + 0x17))
+                rom.write_bytes(0x36FFBE, struct.pack("H", y_pos + 0x38 + 0x17))
                 # Player damage effect------------------------------------
                 rom.write_bytes(0x36FFD0, struct.pack("H", x_pos + 0x68))
                 rom.write_bytes(0x36FFD2, struct.pack("H", y_pos - 0x38 + 0x14))
@@ -235,7 +231,7 @@ def write_bosses(world, rom):
                 rom.write_bytes(0x36FFDA, struct.pack("H", y_pos - 0x38 + 0x14))
 
                 rom.write_bytes(0x36FFDC, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFDF, struct.pack("H", y_pos + 0x38 + 0x14))
+                rom.write_bytes(0x36FFDE, struct.pack("H", y_pos + 0x38 + 0x14))
 
                 # NOP out P.M's camera lock in other rooms
                 rom.write_bytes(0x36A85C, struct.pack("I", 0xE1A00000))
@@ -290,8 +286,9 @@ def write_bosses(world, rom):
 
 def copy_boss_stats(world, rom):
     # Copy all boss stats into unused ROM so we can copy them back
-    for index, boss in enumerate(world.boss_data):
+    for boss in world.boss_data:
         data = world.boss_data[boss]
+        index = int(data.flag_index / 2)
         address = base_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 

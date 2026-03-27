@@ -360,9 +360,9 @@ class DoSWorld(World):
            self.red_soul_walls = passthrough["soul_walls"]
            self.options.gate_items = passthrough["buttonsanity"]
            self.magic_seal_table = passthrough["seals"]
-           self.options.menace_condition = passthrough["menace_condition"]
-           self.options.mine_condition = passthrough["mine_condition"]
-           self.options.garden_condition = passthrough["garden_condition"]
+           self.options.menace_condition.value = passthrough["menace_condition"]
+           self.options.mine_condition.value = passthrough["mine_condition"]
+           self.options.garden_condition.value = passthrough["garden_condition"]
         setup_game(self)
 
         self.auth_id = self.random.getrandbits(32)

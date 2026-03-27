@@ -285,7 +285,7 @@ bl @GetItemFromSpecial
     .dw @DimitriiEvent_Update
 
 .org 0x021A9C78
-    bl @DontDespawnTowerDoors
+    nop
 
 .org 0x021A9C70
     nop ; Door collision delete
@@ -479,6 +479,12 @@ bl @GetItemFromSpecial
 .open "ftc/overlay9_1", 0x02230A00
     .org 0x0225B5B8
         bl @SetFlag_Dario
+
+    .org 0x0225A69C
+        bl @CheckFlag_Dario
+
+    .org 0x0225B318
+        bl @FixDario_MirrorFlag
 
     .org 0x02243FC8
         bl @SetFlag_Aguni
@@ -2300,10 +2306,6 @@ bl @GetItemFromSpecial
 
 @SetFlag_Dimitrii:
     push r0-r3,lr
-    ldr r1, = @BossFlag_Dimitrii
-    ldrh r1, [r1]
-    orr r2, r2, r1
-
     ldr r0, =@GameFlag_ThroneIsShuffled
     ldrb r0, [r0] ; is boss shuffle on
     cmp r0, 0
@@ -2311,6 +2313,9 @@ bl @GetItemFromSpecial
     bl 0x020298A0 ; Mute the music when dimitrii dies
 @@End:
     pop r0-r3,lr
+    ldr r1, = @BossFlag_Dimitrii
+    ldrh r1, [r1]
+    orr r2, r2, r1
     bx lr
 
 @SetFlag_Malphas:
@@ -2322,11 +2327,17 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Dario:
-    push r2
+    push r0-r3, lr
+    ldr r0, =@GameFlag_ThroneIsShuffled
+    ldrb r0, [r0] ; is boss shuffle on
+    cmp r0, 0
+    beq @@End
+    bl 0x020298A0 ; Mute the music when dimitrii dies
+@@End:
+    pop r0-r3, lr
     ldr r2, = @BossFlag_Dario
     ldrh r2, [r2]
     orr r1, r1, r2
-    pop r2
     bx lr
 
 @SetFlag_PuppetMaster:
@@ -2378,6 +2389,14 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Aguni:
+    push r0-r3,lr
+    ldr r0, =@GameFlag_ThroneIsShuffled
+    ldrb r0, [r0] ; is boss shuffle on
+    cmp r0, 0
+    beq @@End
+    bl 0x020298A0 ; Mute the music when aguni dies
+@@End:
+    pop r0-r3,lr
     push r2
     ldr r2, = @BossFlag_Aguni
     ldrh r2, [r2]
@@ -2424,6 +2443,22 @@ bl @GetItemFromSpecial
     ands r1, r1, r2
     pop r2
     bx lr
+
+@CheckFlag_Dario:
+    push r2
+    add r2, r5, 0x270
+    ldrb r2, [r2] ;varB
+    cmp r2, 1
+    beq @@FlagNormal
+    ldr r2, = @BossFlag_Dario
+    ldrh r2, [r2]
+    ands r0, r0, r2
+    pop r2
+    bx lr
+@@FlagNormal:
+    pop r2
+    ands r0,r0,r2
+    bx lr ; Check Dario's normal flag if fighting Dario2
 
 @CheckFlag_Malphas:
     push r2
@@ -2599,21 +2634,6 @@ bl @GetItemFromSpecial
     b 0x021CA074
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Normally this deletes Boss Door type 3 during certain behaviors.
-; This causes the Condemned Tower doors to be deleted too early
-@DontDespawnTowerDoors:
-    push r4
-    ldr r4, =0x020F6DFC ; Get the current game state
-    ldrb r4, [r4]
-    ands r4, r4, 0x02
-    bne @@End ; Don't delete the boss door if the player is still flagged as in a boss fight
-    push lr
-    bl 0x02012ADC
-    pop lr
-@@End:
-    pop r4
-    bx lr
-.pool
 ;;;;;;;;;;;;;;;;;;;
 ; Delete all Boss entities if the player's Y-value is ABOVE a certain height
 ; used to control spawning in Condemned Tower
@@ -3265,6 +3285,19 @@ push r0
     bx lr
 @@End:
     ldr r0,[r5, 0x14]
+    bx lr
+
+@FixDario_MirrorFlag:
+    ldr r0, =0x020F6DF9
+    ldrb r0, [r0]
+    cmp r0, 0 ; We're not in the mirror world
+    beq @@Normal
+    mov r0, 0 ; Force this to fail so dario doesnt get fucked up
+    bx lr
+@@Normal:
+    push lr
+    bl 0x02018B24
+    pop lr
     bx lr
 
 .pool
