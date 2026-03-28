@@ -240,9 +240,9 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                                     
     ################################
     #Cursed Clock Tower
-    multiworld.get_region("Cursed Clock Tower Entrance", player).add_exits(["Garden of Madness East Gate", "Condemned Tower Top", "Cursed Clock Tower Central"],
+    multiworld.get_region("Cursed Clock Tower Entrance", player).add_exits(["Garden of Madness East Gate", "Condemned Tower Main", "Cursed Clock Tower Central"],
                                                                     {"Cursed Clock Tower Central": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
-                                                                     "Condemned Tower Top": lambda state: state.has("Tower Key", player)})
+                                                                     "Condemned Tower Main": lambda state: state.has("Tower Key", player)})
 
     multiworld.get_region("Cursed Clock Tower Central", player).add_exits(["Cursed Clock Tower Entrance", "Cursed Clock Tower Boss Area"],
                                                                     {"Cursed Clock Tower Boss Area": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)})

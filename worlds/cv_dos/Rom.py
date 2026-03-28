@@ -72,7 +72,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  # The initial warp room bit
 
     if world.options.replace_menace_with_soma:
-        rom.copy_bytes(0x153F47, 7, 0x158C34)  # Replace the menace warp coords with soma's
+        rom.copy_bytes(0x158C3C, 8, 0x158C34)  # Replace the menace warp coords with soma's
 
     if world.options.remove_money_gates:
         rom.write_bytes(0xAD661, bytearray([0x00]))

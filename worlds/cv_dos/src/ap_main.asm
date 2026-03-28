@@ -2305,6 +2305,7 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Dimitrii:
+    push r1
     push r0-r3,lr
     ldr r0, =@GameFlag_ThroneIsShuffled
     ldrb r0, [r0] ; is boss shuffle on
@@ -2316,6 +2317,7 @@ bl @GetItemFromSpecial
     ldr r1, = @BossFlag_Dimitrii
     ldrh r1, [r1]
     orr r2, r2, r1
+    pop r1
     bx lr
 
 @SetFlag_Malphas:
@@ -2517,9 +2519,18 @@ bl @GetItemFromSpecial
     bx lr
 
 @CheckFlag_Paranoia:
+    push r2
+    ldrb r2, [r2, 0x6E]
+    cmp r2, 2
+    pop r2
+    bne @@ParanoiaManual ; We want to check the normal flag if it's mini-paranoia
     ldr r2, = @BossFlag_Paranoia
     ldrh r2, [r2]
+@@End:
     ands r0, r0, r2
+    bx lr
+@@ParanoiaManual:
+    ands r0, r0, 0x1000
     bx lr
 
 @CheckFlag_Death:
@@ -3137,9 +3148,12 @@ push r0
     add r1, r5, 0x0200
     push r0
     ldrb r0, [r1, 0x6E]
+    cmp r0, 0 ; Skip goal checks if hammer is a shop
+    beq @@End
     sub r0, r0, 1
     bl @CheckGoal_Sub
     cmp r0, 0 ; Goal is NOT met
+@@End:
     pop r0
     bne 0x021B9EEC
     mov r1, 0
