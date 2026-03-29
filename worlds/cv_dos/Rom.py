@@ -8,14 +8,14 @@ from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
                            boss_list, enemy_table, button_item_table)
-from .music_randomizer import area_music_randomizer, boss_music_randomizer
-from .boss_randomizer import write_bosses
-from .synthesis_randomizer import write_synthesis
-from .bullet_wall_randomizer import apply_souls_and_gfx
+from .modules.music_randomizer import area_music_randomizer, boss_music_randomizer
+from .modules.boss_randomizer import write_bosses
+from .modules.synthesis_randomizer import write_synthesis
+from .modules.bullet_wall_randomizer import apply_souls_and_gfx
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
-from .seal_shuffle import write_seals, randomize_seal_patterns
+from .modules.seal_shuffle import write_seals, randomize_seal_patterns
 from .set_goals import write_goal_triggers
 from BaseClasses import ItemClassification
 

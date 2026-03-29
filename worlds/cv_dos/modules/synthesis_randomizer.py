@@ -1,4 +1,4 @@
-from .in_game_data import global_soul_table
+from ..in_game_data import global_soul_table
 
 normal_synth_souls = [
     # Shortswords

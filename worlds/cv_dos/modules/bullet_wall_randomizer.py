@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .in_game_data import global_soul_table
+from ..in_game_data import global_soul_table
 import struct
 
 viable_wall_souls = [

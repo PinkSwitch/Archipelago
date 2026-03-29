@@ -1,10 +1,10 @@
 from .Options import SoulsanityLevel, SoulRandomizer, MineCondition, GardenCondition, MenaceCondition
 from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
-from .bullet_wall_randomizer import set_souls_for_walls
-from .synthesis_randomizer import randomize_synthesis
-from .boss_randomizer import randomize_bosses
-from .seal_shuffle import set_seals
+from .modules.bullet_wall_randomizer import set_souls_for_walls
+from .modules.synthesis_randomizer import randomize_synthesis
+from .modules.boss_randomizer import randomize_bosses
+from .modules.seal_shuffle import set_seals
 from .set_goals import set_goal_triggers
 from BaseClasses import ItemClassification
 from logging import warning
