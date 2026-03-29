@@ -2797,9 +2797,12 @@ push r0
 @@PlayMusic:
   ldr r1, =0x0225B208
   ldrh r1, [r1]
+@@LoadSong:
   bl @InitializeEnemyAndOverridePlayBossMusic
-@@End:
   pop r15
+@@End:
+    mov r1, 0xFF
+    b @@LoadSong
 
 @FixDarioMusic:
   push r14
