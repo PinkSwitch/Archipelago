@@ -117,6 +117,9 @@
 .org 0x0202682C
     bl @ThroneBoss_MirrorEntities
 
+;;;;;;;;;;;;;;;;;
+.org 0x02020BA8
+    nop  ; Disable failsafe for item palettes greater than 2
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -452,8 +455,7 @@ bl @GetItemFromSpecial
 
 .org 0x02227147
     .db 0x01, 0xFF, 0x0FF
-
-    
+;;;;;;;;;;;;;;;;;;;;;;;;    
 
 
 ;overlay 9 0
@@ -2512,9 +2514,18 @@ bl @GetItemFromSpecial
 
 @CheckFlag_Aguni:
     push r2
+    add r2, r5, 0x270
+    ldrb r2, [r2]
+    cmp r2, 1 ;; varB
+    beq @@CheckMirrorFlag
     ldr r2, = @BossFlag_Aguni
     ldrh r2, [r2]
     ands r1, r1, r2
+    pop r2
+    bx lr
+@@CheckMirrorFlag:
+    ; var b is Aguni in the throne mirror. We want that one to check the normal flag
+    ands r1, r1, 0x800
     pop r2
     bx lr
 
