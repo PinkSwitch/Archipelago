@@ -20,6 +20,12 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     multiworld = world.multiworld
     player = world.player
     locations_per_region = get_locations_per_region(locations)
+    if world.options.boost_speed:
+        sub_hell_speed = lambda state: True
+    else:
+        sub_hell_speed = lambda state: state.has_any({"Flying Armor Soul", "Black Panther Soul"}, player)
+
+
 
     regions = [
         create_region(world, player, locations_per_region, "Lost Village Upper"),
@@ -284,9 +290,10 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
                                                 {"Subterranean Hell Central Lower": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Subterranean Hell Shaft Top": lambda state: state.has_any(big_uppies, player)})
 
-    multiworld.get_region("Subterranean Hell Shaft Top", player).add_exits(["Subterranean Hell Shaft Middle", "Wizardry Lab East Gate"])
+    multiworld.get_region("Subterranean Hell Shaft Top", player).add_exits(["Subterranean Hell Shaft Middle", "Wizardry Lab East Gate", "Subterranean Hell Shaft Bottom Stairs"],
+                                                                           {"Subterranean Hell Shaft Middle": sub_hell_speed})
 
-    multiworld.get_region("Subterranean Hell Shaft Bottom", player).add_exits(["Subterranean Hell Central Lower", "Subterranean Hell Spike Room East", "Silenced Ruins Antechamber", "Subterranean Hell Shaft Bottom Stairs"],
+    multiworld.get_region("Subterranean Hell Shaft Bottom", player).add_exits(["Subterranean Hell Spike Room East", "Silenced Ruins Antechamber", "Subterranean Hell Shaft Bottom Stairs"],
                                                 {"Subterranean Hell Shaft Middle": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                 "Subterranean Hell Shaft Bottom Stairs": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),
                                                  "Subterranean Hell Spike Room East": lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player),

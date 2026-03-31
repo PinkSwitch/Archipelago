@@ -89,6 +89,8 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     set_rule(world.multiworld.get_location("Subterranean Hell: Behind Waterfall", player), lambda state: state.has_any(small_uppies, player) or state.has_any({"Flying Armor Soul", "Black Panther Soul"}, player))
 
+    set_rule(world.multiworld.get_location("Subterranean Hell: Waterfall Room Upper", player), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
+
     set_rule(world.multiworld.get_location("Silenced Ruins: Ice Block Room", player), lambda state: state.has("Balore Soul", player))
     set_rule(world.multiworld.get_location("Silenced Ruins: Mirror World", player), lambda state: state.has("Paranoia Soul", player))
     set_rule(world.multiworld.get_location("Bat Company Soul", player), lambda state: state.has(world.magic_seal_table["Silenced Ruins"], player))
