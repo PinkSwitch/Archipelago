@@ -532,8 +532,8 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
     if world.options.enable_annoying_multiman_checks:
         location_table += [
-        LocationData("Multi-Man Melee", "15 Minute Melee Clear", 0x1A0),
-        LocationData("Multi-Man Melee", "Cruel Melee 5 KO's", 0x1A2)]
+        LocationData("Multi-Man Melee", "Multi Man Melee - 15 Minute Melee Clear", 0x1A0),
+        LocationData("Multi-Man Melee", "Multi Man Melee - Cruel Melee 5 KO's", 0x1A2)]
 
 
     if world.options.bonus_checks:
@@ -638,7 +638,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Center Stage", 0x72),
         LocationData("Any Melee", "Bonus - Star KO", 0x73),
         LocationData("Any Melee", "Bonus - Wimpy KO", 0x74),
-        LocationData("Any Melee", "Bonus - Bull's-eye KO", 0x75),
+        LocationData("Any Melee", "Bonus - Bull's-Eye KO", 0x75),
         LocationData("Any Melee", "Bonus - Pacifist", 0x76),
         LocationData("Any Melee", "Bonus - Moment of Silence", 0x77),
         LocationData("Any Melee", "Bonus - Impervious", 0x78),
@@ -681,7 +681,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Any Melee", "Bonus - Ground Pounded", 0x9C),
         LocationData("Any Melee", "Bonus - Tiny KO", 0x9D),
         LocationData("Any Melee", "Bonus - Invisible KO", 0x9E),
-        LocationData("Any Melee", "Bonus - Bunny-hood Blast", 0x9F),
+        LocationData("Any Melee", "Bonus - Bunny-Hood Blast", 0x9F),
         LocationData("Any Melee", "Bonus - Vegetarian", 0xA0),
         LocationData("Any Melee", "Bonus - Heartthrob", 0xA1),
         LocationData("Any Melee", "Bonus - Invincible Finish", 0xA2),
@@ -797,7 +797,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
 
         if world.options.hard_modes_clear:
             location_table += [
-            LocationData("Any Main 1-P", "Bonus - Very Hard Clear", 0xF1),
+            LocationData("Any Main 1-P", "Bonus - Very-Hard Clear", 0xF1),
             ]
 
     return location_table
