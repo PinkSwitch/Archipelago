@@ -32,6 +32,8 @@
 *.apsave
 *.BIN
 *.puml
+*.nds
+*.apcvpor
 
 setups
 build
