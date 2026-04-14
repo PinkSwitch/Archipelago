@@ -29,7 +29,9 @@ class PoRSettings(settings.Group):
         md5 = "2edd57540cae45842fbd19c45a4214f9"
 
 class PoRWorld(World):
-    """Placeholder text"""
+    """The year is 1944. Dracula's castle has reappeared, and it's been taken over
+       by the mad vampire artist, Brauner, and his two twin daughters. Explore the
+       castle and Brauner's magical portraits with two characters and put a stop to him!"""
     game = "Castlevania: Portrait of Ruin"
     option_definitions = PoROptions
     data_version = 1
