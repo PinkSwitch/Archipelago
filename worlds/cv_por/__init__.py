@@ -1,6 +1,8 @@
 import settings
+import typing
+import threading
 
-from BaseClasses import Item, Tutorial
+from BaseClasses import Item, Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
 
 from .Items import item_table, get_item_names_per_category
@@ -47,7 +49,7 @@ class PoRWorld(World):
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
 
-    web = PoRWeb
+    web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]
     # topology_present = True
     ut_can_gen_without_yaml = True

@@ -25,6 +25,11 @@ class NestofEvil(Choice):   # TODO!!! IMPLEMENT
          Required: You are required to clear the Nest of Evil before you can access your final boss.
          Removed: The three items are added to the item pool, and the Nest of Evil is inaccessible."""
     display_name = "Nest of Evil State"
+    option_vanilla = 0
+    option_randomized = 1
+    option_required = 2
+    option_removed = 3
+    default = 0
 
 class BraunerRequired(DefaultOnToggle):  #  TODO!!! IMPLEMENT
     """If enabled, you will be required to fight Brauner before you can access the Throne Room,
