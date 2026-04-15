@@ -10,15 +10,19 @@ location_ids = {
     "Entrance: Double Room Lower": 0x0A,
     "Entrance: Above Hub": 0x0E,
     "Entrance: Double Room Upper": 0x0F,
+    "The Throne Room: Above Throne Left": 0x13,
     "Buried Chamber: Central Secret": 0x20,
     "Tower of Death: Second Gears Room Left": 0x22,
     "Great Stairway: Lower Grand Staircase Corner Nook": 0x23,
     "Tower of Death: Secret Room": 0x2A,
+    "The Throne Room: Great Stairs Under Stairs": 0x2E,
     "Buried Chamber: Right Secret": 0x30,
     "Tower of Death: Passage Hidden Item": 0x32,
     "Great Stairway: Left Loft Lower": 0x33,
     "Entrance: Center Hidden Room": 0x35,
+    "The Throne Room: Great Stairs Center": 0x3E,
     "Buried Chamber: Westmost Room": 0x41,
+    "Tower of Death: Rampart Room": 0x4A,
     "Entrance: Beyond Great Armor Hallway": 0x4B,
     "Tower of Death: Elevator Room Lower": 0x4C,
     "Great Stairway: Upper Grand Staircase Top Left Item": 0x53,
@@ -39,6 +43,7 @@ location_ids = {
     "Entrance: First Passage Lower Item": 0x7C,
     "Entrance: Pre-Behemoth Boss Room": 0x88,
     "Great Stairway: After Keremet Upper": 0x89,
+    "Tower of Death: Gear Belt Room": 0x8A,
     "Buried Chamber: Central Hall": 0x92,
     "Great Stairway: Central Nook": 0x93,
     "Great Stairway: Upper Grand Staircase Upper Alcove": 0xA1,
@@ -48,13 +53,16 @@ location_ids = {
     "Great Stairway: Big Underground Room Hidden Item": 0xBF,
     "Great Stairway: Right Loft": 0xC0,
     "Great Stairway: Left Loft": 0xC1,
+    "The Throne Room: Above Throne Right": 0xC5,
     "Great Stairway: Lower Grand Staircase Upper Alcove": 0xCA,
     "Great Stairway: Underground East Room": 0xCB,
     "Tower of Death: Elevator Room Top": 0xCC,
     "Entrance: Hub Room": 0xCD,
     "Buried Chamber: Eastmost Room": 0xCE,
+    "Tower of Death: Hidden Room": 0xD1,
     "Great Stairway: Big Underground Room Lower": 0xDA,
     "Tower of Death: Elevator Room Middle": 0xDB,
+    "Tower of Death: Above Motorcycles": 0xE3,
     "Great Stairway: Big Underground Room Upper": 0xE7,
     "Tower of Death: Top Gears Room": 0xF9,
     "Entrance: Lilith Room": 0x101,
@@ -66,11 +74,20 @@ location_ids = {
     "Entrance: Behemoth Chase Room": 0x12C,
     "Entrance: First Passage Hidden Wall": 0x12D,
     "Tower of Death: Lower Passage Hidden Item": 0x131,
+    "The Throne Room: Great Stairs Hidden": 0x145,
     "Buried Chamber: Hidden Wall Item": 0x014C,
     "Great Stairway: Connector Pipe Left": 0x180,
     "Great Stairway: Connector Pipe Right": 0x181,
+    "The Throne Room: Great Stairs Left": 0x182,
 
+
+    #"Tower of Death: Stella Item": ????,
 
     
     
+    }
+
+    game_events = {
+        "Tower of Death: Stella Item",
+        "Master's Keep: Whip Trial"
     }

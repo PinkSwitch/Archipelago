@@ -80,7 +80,8 @@ class ShuffleWhip(Toggle):  # TODO!!! Implement
 
 class PoRExcludeLocations(ExcludeLocations):
     """Prevent these locations from having an important item."""
-    default = frozenset({"Dark Chasm of Old"})
+    default = frozenset({"The Throne Room: Above Throne Left", "The Throne Room: Above Throne Right", "The Throne Room: Great Stairs Left",
+                         "The Throne Room: Great Stairs Center", "The Throne Room: Great Stairs Under Stairs", "The Throne Room: Great Stairs Hidden"})
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -94,7 +95,7 @@ class PoROptions(PerGameCommonOptions):
     reveal_map: RevealMap
     reveal_hidden_walls: RevealBreakableWalls
     experience_percentage: ExperiencePercent
-    exclude_locations: PoRExcludeLocations
+    #exclude_locations: PoRExcludeLocations
     
 por_option_groups = [
     OptionGroup("Goal Options", [
