@@ -11,17 +11,26 @@ location_ids = {
     "Entrance: Above Hub": 0x0E,
     "Entrance: Double Room Upper": 0x0F,
     "Buried Chamber: Central Secret": 0x20,
+    "Tower of Death: Second Gears Room Left": 0x22,
     "Great Stairway: Lower Grand Staircase Corner Nook": 0x23,
+    "Tower of Death: Secret Room": 0x2A,
     "Buried Chamber: Right Secret": 0x30,
+    "Tower of Death: Passage Hidden Item": 0x32,
+    "Great Stairway: Left Loft Lower": 0x33,
     "Entrance: Center Hidden Room": 0x35,
     "Buried Chamber: Westmost Room": 0x41,
     "Entrance: Beyond Great Armor Hallway": 0x4B,
+    "Tower of Death: Elevator Room Lower": 0x4C,
     "Great Stairway: Upper Grand Staircase Top Left Item": 0x53,
+    "Tower of Death: Top of the Tower": 0x55,
     "Great Stairway: Upper Underground Room": 0x56,
     "Entrance: Drawbridge Upper Item": 0x57,
     "Entrance: Statue Room Upper": 0x58,
+    "Tower of Death: Second Gears Room Right": 0x59,
+    "Tower of Death: Lower Gears Room Spike Shaft": 0x5A,
     "Buried Chamber: Right Shade Hall": 0x61,
     "Great Stairway: Underground Hidden Room": 0x66,
+    "Tower of Death: Third Gears Room": 0x70,
     "Entrance: Above Metal Block Room": 0x71,
     "Great Stairway: Before Keremet Room": 0x76,
     "Entrance: First Passage Upper Item": 0x78,
@@ -31,16 +40,23 @@ location_ids = {
     "Entrance: Pre-Behemoth Boss Room": 0x88,
     "Great Stairway: After Keremet Upper": 0x89,
     "Buried Chamber: Central Hall": 0x92,
+    "Great Stairway: Central Nook": 0x93,
     "Great Stairway: Upper Grand Staircase Upper Alcove": 0xA1,
     "Buried Chamber: Final Shaft Item": 0xAA,
+    "Great Stairway: Central Upper": 0xAB,
     "Great Stairway: Lower Grand Staircase Lower Alcove": 0xB4,
     "Great Stairway: Big Underground Room Hidden Item": 0xBF,
+    "Great Stairway: Right Loft": 0xC0,
+    "Great Stairway: Left Loft": 0xC1,
     "Great Stairway: Lower Grand Staircase Upper Alcove": 0xCA,
     "Great Stairway: Underground East Room": 0xCB,
+    "Tower of Death: Elevator Room Top": 0xCC,
     "Entrance: Hub Room": 0xCD,
     "Buried Chamber: Eastmost Room": 0xCE,
     "Great Stairway: Big Underground Room Lower": 0xDA,
+    "Tower of Death: Elevator Room Middle": 0xDB,
     "Great Stairway: Big Underground Room Upper": 0xE7,
+    "Tower of Death: Top Gears Room": 0xF9,
     "Entrance: Lilith Room": 0x101,
     "Great Stairway: Upper Grand Staircase Middle Alcove": 0x10F,
     "Buried Chamber: Right Shaft Top": 0x110,
@@ -49,15 +65,12 @@ location_ids = {
     "Great Stairway: Lower Grand Staircase Middle Alcove": 0x127,
     "Entrance: Behemoth Chase Room": 0x12C,
     "Entrance: First Passage Hidden Wall": 0x12D,
+    "Tower of Death: Lower Passage Hidden Item": 0x131,
     "Buried Chamber: Hidden Wall Item": 0x014C,
+    "Great Stairway: Connector Pipe Left": 0x180,
+    "Great Stairway: Connector Pipe Right": 0x181,
 
 
-
-
-    
-    
-    
-    
     
     
     }
