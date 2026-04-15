@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .Options import Choice, DefaultOnToggle, Range, NamedRange, Toggle
+from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup
 
 class Goal(Choice):   # TODO!!!! IMPLEMENT
     """The goal for your game.
@@ -73,6 +73,10 @@ class ShuffleWhip(Toggle):  # TODO!!! Implement
        Otherwise, it will be at its normal location."""
     display_name = "Shuffle True Vampire Killer"
 
+class PoRExcludeLocations(ExcludeLocations):
+    """Prevent these locations from having an important item."""
+    default = frozenset({"Dark Chasm of Old"})
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -85,6 +89,7 @@ class PoROptions(PerGameCommonOptions):
     reveal_map: RevealMap
     reveal_hidden_walls: RevealBreakableWalls
     experience_percentage: ExperiencePercent
+    exclude_locations: PoRExcludeLocations
     
 por_option_groups = [
     OptionGroup("Goal Options", [

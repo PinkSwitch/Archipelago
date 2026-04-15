@@ -1,6 +1,12 @@
-from .Items import item_table
+import settings
+
+from BaseClasses import Item, Tutorial
+from worlds.AutoWorld import World, WebWorld
+
+from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
 from .generator_main import generate_game
+from .static_location_data import location_ids
 
 class PoRWeb(WebWorld):
     theme = "ocean"
