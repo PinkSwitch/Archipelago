@@ -59,4 +59,5 @@ class PoRWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.extra_item_count = 0
+        
         generate_game(self)
