@@ -35,6 +35,8 @@ location_ids = {
     "13th Street: Triple Moth Room": 0x29,
     "Tower of Death: Secret Room": 0x2A,
     "Nation of Fools: Right Horizontal Room": 0x2B,
+    "Burnt Paradise: Left Lower Isolated Room": 0x2C,
+    "Burnt Paradise: Right Lower Isolated Room": 0x2D,
     "The Throne Room: Great Stairs Under Stairs": 0x2E,
     "13th Street: Behind Final Guard": 0x2F,
     "Buried Chamber: Right Secret": 0x30,
@@ -47,6 +49,8 @@ location_ids = {
     "Master's Keep: Hidden Room": 0x38,
     "13th Street: Three Amalaric Snipers": 0x39,
     "Nation of Fools: Top Corner Room": 0x3B,
+    "Burnt Paradise: Left Upper Isolated Room": 0x3C,
+    "Burnt Paradise: Right Upper Isolated Room": 0x3D,
     "The Throne Room: Great Stairs Center": 0x3E,
     "Forgotten City: Upper Underground Square": 0x3F,
     "Entrance: Double Room Lower": 0x40,
@@ -61,6 +65,7 @@ location_ids = {
     "Tower of Death: Elevator Room Lower": 0x4C,
     "Forgotten City: Outside Left": 0x4E,
     "Sandy Grave: Upper Big Underground Top Left": 0x4F,
+    "Burnt Paradise: Left Upper Big Corner": 0x51,
     "Great Stairway: Upper Grand Staircase Top Left Item": 0x53,
     "City of Haze: Axe Courtyard": 0x54,
     "Tower of Death: Top of the Tower": 0x55,
@@ -82,20 +87,24 @@ location_ids = {
     "Sandy Grave: On Statue": 0x6F,
     "Tower of Death: Third Gears Room": 0x70,
     "Entrance: Above Metal Block Room": 0x71,
+    "Burnt Paradise: Bottom Corner": 0x73,
     "Great Stairway: Before Keremet Room": 0x76,
     "Forgotten City: Lower Boulder Room Upper Alcove": 0x77,
     "Entrance: First Passage Upper Item": 0x78,
     "Great Stairway: Upper Grand Staircase Corner Nook": 0x79,
+    "Burnt Paradise: Bottom Right Big Room": 0x7A,
     "Entrance: Right Hidden Room": 0x7B,
     "Entrance: First Passage Lower Item": 0x7C,
     "City of Haze: Left Dance Hall Right Item": 0x7E,
     "City of Haze: Tunnel Room Left": 0x7F,
+    "Burnt Paradise: Upper Left Big Room Middle Building": 0x82,
     "City of Haze: Chunky Room": 0x84,
     "Entrance: Pre-Behemoth Boss Room": 0x88,
     "Great Stairway: After Keremet Upper": 0x89,
     "Tower of Death: Gear Belt Room": 0x8A,
     "City of Haze: Dance Halls Basement": 0x8B,
     "City of Haze: Central Hallway Lower": 0x8C,
+    "Burnt Paradise: Upper Right Big Room Right Side": 0x8F,
     "Buried Chamber: Central Hall": 0x92,
     "Great Stairway: Central Nook": 0x93,
     "Sandy Grave: Eastmost Item": 0x94,
@@ -142,12 +151,15 @@ location_ids = {
     "Nation of Fools: Top-Right Room Axe Item": 0xE4,
     "13th Street: Underground Secret Room": 0xE6,
     "Great Stairway: Big Underground Room Upper": 0xE7,
+    "Burnt Paradise: Upper Left Big Room Left Building": 0xE9,
     "13th Street: Underground Demon Room": 0xEA,
     "Sandy Grave: Mega Ghost Room Lower": 0xEB,
     "13th Street: Left Big Room": 0xEC,
     "City of Haze: Bread Shelf": 0xED,
+    "Burnt Paradise: Upper Left Lower Corner Upright Building": 0xEE,
     "City of Haze: Underground Secret Room": 0xEF,
     "Sandy Grave: Mega Ghost Room Upper": 0xF0,
+    "Burnt Paradise: Lower Left Big Room": 0xF1,
     "13th Street: Secret Floor Room": 0xF3,
     "City of Haze: Right Dance Hall Item": 0xF7,
     "Tower of Death: Top Gears Room": 0xF9,
@@ -171,6 +183,7 @@ location_ids = {
     "Sandy Grave: Fleaman Pit": 0x11E,
     "Nation of Fools: Top-Right Room Bottom Item": 0x11F,
     "Forgotten City: Pyramid East 5F": 0x122,
+    "Burnt Paradise: Lower Vertical Hall": 0x123,
     "Buried Chamber: West Shaft": 0x124,
     "Great Stairway: Lower Grand Staircase Middle Alcove": 0x127,
     "Entrance: Behemoth Chase Room": 0x12C,
@@ -181,7 +194,10 @@ location_ids = {
     "Sandy Grave: Giant Shaft Low Item": 0x144,
     "The Throne Room: Great Stairs Hidden": 0x145,
     "Nation of Fools: Top-Right Room Breakable Wall": 0x146,
+    "Burnt Paradise: Bottom Right Breakable Wall": 0x147,
+    "Burnt Paradise: Right Upper Big Corner On Wall": 0x148,
     "Nation of Fools: Right Center Room": 0x149,
+    "Burnt Paradise: Left Big Corner": 0x14A,
     "Buried Chamber: Hidden Wall Item": 0x014C,
     "13th Street: Bakery Middle": 0x14D,
     "City of Haze: Cart Secret Right": 0x14E,
@@ -191,9 +207,11 @@ location_ids = {
     "City of Haze: Bar Right": 0x154,
     "13th Street: Square Room": 0x155,
     "13th Street: Bakery Right": 0x156,
+    "Burnt Paradise: Bottom Right Corner Room": 0x157,
     "Nation of Fools: Left Center Room": 0x15F,
     "Nation of Fools: Upside Down Building": 0x161,
     "Nation of Fools: Secret Room": 0x166,
+    "Burnt Paradise: Upper Right Big Room": 0x16B,
     "Sandy Grave: Pyramid East 5F": 0x173,
     "Great Stairway: Connector Pipe Left": 0x180,
     "Great Stairway: Connector Pipe Right": 0x181,
@@ -205,18 +223,7 @@ location_ids = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     #"Master's Keep: Whip Trial": ?????
