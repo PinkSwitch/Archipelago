@@ -16,6 +16,7 @@ location_ids = {
     "Entrance: Above Hub": 0x0E,
     "Entrance: Double Room Upper": 0x0F,
     "Nation of Fools: Legion Arena": 0x10,
+    "Forest of Doom: Post-Boss Room": 0x11,
     "The Throne Room: Above Throne Left": 0x13,
     "Sandy Grave: Boulder Room Tunnel": 0x14,
     "City of Haze: Before Cart Room": 0x16,
@@ -30,6 +31,7 @@ location_ids = {
     "Tower of Death: Second Gears Room Left": 0x22,
     "Great Stairway: Lower Grand Staircase Corner Nook": 0x23,
     "Master's Keep: Entrance": 0x24,
+    "Forest of Doom: Left Atrium Big Room": 0x25,
     "Forgotten City: Big Shaft Room Left": 0x26,
     "Nation of Fools: Left Upper Corner Room": 0x27,
     "13th Street: Triple Moth Room": 0x29,
@@ -63,6 +65,7 @@ location_ids = {
     "Tower of Death: Rampart Room": 0x4A,
     "Entrance: Beyond Great Armor Hallway": 0x4B,
     "Tower of Death: Elevator Room Lower": 0x4C,
+    "Forest of Doom: Right Atrium East Square Room Right": 0x4D,
     "Forgotten City: Outside Left": 0x4E,
     "Sandy Grave: Upper Big Underground Top Left": 0x4F,
     "Burnt Paradise: Left Upper Big Corner": 0x51,
@@ -83,11 +86,13 @@ location_ids = {
     "Sandy Grave: Lower Big Underground Room Top": 0x67,
     "Nation of Fools: Upper Upside Down": 0x68,
     "Forgotten City: Lower Boulder Room Tunnel Alcove": 0x69,
+    "Forest of Doom: Secret Cave Room": 0x6C,
     "City of Haze: Center Room Lower": 0x6E,
     "Sandy Grave: On Statue": 0x6F,
     "Tower of Death: Third Gears Room": 0x70,
     "Entrance: Above Metal Block Room": 0x71,
     "Burnt Paradise: Bottom Corner": 0x73,
+    "Forest of Doom: Left Atrium Top": 0x75,
     "Great Stairway: Before Keremet Room": 0x76,
     "Forgotten City: Lower Boulder Room Upper Alcove": 0x77,
     "Entrance: First Passage Upper Item": 0x78,
@@ -115,11 +120,13 @@ location_ids = {
     "Nation of Fools: Bottom Left Medium Square On Wall": 0xA8,
     "Buried Chamber: Final Shaft Item": 0xAA,
     "Great Stairway: Central Upper": 0xAB,
+    "Forest of Doom: Right Atrium East Top Room": 0xAC,
     "Sandy Grave: Boulder Room Corner Alcove": 0xAE,
     "Forgotten City: Post-Boss Item": 0xAF,
     "City of Haze: Cart Secret Left": 0xB0,
     "City of Haze: Winding Rooms": 0xB3,
     "Great Stairway: Lower Grand Staircase Lower Alcove": 0xB4,
+    "Forest of Doom: Right Atrium East Square Room Left": 0xB5,
     "Forgotten City: Bottom Chamber": 0xB9,
     "City of Haze: Meat Room": 0xBB,
     "Great Stairway: Big Underground Room Hidden Item": 0xBF,
@@ -151,6 +158,7 @@ location_ids = {
     "Nation of Fools: Top-Right Room Axe Item": 0xE4,
     "13th Street: Underground Secret Room": 0xE6,
     "Great Stairway: Big Underground Room Upper": 0xE7,
+    "Forest of Doom: Right Atrium West Top Room": 0xE8,
     "Burnt Paradise: Upper Left Big Room Left Building": 0xE9,
     "13th Street: Underground Demon Room": 0xEA,
     "Sandy Grave: Mega Ghost Room Lower": 0xEB,
@@ -191,6 +199,7 @@ location_ids = {
     "Tower of Death: Lower Passage Hidden Item": 0x131,
     "Forgotten City: Armored Fleaman Pit": 0x137,
     "Nation of Fools: Top-Left Room Right Building": 0x13F,
+    "Forest of Doom: Left Atrium Breakable Wall": 0x140,
     "Sandy Grave: Giant Shaft Low Item": 0x144,
     "The Throne Room: Great Stairs Hidden": 0x145,
     "Nation of Fools: Top-Right Room Breakable Wall": 0x146,
@@ -211,14 +220,24 @@ location_ids = {
     "Nation of Fools: Left Center Room": 0x15F,
     "Nation of Fools: Upside Down Building": 0x161,
     "Nation of Fools: Secret Room": 0x166,
+    "Forest of Doom: Left Atrium Middle Room": 0x167,
     "Burnt Paradise: Upper Right Big Room": 0x16B,
+    "Forest of Doom: Near Cave Save Breakable Wall": 0x16C,
     "Sandy Grave: Pyramid East 5F": 0x173,
+    "Forest of Doom: Left Atrium Upper Room": 0x177,
     "Great Stairway: Connector Pipe Left": 0x180,
     "Great Stairway: Connector Pipe Right": 0x181,
     "The Throne Room: Great Stairs Left": 0x182,
     "13th Street: Right Dance Hall Top Left": 0x183,
     "Forgotten City: Pyramid East 1F": 0x185,
     "Forgotten City: Lower Underground Square Lower Item": 0x186,
+
+
+
+
+
+
+
 
 
 
