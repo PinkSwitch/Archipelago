@@ -246,33 +246,45 @@ location_ids = {
     "Dark Academy: West Building Top Floor Left": 0x184,
     "Forgotten City: Pyramid East 1F": 0x185,
     "Forgotten City: Lower Underground Square Lower Item": 0x186,
+    "Tower of Death: Stella Item": 0x187,
+    "Master's Keep: Whip Trial": 0x188,
 
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    #"Master's Keep: Whip Trial": ?????
-    #"Tower of Death: Stella Item": ????,
-
-    
-    
+    "Quest: Preparations": 0x0200,
+    "Quest: Supersonic Punch": 0x0201,
+    "Quest: Ghosts of the Desert": 0x0202,
+    "Quest: Defender of the Stairs": 0x0203,
+    "Quest: The Spinning Art": 0x0204,
+    "Quest: Art of the Zephyr": 0x0205,
+    "Quest: Find the King of Birds": 0x0206,
+    "Quest: Overcome the Curse": 0x0207,
+    "Quest: The Statue's Tear": 0x0208,
+    "Quest: The Martial Art": 0x0209,
+    "Quest: Holy Appearance": 0x020A,
+    "Quest: Number of Fortune": 0x020B,
+    "Quest: Mental Training 1": 0x020C,
+    "Quest: Mental Training 2": 0x020D,
+    "Quest: The Spear of Legend": 0x020E,
+    "Quest: Mental Training 3": 0x020F,
+    "Quest: Defeat the Ghoul King": 0x0211,
+    "Quest: Abandon Greed": 0x0212,
+    "Quest: A Rank Hunter": 0x0213,
+    "Quest: Mental Training 4": 0x0214,
+    "Quest: S Rank Hunter": 0x0215,
+    "Quest: The Gambler": 0x0216,
+    "Quest: Hands of the Clock": 0x0217,
+    "Quest: Poison vs. Poison": 0x0218,
+    "Quest: Build Your Strength 1": 0x0219,
+    "Quest: Build Your Strength 2": 0x021A,
+    "Quest: The Lonely Stage": 0x021B,
+    "Quest: Build Your Strength 3": 0x021C,
+    "Quest: Pray Before the Cross": 0x021D,
+    "Quest: Build Your Strength 4": 0x021E,
+    "Quest: Lost Page": 0x021F,
+    "Quest: The Hundred Tasks": 0x0220,
+    "Quest: Master the Holy Power": 0x0221,
+    "Quest: Almighty": 0x0222,
+    "Quets: The Great Sage": 0x0223,
+    "Quest: Kill Gergoth": 0x0224
     }
 
 game_events = {
