@@ -17,6 +17,7 @@ location_ids = {
     "Entrance: Double Room Upper": 0x0F,
     "Nation of Fools: Legion Arena": 0x10,
     "Forest of Doom: Post-Boss Room": 0x11,
+    "Dark Academy: Right Building Center Room": 0x12,
     "The Throne Room: Above Throne Left": 0x13,
     "Sandy Grave: Boulder Room Tunnel": 0x14,
     "City of Haze: Before Cart Room": 0x16,
@@ -34,6 +35,7 @@ location_ids = {
     "Forest of Doom: Left Atrium Big Room": 0x25,
     "Forgotten City: Big Shaft Room Left": 0x26,
     "Nation of Fools: Left Upper Corner Room": 0x27,
+    "Dark Academy: Main Building Ghoul Room": 0x28,
     "13th Street: Triple Moth Room": 0x29,
     "Tower of Death: Secret Room": 0x2A,
     "Nation of Fools: Right Horizontal Room": 0x2B,
@@ -50,6 +52,7 @@ location_ids = {
     "Nation of Fools: Right Bottom Corner Room": 0x37,
     "Master's Keep: Hidden Room": 0x38,
     "13th Street: Three Amalaric Snipers": 0x39,
+    "Dark Academy: Main Building Three Toads": 0x3A,
     "Nation of Fools: Top Corner Room": 0x3B,
     "Burnt Paradise: Left Upper Isolated Room": 0x3C,
     "Burnt Paradise: Right Upper Isolated Room": 0x3D,
@@ -86,11 +89,14 @@ location_ids = {
     "Sandy Grave: Lower Big Underground Room Top": 0x67,
     "Nation of Fools: Upper Upside Down": 0x68,
     "Forgotten City: Lower Boulder Room Tunnel Alcove": 0x69,
+    "Dark Academy: Main Building Secret Ceiling": 0x6B,
     "Forest of Doom: Secret Cave Room": 0x6C,
+    "Nest of Evil: Doppelganger Reward": 0x6D,
     "City of Haze: Center Room Lower": 0x6E,
     "Sandy Grave: On Statue": 0x6F,
     "Tower of Death: Third Gears Room": 0x70,
     "Entrance: Above Metal Block Room": 0x71,
+    "Dark Academy: Main Building Entrance": 0x72,
     "Burnt Paradise: Bottom Corner": 0x73,
     "Forest of Doom: Left Atrium Top": 0x75,
     "Great Stairway: Before Keremet Room": 0x76,
@@ -121,6 +127,7 @@ location_ids = {
     "Buried Chamber: Final Shaft Item": 0xAA,
     "Great Stairway: Central Upper": 0xAB,
     "Forest of Doom: Right Atrium East Top Room": 0xAC,
+    "Dark Academy: Right Building Top Floor": 0xAD,
     "Sandy Grave: Boulder Room Corner Alcove": 0xAE,
     "Forgotten City: Post-Boss Item": 0xAF,
     "City of Haze: Cart Secret Left": 0xB0,
@@ -156,6 +163,7 @@ location_ids = {
     "City of Haze: Dance Halls Vertical Hallway": 0xE2,
     "Tower of Death: Above Motorcycles": 0xE3,
     "Nation of Fools: Top-Right Room Axe Item": 0xE4,
+    "Dark Academy: Main Building Secret Malphas Room": 0xE5,
     "13th Street: Underground Secret Room": 0xE6,
     "Great Stairway: Big Underground Room Upper": 0xE7,
     "Forest of Doom: Right Atrium West Top Room": 0xE8,
@@ -197,6 +205,7 @@ location_ids = {
     "Entrance: Behemoth Chase Room": 0x12C,
     "Entrance: First Passage Hidden Wall": 0x12D,
     "Tower of Death: Lower Passage Hidden Item": 0x131,
+    "Dark Academy: West Building Breakable Wall": 0x134,
     "Forgotten City: Armored Fleaman Pit": 0x137,
     "Nation of Fools: Top-Left Room Right Building": 0x13F,
     "Forest of Doom: Left Atrium Breakable Wall": 0x140,
@@ -218,19 +227,33 @@ location_ids = {
     "13th Street: Bakery Right": 0x156,
     "Burnt Paradise: Bottom Right Corner Room": 0x157,
     "Nation of Fools: Left Center Room": 0x15F,
+    "Dark Academy: Main Building Square Room Breakable Wall": 0x160,
     "Nation of Fools: Upside Down Building": 0x161,
+    "Dark Academy: Main Building Minotaur Room": 0x163,
+    "Dark Academy: West Building Top Floor Right": 0x164,
     "Nation of Fools: Secret Room": 0x166,
     "Forest of Doom: Left Atrium Middle Room": 0x167,
     "Burnt Paradise: Upper Right Big Room": 0x16B,
     "Forest of Doom: Near Cave Save Breakable Wall": 0x16C,
     "Sandy Grave: Pyramid East 5F": 0x173,
+    "Nest of Evil: First Item": 0x175,
+    "Nest of Evil: Second Item": 0x176,
     "Forest of Doom: Left Atrium Upper Room": 0x177,
     "Great Stairway: Connector Pipe Left": 0x180,
     "Great Stairway: Connector Pipe Right": 0x181,
     "The Throne Room: Great Stairs Left": 0x182,
     "13th Street: Right Dance Hall Top Left": 0x183,
+    "Dark Academy: West Building Top Floor Left": 0x184,
     "Forgotten City: Pyramid East 1F": 0x185,
     "Forgotten City: Lower Underground Square Lower Item": 0x186,
+
+
+
+
+
+    
+
+
 
 
 
