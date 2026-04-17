@@ -22,6 +22,7 @@ class DoSClient(BizHawkClient):
     has_received_death: bool = False
     state_is_dying: int = 0
     has_reset_from_death: bool = True
+    seen_events: list = []
 
     def __init__(self) -> None:
         super().__init__()
@@ -97,12 +98,18 @@ class DoSClient(BizHawkClient):
             return
 
 
-        read_state = await bizhawk.read(ctx.bizhawk_ctx, [(0x0F7190, 0x10, "Main RAM"), # Check table
-                                                          (0x0F7257, 0x01, "Main RAM"), # Game Mode
-                                                          (0x11504C, 0x01, "Main RAM"), # Current Map
-                                                          (0x0F703C, 0x04, "Main RAM"), # Gameplay timer. Will be 0 if not in game
-                                                          (0x308930, 0x20, "Main RAM"), # AP data
-                                                          (0x0F6DFC, 0x01, "Main RAM")]) # Game state, we only care about the Dead flag
+        read_state = await bizhawk.read(
+            ctx.bizhawk_ctx, [
+                (0x0F7190, 0x10, "Main RAM"), # Check table
+                (0x0F7257, 0x01, "Main RAM"), # Game Mode
+                (0x11504C, 0x01, "Main RAM"), # Current Map
+                (0x0F703C, 0x04, "Main RAM"), # Gameplay timer. Will be 0 if not in game
+                (0x308930, 0x20, "Main RAM"), # AP data
+                (0x0F6DFC, 0x01, "Main RAM"), # Game state, we only care about the Dead flag
+                (0x0F7180, 0x01, "Main RAM"), # Moat Drain Switch flag
+                (0x0F7188, 0x04, "Main RAM"), # Event Bitflags, used for Dario, Dmitrii and the Garden cutscene
+            ]
+        )
 
 
         location_flag_table = bytearray(read_state[0])
@@ -111,6 +118,8 @@ class DoSClient(BizHawkClient):
         game_timer = int.from_bytes(read_state[3], "little")
         ap_data = bytearray(read_state[4])
         death_state = int.from_bytes(read_state[5])
+        moat_switch = int.from_bytes(read_state[6])
+        event_flags = int.from_bytes(read_state[7], "little")
 
         soul_flag_table = list(ap_data[:0x10])
         button_items = ap_data[0x13]
@@ -145,7 +154,7 @@ class DoSClient(BizHawkClient):
 
                 if location & bit:
                     new_checks.append(loc_id)
-                
+
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
             location = ctx.location_names.lookup_in_slot(new_check_id)
@@ -157,6 +166,27 @@ class DoSClient(BizHawkClient):
             item_data = struct.pack(">H", item.item)
             await bizhawk.write(ctx.bizhawk_ctx, [(0x308940, item_data, "Main RAM")])
             await bizhawk.write(ctx.bizhawk_ctx, [(0x30894E, bytes([total_items_received]), "Main RAM")])
+
+        events = {
+            "MoatDrained": (moat_switch >> 2) & 1,
+            "DmitriiDefeated": (event_flags >> 7) & 1,
+            "DarioDefeated": (event_flags >> 8) & 1,
+            "DarknessRejected": (event_flags >> 18) & 1,
+        }
+        for event, seen in events.items():
+            if bool(seen) != (event in self.seen_events):
+                await ctx.send_msgs(
+                    [
+                        {
+                            "cmd": "Set",
+                            "key": f"{event}",
+                            "default": 0,
+                            "want_reply": True,
+                            "operations": [{"operation": "replace", "value": seen}],
+                        }
+                    ]
+                )
+        self.seen_events = [e for e in events if events[e]]
 
         if not ctx.finished_game and cur_map == 0x0D:  # Map 0x0D is used for the Epilogue. If we're here, trigger goal
             await ctx.send_msgs([{
