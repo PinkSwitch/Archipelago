@@ -83,6 +83,10 @@ class PoRExcludeLocations(ExcludeLocations):
     default = frozenset({"The Throne Room: Above Throne Left", "The Throne Room: Above Throne Right", "The Throne Room: Great Stairs Left",
                          "The Throne Room: Great Stairs Center", "The Throne Room: Great Stairs Under Stairs", "The Throne Room: Great Stairs Hidden"})
 
+class StartWithChangeCube(Toggle):  # TODO!!! Implement
+    """If enabled, you'll start with the Change Cube by default"""
+    display_name = "Start with Change Cube"
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -96,6 +100,7 @@ class PoROptions(PerGameCommonOptions):
     reveal_hidden_walls: RevealBreakableWalls
     experience_percentage: ExperiencePercent
     exclude_locations: PoRExcludeLocations
+    start_with_change_cube: StartWithChangeCube
     
 por_option_groups = [
     OptionGroup("Goal Options", [
@@ -113,7 +118,8 @@ por_option_groups = [
     ]),
 
     OptionGroup("Item Options", [
-        ShuffleWhip
+        ShuffleWhip,
+        StartWithChangeCube
 
     ]),
 

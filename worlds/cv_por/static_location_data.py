@@ -283,7 +283,7 @@ location_ids = {
     "Quest: The Hundred Tasks": 0x0220,
     "Quest: Master the Holy Power": 0x0221,
     "Quest: Almighty": 0x0222,
-    "Quets: The Great Sage": 0x0223,
+    "Quest: The Great Sage": 0x0223,
     "Quest: Kill Gergoth": 0x0224
     }
 

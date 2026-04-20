@@ -7,7 +7,6 @@ from worlds.AutoWorld import World, WebWorld
 
 from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
-from .generator_main import generate_game
 from .static_location_data import location_ids
 
 class PoRWeb(WebWorld):
@@ -67,5 +66,11 @@ class PoRWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.extra_item_count = 0
-        
-        generate_game(self)
+
+    def generate_early(self):
+        from .generator_main import generate_early
+        generate_early(self)
+
+    def create_regions(self):
+        from .generator_main import create_regions
+        create_regions(self)
