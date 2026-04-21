@@ -107,7 +107,7 @@ class DoSClient(BizHawkClient):
                 (0x308930, 0x20, "Main RAM"), # AP data
                 (0x0F6DFC, 0x01, "Main RAM"), # Game state, we only care about the Dead flag
                 (0x0F7180, 0x01, "Main RAM"), # Moat Drain Switch flag
-                (0x0F7188, 0x04, "Main RAM"), # Event Bitflags, used for Dario, Dmitrii and the Garden cutscene
+                (0x0F7038, 0x02, "Main RAM"), # Boss Bitflags, used for Dario, Dmitrii and the Garden cutscene
             ]
         )
 
@@ -169,9 +169,9 @@ class DoSClient(BizHawkClient):
 
         events = {
             "MoatDrained": (moat_switch >> 2) & 1,
-            "DmitriiDefeated": (event_flags >> 7) & 1,
-            "DarioDefeated": (event_flags >> 8) & 1,
-            "DarknessRejected": (event_flags >> 18) & 1,
+            "DmitriiDefeated": (event_flags >> 3) & 1,
+            "DarioDefeated": (event_flags >> 5) & 1,
+            "DarknessRejected": (event_flags >> 14) & 1,
         }
         for event, seen in events.items():
             if bool(seen) != (event in self.seen_events):
