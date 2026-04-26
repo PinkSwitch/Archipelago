@@ -12,6 +12,69 @@ class PoRLocation(Location):
     def __init__(self, player: int, name: str = " ", address: int = None, parent=None):
         super().__init__(player, name, address, parent)
 
+region_list = [
+    "Entrance - Wind's Room",  # Used for quests/shops
+    "Entrance - Hub",  # The entire starting area up through the hub
+    "Entrance - Behemoth Area",  # The area past the first jump check, Behemoth's boss room
+    "Entrance - Underground Passage",  # The tunnel leading to the Nest of Evil portrait
+    "Entrance - Hub Painting Room",  # The City of Haze portrait
+    "Entrance - Upper Area",  # The upper route from the statue room
+
+    "Buried Chamber",  # The ENTIRE buried Chamber, since it all falls under the same logic
+
+    "Great Stairway - Lower",  # Ground level up to Keremet and the check afterwards
+    "Great Stairway - Staircases",  # The big stairs rooms and surrounding areas
+    "Great Stairway - Entrance Connector",  # The part that connects to the entrance and the wall switch. There's an awkward jump to the upper level that can't be made with acrobat.
+    "Great Stairway - Upper",  # The towers to the left of the staircase rooms
+    "Great Stairway - Central Painting Area",  # The painting but also the secret room with the nun robes
+    "Great Stairway - Underground Painting",  # The sandy graves portrait room
+
+    "Tower of Death - Bottom",
+    "Tower of Death - Motorcycles",
+    "Tower of Death - Belt Area",
+    "Tower of Death - Painting Room",
+    "Tower of Death - Elevator Room",
+    "Tower of Death - First Gear Room",
+    "Tower of Death - Ascent",
+    "Tower of Death - Second Gear Room",
+    "Tower of Death - Top of the Tower",
+    
+    "Master's Keep - Bridge",
+    "Master's Keep - Lower",
+    "Master's Keep - Main",
+    "Master's Keep - Upper Quarters",
+    "Master's Keep - Portrait Room",
+
+    "City of Haze",
+    "City of Haze - East",
+
+    "13th Street",
+    "13th Street - Main",
+
+    "Sandy Grave",
+    "Sandy Grave - Pyramid Top",
+
+    "Forgotten City",
+    "Forgotten City - Inner",
+
+    "Nation of Fools",
+    "Nation of Fools - Right Lower",
+    "Nation of Fools - Main",
+
+    "Forest of Doom",
+    "Forest of Doom - Main",
+    "Forest of Doom - Cave",
+
+    "Dark Academy",
+    "Dark Academy - Right Building",
+    "Dark Academy - Main",
+
+    "Burnt Paradise",
+    "Burnt Paradise - Bottom",
+    "Nest of Evil"
+
+]
+
 
 def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
@@ -23,69 +86,6 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_spell & Has("Toad Morph"))
 
     locations_per_region = get_locations_per_region(locations)
-
-    region_list = [
-        "Entrance - Wind's Room",  # Used for quests/shops
-        "Entrance - Hub",  # The entire starting area up through the hub
-        "Entrance - Behemoth Area",  # The area past the first jump check, Behemoth's boss room
-        "Entrance - Underground Passage",  # The tunnel leading to the Nest of Evil portrait
-        "Entrance - Hub Painting Room",  # The City of Haze portrait
-        "Entrance - Upper Area",  # The upper route from the statue room
-
-        "Buried Chamber",  # The ENTIRE buried Chamber, since it all falls under the same logic
-
-        "Great Stairway - Lower",  # Ground level up to Keremet and the check afterwards
-        "Great Stairway - Staircases",  # The big stairs rooms and surrounding areas
-        "Great Stairway - Entrance Connector",  # The part that connects to the entrance and the wall switch. There's an awkward jump to the upper level that can't be made with acrobat.
-        "Great Stairway - Upper",  # The towers to the left of the staircase rooms
-        "Great Stairway - Central Painting Area",  # The painting but also the secret room with the nun robes
-        "Great Stairway - Underground Painting",  # The sandy graves portrait room
-
-        "Tower of Death - Bottom",
-        "Tower of Death - Motorcycles",
-        "Tower of Death - Belt Area",
-        "Tower of Death - Painting Room",
-        "Tower of Death - Elevator Room",
-        "Tower of Death - First Gear Room",
-        "Tower of Death - Ascent",
-        "Tower of Death - Second Gear Room",
-        "Tower of Death - Top of the Tower",
-        
-        "Master's Keep - Bridge",
-        "Master's Keep - Lower",
-        "Master's Keep - Main",
-        "Master's Keep - Upper Quarters",
-        "Master's Keep - Portrait Room",
-
-        "City of Haze",
-        "City of Haze - East",
-
-        "13th Street",
-        "13th Street - Main",
-
-        "Sandy Grave",
-        "Sandy Grave - Pyramid Top",
-
-        "Forgotten City",
-        "Forgotten City - Inner",
-
-        "Nation of Fools",
-        "Nation of Fools - Right Lower",
-        "Nation of Fools - Main",
-
-        "Forest of Doom",
-        "Forest of Doom - Main",
-        "Forest of Doom - Cave",
-
-        "Dark Academy",
-        "Dark Academy - Right Building",
-        "Dark Academy - Main",
-
-        "Burnt Paradise",
-        "Burnt Paradise - Bottom",
-        "Nest of Evil"
-
-    ]
 
     if world.options.goal:
         regions.append("Throne Room")
@@ -134,7 +134,7 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
 
     world.get_region("Great Stairway - Central Painting Area").add_exits([world.portrait_connections["Nation of Fools"], "Great Stairway - Upper"])
 
-    world.get_region("Tower of Death - Bottom").add_exits(["Tower of Death - Ascent", "Tower of Death - First Gear Room", "Tower of Death - Motorcycles"],
+    world.get_region("Tower of Death - Bottom").add_exits(["Tower of Death - First Gear Room", "Tower of Death - Motorcycles"],
                                                           {"Tower of Death - Motorcycles": Has("Cog"),
                                                            "Tower of Death - First Gear Room": small_uppies})
 
@@ -222,9 +222,14 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("Throne Room"), "Throne Barrier", Has("Brauner Defeated"))
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
+    from .static_location_data import location_ids
     location = PoRLocation(player, location_data.name, region)
     location.region = location_data.region
-    location.code = 1
+
+    if location.is_event:
+        location.code = None
+    else:
+        location.code = location_ids[location_data.name]
 
     return location
 
@@ -243,6 +248,8 @@ def get_locations_per_region(locations: List[LocationData]) -> Dict[str, List[Lo
     per_region: Dict[str, List[LocationData]] = {}
 
     for location in locations:
+        if location.region not in region_list:
+            raise ValueError(f"Error: Invalid region {location.region} provided for location {location.name}")
         per_region.setdefault(location.region, []).append(location)
 
     return per_region

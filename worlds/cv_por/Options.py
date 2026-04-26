@@ -87,6 +87,15 @@ class StartWithChangeCube(Toggle):  # TODO!!! Implement
     """If enabled, you'll start with the Change Cube by default"""
     display_name = "Start with Change Cube"
 
+class AddExtraItems(Toggle):  # TODO!!! Implement
+    """If enabled, some items and spells that are otherwise only obtainable
+       in other modes will be added to the item pool, such as Puppet Master."""
+    display_name = "Add Extra Items"
+
+class ExcludeOwlMorph(Toggle):  # TODO!!! Implement
+    """If enabled, Owl Morph will not be added to the item pool."""
+    display_name = "Exclude Owl Morph"
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -101,6 +110,8 @@ class PoROptions(PerGameCommonOptions):
     experience_percentage: ExperiencePercent
     exclude_locations: PoRExcludeLocations
     start_with_change_cube: StartWithChangeCube
+    add_extra_items: AddExtraItems
+    exclude_owl_morph: ExcludeOwlMorph
     
 por_option_groups = [
     OptionGroup("Goal Options", [
@@ -119,7 +130,9 @@ por_option_groups = [
 
     OptionGroup("Item Options", [
         ShuffleWhip,
-        StartWithChangeCube
+        StartWithChangeCube,
+        AddExtraItems,
+        ExcludeOwlMorph
 
     ]),
 
