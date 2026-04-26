@@ -6,6 +6,12 @@ from .Options import StartWithChangeCube
 if TYPE_CHECKING:
     from . import PoRWorld
 
+class PoRLocation(Location):
+    game: str = "Castlevania: Portrait of Ruin"
+
+    def __init__(self, player: int, name: str = " ", address: int = None, parent=None):
+        super().__init__(player, name, address, parent)
+
 
 def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
@@ -34,7 +40,6 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
         "Great Stairway - Upper",  # The towers to the left of the staircase rooms
         "Great Stairway - Central Painting Area",  # The painting but also the secret room with the nun robes
         "Great Stairway - Underground Painting",  # The sandy graves portrait room
-        "Great Stairway - Central Staircases",
 
         "Tower of Death - Bottom",
         "Tower of Death - Motorcycles",
@@ -111,12 +116,11 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
 
     world.get_region("Buried Chamber").add_exits(["Entrance - Hub", "Great Stairway - Lower"])
 
-    world.get_region("Great Stairway - Lower").add_exits(["Entrance - Hub", "Great Stairway - Central Staircases", "Buried Chamber"],
-                                                          {"Great Stairway - Central Staircases": Has("Stone of Flight") | big_uppies})
+    world.get_region("Great Stairway - Lower").add_exits(["Entrance - Hub", "Great Stairway - Staircases", "Buried Chamber"],
+                                                          {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
 
     world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper"],
-                                                          {"Great Stairway - Central Staircases": Has("Stone of Flight") | big_uppies,
-                                                           "Tower of Death - Bottom": HasAll("Strength Glove", "Push Cube", "Call Cube"),
+                                                          {"Tower of Death - Bottom": HasAll("Strength Glove", "Push Cube", "Call Cube"),
                                                            "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
 
     world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
@@ -140,7 +144,9 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     world.get_region("Tower of Death - Belt Area").add_exits(["Tower of Death - Painting Room", "Great Stairway - Upper", "Master's Keep - Bridge"],
                                                           {"Great Stairway - Upper": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
 
-    world.get_region("Tower of Death - Painting Room").add_exits(["Tower of Death - Belt Area", world.portrait_connections["Forest of Doom"]])
+    world.get_region("Tower of Death - Painting Room").add_exits(["Tower of Death - Belt Area", world.portrait_connections["Forest of Doom"]], {
+                                                                  world.portrait_connections["Forest of Doom"]: Has("Stella's Locket")
+    })
 
     world.get_region("Tower of Death - Elevator Room").add_exits(["Master's Keep - Bridge", "Tower of Death - Top of the Tower", "Tower of Death - First Gear Room", "Master's Keep - Lower"],
                                                                   {"Master's Keep - Lower": small_uppies & Has("Tower Elevator Active")})
@@ -216,8 +222,9 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("Throne Room"), "Throne Barrier", Has("Brauner Defeated"))
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:
-    location = PoRLocation(player, location_data.name, location_data.code, region)
+    location = PoRLocation(player, location_data.name, region)
     location.region = location_data.region
+    location.code = 1
 
     return location
 
