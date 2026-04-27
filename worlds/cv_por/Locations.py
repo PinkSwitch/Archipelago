@@ -13,6 +13,8 @@ class LocationData(NamedTuple):
 def get_locations(world: "PoRWorld") -> List[LocationData]:
 
     location_table: List[LocationData] = [
+        LocationData("Entrance - Wind's Room", "Quest: Preparations"),
+
         LocationData("Entrance - Hub", "Entrance: Drawbridge Pit Item"),
         LocationData("Entrance - Hub", "Entrance: Drawbridge Switch Item"),
         LocationData("Entrance - Hub", "Entrance: Drawbridge Upper Item"),
@@ -87,11 +89,13 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Tower of Death - Second Gear Room", "Tower of Death: Top Gears Room"),
         LocationData("Tower of Death - Second Gear Room", "Tower of Death: Third Gears Room"),
         LocationData("Tower of Death - Top of the Tower", "Tower of Death: Top of the Tower"),
+        LocationData("Tower of Death - Top of the Tower", "Tower of Death: Elevator Switch", True),
 
         LocationData("Master's Keep - Lower", "Master's Keep: Entrance"),
         LocationData("Master's Keep - Main", "Master's Keep: Hidden Room"),
         LocationData("Master's Keep - Main", "Master's Keep: Right Square Room"),
         LocationData("Master's Keep - Portrait Room", "Master's Keep: Whip Trial"),
+        LocationData("Master's Keep - Portrait Room", "Lost Gallery: Studio Portrait Fight", True),
 
         LocationData("City of Haze", "City of Haze: Meat Room"),
         LocationData("City of Haze", "City of Haze: First Passage"),
@@ -128,7 +132,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("City of Haze - East", "City of Haze: Underground Secret Room"),
         LocationData("City of Haze - East", "City of Haze: Underground Square Left"),
         LocationData("City of Haze - East", "City of Haze: Central Hallway Lower"),
-        LocationData("City of Haze - East", "City of Haze: Boss Room"),
+        LocationData("City of Haze - East", "City of Haze: Boss Room", True),
 
         LocationData("13th Street - Main", "13th Street: Triple Moth Room"),
         LocationData("13th Street - Main", "13th Street: Behind Final Guard"),
@@ -148,7 +152,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("13th Street - Main", "13th Street: Bakery Right"),
         LocationData("13th Street - Main", "13th Street: Right Dance Hall Top Left"),
         LocationData("13th Street - Main", "13th Street: Train Room Secret Left"),
-        LocationData("13th Street - Main", "13th Street: Boss Room"),
+        LocationData("13th Street - Main", "13th Street: Boss Room", True),
 
         LocationData("Sandy Grave", "Sandy Grave: Sandworm Stomach"),
         LocationData("Sandy Grave", "Sandy Grave: On Statue"),
@@ -161,7 +165,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Sandy Grave", "Sandy Grave: Lonely Mimic Alcove"),
         LocationData("Sandy Grave", "Sandy Grave: Boulder Room Corner Alcove"),
         LocationData("Sandy Grave", "Sandy Grave: Boulder Room Tunnel"),
-        LocationData("Sandy Grave", "Sandy Grave: Upper Big Underground Top Righ"),
+        LocationData("Sandy Grave", "Sandy Grave: Upper Big Underground Top Right"),
         LocationData("Sandy Grave", "Sandy Grave: Upper Big Underground Top Left"),
         LocationData("Sandy Grave", "Sandy Grave: Eastmost Item"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Pyramid East 1F"),
@@ -175,6 +179,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Mega Ghost Room Upper"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Mega Ghost Room Lower"),
         LocationData("Sandy Grave - Pyramid Top", "Sandy Grave: Pyramid 5F Nook"),
+        LocationData("Sandy Grave - Pyramid Top", "Sandy Grave: Boss Room", True),
 
         LocationData("Forgotten City", "Forgotten City: Outside Left"),
         LocationData("Forgotten City", "Forgotten City: Pyramid East 5F"),
@@ -193,6 +198,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Forgotten City - Inner", "Forgotten City: Big Shaft Room Left"),
         LocationData("Forgotten City - Inner", "Forgotten City: Big Shaft Room Right"),
         LocationData("Forgotten City - Inner", "Forgotten City: Post-Boss Item"),
+        LocationData("Forgotten City - Inner", "Forgotten City: Boss Room", True),
 
         LocationData("Nation of Fools - Right Lower", "Nation of Fools: Bottom Corner Room"),
         LocationData("Nation of Fools - Right Lower", "Nation of Fools: Bottom-Right Room Left Building"),
@@ -219,6 +225,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Nation of Fools - Main", "Nation of Fools: Left Center Room"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Upside Down Building"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Secret Room"),
+        LocationData("Nation of Fools - Main", "Nation of Fools: Boss Room", True),
 
         LocationData("Burnt Paradise - Entrance", "Burnt Paradise: Left Lower Isolated Room"),
         LocationData("Burnt Paradise - Entrance", "Burnt Paradise: Right Lower Isolated Room"),
@@ -238,6 +245,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Burnt Paradise - Bottom", "Burnt Paradise: Bottom Right Breakable Wall"),
         LocationData("Burnt Paradise - Bottom", "Burnt Paradise: Bottom Right Big Room"),
         LocationData("Burnt Paradise - Bottom", "Burnt Paradise: Bottom Right Corner Room"),
+        LocationData("Burnt Paradise - Bottom", "Burnt Paradise: Boss Room", True),
 
         LocationData("Forest of Doom - Main", "Forest of Doom: Left Atrium Big Room"),
         LocationData("Forest of Doom - Main", "Forest of Doom: Right Atrium East Square Room Right"),
@@ -251,6 +259,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Forest of Doom - Cave", "Forest of Doom: Secret Cave Room"),
         LocationData("Forest of Doom - Cave", "Forest of Doom: Near Cave Save Breakable Wall"),
         LocationData("Forest of Doom - Cave", "Forest of Doom: Post-Boss Room"),
+        LocationData("Forest of Doom - Cave", "Forest of Doom: Boss Room", True),
 
         LocationData("Dark Academy - Right Building", "Dark Academy: Right Building Center Room"),
         LocationData("Dark Academy - Right Building", "Dark Academy: Right Building Top Floor"),
@@ -263,8 +272,9 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Dark Academy - Main", "Dark Academy: Main Building Square Room Breakable Wall"),
         LocationData("Dark Academy - Main", "Dark Academy: Main Building Minotaur Room"),
         LocationData("Dark Academy - Main", "Dark Academy: West Building Top Floor Right"),
-        LocationData("Dark Academy - Main", "Dark Academy: West Building Top Floor Left")
+        LocationData("Dark Academy - Main", "Dark Academy: West Building Top Floor Left"),
+        LocationData("Dark Academy - Main", "Dark Academy: Boss Room", True)
     ]
-    
+
     return location_table
     # LocationData("Dummy", "Dummy"),

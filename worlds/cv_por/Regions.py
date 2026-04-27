@@ -180,8 +180,8 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
                                                          {"Master's Keep - Portrait Room": can_cast_spell & Has("Sanctuary")})
 
     world.get_region("Master's Keep - Portrait Room").add_exits([world.portrait_connections["Forgotten City"], world.portrait_connections["Burnt Paradise"], world.portrait_connections["Dark Academy"], world.portrait_connections["13th Street"]],
-                                                         {world.portrait_connections["13th Street"]: CanReachLocation("Forgotten City - Boss Room"),
-                                                         world.portrait_connections["Burnt Paradise"]: CanReachLocation("13th Street - Boss Room")})
+                                                         {world.portrait_connections["13th Street"]: CanReachLocation("Forgotten City: Boss Room"),
+                                                         world.portrait_connections["Burnt Paradise"]: CanReachLocation("Dark Academy: Boss Room")})
                                                          
     world.get_region("City of Haze").add_exits(["City of Haze - East"],
                                                          {"City of Haze - East": Has("Puppet Master") | (has_change_cube & Has("Call Cube"))})
@@ -229,7 +229,7 @@ def create_location(player: int, location_data: LocationData, region: Region) ->
     location = PoRLocation(player, location_data.name, region)
     location.region = location_data.region
 
-    if location.is_event:
+    if location_data.is_event:
         location.code = None
     else:
         location.code = location_ids[location_data.name]
