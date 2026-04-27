@@ -86,7 +86,7 @@ big_uppies = Has("Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
 is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_spell & Has("Toad Morph"))
 
 
-def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
+def init_areas(world: "PoRWorld") -> None:
     regions = []
 
     if world.options.goal:
@@ -106,16 +106,10 @@ def create_locations(world):
     all_locations = get_locations(world)
 
     for location in all_locations:
-        if location.is_event:
-            code = None
-        else:
-            code = location_ids[location.name]  # Lookup the appropriate ID number
-
         if location.region not in region_list:
             raise ValueError(f"Error: Region {location.name} is invalid for location {location.name}.")
-        else:
-            region = world.get_region(location.region)
-            region.locations.append(PoRLocation(world.player, location.name, code, region))
+        region = world.get_region(location.region)
+        region.locations.append(PoRLocation(world.player, location.name, None if location.is_event else location_ids[location.name], region))
 
 
 def connect_regions(world):

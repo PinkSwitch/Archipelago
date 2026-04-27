@@ -74,3 +74,7 @@ class PoRWorld(World):
     def create_regions(self):
         from .generator_main import create_regions
         create_regions(self)
+
+    def create_items(self):
+        from .generator_main import create_items
+        create_items(self)

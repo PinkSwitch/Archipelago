@@ -1,5 +1,5 @@
 from typing import List, Optional, NamedTuple, TYPE_CHECKING
-from .static_location_data import location_ids
+from .Options import NestofEvil
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -10,8 +10,8 @@ class LocationData(NamedTuple):
     name: str
     is_event: Optional[bool] = False
 
-def get_locations(world: "PoRWorld") -> List[LocationData]:
 
+def get_locations(world: "PoRWorld") -> List[LocationData]:
     location_table: List[LocationData] = [
         LocationData("Entrance - Wind's Room", "Quest: Preparations"),
 
@@ -174,7 +174,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Giant Shaft Low Item"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Pyramid 3F Lower"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Pyramid 3F Upper"),
-        LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Pyramid East 5F"), # check if this is top
+        LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Pyramid East 5F"),  # check if this is top
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Fleaman Pit"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Mega Ghost Room Upper"),
         LocationData("Sandy Grave - Upper Pyramid", "Sandy Grave: Mega Ghost Room Lower"),
@@ -275,6 +275,23 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Dark Academy - Main", "Dark Academy: West Building Top Floor Left"),
         LocationData("Dark Academy - Main", "Dark Academy: Boss Room", True)
     ]
+
+    if world.options.goal:
+        location_table += [
+            LocationData("The Throne Room", "The Throne Room: Above Throne Left"),
+            LocationData("The Throne Room", "The Throne Room: Great Stairs Under Stairs"),
+            LocationData("The Throne Room", "The Throne Room: Great Stairs Center"),
+            LocationData("The Throne Room", "The Throne Room: Above Throne Right"),
+            LocationData("The Throne Room", "The Throne Room: Great Stairs Hidden"),
+            LocationData("The Throne Room", "The Throne Room: Great Stairs Left"),
+            LocationData("The Throne Room", "The Throne Room: Dracula", True),
+        ]
+
+    if world.options.nest_of_evil_state != NestofEvil.option_removed:
+        location_table += [
+        LocationData("Nest of Evil", "Nest of Evil: Doppelganger Reward"),
+        LocationData("Nest of Evil", "Nest of Evil: First Item"),
+        LocationData("Nest of Evil", "Nest of Evil: Second Item")]
 
     return location_table
     # LocationData("Dummy", "Dummy"),

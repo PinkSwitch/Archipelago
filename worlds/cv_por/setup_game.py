@@ -12,5 +12,5 @@ def setup_game(world):
     }
 
 def place_static_items(world):
-    print("aaaaaaaaa")
+    print("TODO. THIS.")
     #world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
