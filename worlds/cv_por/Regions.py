@@ -100,13 +100,6 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     connect_regions(world)
 
 
-def create_location(player: int, location_data: LocationData, region: Region) -> Location:
-    from .static_location_data import location_ids
-    location = PoRLocation(player, location_data.name, None if location_data.is_event else location_ids[location_data.name], region)
-    location.region = location_data.region
-
-    return location
-
 
 def create_locations(world):
     from .static_location_data import location_ids
