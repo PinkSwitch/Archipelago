@@ -6,11 +6,10 @@ from .Options import StartWithChangeCube
 if TYPE_CHECKING:
     from . import PoRWorld
 
+
 class PoRLocation(Location):
     game: str = "Castlevania: Portrait of Ruin"
 
-    def __init__(self, player: int, name: str = " ", address: int = None, parent=None):
-        super().__init__(player, name, address, parent)
 
 region_list = [
     "Entrance - Wind's Room",  # Used for quests/shops
@@ -78,28 +77,55 @@ region_list = [
 
 ]
 
+has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
+
+can_cast_spell = Has("Call Cube") | has_change_cube
+small_uppies = HasAny("Stone of Flight", "Griffon Wing") | HasAll("Call Cube", "Acrobat Cube") | (can_cast_spell & Has("Owl Morph"))
+medium_uppies = HasAny("Stone of Flight", "Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
+big_uppies = Has("Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
+is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_spell & Has("Toad Morph"))
+
 
 def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
-    has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
-
-    can_cast_spell = Has("Call Cube") | has_change_cube
-    small_uppies = HasAny("Stone of Flight", "Griffon Wing") | HasAll("Call Cube", "Acrobat Cube") | (can_cast_spell & Has("Owl Morph"))
-    medium_uppies = HasAny("Stone of Flight", "Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
-    big_uppies = Has("Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
-    is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_spell & Has("Toad Morph"))
-
-    locations_per_region = get_locations_per_region(locations)
+    regions = []
 
     if world.options.goal:
         regions.append("Throne Room")
 
-    regions = []
-
     for area in region_list:
-        regions.append(create_region(world, world.player, locations_per_region, area))
+        regions.append(Region(area, world.player, world.multiworld))
 
     world.multiworld.regions += regions
+    create_locations(world)
+    connect_regions(world)
 
+
+def create_location(player: int, location_data: LocationData, region: Region) -> Location:
+    from .static_location_data import location_ids
+    location = PoRLocation(player, location_data.name, None if location_data.is_event else location_ids[location_data.name], region)
+    location.region = location_data.region
+
+    return location
+
+
+def create_locations(world):
+    from .static_location_data import location_ids
+    all_locations = get_locations(world)
+
+    for location in all_locations:
+        if location.is_event:
+            code = None
+        else:
+            code = location_ids[location.name]  # Lookup the appropriate ID number
+
+        if location.region not in region_list:
+            raise ValueError(f"Error: Region {location.name} is invalid for location {location.name}.")
+        else:
+            region = world.get_region(location.region)
+            region.locations.append(PoRLocation(world.player, location.name, code, region))
+
+
+def connect_regions(world):
     world.get_region("Entrance - Hub").add_exits(["Entrance - Wind's Room", "Entrance - Behemoth Area", "Entrance - Hub Painting Room", "Entrance - Upper Area", "Entrance - Underground Passage"],
                                                  {"Entrance - Behemoth Area": small_uppies,
                                                  "Entrance - Hub Painting Room": is_smol,
@@ -157,7 +183,6 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     world.get_region("Tower of Death - First Gear Room").add_exits(["Tower of Death - Bottom", "Tower of Death - Ascent"],
                                                                    {"Tower of Death - Ascent": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
 
-
     world.get_region("Tower of Death - Ascent").add_exits(["Tower of Death - First Gear Room", "Tower of Death - Second Gear Room"],
                                                           {"Tower of Death - First Gear Room": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
                                                            "Tower of Death - Second Gear Room": medium_uppies})
@@ -165,7 +190,6 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
     world.get_region("Tower of Death - Second Gear Room").add_exits(["Tower of Death - Ascent", "Tower of Death - Top of the Tower"])
 
     world.get_region("Tower of Death - Top of the Tower").add_exits(["Tower of Death - Second Gear Room", "Tower of Death - Elevator Room"])
-
 
     world.get_region("Master's Keep - Bridge").add_exits(["Tower of Death - Belt Area", "Tower of Death - Elevator Room"])
 
@@ -206,53 +230,20 @@ def init_areas(world: "PoRWorld", locations: List[LocationData]) -> None:
                                                          {"Dark Academy - Right Building": small_uppies | Has("Puppet Master")})
 
     world.get_region("Dark Academy - Right Building").add_exits(["Dark Academy - Main"],
-                                                         {"Dark Academy - Main": big_uppies})
+                                                            {"Dark Academy - Main": big_uppies})
 
     world.get_region("Forgotten City").add_exits(["Forgotten City - Inner"],
-                                                         {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
+                                                            {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
 
     world.get_region("13th Street").add_exits(["13th Street - Main"],
-                                                         {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})
+                                              {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})
 
     world.get_region("Burnt Paradise").add_exits(["Burnt Paradise - Entrance"],
-                                                         {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})
+                                                            {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})
 
     world.get_region("Burnt Paradise - Entrance").add_exits(["Burnt Paradise - Bottom"],
-                                                         {"Burnt Paradise - Bottom": big_uppies})
+                                                            {"Burnt Paradise - Bottom": big_uppies})
 
     if world.options.goal:
         # Add a connection to the throne room if necessary
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("Throne Room"), "Throne Barrier", Has("Brauner Defeated"))
-
-def create_location(player: int, location_data: LocationData, region: Region) -> Location:
-    from .static_location_data import location_ids
-    location = PoRLocation(player, location_data.name, region)
-    location.region = location_data.region
-
-    if location_data.is_event:
-        location.code = None
-    else:
-        location.code = location_ids[location_data.name]
-
-    return location
-
-def create_region(world: "PoRWorld", player: int, locations_per_region: Dict[str, List[LocationData]], name: str) -> Region:
-    region = Region(name, player, world.multiworld)
-
-    if name in locations_per_region:
-        for location_data in locations_per_region[name]:
-            location = create_location(player, location_data, region)
-            region.locations.append(location)
-
-    return region
-    
-    
-def get_locations_per_region(locations: List[LocationData]) -> Dict[str, List[LocationData]]:
-    per_region: Dict[str, List[LocationData]] = {}
-
-    for location in locations:
-        if location.region not in region_list:
-            raise ValueError(f"Error: Invalid region {location.region} provided for location {location.name}")
-        per_region.setdefault(location.region, []).append(location)
-
-    return per_region

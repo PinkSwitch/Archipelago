@@ -42,7 +42,7 @@ class PoRWorld(World):
     game = "Castlevania: Portrait of Ruin"
     option_definitions = PoROptions
     data_version = 1
-    origin_region_name = "Dracula's Castle: Entrance"
+    origin_region_name = "Entrance - Hub"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
