@@ -71,7 +71,9 @@ region_list = [
     "Dark Academy - Main",
 
     "Burnt Paradise",
+    "Burnt Paradise - Entrance",
     "Burnt Paradise - Bottom",
+
     "Nest of Evil"
 
 ]
