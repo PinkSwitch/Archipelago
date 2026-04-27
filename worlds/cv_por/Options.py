@@ -87,12 +87,12 @@ class StartWithChangeCube(Toggle):  # TODO!!! Implement
     """If enabled, you'll start with the Change Cube by default"""
     display_name = "Start with Change Cube"
 
-class AddExtraItems(Toggle):  # TODO!!! Implement
+class AddExtraItems(Toggle):
     """If enabled, some items and spells that are otherwise only obtainable
        in other modes will be added to the item pool, such as Puppet Master."""
     display_name = "Add Extra Items"
 
-class ExcludeOwlMorph(Toggle):  # TODO!!! Implement
+class ExcludeOwlMorph(Toggle):
     """If enabled, Owl Morph will not be added to the item pool."""
     display_name = "Exclude Owl Morph"
 

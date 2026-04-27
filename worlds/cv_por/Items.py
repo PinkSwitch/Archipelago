@@ -1,11 +1,13 @@
 from typing import Dict, Set, NamedTuple, Optional
 from BaseClasses import ItemClassification
 
+
 class ItemData(NamedTuple):
     category: str
     code: Optional[int]
     classification: ItemClassification
-    amount: Optional[int] = 1
+    default_count: Optional[int] = 1
+
 
 item_table: Dict[str, ItemData] = {
     "$1": ItemData("Money", 0x100, ItemClassification.filler, 0),
@@ -151,7 +153,7 @@ item_table: Dict[str, ItemData] = {
     "Jagdplaute": ItemData("Swords", 0x0324, ItemClassification.filler, 0),
     "Stellar Sword": ItemData("Swords", 0x0325, ItemClassification.useful, 0),
     "Damascus Sword": ItemData("Swords", 0x0326, ItemClassification.filler, 0),
-    "Claymore": ItemData("Greatswords", 0x0327, ItemClassification.useful),
+    "Claymore": ItemData("Greatswords", 0x0327, ItemClassification.filler, 0),
     "Falchion": ItemData("Greatswords", 0x0328, ItemClassification.filler, 0),
     "Great Sword": ItemData("Greatswords", 0x0329, ItemClassification.filler, 0),
     "Zweihander": ItemData("Greatswords", 0x032A, ItemClassification.filler, 0),
@@ -188,7 +190,7 @@ item_table: Dict[str, ItemData] = {
 
     "Casual Clothes": ItemData("Body Armor", 0x0401, ItemClassification.filler, 0),
     "Hobo's Clothes": ItemData("Body Armor", 0x0402, ItemClassification.filler, 0),
-    "Houppelande": ItemData("Body Armor", 0x0403, ItemClassification.useful),
+    "Houppelande": ItemData("Body Armor", 0x0403, ItemClassification.filler, 0),
     "Poncho": ItemData("Body Armor", 0x0404, ItemClassification.filler, 0),
     "Combat Fatigues": ItemData("Body Armor", 0x0405, ItemClassification.filler, 0),
     "Adrenaline Gear": ItemData("Body Armor", 0x0406, ItemClassification.filler, 0),
@@ -197,18 +199,18 @@ item_table: Dict[str, ItemData] = {
     "Tailcoat": ItemData("Jonathan Armor", 0x0409, ItemClassification.filler, 0),
     "Biker's Jacket": ItemData("Jonathan Armor", 0x040A, ItemClassification.filler, 0),
     "Justaucorps": ItemData("Jonathan Armor", 0x040B, ItemClassification.filler, 0),
-    "Tuxedo Coat": ItemData("Jonathan Armor", 0x040C, ItemClassification.useful),
-    "Battle Jacket": ItemData("Jonathan Armor", 0x040D, ItemClassification.useful),
+    "Tuxedo Coat": ItemData("Jonathan Armor", 0x040C, ItemClassification.filler, 0),
+    "Battle Jacket": ItemData("Jonathan Armor", 0x040D, ItemClassification.filler, 0),
     "Surcoat": ItemData("Jonathan Armor", 0x040E, ItemClassification.filler, 0),
     "Leather Cuirass": ItemData("Jonathan Armor", 0x040F, ItemClassification.filler, 0),
     "Copper Plate": ItemData("Jonathan Armor", 0x0410, ItemClassification.filler, 0),
     "Iron Plate": ItemData("Jonathan Armor", 0x0411, ItemClassification.filler, 0),
     "Silver Plate": ItemData("Jonathan Armor", 0x0412, ItemClassification.filler, 0),
     "Gold Plate": ItemData("Jonathan Armor", 0x0413, ItemClassification.filler, 0),
-    "Lorica": ItemData("Jonathan Armor", 0x0414, ItemClassification.useful),
+    "Lorica": ItemData("Jonathan Armor", 0x0414, ItemClassification.filler, 0),
     "Platinum Plate": ItemData("Jonathan Armor", 0x0415, ItemClassification.filler, 0),
     "Samurai Plate": ItemData("Jonathan Armor", 0x0416, ItemClassification.filler, 0),
-    "Holy Mail": ItemData("Jonathan Armor", 0x0417, ItemClassification.useful),
+    "Holy Mail": ItemData("Jonathan Armor", 0x0417, ItemClassification.filler, 0),
     "Berserker Mail": ItemData("Jonathan Armor", 0x0418, ItemClassification.filler, 0),
     "Ancient Armor": ItemData("Jonathan Armor", 0x0419, ItemClassification.filler, 0),
     "Healing Mail": ItemData("Jonathan Armor", 0x041A, ItemClassification.useful),
@@ -226,19 +228,19 @@ item_table: Dict[str, ItemData] = {
     "Lilith Corset": ItemData("Charlotte Armor", 0x0426, ItemClassification.filler, 0),
     "Platinum Corset": ItemData("Charlotte Armor", 0x0427, ItemClassification.useful),
     "Diamond Corset": ItemData("Charlotte Armor", 0x0428, ItemClassification.filler, 0),
-    "Kirtle": ItemData("Charlotte Armor", 0x0429, ItemClassification.useful),
+    "Kirtle": ItemData("Charlotte Armor", 0x0429, ItemClassification.filler, 0),
     "Miko Dress": ItemData("Charlotte Armor", 0x042A, ItemClassification.filler, 0),
     "Cotton Apron": ItemData("Charlotte Armor", 0x042B, ItemClassification.filler, 0),
     "Silk Negligee": ItemData("Charlotte Armor", 0x042C, ItemClassification.filler, 0),
-    "Bathrobe": ItemData("Charlotte Armor", 0x042D, ItemClassification.useful),
+    "Bathrobe": ItemData("Charlotte Armor", 0x042D, ItemClassification.filler, 0),
     "Frilly Camisole": ItemData("Charlotte Armor", 0x042E, ItemClassification.filler, 0),
-    "Sequined Dress": ItemData("Charlotte Armor", 0x042F, ItemClassification.useful),
+    "Sequined Dress": ItemData("Charlotte Armor", 0x042F, ItemClassification.filler, 0),
     "Clown Shirt": ItemData("Charlotte Armor", 0x0430, ItemClassification.filler, 0),
     "Nun's Robes": ItemData("Charlotte Armor", 0x0431, ItemClassification.useful),
     "Cocktail Dress": ItemData("Charlotte Armor", 0x0432, ItemClassification.filler, 0),
-    "Dancer's Blouse": ItemData("Charlotte Armor", 0x0433, ItemClassification.useful),
+    "Dancer's Blouse": ItemData("Charlotte Armor", 0x0433, ItemClassification.filler, 0),
     "Cotehardie": ItemData("Charlotte Armor", 0x0434, ItemClassification.filler, 0),
-    "Wedding Dress": ItemData("Charlotte Armor", 0x0435, ItemClassification.useful),
+    "Wedding Dress": ItemData("Charlotte Armor", 0x0435, ItemClassification.filler, 0),
     "Europa's Dress": ItemData("Charlotte Armor", 0x0436, ItemClassification.filler, 0),
     "Dalmatica": ItemData("Charlotte Armor", 0x0437, ItemClassification.filler, 0),
     "Princess Coat": ItemData("Charlotte Armor", 0x0438, ItemClassification.filler, 0),
@@ -247,7 +249,7 @@ item_table: Dict[str, ItemData] = {
     "Eye for Decay": ItemData("Headgear", 0x0501, ItemClassification.filler, 0),
     "Gambler Glasses": ItemData("Headgear", 0x0502, ItemClassification.useful, 0),
     "Sunglasses": ItemData("Headgear", 0x0503, ItemClassification.filler, 0),
-    "Thick Glasses": ItemData("Headgear", 0x0504, ItemClassification.useful),
+    "Thick Glasses": ItemData("Headgear", 0x0504, ItemClassification.filler, 0),
     "Glasses": ItemData("Headgear", 0x0505, ItemClassification.filler, 0),
     "Monocle": ItemData("Headgear", 0x0506, ItemClassification.filler, 0),
     "Goggles": ItemData("Headgear", 0x0507, ItemClassification.filler, 0),
@@ -272,8 +274,8 @@ item_table: Dict[str, ItemData] = {
     "Witch's Hat": ItemData("Charlotte Headgear", 0x051A, ItemClassification.filler, 0),
     "Mourning Veil": ItemData("Charlotte Headgear", 0x051B, ItemClassification.filler, 0),
     "Nun's Habit": ItemData("Charlotte Headgear", 0x051C, ItemClassification.useful),
-    "Open Veil": ItemData("Charlotte Headgear", 0x051D, ItemClassification.useful),
-    "Holy Veil": ItemData("Charlotte Headgear", 0x051E, ItemClassification.useful),
+    "Open Veil": ItemData("Charlotte Headgear", 0x051D, ItemClassification.filler, 0),
+    "Holy Veil": ItemData("Charlotte Headgear", 0x051E, ItemClassification.filler, 0),
     "Clover Tiara": ItemData("Charlotte Headgear", 0x051F, ItemClassification.useful),
     "Pearl Tiara": ItemData("Charlotte Headgear", 0x0520, ItemClassification.filler, 0),
     "Diamond Tiara": ItemData("Charlotte Headgear", 0x0521, ItemClassification.filler, 0),
@@ -295,8 +297,8 @@ item_table: Dict[str, ItemData] = {
     "Oxfords": ItemData("Jonathan Boots", 0x060B, ItemClassification.filler, 0),
     "Wingtips": ItemData("Jonathan Boots", 0x060C, ItemClassification.filler, 0),
     "Iron Leggings": ItemData("Jonathan Boots", 0x060D, ItemClassification.filler, 0),
-    "Silver Leggings": ItemData("Jonathan Boots", 0x060E, ItemClassification.useful),
-    "Gold Leggings": ItemData("Jonathan Boots", 0x060F, ItemClassification.useful),
+    "Silver Leggings": ItemData("Jonathan Boots", 0x060E, ItemClassification.filler, 0),
+    "Gold Leggings": ItemData("Jonathan Boots", 0x060F, ItemClassification.filler, 0),
     "Steel Greaves": ItemData("Jonathan Boots", 0x0610, ItemClassification.useful),
     "Platinum Lggngs": ItemData("Jonathan Boots", 0x0611, ItemClassification.filler, 0),
     "Samurai Leggngs": ItemData("Jonathan Boots", 0x0612, ItemClassification.useful),
@@ -329,9 +331,9 @@ item_table: Dict[str, ItemData] = {
     "Immunity Ring": ItemData("Accessories", 0x0710, ItemClassification.useful, 0),
     "Blessed Ring": ItemData("Accessories", 0x0711, ItemClassification.useful, 0),
     "Hercules Ring": ItemData("Accessories", 0x0712, ItemClassification.filler, 0),
-    "Cape": ItemData("Accessories", 0x0713, ItemClassification.useful),
+    "Cape": ItemData("Accessories", 0x0713, ItemClassification.filler, 0),
     "Hero's Cape": ItemData("Accessories", 0x0714, ItemClassification.filler, 0),
-    "Blue Cape": ItemData("Accessories", 0x0715, ItemClassification.useful),
+    "Blue Cape": ItemData("Accessories", 0x0715, ItemClassification.filler, 0),
     "Elven Cape": ItemData("Accessories", 0x0716, ItemClassification.filler, 0),
     "Assassin's Cape": ItemData("Accessories", 0x0717, ItemClassification.useful),
     "Invisible Cape": ItemData("Accessories", 0x0718, ItemClassification.filler, 0),
@@ -362,8 +364,8 @@ item_table: Dict[str, ItemData] = {
     "Suzaku": ItemData("Subweapons", 0x0807, ItemClassification.filler, 0),
     "Byakko": ItemData("Subweapons", 0x0808, ItemClassification.filler, 0),
     "Gnebu": ItemData("Subweapons", 0x0809, ItemClassification.filler, 0),
-    "Knife": ItemData("Subweapons", 0x080A, ItemClassification.useful),
-    "Axe": ItemData("Subweapons", 0x080B, ItemClassification.filler, 0),
+    "Knife Subweapon": ItemData("Subweapons", 0x080A, ItemClassification.useful),
+    "Axe Subweapon": ItemData("Subweapons", 0x080B, ItemClassification.filler, 0),
     "Cross": ItemData("Subweapons", 0x080C, ItemClassification.useful, 0),
     "Holy Water": ItemData("Subweapons", 0x080D, ItemClassification.useful, 0),
     "Bible": ItemData("Subweapons", 0x080E, ItemClassification.useful, 0),
@@ -464,6 +466,7 @@ item_table: Dict[str, ItemData] = {
     "Book of Spirits": ItemData("Relics", 0x086B, ItemClassification.useful)
 }
 
+
 def get_item_names_per_category() -> Dict[str, Set[str]]:
     categories: Dict[str, Set[str]] = {}
 
@@ -472,3 +475,92 @@ def get_item_names_per_category() -> Dict[str, Set[str]]:
             categories.setdefault(data.category, set()).add(name)
 
     return categories
+
+
+money_table = [
+ "$1",
+ "$10",
+ "$50",
+ "$100",
+ "$500",
+ "$1000",
+ "$2000"
+]
+
+consumable_table = [
+    "Potion",
+    "High Potion",
+    "Tonic",
+    "High Tonic",
+    "Anti-Venom",
+    "Uncurse Potion",
+    "Beef Jerky",
+    "Rice Ball",
+    "Mushroom",
+    "Corn Soup",
+    "Mint Sundae",
+    "Cream Puff",
+    "Milk",
+    "Coffee",
+    "Tea",
+    "Pudding",
+    "Strawberry",
+    "Grapes",
+    "Hamburger",
+    "Fried Chicken",
+    "Hot Dog",
+    "Pumpkin Pie",
+    "Pancake",
+    "Tinned Spinach",
+    "Paella",
+    "Spaghetti",
+    "Ice Cream",
+    "Meuniere",
+    "Boiled Starfish",
+    "Wheat Roll",
+    "Sachertorte",
+    "NY Cheesecake",
+    "Mille-feuille",
+    "Tarte au Poire",
+    "Gateau Fraise",
+    "Kugelhopf",
+    "Green Tea Cake",
+    "Gateau Marron",
+    "Langues de Chat",
+    "Financier",
+    "Tropical Sundae",
+    "Pudding Bucket",
+    "Piyoko",
+    "1000 Year Egg",
+    "Jamon Iberico",
+    "Spicy Shrimp",
+    "Pasta Carbonara",
+    "Penne Arrabiata",
+    "Powdered Milk",
+    "Rotten Durian",
+    "Ground Meat",
+    "Noodle Bun",
+    "Touch & Pop",
+    "Moldy Bread",
+    "Penters Natural",
+    "Beehive",
+    "Amanita",
+    "Rotten Meat",
+    "Spoiled Milk",
+    "Rusty Food Tin"
+]
+
+good_food_table = [
+    "Super Potion",
+    "Super Tonic",
+    "Tasty Meat",
+    "New York Steak",
+    "Curry",
+    "Ramen Noodles",
+    "Melon",
+    "Foie Gras",
+    "Caviar",
+    "Truffle",
+    "Peking Duck",
+    "Birthday Cake"
+]

@@ -9,6 +9,7 @@ from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids
 
+
 class PoRWeb(WebWorld):
     theme = "ocean"
     
@@ -25,8 +26,6 @@ class PoRWeb(WebWorld):
     option_groups = por_option_groups
     tutorials = [setup_en]
 
-class CVPoRItem(Item):
-    game: str = "Castlevania: Portrait of Ruin"
 
 class PoRSettings(settings.Group):
     class RomFile(settings.UserFilePath):
@@ -34,6 +33,7 @@ class PoRSettings(settings.Group):
         description = "Portrait of Ruin ROM File"
         copy_to = "CASTLEVANIA2_ACBEA4_00.nds"
         md5 = "2edd57540cae45842fbd19c45a4214f9"
+
 
 class PoRWorld(World):
     """The year is 1944. Dracula's castle has reappeared, and it's been taken over
@@ -56,8 +56,8 @@ class PoRWorld(World):
     options_dataclass = PoROptions
     options: PoROptions
 
-    #locked_locations: List[str]
-    #ocation_cache: List[Location]
+    # locked_locations: List[str]
+    # ocation_cache: List[Location]
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
@@ -65,7 +65,248 @@ class PoRWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.extra_item_count = 0
+        self.has_tried_magus_ring = False
+
+        self.subweapon_filler_table = [
+            "Axe Subweapon",
+            "Cross",
+            "Holy Water",
+            "Bible",
+            "Javelin",
+            "Ricochet Rock",
+            "Boomerang",
+            "Shuriken",
+            "Yagyu Shuriken",
+            "Kunimitsu",
+            "Kunai",
+            "Crossbow",
+            "Dart",
+            "Defensive Form",
+            "Wrecking Ball",
+            "Rampage",
+            "Berserker",
+            "Time Stop",
+            "Heal",
+            "Cure Curse",
+            "LUCK Boost",
+            "Rock Riot",
+            "Spirit of Light",
+            "Dark Rift",
+            "Stone Circle",
+            "Ice Needle",
+            "Explosion",
+            "Chain Lightning",
+            "Nightmare",
+            "Summon Medusa",
+            "Acidic Bubbles",
+            "Hex",
+            "Salamander",
+            "Cocytus",
+            "Thor's Bellow",
+            "Summon Crow",
+            "Summon Skeleton",
+            "Summon Ghost",
+            "Summon Gunman",
+            "Summon Frog"
+        ]
+
+        self.weapon_table = [
+            "Leather Whip",
+            "Steel Whip",
+            "Rose Stem Whip",
+            "Blank Book",
+            "Knife",
+            "Combat Knife",
+            "Baselard",
+            "Short Sword",
+            "Cutlass",
+            "Gladius",
+            "Rahab's Frost",
+            "Agni's Flame",
+            "Claymore",
+            "Falchion",
+            "Great Sword",
+            "Zweihander",
+            "Spear",
+            "Partisan",
+            "Lance",
+            "Trident",
+            "Long Spear",
+            "Couse",
+            "Axe",
+            "Mace",
+            "Battle Axe",
+            "Morning Star",
+            "Bhuj",
+            "Brass Knuckles",
+            "Cestus",
+            "Bullet Punch"
+        ]
+        
+        self.good_weapon_table = [
+            "Medusa Whip",
+            "Undead Killer",
+            "Tome of Arms X",
+            "Katar",
+            "Cinquedea",
+            "Assassin Blade",
+            "Heaven's Sword",
+            "Jagdplaute",
+            "Stellar Sword",
+            "Damascus Sword",
+            "Dragon Slayer",
+            "Final Sword",
+            "Holy Claymore",
+            "Royal Sword",
+            "Sarissa",
+            "Alucard's Spear",
+            "Voulge",
+            "Bullova",
+            "Golden Axe",
+            "Illusion Fist"
+        ]
+
+        self.armor_table = [
+            "Casual Clothes",
+            "Hobo's Clothes",
+            "Houppelande",
+            "Poncho",
+            "Combat Fatigues",
+            "Andrenaline Gear",
+            "Kalasiris",
+            "Tailcoat",
+            "Biker's Jacket",
+            "Justaucorps",
+            "Tuxedo Coat",
+            "Battle Jacket",
+            "Surcoat",
+            "Leather Cuirass",
+            "Copper Plate",
+            "Iron Plate",
+            "Silver Plate",
+            "Gold Plate",
+            "Holy Mail",
+            "Mirror Cuirass",
+            "Spiked Mail",
+            "Leather Corset",
+            "Jade Corset",
+            "Amethyst Corset",
+            "Emerald Corset",
+            "Ruby Corset",
+            "Sapphire Corset",
+            "Lilith Corset",
+            "Diamond Corset",
+            "Kirtle",
+            "Cotton Apron",
+            "Silk Negligee",
+            "Bathrobe",
+            "Frilly Camisole",
+            "Sequined Dress",
+            "Clown Shirt",
+            "Cocktail Dress",
+            "Dancer's Blouse",
+            "Cotehardie",
+            "Eye for Decay",
+            "Gambler Glasses",
+            "Sunglasses",
+            "Thick Glasses",
+            "Glasses",
+            "Monocle",
+            "Goggles",
+            "Uraeus",
+            "Royal Crown",
+            "Headguard",
+            "Iron Helmet",
+            "Stone Mask",
+            "Viking Helmet",
+            "Ballroom Masque",
+            "Fedora",
+            "Porkpie Hat",
+            "Silk Hat",
+            "Traveler's Hat",
+            "Skull Mask",
+            "Witch's Hat",
+            "Pearl Tiara",
+            "Diamond Tiara",
+            "Midnight Tiara",
+            "Sandals",
+            "Engineer Boots",
+            "Royal Sandals",
+            "Combat Boots",
+            "Slick Boots",
+            "Hiking Boots",
+            "Oxfords",
+            "Wingtips",
+            "Iron Leggings",
+            "Silver Leggings",
+            "Enamel Pinheels",
+            "Inuit Boots",
+            "Glass Shoes",
+            "Diamond Shoes"
+        ]
+
+        self.good_armor_table = [
+            "Feather Gear",
+            "Lorica",
+            "Platinum Plate",
+            "Samurai Plate",
+            "Berserker Mail",
+            "Ancient Armor",
+            "Scout Armor",
+            "Heavy Armor",
+            "Impervious Mail",
+            "Diamond Corset",
+            "Miko Dress",
+            "Europa's Dress",
+            "Dalmatica",
+            "Princess Coat",
+            "Wedding Dress",
+            "Samurai Helmet",
+            "Mourning Veil",
+            "Open Veil",
+            "Holy Veil",
+            "Arachne Hennin",
+            "Muse's Tiara",
+            "Gold Leggings",
+            "Platinum Lggngs",
+            "Succubus Boots",
+            "Prima Shoes",
+            "Silent Sandals"
+        ]
+
+        self.accessory_table = [
+            "Studded Choker",
+            "Astral Ring",
+            "Gold Ring",
+            "Cape",
+            "Blue Cape",
+            "Miser Ring",
+            "Sage Ring",
+            "Thief Ring",
+            "Pearl Ring",
+            "Tough Ring",
+            "Master Ring",
+            "Skull Ring",
+            "Immunity Ring",
+            "Blessed Ring",
+            "Hercules Ring",
+            "Hero's Cape",
+            "Elven Cape",
+            "Invisible Cape",
+            "Holy Mantle",
+            "Paludamentum",
+            "Blessed Ankh",
+            "Orchid Corsage",
+            "Rose Corsage",
+            "Sorceress Crest",
+            "Forget-Me-Not",
+            "Platinum Chain",
+            "Heart Brooch",
+            "Astral Brooch",
+            "Abalone Brooch",
+            "Moon Brooch"
+
+        ]
 
     def generate_early(self):
         from .generator_main import generate_early
@@ -78,3 +319,7 @@ class PoRWorld(World):
     def create_items(self):
         from .generator_main import create_items
         create_items(self)
+
+    def get_filler_item_name(self):
+        from .generator_main import get_filler_item_name
+        get_filler_item_name(self)

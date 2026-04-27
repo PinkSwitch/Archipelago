@@ -1,7 +1,7 @@
 from BaseClasses import Region, Location
-from typing import List, TYPE_CHECKING, Dict
+from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
-from .Locations import LocationData, get_locations
+from .Locations import get_locations
 from .Options import StartWithChangeCube
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -98,7 +98,6 @@ def init_areas(world: "PoRWorld") -> None:
     world.multiworld.regions += regions
     create_locations(world)
     connect_regions(world)
-
 
 
 def create_locations(world):

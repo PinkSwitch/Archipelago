@@ -1,6 +1,10 @@
 from BaseClasses import Item
-from .Locations import get_locations
-from typing import List
+from .Items import item_table
+
+
+class CVPoRItem(Item):
+    game: str = "Castlevania: Portrait of Ruin"
+
 
 def generate_early(world) -> None:
     from .setup_game import setup_game
@@ -16,24 +20,81 @@ def create_regions(world) -> None:
     init_areas(world)
     place_static_items(world)
 
+
 def create_items(world) -> None:
-    pool = get_item_pool(world.get_excluded_items())
-    fill_pool(pool)
+    pool = []
+    for name, data in item_table.items():
+        for _ in range(data.default_count):
+            item = set_classifications(world, name)
+            pool.append(item)
+
+    if world.options.shuffle_whip:
+        pool.append(set_classifications(world, "True Vampire Killer"))
+
+    if world.options.add_extra_items:
+        pool.extend([
+            set_classifications(world, "Puppet Master"),
+            set_classifications(world, "Tori"),
+            set_classifications(world, "Seiryu"),
+            set_classifications(world, "Suzaku"),
+            set_classifications(world, "Byakko"),
+            set_classifications(world, "Gnebu"),
+        ])
+
+    if not world.options.exclude_owl_morph:
+        pool.append(set_classifications(world, "Owl Morph"))
+
+    if world.options.nest_of_evil_state:
+        pool.extend([
+            set_classifications(world, "Greatest Five"),
+            set_classifications(world, "Tome of Arms p1"),
+            set_classifications(world, "Tome of Arms p2"),
+        ])
+
+    filler_location_count = len(world.get_locations()) - len(pool)
+    for i in range(filler_location_count):
+        item = set_classifications(world, get_filler_item_name(world))
+        pool.append(item)
 
     world.multiworld.itempool += pool
 
-def fill_pool(world, pool: List[Item]) -> None:
-    for _ in range(len(world.multiworld.get_unfilled_locations(world.player)) - len(pool) - world.extra_item_count):  # Change to fix event count
-        item = self.set_classifications(world.get_filler_item_name())
-        pool.append(item)
+
+def set_classifications(world, name) -> CVPoRItem:
+    # Make quest items be prog, here.
+    item_data = item_table[name]
+    item = CVPoRItem(name, item_data.classification, item_data.code, world.player)
+    return item
 
 
-def get_item_pool(world) -> List[Item]:
-    pool: List[Item] = []
+def get_filler_item_name(world) -> str:
+    from .Items import money_table, good_food_table, consumable_table
+    weights = {"subweapon": 5, "good_weapon": 7, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
+               "weapon": 30, "armor": 40, "consumable": 60}
+    
+    filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
+    weight_table = {
+        "subweapon": world.subweapon_filler_table,
+        "good_weapon": world.good_weapon_table,
+        "weapon": world.weapon_table,
+        "armor": world.armor_table,
+        "good_armor": world.good_armor_table,
+        "money": money_table,
+        "consumable": consumable_table,
+        "good_food": good_food_table,
+        "accessory": world.accessory_table
+    }
 
-    for name, data in item_table.items():
-        for _ in range(data.amount):
-            item = self.set_classifications(name)
-            pool.append(item)
+    filler_item = world.random.choice(weight_table[filler_type])
+    if not world.has_tried_magus_ring:
+        world.has_tried_magus_ring = True
+        if world.random.randint(0, 101) <= 10:  # Magus ring should have a single 10/100 chance to be placed
+            filler_item = "Magus Ring"
+            return filler_item
 
-    return pool
+    if filler_type not in ["consumable", "good_food", "money"]:
+        weight_table[filler_type].remove(filler_item)  # Remove equipment from the corresponding table so it doesn't gen again
+
+        if not weight_table[filler_type]:  # If we have exhausted the entire pool
+            weights[filler_type] = 0  # Make sure it won't be rolled again
+
+    return filler_item
