@@ -52,6 +52,7 @@ region_list = [
     "13th Street - Main",
 
     "Sandy Grave",
+    "Sandy Grave - Upper Pyramid",
     "Sandy Grave - Pyramid Top",
 
     "Forgotten City",
