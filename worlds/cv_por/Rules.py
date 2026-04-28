@@ -50,6 +50,11 @@ def set_location_rules(world):
     set_rule(world.get_location("13th Street: Right Dance Hall Top Right"), small_uppies)
     set_rule(world.get_location("13th Street: Many Nyxes Room"), (medium_uppies | HasAll("Acrobat Cube", "Call Cube", "Puppet Master")) & (HasAll("Puppet Master", "Lizard Tail") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph"))))
 
+    set_rule(world.get_location("Nation of Fools: Bottom Left Medium Square On Wall"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight") | HasAll("Stone of Flight", "Puppet Master"))
+    set_rule(world.get_location("Nation of Fools: Crevice Item"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
+
+    set_rule(world.get_location("Burnt Paradise: Right Upper Big Corner On Wall"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight") | HasAll("Stone of Flight", "Puppet Master"))
+
     set_rule(world.get_location("Lost Gallery: Studio Portrait Fight"),
              Has("Portrait Clear", FromOption(BraunerPortraits)) &
              CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
