@@ -58,6 +58,7 @@ def create_items(world) -> None:
 
     world.multiworld.itempool += pool
 
+
 def set_rules(world) -> None:
     from .Rules import set_location_rules
     set_location_rules(world)
@@ -102,6 +103,7 @@ def get_filler_item_name(world) -> str:
             weights[filler_type] = 0  # Make sure it won't be rolled again
 
     return filler_item
+
 
 def create_item(world, name: str) -> CVPoRItem:
     data = set_classifications(world, name)

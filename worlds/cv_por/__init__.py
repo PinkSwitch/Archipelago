@@ -2,7 +2,7 @@ import settings
 import typing
 import threading
 
-from BaseClasses import Item, Tutorial, MultiWorld
+from BaseClasses import Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
 
 from .Items import item_table, get_item_names_per_category

@@ -1,8 +1,10 @@
 from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
+from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import StartWithChangeCube, NestofEvil
+from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired
+
 if TYPE_CHECKING:
     from . import PoRWorld
 
@@ -236,4 +238,6 @@ def connect_regions(world):
 
     if world.options.goal:
         # Add a connection to the throne room if necessary
-        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier", Has("Brauner Defeated") & Has("Portrait Clear", world.options.dracula_portraits.value))
+        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier",
+            Has("Portrait Clear", FromOption(DraculaPortraits)) & 
+            Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True))
