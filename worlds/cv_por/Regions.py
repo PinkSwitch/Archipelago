@@ -60,6 +60,7 @@ region_list = [
 
     "Forgotten City",
     "Forgotten City - Inner",
+    "Forgotten City - Inner Upper",
 
     "Nation of Fools",
     "Nation of Fools - Right Lower",
@@ -203,7 +204,7 @@ def connect_regions(world):
                                                          {"City of Haze - East": Has("Puppet Master") | (has_change_cube & Has("Call Cube"))})
 
     world.get_region("Sandy Grave").add_exits(["Sandy Grave - Upper Pyramid"],
-                                                         {"Sandy Grave - Upper Pyramid": small_uppies})
+                                                         {"Sandy Grave - Upper Pyramid": (small_uppies & Has("Puppet Master")) | medium_uppies})
 
     world.get_region("Nation of Fools").add_exits(["Nation of Fools - Right Lower", "Nation of Fools - Main"],
                                                          {"Nation of Fools - Right Lower": small_uppies | Has("Puppet Master"),
@@ -226,6 +227,9 @@ def connect_regions(world):
 
     world.get_region("Forgotten City").add_exits(["Forgotten City - Inner"],
                                                             {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
+
+    world.get_region("Forgotten City - Inner").add_exits(["Forgotten City - Inner Upper"],
+                                                            {"Forgotten City - Inner Upper": medium_uppies | HasAll("Puppet Master", "Call Cube", "Acrobat Cube")})
 
     world.get_region("13th Street").add_exits(["13th Street - Main"],
                                               {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})
