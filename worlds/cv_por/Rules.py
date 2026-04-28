@@ -68,7 +68,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies |HasAll("Call Cube", "Acrobat Cube", "Stone of Flight"))
     set_rule(world.get_location("Forgotten City: Big Shaft Room Left"), big_uppies)
     set_rule(world.get_location("Forgotten City: Big Shaft Room Right"), big_uppies)
-    set_rule(world.get_location("Forgotten City: Pyramid East 3F"), medium_uppies | HasAll("Call Cube", "Acrobat Cube", "Puppet Master" | (can_cast_spell & HasAll("Speed Up", "Puppet Master"))))
+    set_rule(world.get_location("Forgotten City: Pyramid East 3F"), medium_uppies | HasAll("Call Cube", "Acrobat Cube", "Puppet Master") | (can_cast_spell & HasAll("Speed Up", "Puppet Master")))
 
     set_rule(world.get_location("Nation of Fools: Bottom Left Medium Square On Wall"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight") | HasAll("Stone of Flight", "Puppet Master"))
     set_rule(world.get_location("Nation of Fools: Crevice Item"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
