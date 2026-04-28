@@ -321,6 +321,10 @@ class PoRWorld(World):
         from .generator_main import create_items
         create_items(self)
 
+    def set_rules(self):
+        from .generator_main import set_rules
+        set_rules(self)
+
     def get_filler_item_name(self):
         from .generator_main import get_filler_item_name
         get_filler_item_name(self)
@@ -328,6 +332,5 @@ class PoRWorld(World):
     def create_item(self, name: str) -> CVPoRItem:
         from .generator_main import set_classifications
         data = set_classifications(self, name)
-
         return CVPoRItem(name, data.classification, data.code, self.player)
         

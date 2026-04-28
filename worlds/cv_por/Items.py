@@ -397,7 +397,7 @@ item_table: Dict[str, ItemData] = {
     "Toad Morph": ItemData("Spells", 0x0827, ItemClassification.progression),
     "Owl Morph": ItemData("Spells", 0x0828, ItemClassification.progression, 0),
     "Sanctuary": ItemData("Spells", 0x0829, ItemClassification.progression),
-    "Speed Up": ItemData("Spells", 0x082A, ItemClassification.useful),
+    "Speed Up": ItemData("Spells", 0x082A, ItemClassification.progression),
     "Berserker": ItemData("Spells", 0x082B, ItemClassification.filler, 0),
     "Eye for an Eye": ItemData("Spells", 0x082C, ItemClassification.useful),
     "Clear Skies": ItemData("Spells", 0x082D, ItemClassification.useful),

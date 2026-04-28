@@ -58,6 +58,10 @@ def create_items(world) -> None:
 
     world.multiworld.itempool += pool
 
+def set_rules(world) -> None:
+    from .Rules import set_location_rules
+    set_location_rules(world)
+
 
 def set_classifications(world, name) -> CVPoRItem:
     # Make quest items be prog, here.
@@ -101,5 +105,4 @@ def get_filler_item_name(world) -> str:
 
 def create_item(world, name: str) -> CVPoRItem:
     data = set_classifications(world, name)
-    print(name)
     return CVPoRItem(name, data.classification, data.code, world.player)

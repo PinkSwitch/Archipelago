@@ -96,7 +96,7 @@ def init_areas(world: "PoRWorld") -> None:
     if world.options.nest_of_evil_state == NestofEvil.option_removed:
         active_regions.remove("Nest of Evil")
 
-    for area in region_list:
+    for area in active_regions:
         regions.append(Region(area, world.player, world.multiworld))
 
     world.multiworld.regions += regions
@@ -118,7 +118,7 @@ def create_locations(world):
 def connect_regions(world):
     world.get_region("Entrance - Hub").add_exits(["Entrance - Wind's Room", "Entrance - Behemoth Area", "Entrance - Hub Painting Room", "Entrance - Upper Area", "Entrance - Underground Passage"],
                                                  {"Entrance - Behemoth Area": small_uppies,
-                                                 "Entrance - Hub Painting Room": is_smol,
+                                                 "Entrance - Hub Painting Room": is_smol | Has("Puppet Master"),
                                                   "Entrance - Upper Area": HasAll("Acrobat Cube", "Call Cube", "Stone of Flight") | big_uppies,
                                                   "Entrance - Underground Passage": Has("Portrait Clear", world.options.nest_portraits.value)})
 
@@ -145,7 +145,7 @@ def connect_regions(world):
     world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
 
     world.get_region("Great Stairway - Entrance Connector").add_exits(["Great Stairway - Staircases", "Entrance - Upper Area", "Great Stairway - Upper"],
-                                                          {"Great Stairway - Upper": (HasAll("Call Cube", "Acrobat Cube", "Puppet Master")) | medium_uppies})
+                                                          {"Great Stairway - Upper": (HasAll("Call Cube", "Acrobat Cube", "Puppet Master")) | medium_uppies | HasAll("Call Cube", "Acrobat Cube", "Speed Up")})
 
     world.get_region("Great Stairway - Upper").add_exits(["Great Stairway - Staircases", "Great Stairway - Entrance Connector", "Tower of Death - Belt Area", "Great Stairway - Central Painting Area"],
                                                           {"Tower of Death - Belt Area": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
@@ -236,4 +236,4 @@ def connect_regions(world):
 
     if world.options.goal:
         # Add a connection to the throne room if necessary
-        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier", Has("Brauner Defeated"))
+        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier", Has("Brauner Defeated") & Has("Portrait Clear", world.options.dracula_portraits.value))

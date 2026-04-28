@@ -68,7 +68,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Great Stairway - Staircases", "Great Stairway: Underground East Room"),
         LocationData("Great Stairway - Upper", "Great Stairway: Connector Pipe Left"),
         LocationData("Great Stairway - Upper", "Great Stairway: Connector Pipe Right"),
-        LocationData("Great Stairway - Upper", "Great Stairway: Upper Grand Staircase Top Left Item"),
+        LocationData("Great Stairway - Staircases", "Great Stairway: Upper Grand Staircase Top Left Item"),
         LocationData("Great Stairway - Upper", "Great Stairway: Central Upper"),
         LocationData("Great Stairway - Upper", "Great Stairway: Right Loft"),
 
