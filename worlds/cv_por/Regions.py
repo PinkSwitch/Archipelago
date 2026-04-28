@@ -2,7 +2,7 @@ from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from .Locations import get_locations
-from .Options import StartWithChangeCube
+from .Options import StartWithChangeCube, NestofEvil
 if TYPE_CHECKING:
     from . import PoRWorld
 
@@ -44,6 +44,8 @@ region_list = [
     "Master's Keep - Upper Quarters",
     "Master's Keep - Portrait Room",
 
+    "The Throne Room",
+
     "City of Haze",
     "City of Haze - East",
 
@@ -72,9 +74,7 @@ region_list = [
     "Burnt Paradise",
     "Burnt Paradise - Entrance",
     "Burnt Paradise - Bottom",
-
     "Nest of Evil"
-
 ]
 
 has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
@@ -88,9 +88,13 @@ is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_s
 
 def init_areas(world: "PoRWorld") -> None:
     regions = []
+    active_regions = region_list.copy()
 
-    if world.options.goal:
-        regions.append("Throne Room")
+    if not world.options.goal:
+        active_regions.remove("The Throne Room")
+
+    if world.options.nest_of_evil_state == NestofEvil.option_removed:
+        active_regions.remove("Nest of Evil")
 
     for area in region_list:
         regions.append(Region(area, world.player, world.multiworld))
@@ -232,4 +236,4 @@ def connect_regions(world):
 
     if world.options.goal:
         # Add a connection to the throne room if necessary
-        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("Throne Room"), "Throne Barrier", Has("Brauner Defeated"))
+        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier", Has("Brauner Defeated"))

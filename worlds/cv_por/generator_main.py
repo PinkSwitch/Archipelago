@@ -51,7 +51,7 @@ def create_items(world) -> None:
             set_classifications(world, "Tome of Arms p2"),
         ])
 
-    filler_location_count = len(world.get_locations()) - len(pool)
+    filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
     for i in range(filler_location_count):
         item = set_classifications(world, get_filler_item_name(world))
         pool.append(item)
@@ -98,3 +98,8 @@ def get_filler_item_name(world) -> str:
             weights[filler_type] = 0  # Make sure it won't be rolled again
 
     return filler_item
+
+def create_item(world, name: str) -> CVPoRItem:
+    data = set_classifications(world, name)
+    print(name)
+    return CVPoRItem(name, data.classification, data.code, world.player)

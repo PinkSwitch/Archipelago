@@ -8,7 +8,7 @@ class Goal(Choice):   # TODO!!!! IMPLEMENT
     display_name = "Goal"
     option_brauner = 0
     option_dracula = 1
-    default = 0
+    default = 1
 
 class RevealMap(DefaultOnToggle):  #  TODO!!! IMPLEMENT
     """Start with the entire map visible."""
@@ -72,7 +72,7 @@ class ExperiencePercent(NamedRange):  # TODO!!! IMPLEMENT
         "quadruple": 400
     }
 
-class ShuffleWhip(Toggle):  # TODO!!! Implement
+class ShuffleWhip(Toggle):
     """If enabled, the True Vampire Killer will be added to the item pool,
        and the Whip's Memory fight will grant you a random item.
        Otherwise, it will be at its normal location."""

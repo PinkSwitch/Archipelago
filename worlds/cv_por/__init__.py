@@ -8,6 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids
+from .generator_main import CVPoRItem
 
 
 class PoRWeb(WebWorld):
@@ -172,7 +173,7 @@ class PoRWorld(World):
             "Houppelande",
             "Poncho",
             "Combat Fatigues",
-            "Andrenaline Gear",
+            "Adrenaline Gear",
             "Kalasiris",
             "Tailcoat",
             "Biker's Jacket",
@@ -323,3 +324,10 @@ class PoRWorld(World):
     def get_filler_item_name(self):
         from .generator_main import get_filler_item_name
         get_filler_item_name(self)
+
+    def create_item(self, name: str) -> CVPoRItem:
+        from .generator_main import set_classifications
+        data = set_classifications(self, name)
+
+        return CVPoRItem(name, data.classification, data.code, self.player)
+        

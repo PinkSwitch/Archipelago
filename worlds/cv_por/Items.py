@@ -395,7 +395,7 @@ item_table: Dict[str, ItemData] = {
     "Rocket Slash": ItemData("Subweapons", 0x0826, ItemClassification.useful, 0),
 
     "Toad Morph": ItemData("Spells", 0x0827, ItemClassification.progression),
-    "Owl Morph": ItemData("Spells", 0x0828, ItemClassification.progression),
+    "Owl Morph": ItemData("Spells", 0x0828, ItemClassification.progression, 0),
     "Sanctuary": ItemData("Spells", 0x0829, ItemClassification.progression),
     "Speed Up": ItemData("Spells", 0x082A, ItemClassification.useful),
     "Berserker": ItemData("Spells", 0x082B, ItemClassification.filler, 0),
@@ -463,7 +463,12 @@ item_table: Dict[str, ItemData] = {
     "Critical Art": ItemData("Relics", 0x0868, ItemClassification.useful),
     "Whip Skill 1": ItemData("Relics", 0x0869, ItemClassification.useful),
     "Whip Skill 2": ItemData("Relics", 0x086A, ItemClassification.useful),
-    "Book of Spirits": ItemData("Relics", 0x086B, ItemClassification.useful)
+    "Book of Spirits": ItemData("Relics", 0x086B, ItemClassification.useful),
+
+    "Portrait Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Tower Elevator Active": ItemData("Events", None, ItemClassification.progression, 0),
+    "Dracula Defeated": ItemData("Events", None, ItemClassification.progression, 0),
+    "Brauner Defeated": ItemData("Events", None, ItemClassification.progression, 0),
 }
 
 
