@@ -3,6 +3,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from . import world_version
+from .static_location_data import location_data_table
 from .Options import NestofEvil
 
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
@@ -46,7 +47,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_to_file(0x02308F20, "overlay_119", patch_name)  # Write in the player's name
     rom.write_to_file(0x02308F35, "overlay_119", world_version.encode("ascii"))  # Write the patch version
 
-    #  Options handling # 
+    #  Options handling ###################
     rom.write_to_file(0x0230916E, "overlay_119", bytearray([world.options.nest_portraits.value]))  # Portraits for nest of evil
     rom.write_to_file(0x0230916F, "overlay_119", bytearray([world.options.brauner_portraits.value]))  # Portraits for Brauner
     rom.write_to_file(0x02309170, "overlay_119", bytearray([world.options.dracula_portraits.value]))  # Portraits for Dracula
@@ -76,8 +77,14 @@ def patch_rom(world, rom, player: int, code_patch):
     # Brauner will never check if brauner is required...
     # If Nest of Evil is required, your goal (either brauner OR drac) will check it.
     rom.write_to_file(0x02309171, "overlay_119", bytearray([goal_requirements]))
+    ####################################
+    for location in world.get_locations():
+        if not location.address:  # Filter all events out of this
+            continue
+        
+        data = location_data_table[location.name]
 
-    
+
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
 
