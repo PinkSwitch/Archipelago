@@ -5,6 +5,7 @@ from typing import Sequence, NamedTuple
 from . import world_version
 from .static_location_data import location_data_table
 from .Options import NestofEvil
+from BaseClasses import ItemClassification
 
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
@@ -41,7 +42,7 @@ class LocalRom(object):
         return bytes(self.file)
 
 
-def patch_rom(world, rom, player: int, code_patch):
+def patch_rom(world, rom, code_patch):
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
     patch_name.append(0)  # Add a terminator here
@@ -83,8 +84,27 @@ def patch_rom(world, rom, player: int, code_patch):
     for location in world.get_locations():
         if not location.address:  # Filter all events out of this
             continue
-        
+        item = location.item
         data = location_data_table[location.name]
+
+        if item.player != location.player:  # Is this an offworld item?
+            item_type = 2
+            if ItemClassification.progression in item.classification:
+                color = 0x0C
+                item_id = 0x50
+            elif ItemClassification.trap in item.classification:
+                color = 0x06
+                item_id = 0x50
+            elif ItemClassification.useful in item.classification:
+                color = 0x07
+                item_id = 0x4F
+            else:
+                color = 0x0E
+                item_id = 0x4F
+        else:
+            color = 0
+            item_type = (item.code & 0xFF00) >> 8
+            item_id = item.code & 0xFF
 
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
