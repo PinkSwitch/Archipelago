@@ -10,6 +10,8 @@ from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids
 from .generator_main import CVPoRItem
 
+world_version = "1.0"
+
 
 class PoRWeb(WebWorld):
     theme = "ocean"
@@ -67,6 +69,7 @@ class PoRWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.has_tried_magus_ring = False
+        self.has_generated_output = False
 
         self.subweapon_filler_table = [
             "Axe Subweapon",
@@ -324,6 +327,10 @@ class PoRWorld(World):
     def set_rules(self):
         from .generator_main import set_rules
         set_rules(self)
+
+    def generate_output(self, output_directory: str) -> None:
+        from .generator_main import generate_output
+        generate_output(self, output_directory)
 
     def get_filler_item_name(self):
         from .generator_main import get_filler_item_name

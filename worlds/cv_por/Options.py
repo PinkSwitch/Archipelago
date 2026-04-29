@@ -17,7 +17,7 @@ class RevealMap(DefaultOnToggle):  #  TODO!!! IMPLEMENT
     display_name = "Reveal Map"
 
 
-class RevealBreakableWalls(Toggle):   # TODO!!! IMPLEMENT
+class RevealBreakableWalls(Toggle):
     """Automatically reveals all breakable walls/objects."""
     display_name = "Reveal Hidden Walls"
 
@@ -95,7 +95,7 @@ class PoRExcludeLocations(ExcludeLocations):
                          "The Throne Room: Great Stairs Center", "The Throne Room: Great Stairs Under Stairs", "The Throne Room: Great Stairs Hidden"})
 
 
-class StartWithChangeCube(Toggle):  # TODO!!! Implement
+class StartWithChangeCube(Toggle):
     """If enabled, you'll start with the Change Cube by default"""
     display_name = "Start with Change Cube"
 

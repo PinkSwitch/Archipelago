@@ -1,7 +1,7 @@
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies
-from .Options import NestofEvil, BraunerPortraits
+from .Options import NestofEvil, BraunerPortraits, Goal
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:

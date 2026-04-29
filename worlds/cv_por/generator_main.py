@@ -1,3 +1,6 @@
+import os
+import pkgutil
+
 from BaseClasses import Item
 from .Items import item_table
 
@@ -8,6 +11,16 @@ class CVPoRItem(Item):
 
 def generate_early(world) -> None:
     from .setup_game import setup_game
+    if hasattr(world.multiworld, "re_gen_passthrough"):  # If UT
+        if "Castlevania: Portrait of Ruin" not in world.multiworld.re_gen_passthrough:
+            return
+        passthrough = world.multiworld.re_gen_passthrough["Castlevania: Portrait of Ruin"]
+        world.options.goal = passthrough["goal"]
+        world.options.brauner_portraits = passthrough["brauner_portraits"]
+        world.options.dracula_portraits = passthrough["dracula_portraits"]
+        world.options.nest_portraits = passthrough["nest_portraits"]
+        world.options.nest_of_evil_state = passthrough["nest_of_evil"]
+        world.options.brauner_required = passthrough["brauner_required"]
     setup_game(world)
 
     world.auth_id = world.random.getrandbits(32)
@@ -72,6 +85,24 @@ def set_classifications(world, name) -> CVPoRItem:
     item_data = item_table[name]
     item = CVPoRItem(name, item_data.classification, item_data.code, world.player)
     return item
+
+
+def generate_output(world, output_directory: str) -> None:
+    from .Rom import PoRProcPatch, patch_rom
+    try:
+        code_patch = pkgutil.get_data(__name__, "src/overlay_119.bin")
+        patch = PoRProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
+        patch.write_file("por_base.bsdiff4", pkgutil.get_data(__name__, "src/por_base.bsdiff4"))
+        patch_rom(world, patch, world.player, code_patch)
+
+        world.rom_name = patch.name
+
+        patch.write(os.path.join(output_directory,
+                                f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
+    except Exception:
+        raise
+    finally:
+        world.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
 
 def get_filler_item_name(world) -> str:
