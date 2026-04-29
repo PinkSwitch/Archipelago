@@ -244,4 +244,5 @@ def connect_regions(world):
         # Add a connection to the throne room if necessary
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier",
             Has("Portrait Clear", FromOption(DraculaPortraits)) & 
-            Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True))
+            Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
+            CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))

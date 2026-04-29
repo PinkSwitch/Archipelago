@@ -77,11 +77,14 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Forest of Doom: Secret Cave Room"), big_uppies)
 
-
-    # Todo. Rules for City and Forest
-
-
-
     set_rule(world.get_location("Lost Gallery: Studio Portrait Fight"),
              Has("Portrait Clear", FromOption(BraunerPortraits)) &
-             CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
+             CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required), OptionFilter(Goal, True)], filtered_resolution=True))
+
+    if world.options.goal:
+        set_rule(world.get_location("The Throne Room: Great Stairs Under Stairs"), medium_uppies | HasAll("Acrobat Cube", "Call Cube", "Puppet Master"))
+        set_rule(world.get_location("The Throne Room: Great Stairs Hidden"), big_uppies)
+        set_rule(world.get_location("The Throne Room: Above Throne Left"), big_uppies)
+        set_rule(world.get_location("The Throne Room: Above Throne Right"), big_uppies)
+        set_rule(world.get_location("The Throne Room: Great Stairs Center"), big_uppies)
+        set_rule(world.get_location("The Throne Room: Great Stairs Left"), big_uppies)

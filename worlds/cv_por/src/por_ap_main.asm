@@ -52,6 +52,9 @@
     .org 0x02076B84
         b @CheckBraunerRequirements
 
+    .org 0x0206EAA0
+        bl @ShowBreakableWalls
+
     .org 0x020E537C
         .dw  @PostBehemothRoom
 
@@ -187,8 +190,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_27", 0x022E01A0
-    .org 0x022E04BC ; Skip to the title screen instantly instead of 6 years of fucking logos
-        nop
+    .org 0x022E04B8 ; Skip to the title screen instantly instead of 6 years of fucking logos
+        mov r0, 0x77
+        bl 0x02007970 ; Load our custom overlay so the original code doesnt get screwed with?
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_60", 0x022D7900
@@ -223,7 +227,7 @@
 
 .open "ftc/overlay9_79", 0x022E8820
     .org 0x022E9348
-        beq 0x022E9364 ; Skips Wind's locket cutscene, removed for brevity
+        b 0x022E9364 ; Skips Wind's locket cutscene, removed for brevity
 .close
 ;;;;;;;;
 ;Tile data for the tower room. adds platforms
@@ -264,32 +268,88 @@
         bl @EndDracula
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_111", 0x022E8820
+; Breakable ceiling that lets rain through from Dark Academy.
+.org 0x022E8FEC
+  bl @ShowBreakableWalls
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
+
 .open "ftc/overlay9_119", @Overlay119Start
 .org @FreeSpace
+.area 0x1F000 ; Maximum overlay space, failsafe if too big
+;;;;;;;;;;;;;;;;;
+;2308F20
+@AP_playerauth: ; Used for the Player name as well as the current world version
+    .fill 0x20
 
+;2308F40
+@ItemColorTable:
+    .fill 0x200 ; This space is reserved for AP item tag colors
+.align 4
+
+;2309140
+@PostBehemothRoom:
+    .dh 0x00E8 ; Upper pickup
+    .dh 0x0068
+    .db 0x00
+    .db 0x04
+    .db 0x0B
+    .db 0x00
+    .dh 0x000F
+    .dh 0x0069
+
+    .dh 0x00E0 ; Lower pickup
+    .dh 0x0140
+    .db 0x00
+    .db 0x04
+    .db 0x08
+    .db 0x00
+    .dh 0x0040
+    .dh 0x0000
+
+    .dh 0x0010 ; Behemoth wall
+    .dh 0x0130
+    .db 0x00
+    .db 0x02
+    .db 0x3A
+    .db 0x00
+    .dh 0x000C
+    .dh 0x0000
+    .db 0xFF, 0x7F, 0xFF, 0x7F
+
+;02309168
+@WhipMemoryItem:
+    .dh 0x030A ;02308F28
+    .db 0x00 ;02308F2A
+
+;0230916B
+@StellaLocketItem:
+    .dh 0x0703 ; Type/ID for the locket 02308F25
+    .db 0x00 ; Item color 02308F27
+
+;0230916E
 @GenerationFlags:
-    @OptionFlag_NestPortraits: ;02308F20
+    @OptionFlag_NestPortraits: ;0230916E
         .db 0x08
 
-    @OptionFlag_BraunerPortraits: ;02308F21
+    @OptionFlag_BraunerPortraits: ;0230916F
         .db 0x04
 
-    @OptionFlag_DraculaPortraits: ;02308F22
+    @OptionFlag_DraculaPortraits: ;02309170
         .db 0x00
 
-    @OptionFlag_DraculaRequirements: ;02308F23
+    @OptionFlag_DraculaRequirements: ;02309171
         .db 0x01
 
-    @OptionFlag_DraculaGoal: ;02308F24
+    @OptionFlag_DraculaGoal: ;02309172
         .db 0x01
 
-    @StellaLocketItem:
-        .dh 0x0703 ; Type/ID for the locket 02308F25
-        .db 0x00 ; Item color 02308F27
+    @OptionFlag_StartWithChangeCube: ;02309173
+        .db 0x00
 
-    @WhipMemoryItem:
-        .dh 0x030A ;02308F28
-        .db 0x00 ;02308F2A
+    @OptionFlag_RevealHiddenWalls: ;02309174
+        .db 0x00
 
     .align 4
 ;;;;;;;;;;;;;;;;;;;
@@ -388,7 +448,7 @@
     cmp r0, 0x5C ; Is this a Relic?
     blt @@EndSkill
     sub r0, r0, 0x5C ; get the skill id num
-    mov r1, 0
+    mov r1, 1
     bl 0x02215308 ; Activate relic
 @@EndSkill:
     pop lr
@@ -522,6 +582,18 @@
     ldr r1, =@ServerItemType
     mov r2, 0x50 ; 50 bytes
     bl 0x0209E570 ; Wipe the 0x50 bytes of AP memory when starting a new file
+    ldr r0, =@OptionFlag_StartWithChangeCube
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    mov r0, 0
+    mov r1, 1
+    bl 0x02215308 ; Activate relic
+    mov r0, 0x5C
+    mov r1, 1
+    bl 0x02215B2C ; Give the change cube
+
+@@End:
     pop lr
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -604,6 +676,10 @@
     beq @@LocketSkill
 @@GiveLocketSkill:
     bl @GetItemArbitrary ; Pass off to the actual item routine
+    ldr r0, =0x2111BE9
+    ldrb r1,[r0]
+    orr r1, r1,0x01
+    strb r1,[r0] ; Write this Loc flag
     pop r0-r2,lr
     bx lr
 @@LocketSkill:
@@ -755,6 +831,12 @@
     ldrb r0, [r1, 1] ; R0 = Item Type
     ldrb r1,[r1] ; R1 = Item ID
     bl @GetItemArbitrary
+    ldr r0, = 0x02111BB8
+    ldrb r1,[r0]
+    orr r1, r1, 0x80
+    strb r1,[r0] ; Set the Loc flag for this check
+
+
     pop r0-r2,lr
     b 0x021CE664
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -833,10 +915,11 @@
     cmp r0, 1
     beq 0x02076BF4 ; If Dracula is the goal, skip this and move on
 
-    ldr r0, = @OptionFlag_NestRequired
+    ldr r0, = @OptionFlag_DraculaRequirements
     ldrb r0,[r0]
+    ands r0, r0, @OptionFlag_NestRequired
     cmp r0, 0
-    beq 0x02076BF4 ; If Nest isn't required, don't bother
+    beq 0x02076BF4 ; If Nest isn't required, don't check for it
 
     ldr r0, = 0x02111BC5
     ldrb r0,[r0]
@@ -849,43 +932,23 @@
     mov r0, 0x0F
     strb r0, [r4,0x13C]
     b 0x02076BF4
+;;;;;;;;;;;;;;;;
+@ShowBreakableWalls:
+    ldr r0, =@OptionFlag_RevealHiddenWalls
+    ldrb r0,[r0]
+    cmp r0, 0 ; the option is DISABLED
+    beq @@CheckForDecay
+    mov r0, 1
+    bx lr
+@@CheckForDecay:
+    push lr
+    mov r0, 3
+    bl 0x02207C9C ; Check if Eye for Decay is equipped
+    pop lr
+    bx lr
+
 
 .pool
 
-
-;;;;;;;;;;;;;;;;;
-.org 0x02322AC0 ; We want this to not move ever so we put it at the back
-@ItemColorTable:
-    .fill 0x200 ; This space is reserved for AP item tag colors
-.align 4
-
-@PostBehemothRoom:
-    .dh 0x00E8 ; Upper pickup
-    .dh 0x0068
-    .db 0x00
-    .db 0x04
-    .db 0x0B
-    .db 0x00
-    .dh 0x000F
-    .dh 0x0069
-
-    .dh 0x00E0 ; Lower pickup
-    .dh 0x0140
-    .db 0x00
-    .db 0x04
-    .db 0x08
-    .db 0x00
-    .dh 0x0040
-    .dh 0x0000
-
-    .dh 0x0010 ; Behemoth wall
-    .dh 0x0130
-    .db 0x00
-    .db 0x02
-    .db 0x3A
-    .db 0x00
-    .dh 0x000C
-    .dh 0x0000
-    .db 0xFF, 0x7F, 0xFF, 0x7F
-
+.endarea
 .close

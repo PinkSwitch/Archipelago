@@ -44,6 +44,9 @@ def create_items(world) -> None:
     if not world.options.exclude_owl_morph:
         pool.append(set_classifications(world, "Owl Morph"))
 
+    if not world.options.start_with_change_cube:
+        pool.append(set_classifications(world, "Change Cube"))
+
     if world.options.nest_of_evil_state:
         pool.extend([
             set_classifications(world, "Greatest Five"),

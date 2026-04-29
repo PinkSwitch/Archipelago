@@ -100,8 +100,8 @@ item_table: Dict[str, ItemData] = {
     # "AP Item": ItemData("Consumables", 0x024F, ItemClassification.filler, 0),
     # "AP Item": ItemData("Consumables", 0x0250, ItemClassification.filler, 0), These are reserved for offworld items
     # "Vic Viper": ItemData("Consumables", 0x0251, ItemClassification.filler, 0),
-    "Tome of Arms p1": ItemData("Key Items", 0x0252, ItemClassification.useful),
-    "Tome of Arms p2": ItemData("Key Items", 0x0253, ItemClassification.useful),
+    "Tome of Arms p1": ItemData("Key Items", 0x0252, ItemClassification.useful, 0),
+    "Tome of Arms p2": ItemData("Key Items", 0x0253, ItemClassification.useful, 0),
     "Spade": ItemData("Key Items", 0x0254, ItemClassification.filler, 0),
     "Diamond": ItemData("Key Items", 0x0255, ItemClassification.filler, 0),
     "Heart": ItemData("Key Items", 0x0256, ItemClassification.filler, 0),
@@ -448,7 +448,7 @@ item_table: Dict[str, ItemData] = {
     "Dark Gate": ItemData("Dual Crashes", 0x085A, ItemClassification.useful),
     "Greatest Five": ItemData("Dual Crashes", 0x085B, ItemClassification.useful, 0),
     
-    "Change Cube": ItemData("Relics", 0x085C, ItemClassification.progression),
+    "Change Cube": ItemData("Relics", 0x085C, ItemClassification.progression, 0),
     "Call Cube": ItemData("Relics", 0x085D, ItemClassification.progression),
     "Skill Cube": ItemData("Relics", 0x085E, ItemClassification.useful),
     "Wait Cube": ItemData("Relics", 0x085F, ItemClassification.progression),
