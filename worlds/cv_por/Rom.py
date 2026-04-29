@@ -8,10 +8,12 @@ from .Options import NestofEvil
 
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
+
 class FilePointer(NamedTuple):
     rom_address: int
     base_address: int
     file_size: int
+
 
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB8),
