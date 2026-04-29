@@ -96,9 +96,6 @@ def init_areas(world: "PoRWorld") -> None:
     if not world.options.goal:
         active_regions.remove("The Throne Room")
 
-    if world.options.nest_of_evil_state == NestofEvil.option_removed:
-        active_regions.remove("Nest of Evil")
-
     for area in active_regions:
         regions.append(Region(area, world.player, world.multiworld))
 

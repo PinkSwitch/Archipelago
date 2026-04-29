@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup
 
 
-class Goal(Choice):   # TODO!!!! IMPLEMENT
+class Goal(Choice):
     """The goal for your game.
        Brauner: Defeat Brauner in the studio portrait.
        Dracula: Defeat Dracula in the throne room."""
@@ -12,7 +12,7 @@ class Goal(Choice):   # TODO!!!! IMPLEMENT
     default = 1
 
 
-class RevealMap(DefaultOnToggle):  #  TODO!!! IMPLEMENT
+class RevealMap(DefaultOnToggle):
     """Start with the entire map visible."""
     display_name = "Reveal Map"
 
@@ -42,7 +42,7 @@ class BraunerRequired(DefaultOnToggle):  #  TODO!!! IMPLEMENT
     display_name = "Brauner Required"
 
 
-class NestPortraits(Range):  # TODO!!! Implement
+class NestPortraits(Range):
     """How many Portraits are required to be cleared to access the underground passage
        at the castle entrance."""
     display_name = "Passage Portraits"
@@ -51,7 +51,7 @@ class NestPortraits(Range):  # TODO!!! Implement
     default = 8
 
 
-class BraunerPortraits(Range):  #TODO!!! IMPLEMENT
+class BraunerPortraits(Range):
     """How many of ANY portraits are required to be cleared to access Brauner's portrait."""
     display_name = "Brauner Portraits"
     range_start = 0
@@ -59,7 +59,7 @@ class BraunerPortraits(Range):  #TODO!!! IMPLEMENT
     default = 4
 
 
-class DraculaPortraits(Range):  # TODO!!! IMPLEMENT
+class DraculaPortraits(Range):
     """How many portraits are required to be cleared to access the Throne Room."""
     display_name = "Throne Portraits"
     range_start = 0

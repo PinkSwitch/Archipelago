@@ -276,6 +276,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 .open "ftc/overlay9_119", @Overlay119Start
+
 .org @FreeSpace
 .area 0x1F000 ; Maximum overlay space, failsafe if too big
 ;;;;;;;;;;;;;;;;;
@@ -349,6 +350,12 @@
         .db 0x00
 
     @OptionFlag_RevealHiddenWalls: ;02309174
+        .db 0x00
+
+    @OptionFlag_RevealMap: ;02309175
+        .db 0x00
+
+    @OptionFlag_EXPMult: ;02309176
         .db 0x00
 
     .align 4
@@ -585,14 +592,21 @@
     ldr r0, =@OptionFlag_StartWithChangeCube
     ldrb r0, [r0]
     cmp r0, 0
-    beq @@End
+    beq @@EndCubeCheck
     mov r0, 0
     mov r1, 1
     bl 0x02215308 ; Activate relic
     mov r0, 0x5C
     mov r1, 1
     bl 0x02215B2C ; Give the change cube
-
+@@EndCubeCheck:
+    ldr r0, = @OptionFlag_RevealMap
+    ldrb r0,[r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, =0x021119D0
+    ldr r1, = 0xFFFFFFFF
+    str r1,[r0] ; Set all of the Map bits, revealing the full map
 @@End:
     pop lr
     bx lr
