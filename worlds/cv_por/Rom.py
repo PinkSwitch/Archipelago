@@ -1,5 +1,6 @@
 import hashlib
 import os
+import Utils
 import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
@@ -66,11 +67,22 @@ class LocalRom(object):
     def read_byte(self, offset: int) -> int:
         return self.file[offset]
 
-    def read_bytes(self, offset: int, length: int) -> bytes:
-        return self.file[offset:offset + length]
+    def read_from_file(self, offset: int, file_name: str, length: int) -> bytes:
+        file = file_pointers[file_name]
+        address = offset - file.base_address
+        if address < 0 or (address + length > file.file_size):
+            raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
+        address = file.rom_address + address
+            
+        return self.file[address:address + length]
 
-    def write_bytes(self, offset: int, values: Sequence[int]) -> None:
-        self.file[offset:offset + len(values)] = values
+    def write_to_file(self, offset: int, file_name: str, values: Sequence[int]) -> None:
+        file = file_pointers[file_name]
+        address = offset - file.base_address
+        if address < 0 or (address + len(values )> file.file_size):
+            raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
+        address = file.rom_address + address
+        self.file[address:address + len(values)] = values
 
     def get_bytes(self) -> bytes:
         return bytes(self.file)
@@ -165,6 +177,7 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     procedure = [
         ("apply_bsdiff4", ["por_base.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"]),
+        ("check_patch_version", []),
         ("adjust_item_positions", []),
         ("apply_modifiers", [])
     ]
@@ -183,6 +196,38 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+class PorPatchExtentions(APPatchExtension):
+    game = "Castlevania: Portrait of Ruin"
+    @staticmethod
+    def check_patch_version(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        version_check = rom.read_from_file(0x02308F35, "overlay_119", 11)
+        version = version_check.rstrip(b"\x00")
+        version = version.decode("ascii")
+        if version != world_version:  # Installed world is different from generated world
+            raise Exception(f"Error! this patch was generated on Portrait of Ruin APworld version: {version}, but installed APworld is version: {world_version}. " +
+                            f"Please use APWorld version {version} to patch your game.")
+        return rom.get_bytes()
+
+    def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        for location in location_data_table:
+            data = location_data_table[location]
+            if data.is_grounded and data.location_type == "Normal":
+                item_type = int.from_bytes(rom.read_from_file(data.pointer + 6, data.file, 1))
+                item_id = int.from_bytes(rom.read_from_file(data.pointer + 10, data.file, 1))
+                if (item_type == 1 and item_id < 4) or item_type == 8:  # Coins and skills
+                    y_pos = int.from_bytes(rom.read_from_file(data.pointer +2, data.file, 2), byteorder="little")
+                    y_pos -= 0x10
+                    rom.write_to_file(data.pointer + 2, data.file, struct.pack("H", y_pos))
+
+        return rom.get_bytes()
+
+    def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
+        print("TODO!")
+        rom = LocalRom(rom)
+        return rom.get_bytes()
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
     base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)

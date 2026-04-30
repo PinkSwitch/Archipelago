@@ -35,6 +35,8 @@ class PoRSettings(settings.Group):
         copy_to = "CASTLEVANIA2_ACBEA4_00.nds"
         md5 = "2edd57540cae45842fbd19c45a4214f9"
 
+    rom_file: RomFile = RomFile(RomFile.copy_to)
+
 
 class PoRWorld(World):
     """The year is 1944. Dracula's castle has reappeared, and it's been taken over
