@@ -160,7 +160,7 @@ def patch_rom(world, rom, code_patch):
         elif data.location_type == "Cutscene":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
         elif data.location_type == "Quest":
-            rom.write_to_file(data.pointer, data.file, bytearray([item_type, item_id]))
+            rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type]))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
 
