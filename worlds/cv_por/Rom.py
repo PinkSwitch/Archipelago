@@ -1,12 +1,14 @@
+import hashlib
+import os
 import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
-from . import world_version
 from .static_location_data import location_data_table
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 
+world_version = "1.0"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
@@ -146,7 +148,7 @@ def patch_rom(world, rom, code_patch):
         elif data.location_type == "Cutscene":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
         elif data.location_type == "Quest":
-            print(":Huhcat:")
+            rom.write_to_file(data.pointer, data.file, bytearray([item_type, item_id]))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
 
@@ -181,3 +183,25 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+def get_base_rom_bytes(file_name: str = "") -> bytes:
+    base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)
+    if not base_rom_bytes:
+        file_name = get_base_rom_path(file_name)
+        base_rom_bytes = bytes(Utils.read_snes_rom(open(file_name, "rb")))
+
+        basemd5 = hashlib.md5()
+        basemd5.update(base_rom_bytes)
+        if hash_us != basemd5.hexdigest():
+            raise Exception('Supplied Base Rom does not match known MD5 for US release. '
+                            'Get the correct game and version, then dump it')
+        get_base_rom_bytes.base_rom_bytes = base_rom_bytes
+    return base_rom_bytes
+
+def get_base_rom_path(file_name: str = "") -> str:
+    from worlds.cv_por import PoRWorld
+    if not file_name:
+        file_name = PoRWorld.settings.rom_file
+    if not os.path.exists(file_name):
+        file_name = Utils.user_path(file_name)
+    return file_name

@@ -22,7 +22,7 @@ class RevealBreakableWalls(Toggle):
     display_name = "Reveal Hidden Walls"
 
 
-class NestofEvil(Choice):   # TODO!!! IMPLEMENT
+class NestofEvil(Choice):
     """The state of the Nest of Evil.
          Vanilla: Nest of Evil has its original rewards, the two tome pages and Greatest Five.
          Randomized: The three items in the Nest of Evil are random, and added to the item pool.
@@ -36,7 +36,7 @@ class NestofEvil(Choice):   # TODO!!! IMPLEMENT
     default = 0
 
 
-class BraunerRequired(DefaultOnToggle):  #  TODO!!! IMPLEMENT
+class BraunerRequired(DefaultOnToggle):
     """If enabled, you will be required to fight Brauner before you can access the Throne Room,
        Of course, this won't do anything if the goal is set to Brauner."""
     display_name = "Brauner Required"

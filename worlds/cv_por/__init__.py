@@ -8,10 +8,8 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids
-from .generator_main import CVPoRItem
-
-world_version = "1.0"
-
+from .generator_main import CVPoRItem, generate_early, create_regions
+from .Client import PoRClient
 
 class PoRWeb(WebWorld):
     theme = "ocean"
@@ -58,6 +56,8 @@ class PoRWorld(World):
 
     options_dataclass = PoROptions
     options: PoROptions
+    generate_early = generate_early
+    create_regions = create_regions
 
     # locked_locations: List[str]
     # ocation_cache: List[Location]
@@ -312,14 +312,6 @@ class PoRWorld(World):
 
         ]
 
-    def generate_early(self):
-        from .generator_main import generate_early
-        generate_early(self)
-
-    def create_regions(self):
-        from .generator_main import create_regions
-        create_regions(self)
-
     def create_items(self):
         from .generator_main import create_items
         create_items(self)
@@ -334,7 +326,7 @@ class PoRWorld(World):
 
     def get_filler_item_name(self):
         from .generator_main import get_filler_item_name
-        get_filler_item_name(self)
+        return get_filler_item_name(self)
 
     def create_item(self, name: str) -> CVPoRItem:
         from .generator_main import set_classifications
