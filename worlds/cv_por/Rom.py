@@ -17,9 +17,41 @@ class FilePointer(NamedTuple):
 
 
 file_pointers = {
-    "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB8),
-    "overlay_113": FilePointer(0x636600, 0x022E8820, 0x6220),
-    "overlay_119": FilePointer(0x2CF0800, 0x02308EC0, 0x1F000),
+    "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB7),
+    "overlay_78": FilePointer(0x369000, 0x022E8820, 0x10ABF),
+    "overlay_79": FilePointer(0x379C00, 0x022E8820, 0x1C83F),
+    "overlay_80": FilePointer(0x396600, 0x022E8820, 0x1671F),
+    "overlay_81": FilePointer(0x3ACE00, 0x022E8820, 0x121BF),
+    "overlay_82": FilePointer(0x3BF000, 0x022E8820, 0x1275F),
+    "overlay_83": FilePointer(0x3D1800, 0x022E8820, 0x143FF),
+    "overlay_84": FilePointer(0x3E5C00, 0x022E8820, 0x1029F),
+    "overlay_85": FilePointer(0x3F6000, 0x022E8820, 0x1E19F),
+    "overlay_86": FilePointer(0x414200, 0x022E8820, 0x13D5F),
+    "overlay_87": FilePointer(0x428000, 0x022E8820, 0x941F),
+    "overlay_88": FilePointer(0x431600, 0x022E8820, 0x137BF),
+    "overlay_91": FilePointer(0x452E00, 0x022E8820, 0x1EE7F),
+    "overlay_92": FilePointer(0x471E00, 0x022E8820, 0x1DE7F),
+    "overlay_93": FilePointer(0x48FE00, 0x022E8820, 0x1963F),
+    "overlay_94": FilePointer(0x4A9600, 0x022E8820, 0xE83F),
+    "overlay_95": FilePointer(0x4B8000, 0x022E8820, 0x1A59F),
+    "overlay_96": FilePointer(0x4D2600, 0x022E8820, 0x1809F),
+    "overlay_97": FilePointer(0x4EA800, 0x022E8820, 0x1D49F),
+    "overlay_98": FilePointer(0x507E00, 0x022E8820, 0xE29F),
+    "overlay_99": FilePointer(0x516200, 0x022E8820, 0x129BF),
+    "overlay_100": FilePointer(0x528C00, 0x022E8820, 0x1A53F),
+    "overlay_101": FilePointer(0x543200, 0x022E8820, 0x1577F),
+    "overlay_102": FilePointer(0x558A00, 0x022E8820, 0x2067F),
+    "overlay_103": FilePointer(0x579200, 0x022E8820, 0x1C59F),
+    "overlay_104": FilePointer(0x595800, 0x022E8820, 0xB45F),
+    "overlay_105": FilePointer(0x5A0E00, 0x022E8820, 0x1493F),
+    "overlay_106": FilePointer(0x5B5800, 0x022E8820, 0x16B3F),
+    "overlay_107": FilePointer(0x5CC400, 0x022E8820, 0x1B6DF),
+    "overlay_108": FilePointer(0x5E7C00, 0x022E8820, 0x1C8FF),
+    "overlay_109": FilePointer(0x604C00, 0x022E8820, 0xDBDF),
+    "overlay_111": FilePointer(0x61C200, 0x022E8820, 0xFEDF),
+    "overlay_112": FilePointer(0x62C200, 0x022E8820, 0xA33F),
+    "overlay_113": FilePointer(0x636600, 0x022E8820, 0x621F),
+    "overlay_119": FilePointer(0x2CF0800, 0x02308EC0, 0x1F000)
 }
 
 
@@ -81,6 +113,7 @@ def patch_rom(world, rom, code_patch):
     # If Nest of Evil is required, your goal (either brauner OR drac) will check it.
     rom.write_to_file(0x02309171, "overlay_119", bytearray([goal_requirements]))
     ####################################
+    # Location handler
     for location in world.get_locations():
         if not location.address:  # Filter all events out of this
             continue
@@ -106,6 +139,17 @@ def patch_rom(world, rom, code_patch):
             item_type = (item.code & 0xFF00) >> 8
             item_id = item.code & 0xFF
 
+        if data.location_type == "Normal":
+            rom.write_to_file(0x02308F40 + location.address, "overlay_119", bytearray([color])) # Item color table
+            rom.write_to_file(data.pointer + 6, data.file, bytearray([item_type]))
+            rom.write_to_file(data.pointer + 10, data.file, bytearray([item_id]))
+        elif data.location_type == "Cutscene":
+            rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
+        elif data.location_type == "Quest":
+            print(":Huhcat:")
+        else:
+            raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
+
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -130,7 +174,7 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     def write_to_file(self, offset: int, file_name: str, value: typing.Iterable[int]) -> None:
         file = file_pointers[file_name]
         address = offset - file.base_address
-        if address < 0 or address > file.file_size:
+        if address < 0 or (address + len(value )> file.file_size):
             raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
         address = file.rom_address + address
         self.write_token(APTokenTypes.WRITE, address, bytes(value))

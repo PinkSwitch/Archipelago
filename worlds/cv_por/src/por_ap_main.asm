@@ -55,6 +55,15 @@
     .org 0x0206EAA0
         bl @ShowBreakableWalls
 
+    .org 0x02040554
+        b @BetterQuestHandler
+
+    .org 0x02040AE0
+        b @GetQuestRewardText
+
+    .org 0x02040C94
+        bl @GetQuestRewardDesc
+
     .org 0x020E537C
         .dw  @PostBehemothRoom
 
@@ -407,6 +416,10 @@
 .dh 0x0001, 0x000A, 0x0032, 0x0064, 0x01F4, 0x03E8, 0x07D0
 .align 4
 
+@RamFlag_SkipArbitrarayPopup:
+.db 0x00
+.align 4
+
 @GetItemArbitrary:
     push lr
     cmp r0, 1 ; Money
@@ -424,10 +437,15 @@
     bl 0x021E43E4 ; Subroutine for granting regular items
     pop r0,r1
     bl 0x021E476C ; Get the global ID for the item
+    ldr r1, =@RamFlag_SkipArbitrarayPopup
+    ldrb r1,[r1]
+    cmp r1, 1
+    beq @@SkipItemPopup ; If we're in the quest menu we don't want to show popups
     mov r1, 0xF0
     bl 0x0204FE0C ; Display the got item popup
     mov r0, 0x31
     bl 0x0204D6B0 ; Play the sound effect for the item
+    @@SkipItemPopup:
     pop lr
     bx lr
 @@GetMaxUp:
@@ -441,15 +459,22 @@
 @@GetSkill:
     mov r0, r1
     push r0, r1
+
+    ldr r1, =@RamFlag_SkipArbitrarayPopup
+    ldrb r1, [r1]
+    cmp r1, 1
+    beq @@SkipSkillPopup
+    
     mov r1, 0xF0
     bl 0x0204FB24 ; Show skill popup
-    
+
+    mov r0, 0x30
+    bl 0x0204D6B0 ; Play the sound effect for the item
+    @@SkipSkillPopup:
     pop r0, r1
     push r0
     mov r1, 1
     bl 0x02214F34 ; Give the skill
-    mov r0, 0x30
-    bl 0x0204D6B0 ; Play the sound effect for the item
     pop r0
 
     cmp r0, 0x5C ; Is this a Relic?
@@ -477,7 +502,14 @@
     push r0
     bl 0x021E3F24 ; Give this amount of money
     pop r0
+    push r2
+    ldr r2, =@RamFlag_SkipArbitrarayPopup
+    ldrb r2,[r2]
+    cmp r2, 1
+    beq @@SkipMoneyPopup
     bl 0x0204FD4C ; Show the text popup for it
+    @@SkipMoneyPopup:
+    pop r2
     pop lr
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -960,6 +992,80 @@
     bl 0x02207C9C ; Check if Eye for Decay is equipped
     pop lr
     bx lr
+;;;;;;;;;;;;;;;;;;;
+; Vanilla quest rewards are bullshit.
+;Instead, we do this-
+@BetterQuestHandler:
+    push r3
+    push r0,r3
+    ldr r3, = @RamFlag_SkipArbitrarayPopup
+    mov r0, 1
+    strb r0,[r3]
+    pop r0,r3
+    sub r3, r3, 4
+    ldrh r3,[r3, r0]
+    ands r1, r3, 0xFF ; Split this into item ID
+    mov r0, r3, lsr 8 ; and item type
+    bl @GetItemArbitrary
+    ldr r3, = @RamFlag_SkipArbitrarayPopup
+    mov r0, 0
+    strb r0,[r3]
+    pop r3
+    b 0x02040844
+
+    ;Convert the Reward text to get type/ID instead of global id
+@GetQuestRewardText:
+    push lr
+    mov r0, r7, lsr 8 ; Funnel the TYPE into r0. the normal code does this by reverse ID searching
+    mov r6,r0
+    ands r1, r7, 0xFF
+    cmp r0, 8
+    bge @@GetQuestSkill
+    cmp r0, 1
+    beq @@GetQuestMoney
+    bl 0x021E476C ; Get the global ID for this item
+    mov r7, r0
+    pop lr
+    b 0x02040AF0
+@@GetQuestSkill:
+    pop lr
+    mov r6, r0
+    mov r7, r1
+    mov r0, r1
+    b 0x02040AF4
+@@GetQuestMoney:
+    pop lr
+    mov r0, 0xB0
+    add r1, r1, r0
+    mov r6, 9
+    mov r7, r1
+    mov r0, r1
+    b 0x02040AF4
+
+    ;Same, but for the item description
+@GetQuestRewardDesc:
+    push lr
+    mov r0, r6, lsr 8
+    ands r1, r6, 0xFF
+    cmp r0, 8
+    bge @@GetQuestSkill
+    cmp r0, 1
+    beq @@GetQuestMoney
+    bl 0x021E476C ; Get the global ID for this item
+    mov r6, r0
+    ldr r0, =0x151
+    pop lr
+    bx lr
+@@GetQuestSkill:
+    pop lr
+    ldr r0, =0x151
+    add r6, r0, r1
+    bx lr
+@@GetQuestMoney:
+    pop lr
+    ldr r1, = 0x051F
+    b 0x02040D18
+
 
 
 .pool
