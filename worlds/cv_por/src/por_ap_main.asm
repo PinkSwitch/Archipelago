@@ -66,6 +66,118 @@
 
     .org 0x020E537C
         .dw  @PostBehemothRoom
+;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; Quest rewards, refitted for new format...
+    .org 0x020DFD40 ; Preparation
+        .dh 0x0862
+
+    .org 0x020DFD50 ; Meat
+        .dh 0x0345
+
+    .org 0x020DFD60 ; Bible
+        .dh 0x080E
+
+    .org 0x020DFD70 ; Whip 2
+        .dh 0x086A
+
+    .org 0x020DFD80 ; Spinning Art
+        .dh 0x0866
+
+    .org 0x020DFD90 ; rocket slash
+        .dh 0x0826
+
+    .org 0x020DFDA0 ; thief ring
+        .dh 0x070B
+
+    .org 0x020DFDb0 ; blessed ring
+        .dh 0x0711
+
+    .org 0x020DFDc0 ; holy water
+        .dh 0x080D
+
+    .org 0x020DFDD0 ; martial art
+        .dh 0x0867
+
+    .org 0x020DFDE0 ; holy appearance
+        .dh 0x082F
+
+    .org 0x020DFDF0 ; luck boost
+        .dh 0x0836
+
+    .org 0x020DFE00 ; mental 1
+        .dh 0x0209
+
+    .org 0x020DFE10 ; mental 2
+        .dh 0x0209
+
+    .org 0x020DFE20 ; spear of legend
+        .dh 0x0337
+
+    .org 0x020DFE30 ; mental 3
+        .dh 0x0209
+
+    .org 0x020DFE40 ; nest of evil (UNUSED, REMOVE LATER?)
+        .dh 0x0100
+
+    .org 0x020DFE50 ; ghoul king
+        .dh 0x0710
+
+    .org 0x020DFE60 ; abandon greed
+        .dh 0x0709
+
+    .org 0x020DFE70 ; a rank huntor
+        .dh 0x032B
+
+    .org 0x020DFE80 ; mental 4
+        .dh 0x00209
+
+    .org 0x020DFE90 ; s rank huntor
+        .dh 0x0309
+
+    .org 0x020DFEA0 ; gambler
+        .dh 0x0502
+
+    .org 0x020DFEB0 ; time sotp
+        .dh 0x082E
+
+    .org 0x020DFEC0 ; poison
+        .dh 0x0321
+
+    .org 0x020DFED0 ; str 1
+        .dh 0x0208
+
+    .org 0x020DFEE0 ; str 2
+        .dh 0x0208
+
+    .org 0x020DFEF0 ; stage
+        .dh 0x025A
+
+    .org 0x020DFF00 ; str 3
+        .dh 0x0208
+
+    .org 0x020DFF10 ; cross
+        .dh 0x080C
+
+    .org 0x020DFF20 ; str 4
+        .dh 0x0208
+
+    .org 0x020DFF30 ; page
+        .dh 0x0314
+
+    .org 0x020DFF40 ; tasks
+        .dh 0x070A
+
+    .org 0x020DFF50 ; holy power
+        .dh 0x0858
+
+    .org 0x020DFF60 ; almighty
+        .dh 0x0325
+
+    .org 0x020DFF70 ; sage
+        .dh 0x071F
+
+    .org 0x020DFF80 ; gergoth
+        .dh 0x084A
 
     ; Fix the map explore/suspend bug
     .org 0x0202E5F8
@@ -365,7 +477,7 @@
         .db 0x00
 
     @OptionFlag_EXPMult: ;02309176
-        .db 0x00
+        .dh 0x0000
 
     .align 4
 ;;;;;;;;;;;;;;;;;;;

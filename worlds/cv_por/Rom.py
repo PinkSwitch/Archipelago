@@ -225,8 +225,9 @@ class PorPatchExtentions(APPatchExtension):
         return rom.get_bytes()
 
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
-        print("TODO!")
         rom = LocalRom(rom)
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_119", 2))[0]  # Read the multiplier
+        exp_multiplier = exp_multiplier / 100
         return rom.get_bytes()
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
