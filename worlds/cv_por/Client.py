@@ -61,7 +61,6 @@ class PoRClient(BizHawkClient):
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
         from CommonClient import logger
-        from .static_location_data import location_ids
 
         if ctx.server_version.build > 0:
             ctx.connected = True
@@ -77,6 +76,49 @@ class PoRClient(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
+
         read_state = await bizhawk.read(ctx.bizhawk_ctx, [
-            (0x308F35, 0x0A, "Main RAM"),
+                    (0x0F6284, 0x01, "Main RAM"),  # Game State
+                    (0x1119E0, 4, "Main RAM"),  # Clock Time
+                    (0x111F51, 1, "Main RAM"),  # Game Mode
+                    (0x111BB8, 0x19F, "Main RAM"),  # Location flags
         ])
+
+        menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
+        game_state = read_state[0][0]
+        clock_time = struct.unpack("I", read_state[1])[0]
+        game_mode = read_state[2][0]
+        # location_flags = read_state[3]
+
+        if not clock_time or game_state in menu_states or game_mode:
+            #  Clock time will be 0 if a file hasn't been booted.
+            #  Don't read data if we're on one of the title screens
+            #  If the game mode is not 0, we've laoded something other than John/Charlotte
+            return
+        await self.check_locations(read_state, ctx)
+
+
+    async def check_locations(self, read_state, ctx):
+        new_checks = []
+        location_flags = read_state[3]
+
+        from .static_location_data import location_ids, location_data_table
+        for location_name in location_ids:
+            loc_id = location_ids[location_name]
+            if loc_id not in ctx.server_locations:
+                continue
+            data = location_data_table[location_name]
+            if loc_id not in ctx.locations_checked:
+                if data.location_type == "Quest":
+                    print("Mega Sadge")
+                else:
+                    offset = int(loc_id / 8)
+                    bit = int(1 << (loc_id % 8))
+                    flag = location_flags[offset]
+                    if flag & bit:
+                        new_checks.append(loc_id)
+
+            for new_check_id in new_checks:
+                ctx.locations_checked.add(new_check_id)
+                location = ctx.location_names.lookup_in_slot(new_check_id)
+                await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
