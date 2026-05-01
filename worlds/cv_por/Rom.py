@@ -104,6 +104,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309173, "overlay_119", bytearray([world.options.reveal_hidden_walls.value]))  # Reveal hidden walls
     rom.write_to_file(0x02309174, "overlay_119", bytearray([world.options.start_with_change_cube.value]))  # Start with Change Cube
     rom.write_to_file(0x02309175, "overlay_119", bytearray([world.options.reveal_map.value]))  # Reveal map
+    rom.write_to_file(0x02309176, "overlay_119", struct.pack("H", world.options.experience_percentage.value))  # ExP Multiplier
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
@@ -228,6 +229,11 @@ class PorPatchExtentions(APPatchExtension):
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_119", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
+
+        for i in range(0x9A):
+            address = 0x020BE568 + (0x20 * i)
+            enemy_exp = struct.unpack("H", rom.read_from_file(address + 16, "arm9", 2))[0]
+            enemy_exp = int(min(0xFFFF, (enemy_exp * exp_multiplier)))
         return rom.get_bytes()
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
