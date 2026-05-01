@@ -60,4 +60,23 @@ class PoRClient(BizHawkClient):
 
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        print("NOT DONE YET")
+        from CommonClient import logger
+        from .static_location_data import location_ids
+
+        if ctx.server_version.build > 0:
+            ctx.connected = True
+        else:
+            ctx.connected = False
+            ctx.refresh_connect = True
+
+        if ctx.slot_data is not None:
+            ctx.data_present = True
+        else:
+            ctx.data_present = False
+
+        if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
+            return
+
+        read_state = await bizhawk.read(ctx.bizhawk_ctx, [
+            (0x308F35, 0x0A, "Main RAM"),
+        ])
