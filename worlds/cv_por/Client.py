@@ -76,13 +76,15 @@ class PoRClient(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
-
         read_state = await bizhawk.read(ctx.bizhawk_ctx, [
                     (0x0F6284, 0x01, "Main RAM"),  # Game State
                     (0x1119E0, 4, "Main RAM"),  # Clock Time
                     (0x111F51, 1, "Main RAM"),  # Game Mode
                     (0x111BB8, 0x19F, "Main RAM"),  # Location flags
                     (0x111EAC, 0x24, "Main RAM"),  # Quest data
+                    (0x2308ED0, 2, "Main RAM"),  # Received Item
+                    (0x308ED2, 2, "Main RAM"),  # Total items
+                    (0x1119DC, 4, "Main RAM")  # Boss defeat flags
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
@@ -91,6 +93,8 @@ class PoRClient(BizHawkClient):
         game_mode = read_state[2][0]
         # location_flags = read_state[3]
         # quest_flags = read_state[4]
+        # last_received_item = read_state[5[1]
+        boss_death_flags = struct.unpack("I", read_state[7])[0]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
@@ -98,6 +102,12 @@ class PoRClient(BizHawkClient):
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
         await self.check_locations(read_state, ctx)
+        # await self.give_items(read_state, ctx)
+        if not ctx.finished_game and boss_death_flags & 0x20000:  # Dracula's defeat flag
+            await ctx.send_msgs([{
+                "cmd": "StatusUpdate",
+                "status": ClientStatus.CLIENT_GOAL
+            }])
 
 
     async def check_locations(self, read_state, ctx):
