@@ -1,7 +1,9 @@
 import os
+import typing
 import pkgutil
 
 from BaseClasses import Item
+from typing import Dict
 from .Items import item_table
 
 
@@ -16,6 +18,7 @@ def generate_early(world) -> None:
             return
         passthrough = world.multiworld.re_gen_passthrough["Castlevania: Portrait of Ruin"]
         world.options.goal = passthrough["goal"]
+        world.options.start_with_change_cube = passthrough["start_with_change_cube"]
         world.options.brauner_portraits = passthrough["brauner_portraits"]
         world.options.dracula_portraits = passthrough["dracula_portraits"]
         world.options.nest_portraits = passthrough["nest_portraits"]
@@ -103,6 +106,24 @@ def generate_output(world, output_directory: str) -> None:
         raise
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
+
+def modify_multidata(world, multidata: dict) -> None:
+    # wait for self.rom_name to be available.
+    world.rom_name_available_event.wait()
+    rom_name = getattr(world, "rom_name", None)
+    if rom_name:
+        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.multiworld.player_name[world.player]]
+
+def fill_slot_data(world) -> Dict[str, typing.Any]:
+    return {
+        "goal": world.options.goal.value,
+        "start_with_change_cube": world.options.start_with_change_cube.value,
+        "brauner_portraits": world.options.brauner_portraits.value,
+        "dracula_portrtaits": world.options.dracula_portraits.value,
+        "nest_portrtaits": world.options.nest_portraits.value,
+        "nest_of_evil": world.options.nest_of_evil_state.value,
+        "brauner_required": world.options.brauner_required.value
+    }
 
 
 def get_filler_item_name(world) -> str:
