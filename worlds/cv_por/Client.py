@@ -82,6 +82,7 @@ class PoRClient(BizHawkClient):
                     (0x1119E0, 4, "Main RAM"),  # Clock Time
                     (0x111F51, 1, "Main RAM"),  # Game Mode
                     (0x111BB8, 0x19F, "Main RAM"),  # Location flags
+                    (0x111EAC, 0x24, "Main RAM"),  # Quest data
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
@@ -89,6 +90,7 @@ class PoRClient(BizHawkClient):
         clock_time = struct.unpack("I", read_state[1])[0]
         game_mode = read_state[2][0]
         # location_flags = read_state[3]
+        # quest_flags = read_state[4]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
@@ -101,6 +103,7 @@ class PoRClient(BizHawkClient):
     async def check_locations(self, read_state, ctx):
         new_checks = []
         location_flags = read_state[3]
+        quest_flags = read_state[4]
 
         from .static_location_data import location_ids, location_data_table
         for location_name in location_ids:
@@ -110,7 +113,10 @@ class PoRClient(BizHawkClient):
             data = location_data_table[location_name]
             if loc_id not in ctx.locations_checked:
                 if data.location_type == "Quest":
-                    print("Mega Sadge")
+                    quest_id = loc_id - 0x200
+                    quest_state = quest_flags[quest_id]
+                    if quest_state & 0x08:  # Bit that a quest has been completed
+                        new_checks.append(loc_id)
                 else:
                     offset = int(loc_id / 8)
                     bit = int(1 << (loc_id % 8))
