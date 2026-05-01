@@ -130,8 +130,7 @@ def get_filler_item_name(world) -> str:
     from .Items import money_table, good_food_table, consumable_table
     weights = {"subweapon": 5, "good_weapon": 7, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
                "weapon": 30, "armor": 40, "consumable": 60}
-    
-    filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
+
     weight_table = {
         "subweapon": world.subweapon_filler_table,
         "good_weapon": world.good_weapon_table,
@@ -143,7 +142,11 @@ def get_filler_item_name(world) -> str:
         "good_food": good_food_table,
         "accessory": world.accessory_table
     }
+    for fill_type, table in weight_table.items():
+        if not table:  # Remove empty tables to prevent them from being chosen
+            weights[fill_type] = 0
 
+    filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
     filler_item = world.random.choice(weight_table[filler_type])
     if not world.has_tried_magus_ring:
         world.has_tried_magus_ring = True
@@ -153,9 +156,6 @@ def get_filler_item_name(world) -> str:
 
     if filler_type not in ["consumable", "good_food", "money"]:
         weight_table[filler_type].remove(filler_item)  # Remove equipment from the corresponding table so it doesn't gen again
-
-        if not weight_table[filler_type]:  # If we have exhausted the entire pool
-            weights[filler_type] = 0  # Make sure it won't be rolled again
 
     return filler_item
 
