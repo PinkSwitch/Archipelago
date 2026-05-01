@@ -17,13 +17,13 @@ def generate_early(world) -> None:
         if "Castlevania: Portrait of Ruin" not in world.multiworld.re_gen_passthrough:
             return
         passthrough = world.multiworld.re_gen_passthrough["Castlevania: Portrait of Ruin"]
-        world.options.goal = passthrough["goal"]
-        world.options.start_with_change_cube = passthrough["start_with_change_cube"]
-        world.options.brauner_portraits = passthrough["brauner_portraits"]
-        world.options.dracula_portraits = passthrough["dracula_portraits"]
-        world.options.nest_portraits = passthrough["nest_portraits"]
-        world.options.nest_of_evil_state = passthrough["nest_of_evil"]
-        world.options.brauner_required = passthrough["brauner_required"]
+        world.options.goal.value = passthrough["goal"]
+        world.options.start_with_change_cube.value = passthrough["start_with_change_cube"]
+        world.options.brauner_portraits.value = passthrough["brauner_portraits"]
+        world.options.dracula_portraits.value = passthrough["dracula_portraits"]
+        world.options.nest_portraits.value = passthrough["nest_portraits"]
+        world.options.nest_of_evil_state.value = passthrough["nest_of_evil"]
+        world.options.brauner_required.value = passthrough["brauner_required"]
     setup_game(world)
 
     world.auth_id = world.random.getrandbits(32)
@@ -119,8 +119,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "goal": world.options.goal.value,
         "start_with_change_cube": world.options.start_with_change_cube.value,
         "brauner_portraits": world.options.brauner_portraits.value,
-        "dracula_portrtaits": world.options.dracula_portraits.value,
-        "nest_portrtaits": world.options.nest_portraits.value,
+        "dracula_portraits": world.options.dracula_portraits.value,
+        "nest_portraits": world.options.nest_portraits.value,
         "nest_of_evil": world.options.nest_of_evil_state.value,
         "brauner_required": world.options.brauner_required.value
     }

@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from NetUtils import ClientStatus
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
 from .Rom import world_version
@@ -82,7 +83,7 @@ class PoRClient(BizHawkClient):
                     (0x111F51, 1, "Main RAM"),  # Game Mode
                     (0x111BB8, 0x19F, "Main RAM"),  # Location flags
                     (0x111EAC, 0x24, "Main RAM"),  # Quest data
-                    (0x2308ED0, 2, "Main RAM"),  # Received Item
+                    (0x308ED0, 2, "Main RAM"),  # Received Item
                     (0x308ED2, 2, "Main RAM"),  # Total items
                     (0x1119DC, 4, "Main RAM")  # Boss defeat flags
         ])
@@ -102,7 +103,7 @@ class PoRClient(BizHawkClient):
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
         await self.check_locations(read_state, ctx)
-        # await self.give_items(read_state, ctx)
+        await self.give_items(read_state, ctx)
         if not ctx.finished_game and boss_death_flags & 0x20000:  # Dracula's defeat flag
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
@@ -138,3 +139,14 @@ class PoRClient(BizHawkClient):
                 ctx.locations_checked.add(new_check_id)
                 location = ctx.location_names.lookup_in_slot(new_check_id)
                 await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
+
+    async def give_items(self, read_state, ctx):
+        currently_processed_item_type = read_state[5][1]
+        items_from_server = struct.unpack("H", read_state[6])[0]
+
+        if items_from_server < len(ctx.items_received) and not currently_processed_item_type:
+            item = ctx.items_received[items_from_server]
+            items_from_server += 1
+            item_data = struct.pack("H", item.item)
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED0, item_data, "Main RAM")])
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED2, bytes([items_from_server]), "Main RAM")])
