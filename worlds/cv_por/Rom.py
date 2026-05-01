@@ -90,7 +90,7 @@ class LocalRom(object):
 
 def patch_rom(world, rom, code_patch):
     rom.name = f"{world.player}_{world.auth_id}"
-    patch_name = bytearray(rom.name, "utf8")[:0x14]
+    patch_name = bytearray(rom.name, "utf8")[:0x13]
     patch_name.append(0)  # Add a terminator here
     rom.write_to_file(0x02309140, "overlay_119", code_patch)  # Apply the basepatch's data
     rom.write_to_file(0x02308F20, "overlay_119", patch_name)  # Write in the player's name
