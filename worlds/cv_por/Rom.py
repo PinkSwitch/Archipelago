@@ -101,8 +101,8 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x0230916F, "overlay_119", bytearray([world.options.brauner_portraits.value]))  # Portraits for Brauner
     rom.write_to_file(0x02309170, "overlay_119", bytearray([world.options.dracula_portraits.value]))  # Portraits for Dracula
     rom.write_to_file(0x02309172, "overlay_119", bytearray([world.options.goal.value]))  # Goal mode, 1 if Dracula
-    rom.write_to_file(0x02309173, "overlay_119", bytearray([world.options.reveal_hidden_walls.value]))  # Reveal hidden walls
-    rom.write_to_file(0x02309174, "overlay_119", bytearray([world.options.start_with_change_cube.value]))  # Start with Change Cube
+    rom.write_to_file(0x02309174, "overlay_119", bytearray([world.options.reveal_hidden_walls.value]))  # Reveal hidden walls
+    rom.write_to_file(0x02309173, "overlay_119", bytearray([world.options.start_with_change_cube.value]))  # Start with Change Cube
     rom.write_to_file(0x02309175, "overlay_119", bytearray([world.options.reveal_map.value]))  # Reveal map
     rom.write_to_file(0x02309176, "overlay_119", struct.pack("H", world.options.experience_percentage.value))  # ExP Multiplier
 

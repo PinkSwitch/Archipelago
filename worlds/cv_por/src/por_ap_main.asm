@@ -497,6 +497,8 @@
     cmp r0, 8
     beq @@GetSkill ; Skills/abilities
     ; normal items/armor
+    cmp r0, 2
+    bne @@NormalItem ; Armor/stuff shouldn't check Max ups?
     push r0,r1
     cmp r1, 0x08
     blt @@NormalItem
