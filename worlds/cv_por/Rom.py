@@ -71,7 +71,7 @@ class LocalRom(object):
         file = file_pointers[file_name]
         address = offset - file.base_address
         if address < 0 or (address + length > file.file_size):
-            raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
+            raise ValueError(f"Out of Range: Tried to read at {hex(offset)} in {file_name}")
         address = file.rom_address + address
             
         return self.file[address:address + length]
@@ -80,7 +80,7 @@ class LocalRom(object):
         file = file_pointers[file_name]
         address = offset - file.base_address
         if address < 0 or (address + len(values )> file.file_size):
-            raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
+            raise ValueError(f"Out of Range: Tried to write {values} at {hex(offset)} in {file_name}")
         address = file.rom_address + address
         self.file[address:address + len(values)] = values
 
