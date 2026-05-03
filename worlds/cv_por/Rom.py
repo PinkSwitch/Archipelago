@@ -234,6 +234,7 @@ class PorPatchExtentions(APPatchExtension):
             address = 0x020BE568 + (0x20 * i)
             enemy_exp = struct.unpack("H", rom.read_from_file(address + 16, "arm9", 2))[0]
             enemy_exp = int(min(0xFFFF, (enemy_exp * exp_multiplier)))
+            rom.write_to_file(address + 16, "arm9", struct.pack("H", enemy_exp))
         return rom.get_bytes()
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:

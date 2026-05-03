@@ -70,7 +70,7 @@ class DraculaPortraits(Range):
 class ExperiencePercent(NamedRange):  # TODO!!! IMPLEMENT
     """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
     display_name = "Experience Percentage"
-    range_start = 0
+    range_start = 50
     range_end = 500
     default = 100
     special_range_names = {

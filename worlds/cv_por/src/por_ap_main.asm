@@ -498,8 +498,8 @@
     beq @@GetSkill ; Skills/abilities
     ; normal items/armor
     cmp r0, 2
-    bne @@NormalItem ; Armor/stuff shouldn't check Max ups?
     push r0,r1
+    bne @@NormalItem ; Armor/stuff shouldn't check Max ups?
     cmp r1, 0x08
     blt @@NormalItem
     cmp r1, 0x0A
@@ -794,9 +794,9 @@
     beq @@LocketSkill
 @@GiveLocketSkill:
     bl @GetItemArbitrary ; Pass off to the actual item routine
-    ldr r0, =0x2111BE9
+    ldr r0, =0x2111BE8
     ldrb r1,[r0]
-    orr r1, r1,0x01
+    orr r1, r1,0x080
     strb r1,[r0] ; Write this Loc flag
     pop r0-r2,lr
     bx lr
@@ -946,9 +946,9 @@
     ldrb r0, [r1, 1] ; R0 = Item Type
     ldrb r1,[r1] ; R1 = Item ID
     bl @GetItemArbitrary
-    ldr r0, = 0x02111BB8
+    ldr r0, = 0x02111BE9
     ldrb r1,[r0]
-    orr r1, r1, 0x80
+    orr r1, r1, 0x01
     strb r1,[r0] ; Set the Loc flag for this check
 
 
