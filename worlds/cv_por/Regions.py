@@ -82,7 +82,7 @@ region_list = [
 
 has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
 
-can_cast_spell = Has("Call Cube") | has_change_cube
+can_cast_spell = Has("Skill Cube") | has_change_cube
 small_uppies = HasAny("Stone of Flight", "Griffon Wing") | HasAll("Call Cube", "Acrobat Cube") | (can_cast_spell & Has("Owl Morph"))
 medium_uppies = HasAny("Stone of Flight", "Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
 big_uppies = Has("Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
@@ -168,7 +168,8 @@ def connect_regions(world):
     })
 
     world.get_region("Tower of Death - Elevator Room").add_exits(["Master's Keep - Bridge", "Tower of Death - Top of the Tower", "Tower of Death - First Gear Room", "Master's Keep - Lower"],
-                                                                  {"Master's Keep - Lower": small_uppies & Has("Tower Elevator Active")})
+                                                                  {"Master's Keep - Lower": small_uppies & Has("Tower Elevator Active"),
+                                                                   "Tower of Death - Top of the Tower": big_uppies})
 
     world.get_region("Tower of Death - First Gear Room").add_exits(["Tower of Death - Bottom", "Tower of Death - Ascent"],
                                                                    {"Tower of Death - Ascent": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})

@@ -50,7 +50,7 @@ file_pointers = {
     "overlay_106": FilePointer(0x5B5800, 0x022E8820, 0x16B3F),
     "overlay_107": FilePointer(0x5CC400, 0x022E8820, 0x1B6DF),
     "overlay_108": FilePointer(0x5E7C00, 0x022E8820, 0x1C8FF),
-    "overlay_109": FilePointer(0x604C00, 0x022E8820, 0xDBDF),
+    "overlay_109": FilePointer(0x604600, 0x022E8820, 0xDBDF),
     "overlay_111": FilePointer(0x61C200, 0x022E8820, 0xFEDF),
     "overlay_112": FilePointer(0x62C200, 0x022E8820, 0xA33F),
     "overlay_113": FilePointer(0x636600, 0x022E8820, 0x621F),
@@ -130,6 +130,10 @@ def patch_rom(world, rom, code_patch):
     ####################################
     # Location handler
     for location in world.get_locations():
+        if location.name == "Dark Academy: West Building Breakable Wall":
+            world.test = True
+        else:
+            world.test = False
         if not location.address:  # Filter all events out of this
             continue
         item = location.item
@@ -155,8 +159,10 @@ def patch_rom(world, rom, code_patch):
             item_id = item.code & 0xFF
 
         if data.location_type == "Normal":
+            if world.test:
+                print(f"writing to {hex(data.pointer + 6)} in {data.file}")
             rom.write_to_file(0x02308F40 + location.address, "overlay_119", bytearray([color])) # Item color table
-            rom.write_to_file(data.pointer + 6, data.file, bytearray([item_type]))
+            rom.write_to_file(data.pointer + 6, data.file, bytearray([item_type]), world.test)
             rom.write_to_file(data.pointer + 10, data.file, bytearray([item_id]))
         elif data.location_type == "Cutscene":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
@@ -187,12 +193,16 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
 
-    def write_to_file(self, offset: int, file_name: str, value: typing.Iterable[int]) -> None:
+    def write_to_file(self, offset: int, file_name: str, value: typing.Iterable[int], test=False) -> None:
         file = file_pointers[file_name]
         address = offset - file.base_address
         if address < 0 or (address + len(value )> file.file_size):
             raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
         address = file.rom_address + address
+        if test:
+            print(hex(address))
+            print(hex(offset - file.base_address))
+            print(hex(file.rom_address + (offset - file.base_address)))
         self.write_token(APTokenTypes.WRITE, address, bytes(value))
     
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
