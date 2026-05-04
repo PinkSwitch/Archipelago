@@ -256,7 +256,7 @@ item_table: Dict[str, ItemData] = {
     "Combat Beret": ItemData("Headgear", 0x0508, ItemClassification.useful),
     "Uraeus": ItemData("Headgear", 0x0509, ItemClassification.filler, 0),
     "Royal Crown": ItemData("Headgear", 0x050A, ItemClassification.filler, 0),
-    "Headguard": ItemData("Jonathan Headgear", 0x050B, ItemClassification.filler, 0),
+    "Head Guard": ItemData("Jonathan Headgear", 0x050B, ItemClassification.filler, 0),
     "Bandana": ItemData("Jonathan Headgear", 0x050C, ItemClassification.useful),
     "Iron Helmet": ItemData("Jonathan Headgear", 0x050D, ItemClassification.filler, 0),
     "Stone Mask": ItemData("Jonathan Headgear", 0x050E, ItemClassification.filler, 0),
