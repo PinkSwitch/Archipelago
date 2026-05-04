@@ -228,7 +228,7 @@ class PoRWorld(World):
             "Goggles",
             "Uraeus",
             "Royal Crown",
-            "Headguard",
+            "Head Guard",
             "Iron Helmet",
             "Stone Mask",
             "Viking Helmet",
