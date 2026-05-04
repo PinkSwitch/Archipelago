@@ -188,7 +188,7 @@
     ; If we own 9 of an item, pretend we have 8
     ; this allows the item to still be properly picked up even at cap
     .org 0x021E4400 ; In GiveItem
-        movge r9, 8
+        movge r2, 8
         nop
         nop
 
@@ -296,6 +296,11 @@
         nop ; Prevent dracula from setting the dracula flag mid fight
 .close
 ;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_74", 0x022D7900
+    .org 0x022D7C10
+        b @SwapAfterAstarte
+.close
+
 .open "ftc/overlay9_78", 0x022E8820
     .org 0x022E8884
         cmp r1, 0xFF ; Always set the drawbridge to open
@@ -345,6 +350,11 @@
 .open "ftc/overlay9_90", 0x022E8820
     .org 0x022E8BD8
         bl @EndDracula
+.close
+;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_93", 0x022E8820
+    .org 0x022EA3D0
+        bl @UncallCharlotte
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_111", 0x022E8820
@@ -1176,6 +1186,37 @@
         ldr r14, =1B50Ch
         ldr r6, =1B510h
         b 0202E6CCh
+;;;;;;;;;;;;;;;;;;;;;;;
+; Switch back to Jonathan after fighting Astarte, if you've been hit with Temptation
+@SwapAfterAstarte:
+    ldr r0, =0x02111F56
+    ldrb r0, [r0]
+    cmp r0, 1
+    bne @@End ; We only should switch back if playing Charlotte
+    ldr r0, =0x02111A9A
+    ldrb r0, [r0]
+    ands r0, 0x01
+    bne @@End ; If we have Change, we don't need to swap back
+    bl 0x021F5004 ; Switch back to Jonathan
+@@End:
+    mov r0, r5
+    b 0x022D7C14
+
+; Dismiss Charlotte if we dont own the Call Cube
+@UncallCharlotte:
+    push r0, r1
+    ldr r0, =0x02111A9A        
+    ldrb r0, [r0]
+    ands r0, 0x10 ; Call Cube
+    bne @@End
+    ldr r0, =0x0211210A
+    mov r1, 0 ; Zero out the Called Partner var
+    strb r1, [r0]
+@@End:
+    pop r0, r1
+    b 0x021D13EC
+
+
 .pool
 
 .endarea

@@ -9,7 +9,7 @@ from .static_location_data import location_data_table
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 
-world_version = "1.0"
+world_version = "1.0.1"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
@@ -130,10 +130,6 @@ def patch_rom(world, rom, code_patch):
     ####################################
     # Location handler
     for location in world.get_locations():
-        if location.name == "Dark Academy: West Building Breakable Wall":
-            world.test = True
-        else:
-            world.test = False
         if not location.address:  # Filter all events out of this
             continue
         item = location.item
@@ -159,10 +155,8 @@ def patch_rom(world, rom, code_patch):
             item_id = item.code & 0xFF
 
         if data.location_type == "Normal":
-            if world.test:
-                print(f"writing to {hex(data.pointer + 6)} in {data.file}")
             rom.write_to_file(0x02308F40 + location.address, "overlay_119", bytearray([color])) # Item color table
-            rom.write_to_file(data.pointer + 6, data.file, bytearray([item_type]), world.test)
+            rom.write_to_file(data.pointer + 6, data.file, bytearray([item_type]))
             rom.write_to_file(data.pointer + 10, data.file, bytearray([item_id]))
         elif data.location_type == "Cutscene":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
@@ -193,16 +187,12 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
 
-    def write_to_file(self, offset: int, file_name: str, value: typing.Iterable[int], test=False) -> None:
+    def write_to_file(self, offset: int, file_name: str, value: typing.Iterable[int]) -> None:
         file = file_pointers[file_name]
         address = offset - file.base_address
         if address < 0 or (address + len(value )> file.file_size):
             raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
         address = file.rom_address + address
-        if test:
-            print(hex(address))
-            print(hex(offset - file.base_address))
-            print(hex(file.rom_address + (offset - file.base_address)))
         self.write_token(APTokenTypes.WRITE, address, bytes(value))
     
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
