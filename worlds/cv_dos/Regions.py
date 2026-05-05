@@ -345,7 +345,7 @@ def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
     #Mine of Judgment
     if world.mine_status != "Disabled":
         multiworld.get_region("Mine of Judgment", player).add_exits(["The Abyss", "Warp Room"],
-                                                                    {"The Abyss": lambda state: state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player) and state.has(world.magic_seal_table["Mine of Judgment"], player)})
+                                                                    {"The Abyss": lambda state: (state.has_any(small_uppies, player) or state.has("Pupper Master Soul", player)) and state.has(world.magic_seal_table["Mine of Judgment"], player)})
 
         multiworld.get_region("The Abyss", player).add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
                                                             {"Mine of Judgment": lambda state: state.has_any(small_uppies, player),
