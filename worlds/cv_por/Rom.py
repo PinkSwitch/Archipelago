@@ -105,6 +105,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309173, "overlay_119", bytearray([world.options.start_with_change_cube.value]))  # Start with Change Cube
     rom.write_to_file(0x02309175, "overlay_119", bytearray([world.options.reveal_map.value]))  # Reveal map
     rom.write_to_file(0x02309176, "overlay_119", struct.pack("H", world.options.experience_percentage.value))  # ExP Multiplier
+    rom.write_to_file(0x02309178, "overlay_119", bytearray([world.options.stronger_glove.value]))
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders

@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired
+from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -81,6 +81,7 @@ region_list = [
 ]
 
 has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
+strongies = Has("Strength Glove") & (HasAll("Push Cube", "Call Cube") | OptionFilter(StrongerGlove, 0))
 
 can_cast_spell = Has("Skill Cube") | has_change_cube
 small_uppies = HasAny("Stone of Flight", "Griffon Wing") | HasAll("Call Cube", "Acrobat Cube") | (can_cast_spell & Has("Owl Morph"))
@@ -131,7 +132,7 @@ def connect_regions(world):
     world.get_region("Entrance - Upper Area").add_exits(["Entrance - Hub", "Great Stairway - Entrance Connector"])  # Stairway connector
 
     world.get_region("Entrance - Behemoth Area").add_exits(["Entrance - Hub", "Great Stairway - Lower", "Buried Chamber"],
-                                                              {"Great Stairway - Lower": HasAll("Strength Glove", "Push Cube", "Call Cube")})
+                                                              {"Great Stairway - Lower": strongies})
 
     world.get_region("Buried Chamber").add_exits(["Entrance - Hub", "Great Stairway - Lower"])
 
@@ -139,7 +140,7 @@ def connect_regions(world):
                                                           {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
 
     world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper"],
-                                                          {"Tower of Death - Bottom": HasAll("Strength Glove", "Push Cube", "Call Cube"),
+                                                          {"Tower of Death - Bottom": strongies,
                                                            "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
 
     world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
@@ -215,7 +216,7 @@ def connect_regions(world):
                                                          {"Forest of Doom - Main": small_uppies})
 
     world.get_region("Forest of Doom - Main").add_exits(["Forest of Doom - Cave"],
-                                                         {"Forest of Doom - Cave": HasAll("Strength Glove", "Push Cube", "Call Cube")})
+                                                         {"Forest of Doom - Cave": strongies})
 
     world.get_region("Dark Academy").add_exits(["Dark Academy - Right Building"],
                                                          {"Dark Academy - Right Building": small_uppies | Has("Puppet Master")})
@@ -230,7 +231,7 @@ def connect_regions(world):
                                                             {"Forgotten City - Inner Upper": medium_uppies | HasAll("Puppet Master", "Call Cube", "Acrobat Cube")})
 
     world.get_region("13th Street").add_exits(["13th Street - Main"],
-                                              {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})
+                                              {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})  # This one ACTUALLY needs all 3
 
     world.get_region("Burnt Paradise").add_exits(["Burnt Paradise - Entrance"],
                                                             {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})

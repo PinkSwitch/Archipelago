@@ -110,6 +110,10 @@ class ExcludeOwlMorph(Toggle):
     """If enabled, Owl Morph will not be added to the item pool."""
     display_name = "Exclude Owl Morph"
 
+class StrongerGlove(Toggle):
+    """If enabled, the Strength Glove will be buffed and able to push stationary heavy objects on its own."""
+    display_name = "Stronger Glove"
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -127,6 +131,7 @@ class PoROptions(PerGameCommonOptions):
     start_with_change_cube: StartWithChangeCube
     add_extra_items: AddExtraItems
     exclude_owl_morph: ExcludeOwlMorph
+    stronger_glove: StrongerGlove
 
 
 por_option_groups = [
@@ -148,7 +153,8 @@ por_option_groups = [
         ShuffleWhip,
         StartWithChangeCube,
         AddExtraItems,
-        ExcludeOwlMorph
+        ExcludeOwlMorph,
+        StrongerGlove
 
     ]),
 

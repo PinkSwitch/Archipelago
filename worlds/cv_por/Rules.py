@@ -1,6 +1,6 @@
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
-from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies
+from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies
 from .Options import NestofEvil, BraunerPortraits, Goal
 
 from typing import TYPE_CHECKING
@@ -13,7 +13,7 @@ def set_location_rules(world):
     world.set_completion_rule(Has("Dracula Defeated"))
 
     set_rule(world.get_location("Entrance: Drawbridge Upper Item"), big_uppies | HasAll("Acrobat Cube", "Call Cube", "Stone of Flight", "Puppet Master"))
-    set_rule(world.get_location("Entrance: Above Metal Block Room"), big_uppies | (HasAll("Strength Glove", "Push Cube", "Call Cube") & medium_uppies) | (HasAll("Acrobat Cube", "Puppet Master")) | (HasAll("Puppet Master", "Stone of Flight", "Acrobat Cube", "Call Cube")))
+    set_rule(world.get_location("Entrance: Above Metal Block Room"), big_uppies | (strongies & medium_uppies) | (HasAll("Acrobat Cube", "Puppet Master")) | (HasAll("Puppet Master", "Stone of Flight", "Acrobat Cube", "Call Cube")))
 
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Lower Alcove"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Upper Alcove"), medium_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))
