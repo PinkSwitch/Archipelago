@@ -101,11 +101,12 @@ def generate_output(world, output_directory: str) -> None:
         world.rom_name = patch.name
 
         patch.write(os.path.join(output_directory,
-                                f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
+                                 f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
     except Exception:
         raise
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
+
 
 def modify_multidata(world, multidata: dict) -> None:
     # wait for self.rom_name to be available.
@@ -113,6 +114,7 @@ def modify_multidata(world, multidata: dict) -> None:
     rom_name = getattr(world, "rom_name", None)
     if rom_name:
         multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.multiworld.player_name[world.player]]
+
 
 def fill_slot_data(world) -> Dict[str, typing.Any]:
     return {

@@ -1,15 +1,8 @@
+from .modules.portrait_shuffle import portrait_shuffle
+
+
 def setup_game(world):
-    world.portrait_connections = {
-        "City of Haze": "City of Haze",
-        "13th Street": "13th Street",
-        "Sandy Grave": "Sandy Grave",
-        "Forgotten City": "Forgotten City",
-        "Nation of Fools": "Nation of Fools",
-        "Burnt Paradise": "Burnt Paradise",
-        "Forest of Doom": "Forest of Doom",
-        "Dark Academy": "Dark Academy",
-        "Nest of Evil": "Nest of Evil"
-    }
+    portrait_shuffle(world)
 
 
 def place_static_items(world):

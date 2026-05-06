@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 class PoRClient(BizHawkClient):
     game = "Castlevania: Portrait of Ruin"
-    system = ("NDS")
+    system = "NDS"
     patch_suffix = ".apcvpor"
     most_recent_connect: str = ""
     client_version: str = world_version
@@ -59,9 +59,7 @@ class PoRClient(BizHawkClient):
         slot_name_bytes = slot_name_bytes[0].rstrip(b'\x00')
         ctx.auth = slot_name_bytes.decode("ascii")
 
-
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        from CommonClient import logger
 
         if ctx.server_version.build > 0:
             ctx.connected = True
@@ -109,7 +107,6 @@ class PoRClient(BizHawkClient):
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
             }])
-
 
     async def check_locations(self, read_state, ctx):
         new_checks = []

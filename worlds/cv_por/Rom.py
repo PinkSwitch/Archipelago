@@ -166,6 +166,8 @@ def patch_rom(world, rom, code_patch):
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type]))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
+    #####################################
+    # Portrait Shuffle
 
 
     rom.write_file("token_patch.bin", rom.get_token_binary())

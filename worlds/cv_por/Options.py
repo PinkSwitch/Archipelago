@@ -110,13 +110,24 @@ class ExcludeOwlMorph(Toggle):
     """If enabled, Owl Morph will not be added to the item pool."""
     display_name = "Exclude Owl Morph"
 
+
 class StrongerGlove(Toggle):
     """If enabled, the Strength Glove will be buffed and able to push stationary heavy objects on its own."""
     display_name = "Stronger Glove"
 
+
 class OneScreenMode(Toggle):
     """Allows the entire game to be played with only the bottom screen. Press Select to view the map."""
     display_name = "One-Screen Mode"
+
+
+class PortraitShuffle(Choice):
+    """Shuffles which areas the Portraits lead you to."""
+    display_name = "Nest of Evil State"
+    option_normal = 0
+    option_shuffle = 1
+    option_add_nest_of_evil = 2
+    default = 0
 
 
 @dataclass
@@ -137,6 +148,7 @@ class PoROptions(PerGameCommonOptions):
     exclude_owl_morph: ExcludeOwlMorph
     stronger_glove: StrongerGlove
     one_screen_mode: OneScreenMode
+    portrait_shuffle: PortraitShuffle
 
 
 por_option_groups = [
@@ -160,6 +172,11 @@ por_option_groups = [
         AddExtraItems,
         ExcludeOwlMorph,
         StrongerGlove
+
+    ]),
+
+    OptionGroup("Area Randomization", [
+        PortraitShuffle
 
     ]),
 
