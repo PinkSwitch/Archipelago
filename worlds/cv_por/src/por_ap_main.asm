@@ -64,6 +64,33 @@
     .org 0x02040C94
         bl @GetQuestRewardDesc
 
+    .org 0x020523B4
+        bl @OneScreen_OpenMap
+
+    .org 0x02052614
+        ;nop ; Remove debugging code for room selector
+
+    .org 0x020528D8
+        b 0x02052AF0 ; Prevent the Debug map from warping to touched rooms
+
+    .org 0x0205283C
+        b @OneScreen_CloseMap ; Make closing the debug map just close. skip corrupting code
+
+    .org 0x02052834
+        ands r0, r0, 0x06 ; Allow closing the map with B or Select
+
+    .org 0x0202DF90
+        bl @DontRenderWarpMarks
+
+    .org 0x0202E0A8
+        bl @OneScreen_UsePlayerPositionX
+
+    .org 0x0202E0DC
+        bl @OneScreen_UsePlayerPositionY
+
+    .org 0x02053DD0
+        b @OneScreen_DontChangeTop
+
     .org 0x020E537C
         .dw  @PostBehemothRoom
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -204,6 +231,9 @@
     .org 0x021E5414
         bl @LoadAPItemColor
 
+    .org 0x02207D88
+        bl @CheckStrongerGloveSpeed
+
 ;;;;;;;;;;;;;;;;
     .org 0x0221BBBC  ; Repoint the Konami Man and Twin Bee's item names
         .dw 0x0222253C ; This so that they can both use the name 'AP Item'
@@ -307,6 +337,9 @@
 
     .org 0x022E898C
         bl @Undergroundpassage_Portraitcheck
+
+    .org 0x022EA274
+        bl @SetDefaultMap
 .close
 
 .open "ftc/overlay9_79", 0x022E8820
@@ -335,6 +368,9 @@
 
     .org 0x022EC8A0
         b @ForestPortraitSceneCheck
+
+    .org 0x022EC87C
+        b @ForestPortrait_Dismiss
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_88", 0x022E8820
@@ -354,7 +390,7 @@
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_93", 0x022E8820
     .org 0x022EA3D0
-        bl @UncallCharlotte
+        bl @CityPortrait_Dismiss
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_111", 0x022E8820
@@ -446,6 +482,12 @@
 
     @OptionFlag_EXPMult: ;02309176
         .dh 0x0000
+
+    @OptionFlag_StrongerGlove: ;02309178
+        .db 0x00
+
+    @OptionFlag_OneScreenMode: ;02309179
+        .db 0x00
 
     .align 4
 ;;;;;;;;;;;;;;;;;;;
@@ -560,13 +602,52 @@
     pop r0
 
     cmp r0, 0x5C ; Is this a Relic?
-    blt @@EndSkill
+    blt @@GiveNormalSkill
     sub r0, r0, 0x5C ; get the skill id num
     mov r1, 1
     bl 0x02215308 ; Activate relic
 @@EndSkill:
     pop lr
     bx lr
+@@GiveNormalSkill:
+    cmp r0, 0x27
+    bge @@GiveSpell
+    push r0
+    ldr r1, =0x0211217E
+    ldrb r0, [r1] ; Check if we have a Subweapon on already
+    cmp r0, 0
+    pop r0
+    streqb r0, [r1]
+    b @@EndSkill
+@@GiveSpell:
+    cmp r0, 0x51
+    bge @@GiveCrush
+    push r0
+    ldr r1, =0x021121EA
+    ldrb r0, [r1] ; Check if we have a Spell on already
+    cmp r0, 0
+    pop r0
+    streqb r0,[r1]
+    b @@EndSkill
+@@GiveCrush:
+    push r0
+    ldr r1, =0x0211218A
+    ldrb r0, [r1]
+    cmp r0, 0
+    pop r0
+    push r0
+    subeq r0, r0, 0x51
+    streqb r0,[r1]
+    pop r0
+    ; Also check Charlotte's crush
+    push r0
+    ldr r1, =0x021121F6
+    ldrb r0, [r1]
+    cmp r0, 0
+    pop r0
+    subeq r0, r0, 0x51
+    streqb r0,[r1]
+    b @@EndSkill
 @@GetMoney:
     mov r1, r1, lsl 1
     ldr r0, = @MoneyValues
@@ -870,7 +951,14 @@
   cmp r0, 0h
   movlt r0, 0h ; Y = 0 if Y < 0
   ldr r2, = 0x02112458
-  ldrb r2, [r2, 0x3B]
+  ldrh r2, [r2, 0x3A]
+  push r0,lr
+  mov r0, r2
+  mov r1, 0xC0
+  bl 0x020BD93C ; Divide pixels by C0 to get Screen Count
+  mov r2, r0
+  sub r2, r2, 1
+  pop r0, lr
   cmp r0, r2
   movgt r0, r2 ; Y = room_height-1 if Y > room_height-1
   bx r14
@@ -1189,7 +1277,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Switch back to Jonathan after fighting Astarte, if you've been hit with Temptation
 @SwapAfterAstarte:
-    ldr r0, =0x02111F56
+    ldr r0, =0x02111F57
     ldrb r0, [r0]
     cmp r0, 1
     bne @@End ; We only should switch back if playing Charlotte
@@ -1201,6 +1289,13 @@
 @@End:
     mov r0, r5
     b 0x022D7C14
+
+; Dismiss Charlotte during the City of Haze entrance cutscene, if necessary.
+@CityPortrait_Dismiss:
+    push lr
+    bl @UncallCharlotte
+    pop lr
+    b 0x021D13EC
 
 ; Dismiss Charlotte if we dont own the Call Cube
 @UncallCharlotte:
@@ -1214,10 +1309,180 @@
     strb r1, [r0]
 @@End:
     pop r0, r1
+    bx lr
+
+; Dismiss Charlotte after the Forest Portrait scene
+@ForestPortrait_Dismiss:
+    push r0, r1
+    ldr r0, =0x02111A9A
+    ldrb r0, [r0]
+    ands r0, 0x10 ; Call Cube
+    bne @@End
+    ldr r0, =0x0211210A
+    mov r1, 0 ; Zero out the Called Partner var
+    strb r1, [r0]
+@@End:
+    pop r0, r1
+    b 0x022EC944
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; If we have the stronger glove option on,
+; Give a bigger strength boost.
+@CheckStrongerGloveSpeed:
+    push r0
+    ldr r0, =@OptionFlag_StrongerGlove
+    ldrb r0, [r0] ; Check if this option is on
+    cmp r0, 0
+    pop r0
+    beq @@NormalStr
+    add r10, r10, 0x0B80 ; If we have Stronger Glove, boost the strength it gives
+    bx lr
+@@NormalStr:
+    add r10, r10, 0x800
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+@RamFlag_MapOpen:
+    .db 0x00
+.align 4
+@OneScreen_OpenMap:
+    push r0-r3, lr
+    ldr r0, = @OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipMap ; If the option is off, don't check this
+    ldr r0, =0x020F628C ; Does the player have control?
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@SkipMap ; Not while playing text....
+    ldr r0, = 0x020FC498
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@SkipMap ; This is for main player control. Also used for cutscenes/autowalks?
+    ldr r0, = 0x0211174C
+    ldr r0, [r0]
+    ldr r1, = 0x80100041 ; We don't want to map while dying, in a cutscene, room transition, or otherwise in a no pausing state
+    ands r0, r0, r1
+    bne @@SkipMap
+
+    ldr r0, =0x020FC48E ; Inputs this frame
+    ldrb r0, [r0]
+    ands r0, r0, 0x04 ; Select
+    beq @@SkipMap
+    ; Open the map if Select was pushed
+    ldr r0, =@RamFlag_MapOpen
+    mov r1, 1
+    strb r1, [r0]
+
+    mov r0, 3
+    mov r1, 1
+    bl 0x02051B38 ; Load objects for map markers
+
+    ldr r0, =0x02111785 ; Current map
+    ldrb r0, [r0] ; Put the current map in 0 so it draws the right map
+    push r0
+    bl 0x0202F138
+    bl 0x0202E854 ; Actually draw it
+    pop r0
+    bl 0x0202DF18 ; Rendr objects
+
+    ldr r1, = 0x020CA580
+    ldr r0, [r1]
+    mov r2, 4
+    add r0, r0, 0x1B000
+    strb r2, [r0, 0x4D4] ; Darken the screen for the map
+    mov r2, 0
+    strb r2, [r0, 0x4D5]
+@@SkipMap:
+    pop r0-r3, lr
+    b 0x0203EC94
+
+; Change the default top screen to Stats instead of Map
+@SetDefaultMap:
+    push r0,r1
+    ldr r0, =@OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, = 0x020CA580
+    ldr r0, [r0]
+    add r0, r0, 0x1B000
+    mov r1, 1
+    strb r1, [r0, 0x0CDC] ; Set the Top Screen to stats
+@@End:
+    pop r0, r1
     b 0x021D13EC
+
+; Check if the bottom screen map is open. We don't want to display Warp Markers if it is.
+@DontRenderWarpMarks:
+    ldr r0, =@RamFlag_MapOpen
+    ldrb r0, [r0]
+    cmp r0, 1
+    moveq r0, 0 ; Zero this out so we don't render the warp rooms
+    bxeq lr
+    ldrb r0, [r6, 0x3E]
+    bx lr
+
+;Reset the MapOpen var when closing the map
+@OneScreen_CloseMap:
+    push r0,r1
+    ldr r0, = @RamFlag_MapOpen
+    mov r1, 0
+    strb r1, [r0] ; Reset the map flag for normal warp rooms
+    pop r0,r1
+    b 0x02052A2C
+
+; Tell the One Screen map to use the Player's coordinates instead of Warp Room coordinates
+@OneScreen_UsePlayerPositionX:
+    ldr r1, =@RamFlag_MapOpen
+    cmp r1, 0
+    beq @@UseCoordNormal
+    push r0
+    ldr r0, =0x02111F57 ; Get the PlayerNum
+    ldrb r0, [r0]
+    ldr r1, =0x211177C ; Map Pos.
+    add r1, r1, r0, lsl 1
+    ldrb r1, [r1] ; Get the X position here
+    pop r0
+    bx lr
+@@UseCoordNormal:
+    ldrb r1, [r2, r1]
+    bx lr
+
+; Tell the One Screen map to use the Player's coordinates instead of Warp Room coordinates
+@OneScreen_UsePlayerPositionY:
+    ldr r2, =@RamFlag_MapOpen
+    cmp r2, 0
+    beq @@UseCoordNormal
+    push r0
+    ldr r0, =0x02111F57 ; Get the PlayerNum
+    ldrb r0, [r0]
+    ldr r2, =0x2111780 ; Map Pos.
+    add r2, r2, r0, lsl 1
+    ldrb r2, [r2] ; Get the Y position here
+    pop r0
+    bx lr
+@@UseCoordNormal:
+    ldrb r2, [r3, r2]
+    bx lr
+
+; Don't change off of Stats if One Screen is on.
+@OneScreen_DontChangeTop:
+    push r0
+    ldr r0, =@OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 1
+    pop r0
+    beq 0x02053DE8
+    cmp r0, 0
+    b 0x02053DD4
+
+
+
+
+
 
 
 .pool
+
 
 .endarea
 .close
