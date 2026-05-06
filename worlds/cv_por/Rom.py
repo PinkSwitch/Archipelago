@@ -106,6 +106,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309175, "overlay_119", bytearray([world.options.reveal_map.value]))  # Reveal map
     rom.write_to_file(0x02309176, "overlay_119", struct.pack("H", world.options.experience_percentage.value))  # ExP Multiplier
     rom.write_to_file(0x02309178, "overlay_119", bytearray([world.options.stronger_glove.value]))
+    rom.write_to_file(0x02309179, "overlay_119", bytearray([world.options.one_screen_mode.value]))  # One-screen mode
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders

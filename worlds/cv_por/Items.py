@@ -318,7 +318,7 @@ item_table: Dict[str, ItemData] = {
     "Stella's Locket": ItemData("Key Items", 0x0703, ItemClassification.progression),
     "Astral Ring": ItemData("Accessories", 0x0704, ItemClassification.filler, 0),
     "Engagement Ring": ItemData("Accessories", 0x0705, ItemClassification.useful),
-    "Magus Ring": ItemData("Accessories", 0x0706, ItemClassification.filler, 0),
+    "Magus Ring": ItemData("Accessories", 0x0706, ItemClassification.useful, 0),
     "Gold Ring": ItemData("Accessories", 0x0707, ItemClassification.filler, 0),
     "Shaman Ring": ItemData("Accessories", 0x0708, ItemClassification.useful),
     "Miser Ring": ItemData("Accessories", 0x0709, ItemClassification.useful, 0),

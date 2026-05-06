@@ -114,6 +114,10 @@ class StrongerGlove(Toggle):
     """If enabled, the Strength Glove will be buffed and able to push stationary heavy objects on its own."""
     display_name = "Stronger Glove"
 
+class OneScreenMode(Toggle):
+    """Allows the entire game to be played with only the bottom screen. Press Select to view the map."""
+    display_name = "One-Screen Mode"
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -132,6 +136,7 @@ class PoROptions(PerGameCommonOptions):
     add_extra_items: AddExtraItems
     exclude_owl_morph: ExcludeOwlMorph
     stronger_glove: StrongerGlove
+    one_screen_mode: OneScreenMode
 
 
 por_option_groups = [
@@ -165,6 +170,7 @@ por_option_groups = [
 
     OptionGroup("Quality of Life", [
         RevealMap,
-        RevealBreakableWalls
+        RevealBreakableWalls,
+        OneScreenMode
     ])
 ]
