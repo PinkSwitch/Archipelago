@@ -513,6 +513,12 @@
     ands r0, r0, r1
     bne @@End
 
+    ldr r0, = 0x020f61FC
+    ldrb r0, [r0]
+    cmp r0, 0 ; White fadeout/Warp timer. If this is nonzero you can get items on a white screen.
+    bne @@End
+
+
     ldr r0, = @ServerItemType
     mov r1, r0 ; back up the address
     
