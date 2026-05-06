@@ -168,6 +168,33 @@ def patch_rom(world, rom, code_patch):
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
     #####################################
     # Portrait Shuffle
+    if world.options.portrait_shuffle:
+        #  It would be too easy to break logic with the Shortcut portraits, so just remove them
+        #  13th Street
+        rom.write_to_file(0x022FF324, "overlay_106", bytearray([0x00]))
+        rom.write_to_file(0x022FF33C, "overlay_106", bytearray([0x00]))
+        rom.write_to_file(0x022FF348, "overlay_106", bytearray([0x00]))
+        #  Forgotten City
+        rom.write_to_file(0x02304714, "overlay_103", bytearray([0x00]))
+        rom.write_to_file(0x02304720, "overlay_103", bytearray([0x00]))
+        rom.write_to_file(0x0230472C, "overlay_103", bytearray([0x00]))
+        #  Burnt Paradise
+        rom.write_to_file(0x023037C4, "overlay_107", bytearray([0x00]))
+        rom.write_to_file(0x023037D0, "overlay_107", bytearray([0x00]))
+        rom.write_to_file(0x023037E8, "overlay_107", bytearray([0x00]))
+        #  Dark Academy
+        rom.write_to_file(0x022F62B8, "overlay_109", bytearray([0x00]))
+        rom.write_to_file(0x022F62C4, "overlay_109", bytearray([0x00]))
+        rom.write_to_file(0x022F62D0, "overlay_109", bytearray([0x00]))
+
+        for portrait in world.portrait_connections:
+            destination = world.portrait_connections[portrait]
+            if destination in ["13th Street", "Forgotten City", "Burnt Paradise", "Dark Academy"]:
+                frame = 0x76
+            elif destination == "Nest of Evil":
+                frame = 0x86
+            else:  # City of Haze, Sandy Grave, Nation of Fools, Forest of Doom
+                frame = 0x1A
 
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
