@@ -5,7 +5,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
-from .modules.portrait_shuffle import portrait_data
+from .modules.portrait_shuffle import portrait_data, write_portrait_data
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 
@@ -108,6 +108,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309176, "overlay_119", struct.pack("H", world.options.experience_percentage.value))  # ExP Multiplier
     rom.write_to_file(0x02309178, "overlay_119", bytearray([world.options.stronger_glove.value]))
     rom.write_to_file(0x02309179, "overlay_119", bytearray([world.options.one_screen_mode.value]))  # One-screen mode
+    rom.write_to_file(0x0230917A, "overlay_119", bytearray([world.options.portrait_shuffle.value]))  # Portrait shuffle
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
@@ -168,54 +169,8 @@ def patch_rom(world, rom, code_patch):
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
     #####################################
-    # Portrait Shuffle
     if world.options.portrait_shuffle:
-        #  It would be too easy to break logic with the Shortcut portraits, so just remove them
-        #  13th Street
-        rom.write_to_file(0x022FF324, "overlay_106", bytearray([0x00]))
-        rom.write_to_file(0x022FF33C, "overlay_106", bytearray([0x00]))
-        rom.write_to_file(0x022FF348, "overlay_106", bytearray([0x00]))
-        #  Forgotten City
-        rom.write_to_file(0x02304714, "overlay_103", bytearray([0x00]))
-        rom.write_to_file(0x02304720, "overlay_103", bytearray([0x00]))
-        rom.write_to_file(0x0230472C, "overlay_103", bytearray([0x00]))
-        #  Burnt Paradise
-        rom.write_to_file(0x023037C4, "overlay_107", bytearray([0x00]))
-        rom.write_to_file(0x023037D0, "overlay_107", bytearray([0x00]))
-        rom.write_to_file(0x023037E8, "overlay_107", bytearray([0x00]))
-        #  Dark Academy
-        rom.write_to_file(0x022F62B8, "overlay_109", bytearray([0x00]))
-        rom.write_to_file(0x022F62C4, "overlay_109", bytearray([0x00]))
-        rom.write_to_file(0x022F62D0, "overlay_109", bytearray([0x00]))
-
-        # Variable used to check which Portrait is used for the Stella's Locket scene
-        rom.write_to_file(0x0230917B, "overlay_119", bytearray([portrait_data[world.portrait_connections["Forest of Doom"]].destination_map]))
-
-        for portrait in world.portrait_connections:
-            destination = world.portrait_connections[portrait]
-            data = portrait_data[destination]
-            return_data = portrait_data[portrait]
-            if destination in ["13th Street", "Forgotten City", "Burnt Paradise", "Dark Academy"]:
-                frame = 0x76
-            elif destination == "Nest of Evil":
-                frame = 0x86
-            else:  # City of Haze, Sandy Grave, Nation of Fools, Forest of Doom
-                frame = 0x1A
-            area = data.destination_map
-            room = data.destination_room
-            address = data.destination_pointer[0]
-            file = data.destination_pointer[1]
-            #  Write the shuffled portraits into the game
-            rom.write_to_file(address + 6, file, bytearray([frame]))
-            rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
-            rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
-            #  Write the return portraits as well
-            area = return_data.destination_room
-            room = return_data.destination_room
-            address = return_data.destination_pointer[0]
-            file = return_data.destination_pointer[1]
-            rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
-            rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
+        write_portrait_data(world, rom)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 

@@ -1,5 +1,6 @@
 from ..Options import PortraitShuffle
 from typing import NamedTuple
+import struct
 
 
 class PortraitData(NamedTuple):
@@ -33,8 +34,17 @@ return_portraits = {
     "Nest of Evil": PortraitData([0x022ED9A0, "overlay_113"], 0x00, 0x05)
 }
 
+remix_shortcuts = {
+    "Forgotten City": [0x02304708, "overlay_103"],
+    "13th Street": [0x022FF33C, "overlay_106"],
+    "Burnt Paradise": [0x023037DC, "overlay_107"],
+    "Dark Academy": [0x022F62DC, "overlay_109"]
+}
+
 
 def portrait_shuffle(world) -> None:
+    if world.portrait_connections:
+        return
     world.portrait_connections = {
         "City of Haze": "City of Haze",
         "Sandy Grave": "Sandy Grave",
@@ -58,3 +68,57 @@ def portrait_shuffle(world) -> None:
         if world.options.portrait_shuffle != PortraitShuffle.option_add_nest_of_evil:
             world.portrait_connections["Nest of Evil"] = "Nest of Evil"  # Set this back to normal
         
+
+def write_portrait_data(world, rom) -> None:
+    #  It would be too easy to break logic with the Shortcut portraits, so just remove them
+    #  13th Street
+    rom.write_to_file(0x022FF324, "overlay_106", bytearray([0x00]))
+    rom.write_to_file(0x022FF33C, "overlay_106", bytearray([0x00]))
+    rom.write_to_file(0x022FF348, "overlay_106", bytearray([0x00]))
+    #  Forgotten City
+    rom.write_to_file(0x02304714, "overlay_103", bytearray([0x00]))
+    rom.write_to_file(0x02304720, "overlay_103", bytearray([0x00]))
+    rom.write_to_file(0x0230472C, "overlay_103", bytearray([0x00]))
+    #  Burnt Paradise
+    rom.write_to_file(0x023037C4, "overlay_107", bytearray([0x00]))
+    rom.write_to_file(0x023037D0, "overlay_107", bytearray([0x00]))
+    rom.write_to_file(0x023037E8, "overlay_107", bytearray([0x00]))
+    #  Dark Academy
+    rom.write_to_file(0x022F62B8, "overlay_109", bytearray([0x00]))
+    rom.write_to_file(0x022F62C4, "overlay_109", bytearray([0x00]))
+    rom.write_to_file(0x022F62D0, "overlay_109", bytearray([0x00]))
+
+    # Variable used to check which Portrait is used for the Stella's Locket scene
+    rom.write_to_file(0x0230917B, "overlay_119", bytearray([portrait_data[world.portrait_connections["Forest of Doom"]].destination_map]))
+
+    for portrait in world.portrait_connections:
+        destination = world.portrait_connections[portrait]
+        data = portrait_data[destination]
+        return_data = portrait_data[portrait]
+        if destination in ["13th Street", "Forgotten City", "Burnt Paradise", "Dark Academy"]:
+            frame = 0x76
+        elif destination == "Nest of Evil":
+            frame = 0x86
+        else:  # City of Haze, Sandy Grave, Nation of Fools, Forest of Doom
+            frame = 0x1A
+        area = data.destination_map
+        room = data.destination_room
+        address = data.destination_pointer[0]
+        file = data.destination_pointer[1]
+        #  Write the shuffled portraits into the game
+        rom.write_to_file(address + 6, file, bytearray([frame]))
+        rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
+        rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
+        #  Write the return portraits as well
+        area = return_data.destination_room
+        room = return_data.destination_room
+        address = return_data.destination_pointer[0]
+        file = return_data.destination_pointer[1]
+        rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
+        rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
+
+    #  Write the shortcuts used at the end of the Remix portraits
+    for obj in remix_shortcuts:
+        data = portrait_data[obj]
+        portrait = remix_shortcuts[obj]
+        rom.write_to_file(portrait[0] + 10, portrait[1], struct.pack("H", data.destination_room))

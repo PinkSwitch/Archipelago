@@ -52,6 +52,7 @@ class PoRWorld(World):
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
+    portrait_connections = {}
 
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]

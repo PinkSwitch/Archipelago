@@ -25,8 +25,16 @@ def generate_early(world) -> None:
         world.options.nest_portraits.value = passthrough["nest_portraits"]
         world.options.nest_of_evil_state.value = passthrough["nest_of_evil"]
         world.options.brauner_required.value = passthrough["brauner_required"]
+        world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
+        world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
+        world.portrait_connections["Nation of Fools"] = passthrough["stairs_portrait"]
+        world.portrait_connections["Forest of Doom"] = passthrough["tower_portrait"]
+        world.portrait_connections["Forgotten City"] = passthrough["brauner_portrait_1"]
+        world.portrait_connections["13th Street"] = passthrough["brauner_portrait_2"]
+        world.portrait_connections["Burnt Paradise"] = passthrough["brauner_portrait_3"]
+        world.portrait_connections["Dark Academy"] = passthrough["brauner_portrait_4"]
+        world.portrait_connections["Nest of Evil"] = passthrough["passage_portrait"]
     setup_game(world)
-
     world.auth_id = world.random.getrandbits(32)
 
 
@@ -108,6 +116,7 @@ def generate_output(world, output_directory: str) -> None:
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
+
 def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
     from .modules.portrait_shuffle import portrait_data
     if world.options.portrait_shuffle:
@@ -143,8 +152,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "brauner_required": world.options.brauner_required.value,
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],
-        "hub_portrait": world.portrait_connections["Nation of Fools"],
-        "hub_portrait": world.portrait_connections["Forest of Doom"],
+        "stairs_portrait": world.portrait_connections["Nation of Fools"],
+        "tower_portrait": world.portrait_connections["Forest of Doom"],
         "brauner_portrait_1": world.portrait_connections["Forgotten City"],
         "brauner_portrait_2": world.portrait_connections["13th Street"],
         "brauner_portrait_3": world.portrait_connections["Burnt Paradise"],
