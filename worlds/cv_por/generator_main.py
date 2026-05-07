@@ -3,8 +3,9 @@ import typing
 import pkgutil
 
 from BaseClasses import Item
-from typing import Dict
+from typing import Dict, TextIO
 from .Items import item_table
+from .Options import PortraitShuffle
 
 
 class CVPoRItem(Item):
@@ -107,6 +108,21 @@ def generate_output(world, output_directory: str) -> None:
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
+def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
+    from .modules.portrait_shuffle import portrait_data
+    if world.options.portrait_shuffle:
+        spoiler_handle.write("""
+Portraits:
+""")
+        for connection in world.portrait_connections:
+            if connection != "Nest of Evil":
+                spoiler_handle.write(f""" {portrait_data[connection].spoiler_map_name}: {world.portrait_connections[connection]}
+""")
+
+        if world.options.portrait_shuffle == PortraitShuffle.option_add_nest_of_evil:
+            spoiler_handle.write(f""" {portrait_data["Nest of Evil"].spoiler_map_name}: {world.portrait_connections["Nest of Evil"]}
+""")
+
 
 def modify_multidata(world, multidata: dict) -> None:
     # wait for self.rom_name to be available.
@@ -124,7 +140,16 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "dracula_portraits": world.options.dracula_portraits.value,
         "nest_portraits": world.options.nest_portraits.value,
         "nest_of_evil": world.options.nest_of_evil_state.value,
-        "brauner_required": world.options.brauner_required.value
+        "brauner_required": world.options.brauner_required.value,
+        "hub_portrait": world.portrait_connections["City of Haze"],
+        "underground_portrait": world.portrait_connections["Sandy Grave"],
+        "hub_portrait": world.portrait_connections["Nation of Fools"],
+        "hub_portrait": world.portrait_connections["Forest of Doom"],
+        "brauner_portrait_1": world.portrait_connections["Forgotten City"],
+        "brauner_portrait_2": world.portrait_connections["13th Street"],
+        "brauner_portrait_3": world.portrait_connections["Burnt Paradise"],
+        "brauner_portrait_4": world.portrait_connections["Dark Academy"],
+        "passage_portrait": world.portrait_connections["Nest of Evil"]
     }
 
 

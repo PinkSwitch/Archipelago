@@ -193,7 +193,7 @@ def connect_regions(world):
                                                          {"Master's Keep - Upper Quarters": medium_uppies | (small_uppies & Has("Puppet Master"))})
 
     world.get_region("Master's Keep - Upper Quarters").add_exits(["Master's Keep - Portrait Room", "Master's Keep - Main"],
-                                                         {"Master's Keep - Portrait Room": can_cast_spell & Has("Sanctuary")})
+                                                         {"Master's Keep - Portrait Room": Has("Sanctuary") & HasAny("Skill Cube", "Call Cube")})
 
     world.get_region("Master's Keep - Portrait Room").add_exits([world.portrait_connections["Forgotten City"], world.portrait_connections["Burnt Paradise"], world.portrait_connections["Dark Academy"], world.portrait_connections["13th Street"]],
                                                          {world.portrait_connections["13th Street"]: CanReachLocation("Forgotten City: Boss Room"),

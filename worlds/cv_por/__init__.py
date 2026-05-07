@@ -9,7 +9,8 @@ from .Items import item_table, get_item_names_per_category
 from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids
 from .generator_main import (CVPoRItem, generate_early, create_regions, fill_slot_data,
-                             modify_multidata, generate_output, create_items, get_filler_item_name, set_rules)
+                             modify_multidata, generate_output, create_items, get_filler_item_name, set_rules,
+                             write_spoiler_header)
 from .Client import PoRClient
 
 class PoRWeb(WebWorld):
@@ -67,6 +68,7 @@ class PoRWorld(World):
     generate_output = generate_output
     get_filler_item_name = get_filler_item_name
     set_rules = set_rules
+    write_spoiler_header = write_spoiler_header
 
     # locked_locations: List[str]
     # ocation_cache: List[Location]

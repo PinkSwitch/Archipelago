@@ -1,6 +1,6 @@
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
-from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies
+from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies, is_smol
 from .Options import NestofEvil, BraunerPortraits, Goal
 
 from typing import TYPE_CHECKING
@@ -42,6 +42,7 @@ def set_location_rules(world):
     set_rule(world.get_location("City of Haze: Tunnel Room Left"), (can_cast_spell & HasAny("Toad Morph", "Owl Morph")) | Has("Puppet Master"))
     set_rule(world.get_location("City of Haze: Left Dance Hall Left Item"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("City of Haze: Left Dance Hall Right Item"), small_uppies | Has("Puppet Master"))
+    set_rule(world.get_location("City of Haze: Central Hallway Lower"), is_smol)
 
     set_rule(world.get_location("13th Street: Train Room Secret Left"), big_uppies)
     set_rule(world.get_location("13th Street: Train Room Secret Right"), big_uppies)
