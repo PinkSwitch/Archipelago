@@ -60,6 +60,9 @@ def portrait_shuffle(world) -> None:
     if world.options.portrait_shuffle:
         portrait_pool = list(world.portrait_connections.values())
         world.random.shuffle(portrait_pool)
+        while portrait_pool.index("Nest of Evil") in [5, 7]:
+            world.random.shuffle(portrait_pool)  # Nest doesn't have a boss room, so if it's a Lock we need to remove it
+
         if world.options.portrait_shuffle != PortraitShuffle.option_add_nest_of_evil:
             portrait_pool.remove("Nest of Evil")
 
@@ -95,18 +98,11 @@ def write_portrait_data(world, rom) -> None:
         destination = world.portrait_connections[portrait]
         data = portrait_data[destination]
         return_data = portrait_data[portrait]
-        if destination in ["13th Street", "Forgotten City", "Burnt Paradise", "Dark Academy"]:
-            frame = 0x76
-        elif destination == "Nest of Evil":
-            frame = 0x86
-        else:  # City of Haze, Sandy Grave, Nation of Fools, Forest of Doom
-            frame = 0x1A
         area = data.destination_map
         room = data.destination_room
         address = data.destination_pointer[0]
         file = data.destination_pointer[1]
         #  Write the shuffled portraits into the game
-        rom.write_to_file(address + 6, file, bytearray([frame]))
         rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
         rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
         #  Write the return portraits as well
@@ -122,3 +118,6 @@ def write_portrait_data(world, rom) -> None:
         data = portrait_data[obj]
         portrait = remix_shortcuts[obj]
         rom.write_to_file(portrait[0] + 10, portrait[1], struct.pack("H", data.destination_room))
+
+def adjust_portrait_gfx(rom):
+    print("DONE!")

@@ -123,11 +123,18 @@ class OneScreenMode(Toggle):
 
 class PortraitShuffle(Choice):
     """Shuffles which areas the Portraits lead you to."""
-    display_name = "Nest of Evil State"
+    display_name = "Portrait Shuffle"
     option_normal = 0
     option_shuffle = 1
     option_add_nest_of_evil = 2
     default = 0
+
+class SPMultiplier(Range):
+    """Multiplier for the amount of SP given by enemies."""
+    display_name = "SP Multiplier"
+    range_start = 1
+    range_end = 100
+    default = 1
 
 
 @dataclass
@@ -149,6 +156,7 @@ class PoROptions(PerGameCommonOptions):
     stronger_glove: StrongerGlove
     one_screen_mode: OneScreenMode
     portrait_shuffle: PortraitShuffle
+    sp_multiplier: SPMultiplier
 
 
 por_option_groups = [
@@ -181,7 +189,8 @@ por_option_groups = [
     ]),
 
     OptionGroup("Enemy Settings", [
-        ExperiencePercent
+        ExperiencePercent,
+        SPMultiplier
 
     ]),
 

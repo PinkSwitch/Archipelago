@@ -193,11 +193,11 @@ def connect_regions(world):
                                                          {"Master's Keep - Upper Quarters": medium_uppies | (small_uppies & Has("Puppet Master"))})
 
     world.get_region("Master's Keep - Upper Quarters").add_exits(["Master's Keep - Portrait Room", "Master's Keep - Main"],
-                                                         {"Master's Keep - Portrait Room": Has("Sanctuary") & HasAny("Skill Cube", "Call Cube")})
+                                                         {"Master's Keep - Portrait Room": Has("Sanctuary") & (Has("Skill Cube") | (has_change_cube & Has("Call Cube")))})
 
     world.get_region("Master's Keep - Portrait Room").add_exits([world.portrait_connections["Forgotten City"], world.portrait_connections["Burnt Paradise"], world.portrait_connections["Dark Academy"], world.portrait_connections["13th Street"]],
-                                                         {world.portrait_connections["13th Street"]: CanReachLocation("Forgotten City: Boss Room"),
-                                                         world.portrait_connections["Burnt Paradise"]: CanReachLocation("Dark Academy: Boss Room")})
+                                                         {world.portrait_connections["13th Street"]: CanReachLocation(f'{world.portrait_connections["Forgotten City"]}: Boss Room'),
+                                                         world.portrait_connections["Burnt Paradise"]: CanReachLocation(f'{world.portrait_connections["Dark Academy"]}: Boss Room')})
                                                          
     world.get_region("City of Haze").add_exits(["City of Haze - East"],
                                                          {"City of Haze - East": Has("Puppet Master") | (has_change_cube & Has("Call Cube"))})

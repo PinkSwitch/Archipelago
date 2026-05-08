@@ -5,7 +5,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
-from .modules.portrait_shuffle import portrait_data, write_portrait_data
+from .modules.portrait_shuffle import write_portrait_data
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 
@@ -109,6 +109,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309178, "overlay_119", bytearray([world.options.stronger_glove.value]))
     rom.write_to_file(0x02309179, "overlay_119", bytearray([world.options.one_screen_mode.value]))  # One-screen mode
     rom.write_to_file(0x0230917A, "overlay_119", bytearray([world.options.portrait_shuffle.value]))  # Portrait shuffle
+    rom.write_to_file(0x0230917C, "overlay_119", bytearray([world.options.sp_multiplier.value]))
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
@@ -186,7 +187,8 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
         ("apply_tokens", ["token_patch.bin"]),
         ("check_patch_version", []),
         ("adjust_item_positions", []),
-        ("apply_modifiers", [])
+        ("apply_modifiers", [],
+         "copy_portrait_gfx", [])
     ]
 
     @classmethod
@@ -237,13 +239,23 @@ class PorPatchExtentions(APPatchExtension):
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_119", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
+        sp_multiplier = rom.read_from_file(0x0230917C, "overlay_119", 1)[0]
 
         for i in range(0x9A):
             address = 0x020BE568 + (0x20 * i)
             enemy_exp = struct.unpack("H", rom.read_from_file(address + 16, "arm9", 2))[0]
             enemy_exp = int(min(0xFFFF, (enemy_exp * exp_multiplier)))
+
+            enemy_sp = rom.read_from_file(address + 13, "arm9", 1)[0]
+            enemy_sp = int(min(255, (enemy_sp * sp_multiplier)))
             rom.write_to_file(address + 16, "arm9", struct.pack("H", enemy_exp))
+            rom.write_to_file(address + 13, "arm9", bytearray([enemy_sp]))
         return rom.get_bytes()
+
+    def copy_portrait_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        adjust_portrait_gfx(rom)
+        return rom.get_bytes
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:

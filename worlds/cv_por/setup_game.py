@@ -3,6 +3,8 @@ from .modules.portrait_shuffle import portrait_shuffle
 
 def setup_game(world):
     portrait_shuffle(world)
+    if world.portrait_connections != "Nest of Evil" and world.options.nest_portraits.value == 8:
+        world.options.nest_portraits.value = 7  # This would be otherwise impossible, so lower the count to 7
 
 
 def place_static_items(world):
