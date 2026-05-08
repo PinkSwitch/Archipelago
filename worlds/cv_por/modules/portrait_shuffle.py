@@ -166,6 +166,54 @@ def adjust_portrait_gfx(rom):
     for i in range(62):  # Nest of evil is the only portrait we need out of Set 3
         nest_of_evil.append(rom.read_from_file(0xC9 + (0x80 * i), "portrait_set_3", 0x2E))
 
+    #  Read all of the shuffled Portrait destinations
+    hub_destination = portrait_data["City of Haze"].destination_pointer
+    stairs_underground = portrait_data["Sandy Grave"].destination_pointer
+    stairs_main = portrait_data["Nation of Fools"].destination_pointer
+    tower_destination = portrait_data["Forest of Doom"].destination_pointer
+    brauner_1 = portrait_data["Forgotten City"].destination_pointer
+    brauner_2 = portrait_data["13th Street"].destination_pointer
+    brauner_3 = portrait_data["Burnt Paradise"].destination_pointer
+    brauner_4 = portrait_data["Dark Academy"].destination_pointer
+    nest_destination = portrait_data["Nest of Evil"].destination_pointer
+
+    hub_destination = rom.read_from_file(hub_destination[0] + 8, hub_destination[1], 1)[0]
+    stairs_underground = rom.read_from_file(stairs_underground[0] + 8, stairs_underground[1], 1)[0]
+    stairs_main = rom.read_from_file(stairs_main[0] + 8, stairs_main[1], 1)[0]
+    tower_destination = rom.read_from_file(tower_destination[0] + 8, tower_destination[1], 1)[0]
+    brauner_1 = rom.read_from_file(brauner_1[0] + 8, brauner_1[1], 1)[0]
+    brauner_2 = rom.read_from_file(brauner_2[0] + 8, brauner_2[1], 1)[0]
+    brauner_3 = rom.read_from_file(brauner_3[0] + 8, brauner_3[1], 1)[0]
+    brauner_4 = rom.read_from_file(brauner_4[0] + 8, brauner_4[1], 1)[0]
+    nest_destination = rom.read_from_file(nest_destination[0] + 8, nest_destination[1], 1)[0]
+
+    portrait_warps = [
+        hub_destination,
+        stairs_underground,
+        stairs_main,
+        tower_destination,
+        brauner_1,
+        brauner_2,
+        brauner_3,
+        brauner_4,
+        nest_destination
+    ]
+
+    for i in range(4):
+        destination = portrait_warps[i]
+        destination = portrait_order[destination]
+        print(len(destination))
+
+        sprite_start = (i // 2) * 0x2000  # The bottom portraits are 0x2000 bytes down
+        for j in range(62):  # Portraits are 62 pixels tall
+            print(j)
+            address = 0x89 + sprite_start  # Read the start of the sprite
+            address += (0x40 * (i % 2))  # Make sure we read the correct painting
+            address += (0x80 * j)  # Each row is 0x80 bytes apart
+
+            rom.write_to_file(address, "portrait_set_1", destination[j])
+
+
     for i in range(62):
         rom.write_to_file(0x89 + (0x80 * i), "portrait_set_1", nest_of_evil[i])
 
