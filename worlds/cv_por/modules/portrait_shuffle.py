@@ -50,8 +50,8 @@ def portrait_shuffle(world) -> None:
         "Sandy Grave": "Sandy Grave",
         "Nation of Fools": "Nation of Fools",
         "Forest of Doom": "Forest of Doom",
-        "13th Street": "13th Street",
         "Forgotten City": "Forgotten City",
+        "13th Street": "13th Street",
         "Burnt Paradise": "Burnt Paradise",
         "Dark Academy": "Dark Academy",
         "Nest of Evil": "Nest of Evil"
@@ -96,21 +96,21 @@ def write_portrait_data(world, rom) -> None:
 
     for portrait in world.portrait_connections:
         destination = world.portrait_connections[portrait]
-        data = portrait_data[destination]
-        return_data = portrait_data[portrait]
-        area = data.destination_map
-        room = data.destination_room
+        source = portrait_data[destination]
+        data = portrait_data[portrait]
+
+        return_data = return_portraits[portrait]
+        area = source.destination_map
+        room = source.destination_room
         address = data.destination_pointer[0]
         file = data.destination_pointer[1]
         #  Write the shuffled portraits into the game
         rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
         rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
         #  Write the return portraits as well
-        area = return_data.destination_room
         room = return_data.destination_room
         address = return_data.destination_pointer[0]
         file = return_data.destination_pointer[1]
-        rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
         rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
 
     #  Write the shortcuts used at the end of the Remix portraits
@@ -119,5 +119,54 @@ def write_portrait_data(world, rom) -> None:
         portrait = remix_shortcuts[obj]
         rom.write_to_file(portrait[0] + 10, portrait[1], struct.pack("H", data.destination_room))
 
+
 def adjust_portrait_gfx(rom):
-    print("DONE!")
+    city_of_haze = []
+    sandy_grave = []
+    nation_of_fools = []
+    forest_of_doom = []
+    thirteenth_street = []
+    forgotten_city = []
+    burnt_paradise = []
+    dark_academy = []
+    nest_of_evil = []
+
+    portrait_order = [
+        city_of_haze,
+        sandy_grave,
+        nation_of_fools,
+        forest_of_doom,
+        thirteenth_street,
+        forgotten_city,
+        burnt_paradise,
+        dark_academy,
+        nest_of_evil
+    ]
+
+    #  Read the regular portraits
+    for i in range(4):
+        sprite_start = (i // 2) * 0x2000  # The bottom portraits are 0x2000 bytes down
+        for j in range(62):  # Portraits are 62 pixels tall
+            address = 0x89 + sprite_start  # Read the start of the sprite
+            address += (0x40 * (i % 2))  # Make sure we read the correct painting
+            address += (0x80 * j)  # Each row is 0x80 bytes apart
+
+            portrait_order[i].append(rom.read_from_file(address, "portrait_set_1", 0x2E))
+
+    #  Also read the Remix portraits
+    for i in range(4):
+        sprite_start = (i // 2) * 0x2000  # The bottom portraits are 0x2000 bytes down
+        for j in range(62):  # Portraits are 62 pixels tall
+            address = 0x89 + sprite_start  # Read the start of the sprite
+            address += (0x40 * (i % 2))  # Make sure we read the correct painting
+            address += (0x80 * j)  # Each row is 0x80 bytes apart
+
+            portrait_order[i + 4].append(rom.read_from_file(address, "portrait_set_2", 0x2E))
+
+    for i in range(62):  # Nest of evil is the only portrait we need out of Set 3
+        nest_of_evil.append(rom.read_from_file(0xC9 + (0x80 * i), "portrait_set_3", 0x2E))
+
+    for i in range(62):
+        rom.write_to_file(0x89 + (0x80 * i), "portrait_set_1", nest_of_evil[i])
+
+    #  62 pixels tall

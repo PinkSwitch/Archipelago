@@ -5,7 +5,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
-from .modules.portrait_shuffle import write_portrait_data
+from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 
@@ -52,10 +52,14 @@ file_pointers = {
     "overlay_107": FilePointer(0x5CC400, 0x022E8820, 0x1B6DF),
     "overlay_108": FilePointer(0x5E7C00, 0x022E8820, 0x1C8FF),
     "overlay_109": FilePointer(0x604600, 0x022E8820, 0xDBDF),
+    "overlay_110": FilePointer(0x612200, 0x022E8820, 0x9E5F),
     "overlay_111": FilePointer(0x61C200, 0x022E8820, 0xFEDF),
     "overlay_112": FilePointer(0x62C200, 0x022E8820, 0xA33F),
     "overlay_113": FilePointer(0x636600, 0x022E8820, 0x621F),
-    "overlay_119": FilePointer(0x2CF0800, 0x02308EC0, 0x1F000)
+    "overlay_119": FilePointer(0x2CF0800, 0x02308EC0, 0x1F000),
+    "portrait_set_1": FilePointer(0x1936000, 0x00, 0x3FFF),
+    "portrait_set_2": FilePointer(0x193A000, 0x00, 0x3FFF),
+    "portrait_set_3": FilePointer(0x193E000, 0x00, 0x3FFF)
 }
 
 
@@ -187,8 +191,8 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
         ("apply_tokens", ["token_patch.bin"]),
         ("check_patch_version", []),
         ("adjust_item_positions", []),
-        ("apply_modifiers", [],
-         "copy_portrait_gfx", [])
+        ("apply_modifiers", []),
+        ("shuffle_portrait_gfx", [])
     ]
 
     @classmethod
@@ -252,10 +256,10 @@ class PorPatchExtentions(APPatchExtension):
             rom.write_to_file(address + 13, "arm9", bytearray([enemy_sp]))
         return rom.get_bytes()
 
-    def copy_portrait_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
+    def shuffle_portrait_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         adjust_portrait_gfx(rom)
-        return rom.get_bytes
+        return rom.get_bytes()
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
