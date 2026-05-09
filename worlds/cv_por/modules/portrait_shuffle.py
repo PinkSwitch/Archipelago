@@ -213,6 +213,19 @@ def adjust_portrait_gfx(rom):
         nest_destination
     ]
 
+    for index, sprite in enumerate(portrait_order):
+        destination = portrait_warps[index] - 1 # Check the destination
+        if destination == 8:
+            destination = 9  # Nest of evil, shift the index up one
+
+        for row in sprite:
+            for i, pixel in enumerate(row):
+                if index % 2 and pixel < 0x80:  # This portrait is part of Row 2
+                    row[i] = pixel + 0x80
+
+                elif not index % 2 and pixel >= 0x80:
+                    row[i] = pixel - 0x80
+
     for i in range(4):
         destination_map = portrait_warps[i] - 1
         new_portrait = map_order[destination_map]
@@ -238,7 +251,7 @@ def adjust_portrait_gfx(rom):
     for i in range(62):  # Nest of evil is the only portrait we need out of Set 3
         rom.write_to_file(0xC9 + (0x80 * i), "portrait_set_3", nest_map[i])
 
-    ## Get the palettes ##
+    # Get the palettes ##
     city_of_haze = []
     sandy_grave = []
     nation_of_fools = []
@@ -261,11 +274,25 @@ def adjust_portrait_gfx(rom):
         nest_of_evil
     ]
 
+    map_order = [
+        city_of_haze,
+        thirteenth_street,
+        sandy_grave,
+        forgotten_city,
+        nation_of_fools,
+        burnt_paradise,
+        forest_of_doom,
+        dark_academy,
+        nest_of_evil
+    ]
+
     for i in range(8):
         portrait_palettes[i].append(rom.read_from_file((0x22BD6C4 + (0x3028 * (i // 4))) + (0x100 * (i % 4)), "overlay_7", 0x100))
 
     portrait_palettes[8].append(rom.read_from_file(0x022C0BF0, "overlay_7", 0x100))  # Nest of evil
 
-    rom.write_to_file(0x22BD7C4, "overlay_7", nest_of_evil[0])
+    for i in range(8):
+        new_palette = map_order[portrait_warps[i] - 1][0]
+        rom.write_to_file((0x22BD6C4 + (0x3028 * (i // 4))) + (0x100 * (i % 4)), "overlay_7", new_palette)
 
     #  62 pixels tall
