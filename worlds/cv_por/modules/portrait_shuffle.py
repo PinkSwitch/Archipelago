@@ -136,10 +136,12 @@ def adjust_portrait_gfx(rom):
         sandy_grave,
         nation_of_fools,
         forest_of_doom,
+
         thirteenth_street,
         forgotten_city,
         burnt_paradise,
         dark_academy,
+
         nest_of_evil
     ]
 
@@ -187,34 +189,83 @@ def adjust_portrait_gfx(rom):
     brauner_4 = rom.read_from_file(brauner_4[0] + 8, brauner_4[1], 1)[0]
     nest_destination = rom.read_from_file(nest_destination[0] + 8, nest_destination[1], 1)[0]
 
+    map_order = [
+        city_of_haze,
+        thirteenth_street,
+        sandy_grave,
+        forgotten_city,
+        nation_of_fools,
+        burnt_paradise,
+        forest_of_doom,
+        dark_academy,
+        nest_of_evil
+    ]
+
     portrait_warps = [
         hub_destination,
         stairs_underground,
         stairs_main,
         tower_destination,
-        brauner_1,
         brauner_2,
+        brauner_1,
         brauner_3,
         brauner_4,
         nest_destination
     ]
 
     for i in range(4):
-        destination = portrait_warps[i]
-        destination = portrait_order[destination]
-        print(len(destination))
+        destination_map = portrait_warps[i] - 1
+        new_portrait = map_order[destination_map]
+        sprite_start = (i // 2) * 0x2000
+        for j in range(62):
+            address = 0x89 + sprite_start
+            address += (0x40 * (i % 2))
+            address += (0x80 * j)
+            rom.write_to_file(address, "portrait_set_1", new_portrait[j])
 
-        sprite_start = (i // 2) * 0x2000  # The bottom portraits are 0x2000 bytes down
-        for j in range(62):  # Portraits are 62 pixels tall
-            print(j)
-            address = 0x89 + sprite_start  # Read the start of the sprite
-            address += (0x40 * (i % 2))  # Make sure we read the correct painting
-            address += (0x80 * j)  # Each row is 0x80 bytes apart
+    for i in range(4):
+        destination_map = portrait_warps[i + 4] - 1
+        new_portrait = map_order[destination_map]
+        sprite_start = (i // 2) * 0x2000
+        for j in range(62):
+            address = 0x89 + sprite_start
+            address += (0x40 * (i % 2))
+            address += (0x80 * j)
+            rom.write_to_file(address, "portrait_set_2", new_portrait[j])
 
-            rom.write_to_file(address, "portrait_set_1", destination[j])
+    nest_portrait = portrait_warps[8]
+    nest_map = map_order[nest_portrait - 1]
+    for i in range(62):  # Nest of evil is the only portrait we need out of Set 3
+        rom.write_to_file(0xC9 + (0x80 * i), "portrait_set_3", nest_map[i])
 
+    ## Get the palettes ##
+    city_of_haze = []
+    sandy_grave = []
+    nation_of_fools = []
+    forest_of_doom = []
+    thirteenth_street = []
+    forgotten_city = []
+    burnt_paradise = []
+    dark_academy = []
+    nest_of_evil = []
 
-    for i in range(62):
-        rom.write_to_file(0x89 + (0x80 * i), "portrait_set_1", nest_of_evil[i])
+    portrait_palettes = [
+        city_of_haze,
+        sandy_grave,
+        nation_of_fools,
+        forest_of_doom,
+        thirteenth_street,
+        forgotten_city,
+        dark_academy,
+        burnt_paradise,
+        nest_of_evil
+    ]
+
+    for i in range(8):
+        portrait_palettes[i].append(rom.read_from_file((0x22BD6C4 + (0x3028 * (i // 4))) + (0x100 * (i % 4)), "overlay_7", 0x100))
+
+    portrait_palettes[8].append(rom.read_from_file(0x022C0BF0, "overlay_7", 0x100))  # Nest of evil
+
+    rom.write_to_file(0x22BD7C4, "overlay_7", nest_of_evil[0])
 
     #  62 pixels tall

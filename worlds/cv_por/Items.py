@@ -462,7 +462,7 @@ item_table: Dict[str, ItemData] = {
     "Martial Art": ItemData("Relics", 0x0867, ItemClassification.useful, 0),
     "Critical Art": ItemData("Relics", 0x0868, ItemClassification.useful),
     "Whip Skill 1": ItemData("Relics", 0x0869, ItemClassification.useful),
-    "Whip Skill 2": ItemData("Relics", 0x086A, ItemClassification.useful),
+    "Whip Skill 2": ItemData("Relics", 0x086A, ItemClassification.useful, 0),
     "Book of Spirits": ItemData("Relics", 0x086B, ItemClassification.useful),
 
     "Portrait Clear": ItemData("Events", None, ItemClassification.progression, 0),

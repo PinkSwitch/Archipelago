@@ -21,6 +21,7 @@ class FilePointer(NamedTuple):
 
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB7),
+    "overlay_7": FilePointer(0x268C00, 0x022B7660, 0x198DF),
     "overlay_78": FilePointer(0x369000, 0x022E8820, 0x10ABF),
     "overlay_79": FilePointer(0x379C00, 0x022E8820, 0x1C83F),
     "overlay_80": FilePointer(0x396600, 0x022E8820, 0x1671F),
