@@ -113,21 +113,21 @@ def portrait_shuffle(world) -> None:
 def write_portrait_data(world, rom) -> None:
     #  It would be too easy to break logic with the Shortcut portraits, so just remove them
     #  13th Street
-    rom.write_to_file(0x022FF324, "overlay_106", bytearray([0x00]))
-    rom.write_to_file(0x022FF33C, "overlay_106", bytearray([0x00]))
-    rom.write_to_file(0x022FF348, "overlay_106", bytearray([0x00]))
+    rom.write_to_file(0x022FF329, "overlay_106", bytearray([0x00]))
+    rom.write_to_file(0x022FF341, "overlay_106", bytearray([0x00]))
+    rom.write_to_file(0x022FF34D, "overlay_106", bytearray([0x00]))
     #  Forgotten City
-    rom.write_to_file(0x02304714, "overlay_103", bytearray([0x00]))
-    rom.write_to_file(0x02304720, "overlay_103", bytearray([0x00]))
-    rom.write_to_file(0x0230472C, "overlay_103", bytearray([0x00]))
+    rom.write_to_file(0x02304719, "overlay_103", bytearray([0x00]))
+    rom.write_to_file(0x02304725, "overlay_103", bytearray([0x00]))
+    rom.write_to_file(0x02304731, "overlay_103", bytearray([0x00]))
     #  Burnt Paradise
-    rom.write_to_file(0x023037C4, "overlay_107", bytearray([0x00]))
-    rom.write_to_file(0x023037D0, "overlay_107", bytearray([0x00]))
-    rom.write_to_file(0x023037E8, "overlay_107", bytearray([0x00]))
+    rom.write_to_file(0x023037C9, "overlay_107", bytearray([0x00]))
+    rom.write_to_file(0x023037D5, "overlay_107", bytearray([0x00]))
+    rom.write_to_file(0x023037ED, "overlay_107", bytearray([0x00]))
     #  Dark Academy
-    rom.write_to_file(0x022F62B8, "overlay_109", bytearray([0x00]))
-    rom.write_to_file(0x022F62C4, "overlay_109", bytearray([0x00]))
-    rom.write_to_file(0x022F62D0, "overlay_109", bytearray([0x00]))
+    rom.write_to_file(0x022F62BD, "overlay_109", bytearray([0x00]))
+    rom.write_to_file(0x022F62C9, "overlay_109", bytearray([0x00]))
+    rom.write_to_file(0x022F62D5, "overlay_109", bytearray([0x00]))
 
     # Variable used to check which Portrait is used for the Stella's Locket scene
     rom.write_to_file(0x0230917B, "overlay_119", bytearray([portrait_data[world.portrait_connections["Forest of Doom"]].destination_map]))
@@ -138,17 +138,19 @@ def write_portrait_data(world, rom) -> None:
         data = portrait_data[portrait]
 
         return_data = return_portraits[portrait]
+        return_address = return_portraits[destination]
         area = source.destination_map
         room = source.destination_room
         address = data.destination_pointer[0]
         file = data.destination_pointer[1]
         #  Write the shuffled portraits into the game
         rom.write_to_file(address + 8, file, struct.pack("H", area))  # Portrait Area
-        rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
+        rom.write_to_file(address + 10, file, bytearray([room]))  # Portrait room
         #  Write the return portraits as well
+
         room = return_data.destination_room
-        address = return_data.destination_pointer[0]
-        file = return_data.destination_pointer[1]
+        address = return_address.destination_pointer[0]
+        file = return_address.destination_pointer[1]
         rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
 
     #  Write the shortcuts used at the end of the Remix portraits
@@ -210,7 +212,6 @@ def adjust_portrait_gfx(rom):
         destination = portraits[portrait].destination_map
         destination = area_map[destination - 1]
         sprite = portraits[destination].sprite
-        print(f"{portrait}: {index}")
         if index == 8:
             index = 9  # Bump up Nest because we skip over the real portrait 9
         for row in sprite:
@@ -256,9 +257,6 @@ def adjust_portrait_gfx(rom):
         portrait = palette_order[i]
         portraits[portrait].palette.append(rom.read_from_file(
             (0x22BD6C4 + (0x3028 * (i // 4))) + (0x100 * (i % 4)), "overlay_7", 0x100))
-    test_palette = portraits["Forest of Doom"].palette
-    for byte in test_palette[0]:
-        print(hex(byte))
 
     portraits["Nest of Evil"].palette.append(rom.read_from_file(0x022C0BF0, "overlay_7", 0x100))  # Nest of evil
 

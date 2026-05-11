@@ -25,6 +25,8 @@ def generate_early(world) -> None:
         world.options.nest_portraits.value = passthrough["nest_portraits"]
         world.options.nest_of_evil_state.value = passthrough["nest_of_evil"]
         world.options.brauner_required.value = passthrough["brauner_required"]
+        world.options.stronger_glove.value = passthrough["stronger_glove"]
+
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
         world.portrait_connections["Nation of Fools"] = passthrough["stairs_portrait"]
@@ -150,6 +152,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "nest_portraits": world.options.nest_portraits.value,
         "nest_of_evil": world.options.nest_of_evil_state.value,
         "brauner_required": world.options.brauner_required.value,
+        "stronger_glove": world.options.stronger_glove.value,
+
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],
         "stairs_portrait": world.portrait_connections["Nation of Fools"],
