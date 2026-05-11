@@ -132,6 +132,16 @@ def write_portrait_data(world, rom) -> None:
     # Variable used to check which Portrait is used for the Stella's Locket scene
     rom.write_to_file(0x0230917B, "overlay_119", bytearray([portrait_data[world.portrait_connections["Forest of Doom"]].destination_map]))
 
+    #  The two locked portraits in the Gallery. Write what they are so we know which ones to check
+    rom.write_to_file(0x0230917D, "overlay_119", bytearray([portrait_data[world.portrait_connections["13th Street"]].destination_map]))
+    rom.write_to_file(0x0230917E, "overlay_119", bytearray([portrait_data[world.portrait_connections["Burnt Paradise"]].destination_map]))
+
+    # List of brauner portraits in order. Used for determining return position
+    rom.write_to_file(0x0230917F, "overlay_119", bytearray([portrait_data[world.portrait_connections["Forgotten City"]].destination_map]))
+    rom.write_to_file(0x02309180, "overlay_119", bytearray([portrait_data[world.portrait_connections["13th Street"]].destination_map]))
+    rom.write_to_file(0x02309181, "overlay_119", bytearray([portrait_data[world.portrait_connections["Burnt Paradise"]].destination_map]))
+    rom.write_to_file(0x02309182, "overlay_119", bytearray([portrait_data[world.portrait_connections["Dark Academy"]].destination_map]))
+
     for portrait in world.portrait_connections:
         destination = world.portrait_connections[portrait]
         source = portrait_data[destination]

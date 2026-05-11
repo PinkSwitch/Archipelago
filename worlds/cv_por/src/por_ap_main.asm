@@ -97,7 +97,7 @@
     .org 0x02078FF0
         bl @CheckPortraitRequired_Street
 
-    .org 0x02078FBC
+    .org 0x02078FB8
         bl @CheckPortraitRequired_Paradise
 
     .org 0x02079850
@@ -105,6 +105,15 @@
 
     .org 0x0207B628
         bl @InitPortraitAndGetVanillaPicture 
+
+    .org 0x02078FA8
+        b @CheckPortraitLock2
+
+    .org 0x02078FDC
+        b @CheckPortraitLock1
+
+    .org 0x02079874
+        bl @GetPortraitPosition
     
 
     .org 0x020E537C
@@ -554,6 +563,12 @@
 
     @OptionFlag_SPMultiplier: ;0230917C
         .db 0x00
+
+    @ROMFlag_LockedPortraits: ;0230917D-E
+        .db 0x02, 0x06 ; Portrait left, then right
+
+    @ROMFlag_BraunerPortraits: ;030917F-82
+        .db 0x04, 0x02, 0x06, 0x08
 
     .align 4
 ;;;;;;;;;;;;;;;;;;;
@@ -1599,19 +1614,22 @@
 ;;;;;;;;;;;;;;;;;;;
 ; Check the NEW portrait boss flags for clearing the portrait fires
 @CheckPortraitRequired_Street:
-    ldr r0, =0x022F1F54 ; Check which area is shuffled over this
+    push r0
+    ldr r0, =@ROMFlag_BraunerPortraits ; Check Portrait 1
     ldrb r0, [r0]
+
     ldr r1, =0x020F4E78 ; Table of portrait bosses
     ldrb r1, [r1, r0]
-    ldr r0, [r0, 0x76C]
+    pop r0
     bx lr
 
 @CheckPortraitRequired_Paradise:
-    ldr r0, =0x022F1F78 ; Check which area is shuffled over this
-    ldrb r0, [r0]
+    push r0
+    ldr r0, =@ROMFlag_BraunerPortraits ; Check Portrait 1
+    ldrb r0, [r0, 3]
     ldr r1, =0x020F4E78 ; Table of portrait bosses
     ldrb r1, [r1, r0]
-    ldr r0, [r0, 0x76C]
+    pop r0
     bx lr
 
 ; Flag 0x8000 is a Portrait Identifier. If it's set, ignore the rest of the high byte.
@@ -1674,6 +1692,58 @@
     bl @UncallCharlotte
     bl 0x02032D90
     b 0x022E98E4
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check if the current portrait is one of the 2 locked portraits in the gallery
+@CheckPortraitLock1:
+    push r1
+    ldr r1, =@ROMFlag_LockedPortraits
+    ldrb r1, [r1] ; Read the first locked portrait
+    cmp r0, r1
+    pop r1
+    bne 0x02079114
+    b 0x02078FE0
+
+@CheckPortraitLock2:
+    push r1
+    ldr r1, =@ROMFlag_LockedPortraits
+    ldrb r1, [r1, 1] ; Read the first locked portrait
+    cmp r3, r1
+    pop r1
+    bne 0x02078FD4
+    b 0x02078FB0
+;;;;;;;;;;;;;;;;;;;;;;
+; Gets the proper coordinates for the Return portraits
+@BraunerPortraitPositions:
+    .dh 0x0040 ; Forgotten City
+    .dh 0x0090 ; 13th Street
+    .dh 0x0170 ; Burnt Paradise
+    .dh 0x01C0 ; Dark Academy
+
+@GetPortraitPosition:
+    cmp r0, 0  ; We want to IGNORE this outright unless we're teleporting into the castle
+    bne @@SkipPositionCheck
+    push r0-r2
+    ldr r3, =@ROMFlag_BraunerPortraits
+    mov r1, 0
+    ldr r0, = 0x02111785
+    ldrb r0, [r0] ; Get the ID of the current area
+@@CheckNextPortrait:
+    ldrb r2, [r3, r1]
+    cmp r0, r2 ; Check if this is one of the Brauner Gallery portraits
+    beq @@IsBraunerPortrait
+    add r1, r1, 1
+    cmp r1, 4
+    bne @@CheckNextPortrait
+    mov r3, 0x80 ; All standard portraits use 0x80 as their X-pos
+    pop r0-r2
+@@SkipPositionCheck:
+    b 0x023097A4
+@@IsBraunerPortrait:
+    ldr r3, = @BraunerPortraitPositions
+    mov r1, r1, lsl 1
+    ldrh r3, [r3, r1]
+    pop r0-r2
+    b 0x023097A4
 
 
 .pool
