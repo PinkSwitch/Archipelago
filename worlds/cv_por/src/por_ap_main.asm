@@ -91,6 +91,22 @@
     .org 0x02053DD0
         b @OneScreen_DontChangeTop
 
+    .org 0x0207927C
+        bl @LockPortraitForScene
+
+    .org 0x02078FF0
+        bl @CheckPortraitRequired_Street
+
+    .org 0x02078FBC
+        bl @CheckPortraitRequired_Paradise
+
+    .org 0x02079850
+        bl @FilterPortraitHighFlag
+
+    .org 0x0207B628
+        bl @InitPortraitAndGetVanillaPicture 
+    
+
     .org 0x020E537C
         .dw  @PostBehemothRoom
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -234,6 +250,9 @@
     .org 0x02207D88
         bl @CheckStrongerGloveSpeed
 
+    .org 0x021F4EBC
+        bl @DismissWithoutCall
+
 ;;;;;;;;;;;;;;;;
     .org 0x0221BBBC  ; Repoint the Konami Man and Twin Bee's item names
         .dw 0x0222253C ; This so that they can both use the name 'AP Item'
@@ -365,6 +384,9 @@
 .open "ftc/overlay9_79", 0x022E8820
     .org 0x022E9348
         b 0x022E9364 ; Skips Wind's locket cutscene, removed for brevity
+
+    .org 0x022EBCDC
+        bl @DismissCharlotteIfPortraitShuffle
 .close
 ;;;;;;;;
 ;Tile data for the tower room. adds platforms
@@ -392,6 +414,16 @@
     .org 0x022EC87C
         b @ForestPortrait_Dismiss
 .close
+;;;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_87", 0x022E8820
+    .org 0x022E948C
+        b @DismissCharlotteDracula
+
+    .org 0x022E98E0
+        b @DismissCharlotteDracula2
+.close
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_88", 0x022E8820
     .org 0x022E8880
@@ -512,6 +544,15 @@
         .db 0x00
 
     @OptionFlag_OneScreenMode: ;02309179
+        .db 0x00
+
+    @OptionFlag_PortraitShuffle: ;0230917A
+        .db 0x00
+    
+    @ROMFlag_TowerPortrait:; 0230917B
+        .db 0x07
+
+    @OptionFlag_SPMultiplier: ;0230917C
         .db 0x00
 
     .align 4
@@ -701,6 +742,7 @@
     ldrb r2,[r2]
     cmp r2, 1
     beq @@SkipMoneyPopup
+    mov r1, 0xF0 ; Set the timer
     bl 0x0204FD4C ; Show the text popup for it
     @@SkipMoneyPopup:
     pop r2
@@ -833,6 +875,7 @@
     ldr r0, =0x021119D0
     ldr r1, = 0xFFFFFFFF
     str r1,[r0] ; Set all of the Map bits, revealing the full map
+    str r1, [r0, 0x04]
 @@End:
     pop lr
     bx lr
@@ -1043,6 +1086,9 @@
     cmp r0, 0x0B ; Are we in the Lost Galley?
     bne @@NormalPortrait
     pop r0
+    push lr
+    bl @UncallCharlotte
+    pop lr
     ldr r0, = @OptionFlag_DraculaGoal
     ldrb r0, [r0]
     cmp r0, 1 ; Did the player choose Dracula goal?
@@ -1131,6 +1177,12 @@
     popeq r0
     beq 0x022E8894
 @@SkipNestRequirement:
+    push r1
+    ldr r0, =0x02111BB1
+    ldrb r1, [r0] ; Load the flags
+    orr r1, r1, 0x20
+    strb r1, [r0] ; Set the flag for having seen the Barrier cutscene so it doesn't bug out
+    pop r1
     pop r0
     b 0x022E8884 ; All checks pass so delete the barrier
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1522,11 +1574,106 @@
     ldreq r1, =0x6D8
     ldrne r1, =0x6CD ; Text id for the other text
     bx lr
+;;;;;;;;;;;;;;;;;;;;;;;
+; Dismisses Charlotte after the City of Haze portrait scene
+; but only if it's shuffled.
+@DismissCharlotteIfPortraitShuffle:
+    ldr r0, =0x02304A4C ; The Hub painting's destination
+    ldrh r0, [r0]
+    cmp r0, 0x0001
+    beq @@Skip ; Normally, the City cutscene dismisses charlotte
+    push lr
+    bl @UncallCharlotte ; The scene won't play if it's shuffled, so do it here instead
+    pop lr
+@@Skip:
+    mov r0, r4
+    bx lr
 
+@LockPortraitForScene:
+    push r1
+    ldr r1, =@ROMFlag_TowerPortrait
+    ldrb r1, [r1] ; Load the randomized portrait map
+    cmp r0, r1
+    pop r1
+    bx lr
+;;;;;;;;;;;;;;;;;;;
+; Check the NEW portrait boss flags for clearing the portrait fires
+@CheckPortraitRequired_Street:
+    ldr r0, =0x022F1F54 ; Check which area is shuffled over this
+    ldrb r0, [r0]
+    ldr r1, =0x020F4E78 ; Table of portrait bosses
+    ldrb r1, [r1, r0]
+    ldr r0, [r0, 0x76C]
+    bx lr
 
+@CheckPortraitRequired_Paradise:
+    ldr r0, =0x022F1F78 ; Check which area is shuffled over this
+    ldrb r0, [r0]
+    ldr r1, =0x020F4E78 ; Table of portrait bosses
+    ldrb r1, [r1, r0]
+    ldr r0, [r0, 0x76C]
+    bx lr
 
+; Flag 0x8000 is a Portrait Identifier. If it's set, ignore the rest of the high byte.
+@FilterPortraitHighFlag:
+    ldrh r6, [r0, 0x3E]
+    push r6
+    ands r6, r6, 0x8000 ; If the high flag is set...
+    pop r6
+    bne @@PortraitFlagSet
+    bx lr
+@@PortraitFlagSet:
+    and r6, r6, 0xFF
+    bx lr
 
+; Force portraits to always use their vanilla portrait. High byte of Var B = 0x80 + ID of the portrait.
+@VanillaPortraitTable:
+.db 0x00, 0x03, 0x05, 0x07
+.db 0x04, 0x02, 0x06, 0x08
+.db 0x09
+.align 4
 
+@InitPortraitAndGetVanillaPicture:
+    ldrh r1, [r0, 0x3E] ; Read the varB
+    ands r1, r1, 0x8000 ; If the flag is set
+    bne @@LoadSpecificVanillaPortrait
+    ldrh r1, [r0, 0x3C]
+    bx lr
+@@LoadSpecificVanillaPortrait:
+    ldrh r1, [r0, 0x3E]
+    and r1, r1, 0xFF00
+    mov r1, r1, lsr 8 ; Shift into the lower byte
+    and r1, r1, 0x7F ; AND out the 0x80 byte
+    push r0
+    ldr r0, = @VanillaPortraitTable
+    ldrb r1, [r0, r1] ; Read what it's supposed to be
+    pop r0
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;
+; Allow the partner to be Dismissed without Call cube
+@DismissWithoutCall:
+    push lr
+    bl 0x02215394 ; Check if the Call Cube is equipped
+    pop lr
+    cmp r0, 0
+    bne 0x021F4EC8 ; If Call is equipped, always pass this regardless
+    ldr r0, =0x0211210A ; Var for if the partner is out or not
+    ldrb r0, [r0]
+    cmp r0, 1 ; Partner is summoned
+    beq 0x021F4EC8 ; If the partner is out, dismiss even if we don't have Call
+    b 0x021F4F00
+
+;Dismiss Charlotte during the true Dracula scene
+@DismissCharlotteDracula:
+    push lr
+    bl @UncallCharlotte
+    pop lr
+    b 0x022E95EC
+
+@DismissCharlotteDracula2:
+    bl @UncallCharlotte
+    bl 0x02032D90
+    b 0x022E98E4
 
 
 .pool

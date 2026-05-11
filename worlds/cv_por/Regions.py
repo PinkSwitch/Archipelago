@@ -111,7 +111,7 @@ def create_locations(world):
 
     for location in all_locations:
         if location.region not in region_list:
-            raise ValueError(f"Error: Region {location.name} is invalid for location {location.name}.")
+            raise ValueError(f"Error: Region {location.region} is invalid for location {location.name}.")
         region = world.get_region(location.region)
         region.locations.append(PoRLocation(world.player, location.name, None if location.is_event else location_ids[location.name], region))
 
