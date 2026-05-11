@@ -547,3 +547,30 @@ location_data_table = {
 
     "Quest: Preparations": LocationInformation(0x020DFD40, "arm9", False, "Quest")
 }
+
+
+def get_location_groups():
+    location_groups = {
+        "Entrance": set(),
+        "Buried Chamber": set(),
+        "Great Stairway": set(),
+        "Tower of Death": set(),
+        "Master's Keep": set(),
+        "The Throne Room": set(),
+        "City of Haze": set(),
+        "Sandy Grave": set(),
+        "Nation of Fools": set(),
+        "Forest of Doom": set(),
+        "Forgotten City": set(),
+        "13th Street": set(),
+        "Burnt Paradise": set(),
+        "Dark Academy": set(),
+        "Nest of Evil": set(),
+        "Quests": set()
+    }
+    for location in location_ids:
+        group = location.split(":")[0]
+        if group == "Quest":
+            group = "Quests"  # Make this read better for a group name
+        location_groups[group].add(location)
+    return location_groups

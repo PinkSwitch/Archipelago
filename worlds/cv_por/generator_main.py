@@ -6,6 +6,7 @@ from BaseClasses import Item
 from typing import Dict, TextIO
 from .Items import item_table
 from .Options import PortraitShuffle
+from .modules.portrait_shuffle import portrait_data
 
 
 class CVPoRItem(Item):
@@ -120,7 +121,6 @@ def generate_output(world, output_directory: str) -> None:
 
 
 def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
-    from .modules.portrait_shuffle import portrait_data
     if world.options.portrait_shuffle:
         spoiler_handle.write("""
 Portraits:
@@ -164,6 +164,21 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "brauner_portrait_4": world.portrait_connections["Dark Academy"],
         "passage_portrait": world.portrait_connections["Nest of Evil"]
     }
+
+def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
+    from .static_location_data import location_ids
+    hint_struct = {
+    }
+    if world.options.portrait_shuffle:
+        for connection in world.portrait_connections:
+            locations_per_region = []
+            room = portrait_data[connection].spoiler_map_name
+            destination = world.portrait_connections[connection]
+            region = world.location_name_groups[destination]
+            for location in region:
+                hint_struct[location_ids[location]] = room
+        
+        hint_data[world.player] = hint_struct
 
 
 def get_filler_item_name(world) -> str:
