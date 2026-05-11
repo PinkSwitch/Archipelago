@@ -98,7 +98,7 @@ def portrait_shuffle(world) -> None:
     if world.options.portrait_shuffle:
         portrait_pool = list(world.portrait_connections.values())
         world.random.shuffle(portrait_pool)
-        while portrait_pool.index("Nest of Evil") in [5, 7]:
+        while portrait_pool.index("Nest of Evil") in [4, 7]:
             world.random.shuffle(portrait_pool)  # Nest doesn't have a boss room, so if it's a Lock we need to remove it
 
         if world.options.portrait_shuffle != PortraitShuffle.option_add_nest_of_evil:
