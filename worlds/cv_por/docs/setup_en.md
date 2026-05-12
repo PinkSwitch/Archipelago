@@ -1,4 +1,4 @@
-# Castlevania: Dawn of Sorrow Archipelago Randomizer Setup Guide
+# Castlevania: Portrait of Ruin Archipelago Randomizer Setup Guide
 
 ## Required Software
 
@@ -6,7 +6,7 @@
 
 
 - BizHawk version 2.10 or newer    
-- A legally obtained US ROM of Castlevania: Dawn of Sorrow. The MD5 hash should be cc0f25b8783fb83cb4588d1c111bdc18.
+- A legally obtained US ROM of Castlevania: Portrait of Ruin. The MD5 hash should be 2edd57540cae45842fbd19c45a4214f9.
 
 ## Installation Procedures
 
@@ -34,7 +34,7 @@ validator page: [YAML Validation page](/mysterycheck)
 ## Joining a MultiWorld Game
 
 ### Generating and Patching a Game
-1. Follow the general Archipelago instructions for generating a game. This will generate an output file for you. Your patch file will have the .apcvdos file extension.
+1. Follow the general Archipelago instructions for generating a game. This will generate an output file for you. Your patch file will have the .apcvpor file extension.
    Open ArchipelagoLauncher.exe
 2. Select "Open Patch" on the left side and select your patch file. Alternatively, you can open the ArchipelagoBizhawkClient with your patch file.
 3. If this is your first time patching, you will be prompted to locate your vanilla ROM.
