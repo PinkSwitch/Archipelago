@@ -1426,6 +1426,8 @@
 ; If we have the stronger glove option on,
 ; Give a bigger strength boost.
 @CheckStrongerGloveSpeed:
+    cmp r0, 0
+    beq @@End
     push r0
     ldr r0, =@OptionFlag_StrongerGlove
     ldrb r0, [r0] ; Check if this option is on
@@ -1436,6 +1438,7 @@
     bx lr
 @@NormalStr:
     add r10, r10, 0x800
+@@End:
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 @RamFlag_MapOpen:
