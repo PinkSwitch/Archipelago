@@ -74,7 +74,7 @@ return_portraits = {
 
 remix_shortcuts = {
     "Forgotten City": [0x02304708, "overlay_103"],
-    "13th Street": [0x022FF33C, "overlay_106"],
+    "13th Street": [0x022FF330, "overlay_106"],
     "Burnt Paradise": [0x023037DC, "overlay_107"],
     "Dark Academy": [0x022F62DC, "overlay_109"]
 }
@@ -163,11 +163,11 @@ def write_portrait_data(world, rom) -> None:
         file = return_address.destination_pointer[1]
         rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
 
-    #  Write the shortcuts used at the end of the Remix portraits
-    for obj in remix_shortcuts:
-        data = portrait_data[obj]
-        portrait = remix_shortcuts[obj]
-        rom.write_to_file(portrait[0] + 10, portrait[1], struct.pack("H", data.destination_room))
+        if destination in remix_shortcuts:
+            room = return_portraits[portrait].destination_room
+            address = remix_shortcuts[destination][0]
+            file = remix_shortcuts[destination][1]
+            rom.write_to_file(address + 10, file, struct.pack("H", room))  # Portrait room
 
 
 def adjust_portrait_gfx(rom):
