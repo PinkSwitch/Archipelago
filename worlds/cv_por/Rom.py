@@ -178,6 +178,21 @@ def patch_rom(world, rom, code_patch):
     if world.options.portrait_shuffle:
         write_portrait_data(world, rom)
 
+    #  Sanctuary hint
+    sanctuary_location = world.multiworld.find_item("Sanctuary", world.player)
+    location_name_groups = world.multiworld.worlds[sanctuary_location.player].location_name_groups
+    possible_location_groups = [group_name for group_name, group_locations in location_name_groups.items()
+                                if sanctuary_location.name in group_locations and group_name != "Everywhere"]
+    if possible_location_groups:
+        area = world.random.choice(possible_location_groups)  # If the world has location groups, use a location group the check belongs to as the area hint
+    else:
+        if sanctuary_location.parent_region.name == "Menu":
+            area = ""  # We don't want to say it's at their Menu, so just say it's somewhere
+        else:
+            area = sanctuary_location.parent_region.name  # Otherwise, display the region name
+
+    print(area)
+
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
 
