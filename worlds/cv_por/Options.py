@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup
+from .modules.quest_data import all_quests
 
 
 class Goal(Choice):
@@ -136,6 +137,33 @@ class SPMultiplier(Range):
     range_end = 100
     default = 1
 
+class UnlockAllQuests(Toggle):
+    """If enabled, all Quests will be unlocked by default."""
+    display_name = "Unlock All Quests"
+
+class ActiveQuests(OptionSet):
+    """Specify which Quests have random items. 'Preparations' is always included, regardless of settings. Nest of Evil is never included.
+       You can type any quest name, as well as the following shortcuts:
+       Requires Item: Any Quest which requires you to turn in an item or set of items (except for Almighty and Great Sage)
+       Defeat Enemies: Any Quest which requires you to defeat specific enemies.
+       Mastery: Any Quest which requires you to Master a subweapon.
+       Simple: Any Quest with no specific requirement other than reaching an area or changing your status.
+       Grindy: Any Quest with a high grinding requirement. (Includes the Mastery quests.)
+       All: Enables ALL quests
+       """
+    display_name = "Randomized Quests"
+    default = {}
+    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
+    valid_keys_casefold = True
+
+class ExcludedQuests(OptionSet):
+    """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.
+       The same shortcuts from the above option apply."""
+    display_name = "Excluded Quests"
+    default = {"A Rank Hunter", "S Rank Hunter", "Hands of the Clock", "The Hundred Tasks", "Master the Holy Power", "Almighty", "The Great Sage"}
+    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
+    valid_keys_casefold = True
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -157,6 +185,9 @@ class PoROptions(PerGameCommonOptions):
     one_screen_mode: OneScreenMode
     portrait_shuffle: PortraitShuffle
     sp_multiplier: SPMultiplier
+    unlock_all_quests: UnlockAllQuests
+    randomized_quests: ActiveQuests
+    excluded_quests: ExcludedQuests
 
 
 por_option_groups = [
@@ -180,6 +211,13 @@ por_option_groups = [
         AddExtraItems,
         ExcludeOwlMorph,
         StrongerGlove
+
+    ]),
+
+    OptionGroup("Quest Options", [
+        UnlockAllQuests,
+        # Active Quests,
+        # Excluded Quests
 
     ]),
 
