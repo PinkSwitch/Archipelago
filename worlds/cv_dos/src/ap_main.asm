@@ -3273,6 +3273,13 @@ push r0
     ldrb r1, [r0]
     and r1, 0x7E ; Remove the bits for HUD display and inScene
     strb r1, [r0]
+
+    ldr r1, =0x0208AC20
+    ldr r1, [r1]
+    add r1, r1, 0x36000
+    mov r0, 0
+    strb r0, [r1, 0xD44] ; Reset whatever the hell this flag is
+
     b 0x021CEBF4
 
 @ResetGardenFlags:
@@ -3280,6 +3287,11 @@ push r0
     ldrb r1, [r0]
     and r1, 0x7E ; Remove the bits for HUD display and inScene
     strb r1, [r0]
+    ldr r1, =0x0208AC20
+    ldr r1, [r1]
+    add r1, r1, 0x36000
+    mov r0, 0
+    strb r0, [r1, 0xD44] ; Reset whatever the hell this flag is
     bx lr
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3300,6 +3312,12 @@ push r0
     add r0, r0, 0x1C
     mov r1, 0x7F00
     strh r1, [r0, 0x04] ; Fix the volume post-scene
+
+    ldr r1, =0x0208AC20
+    ldr r1, [r1]
+    add r1, r1, 0x36000
+    mov r0, 0
+    strb r0, [r1, 0xD44] ; Reset whatever the hell this flag is
     bx lr
 .pool
 
