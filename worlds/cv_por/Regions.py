@@ -81,7 +81,7 @@ region_list = [
 ]
 
 has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
-strongies = Has("Strength Glove") & (HasAll("Push Cube", "Call Cube") | OptionFilter(StrongerGlove, 0))
+strongies = Has("Strength Glove") & (HasAll("Push Cube", "Call Cube") | OptionFilter(StrongerGlove, 1))
 
 can_cast_spell = Has("Skill Cube") | has_change_cube
 small_uppies = HasAny("Stone of Flight", "Griffon Wing") | HasAll("Call Cube", "Acrobat Cube") | (can_cast_spell & Has("Owl Morph"))

@@ -3,18 +3,16 @@ from rule_builder.field_resolvers import FromOption
 from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies, is_smol
 from .Options import NestofEvil, BraunerPortraits, Goal
 
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from . import PoRWorld
-
 
 def set_location_rules(world):
     set_rule = world.set_rule
     world.set_completion_rule(Has("Dracula Defeated"))
 
     set_rule(world.get_location("Entrance: Drawbridge Upper Item"), big_uppies | HasAll("Acrobat Cube", "Call Cube", "Stone of Flight", "Puppet Master"))
-    set_rule(world.get_location("Entrance: Above Metal Block Room"), big_uppies | (strongies & medium_uppies) | (HasAll("Acrobat Cube", "Puppet Master")) | (HasAll("Puppet Master", "Stone of Flight", "Acrobat Cube", "Call Cube")))
-
+    set_rule(world.get_location("Entrance: Above Metal Block Room"), big_uppies |
+                                                                    HasAll("Stone of Flight", "Puppet Master") |
+                                                                    strongies & ((Has("Stone of Flight")) | HasAll("Acrobat Cube", "Call Cube")))
+                                                                    
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Lower Alcove"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Upper Alcove"), medium_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Middle Alcove"), medium_uppies | HasAll("Speed Up", "Puppet Master", "Call Cube"))
@@ -65,8 +63,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Forgotten City: Lower Boulder Room Upper Alcove"), big_uppies)
     set_rule(world.get_location("Forgotten City: Lower Boulder Room Tunnel Alcove"), can_cast_spell & HasAny("Toad Morph", "Owl Morph"))
     set_rule(world.get_location("Forgotten City: Lower Underground Square Upper Item"), medium_uppies | HasAll("Call Cube", "Acrobat Cube", "Puppet Master"))
-    set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies |HasAll("Call Cube", "Acrobat Cube", "Stone of Flight"))
-    set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies |HasAll("Call Cube", "Acrobat Cube", "Stone of Flight"))
+    set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight"))
+    set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight"))
     set_rule(world.get_location("Forgotten City: Big Shaft Room Left"), big_uppies)
     set_rule(world.get_location("Forgotten City: Big Shaft Room Right"), big_uppies)
     set_rule(world.get_location("Forgotten City: Pyramid East 3F"), medium_uppies | HasAll("Call Cube", "Acrobat Cube", "Puppet Master") | (can_cast_spell & HasAll("Speed Up", "Puppet Master")))
