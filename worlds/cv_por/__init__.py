@@ -13,6 +13,7 @@ from .generator_main import (CVPoRItem, generate_early, create_regions, fill_slo
                              write_spoiler_header, extend_hint_information)
 from .Client import PoRClient
 
+
 class PoRWeb(WebWorld):
     theme = "ocean"
     

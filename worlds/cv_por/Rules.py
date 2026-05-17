@@ -73,6 +73,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Nation of Fools: Crevice Item"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
 
     set_rule(world.get_location("Burnt Paradise: Right Upper Big Corner On Wall"), big_uppies | HasAll("Call Cube", "Acrobat Cube", "Stone of Flight") | HasAll("Stone of Flight", "Puppet Master"))
+    set_rule(world.get_location("Burnt Paradise: Lower Vertical Hall"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
 
     set_rule(world.get_location("Forest of Doom: Secret Cave Room"), big_uppies)
 

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup
-from .modules.quest_data import all_quests
+from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup, StartInventoryPool, OptionSet
+from .modules.quest_data import quest_data
 
 
 class Goal(Choice):
@@ -141,6 +141,13 @@ class UnlockAllQuests(Toggle):
     """If enabled, all Quests will be unlocked by default."""
     display_name = "Unlock All Quests"
 
+quest_keys = set()
+for quest in quest_data:
+    if quest not in ["Quest: Preparations", "Quest: The Nest of Evil"]:
+        quest_keys.add(quest)
+        quest_keys.add(quest.split(": ")[1])  # Truncate it to just the quest name
+quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Mastery", "Simple", "Grindy"}
+
 class ActiveQuests(OptionSet):
     """Specify which Quests have random items. 'Preparations' is always included, regardless of settings. Nest of Evil is never included.
        You can type any quest name, as well as the following shortcuts:
@@ -153,15 +160,17 @@ class ActiveQuests(OptionSet):
        """
     display_name = "Randomized Quests"
     default = {}
-    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
+    print(valid_keys)
+    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
 
 class ExcludedQuests(OptionSet):
     """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.
        The same shortcuts from the above option apply."""
     display_name = "Excluded Quests"
     default = {"A Rank Hunter", "S Rank Hunter", "Hands of the Clock", "The Hundred Tasks", "Master the Holy Power", "Almighty", "The Great Sage"}
-    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
 
@@ -188,6 +197,7 @@ class PoROptions(PerGameCommonOptions):
     unlock_all_quests: UnlockAllQuests
     randomized_quests: ActiveQuests
     excluded_quests: ExcludedQuests
+    start_inventory_from_pool: StartInventoryPool
 
 
 por_option_groups = [
@@ -216,8 +226,8 @@ por_option_groups = [
 
     OptionGroup("Quest Options", [
         UnlockAllQuests,
-        # Active Quests,
-        # Excluded Quests
+        ActiveQuests,
+        ExcludedQuests
 
     ]),
 
