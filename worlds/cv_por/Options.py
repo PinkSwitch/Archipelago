@@ -162,8 +162,6 @@ class ActiveQuests(OptionSet):
     default = {}
     valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
-    print(valid_keys)
-    #valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
 
 class ExcludedQuests(OptionSet):
     """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.

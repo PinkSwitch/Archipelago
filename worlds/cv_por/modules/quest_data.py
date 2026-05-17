@@ -1,7 +1,9 @@
 from typing import NamedTuple
 
+
 class QuestData(NamedTuple):
     pointer: int
+
 
 quest_data = {
     "Quest: Preparations": QuestData(0),
@@ -42,3 +44,82 @@ quest_data = {
     "Quest: The Great Sage": QuestData(0),
     "Quest: Kill Gergoth": QuestData(0)
 }
+
+simple_quests = {
+    "Quest: The Spinning Art",
+    "Quest: Overcome the Curse",
+    "Quest: The Martial Art",
+    "Quest: Number of Fortune",
+    "Quest: Mental Training 1",
+    "Quest: Abandon Greed",
+    "Quest: Hands of the Clock",
+    "Quest: The Lonely Stage",
+    "Quest: Pray Before the Cross"
+}
+
+item_required_quests = {
+    "Quest: Supersonic Punch",
+    "Quest: Art of the Zephyr",
+    "Quest: The Statue's Tear",
+    "Quest: Holy Appearance",
+    "Quest: Mental Training 2",
+    "Quest: The Gambler",
+    "Quest: Poison vs. Poison",
+    "Quest: Build Your Strength 1",
+    "Quest: Build Your Strength 2",
+    "Quest: Build Your Strength 3",
+    "Quest: Lost Page"
+}
+
+enemy_quests = {
+    "Quest: Ghosts of the Desert",
+    "Quest: Defender of the Stairs",
+    "Quest: Find the King of Birds",
+    "Quest: Defeat the Ghoul King",
+    "Quest: Kill Gergoth"
+}
+
+mastery_quests = {
+    "Quest: The Spear of Legend",
+    "Quest: Master the Holy Power"
+}
+
+grindy_quests = {
+    "Quest: Mental Training 3",
+    "Quest: A Rank Hunter",
+    "Quest: Mental Training 4",
+    "Quest: S Rank Hunter",
+    "Quest: Strength Training 4",
+    "Quest: The Hundred Tasks",
+    "Quest: Master the Holy Power",
+    "Quest: Almighty",
+    "Quest: The Great Sage"
+}
+
+
+def setup_quests(world):
+    selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
+    if "all" in selected_quests:
+        for quest in quest_data:
+            if quest not in ["Quest: Preparatations", "Quest: The Nest of Evil"]:
+                selected_quests.add(quest)
+
+    if "simple" in selected_quests:
+        selected_quests |= simple_quests
+
+    if "requires item" in selected_quests:
+        selected_quests |= item_required_quests
+
+    if "defeat enemies" in selected_quests:
+        selected_quests |= enemy_quests
+
+    if "mastery" in selected_quests:
+        selected_quests |= mastery_quests
+
+    if "grindy" in selected_quests:
+        selected_quests |= grindy_quests
+
+    for quest in quest_data:
+        if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests:
+            world.active_quests.append(quest)
+    print(world.active_quests)

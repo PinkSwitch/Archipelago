@@ -10,7 +10,7 @@ from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids, get_location_groups
 from .generator_main import (CVPoRItem, generate_early, create_regions, fill_slot_data,
                              modify_multidata, generate_output, create_items, get_filler_item_name, set_rules,
-                             write_spoiler_header, extend_hint_information)
+                             write_spoiler_header, extend_hint_information, create_item)
 from .Client import PoRClient
 
 
@@ -54,6 +54,8 @@ class PoRWorld(World):
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
     portrait_connections = {}
+    active_quests = ["Quest: Preparations"]
+    excluded_quests = []
 
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]
@@ -65,6 +67,7 @@ class PoRWorld(World):
     options: PoROptions
     generate_early = generate_early
     create_items = create_items
+    create_item = create_item
     create_regions = create_regions
     fill_slot_data = fill_slot_data
     modify_multidata = modify_multidata
@@ -73,9 +76,6 @@ class PoRWorld(World):
     set_rules = set_rules
     write_spoiler_header = write_spoiler_header
     extend_hint_information = extend_hint_information
-
-    # locked_locations: List[str]
-    # ocation_cache: List[Location]
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
@@ -305,9 +305,4 @@ class PoRWorld(World):
             "Moon Brooch"
 
         ]
-
-    def create_item(self, name: str) -> CVPoRItem:
-        from .generator_main import set_classifications
-        data = set_classifications(self, name)
-        return CVPoRItem(name, data.classification, data.code, self.player)
         

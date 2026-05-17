@@ -165,7 +165,6 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "passage_portrait": world.portrait_connections["Nest of Evil"]
     }
 
-
 def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
     from .static_location_data import location_ids
     hint_struct = {
@@ -177,7 +176,7 @@ def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
             destination = world.portrait_connections[connection]
             region = world.location_name_groups[destination]
             for location in region:
-                hint_struct[location_ids[location]] = room
+                hint_struct[location_ids[location]] = ro
         
         hint_data[world.player] = hint_struct
 
