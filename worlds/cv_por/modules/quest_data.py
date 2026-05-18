@@ -1,4 +1,5 @@
 from typing import NamedTuple
+from ..Options import NestofEvil
 
 
 class QuestData(NamedTuple):
@@ -134,6 +135,9 @@ def setup_quests(world):
 
         if quest.casefold() in excluded_quests or quest.split(": ")[1].casefold() in excluded_quests:
             excluded_quests.add(quest)
+
+    if "Quest: Kill Gergoth" in world.active_quests and world.options.nest_of_evil_state == NestofEvil.option_removed:
+        world.active_quests.remove("Quest: Kill Gergoth")  # This would be impossible, so remove it
 
     # After adding the active quest rewards, REMOVE excluded quests from active
     # We do this here at this point so that it only excludes quests that are active in the first place
