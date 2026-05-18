@@ -454,7 +454,7 @@ item_table: Dict[str, ItemData] = {
     "Wait Cube": ItemData("Relics", 0x085F, ItemClassification.progression),
     "Acrobat Cube": ItemData("Relics", 0x0860, ItemClassification.progression),
     "Push Cube": ItemData("Relics", 0x0861, ItemClassification.progression),
-    "Lizard Tail": ItemData("Relics", 0x0862, ItemClassification.progression),
+    "Lizard Tail": ItemData("Relics", 0x0862, ItemClassification.progression, 0),
     "Stone of Flight": ItemData("Relics", 0x0863, ItemClassification.progression),
     "Griffon Wing": ItemData("Relics", 0x0864, ItemClassification.progression),
     "Strength Glove": ItemData("Relics", 0x0865, ItemClassification.progression),

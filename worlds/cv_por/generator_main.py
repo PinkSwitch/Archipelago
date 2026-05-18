@@ -81,7 +81,9 @@ def create_items(world) -> None:
             set_classifications(world, "Tome of Arms p1"),
             set_classifications(world, "Tome of Arms p2"),
         ])
-
+        
+    for item in world.quest_reward_pool:
+        pool.append(set_classifications(world, item))
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
     for i in range(filler_location_count):
         item = set_classifications(world, get_filler_item_name(world))

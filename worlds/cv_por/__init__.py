@@ -55,6 +55,7 @@ class PoRWorld(World):
     item_name_groups = get_item_names_per_category()
     portrait_connections = {}
     active_quests = ["Quest: Preparations"]
+    quest_reward_pool = []
     excluded_quests = []
 
     web = PoRWeb()
