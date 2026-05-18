@@ -3,39 +3,40 @@ from typing import NamedTuple
 
 class QuestData(NamedTuple):
     vanilla_reward: str
+    unlock_requirement: list
 
 
 quest_data = {
     "Quest: Preparations": QuestData("Lizard Tail"),
-    "Quest: Supersonic Punch": QuestData("Bullet Punch"),
-    "Quest: Ghosts of the Desert": QuestData("Bible"),
-    "Quest: Defender of the Stairs": QuestData("Whip Skill 2"),
-    "Quest: The Spinning Art": QuestData("Spinning Art"),
+    "Quest: Supersonic Punch": QuestData("Bullet Punch", []),
+    "Quest: Ghosts of the Desert": QuestData("Bible", []),
+    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", []),
+    "Quest: The Spinning Art": QuestData("Spinning Art", []),
     "Quest: Art of the Zephyr": QuestData("Rocket Slash"),
-    "Quest: Find the King of Birds": QuestData("Thief Ring"),
-    "Quest: Overcome the Curse": QuestData("Blessed Ring"),
-    "Quest: The Statue's Tear": QuestData("Holy Water"),
-    "Quest: The Martial Art": QuestData("Martial Art"),
-    "Quest: Holy Appearance": QuestData("Heal"),
-    "Quest: Number of Fortune": QuestData("LUCK Boost"),
-    "Quest: Mental Training 1": QuestData("MP Max up"),
+    "Quest: Find the King of Birds": QuestData("Thief Ring", []),
+    "Quest: Overcome the Curse": QuestData("Blessed Ring", []),
+    "Quest: The Statue's Tear": QuestData("Holy Water", []),
+    "Quest: The Martial Art": QuestData("Martial Art", []),
+    "Quest: Holy Appearance": QuestData("Heal", []),
+    "Quest: Number of Fortune": QuestData("LUCK Boost", []),
+    "Quest: Mental Training 1": QuestData("MP Max up", []),
     "Quest: Mental Training 2": QuestData("MP Max up"),
-    "Quest: The Spear of Legend": QuestData("Alucard's Spear"),
+    "Quest: The Spear of Legend": QuestData("Alucard's Spear", []),
     "Quest: Mental Training 3": QuestData("MP Max up"),
-    # "Quest: The Nest of Evil": QuestData("None"),
-    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring"),
-    "Quest: Abandon Greed": QuestData("Miser Ring"),
-    "Quest: A Rank Hunter": QuestData("Royal Sword"),
+    # "Quest: The Nest of Evil": QuestData("None", []),
+    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", []),
+    "Quest: Abandon Greed": QuestData("Miser Ring", []),
+    "Quest: A Rank Hunter": QuestData("Royal Sword", []),
     "Quest: Mental Training 4": QuestData("MP Max up"),
     "Quest: S Rank Hunter": QuestData("Undead Killer"),
-    "Quest: The Gambler": QuestData("Gambler Glasses"),
-    "Quest: Hands of the Clock": QuestData("Time Stop"),
-    "Quest: Poison vs. Poison": QuestData("Assassin Blade"),
-    "Quest: Build Your Strength 1": QuestData("HP Max up"),
+    "Quest: The Gambler": QuestData("Gambler Glasses", []),
+    "Quest: Hands of the Clock": QuestData("Time Stop", []),
+    "Quest: Poison vs. Poison": QuestData("Assassin Blade", []),
+    "Quest: Build Your Strength 1": QuestData("HP Max up", []),
     "Quest: Build Your Strength 2": QuestData("HP Max up"),
-    "Quest: The Lonely Stage": QuestData("Record Player"),
+    "Quest: The Lonely Stage": QuestData("Record Player", []),
     "Quest: Build Your Strength 3": QuestData("HP Max up"),
-    "Quest: Pray Before the Cross": QuestData("Cross"),
+    "Quest: Pray Before the Cross": QuestData("Cross", []),
     "Quest: Build Your Strength 4": QuestData("HP Max up"),
     "Quest: Lost Page": QuestData("Tome of Arms X"),
     "Quest: The Hundred Tasks": QuestData("Sage Ring"),
@@ -165,4 +166,5 @@ def setup_quests(world):
 
         if quest in quest_data:
             world.excluded_quests.append(quest)
+    
     
