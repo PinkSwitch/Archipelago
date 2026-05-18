@@ -4,6 +4,7 @@
 
 @Overlay119Start equ 0x02308EC0
 @FreeSpace equ @Overlay119Start + 0x60
+@APItemNames equ @FreeSpace + 0x10000
 
 @ServerItemType equ 0x02308ED0 ; 2 bytes
 @TotalItemsReceived equ 0x02308ED2 ; 2 bytes
@@ -114,6 +115,27 @@
 
     .org 0x02079874
         bl @GetPortraitPosition
+
+    .org 0x0203F924
+        b @CheckQuestCompletion
+
+    .org 0x0204077C
+        b @UpdateQuestMenuOnAccept
+
+    .org 0x0203F66C
+        b @UnlockAllQuests
+
+    .org 0x02040C58
+        bl @QuestMenu_SwapText
+
+    .org 0x020357BC
+        bl @QuestGuide_SwapText
+
+    .org 0x02008280
+        bl @RenderAPItemName
+
+    .org 0x0203F340
+        b @SwapQuestToAPText
     
 
     .org 0x020E537C
@@ -229,7 +251,7 @@
         .dh 0x071F
 
     .org 0x020DFF80 ; gergoth
-        .dh 0x0208
+        .dh 0x084A
 
     ; Fix the map explore/suspend bug
     .org 0x0202E5F8
@@ -267,6 +289,16 @@
         .dw 0x0222253C ; This so that they can both use the name 'AP Item'
         .dw 0x0222253C
 ;;;;;;;;;;;;;;;;;;;;;
+    .org 0x0221D450
+        .dw @QuestInstructions ; Shows that you can press X to accept a quest
+;;;;;;;;;;;;;;;;;;;;
+    .org 0x0221BFE0
+        .dw 0x02223064 ; Switch the HP max up description to "Max HP increased"
+
+    .org 0x0221BFE4
+        .dw 0x0222307C ; Switch the MP Max up description to "Max MP increased"
+
+
 ;overlay 9 0
 .close
 
@@ -341,6 +373,15 @@
 .open "ftc/overlay9_25",  0x022D7900
     .org 0x022D95CC
         bl @LoadAPData
+
+    .org 0x022D8D20
+        mov r0, 40h ; Beat game
+
+    .org 0x022D82D4
+        mov r0, 40h ; Beat game
+
+    .org 0x022D7CDC
+        b @SkipCharSelect
 
 .close
 
@@ -569,6 +610,9 @@
 
     @ROMFlag_BraunerPortraits: ;030917F-82
         .db 0x04, 0x02, 0x06, 0x08
+
+    @OptionFlag_UnlockAllQuests: ;02039183
+        .db 0x00
 
     .align 4
 ;;;;;;;;;;;;;;;;;;;
@@ -853,6 +897,7 @@
     bne @@SkipEquip
     mov r1, 0x0A
     strb r1,[r0] ; Replace with old one with the new one
+    bl 0x02208680 ; Recalculate stats if we auto-equipped it
 @@SkipEquip:
     pop r0-r2, lr
     b 0x021E4428
@@ -1747,9 +1792,194 @@
     ldrh r3, [r3, r1]
     pop r0-r2
     b 0x023097A4
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Removes quests from the Quest List after accepting them.
+@CheckQuestCompletion:
+    push r1
+    mov r1, r0
+    ands r0, r0, 0x08 ; Check if the quest is actually completed, like normal
+    bne @@DisableQuest
+    mov r0, r1
+    ands r0, r0, 0x04 ; If the quest is completable, we want to count it again
+    bne @@EnableQuest
+    mov r0, r1
+    ands r0, r0, 0x02 ; Otherwise, if we've accepted it, disable
+    bne @@DisableQuest
+@@EnableQuest:
+    pop r1
+    strb r8, [r6, r7]
+    add r7, r7, 1
+    b 0x0203F930
+@@DisableQuest:
+    pop r1
+    b 0x0203F930
+
+; Updates the quest menu. Actually removes it from the physical list.
+@UpdateQuestMenuOnAccept:
+    bl 0x0203F554 ; Count how many quests we still have
+    sub r0, r0, 1
+    cmp r0, 0
+    bgt @@CloseQuestMenu
+    b 0x02040850
+@@CloseQuestMenu:
+    mov r0, 0
+    bl 0x0203F620 ; Refresh the quest listings
+    bl 0x0203FC04
+    b 0x02040780
+
+; Flags all Quests as unlocked (or more specifically, ignores the unlock requirement)
+@UnlockAllQuests:
+    push r0
+    ldr r0, =@OptionFlag_UnlockAllQuests
+    ldrb r0, [r0]
+    cmp r0, 0
+    pop r0
+    bne 0x0203F914
+    cmp r8, 0x24
+    b 0x0203F670
+
+; Switch Text for quest descriptions to show the reward when holding Xs in the Quest menu
+@QuestMenu_SwapText:
+    push lr
+    bl @SwitchQuestText
+    pop lr
+    b 0x0204100C
+
+; Switch quest text on the Guide menu
+@QuestGuide_SwapText:
+    push r1, lr
+    mov r1, r0
+
+    bl @SwitchQuestText
+    mov r0, r1
+    pop r1, lr
+    cmp r2, r0
+    bx lr
+
+
+;Switches text for quest description/reward based on holding X
+@SwitchQuestText:
+    push r0
+    ldr r0, =0x020FC48D
+    ldrb r0, [r0] ; Get the current HELD input
+    ands r0, r0, 0x04 ; Check if holding X
+    bne @@SwitchText
+@@NormalText:
+    pop r0
+    bx lr
+@@SwitchText:
+    sub r1, r1, 0x600
+    cmp r1, 0x4C
+    addlt r1, r1, 0x600
+    blt @@NormalText
+    cmp r1, 0x70
+    addgt r1, r1, 0x600
+    bgt @@NormalText ; We only want to switch the description, not any other text
+    sub r1, r1, 0x4C ; Convert the quest to an ID number
+    push lr
+    bl @ConvertQuestToRewardTex
+    pop lr
+    b @@NormalText
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@QuestInstructions:
+    .db 0x01, 0x00
+    .db 0xED, 0x1A, 0x00, 0x21, 0x43, 0x43, 0x45, 0x50, 0x54, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+    .db 0xFF, 0xEF, 0x1A, 0x00, 0x33, 0x48, 0x4F, 0x57, 0x00, 0x52, 0x45, 0x57, 0x41, 0x52, 0x44
+    .db 0xEA
+.align 4
+
+@ItemNameBase:
+    .dh 0x4E7 ; Money
+    .dh 0x0C ; Consumables
+    .dh 0x6C ; Weapons
+    .dh 0xB5 ; Armor
+    .dh 0xEF ; Headgear
+    .dh 0x115 ; Boots
+    .dh 0x132 ; Accessories
+    .dh 0x3E6 ; Skills
+@ConvertQuestToRewardTex:
+    ;r1 - Quest ID
+    push r0, r2
+    ldr r0, =0x020DFD40 ; Quest data table
+    mov r2, r1, lsl 4
+    ldrh r0, [r0, r2]
+    ands r1, r0, 0xFF ; Set the ID in r1
+    mov r0, r0, lsr 8 ; Set the TYPE in r0
+    ldr r2, =@ItemNameBase
+    sub r0, r0, 1 ; Shift down because types start at 1
+    mov r0, r0, lsl 1
+    ldrh r0, [r2, r0]
+    add r1, r0, r1
+    pop r0, r2
+    bx lr
+
+; For quest ID r1, load the quest's Unused3 into the Item Override Pointer
+@LoadQuestRewardPointer:
+    push r0, r1
+    ldr r0, =0x020DFD40 ; Quest data table
+    mov r1, r1, lsl 4
+    add r0, r0, r1
+    ldr r0, [r0, 0x0C] ; Get the pointer
+    ldr r1, =@ApItemNamePtr
+    str r0, [r1]
+    pop r0, r1
+    bx lr
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Check if the APItemName pointer is 0. If it's not use, that instead.
+@ApItemNamePtr:
+    .dw 0x00000000
+@RenderAPItemName:
+    push r1
+    mov r1, r0
+    ldr r0, = @ApItemNamePtr
+    ldr r0, [r0]
+    cmp r0, 0
+    beq @@DrawNormalName
+    push r2
+    ldr r2, =@ApItemNamePtr
+    mov r1, 0
+    str r1, [r2]
+    pop r2
+    pop r1
+    bx lr
+@@DrawNormalName:
+    mov r0, r1
+    pop r1
+    b 0x02008D80
+
+@SwapQuestToAPText:
+    push lr
+    push r1, r2
+    sub r2, r2, 0x600
+    cmp r2, 0x4C
+    blt @@End
+    cmp r2, 0x70
+    bgt @@End
+    ; We're in range so we know this is a quest
+    cmp r0, 0x5B
+    blt @@End
+    cmp r0, 0x5D
+    bge @@End ; Only run this for the AP item text
+    sub r1, r2, 0x4C
+    bl @LoadQuestRewardPointer
+@@End:
+    pop r1, r2
+    b 0x0203F344
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@SkipCharSelect:
+; Skip the Character screen if we haven't beaten the game yet
+    ldrb r0, [r6, 0x11]
+    ands r0, r0, 0x40 ; Check the beaten flag
+    bne 0x022D7D28
+    b 0x022D7CE0
 
 
 .pool
+
+.org @APItemNames
+    .fill 0x0B00
 
 
 .endarea

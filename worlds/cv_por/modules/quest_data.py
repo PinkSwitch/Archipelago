@@ -1,5 +1,4 @@
 from typing import NamedTuple
-from ..Options import NestofEvil
 
 
 class QuestData(NamedTuple):
@@ -99,6 +98,7 @@ grindy_quests = {
 
 
 def setup_quests(world):
+    from ..Options import NestofEvil
     selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
     excluded_quests = {quest.casefold() for quest in world.options.excluded_quests.value}
 

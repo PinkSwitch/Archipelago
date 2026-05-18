@@ -8,8 +8,9 @@ from .static_location_data import location_data_table
 from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
+from .Items import item_table
 
-world_version = "1.1"
+world_version = "1.2"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
@@ -115,6 +116,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309179, "overlay_119", bytearray([world.options.one_screen_mode.value]))  # One-screen mode
     rom.write_to_file(0x0230917A, "overlay_119", bytearray([world.options.portrait_shuffle.value]))  # Portrait shuffle
     rom.write_to_file(0x0230917C, "overlay_119", bytearray([world.options.sp_multiplier.value]))
+    rom.write_to_file(0x02309183, "overlay_119", bytearray([world.options.unlock_all_quests.value]))
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
@@ -140,8 +142,8 @@ def patch_rom(world, rom, code_patch):
     ####################################
     # Location handler
     for location in world.get_locations():
-        if not location.address:  # Filter all events out of this
-            continue
+        if not location.address and "Quest" not in location.name:
+            continue  # We use Events for junk quests, which we DO want to handle the reward of normally
         item = location.item
         data = location_data_table[location.name]
 
@@ -159,6 +161,11 @@ def patch_rom(world, rom, code_patch):
             else:
                 color = 0x0E
                 item_id = 0x4F
+        elif not item.code:
+            color = 0
+            code = item_table[location.item.name].code
+            item_type = (code & 0xFF00) >> 8
+            item_id = code & 0xFF
         else:
             color = 0
             item_type = (item.code & 0xFF00) >> 8
@@ -208,7 +215,8 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
         ("check_patch_version", []),
         ("adjust_item_positions", []),
         ("apply_modifiers", []),
-        ("shuffle_portrait_gfx", [])
+        ("shuffle_portrait_gfx", []),
+        ("adjust_quest_rewards", [])
     ]
 
     @classmethod
@@ -275,6 +283,41 @@ class PorPatchExtentions(APPatchExtension):
     def shuffle_portrait_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         adjust_portrait_gfx(rom)
+        return rom.get_bytes()
+
+    def adjust_quest_rewards(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        quest_address = 0x020DFD40
+        for i in range(0x24):
+            show_description = False
+            is_skill = False
+            reward = struct.unpack("H", rom.read_from_file(quest_address, "arm9", 2))[0]  # Read the reward
+            data = struct.unpack("H", rom.read_from_file(quest_address + 4, "arm9", 2))[0]
+            data &= 0xEFE0  # Clear the Type bit, but not the requirement
+
+            item_type = (reward & 0xFF00) >> 8
+            item_id = reward & 0xFF
+            if item_type == 8:  # Skills or relic
+                if item_id >= 0x5C:
+                    show_description = True
+                else:
+                    is_skill = True
+            elif reward in [0x0208, 0x209]:  # HP/MP Max ups
+                show_description = True
+
+            if is_skill:
+                data |= 0x02
+            else:
+                data |= 0x01
+
+            if show_description:
+                data |= 0x1000
+
+            rom.write_to_file(quest_address + 4, "arm9", struct.pack("H", data))
+            quest_address += 0x10
+
+
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_119", 2))[0]  # Read the multiplier
         return rom.get_bytes()
 
 
