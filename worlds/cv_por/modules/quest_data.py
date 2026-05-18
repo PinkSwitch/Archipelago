@@ -3,47 +3,47 @@ from typing import NamedTuple
 
 class QuestData(NamedTuple):
     vanilla_reward: str
-    unlock_requirement: list
+    clear_requirement: str  # Which boss you need to clear to unlock the quest
 
 
 quest_data = {
-    "Quest: Preparations": QuestData("Lizard Tail"),
-    "Quest: Supersonic Punch": QuestData("Bullet Punch", []),
-    "Quest: Ghosts of the Desert": QuestData("Bible", []),
-    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", []),
-    "Quest: The Spinning Art": QuestData("Spinning Art", []),
-    "Quest: Art of the Zephyr": QuestData("Rocket Slash"),
-    "Quest: Find the King of Birds": QuestData("Thief Ring", []),
-    "Quest: Overcome the Curse": QuestData("Blessed Ring", []),
-    "Quest: The Statue's Tear": QuestData("Holy Water", []),
-    "Quest: The Martial Art": QuestData("Martial Art", []),
-    "Quest: Holy Appearance": QuestData("Heal", []),
-    "Quest: Number of Fortune": QuestData("LUCK Boost", []),
-    "Quest: Mental Training 1": QuestData("MP Max up", []),
-    "Quest: Mental Training 2": QuestData("MP Max up"),
-    "Quest: The Spear of Legend": QuestData("Alucard's Spear", []),
-    "Quest: Mental Training 3": QuestData("MP Max up"),
-    # "Quest: The Nest of Evil": QuestData("None", []),
-    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", []),
-    "Quest: Abandon Greed": QuestData("Miser Ring", []),
-    "Quest: A Rank Hunter": QuestData("Royal Sword", []),
-    "Quest: Mental Training 4": QuestData("MP Max up"),
-    "Quest: S Rank Hunter": QuestData("Undead Killer"),
-    "Quest: The Gambler": QuestData("Gambler Glasses", []),
-    "Quest: Hands of the Clock": QuestData("Time Stop", []),
-    "Quest: Poison vs. Poison": QuestData("Assassin Blade", []),
-    "Quest: Build Your Strength 1": QuestData("HP Max up", []),
-    "Quest: Build Your Strength 2": QuestData("HP Max up"),
-    "Quest: The Lonely Stage": QuestData("Record Player", []),
-    "Quest: Build Your Strength 3": QuestData("HP Max up"),
-    "Quest: Pray Before the Cross": QuestData("Cross", []),
-    "Quest: Build Your Strength 4": QuestData("HP Max up"),
-    "Quest: Lost Page": QuestData("Tome of Arms X"),
-    "Quest: The Hundred Tasks": QuestData("Sage Ring"),
-    "Quest: Master the Holy Power": QuestData("Grand Cruz"),
-    "Quest: Almighty": QuestData("Stellar Sword"),
-    "Quest: The Great Sage": QuestData("Sorceress Crest"),
-    "Quest: Kill Gergoth": QuestData("Cocytus")
+    "Quest: Preparations": QuestData("Lizard Tail", "None"),
+    "Quest: Supersonic Punch": QuestData("Bullet Punch", "Dullahan"),
+    "Quest: Ghosts of the Desert": QuestData("Bible", "Keremet"),
+    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", "Keremet"),
+    "Quest: The Spinning Art": QuestData("Spinning Art", "Astarte"),
+    "Quest: Art of the Zephyr": QuestData("Rocket Slash", "Legion"),
+    "Quest: Find the King of Birds": QuestData("Thief Ring", "The Creature"),
+    "Quest: Overcome the Curse": QuestData("Blessed Ring", "Astarte"),
+    "Quest: The Statue's Tear": QuestData("Holy Water", "Legion"),
+    "Quest: The Martial Art": QuestData("Martial Art", "Legion"),
+    "Quest: Holy Appearance": QuestData("Heal", "Stella"),
+    "Quest: Number of Fortune": QuestData("LUCK Boost", "Stella"),
+    "Quest: Mental Training 1": QuestData("MP Max up", "Stella"),
+    "Quest: Mental Training 2": QuestData("MP Max up", "Stella"),
+    "Quest: The Spear of Legend": QuestData("Alucard's Spear", "The Creature"),
+    "Quest: Mental Training 3": QuestData("MP Max up", "The Creature"),
+    # "Quest: The Nest of Evil": QuestData("None", "Werewolf"),
+    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", "Sisters"),
+    "Quest: Abandon Greed": QuestData("Miser Ring", "Sisters"),
+    "Quest: A Rank Hunter": QuestData("Royal Sword", "Dagon"),
+    "Quest: Mental Training 4": QuestData("MP Max up", "The Creature"),
+    "Quest: S Rank Hunter": QuestData("Undead Killer", "Werewolf"),
+    "Quest: The Gambler": QuestData("Gambler Glasses", "Dagon"),
+    "Quest: Hands of the Clock": QuestData("Time Stop", "Death"),
+    "Quest: Poison vs. Poison": QuestData("Assassin Blade", "Legion"),
+    "Quest: Build Your Strength 1": QuestData("HP Max up", "Death"),
+    "Quest: Build Your Strength 2": QuestData("HP Max up", "Deat"),
+    "Quest: The Lonely Stage": QuestData("Record Player", "The Creature"),
+    "Quest: Build Your Strength 3": QuestData("HP Max up", "The Creature"),
+    "Quest: Pray Before the Cross": QuestData("Cross", "Werewolf"),
+    "Quest: Build Your Strength 4": QuestData("HP Max up", "The Creature"),
+    "Quest: Lost Page": QuestData("Tome of Arms X", "None"),
+    "Quest: The Hundred Tasks": QuestData("Sage Ring", "None"),
+    "Quest: Master the Holy Power": QuestData("Grand Cruz", "None"),
+    "Quest: Almighty": QuestData("Stellar Sword", "None"),
+    "Quest: The Great Sage": QuestData("Sorceress Crest", "None"),
+    "Quest: Kill Gergoth": QuestData("Cocytus", "None")
 }
 
 simple_quests = {
@@ -168,3 +168,79 @@ def setup_quests(world):
             world.excluded_quests.append(quest)
     
     
+def set_quest_rules(world):
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+    set_rule(world.get_location("Dummy"), dummy)
+
+
+
+    "Quest: Preparations": QuestData("Lizard Tail", "None"),
+    "Quest: Supersonic Punch": QuestData("Bullet Punch", "Dullahan"),
+    "Quest: Ghosts of the Desert": QuestData("Bible", "Keremet"),
+    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", "Keremet"),
+    "Quest: The Spinning Art": QuestData("Spinning Art", "Astarte"),
+    "Quest: Art of the Zephyr": QuestData("Rocket Slash", "Legion"),
+    "Quest: Find the King of Birds": QuestData("Thief Ring", "The Creature"),
+    "Quest: Overcome the Curse": QuestData("Blessed Ring", "Astarte"),
+    "Quest: The Statue's Tear": QuestData("Holy Water", "Legion"),
+    "Quest: The Martial Art": QuestData("Martial Art", "Legion"),
+    "Quest: Holy Appearance": QuestData("Heal", "Stella"),
+    "Quest: Number of Fortune": QuestData("LUCK Boost", "Stella"),
+    "Quest: Mental Training 1": QuestData("MP Max up", "Stella"),
+    "Quest: Mental Training 2": QuestData("MP Max up", "Stella"),
+    "Quest: The Spear of Legend": QuestData("Alucard's Spear", "The Creature"),
+    "Quest: Mental Training 3": QuestData("MP Max up", "The Creature"),
+    # "Quest: The Nest of Evil": QuestData("None", "Werewolf"),
+    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", "Sisters"),
+    "Quest: Abandon Greed": QuestData("Miser Ring", "Sisters"),
+    "Quest: A Rank Hunter": QuestData("Royal Sword", "Dagon"),
+    "Quest: Mental Training 4": QuestData("MP Max up", "The Creature"),
+    "Quest: S Rank Hunter": QuestData("Undead Killer", "Werewolf"),
+    "Quest: The Gambler": QuestData("Gambler Glasses", "Dagon"),
+    "Quest: Hands of the Clock": QuestData("Time Stop", "Death"),
+    "Quest: Poison vs. Poison": QuestData("Assassin Blade", "Legion"),
+    "Quest: Build Your Strength 1": QuestData("HP Max up", "Death"),
+    "Quest: Build Your Strength 2": QuestData("HP Max up", "Deat"),
+    "Quest: The Lonely Stage": QuestData("Record Player", "The Creature"),
+    "Quest: Build Your Strength 3": QuestData("HP Max up", "The Creature"),
+    "Quest: Pray Before the Cross": QuestData("Cross", "Werewolf"),
+    "Quest: Build Your Strength 4": QuestData("HP Max up", "The Creature"),
+    "Quest: Lost Page": QuestData("Tome of Arms X", "None"),
+    "Quest: The Hundred Tasks": QuestData("Sage Ring", "None"),
+    "Quest: Master the Holy Power": QuestData("Grand Cruz", "None"),
+    "Quest: Almighty": QuestData("Stellar Sword", "None"),
+    "Quest: The Great Sage": QuestData("Sorceress Crest", "None"),
+    "Quest: Kill Gergoth": QuestData("Cocytus", "None")

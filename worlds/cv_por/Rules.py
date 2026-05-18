@@ -2,6 +2,7 @@ from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocati
 from rule_builder.field_resolvers import FromOption
 from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies, is_smol
 from .Options import NestofEvil, BraunerPortraits, Goal
+from . modules.quest_data import set_quest_rules
 
 
 def set_location_rules(world):
@@ -88,3 +89,5 @@ def set_location_rules(world):
         set_rule(world.get_location("The Throne Room: Above Throne Right"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Center"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Left"), big_uppies)
+
+    set_quest_rules(world)

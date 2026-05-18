@@ -6,7 +6,7 @@ from .generator_main import create_item_as_event, get_filler_item_name
 def setup_game(world):
     setup_quests(world)
     portrait_shuffle(world)
-    if world.portrait_connections != "Nest of Evil" and world.options.nest_portraits.value == 8:
+    if world.portrait_connections["Nest of Evil"] != "Nest of Evil" and world.options.nest_portraits.value == 8:
         world.options.nest_portraits.value = 7  # This would be otherwise impossible, so lower the count to 7
 
 
