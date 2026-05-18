@@ -127,6 +127,8 @@ def setup_quests(world):
         else:
             world.vanilla_quests.append(quest)
 
+    world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
+
     for quest in world.active_quests:
         world.quest_reward_pool.append(quest_data[quest].vanilla_reward)
 

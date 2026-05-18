@@ -545,9 +545,43 @@ location_data_table = {
     "Tower of Death: Stella Item": LocationInformation(0x0230916B, "overlay_119", False, "Cutscene"),
     "Master's Keep: Whip Trial": LocationInformation(0x02309168, "overlay_119", False, "Cutscene"),
 
-    "Quest: Preparations": LocationInformation(0x020DFD40, "arm9", False, "Quest")
+    "Quest: Preparations": LocationInformation(0x020DFD40, "arm9", False, "Quest"),
+    "Quest: Supersonic Punch": LocationInformation(0x020DFD50, "arm9", False, "Quest"),
+    "Quest: Ghosts of the Desert": LocationInformation(0x020DFD60, "arm9", False, "Quest"),
+    "Quest: Defender of the Stairs": LocationInformation(0x020DFD70, "arm9", False, "Quest"),
+    "Quest: The Spinning Art": LocationInformation(0x020DFD80, "arm9", False, "Quest"),
+    "Quest: Art of the Zephyr": LocationInformation(0x020DFD90, "arm9", False, "Quest"),
+    "Quest: Find the King of Birds": LocationInformation(0x020DFDA0, "arm9", False, "Quest"),
+    "Quest: Overcome the Curse": LocationInformation(0x020DFDB0, "arm9", False, "Quest"),
+    "Quest: The Statue's Tear": LocationInformation(0x020DFDC0, "arm9", False, "Quest"),
+    "Quest: The Martial Art": LocationInformation(0x020DFDD0, "arm9", False, "Quest"),
+    "Quest: Holy Appearance": LocationInformation(0x020DFDE0, "arm9", False, "Quest"),
+    "Quest: Number of Fortune": LocationInformation(0x020DFDF0, "arm9", False, "Quest"),
+    "Quest: Mental Training 1": LocationInformation(0x020DFE00, "arm9", False, "Quest"),
+    "Quest: Mental Training 2": LocationInformation(0x020DFE10, "arm9", False, "Quest"),
+    "Quest: The Spear of Legend": LocationInformation(0x020DFE20, "arm9", False, "Quest"),
+    "Quest: Mental Training 3": LocationInformation(0x020DFE30, "arm9", False, "Quest"),
+    "Quest: Defeat the Ghoul King": LocationInformation(0x020DFE50, "arm9", False, "Quest"),
+    "Quest: Abandon Greed": LocationInformation(0x020DFE60, "arm9", False, "Quest"),
+    "Quest: A Rank Hunter": LocationInformation(0x020DFE70, "arm9", False, "Quest"),
+    "Quest: Mental Training 4": LocationInformation(0x020DFE80, "arm9", False, "Quest"),
+    "Quest: S Rank Hunter": LocationInformation(0x020DFE90, "arm9", False, "Quest"),
+    "Quest: The Gambler": LocationInformation(0x020DFEA0, "arm9", False, "Quest"),
+    "Quest: Hands of the Clock": LocationInformation(0x020DFEB0, "arm9", False, "Quest"),
+    "Quest: Poison vs. Poison": LocationInformation(0x020DFEC0, "arm9", False, "Quest"),
+    "Quest: Build Your Strength 1": LocationInformation(0x020DFED0, "arm9", False, "Quest"),
+    "Quest: Build Your Strength 2": LocationInformation(0x020DFEE0, "arm9", False, "Quest"),
+    "Quest: The Lonely Stage": LocationInformation(0x020DFEF0, "arm9", False, "Quest"),
+    "Quest: Build Your Strength 3": LocationInformation(0x020DFF00, "arm9", False, "Quest"),
+    "Quest: Pray Before the Cross": LocationInformation(0x020DFF10, "arm9", False, "Quest"),
+    "Quest: Build Your Strength 4": LocationInformation(0x020DFF20, "arm9", False, "Quest"),
+    "Quest: Lost Page": LocationInformation(0x020DFF30, "arm9", False, "Quest"),
+    "Quest: The Hundred Tasks": LocationInformation(0x020DFF40, "arm9", False, "Quest"),
+    "Quest: Master the Holy Power": LocationInformation(0x020DFF50, "arm9", False, "Quest"),
+    "Quest: Almighty": LocationInformation(0x020DFF60, "arm9", False, "Quest"),
+    "Quest: The Great Sage": LocationInformation(0x020DFF70, "arm9", False, "Quest"),
+    "Quest: Kill Gergoth": LocationInformation(0x020DFF80, "arm9", False, "Quest")
 }
-
 
 def get_location_groups():
     location_groups = {
