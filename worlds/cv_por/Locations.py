@@ -1,5 +1,6 @@
 from typing import List, Optional, NamedTuple, TYPE_CHECKING
 from .Options import NestofEvil
+from .modules.quest_data import quest_data
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -13,8 +14,6 @@ class LocationData(NamedTuple):
 
 def get_locations(world: "PoRWorld") -> List[LocationData]:
     location_table: List[LocationData] = [
-        LocationData("Entrance - Wind's Room", "Quest: Preparations"),
-
         LocationData("Entrance - Hub", "Entrance: Drawbridge Pit Item"),
         LocationData("Entrance - Hub", "Entrance: Drawbridge Switch Item"),
         LocationData("Entrance - Hub", "Entrance: Drawbridge Upper Item"),
@@ -292,6 +291,13 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
          LocationData("Nest of Evil", "Nest of Evil: Doppelganger Reward"),
          LocationData("Nest of Evil", "Nest of Evil: First Item"),
          LocationData("Nest of Evil", "Nest of Evil: Second Item")]
+
+    for quest in quest_data:
+        if quest not in world.active_quests:
+            is_event = True  # We create event locations for inactive quests
+        else:
+            is_event = False
+        location_table.append(LocationData("Entrance - Wind's Room", quest, is_event))
 
     return location_table
     # LocationData("Dummy", "Dummy"),

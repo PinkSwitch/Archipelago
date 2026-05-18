@@ -18,25 +18,25 @@ quest_data = {
     "Quest: The Martial Art": QuestData("Martial Art"),
     "Quest: Holy Appearance": QuestData("Heal"),
     "Quest: Number of Fortune": QuestData("LUCK Boost"),
-    "Quest: Mental Training 1": QuestData("MP Max Up"),
-    "Quest: Mental Training 2": QuestData("MP Max Up"),
+    "Quest: Mental Training 1": QuestData("MP Max up"),
+    "Quest: Mental Training 2": QuestData("MP Max up"),
     "Quest: The Spear of Legend": QuestData("Alucard's Spear"),
-    "Quest: Mental Training 3": QuestData("MP Max Up"),
-    "Quest: The Nest of Evil": QuestData("None"),
+    "Quest: Mental Training 3": QuestData("MP Max up"),
+    # "Quest: The Nest of Evil": QuestData("None"),
     "Quest: Defeat the Ghoul King": QuestData("Immunity Ring"),
     "Quest: Abandon Greed": QuestData("Miser Ring"),
     "Quest: A Rank Hunter": QuestData("Royal Sword"),
-    "Quest: Mental Training 4": QuestData("MP Max Up"),
+    "Quest: Mental Training 4": QuestData("MP Max up"),
     "Quest: S Rank Hunter": QuestData("Undead Killer"),
     "Quest: The Gambler": QuestData("Gambler Glasses"),
     "Quest: Hands of the Clock": QuestData("Time Stop"),
     "Quest: Poison vs. Poison": QuestData("Assassin Blade"),
-    "Quest: Build Your Strength 1": QuestData("HP Max Up"),
-    "Quest: Build Your Strength 2": QuestData("HP Max Up"),
+    "Quest: Build Your Strength 1": QuestData("HP Max up"),
+    "Quest: Build Your Strength 2": QuestData("HP Max up"),
     "Quest: The Lonely Stage": QuestData("Record Player"),
-    "Quest: Build Your Strength 3": QuestData("HP Max Up"),
+    "Quest: Build Your Strength 3": QuestData("HP Max up"),
     "Quest: Pray Before the Cross": QuestData("Cross"),
-    "Quest: Build Your Strength 4": QuestData("HP Max Up"),
+    "Quest: Build Your Strength 4": QuestData("HP Max up"),
     "Quest: Lost Page": QuestData("Tome of Arms X"),
     "Quest: The Hundred Tasks": QuestData("Sage Ring"),
     "Quest: Master the Holy Power": QuestData("Grand Cruz"),
@@ -98,8 +98,8 @@ grindy_quests = {
 
 
 def setup_quests(world):
-    vanilla_quests = []
     selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
+    excluded_quests = {quest.casefold() for quest in world.options.excluded_quests.value}
 
     if "all" in selected_quests:
         for quest in quest_data:
@@ -126,7 +126,37 @@ def setup_quests(world):
             world.active_quests.append(quest)
         else:
             world.vanilla_quests.append(quest)
-    # Handle excluded quests
+
     for quest in world.active_quests:
         world.quest_reward_pool.append(quest_data[quest].vanilla_reward)
-        
+
+        if quest.casefold() in excluded_quests or quest.split(": ")[1].casefold() in excluded_quests:
+            excluded_quests.add(quest)
+
+    # After adding the active quest rewards, REMOVE excluded quests from active
+    # We do this here at this point so that it only excludes quests that are active in the first place
+    if "all" in excluded_quests:
+        world.active_quests = []
+
+    if "simple" in selected_quests:
+        world.active_quests -= simple_quests
+
+    if "requires item" in selected_quests:
+        world.active_quests -= item_required_quests
+
+    if "defeat enemies" in selected_quests:
+        world.active_quests -= enemy_quests
+
+    if "mastery" in selected_quests:
+        world.active_quests -= mastery_quests
+
+    if "grindy" in selected_quests:
+        world.active_quests -= grindy_quests
+
+    for quest in excluded_quests:
+        if quest in world.active_quests:
+            world.active_quests.remove(quest)
+
+        if quest in quest_data:
+            world.excluded_quests.append(quest)
+    
