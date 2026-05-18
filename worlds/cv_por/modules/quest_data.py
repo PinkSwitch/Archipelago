@@ -98,7 +98,9 @@ grindy_quests = {
 
 
 def setup_quests(world):
+    vanilla_quests = []
     selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
+
     if "all" in selected_quests:
         for quest in quest_data:
             if quest not in ["Quest: Preparatations", "Quest: The Nest of Evil"]:
@@ -122,8 +124,9 @@ def setup_quests(world):
     for quest in quest_data:
         if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests:
             world.active_quests.append(quest)
-    # World.vanilla_quests?
+        else:
+            world.vanilla_quests.append(quest)
     # Handle excluded quests
     for quest in world.active_quests:
         world.quest_reward_pool.append(quest_data[quest].vanilla_reward)
-    print(world.quest_reward_pool)
+        

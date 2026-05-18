@@ -57,6 +57,7 @@ class PoRWorld(World):
     active_quests = ["Quest: Preparations"]
     quest_reward_pool = []
     excluded_quests = []
+    vanilla_quests = []
 
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]

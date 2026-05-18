@@ -220,3 +220,8 @@ def get_filler_item_name(world) -> str:
 def create_item(world, name: str) -> CVPoRItem:
     data = set_classifications(world, name)
     return CVPoRItem(name, data.classification, data.code, world.player)
+
+def create_item_as_event(world, name: str) -> CVPoRItem:
+    # The same as create item, but forces the code to None instead. This lets us create pseudochecks for inactive quests
+    data = set_classifications(world, name)
+    return CVPoRItem(name, data.classification, None, world.player)
