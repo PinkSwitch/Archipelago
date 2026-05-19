@@ -47,6 +47,8 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
 
         LocationData("Great Stairway - Lower", "Great Stairway: After Keremet Lower"),
         LocationData("Great Stairway - Lower", "Great Stairway: Before Keremet Room"),
+        LocationData("Great Stairway - Lower", "Great Stairway: Boss Room", True),
+
         LocationData("Great Stairway - Central Painting Area", "Great Stairway: Left Loft"),
         LocationData("Great Stairway - Central Painting Area", "Great Stairway: Left Loft Lower"),
         LocationData("Great Stairway - Entrance Connector", "Great Stairway: Central Nook"),
@@ -89,6 +91,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Tower of Death - Second Gear Room", "Tower of Death: Third Gears Room"),
         LocationData("Tower of Death - Top of the Tower", "Tower of Death: Top of the Tower"),
         LocationData("Tower of Death - Top of the Tower", "Tower of Death: Elevator Switch", True),
+        LocationData("Tower of Death - Top of the Tower", "Tower of Death: Boss Room", True),
 
         LocationData("Master's Keep - Lower", "Master's Keep: Entrance"),
         LocationData("Master's Keep - Main", "Master's Keep: Hidden Room"),

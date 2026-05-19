@@ -466,6 +466,8 @@ item_table: Dict[str, ItemData] = {
     "Book of Spirits": ItemData("Relics", 0x086B, ItemClassification.useful),
 
     "Portrait Clear": ItemData("Events", None, ItemClassification.progression, 0),
+    "Keremet Defeated": ItemData("Events", None, ItemClassification.filler, 0),
+    "Death Defeated": ItemData("Events", None, ItemClassification.filler, 0),
     "Tower Elevator Active": ItemData("Events", None, ItemClassification.progression, 0),
     "Dracula Defeated": ItemData("Events", None, ItemClassification.progression, 0),
     "Brauner Defeated": ItemData("Events", None, ItemClassification.progression, 0),

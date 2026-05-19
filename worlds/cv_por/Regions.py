@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove
+from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -121,7 +121,7 @@ def connect_regions(world):
                                                  {"Entrance - Behemoth Area": small_uppies,
                                                  "Entrance - Hub Painting Room": is_smol | Has("Puppet Master"),
                                                   "Entrance - Upper Area": HasAll("Acrobat Cube", "Call Cube", "Stone of Flight") | big_uppies,
-                                                  "Entrance - Underground Passage": Has("Portrait Clear", world.options.nest_portraits.value)})
+                                                  "Entrance - Underground Passage": Has("Portrait Clear", FromOption(NestPortraits))})
 
     world.get_region("Entrance - Hub Painting Room").add_exits(["Entrance - Hub", world.portrait_connections["City of Haze"]],
                                                               {"Entrance - Hub": is_smol})
@@ -179,7 +179,7 @@ def connect_regions(world):
                                                           {"Tower of Death - First Gear Room": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
                                                            "Tower of Death - Second Gear Room": medium_uppies})
 
-    world.get_region("Tower of Death - Second Gear Room").add_exits(["Tower of Death - Ascent", "Tower of Death - Top of the Tower"])
+    world.get_region("Tower of Death - Second Gear Room").add_exits(["Tower of Death - Ascent", "Tower of Death - Top of the Tower"])  # This transition needs the boss key
 
     world.get_region("Tower of Death - Top of the Tower").add_exits(["Tower of Death - Second Gear Room", "Tower of Death - Elevator Room"])
 

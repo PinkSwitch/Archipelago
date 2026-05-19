@@ -21,6 +21,9 @@ def place_static_items(world):
     world.get_location("Forest of Doom: Boss Room").place_locked_item(world.create_item("Portrait Clear"))
     world.get_location("Dark Academy: Boss Room").place_locked_item(world.create_item("Portrait Clear"))
 
+    world.get_location("Great Stairway: Boss Room").place_locked_item(world.create_item("Keremet Defeated"))
+    world.get_location("Tower of Death: Boss Room").place_locked_item(world.create_item("Death Defeated"))
+
     if world.options.goal:
         world.get_location("Lost Gallery: Studio Portrait Fight").place_locked_item(world.create_item("Brauner Defeated"))
         world.get_location("The Throne Room: Dracula").place_locked_item(world.create_item("Dracula Defeated"))

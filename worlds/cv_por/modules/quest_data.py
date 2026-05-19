@@ -1,5 +1,7 @@
-from typing import NamedTuple
 
+from typing import NamedTuple
+from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has
+from rule_builder.field_resolvers import FromOption
 
 class QuestData(NamedTuple):
     vanilla_reward: str
@@ -33,7 +35,7 @@ quest_data = {
     "Quest: Hands of the Clock": QuestData("Time Stop", "Death"),
     "Quest: Poison vs. Poison": QuestData("Assassin Blade", "Legion"),
     "Quest: Build Your Strength 1": QuestData("HP Max up", "Death"),
-    "Quest: Build Your Strength 2": QuestData("HP Max up", "Deat"),
+    "Quest: Build Your Strength 2": QuestData("HP Max up", "Death"),
     "Quest: The Lonely Stage": QuestData("Record Player", "The Creature"),
     "Quest: Build Your Strength 3": QuestData("HP Max up", "The Creature"),
     "Quest: Pray Before the Cross": QuestData("Cross", "Werewolf"),
@@ -169,78 +171,79 @@ def setup_quests(world):
     
     
 def set_quest_rules(world):
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
-    set_rule(world.get_location("Dummy"), dummy)
+    from ..Options import UnlockAllQuests, NestPortraits
+    set_rule = world.set_rule
 
+    supersonic_punch_active = CanReachLocation("City of Haze: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    ghosts_of_desert_active = CanReachLocation("Great Stairway: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    defender_stairs_active = CanReachLocation("Great Stairway: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    spinning_art_active = CanReachLocation("Sandy Grave: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    zephyr_art_active = And(CanReachLocation("Nation of Fools: Boss Room"), CanReachLocation("Quest: The Spinning Art"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) 
+    king_bird_active = CanReachLocation("Dark Academy: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    overcome_curse_active = CanReachLocation("Sandy Grave: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    statue_tear_active = CanReachLocation("Nation of Fools: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    martial_art_active = CanReachLocation("Nation of Fools: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    holy_appearance_active = CanReachLocation("Tower of Death: Stella Item", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    number_fortune_active = CanReachLocation("Tower of Death: Stella Item", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    mental_1_active = CanReachLocation("Tower of Death: Stella Item", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    mental_2_active = And(CanReachLocation("Tower of Death: Stella Item"), CanReachLocation("Quest: Mental Training 1"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)   # Mental 1
+    legend_spear_active = CanReachLocation("Dark Academy: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    mental_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Mental Training 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)  # Mental 2
+    ghoul_king_active = CanReachRegion("Master's Keep - Portrait Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    abandon_greed_active = CanReachRegion("Master's Keep - Portrait Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    a_rank_active = CanReachLocation("Forest of Doom: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    mental_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Mental Training 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    s_rank_active = And(CanReachLocation("13th Street: Boss Room"), CanReachLocation("Quest: A Rank Hunter"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    the_gambler_active = CanReachLocation("Forest of Doom: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    clock_hands_active = CanReachLocation("Tower of Death: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    poison_v_poison_active = CanReachLocation("Nation of Fools: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    strength_1_active = CanReachLocation("Tower of Death: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    
+    strength_2_active = And(CanReachLocation("Tower of Death: Boss Room"), CanReachLocation("Quest: Build Your Strength 1"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    lonely_stage_active = CanReachLocation("Dark Academy: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    strength_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    pray_cross_active = CanReachLocation("13th Street: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
 
-
-    "Quest: Preparations": QuestData("Lizard Tail", "None"),
-    "Quest: Supersonic Punch": QuestData("Bullet Punch", "Dullahan"),
-    "Quest: Ghosts of the Desert": QuestData("Bible", "Keremet"),
-    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", "Keremet"),
-    "Quest: The Spinning Art": QuestData("Spinning Art", "Astarte"),
-    "Quest: Art of the Zephyr": QuestData("Rocket Slash", "Legion"),
-    "Quest: Find the King of Birds": QuestData("Thief Ring", "The Creature"),
-    "Quest: Overcome the Curse": QuestData("Blessed Ring", "Astarte"),
-    "Quest: The Statue's Tear": QuestData("Holy Water", "Legion"),
-    "Quest: The Martial Art": QuestData("Martial Art", "Legion"),
-    "Quest: Holy Appearance": QuestData("Heal", "Stella"),
-    "Quest: Number of Fortune": QuestData("LUCK Boost", "Stella"),
-    "Quest: Mental Training 1": QuestData("MP Max up", "Stella"),
-    "Quest: Mental Training 2": QuestData("MP Max up", "Stella"),
-    "Quest: The Spear of Legend": QuestData("Alucard's Spear", "The Creature"),
-    "Quest: Mental Training 3": QuestData("MP Max up", "The Creature"),
-    # "Quest: The Nest of Evil": QuestData("None", "Werewolf"),
-    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", "Sisters"),
-    "Quest: Abandon Greed": QuestData("Miser Ring", "Sisters"),
-    "Quest: A Rank Hunter": QuestData("Royal Sword", "Dagon"),
-    "Quest: Mental Training 4": QuestData("MP Max up", "The Creature"),
-    "Quest: S Rank Hunter": QuestData("Undead Killer", "Werewolf"),
-    "Quest: The Gambler": QuestData("Gambler Glasses", "Dagon"),
-    "Quest: Hands of the Clock": QuestData("Time Stop", "Death"),
-    "Quest: Poison vs. Poison": QuestData("Assassin Blade", "Legion"),
-    "Quest: Build Your Strength 1": QuestData("HP Max up", "Death"),
-    "Quest: Build Your Strength 2": QuestData("HP Max up", "Deat"),
-    "Quest: The Lonely Stage": QuestData("Record Player", "The Creature"),
-    "Quest: Build Your Strength 3": QuestData("HP Max up", "The Creature"),
-    "Quest: Pray Before the Cross": QuestData("Cross", "Werewolf"),
-    "Quest: Build Your Strength 4": QuestData("HP Max up", "The Creature"),
-    "Quest: Lost Page": QuestData("Tome of Arms X", "None"),
-    "Quest: The Hundred Tasks": QuestData("Sage Ring", "None"),
-    "Quest: Master the Holy Power": QuestData("Grand Cruz", "None"),
-    "Quest: Almighty": QuestData("Stellar Sword", "None"),
-    "Quest: The Great Sage": QuestData("Sorceress Crest", "None"),
-    "Quest: Kill Gergoth": QuestData("Cocytus", "None")
+    lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    hundred_tasks_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    holy_master_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    almighty_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    great_sage_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    kill_gergoth_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    
+    set_rule(world.get_location("Quest: Supersonic Punch"), supersonic_punch_active)
+    set_rule(world.get_location("Quest: Ghosts of the Desert"), ghosts_of_desert_active)
+    set_rule(world.get_location("Quest: Defender of the Stairs"), defender_stairs_active)
+    set_rule(world.get_location("Quest: The Spinning Art"), spinning_art_active)
+    set_rule(world.get_location("Quest: Art of the Zephyr"), zephyr_art_active)
+    set_rule(world.get_location("Quest: Find the King of Birds"), king_bird_active)
+    set_rule(world.get_location("Quest: Overcome the Curse"), overcome_curse_active)
+    set_rule(world.get_location("Quest: The Statue's Tear"), statue_tear_active)
+    set_rule(world.get_location("Quest: The Martial Art"), martial_art_active)
+    set_rule(world.get_location("Quest: Holy Appearance"), holy_appearance_active)
+    set_rule(world.get_location("Quest: Number of Fortune"), number_fortune_active)
+    set_rule(world.get_location("Quest: Mental Training 1"), mental_1_active)
+    set_rule(world.get_location("Quest: Mental Training 2"), mental_2_active)
+    set_rule(world.get_location("Quest: The Spear of Legend"), legend_spear_active)
+    set_rule(world.get_location("Quest: Mental Training 3"), mental_3_active)
+    set_rule(world.get_location("Quest: Defeat the Ghoul King"), ghoul_king_active)
+    set_rule(world.get_location("Quest: Abandon Greed"), abandon_greed_active)
+    set_rule(world.get_location("Quest: A Rank Hunter"), a_rank_active)
+    set_rule(world.get_location("Quest: Mental Training 4"), mental_4_active)
+    set_rule(world.get_location("Quest: S Rank Hunter"), s_rank_active)
+    set_rule(world.get_location("Quest: The Gambler"), the_gambler_active)
+    set_rule(world.get_location("Quest: Hands of the Clock"), clock_hands_active)
+    set_rule(world.get_location("Quest: Poison vs. Poison"), poison_v_poison_active)
+    set_rule(world.get_location("Quest: Build Your Strength 1"), strength_1_active)
+    set_rule(world.get_location("Quest: Build Your Strength 2"), strength_2_active)
+    set_rule(world.get_location("Quest: The Lonely Stage"), lonely_stage_active)
+    set_rule(world.get_location("Quest: Build Your Strength 3"), strength_3_active)
+    set_rule(world.get_location("Quest: Pray Before the Cross"), pray_cross_active)
+    set_rule(world.get_location("Quest: Build Your Strength 4"), strength_4_active)
+    set_rule(world.get_location("Quest: Lost Page"), lost_page_active)
+    set_rule(world.get_location("Quest: The Hundred Tasks"), hundred_tasks_active)
+    set_rule(world.get_location("Quest: Master the Holy Power"), holy_master_active)
+    set_rule(world.get_location("Quest: Almighty"), almighty_active)
+    set_rule(world.get_location("Quest: The Great Sage"), great_sage_active)
+    set_rule(world.get_location("Quest: Kill Gergoth"), kill_gergoth_active)
