@@ -6,6 +6,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
 from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
+from .modules.text_builder import text_encoder
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
@@ -22,6 +23,7 @@ class FilePointer(NamedTuple):
 
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB7),
+    "overlay_1": FilePointer(0x154200, 0x0221F680, 0xD1BF),
     "overlay_7": FilePointer(0x268C00, 0x022B7660, 0x198DF),
     "overlay_78": FilePointer(0x369000, 0x022E8820, 0x10ABF),
     "overlay_79": FilePointer(0x379C00, 0x022E8820, 0x1C83F),
@@ -161,7 +163,7 @@ def patch_rom(world, rom, code_patch):
             else:
                 color = 0x0E
                 item_id = 0x4F
-        elif not item.code:
+        elif not item.code:  # Event quests
             color = 0
             code = item_table[location.item.name].code
             item_type = (code & 0xFF00) >> 8
@@ -185,6 +187,9 @@ def patch_rom(world, rom, code_patch):
     if world.options.portrait_shuffle:
         write_portrait_data(world, rom)
 
+    #  Encode the number of portraits for menu display
+    rom.write_to_file(0x0222B814, "overlay_1", bytearray(text_encoder(str(world.options.nest_portraits.value))))
+    #####################################
     #  Sanctuary hint
     sanctuary_location = world.multiworld.find_item("Sanctuary", world.player)
     location_name_groups = world.multiworld.worlds[sanctuary_location.player].location_name_groups
