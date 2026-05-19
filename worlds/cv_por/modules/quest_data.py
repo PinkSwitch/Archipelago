@@ -1,6 +1,6 @@
 
 from typing import NamedTuple
-from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has
+from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has, HasAll
 from rule_builder.field_resolvers import FromOption
 
 class QuestData(NamedTuple):
@@ -207,10 +207,11 @@ def set_quest_rules(world):
 
     lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     hundred_tasks_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
-    holy_master_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    holy_master_active = And(Has("Portrait Clear", FromOption(NestPortraits)),
+                             HasAll("Cross", "Holy Water", "Bible"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     almighty_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     great_sage_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
-    kill_gergoth_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    kill_gergoth_active = And(Has("Portrait Clear", FromOption(NestPortraits)), CanReachRegion("Nest of Evil"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     
     set_rule(world.get_location("Quest: Supersonic Punch"), supersonic_punch_active)
     set_rule(world.get_location("Quest: Ghosts of the Desert"), ghosts_of_desert_active)
