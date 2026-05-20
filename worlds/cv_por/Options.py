@@ -172,7 +172,7 @@ class ExcludedQuests(OptionSet):
     """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.
        The same shortcuts from the above option apply."""
     display_name = "Excluded Quests"
-    default = {"A Rank Hunter", "S Rank Hunter", "Hands of the Clock", "The Hundred Tasks", "Master the Holy Power", "Almighty", "The Great Sage"}
+    default = {"Quest: A Rank Hunter", "Quest: S Rank Hunter", "Quest: Hands of the Clock", "Quest: The Hundred Tasks", "Quest: Master the Holy Power", "Quest: Almighty", "Quest: The Great Sage"}
     valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 

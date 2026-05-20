@@ -6,47 +6,66 @@ from rule_builder.field_resolvers import FromOption
 
 class QuestData(NamedTuple):
     vanilla_reward: str
-    clear_requirement: str  # Which boss you need to clear to unlock the quest
+    required_items: list = []  # Which boss you need to clear to unlock the quest
+
+cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille", "Tarte au Poire",
+            "Gateau Faise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
+            "Birthday Cake"]
+
+subweapons = ["Knife Subweapon", "Axe Subweapon", "Cross", "Holy Water", "Bible", "Javelin",
+                "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
+                "Discus", "Kunimitsu", "Kunai", "Paper Airplane", "Cream Pie", "Crossbow",
+                "Dart", "Grenade", "Steel Ball", "Stonewall", "Offensive Form", "Defensive Form",
+                "Taunt", "Wrecking Ball", "Rampage", "Knee Strike", "Aura Blast", "Rocket Slash"]
+
+spells = ["Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Berserker", "Eye for an Eye",
+            "Clear Skies", "Time Stop", "Heal", "Cure Poison", "Cure Curse", "STR Boost",
+            "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
+            "Rock Riot", "Raging Fire", "Ice Fang", "Thunderbolt", "Spirit of Light",
+            "Dark Rift", "Tempest", "Stone Circle", "Ice Needle", "Explosion", "Chain Lightning",
+            "Piercing Beam", "Nightmare", "Summon Medusa", "Acidic Bubbles", "Hex", "Salamander",
+            "Cocytus", "Thor's Bellow", "Summon Crow", "Summon Skeleton", "Summon Ghost", "Summon Gunman",
+            "Summon Frog"]
 
 
 quest_data = {
-    "Quest: Preparations": QuestData("Lizard Tail", "None"),
-    "Quest: Supersonic Punch": QuestData("Bullet Punch", "Dullahan"),
-    "Quest: Ghosts of the Desert": QuestData("Bible", "Keremet"),
-    "Quest: Defender of the Stairs": QuestData("Whip Skill 2", "Keremet"),
-    "Quest: The Spinning Art": QuestData("Spinning Art", "Astarte"),
-    "Quest: Art of the Zephyr": QuestData("Rocket Slash", "Legion"),
-    "Quest: Find the King of Birds": QuestData("Thief Ring", "The Creature"),
-    "Quest: Overcome the Curse": QuestData("Blessed Ring", "Astarte"),
-    "Quest: The Statue's Tear": QuestData("Holy Water", "Legion"),
-    "Quest: The Martial Art": QuestData("Martial Art", "Legion"),
-    "Quest: Holy Appearance": QuestData("Heal", "Stella"),
-    "Quest: Number of Fortune": QuestData("LUCK Boost", "Stella"),
-    "Quest: Mental Training 1": QuestData("MP Max up", "Stella"),
-    "Quest: Mental Training 2": QuestData("MP Max up", "Stella"),
-    "Quest: The Spear of Legend": QuestData("Alucard's Spear", "The Creature"),
-    "Quest: Mental Training 3": QuestData("MP Max up", "The Creature"),
+    "Quest: Preparations": QuestData("Lizard Tail"),
+    "Quest: Supersonic Punch": QuestData("Bullet Punch", ["Ground Meat"]),
+    "Quest: Ghosts of the Desert": QuestData("Bible"),
+    "Quest: Defender of the Stairs": QuestData("Whip Skill 2"),
+    "Quest: The Spinning Art": QuestData("Spinning Art"),
+    "Quest: Art of the Zephyr": QuestData("Rocket Slash", ["Spinning Art"]),
+    "Quest: Find the King of Birds": QuestData("Thief Ring"),
+    "Quest: Overcome the Curse": QuestData("Blessed Ring", ["Skull Ring"]),
+    "Quest: The Statue's Tear": QuestData("Holy Water", ["Statue's Tear"]),
+    "Quest: The Martial Art": QuestData("Martial Art"),
+    "Quest: Holy Appearance": QuestData("Heal", ["Nun's Habit", "Nun's Robes", "Nun's Shoes"]),
+    "Quest: Number of Fortune": QuestData("LUCK Boost"),
+    "Quest: Mental Training 1": QuestData("MP Max up"),
+    "Quest: Mental Training 2": QuestData("MP Max up", ["Thick Glasses"]),
+    "Quest: The Spear of Legend": QuestData("Alucard's Spear", ["Javelin"]),
+    "Quest: Mental Training 3": QuestData("MP Max up", ["INT Boost"]),
     # "Quest: The Nest of Evil": QuestData("None", "Werewolf"),
-    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring", "Sisters"),
-    "Quest: Abandon Greed": QuestData("Miser Ring", "Sisters"),
-    "Quest: A Rank Hunter": QuestData("Royal Sword", "Dagon"),
-    "Quest: Mental Training 4": QuestData("MP Max up", "The Creature"),
-    "Quest: S Rank Hunter": QuestData("Undead Killer", "Werewolf"),
-    "Quest: The Gambler": QuestData("Gambler Glasses", "Dagon"),
-    "Quest: Hands of the Clock": QuestData("Time Stop", "Death"),
-    "Quest: Poison vs. Poison": QuestData("Assassin Blade", "Legion"),
-    "Quest: Build Your Strength 1": QuestData("HP Max up", "Death"),
-    "Quest: Build Your Strength 2": QuestData("HP Max up", "Death"),
-    "Quest: The Lonely Stage": QuestData("Record Player", "The Creature"),
-    "Quest: Build Your Strength 3": QuestData("HP Max up", "The Creature"),
-    "Quest: Pray Before the Cross": QuestData("Cross", "Werewolf"),
-    "Quest: Build Your Strength 4": QuestData("HP Max up", "The Creature"),
-    "Quest: Lost Page": QuestData("Tome of Arms X", "None"),
-    "Quest: The Hundred Tasks": QuestData("Sage Ring", "None"),
-    "Quest: Master the Holy Power": QuestData("Grand Cruz", "None"),
-    "Quest: Almighty": QuestData("Stellar Sword", "None"),
-    "Quest: The Great Sage": QuestData("Sorceress Crest", "None"),
-    "Quest: Kill Gergoth": QuestData("Cocytus", "None")
+    "Quest: Defeat the Ghoul King": QuestData("Immunity Ring"),
+    "Quest: Abandon Greed": QuestData("Miser Ring"),
+    "Quest: A Rank Hunter": QuestData("Royal Sword"),
+    "Quest: Mental Training 4": QuestData("MP Max up", ["MIND Boost"]),
+    "Quest: S Rank Hunter": QuestData("Undead Killer"),
+    "Quest: The Gambler": QuestData("Gambler Glasses"),
+    "Quest: Hands of the Clock": QuestData("Time Stop"),
+    "Quest: Poison vs. Poison": QuestData("Assassin Blade", ["Moldy Bread", "Amanita", "Long Sword"]),
+    "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"]),
+    "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"]),
+    "Quest: The Lonely Stage": QuestData("Record Player"),
+    "Quest: Build Your Strength 3": QuestData("HP Max up", cakes),
+    "Quest: Pray Before the Cross": QuestData("Cross"),
+    "Quest: Build Your Strength 4": QuestData("HP Max up", ["CON Boost"]),
+    "Quest: Lost Page": QuestData("Tome of Arms X", ["Tome of Arms p1", "Tome of Arms p2"]),
+    "Quest: The Hundred Tasks": QuestData("Sage Ring"),
+    "Quest: Master the Holy Power": QuestData("Grand Cruz", ["Bible", "Holy Water", "Cross"]),
+    "Quest: Almighty": QuestData("Stellar Sword", subweapons),
+    "Quest: The Great Sage": QuestData("Sorceress Crest", spells),
+    "Quest: Kill Gergoth": QuestData("Cocytus")
 }
 
 simple_quests = {
@@ -127,12 +146,12 @@ def setup_quests(world):
         selected_quests |= grindy_quests
 
     for quest in quest_data:
-        if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests:
+        if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests or quest in selected_quests:
             world.active_quests.append(quest)
         else:
             world.vanilla_quests.append(quest)
 
-    world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
+    #world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
 
     for quest in world.active_quests:
         world.quest_reward_pool.append(quest_data[quest].vanilla_reward)
@@ -175,25 +194,6 @@ def set_quest_rules(world):
     from ..Options import UnlockAllQuests, NestPortraits
     from ..Regions import has_change_cube
     set_rule = world.set_rule
-
-    cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille", "Tarte au Poire",
-             "Gateau Faise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
-             "Birthday Cake"]
-
-    subweapons = ["Knife Subweapon", "Axe Subweapon", "Cross", "Holy Water", "Bible", "Javelin",
-                  "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
-                  "Discus", "Kunimitsu", "Kunai", "Paper Airplane", "Cream Pie", "Crossbow",
-                  "Dart", "Grenade", "Steel Ball", "Stonewall", "Offensive Form", "Defensive Form",
-                  "Taunt", "Wrecking Ball", "Rampage", "Knee Strike", "Aura Blast", "Rocket Slash"]
-
-    spells = ["Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Berserker", "Eye for an Eye",
-              "Clear Skies", "Time Stop", "Heal", "Cure Poison", "Cure Curse", "STR Boost",
-              "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
-              "Rock Riot", "Raging Fire", "Ice Fang", "Thunderbolt", "Spirit of Light",
-              "Dark Rift", "Tempest", "Stone Circle", "Ice Needle", "Explosion", "Chain Lightning",
-              "Piercing Beam", "Nightmare", "Summon Medusa", "Acidic Bubbles", "Hex", "Salamander",
-              "Cocytus", "Thor's Bellow", "Summon Crow", "Summon Skeleton", "Summon Ghost", "Summon Gunman",
-              "Summon Frog"]
 
     supersonic_punch_active = CanReachLocation("City of Haze: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                              Has("Ground Meat") | CanReachRegion("City of Haze"))
