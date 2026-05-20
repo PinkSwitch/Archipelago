@@ -250,7 +250,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Burnt Paradise - Bottom", "Burnt Paradise: Boss Room", True),
 
         LocationData("Forest of Doom - Main", "Forest of Doom: Left Atrium Big Room"),
-        LocationData("Forest of Doom - Main", "Forest of Doom: Right Atrium East Square Room Right"),
+        LocationData("Forest of Doom - Cave", "Forest of Doom: Right Atrium East Square Room Right"),
         LocationData("Forest of Doom - Main", "Forest of Doom: Left Atrium Top"),
         LocationData("Forest of Doom - Main", "Forest of Doom: Right Atrium East Top Room"),
         LocationData("Forest of Doom - Main", "Forest of Doom: Right Atrium East Square Room Left"),

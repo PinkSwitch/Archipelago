@@ -583,6 +583,7 @@ location_data_table = {
     "Quest: Kill Gergoth": LocationInformation(0x020DFF80, "arm9", False, "Quest")
 }
 
+
 def get_location_groups():
     location_groups = {
         "Entrance": set(),

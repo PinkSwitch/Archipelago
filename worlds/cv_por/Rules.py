@@ -11,8 +11,8 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Entrance: Drawbridge Upper Item"), big_uppies | HasAll("Acrobat Cube", "Call Cube", "Stone of Flight", "Puppet Master"))
     set_rule(world.get_location("Entrance: Above Metal Block Room"), big_uppies |
-                                                                    HasAll("Stone of Flight", "Puppet Master") |
-                                                                    strongies & ((Has("Stone of Flight")) | HasAll("Acrobat Cube", "Call Cube")))
+                               HasAll("Stone of Flight", "Puppet Master") |
+                               strongies & ((Has("Stone of Flight")) | HasAll("Acrobat Cube", "Call Cube")))
                                                                     
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Lower Alcove"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Upper Alcove"), medium_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))

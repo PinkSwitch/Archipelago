@@ -130,6 +130,7 @@ class PortraitShuffle(Choice):
     option_add_nest_of_evil = 2
     default = 0
 
+
 class SPMultiplier(Range):
     """Multiplier for the amount of SP given by enemies."""
     display_name = "SP Multiplier"
@@ -137,9 +138,11 @@ class SPMultiplier(Range):
     range_end = 100
     default = 1
 
+
 class UnlockAllQuests(Toggle):
     """If enabled, all Quests will be unlocked by default."""
     display_name = "Unlock All Quests"
+
 
 quest_keys = set()
 for quest in quest_data:
@@ -147,6 +150,7 @@ for quest in quest_data:
         quest_keys.add(quest)
         quest_keys.add(quest.split(": ")[1])  # Truncate it to just the quest name
 quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Mastery", "Simple", "Grindy"}
+
 
 class ActiveQuests(OptionSet):
     """Specify which Quests have random items. 'Preparations' is always included, regardless of settings. Nest of Evil is never included.
@@ -162,6 +166,7 @@ class ActiveQuests(OptionSet):
     default = {}
     valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
+
 
 class ExcludedQuests(OptionSet):
     """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.
