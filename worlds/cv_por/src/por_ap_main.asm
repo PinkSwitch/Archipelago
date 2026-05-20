@@ -134,8 +134,11 @@
     .org 0x02008280
         bl @RenderAPItemName
 
-    .org 0x0203F340
+    .org 0x0203F344
         b @SwapQuestToAPText
+
+    .org 0x02034F58
+        mov r0, 1 ; Allow the quest menu to always be opened
     
 
     .org 0x020E537C
@@ -305,6 +308,15 @@
 .open "ftc/overlay9_1", 0x0221F680
     .org 0x0222253E
         .db 0x21, 0x30, 0x00, 0x49, 0x54, 0x45, 0x4D, 0xEA ; AP Item - editor repoints text so im doing it here manually
+
+        ; Nest of Evil quest description
+    .org 0x0222B7E2
+        ; To access the underground passage, you must clear X portraits.
+        .db 0x34, 0x4F, 0x00, 0x41, 0x43, 0x43, 0x45, 0x53, 0x53, 0x00, 0x54, 0x48, 0x45, 0x00
+        .db 0x55, 0x4E, 0x44, 0x45, 0x52, 0x47, 0x52, 0x4F, 0x55, 0x4E, 0x44, 0x00, 0x50, 0x41
+        .db 0x53, 0x53, 0x41, 0x47, 0x45, 0x0C, 0xE6, 0x59, 0x4F, 0x55, 0x00, 0x4D, 0x55, 0x53
+        .db 0x54, 0x00, 0x43, 0x4C, 0x45, 0x41, 0x52, 0x00, 0x38, 0x00, 0x50, 0x4F, 0x52, 0x54
+        .db 0x52, 0x41, 0x49, 0x54, 0x53, 0x0E, 0xEA
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
 
@@ -357,6 +369,7 @@
         .db 0xE7, 0x01, 0xE3, 0x0B, 0x29, 0x54, 0x07, 0x53, 0x00, 0x57, 0x4F, 0x4F, 0x44, 0x53
         .db 0x00, 0x54, 0x49, 0x4D, 0x45, 0x00, 0x46, 0x4F, 0x52, 0x00, 0x59, 0x4F, 0x55, 0x0E
         .db 0xE6, 0xE5, 0xE4, 0xEA
+
 .close
 ;;;;;;;;;;;;
 .open "ftc/overlay9_4", 0x0222C840
@@ -913,6 +926,10 @@
     mov r1, 0x45
     mov r2, 1
     bl 0x021E4428 ; Give the player a magical ticket
+    mov r1, 1
+    ldr r0, = 0x02111EBC
+    strb r1, [r0] ; Set the Nest of Evil quest to Seen as soon as the game is opened
+
     mov r0, 0x00 ; Clear
     ldr r1, =@ServerItemType
     mov r2, 0x50 ; 50 bytes
@@ -1110,6 +1127,11 @@
     pop lr
     bx lr
 @@ActivateCheck:
+    push r0, r1
+    ldr r0, =0x02111EBC
+    mov r1, 0x0F ; Set the Nest of Evil quest as complete
+    strb r1, [r0]
+    pop r0, r1
     cmp r0, 1
     pop lr
     bx lr
@@ -1829,6 +1851,9 @@
 
 ; Flags all Quests as unlocked (or more specifically, ignores the unlock requirement)
 @UnlockAllQuests:
+    cmp r8, 0x10
+    beq 0x0203F954 ; NEVER unlock Nest of Evil
+
     push r0
     ldr r0, =@OptionFlag_UnlockAllQuests
     ldrb r0, [r0]
@@ -1948,9 +1973,11 @@
     mov r0, r1
     pop r1
     b 0x02008D80
+.pool
+    
 
 @SwapQuestToAPText:
-    push lr
+    sub r13, r13, 0x1C
     push r1, r2
     sub r2, r2, 0x600
     cmp r2, 0x4C
@@ -1966,7 +1993,7 @@
     bl @LoadQuestRewardPointer
 @@End:
     pop r1, r2
-    b 0x0203F344
+    b 0x0203F348
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SkipCharSelect:
 ; Skip the Character screen if we haven't beaten the game yet
