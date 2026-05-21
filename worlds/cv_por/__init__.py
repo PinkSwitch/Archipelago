@@ -53,14 +53,6 @@ class PoRWorld(World):
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
-    portrait_connections = {}
-    active_quests = ["Quest: Preparations"]
-    quest_reward_pool = []
-    excluded_quests = []
-    vanilla_quests = []
-    important_quests = set()
-    quest_requirements = set()
-
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]
     # topology_present = True
@@ -89,6 +81,13 @@ class PoRWorld(World):
         self.location_cache = []
         self.has_tried_magus_ring = False
         self.has_generated_output = False
+        self.portrait_connections = {}
+        self.active_quests = ["Quest: Preparations"]
+        self.quest_reward_pool = []
+        self.excluded_quests = []
+        self.vanilla_quests = []
+        self.important_quests = set()
+        self.quest_requirements = set()
 
         self.subweapon_filler_table = [
             "Axe Subweapon",
