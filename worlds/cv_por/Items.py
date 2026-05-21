@@ -467,7 +467,7 @@ item_table: Dict[str, ItemData] = {
 
     "Portrait Clear": ItemData("Events", None, ItemClassification.progression, 0),
     "Keremet Defeated": ItemData("Events", None, ItemClassification.filler, 0),
-    "Death Defeated": ItemData("Events", None, ItemClassification.filler, 0),
+    "Death Defeated": ItemData("Events", None, ItemClassification.progression, 0),
     "Tower Elevator Active": ItemData("Events", None, ItemClassification.progression, 0),
     "Dracula Defeated": ItemData("Events", None, ItemClassification.progression, 0),
     "Brauner Defeated": ItemData("Events", None, ItemClassification.progression, 0),

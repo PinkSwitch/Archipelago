@@ -51,8 +51,15 @@ def create_regions(world) -> None:
     init_areas(world)
     place_static_items(world)
 
-
 def create_items(world) -> None:
+    force_create_blacklist = ["Gold Ring", "Knife Subweapon", "Cross", "Holy Water", "Bible",
+                              "Bwaka Knife", "Paper Airplane", "Cream Pie", "Grenade", "Steel Ball",
+                              "Stonewall", "Offensive Form", "Taunt", "Knee Strike", "Aura Blast",
+                              "Rocket Slash", "Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Eye for an Eye",
+                              "Clear Skies", "Time Stop", "Heal", "Cure Poison", "STR Boost",
+                              "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
+                              "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus"]  # We want to specifically NEVER forcibly create these.
+
     pool = []
     for name, data in item_table.items():
         for _ in range(data.default_count):
@@ -109,7 +116,9 @@ def create_items(world) -> None:
 
                 if item in world.accessory_table:
                     world.accessory_table.remove(item)
-                pool.append(set_classifications(world, item))
+                    
+                if item not in pool and item not in force_create_blacklist:
+                    pool.append(set_classifications(world, item))
 
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)

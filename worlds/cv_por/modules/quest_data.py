@@ -1,6 +1,5 @@
-
 from typing import NamedTuple
-from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has, HasAll, HasFromListUnique
+from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has, HasAll, HasFromListUnique, HasAny
 from rule_builder.field_resolvers import FromOption
 
 
@@ -11,8 +10,11 @@ class QuestData(NamedTuple):
 
 
 cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille", "Tarte au Poire",
-         "Gateau Faise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
+         "Gateau Fraise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
          "Birthday Cake"]
+
+cakes_expensive = [
+        "Birthday Cake", "Tarte au Poire"]
 
 subweapons = ["Knife Subweapon", "Axe Subweapon", "Cross", "Holy Water", "Bible", "Javelin",
               "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
@@ -59,14 +61,14 @@ quest_data = {
     "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"]),
     "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"], True),
     "Quest: The Lonely Stage": QuestData("Record Player"),
-    "Quest: Build Your Strength 3": QuestData("HP Max up", cakes),
+    "Quest: Build Your Strength 3": QuestData("HP Max up", cakes + ["Gold Ring"], True),
     "Quest: Pray Before the Cross": QuestData("Cross"),
     "Quest: Build Your Strength 4": QuestData("HP Max up", ["CON Boost"]),
     "Quest: Lost Page": QuestData("Tome of Arms X", ["Tome of Arms p1", "Tome of Arms p2"]),
     "Quest: The Hundred Tasks": QuestData("Sage Ring"),
     "Quest: Master the Holy Power": QuestData("Grand Cruz", ["Bible", "Holy Water", "Cross"]),
-    "Quest: Almighty": QuestData("Stellar Sword", subweapons),
-    "Quest: The Great Sage": QuestData("Sorceress Crest", spells),
+    "Quest: Almighty": QuestData("Stellar Sword", subweapons, True),
+    "Quest: The Great Sage": QuestData("Sorceress Crest", spells, True),
     "Quest: Kill Gergoth": QuestData("Cocytus")
 }
 
@@ -198,6 +200,7 @@ def setup_quests(world):
     if not world.options.unlock_all_quests:
         #  These are quests that require you to have completed a previous Quest.
         #  We want these to be logical if you need to complete them.
+
         if "Quest: Art of the Zephyr" in world.important_quests:
             world.important_quests.add("Quest: The Spinning Art")
 
@@ -223,10 +226,10 @@ def setup_quests(world):
             world.important_quests.add("Quest: Build Your Strength 1")
 
         if "Quest: Master the Holy Power" in world.important_quests:
-            world.important_quests |= [
+            world.important_quests.update([
                 "Quest: The Statue's Tear",
                 "Quest: Ghosts of the Desert",
-                "Quest: Pray Before the Cross"]
+                "Quest: Pray Before the Cross"])
 
     for quest in world.important_quests:
         world.quest_requirements.update(quest_data[quest].required_items)
@@ -307,7 +310,7 @@ def set_quest_rules(world):
                         CanReachRegion("Dark Academy - Main"))
                         
     strength_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        HasFromListUnique(*cakes, count=5) | (HasFromListUnique(*cakes, count=1) & CanReachRegion("City of Haze")))
+                        HasFromListUnique(*cakes, count=5) | (HasAny(*cakes_expensive) & CanReachRegion("City of Haze")) | (Has("Gold Ring") & CanReachRegion("City of Haze")))
 
     pray_cross_active = CanReachLocation("13th Street: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
@@ -322,7 +325,7 @@ def set_quest_rules(world):
                         HasAll("Bible", "Cross", "Holy Water") & Has("Portrait Clear", 2))
 
     almighty_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        HasFromListUnique(*subweapons, count=len(subweapons)))
+                        HasAll(*subweapons))
 
     great_sage_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasFromListUnique(*spells, count=len(spells)))

@@ -129,6 +129,9 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x020E2248, "arm9", struct.pack("I", 0))  # Habit
         rom.write_to_file(0x020E1F48, "arm9", struct.pack("I", 0))  # Shoes
 
+    if "Quest: Build Your Strength 3" in world.important_quests:
+        rom.write_to_file(0x020E23E0, "arm9", struct.pack("I", 0))  # Gold Ring
+
     if world.options.random_spell_charge_times:
         for i in range(0x25):
             rom.write_to_file(0x020E3C16 + (6 * i), "arm9", struct.pack("H", world.random.randint(0x1, 0x200)))
