@@ -59,6 +59,7 @@ class PoRWorld(World):
     excluded_quests = []
     vanilla_quests = []
     important_quests = set()
+    quest_requirements = set()
 
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]

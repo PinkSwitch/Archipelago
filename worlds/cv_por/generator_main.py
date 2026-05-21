@@ -2,7 +2,7 @@ import os
 import typing
 import pkgutil
 
-from BaseClasses import Item
+from BaseClasses import Item, ItemClassification
 from typing import Dict, TextIO
 from .Items import item_table
 from .Options import PortraitShuffle
@@ -101,6 +101,12 @@ def set_classifications(world, name) -> CVPoRItem:
     # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVPoRItem(name, item_data.classification, item_data.code, world.player)
+    if item.name in world.quest_requirements:
+        if ItemClassification.trap in item.classification:
+            item.classification |= ItemClassification.progression  # Traps should be ProgTrap
+        else:
+            item.classification = ItemClassification.progression
+
     return item
 
 

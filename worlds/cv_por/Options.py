@@ -176,6 +176,10 @@ class ExcludedQuests(OptionSet):
     valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
+class RandomizeSpellChargeTimes(Toggle):
+    """Randomizes the charge time of non-major spells."""
+    display_name = "Randomize Spell Charge Time"
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -201,6 +205,7 @@ class PoROptions(PerGameCommonOptions):
     randomized_quests: ActiveQuests
     excluded_quests: ExcludedQuests
     start_inventory_from_pool: StartInventoryPool
+    random_spell_charge_times: RandomizeSpellChargeTimes
 
 
 por_option_groups = [
@@ -223,7 +228,8 @@ por_option_groups = [
         StartWithChangeCube,
         AddExtraItems,
         ExcludeOwlMorph,
-        StrongerGlove
+        StrongerGlove,
+        RandomizeSpellChargeTimes
 
     ]),
 

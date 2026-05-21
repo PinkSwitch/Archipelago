@@ -8,24 +8,25 @@ class QuestData(NamedTuple):
     vanilla_reward: str
     required_items: list = []  # Which boss you need to clear to unlock the quest
 
+
 cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille", "Tarte au Poire",
-            "Gateau Faise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
-            "Birthday Cake"]
+         "Gateau Faise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
+         "Birthday Cake"]
 
 subweapons = ["Knife Subweapon", "Axe Subweapon", "Cross", "Holy Water", "Bible", "Javelin",
-                "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
-                "Discus", "Kunimitsu", "Kunai", "Paper Airplane", "Cream Pie", "Crossbow",
-                "Dart", "Grenade", "Steel Ball", "Stonewall", "Offensive Form", "Defensive Form",
-                "Taunt", "Wrecking Ball", "Rampage", "Knee Strike", "Aura Blast", "Rocket Slash"]
+              "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
+              "Discus", "Kunimitsu", "Kunai", "Paper Airplane", "Cream Pie", "Crossbow",
+              "Dart", "Grenade", "Steel Ball", "Stonewall", "Offensive Form", "Defensive Form",
+              "Taunt", "Wrecking Ball", "Rampage", "Knee Strike", "Aura Blast", "Rocket Slash"]
 
 spells = ["Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Berserker", "Eye for an Eye",
-            "Clear Skies", "Time Stop", "Heal", "Cure Poison", "Cure Curse", "STR Boost",
-            "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
-            "Rock Riot", "Raging Fire", "Ice Fang", "Thunderbolt", "Spirit of Light",
-            "Dark Rift", "Tempest", "Stone Circle", "Ice Needle", "Explosion", "Chain Lightning",
-            "Piercing Beam", "Nightmare", "Summon Medusa", "Acidic Bubbles", "Hex", "Salamander",
-            "Cocytus", "Thor's Bellow", "Summon Crow", "Summon Skeleton", "Summon Ghost", "Summon Gunman",
-            "Summon Frog"]
+          "Clear Skies", "Time Stop", "Heal", "Cure Poison", "Cure Curse", "STR Boost",
+          "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
+          "Rock Riot", "Raging Fire", "Ice Fang", "Thunderbolt", "Spirit of Light",
+          "Dark Rift", "Tempest", "Stone Circle", "Ice Needle", "Explosion", "Chain Lightning",
+          "Piercing Beam", "Nightmare", "Summon Medusa", "Acidic Bubbles", "Hex", "Salamander",
+          "Cocytus", "Thor's Bellow", "Summon Crow", "Summon Skeleton", "Summon Ghost", "Summon Gunman",
+          "Summon Frog"]
 
 
 quest_data = {
@@ -151,7 +152,8 @@ def setup_quests(world):
         else:
             world.vanilla_quests.append(quest)
 
-    #world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
+    if "Quest: Preparations" in world.vanilla_quests:
+        world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
 
     for quest in world.active_quests:
         world.quest_reward_pool.append(quest_data[quest].vanilla_reward)
@@ -188,6 +190,45 @@ def setup_quests(world):
 
         if quest in quest_data:
             world.excluded_quests.append(quest)
+
+    for quest in world.active_quests:
+        world.important_quests.add(quest)
+
+    if not world.options.unlock_all_quests:
+        #  These are quests that require you to have completed a previous Quest.
+        #  We want these to be logical if you need to complete them.
+        if "Quest: Art of the Zephyr" in world.important_quests:
+            world.important_quests.add("Quest: The Spinning Art")
+
+        if "Quest: S Rank Hunter" in world.important_quests:
+            world.important_quests.add("Quest: A Rank Hunter")
+
+        if "Quest: Mental Training 4" in world.important_quests:
+            world.important_quests.add("Quest: Mental Training 3")
+
+        if "Quest: Mental Training 3" in world.important_quests:
+            world.important_quests.add("Quest: Mental Training 2")
+
+        if "Quest: Mental Training 2" in world.important_quests:
+            world.important_quests.add("Quest: Mental Training 1")
+
+        if "Quest: Build Your Strength 4" in world.important_quests:
+            world.important_quests.add("Quest: Build Your Strength 3")
+
+        if "Quest: Build Your Strength 3" in world.important_quests:
+            world.important_quests.add("Quest: Build Your Strength 2")
+
+        if "Quest: Build Your Strength 2" in world.important_quests:
+            world.important_quests.add("Quest: Build Your Strength 1")
+
+        if "Quest: Master the Holy Power" in world.important_quests:
+            world.important_quests |= [
+                "Quest: The Statue's Tear",
+                "Quest: Ghosts of the Desert",
+                "Quest: Pray Before the Cross"]
+
+    for quest in world.important_quests:
+        world.quest_requirements.update(quest_data[quest].required_items)
     
     
 def set_quest_rules(world):
@@ -238,13 +279,13 @@ def set_quest_rules(world):
 
     abandon_greed_active = CanReachRegion("Master's Keep - Portrait Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
     a_rank_active = CanReachLocation("Forest of Doom: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Portrait Clear", 7))
+                        Has("Portrait Clear", 5))
 
     mental_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Mental Training 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (Has("MIND Boost") & has_change_cube)))
 
     s_rank_active = And(CanReachLocation("13th Street: Boss Room"), CanReachLocation("Quest: A Rank Hunter"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Portrait Clear", 8))
+                        Has("Portrait Clear", 7))
 
     the_gambler_active = CanReachLocation("Forest of Doom: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll("Spade", "Diamond", "Heart", "Club", "Joker"))
@@ -325,42 +366,7 @@ def set_quest_rules(world):
         "Quest: Kill Gergoth": kill_gergoth_active
     }
 
-    for quest in world.active_quests:
-        world.important_quests.add(quest)
-
-    if not world.options.unlock_all_quests:
-        #  These are quests that require you to have completed a previous Quest.
-        #  We want these to be logical if you need to complete them.
-        if "Quest: Art of the Zephyr" in world.important_quests:
-            world.important_quests.add("Quest: The Spinning Art")
-
-        if "Quest: S Rank Hunter" in world.important_quests:
-            world.important_quests.add("Quest: A Rank Hunter")
-
-        if "Quest: Mental Training 4" in world.important_quests:
-            world.important_quests.add("Quest: Mental Training 3")
-
-        if "Quest: Mental Training 3" in world.important_quests:
-            world.important_quests.add("Quest: Mental Training 2")
-
-        if "Quest: Mental Training 2" in world.important_quests:
-            world.important_quests.add("Quest: Mental Training 1")
-
-        if "Quest: Build Your Strength 4" in world.important_quests:
-            world.important_quests.add("Quest: Build Your Strength 3")
-
-        if "Quest: Build Your Strength 3" in world.important_quests:
-            world.important_quests.add("Quest: Build Your Strength 2")
-
-        if "Quest: Build Your Strength 2" in world.important_quests:
-            world.important_quests.add("Quest: Build Your Strength 1")
-
-        if "Quest: Master the Holy Power" in world.important_quests:
-            world.important_quests |= [
-                "Quest: The Statue's Tear",
-                "Quest: Ghosts of the Desert",
-                "Quest: Pray Before the Cross"]
-
     for quest in world.important_quests:
         if quest != "Quest: Preparations":
             set_rule(world.get_location(quest), quest_rules[quest])
+            

@@ -120,6 +120,19 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x0230917C, "overlay_119", bytearray([world.options.sp_multiplier.value]))
     rom.write_to_file(0x02309183, "overlay_119", bytearray([world.options.unlock_all_quests.value]))
 
+    #  We need to zero out the price of certain equips so that they can't be sold
+    if "Quest: Overcome the Curse" in world.active_quests:
+        rom.write_to_file(0x020E24A0, "arm9", struct.pack("I", 0))
+
+    if "Quest: Holy Appearance" in world.active_quests:
+        rom.write_to_file(0x020E3040, "arm9", struct.pack("I", 0))  # Robe
+        rom.write_to_file(0x020E2248, "arm9", struct.pack("I", 0))  # Habit
+        rom.write_to_file(0x020E1F48, "arm9", struct.pack("I", 0))  # Shoes
+
+    if world.options.random_spell_charge_times:
+        for i in range(0x25):
+            rom.write_to_file(0x020E3C16 + (6 * i), "arm9", struct.pack("H", world.random.randint(0x1, 0x200)))
+
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
     
