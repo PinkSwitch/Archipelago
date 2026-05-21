@@ -7,6 +7,7 @@ from typing import Dict, TextIO
 from .Items import item_table
 from .Options import PortraitShuffle
 from .modules.portrait_shuffle import portrait_data
+from .modules.quest_data import quest_data
 
 
 class CVPoRItem(Item):
@@ -27,6 +28,8 @@ def generate_early(world) -> None:
         world.options.nest_of_evil_state.value = passthrough["nest_of_evil"]
         world.options.brauner_required.value = passthrough["brauner_required"]
         world.options.stronger_glove.value = passthrough["stronger_glove"]
+        world.options.randomized_quests.value = passthrough["active_quests"]
+        world.options.excluded_quests.value = passthrough["excluded_quests"]
 
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
@@ -84,7 +87,33 @@ def create_items(world) -> None:
         
     for item in world.quest_reward_pool:
         pool.append(set_classifications(world, item))
+        
+    for quest in world.important_quests:
+        if quest_data[quest].requires_filler_items:
+            for item in quest_data[quest].required_items:
+                #  We don't want to regenerate any of these as filler because we know we need them here
+                if item in world.subweapon_filler_table:
+                    world.subweapon_filler_table.remove(item)
+
+                if item in world.good_weapon_table:
+                    world.good_weapon_table.remove(item)
+
+                if item in world.weapon_table:
+                    world.weapon_table.remove(item)
+
+                if item in world.armor_table:
+                    world.armor_table.remove(item)
+
+                if item in world.good_armor_table:
+                    world.good_armor_table.remove(item)
+
+                if item in world.accessory_table:
+                    world.accessory_table.remove(item)
+                pool.append(set_classifications(world, item))
+
+
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
+
     for i in range(filler_location_count):
         item = set_classifications(world, get_filler_item_name(world))
         pool.append(item)
@@ -161,6 +190,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "nest_of_evil": world.options.nest_of_evil_state.value,
         "brauner_required": world.options.brauner_required.value,
         "stronger_glove": world.options.stronger_glove.value,
+        "active_quests": world.options.randomized_quests.value,
+        "excluded_quests": world.options.excluded_quests.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],
@@ -171,6 +202,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "brauner_portrait_3": world.portrait_connections["Burnt Paradise"],
         "brauner_portrait_4": world.portrait_connections["Dark Academy"],
         "passage_portrait": world.portrait_connections["Nest of Evil"]
+
     }
 
 def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:

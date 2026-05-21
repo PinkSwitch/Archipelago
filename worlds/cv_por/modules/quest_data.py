@@ -7,6 +7,7 @@ from rule_builder.field_resolvers import FromOption
 class QuestData(NamedTuple):
     vanilla_reward: str
     required_items: list = []  # Which boss you need to clear to unlock the quest
+    requires_filler_items: bool = False  # Whether this requires us to find filler items or not
 
 
 cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille", "Tarte au Poire",
@@ -40,11 +41,11 @@ quest_data = {
     "Quest: Overcome the Curse": QuestData("Blessed Ring", ["Skull Ring"]),
     "Quest: The Statue's Tear": QuestData("Holy Water", ["Statue's Tear"]),
     "Quest: The Martial Art": QuestData("Martial Art"),
-    "Quest: Holy Appearance": QuestData("Heal", ["Nun's Habit", "Nun's Robes", "Nun's Shoes"]),
+    "Quest: Holy Appearance": QuestData("Heal", ["Nun's Habit", "Nun's Robes", "Nun's Shoes"], True),
     "Quest: Number of Fortune": QuestData("LUCK Boost"),
     "Quest: Mental Training 1": QuestData("MP Max up"),
-    "Quest: Mental Training 2": QuestData("MP Max up", ["Thick Glasses"]),
-    "Quest: The Spear of Legend": QuestData("Alucard's Spear", ["Javelin"]),
+    "Quest: Mental Training 2": QuestData("MP Max up", ["Thick Glasses"], True),
+    "Quest: The Spear of Legend": QuestData("Alucard's Spear", ["Javelin"], True),
     "Quest: Mental Training 3": QuestData("MP Max up", ["INT Boost"]),
     # "Quest: The Nest of Evil": QuestData("None", "Werewolf"),
     "Quest: Defeat the Ghoul King": QuestData("Immunity Ring"),
@@ -52,11 +53,11 @@ quest_data = {
     "Quest: A Rank Hunter": QuestData("Royal Sword"),
     "Quest: Mental Training 4": QuestData("MP Max up", ["MIND Boost"]),
     "Quest: S Rank Hunter": QuestData("Undead Killer"),
-    "Quest: The Gambler": QuestData("Gambler Glasses"),
+    "Quest: The Gambler": QuestData("Gambler Glasses", ["Spade", "Heart", "Diamond", "Club", "Joker"], True),
     "Quest: Hands of the Clock": QuestData("Time Stop"),
-    "Quest: Poison vs. Poison": QuestData("Assassin Blade", ["Moldy Bread", "Amanita", "Long Sword"]),
+    "Quest: Poison vs. Poison": QuestData("Assassin Blade", ["Moldy Bread", "Amanita", "Long Sword"], True),
     "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"]),
-    "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"]),
+    "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"], True),
     "Quest: The Lonely Stage": QuestData("Record Player"),
     "Quest: Build Your Strength 3": QuestData("HP Max up", cakes),
     "Quest: Pray Before the Cross": QuestData("Cross"),
