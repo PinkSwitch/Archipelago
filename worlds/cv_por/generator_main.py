@@ -30,6 +30,7 @@ def generate_early(world) -> None:
         world.options.stronger_glove.value = passthrough["stronger_glove"]
         world.options.randomized_quests.value = passthrough["active_quests"]
         world.options.excluded_quests.value = passthrough["excluded_quests"]
+        world.options.start_with_call_cube = passthrough["start_with_call_cube"]
 
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
@@ -84,6 +85,9 @@ def create_items(world) -> None:
 
     if not world.options.exclude_owl_morph:
         pool.append(set_classifications(world, "Owl Morph"))
+
+    if not world.options.start_with_call_cube:
+        pool.append(set_classifications(world, "Call Cube"))
 
     if not world.options.start_with_change_cube:
         pool.append(set_classifications(world, "Change Cube"))
@@ -207,6 +211,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "stronger_glove": world.options.stronger_glove.value,
         "active_quests": world.options.randomized_quests.value,
         "excluded_quests": world.options.excluded_quests.value,
+        "start_with_call_cube": world.options.start_with_call_cube.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],

@@ -47,8 +47,8 @@
     .org 0x0203B65C
         b @DontEquipOnGlitchMenu
 
-    .org 0x02079874
-        bl @PostBraunerCheck
+    ;.org 0x02079874
+     ;   bl @PostBraunerCheck
 
     .org 0x02076B84
         b @CheckBraunerRequirements
@@ -139,6 +139,69 @@
 
     .org 0x02034F58
         mov r0, 1 ; Allow the quest menu to always be opened
+
+    .org 0x0203F8BC
+        b @Quests_CheckNestUnlock
+
+    ; Switch the Stat quests to 50 instead of 100
+    .org 0x020410D0
+        cmp r0, 50 ; Mental training 3
+
+    .org 0x0204108C
+        cmp r0, 50 ; Mental training 4
+
+    .org 0x02041184
+        cmp r0, 50 ; Str training 4
+
+    .org 0x02041570 ; Supersonic punch
+        bl 0x021E418C
+
+    .org 0x02041248; Strength 2
+        bl 0x021E418C
+
+    .org 0x02041110; Mental 2
+        bl 0x021E418C
+
+    ;;;;;;Poison v poison;;;;
+    .org 0x02041524
+        bl 0x021E418C
+
+    .org 0x02041534
+        bl 0x021E418C
+
+    .org 0x02041544
+        bl 0x021E418C
+    ;;;;;;;;;;;;;;;;;;;
+    .org 0x0204126C
+        bl 0x021E418C ; Strength 1
+
+    .org 0x02041208
+        bl 0x021E418C ; strength 3
+
+    .org 0x02041594
+        mov r1, 0x1F4 ; Set A-rank hunter to 500 kills
+
+    .org 0x020414CC
+        mov r1, 0x3E8 ; Set S-rank hunter to 1000 kills
+
+    .org 0x02041288
+        mov r4, 0x27 ; Fix bug where extra subs would be checked for great sage
+
+    .org 0x0205BDA0
+        bl @ResetElevatorMemory
+
+    .org 0x02041290
+        bl @CheckExcludedOwl
+
+    .org 0x020E3B5E ; Cross mastery
+        .dh 0x03E8
+
+    .org 0x020E3B64 ; Water mastery
+        .dh 0x03E8
+
+    .org 0x020E3B6A ; Bible mastery
+        .dh 0x03E8
+
     
 
     .org 0x020E537C
@@ -301,6 +364,13 @@
     .org 0x0221BFE4
         .dw 0x0222307C ; Switch the MP Max up description to "Max MP increased"
 
+    .org 0x0221C0FC ; AP item descriptions
+        .dw @APItem
+        .dw @APItem_Important
+
+    ;.org 0x0221C101
+    ;    .dw @APItem
+
 
 ;overlay 9 0
 .close
@@ -317,6 +387,23 @@
         .db 0x53, 0x53, 0x41, 0x47, 0x45, 0x0C, 0xE6, 0x59, 0x4F, 0x55, 0x00, 0x4D, 0x55, 0x53
         .db 0x54, 0x00, 0x43, 0x4C, 0x45, 0x41, 0x52, 0x00, 0x38, 0x00, 0x50, 0x4F, 0x52, 0x54
         .db 0x52, 0x41, 0x49, 0x54, 0x53, 0x0E, 0xEA
+
+    .org 0x02227A28
+        .db 0x15, 0x10, 0xFF ; Mental training 3, 50 int
+
+    .org 0x0222AFC8
+        .db 0xFF ; A rank hunter, 500
+
+    .org 0x02227A98
+        .db 0x15, 0x10, 0xFF ; Mental training 4, 50 mnd
+
+    .org 0x0222433C
+        .db 0xFF, 0x11 ; S rank hunter, 1000
+
+    .org 0x0222B7D9
+        .db 0x15, 0x10, 0xFF ; str training 4, 50 con
+
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
 
@@ -627,6 +714,12 @@
     @OptionFlag_UnlockAllQuests: ;02039183
         .db 0x00
 
+    @OptionFlag_ExcludeOwl: ;02039184
+        .db 0x00
+
+    @OptionFlag_StartWithCallCube ;02039185
+        .db 0x00
+
     .align 4
 ;;;;;;;;;;;;;;;;;;;
 ; Gets an arbitrary item and gives it to the player. Used for Archipelago server items
@@ -705,6 +798,7 @@
     bl 0x021E43E4 ; Subroutine for granting regular items
     pop r0,r1
     bl 0x021E476C ; Get the global ID for the item
+    bl @UnlockAdditionalInfo
     ldr r1, =@RamFlag_SkipArbitrarayPopup
     ldrb r1,[r1]
     cmp r1, 1
@@ -1335,7 +1429,12 @@
     strb r0,[r3]
     pop r0,r3
     sub r3, r3, 4
-    ldrh r3,[r3, r0]
+    ldr r1, [r3, 0x0C] ; Reward text pointer
+    push r2
+    ldr r2, =@ApItemNamePtr
+    str r1, [r2]
+    pop r2
+    ldrh r3,[r3, r0] ; load reward id
     ands r1, r3, 0xFF ; Split this into item ID
     mov r0, r3, lsr 8 ; and item type
     bl @GetItemArbitrary
@@ -1807,13 +1906,13 @@
     mov r3, 0x80 ; All standard portraits use 0x80 as their X-pos
     pop r0-r2
 @@SkipPositionCheck:
-    b 0x023097A4
+    b @PostBraunerCheck
 @@IsBraunerPortrait:
     ldr r3, = @BraunerPortraitPositions
     mov r1, r1, lsl 1
     ldrh r3, [r3, r1]
     pop r0-r2
-    b 0x023097A4
+    b @PostBraunerCheck
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Removes quests from the Quest List after accepting them.
 @CheckQuestCompletion:
@@ -2001,6 +2100,78 @@
     ands r0, r0, 0x40 ; Check the beaten flag
     bne 0x022D7D28
     b 0x022D7CE0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Have endgame quests check the Underground Passage instead of Nest of Evil's quest
+@Quests_CheckNestUnlock:
+    push lr
+    bl @CheckPortraitClearCount
+    pop lr
+    ldr r1, =@OptionFlag_NestPortraits
+    ldrb r1, [r1]
+    cmp r0, r1
+    blt 0x0203F954 ; Skip the quest
+    b 0x0203F8C0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Triggers the Item Log and Quest Unlocks for arbitrary item id in r0
+@UnlockAdditionalInfo:
+    push r0-r5, lr
+    mov r5, r0
+    bl 0x021E40CC ; Register the item in the Log
+    bl 0x0203FC24 ; Check if this item unlocked a Quest
+    mvn r1, 0
+    cmp r0, r1
+    beq @@End
+    bl 0x0203FA74
+    mov r0, 0x3C
+    bl 0x0204D6B0 ; Play the sound
+@@End:
+    pop r0-r5, lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Clears the memory used for the elevator room to prevent softlocks on reload
+@ResetElevatorMemory:
+    push lr
+    push r0-r2
+    bl 0x02007970 ; Load the overlay
+    mov r0, 0
+    ldr r1, =0x020F7020 ; Used for the invisible door walls in the elevator room
+    ldr r2, =0x1AF
+    bl 0x0209E570 ; Clear memory
+    pop r0-r2
+    pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;
+; Makes sure not to check owl for Great Sage if it's excluded
+@CheckExcludedOwl:
+    push lr
+    cmp r0, 0x28 ; Owl morph
+    bne @@CheckAsNormal
+    ldr r0, =@OptionFlag_ExcludeOwl
+    ldrb r0, [r0]
+    cmp r0, 1
+    moveq r0, 1
+    beq @@SkipCheck
+    mov r0, r4
+@@CheckAsNormal:
+    bl 0x02215BBC
+@@SkipCheck:
+    pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;
+; A mysterious object from another world.
+@APItem:
+.db 0x01, 0x00
+.db 0x21, 0x00, 0x4D, 0x59, 0x53, 0x54, 0x45, 0x52, 0x49, 0x4F, 0x55, 0x53, 0x00, 0x4F
+.db 0x42, 0x4A, 0x45, 0x43, 0x54, 0x00, 0x46, 0x52, 0x4F, 0x4D, 0x00, 0x41, 0x4E, 0x4F
+.db 0x54, 0x48, 0x45, 0x52, 0xE6, 0x57, 0x4F, 0x52, 0x4C, 0x44, 0x0E, 0xEA
+
+; A mysterious object from another world. It seems important
+@APItem_Important:
+.db 0x01, 0x00, 0x21, 0x00, 0x4D, 0x59, 0x53, 0x54, 0x45, 0x52, 0x49, 0x4F, 0x55, 0x53
+.db 0x00, 0x4F, 0x42, 0x4A, 0x45, 0x43, 0x54, 0x00, 0x46, 0x52, 0x4F, 0x4D, 0x00, 0x41
+.db 0x4E, 0x4F, 0x54, 0x48, 0x45, 0x52, 0xE6, 0x57, 0x4F, 0x52, 0x4C, 0x44, 0x0E, 0x00
+.db 0x29, 0x54, 0x00, 0x53, 0x45, 0x45, 0x4D, 0x53, 0x00, 0x49, 0x4D, 0x50, 0x4F, 0x52
+.db 0x54, 0x41, 0x4E, 0x54, 0x0E, 0xEA
 
 
 .pool

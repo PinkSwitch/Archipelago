@@ -181,6 +181,11 @@ class RandomizeSpellChargeTimes(Toggle):
     display_name = "Randomize Spell Charge Time"
 
 
+class StartWithCallCube(Toggle):
+    """If enabled, you'll start with the Call Cube by default"""
+    display_name = "Start with Call Cube"
+
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -206,6 +211,7 @@ class PoROptions(PerGameCommonOptions):
     excluded_quests: ExcludedQuests
     start_inventory_from_pool: StartInventoryPool
     random_spell_charge_times: RandomizeSpellChargeTimes
+    start_with_call_cube: StartWithCallCube
 
 
 por_option_groups = [
@@ -226,6 +232,7 @@ por_option_groups = [
     OptionGroup("Item Options", [
         ShuffleWhip,
         StartWithChangeCube,
+        StartWithCallCube,
         AddExtraItems,
         ExcludeOwlMorph,
         StrongerGlove,

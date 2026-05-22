@@ -449,7 +449,7 @@ item_table: Dict[str, ItemData] = {
     "Greatest Five": ItemData("Dual Crashes", 0x085B, ItemClassification.useful, 0),
     
     "Change Cube": ItemData("Relics", 0x085C, ItemClassification.progression, 0),
-    "Call Cube": ItemData("Relics", 0x085D, ItemClassification.progression),
+    "Call Cube": ItemData("Relics", 0x085D, ItemClassification.progression, 0),
     "Skill Cube": ItemData("Relics", 0x085E, ItemClassification.progression),
     "Wait Cube": ItemData("Relics", 0x085F, ItemClassification.progression),
     "Acrobat Cube": ItemData("Relics", 0x0860, ItemClassification.progression),
