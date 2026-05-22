@@ -291,9 +291,9 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
 
     if world.options.nest_of_evil_state != NestofEvil.option_removed:
         location_table += [
-         LocationData("Nest of Evil - Gauntlet", "Nest of Evil: Doppelganger Reward"),
-         LocationData("Nest of Evil - Gauntlet", "Nest of Evil: First Item"),
-         LocationData("Nest of Evil - Gauntlet", "Nest of Evil: Second Item")]
+         LocationData("Nest of Evil", "Nest of Evil: Doppelganger Reward"),
+         LocationData("Nest of Evil", "Nest of Evil: First Item"),
+         LocationData("Nest of Evil", "Nest of Evil: Second Item")]
 
     for quest in quest_data:
         if quest == "Quest: Kill Gergoth" and world.options.nest_of_evil_state == NestofEvil.option_removed:
