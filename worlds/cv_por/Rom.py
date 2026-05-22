@@ -7,6 +7,7 @@ from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
 from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
 from .modules.text_builder import text_encoder, calculate_text_width
+from .modules.quest_data import quest_data
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
@@ -199,21 +200,22 @@ def patch_rom(world, rom, code_patch):
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
         elif data.location_type == "Quest":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type]))
-            # Only do this for AP items
-            # Skip nest of evil
-            if item.player != world.player:
+            if item.player != world.player:  # Show AP item full names
                 recepient = world.multiworld.get_player_name(item.player)
                 item_name = item.name
-                while calculate_text_width(item_name) >= 208:  # Make sure this width is right?
+                while calculate_text_width(item_name) >= 204:  # Max length for 1 line
                     item_name = item_name[:-1]
                 if item_name != item.name:
-                    item_name += "..."
+                    item_name += "..."  # Do this to show it's not the full name
                 name_string = text_encoder(f"{recepient}'s\n{item_name}")
                 name_string.insert(0, 0)
                 name_string.insert(0, 1)
                 name_string.append(0xEA)  # Terminator
-                #  TODO; Write into rom, then write a pointer to where it is in rom
-                # rom.write_to_file(data.pointer + 0x0C, data.file, pointer)
+                quest_index = list(quest_data).index(location.name)
+                pointer = 0x2318F20 + (0x80 * quest_index)
+                rom.write_to_file(pointer, "overlay_119", bytearray(name_string))
+                rom.write_to_file(data.pointer + 0x0C, "arm9", struct.pack("I", pointer))
+
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
     #####################################
