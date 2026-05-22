@@ -6,7 +6,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
 from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
-from .modules.text_builder import text_encoder
+from .modules.text_builder import text_encoder, calculate_text_width
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
@@ -199,6 +199,21 @@ def patch_rom(world, rom, code_patch):
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type, color]))
         elif data.location_type == "Quest":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type]))
+            # Only do this for AP items
+            # Skip nest of evil
+            if item.player != world.player:
+                recepient = world.multiworld.get_player_name(item.player)
+                item_name = item.name
+                while calculate_text_width(item_name) >= 208:  # Make sure this width is right?
+                    item_name = item_name[:-1]
+                if item_name != item.name:
+                    item_name += "..."
+                name_string = text_encoder(f"{recepient}'s\n{item_name}")
+                name_string.insert(0, 0)
+                name_string.insert(0, 1)
+                name_string.append(0xEA)  # Terminator
+                #  TODO; Write into rom, then write a pointer to where it is in rom
+                # rom.write_to_file(data.pointer + 0x0C, data.file, pointer)
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
     #####################################
