@@ -225,7 +225,7 @@ def connect_regions(world):
                                                             {"Dark Academy - Main": big_uppies})
 
     world.get_region("Forgotten City").add_exits(["Forgotten City - Inner"],
-                                                            {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
+                                                 {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
 
     world.get_region("Forgotten City - Inner").add_exits(["Forgotten City - Inner Upper"],
                                                             {"Forgotten City - Inner Upper": medium_uppies | HasAll("Puppet Master", "Call Cube", "Acrobat Cube")})
@@ -242,6 +242,6 @@ def connect_regions(world):
     if world.options.goal:
         # Add a connection to the throne room if necessary
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier",
-            Has("Portrait Clear", FromOption(DraculaPortraits)) & 
+            Has("Portrait Clear", FromOption(DraculaPortraits)) &
             Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
             CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))

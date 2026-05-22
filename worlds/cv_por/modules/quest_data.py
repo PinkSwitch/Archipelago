@@ -128,6 +128,13 @@ def setup_quests(world):
     from ..Options import NestofEvil
     selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
     excluded_quests = {quest.casefold() for quest in world.options.excluded_quests.value}
+    spell_quests = ["Quest: Holy Apperance", "Quest: Number of Fortune", "Quest: Kill Gergoth",
+                    "Quest: Hands of the Clock"]
+
+    subweapon_quests = ["Quest: Ghosts of the Desert", "Quest: Art of the Zephyr", "Quest: The Statue's Tear",
+                        "Quest: Pray Before the Cross"]
+
+    holy_quests = ["Quest: The Statue's Tear", "Quest: Ghosts of the Desert", "Quest: Pray Before the Cross"]
 
     if "all" in selected_quests:
         for quest in quest_data:
@@ -200,6 +207,22 @@ def setup_quests(world):
     if not world.options.unlock_all_quests:
         #  These are quests that require you to have completed a previous Quest.
         #  We want these to be logical if you need to complete them.
+        if "Quest: The Great Sage" in world.important_quests:
+            if world.options.nest_of_evil_state == NestofEvil.option_removed:
+                spell_quests.remove("Quest: Kill Gergoth")
+            for quest in spell_quests:
+                if quest in world.vanilla_quests:
+                    world.important_quests.add(quest)  # We need the rewards from these
+
+        if "Quest: Almighty" in world.important_quests:
+            for quest in subweapon_quests:
+                if quest in world.vanilla_quests:
+                    world.important_quests.add(quest)
+
+        if "Quest: Master the Holy Power" in world.important_quests:
+            for quest in holy_quests:
+                if quest in world.vanilla_quests:
+                    world.important_quests.add(quest)
 
         if "Quest: Art of the Zephyr" in world.important_quests:
             world.important_quests.add("Quest: The Spinning Art")
@@ -225,12 +248,6 @@ def setup_quests(world):
         if "Quest: Build Your Strength 2" in world.important_quests:
             world.important_quests.add("Quest: Build Your Strength 1")
 
-        if "Quest: Master the Holy Power" in world.important_quests:
-            world.important_quests.update([
-                "Quest: The Statue's Tear",
-                "Quest: Ghosts of the Desert",
-                "Quest: Pray Before the Cross"])
-
     for quest in world.important_quests:
         world.quest_requirements.update(quest_data[quest].required_items)
     
@@ -239,6 +256,9 @@ def set_quest_rules(world):
     from ..Options import UnlockAllQuests, NestPortraits
     from ..Regions import has_change_cube
     set_rule = world.set_rule
+    logic_spells = spells.copy()
+    if world.options.exclude_owl_morph:
+        logic_spells.remove("Owl Morph")  # This would be impossible so we remove it
 
     supersonic_punch_active = CanReachLocation("City of Haze: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                              Has("Ground Meat") | CanReachRegion("City of Haze"))
@@ -328,7 +348,7 @@ def set_quest_rules(world):
                         HasAll(*subweapons))
 
     great_sage_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        HasFromListUnique(*spells, count=len(spells)))
+                        HasAll(*logic_spells))
     kill_gergoth_active = And(Has("Portrait Clear", FromOption(NestPortraits)), CanReachRegion("Nest of Evil"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         CanReachRegion("Nest of Evil"))
 

@@ -5,7 +5,7 @@ import pkgutil
 from BaseClasses import Item, ItemClassification
 from typing import Dict, TextIO
 from .Items import item_table
-from .Options import PortraitShuffle
+from .Options import PortraitShuffle, NestofEvil
 from .modules.portrait_shuffle import portrait_data
 from .modules.quest_data import quest_data
 
@@ -60,6 +60,9 @@ def create_items(world) -> None:
                               "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
                               "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus"]  # We want to specifically NEVER forcibly create these.
 
+    if world.options.nest_of_evil_state == NestofEvil.option_removed:
+        force_create_blacklist.remove("Cocytus")
+
     pool = []
     for name, data in item_table.items():
         for _ in range(data.default_count):
@@ -96,6 +99,9 @@ def create_items(world) -> None:
         pool.append(set_classifications(world, item))
         
     for quest in world.important_quests:
+        if quest in world.vanilla_quests:
+            continue
+            
         if quest_data[quest].requires_filler_items:
             for item in quest_data[quest].required_items:
                 #  We don't want to regenerate any of these as filler because we know we need them here

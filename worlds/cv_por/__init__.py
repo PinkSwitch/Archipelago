@@ -96,7 +96,7 @@ class PoRWorld(World):
             "Boomerang",
             "Shuriken",
             "Yagyu Shuriken",
-            "Discus"
+            "Discus",
             "Kunimitsu",
             "Kunai",
             "Crossbow",

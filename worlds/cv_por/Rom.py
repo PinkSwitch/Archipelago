@@ -119,6 +119,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x0230917A, "overlay_119", bytearray([world.options.portrait_shuffle.value]))  # Portrait shuffle
     rom.write_to_file(0x0230917C, "overlay_119", bytearray([world.options.sp_multiplier.value]))
     rom.write_to_file(0x02309183, "overlay_119", bytearray([world.options.unlock_all_quests.value]))
+    rom.write_to_file(0x02309184, "overlay_119", bytearray([world.options.exclude_owl_morph.value]))
 
     #  We need to zero out the price of certain equips so that they can't be sold
     if "Quest: Overcome the Curse" in world.active_quests:

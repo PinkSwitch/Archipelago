@@ -1,6 +1,7 @@
 from .modules.portrait_shuffle import portrait_shuffle
 from .modules.quest_data import setup_quests, quest_data
 from .generator_main import create_item_as_event, get_filler_item_name
+from .Options import NestofEvil
 
 
 def setup_game(world):
@@ -39,6 +40,8 @@ def place_static_items(world):
         world.get_location("Nest of Evil: Doppelganger Reward").place_locked_item(world.create_item("Greatest Five"))
 
     for quest in world.vanilla_quests:
+        if quest == "Quest: Kill Gergoth" and world.options.nest_of_evil_state == NestofEvil.option_removed:
+            continue
         world.get_location(quest).place_locked_item(create_item_as_event(world, quest_data[quest].vanilla_reward))
 
     for quest in world.excluded_quests:
