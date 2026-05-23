@@ -240,13 +240,14 @@ def patch_rom(world, rom, code_patch):
     if sanctuary_location.player != world.player:
         name = world.multiworld.get_player_name(sanctuary_location.player)
         old_name = area
-        while calculate_text_width(area) >= 19:
+        while calculate_text_width(area) >= 190:
             area = area[:-1]
         if area != old_name:
             area += "..."
         hint_string = f"{name}'s\n{area}!"
     else:
         hint_string = f"the {area}!"
+    print(hint_string)
     hint = text_encoder(hint_string)
     hint.extend([0xE6, 0xE5, 0xE4, 0xEA])
     rom.write_to_file(0x02222FFA, "overlay_2", bytearray(hint))

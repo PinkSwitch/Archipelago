@@ -1,5 +1,6 @@
 from typing import NamedTuple
-from rule_builder.rules import CanReachLocation, OptionFilter, CanReachRegion, And, Has, HasAll, HasFromListUnique, HasAny
+from rule_builder.rules import (CanReachLocation, OptionFilter, CanReachRegion,
+                                And, Has, HasAll, HasFromListUnique, HasAny)
 from rule_builder.field_resolvers import FromOption
 
 
@@ -162,6 +163,9 @@ def setup_quests(world):
         else:
             world.vanilla_quests.append(quest)
 
+    if "Quest: Kill Gergoth" in world.active_quests and world.options.nest_of_evil_state == NestofEvil.option_removed:
+        world.active_quests.remove("Quest: Kill Gergoth")  # This would be impossible, so remove it
+
     if "Quest: Preparations" in world.vanilla_quests:
         world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
 
@@ -171,28 +175,25 @@ def setup_quests(world):
         if quest.casefold() in excluded_quests or quest.split(": ")[1].casefold() in excluded_quests:
             excluded_quests.add(quest)
 
-    if "Quest: Kill Gergoth" in world.active_quests and world.options.nest_of_evil_state == NestofEvil.option_removed:
-        world.active_quests.remove("Quest: Kill Gergoth")  # This would be impossible, so remove it
-
     # After adding the active quest rewards, REMOVE excluded quests from active
     # We do this here at this point so that it only excludes quests that are active in the first place
     if "all" in excluded_quests:
         world.active_quests = []
 
     if "simple" in selected_quests:
-        world.active_quests -= simple_quests
+        world.active_quests = [quest for quest in world.active_quests if quest not in simple_quests]
 
     if "requires item" in selected_quests:
-        world.active_quests -= item_required_quests
+        world.active_quests = [quest for quest in world.active_quests if quest not in item_required_quests]
 
     if "defeat enemies" in selected_quests:
-        world.active_quests -= enemy_quests
+        world.active_quests = [quest for quest in world.active_quests if quest not in enemy_quests]
 
     if "mastery" in selected_quests:
-        world.active_quests -= mastery_quests
+        world.active_quests = [quest for quest in world.active_quests if quest not in mastery_quests]
 
     if "grindy" in selected_quests:
-        world.active_quests -= grindy_quests
+        world.active_quests = [quest for quest in world.active_quests if quest not in grindy_quests]
 
     for quest in excluded_quests:
         if quest in world.active_quests:

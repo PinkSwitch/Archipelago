@@ -103,9 +103,6 @@ def create_items(world) -> None:
         pool.append(set_classifications(world, item))
         
     for quest in world.important_quests:
-        if quest in world.vanilla_quests:
-            continue
-            
         if quest_data[quest].requires_filler_items:
             for item in quest_data[quest].required_items:
                 #  We don't want to regenerate any of these as filler because we know we need them here
@@ -236,7 +233,7 @@ def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
             destination = world.portrait_connections[connection]
             region = world.location_name_groups[destination]
             for location in region:
-                hint_struct[location_ids[location]] = ro
+                hint_struct[location_ids[location]] = room
         
         hint_data[world.player] = hint_struct
 

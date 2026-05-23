@@ -202,8 +202,30 @@
     .org 0x020E3B6A ; Bible mastery
         .dh 0x03E8
 
-    
 
+    ; Load new custom overlay
+    .org 0x02007830
+        mov r0, 0h
+    .org 0x02007838
+        mov r0, 19h
+    .org 0x02007840
+        mov r0, 5h
+    .org 0x02007848
+        mov r0, 6h
+    .org 0x02007850
+        mov r0, 7h
+    .org 0x02007858
+        mov r0, 8h
+
+    .org 0x02007860
+    b 0200786Ch ; Then we jump to the now free space.
+
+    ; Add our code into the free space.
+    .org 0x0200786C
+    mov r0, 77h ; Load our new overlay, overlay 119.
+    bl 02007970h
+    bl 020078D4h ; Replaces the line of code at 02007860 that we overwrote to jump here.
+    b 02007864h ; Jump back.
     
 
     .org 0x020E537C
@@ -1232,6 +1254,7 @@
   cmp r0, r2
   movgt r0, r2 ; Y = room_height-1 if Y > room_height-1
   bx r14
+.pool
 ;;;;;;;;;;;;;;;;;;
 ; Switches the underground passage/nest of evil to check portraits instead of a flag
 @Undergroundpassage_Portraitcheck:
@@ -2132,7 +2155,11 @@
 @@CheckForSwitch:
     cmp r0, 0x600
     bge @@End
-    mov r2, r5
+    cmp r3, 0
+    blt @@End
+    cmp r3, 0x640
+    movlt r2, r5 ; Wind
+    movgt r2, r3 ; Guide
     b @@HandleNextText
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
