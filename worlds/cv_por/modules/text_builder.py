@@ -55,13 +55,17 @@ char_width_table = {" ": 3, "!": 1, '""': 3, "#": 6, "$": 5, "%": 7, "&": 5,
                     "\n": 0}
 
 
-def text_encoder(input_text) -> list:
+def text_encoder(input_text, is_full_string = False) -> list:
     output = []
+    if is_full_string:
+        output += [0x01, 0x00]  # Some kind of header? strings in game are appended with this pattern...
     for char in input_text:
         if char in text_table:
             output.append(text_table[char])
         else:
             output.append(text_table["?"])
+    if is_full_string:
+        output.append(0xEA)  # Terminator
     return output
 
 

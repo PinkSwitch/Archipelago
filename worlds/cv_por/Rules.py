@@ -57,7 +57,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Sandy Grave: Upper Big Underground Top Left"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Sandy Grave: Upper Big Underground Top Right"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Sandy Grave: Eastmost Item"), small_uppies)
-    set_rule(world.get_location("Sandy Grave: Pyramid East 1F"), big_uppies | (HasAll("Stone of Flight", "Acrobat Cube") & has_call_cube))
+    set_rule(world.get_location("Sandy Grave: Pyramid East 1F"), big_uppies | Has("Stone of Flight"))
 
     set_rule(world.get_location("Forgotten City: Pyramid East 5F"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Forgotten City: Pyramid 1F Bricks"), big_uppies)

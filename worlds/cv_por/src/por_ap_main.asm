@@ -204,6 +204,8 @@
 
     
 
+    
+
     .org 0x020E537C
         .dw  @PostBehemothRoom
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -257,7 +259,10 @@
         .dh 0x0209
 
     .org 0x020DFE40 ; nest of evil (UNUSED, REMOVE LATER?)
-        .dh 0x0100
+        .dh 0x024F
+
+    .org 0x020DFE4C ; Nest of evil's AP pointer
+        .dw 0x0222B7E0 ; Spoof this so the description just doesn't change
 
     .org 0x020DFE50 ; ghoul king
         .dh 0x0710
@@ -364,9 +369,8 @@
     .org 0x0221BFE4
         .dw 0x0222307C ; Switch the MP Max up description to "Max MP increased"
 
-    .org 0x0221C0FC ; AP item descriptions
-        .dw @APItem
-        .dw @APItem_Important
+    .org 0x0221D59C
+        .dw 0x02222FD0
 
     ;.org 0x0221C101
     ;    .dw @APItem
@@ -456,6 +460,12 @@
         .db 0xE7, 0x01, 0xE3, 0x0B, 0x29, 0x54, 0x07, 0x53, 0x00, 0x57, 0x4F, 0x4F, 0x44, 0x53
         .db 0x00, 0x54, 0x49, 0x4D, 0x45, 0x00, 0x46, 0x4F, 0x52, 0x00, 0x59, 0x4F, 0x55, 0x0E
         .db 0xE6, 0xE5, 0xE4, 0xEA
+
+    .org 0x02222FD0
+        .db 0x01, 0x00, 0xE7, 0x00, 0xE3, 0x02, 0x24, 0x41, 0x4D, 0x4E, 0x01, 0x00, 0x29, 0x46
+        .db 0x00, 0x4F, 0x4E, 0x4C, 0x59, 0x00, 0x57, 0x45, 0x00, 0x48, 0x41, 0x44, 0x00, 0x33
+        .db 0x41, 0x4E, 0x43, 0x54, 0x55, 0x41, 0x52, 0x59, 0x00, 0x46, 0x52, 0x4F, 0x4D, 0xE6
+        .db 0xE5, 0xE4, 0xEA
 
 .close
 ;;;;;;;;;;;;
@@ -583,6 +593,7 @@
 .open "ftc/overlay9_89", 0x022E8820
     .org 0x022EA018
         bl @GetWhipMemItem
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_90", 0x022E8820
@@ -717,7 +728,10 @@
     @OptionFlag_ExcludeOwl: ;02039184
         .db 0x00
 
-    @OptionFlag_StartWithCallCube ;02039185
+    @OptionFlag_StartWithCallCube: ;02039185
+        .db 0x00
+
+    @ROMFlag_NestDisabled: ;02039186
         .db 0x00
 
     .align 4
@@ -1039,6 +1053,17 @@
     mov r1, 1
     bl 0x02215B2C ; Give the change cube
 @@EndCubeCheck:
+    ldr r0, =@OptionFlag_StartWithCallCube
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@EndCallCheck
+    mov r0, 1 ; Set the call cube
+    mov r1, 1 ; Enabled
+    bl 0x02215308 ; Activate relic
+    mov r0, 0x5D
+    mov r1, 1
+    bl 0x02215B2C
+@@EndCallCheck:
     ldr r0, = @OptionFlag_RevealMap
     ldrb r0,[r0]
     cmp r0, 0
@@ -1952,7 +1977,9 @@
 @UnlockAllQuests:
     cmp r8, 0x10
     beq 0x0203F954 ; NEVER unlock Nest of Evil
-
+    cmp r8, 0x24
+    beq @@CheckGergothUnlock
+@@EnableGergoth:
     push r0
     ldr r0, =@OptionFlag_UnlockAllQuests
     ldrb r0, [r0]
@@ -1961,6 +1988,14 @@
     bne 0x0203F914
     cmp r8, 0x24
     b 0x0203F670
+@@CheckGergothUnlock:
+    push r0
+    ldr r0, = @ROMFlag_NestDisabled
+    ldrb r0, [r0]
+    cmp r0, 1 ; If Nest is disabled, we want to fail the Gergoth quest
+    pop r0 ; so that it never shows up
+    beq 0x0203F954
+    b @@EnableGergoth
 
 ; Switch Text for quest descriptions to show the reward when holding Xs in the Quest menu
 @QuestMenu_SwapText:
@@ -2049,6 +2084,7 @@
     str r0, [r1]
     pop r0, r1
     bx lr
+.pool
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Check if the APItemName pointer is 0. If it's not use, that instead.
@@ -2072,15 +2108,15 @@
     mov r0, r1
     pop r1
     b 0x02008D80
-.pool
     
 
 @SwapQuestToAPText:
     sub r13, r13, 0x1C
     push r1, r2
+@@HandleNextText:
     sub r2, r2, 0x600
     cmp r2, 0x4C
-    blt @@End
+    blt @@CheckForSwitch
     cmp r2, 0x70
     bgt @@End
     ; We're in range so we know this is a quest
@@ -2093,6 +2129,12 @@
 @@End:
     pop r1, r2
     b 0x0203F348
+@@CheckForSwitch:
+    cmp r0, 0x600
+    bge @@End
+    mov r2, r5
+    b @@HandleNextText
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SkipCharSelect:
 ; Skip the Character screen if we haven't beaten the game yet
@@ -2158,26 +2200,10 @@
     pop lr
     bx lr
 ;;;;;;;;;;;;;;;;;
-; A mysterious object from another world.
-@APItem:
-.db 0x01, 0x00
-.db 0x21, 0x00, 0x4D, 0x59, 0x53, 0x54, 0x45, 0x52, 0x49, 0x4F, 0x55, 0x53, 0x00, 0x4F
-.db 0x42, 0x4A, 0x45, 0x43, 0x54, 0x00, 0x46, 0x52, 0x4F, 0x4D, 0x00, 0x41, 0x4E, 0x4F
-.db 0x54, 0x48, 0x45, 0x52, 0xE6, 0x57, 0x4F, 0x52, 0x4C, 0x44, 0x0E, 0xEA
-
-; A mysterious object from another world. It seems important
-@APItem_Important:
-.db 0x01, 0x00, 0x21, 0x00, 0x4D, 0x59, 0x53, 0x54, 0x45, 0x52, 0x49, 0x4F, 0x55, 0x53
-.db 0x00, 0x4F, 0x42, 0x4A, 0x45, 0x43, 0x54, 0x00, 0x46, 0x52, 0x4F, 0x4D, 0x00, 0x41
-.db 0x4E, 0x4F, 0x54, 0x48, 0x45, 0x52, 0xE6, 0x57, 0x4F, 0x52, 0x4C, 0x44, 0x0E, 0x00
-.db 0x29, 0x54, 0x00, 0x53, 0x45, 0x45, 0x4D, 0x53, 0x00, 0x49, 0x4D, 0x50, 0x4F, 0x52
-.db 0x54, 0x41, 0x4E, 0x54, 0x0E, 0xEA
-
-
 .pool
 
 .org @APItemNames
-    .fill 0x0B00
+    .fill 0x15E0
 
 
 .endarea

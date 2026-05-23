@@ -25,6 +25,7 @@ class FilePointer(NamedTuple):
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFDBB7),
     "overlay_1": FilePointer(0x154200, 0x0221F680, 0xD1BF),
+    "overlay_2": FilePointer(0x161400, 0x0221F680, 0xBCDF),
     "overlay_7": FilePointer(0x268C00, 0x022B7660, 0x198DF),
     "overlay_78": FilePointer(0x369000, 0x022E8820, 0x10ABF),
     "overlay_79": FilePointer(0x379C00, 0x022E8820, 0x1C83F),
@@ -155,6 +156,7 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x022EB0EA, "overlay_113", struct.pack("H", 0x4027))
         rom.write_to_file(0x022EB10A, "overlay_113", struct.pack("H", 0x4027))
         rom.write_to_file(0x022EB12A, "overlay_113", struct.pack("H", 0x4027))
+        rom.write_to_file(0x02309185, "overlay_119", bytearray([0x01]))
 
     # This is the singular Goal Requirements flag.
     # Brauner will never check if brauner is required...
@@ -207,10 +209,7 @@ def patch_rom(world, rom, code_patch):
                     item_name = item_name[:-1]
                 if item_name != item.name:
                     item_name += "..."  # Do this to show it's not the full name
-                name_string = text_encoder(f"{recepient}'s\n{item_name}")
-                name_string.insert(0, 0)
-                name_string.insert(0, 1)
-                name_string.append(0xEA)  # Terminator
+                name_string = text_encoder(f"{recepient}'s\n{item_name}", True)
                 quest_index = list(quest_data).index(location.name)
                 pointer = 0x2318F20 + (0x80 * quest_index)
                 rom.write_to_file(pointer, "overlay_119", bytearray(name_string))
@@ -238,7 +237,19 @@ def patch_rom(world, rom, code_patch):
         else:
             area = sanctuary_location.parent_region.name  # Otherwise, display the region name
 
-    print(area)
+    if sanctuary_location.player != world.player:
+        name = world.multiworld.get_player_name(sanctuary_location.player)
+        old_name = area
+        while calculate_text_width(area) >= 19:
+            area = area[:-1]
+        if area != old_name:
+            area += "..."
+        hint_string = f"{name}'s\n{area}!"
+    else:
+        hint_string = f"the {area}!"
+    hint = text_encoder(hint_string)
+    hint.extend([0xE6, 0xE5, 0xE4, 0xEA])
+    rom.write_to_file(0x02222FFA, "overlay_2", bytearray(hint))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
