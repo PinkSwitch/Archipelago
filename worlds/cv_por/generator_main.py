@@ -103,6 +103,9 @@ def create_items(world) -> None:
         pool.append(set_classifications(world, item))
         
     for quest in world.important_quests:
+        if quest in world.vanilla_quests and quest not in world.important_quests:
+            continue
+            
         if quest_data[quest].requires_filler_items:
             for item in quest_data[quest].required_items:
                 #  We don't want to regenerate any of these as filler because we know we need them here
