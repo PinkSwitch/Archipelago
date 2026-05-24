@@ -232,10 +232,7 @@ def patch_rom(world, rom, code_patch):
     if possible_location_groups:
         area = world.random.choice(possible_location_groups)  # If the world has location groups, use a location group the check belongs to as the area hint
     else:
-        if sanctuary_location.parent_region.name == "Menu":
-            area = ""  # We don't want to say it's at their Menu, so just say it's somewhere
-        else:
-            area = sanctuary_location.parent_region.name  # Otherwise, display the region name
+        area = sanctuary_location.parent_region.name  # Otherwise, display the region name
 
     if sanctuary_location.player != world.player:
         name = world.multiworld.get_player_name(sanctuary_location.player)
@@ -243,11 +240,17 @@ def patch_rom(world, rom, code_patch):
         while calculate_text_width(area) >= 190:
             area = area[:-1]
         if area != old_name:
-            area += "..."
-        hint_string = f"{name}'s\n{area}!"
+            area += "..."  # This means the name had to be cutoff. Use these to show that it's been shortened
+
+        if area = "Menu":
+            hint_string = f"somewhere by {name}!"  # We don't want to say at [Player]'s menu
+        else:
+            hint_string = f"{name}'s\n{area}!"
     else:
-        hint_string = f"the {area}!"
-    print(hint_string)
+        if area = "The Throne Room":
+            hint_string = "the Throne Room!"  # I'm a stickler for my the's
+        else:
+            hint_string = f"the {area}!"
     hint = text_encoder(hint_string)
     hint.extend([0xE6, 0xE5, 0xE4, 0xEA])
     rom.write_to_file(0x02222FFA, "overlay_2", bytearray(hint))

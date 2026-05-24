@@ -394,6 +394,9 @@
     .org 0x0221D59C
         .dw 0x02222FD0
 
+    .org 0x021E37F0
+        b @LoadBespokeRelicGraphics
+
     ;.org 0x0221C101
     ;    .dw @APItem
 
@@ -1476,12 +1479,16 @@
     mov r0, 1
     strb r0,[r3]
     pop r0,r3
+
     sub r3, r3, 4
+    add r3, r3, r0
     ldr r1, [r3, 0x0C] ; Reward text pointer
+    sub r3, r3, r0
     push r2
     ldr r2, =@ApItemNamePtr
     str r1, [r2]
     pop r2
+
     ldrh r3,[r3, r0] ; load reward id
     ands r1, r3, 0xFF ; Split this into item ID
     mov r0, r3, lsr 8 ; and item type
@@ -2040,6 +2047,9 @@
 
 
 ;Switches text for quest description/reward based on holding X
+@RamFlag_LastKnownQuest:
+.db 0x00
+.align 4
 @SwitchQuestText:
     push r0
     ldr r0, =0x020FC48D
@@ -2050,6 +2060,14 @@
     pop r0
     bx lr
 @@SwitchText:
+    push r1
+    ldr r0, = @RamFlag_LastKnownQuest
+    ldrb r1, [r0]
+    cmp r1, r8
+    strb r8, [r0]
+    bne @@ReloadText
+@@Unreload:
+    pop r1
     sub r1, r1, 0x600
     cmp r1, 0x4C
     addlt r1, r1, 0x600
@@ -2062,6 +2080,13 @@
     bl @ConvertQuestToRewardTex
     pop lr
     b @@NormalText
+@@ReloadText:
+    ldr r0, =0x02110F00
+    ldr r0, [r0, 0x158]
+    add r0, r0, 0x200
+    mov r1, 0
+    strh r1, [r0, 0x92]
+    b @@Unreload
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @QuestInstructions:
@@ -2226,7 +2251,29 @@
 @@SkipCheck:
     pop lr
     bx lr
-;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;
+; Loads specific graphics for Relics instead of all being Cubes
+;b @ 021E37F0
+@RelicGFX:
+    .dh 0x017C ; Lizard Tail
+    .dh 0x017D ; Stone of Flight
+    .dh 0x017E ; Griffon Wing
+    .dh 0x0048 ; Strength Glove
+    .dh 0x0178 ; Spinning Art
+    .dh 0x0178 ; Martial Art
+    .dh 0x0179 ; Critical Art
+    .dh 0x017A ; Whip Skill
+    .dh 0x017A ; Whip Skill
+    .dh 0x017B ; Book of Spirits
+@LoadBespokeRelicGraphics:
+    cmp r5, 0x62
+    blt 0x021E38BC ; These are the actual Cubes, they can use normal gfx
+    sub r0, r5, 0x62
+    mov r0, r0, lsl 1
+    ldr r1, =@RelicGFX
+    ldrh r0, [r1, r0]
+    b 0x021E38D0
+
 .pool
 
 .org @APItemNames

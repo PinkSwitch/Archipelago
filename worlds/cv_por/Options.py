@@ -123,11 +123,15 @@ class OneScreenMode(Toggle):
 
 
 class PortraitShuffle(Choice):
-    """Shuffles which areas the Portraits lead you to."""
+    """Shuffles which areas the Portraits lead you to.
+       Split: Shuffles the normal and Brauner portraits separately
+       Full: Shuffles all of the portraits together
+       Add Nest: Full, but also shuffles the Nest of Evil portrait"""
     display_name = "Portrait Shuffle"
     option_normal = 0
-    option_shuffle = 1
-    option_add_nest_of_evil = 2
+    option_split = 1
+    option_full = 2
+    option_add_nest_of_evil = 3
     default = 0
 
 
