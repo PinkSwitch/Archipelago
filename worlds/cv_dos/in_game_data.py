@@ -1,4 +1,4 @@
-world_version = "2.0.2"
+world_version = "2.0.4"
 
 location_ram_table = {
     "Lost Village: Above Entrance": [0x05, 0x10],

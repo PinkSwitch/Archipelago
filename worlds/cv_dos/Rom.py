@@ -133,9 +133,12 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2DE21C, bytearray([0x41]))
         ######
 
+    if world.mine_status == "Disabled":
         rom.write_bytes(0x2F6DDFD, bytearray([0xFF])) # Remove Death, Abaddon, and Aguni from the Soulstiary
         rom.write_bytes(0x2F6DDFE, bytearray([0xFF])) # IF MINE IS REMOVED!!!!
-        rom.write_bytes(0x2F6DE02, bytearray([0xFF]))
+
+    if not world.options.goal:
+        rom.write_bytes(0x2F6DE02, bytearray([0xFF]))  # Clear Aguni if the goal is Throne
 
     #if world.options.goal == 2:
         #rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated

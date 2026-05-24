@@ -120,6 +120,7 @@
 ;;;;;;;;;;;;;;;;;
 .org 0x02020BA8
     nop  ; Disable failsafe for item palettes greater than 2
+    
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

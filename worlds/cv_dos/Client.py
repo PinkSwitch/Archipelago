@@ -35,8 +35,6 @@ class DoSClient(BizHawkClient):
             base_rom_name = validation_data[0].decode("ascii") # AP ROM name
 
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
-                print("A!!!!")
-                print(base_rom_name)
                 return False
 
             # This is a DoS ROM
@@ -61,6 +59,7 @@ class DoSClient(BizHawkClient):
 
         ctx.game = self.game
         ctx.items_handling = 0b101
+        ctx.locations_checked = set()
         return True
 
     async def set_auth(self, ctx: "BizHawkClientContext") -> None:
