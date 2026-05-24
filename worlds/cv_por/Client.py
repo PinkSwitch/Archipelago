@@ -45,6 +45,7 @@ class PoRClient(BizHawkClient):
 
             ctx.game = self.game
             ctx.items_handling = 0b101
+            ctx.locations_checked = set()
             return True
 
         except UnicodeDecodeError:
@@ -60,6 +61,7 @@ class PoRClient(BizHawkClient):
         ctx.auth = slot_name_bytes.decode("ascii")
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
+        print(ctx.locations_checked)
 
         if ctx.server_version.build > 0:
             ctx.connected = True
