@@ -156,7 +156,7 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x022EB0EA, "overlay_113", struct.pack("H", 0x4027))
         rom.write_to_file(0x022EB10A, "overlay_113", struct.pack("H", 0x4027))
         rom.write_to_file(0x022EB12A, "overlay_113", struct.pack("H", 0x4027))
-        rom.write_to_file(0x02309185, "overlay_119", bytearray([0x01]))
+        rom.write_to_file(0x02309186, "overlay_119", bytearray([0x01]))
 
     # This is the singular Goal Requirements flag.
     # Brauner will never check if brauner is required...
