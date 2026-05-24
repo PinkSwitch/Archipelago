@@ -333,7 +333,9 @@ def set_quest_rules(world):
     strength_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasFromListUnique(*cakes, count=5) | (HasAny(*cakes_expensive) & CanReachRegion("City of Haze")) | (Has("Gold Ring") & CanReachRegion("City of Haze")))
 
-    pray_cross_active = CanReachLocation("13th Street: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
+    pray_cross_active = CanReachLocation("13th Street: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
+        CanReachRegion("13th Street - Main"))
+        
     strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (HasAll("CON Boost", "Skill Cube"))))
     lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (

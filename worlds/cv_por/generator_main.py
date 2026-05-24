@@ -59,7 +59,8 @@ def create_items(world) -> None:
                               "Rocket Slash", "Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Eye for an Eye",
                               "Clear Skies", "Time Stop", "Heal", "Cure Poison", "STR Boost",
                               "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
-                              "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus"]  # We want to specifically NEVER forcibly create these.
+                              "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus",
+                              "Nun's Habit", "Nun's Robes", "Nun's Shoes", "Long Sword"]  # We want to specifically NEVER forcibly create these.
 
     if world.options.nest_of_evil_state == NestofEvil.option_removed:
         force_create_blacklist.remove("Cocytus")

@@ -242,12 +242,12 @@ def patch_rom(world, rom, code_patch):
         if area != old_name:
             area += "..."  # This means the name had to be cutoff. Use these to show that it's been shortened
 
-        if area = "Menu":
+        if area == "Menu":
             hint_string = f"somewhere by {name}!"  # We don't want to say at [Player]'s menu
         else:
             hint_string = f"{name}'s\n{area}!"
     else:
-        if area = "The Throne Room":
+        if area == "The Throne Room":
             hint_string = "the Throne Room!"  # I'm a stickler for my the's
         else:
             hint_string = f"the {area}!"
