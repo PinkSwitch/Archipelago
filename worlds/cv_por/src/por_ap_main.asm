@@ -2056,6 +2056,11 @@
     ldrb r0, [r0] ; Get the current HELD input
     ands r0, r0, 0x04 ; Check if holding X
     bne @@SwitchText
+    ldr r0, =@RamFlag_LastKnownQuest
+    push r1
+    mov r1, 0
+    strb r1, [r0]
+    pop r1
 @@NormalText:
     pop r0
     bx lr
