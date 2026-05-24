@@ -747,16 +747,16 @@
     @ROMFlag_BraunerPortraits: ;030917F-82
         .db 0x04, 0x02, 0x06, 0x08
 
-    @OptionFlag_UnlockAllQuests: ;02039183
+    @OptionFlag_UnlockAllQuests: ;02309183
         .db 0x00
 
-    @OptionFlag_ExcludeOwl: ;02039184
+    @OptionFlag_ExcludeOwl: ;02309184
         .db 0x00
 
-    @OptionFlag_StartWithCallCube: ;02039185
+    @OptionFlag_StartWithCallCube: ;02309185
         .db 0x00
 
-    @ROMFlag_NestDisabled: ;02039186
+    @ROMFlag_NestDisabled: ;02309186
         .db 0x00
 
     .align 4
@@ -2269,7 +2269,7 @@
     .dh 0x0179 ; Critical Art
     .dh 0x017A ; Whip Skill
     .dh 0x017A ; Whip Skill
-    .dh 0x017B ; Book of Spirits
+    .dh 0x0141 ; Book of Spirits
 @LoadBespokeRelicGraphics:
     cmp r5, 0x62
     blt 0x021E38BC ; These are the actual Cubes, they can use normal gfx
