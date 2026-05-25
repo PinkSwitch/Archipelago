@@ -298,7 +298,7 @@ def set_quest_rules(world):
                         Has("Javelin") & Has("Portrait Clear", 2))
 
     mental_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Mental Training 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & Has("INT Boost")))
+                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (Has("INT Boost") & has_change_cube)))
 
     ghoul_king_active = CanReachRegion("Master's Keep - Portrait Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         CanReachRegion("13th Street - Main"))
@@ -338,7 +338,7 @@ def set_quest_rules(world):
         CanReachRegion("13th Street - Main"))
 
     strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & Has("CON Boost")))
+                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (Has("CON Boost") & has_change_cube)))
     lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll("Tome of Arms p1", "Tome of Arms p2"))
 
@@ -354,7 +354,7 @@ def set_quest_rules(world):
     great_sage_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll(*logic_spells))
     kill_gergoth_active = And(Has("Portrait Clear", FromOption(NestPortraits)), CanReachRegion("Nest of Evil"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        CanReachRegion("Nest of Evil"))
+                        CanReachRegion("Nest of Evil") & has_change_cube)
 
     quest_rules = {
         "Quest: Supersonic Punch": supersonic_punch_active,
