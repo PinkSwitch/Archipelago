@@ -12,7 +12,7 @@ from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
 
-world_version = "1.2.1"
+world_version = "1.2.2"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
