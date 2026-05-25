@@ -14,8 +14,9 @@ cakes = ["Pancake", "Wheat Roll", "Sachertorte", "NY Cheesecake", "Mille-feuille
          "Gateau Fraise", "Kugelhopf", "Green Tea Cake", "Gateau Marron", "Langues de Chat", "Financier",
          "Birthday Cake"]
 
-cakes_expensive = [
-        "Birthday Cake", "Tarte au Poire"]
+cakes_notforsale = [
+        "Pancake", "Tarte au Poire", "Gateau Fraise", "Kugelhopf", "Green Tea Cake", "Gateau Marron",
+        "Langues de Chat", "Financier", "Birthday Cake"]
 
 subweapons = ["Knife Subweapon", "Axe Subweapon", "Cross", "Holy Water", "Bible", "Javelin",
               "Ricochet Rock", "Boomerang", "Bwaka Knife", "Shuriken", "Yagyu Shuriken",
@@ -62,7 +63,7 @@ quest_data = {
     "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"]),
     "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"], True),
     "Quest: The Lonely Stage": QuestData("Record Player"),
-    "Quest: Build Your Strength 3": QuestData("HP Max up", cakes + ["Gold Ring"], True),
+    "Quest: Build Your Strength 3": QuestData("HP Max up", cakes + ["Gold Ring"]),
     "Quest: Pray Before the Cross": QuestData("Cross"),
     "Quest: Build Your Strength 4": QuestData("HP Max up", ["CON Boost"]),
     "Quest: Lost Page": QuestData("Tome of Arms X", ["Tome of Arms p1", "Tome of Arms p2"]),
@@ -331,11 +332,11 @@ def set_quest_rules(world):
                         CanReachRegion("Dark Academy - Main"))
                         
     strength_3_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 2"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        HasFromListUnique(*cakes, count=5) | (HasAny(*cakes_expensive) & CanReachRegion("City of Haze")) | (Has("Gold Ring") & CanReachRegion("City of Haze")))
+                        HasFromListUnique(*cakes, count=5) | (HasAny(*cakes_notforsale) & CanReachRegion("City of Haze")) | (Has("Gold Ring") & CanReachRegion("City of Haze")))
 
     pray_cross_active = CanReachLocation("13th Street: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
         CanReachRegion("13th Street - Main"))
-        
+
     strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (HasAll("CON Boost", "Skill Cube"))))
     lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (

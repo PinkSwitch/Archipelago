@@ -53,6 +53,7 @@ def create_regions(world) -> None:
     place_static_items(world)
 
 def create_items(world) -> None:
+    from .modules.quest_data import cakes_notforsale
     force_create_blacklist = ["Gold Ring", "Knife Subweapon", "Cross", "Holy Water", "Bible",
                               "Bwaka Knife", "Paper Airplane", "Cream Pie", "Grenade", "Steel Ball",
                               "Stonewall", "Offensive Form", "Taunt", "Knee Strike", "Aura Blast",
@@ -60,7 +61,7 @@ def create_items(world) -> None:
                               "Clear Skies", "Time Stop", "Heal", "Cure Poison", "STR Boost",
                               "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
                               "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus",
-                              "Nun's Habit", "Nun's Robes", "Nun's Shoes", "Long Sword"]  # We want to specifically NEVER forcibly create these.
+                              "Nun's Habit", "Nun's Robes", "Nun's Shoes", "Long Sword", "Birthday Cake",]  # We want to specifically NEVER forcibly create these.
 
     if world.options.nest_of_evil_state == NestofEvil.option_removed:
         force_create_blacklist.remove("Cocytus")
@@ -106,6 +107,9 @@ def create_items(world) -> None:
     for quest in world.important_quests:
         if quest in world.vanilla_quests and quest not in world.important_quests:
             continue
+
+        if quest == "Quest: Build Your Strength 3":
+            pool.append(set_classifications(world, world.random.choice(cakes_notforsale)))
             
         if quest_data[quest].requires_filler_items:
             for item in quest_data[quest].required_items:
