@@ -145,12 +145,21 @@
 
     ; Switch the Stat quests to 50 instead of 100
     .org 0x020410D0
-        cmp r0, 50 ; Mental training 3
+        cmp r0, 50 ; Mental training 3, Jonathan
+
+    .org 0x020410E0
+        cmp r0, 50 ; Mental training 3, Char
 
     .org 0x0204108C
         cmp r0, 50 ; Mental training 4
 
+    .org 0x0204109C
+        cmp r0, 50 ; Mental training 4
+
     .org 0x02041184
+        cmp r0, 50 ; Str training 4
+
+    .org 0x02041194
         cmp r0, 50 ; Str training 4
 
     .org 0x02041570 ; Supersonic punch

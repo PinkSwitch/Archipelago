@@ -140,7 +140,7 @@ def setup_quests(world):
 
     if "all" in selected_quests:
         for quest in quest_data:
-            if quest not in ["Quest: Preparatations", "Quest: The Nest of Evil"]:
+            if quest not in ["Quest: Preparations", "Quest: The Nest of Evil"]:
                 selected_quests.add(quest)
 
     if "simple" in selected_quests:
@@ -338,7 +338,7 @@ def set_quest_rules(world):
         CanReachRegion("13th Street - Main"))
 
     strength_4_active = And(CanReachLocation("Dark Academy: Boss Room"), CanReachLocation("Quest: Build Your Strength 3"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & (HasAll("CON Boost", "Skill Cube"))))
+                        Has("Portrait Clear", 5) | (Has("Portrait Clear", 3) & Has("CON Boost")))
     lost_page_active = Has("Portrait Clear", FromOption(NestPortraits), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll("Tome of Arms p1", "Tome of Arms p2"))
 
