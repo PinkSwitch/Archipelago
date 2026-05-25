@@ -81,7 +81,7 @@ class PoRClient(BizHawkClient):
                     (0x1119E0, 4, "Main RAM"),  # Clock Time
                     (0x111F51, 1, "Main RAM"),  # Game Mode
                     (0x111BB8, 0x19F, "Main RAM"),  # Location flags
-                    (0x111EAC, 0x24, "Main RAM"),  # Quest data
+                    (0x111EAC, 0x25, "Main RAM"),  # Quest data
                     (0x308ED0, 2, "Main RAM"),  # Received Item
                     (0x308ED2, 2, "Main RAM"),  # Total items
                     (0x1119DC, 4, "Main RAM")  # Boss defeat flags
