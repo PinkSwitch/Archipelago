@@ -30,7 +30,8 @@ def generate_early(world) -> None:
         world.options.stronger_glove.value = passthrough["stronger_glove"]
         world.options.randomized_quests.value = passthrough["active_quests"]
         world.options.excluded_quests.value = passthrough["excluded_quests"]
-        world.options.start_with_call_cube = passthrough["start_with_call_cube"]
+        world.options.start_with_call_cube.value = passthrough["start_with_call_cube"]
+        world.options.unlock_all_quests.value = passthrough["unlock_all_quests"]
 
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
@@ -217,6 +218,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "active_quests": world.options.randomized_quests.value,
         "excluded_quests": world.options.excluded_quests.value,
         "start_with_call_cube": world.options.start_with_call_cube.value,
+        "unlock_all_quests": world.options.unlock_all_quests.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],

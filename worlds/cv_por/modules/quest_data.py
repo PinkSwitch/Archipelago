@@ -41,7 +41,7 @@ quest_data = {
     "Quest: Defender of the Stairs": QuestData("Whip Skill 2"),
     "Quest: The Spinning Art": QuestData("Spinning Art"),
     "Quest: Art of the Zephyr": QuestData("Rocket Slash", ["Spinning Art"]),
-    "Quest: Find the King of Birds": QuestData("Thief Ring"),
+    "Quest: Find the King of Birds": QuestData("Thief Ring", ["Time Stop"]),
     "Quest: Overcome the Curse": QuestData("Blessed Ring", ["Skull Ring"]),
     "Quest: The Statue's Tear": QuestData("Holy Water", ["Statue's Tear"]),
     "Quest: The Martial Art": QuestData("Martial Art"),
@@ -256,7 +256,7 @@ def setup_quests(world):
     
 def set_quest_rules(world):
     from ..Options import UnlockAllQuests, NestPortraits
-    from ..Regions import has_change_cube
+    from ..Regions import has_change_cube, can_cast_spell
     set_rule = world.set_rule
     logic_spells = spells.copy()
     if world.options.exclude_owl_morph:
@@ -277,7 +277,7 @@ def set_quest_rules(world):
                              Has("Spinning Art"))
 
     king_bird_active = CanReachLocation("Dark Academy: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        CanReachRegion("Forgotten City"))
+                        CanReachRegion("Forgotten City") & (can_cast_spell & Has("Time Stop")))
     
     overcome_curse_active = CanReachLocation("Sandy Grave: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("Skull Ring") | CanReachRegion("Entrance - Upper Area") | CanReachLocation("Tower of Death: Rampart Room") | CanReachRegion("Tower of Death - Ascent")) | CanReachRegion("Sandy Grave")
