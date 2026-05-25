@@ -181,19 +181,19 @@ def setup_quests(world):
     if "all" in excluded_quests:
         world.active_quests = []
 
-    if "simple" in selected_quests:
+    if "simple" in excluded_quests:
         world.active_quests = [quest for quest in world.active_quests if quest not in simple_quests]
 
-    if "requires item" in selected_quests:
+    if "requires item" in excluded_quests:
         world.active_quests = [quest for quest in world.active_quests if quest not in item_required_quests]
 
-    if "defeat enemies" in selected_quests:
+    if "defeat enemies" in excluded_quests:
         world.active_quests = [quest for quest in world.active_quests if quest not in enemy_quests]
 
-    if "mastery" in selected_quests:
+    if "mastery" in excluded_quests:
         world.active_quests = [quest for quest in world.active_quests if quest not in mastery_quests]
 
-    if "grindy" in selected_quests:
+    if "grindy" in excluded_quests:
         world.active_quests = [quest for quest in world.active_quests if quest not in grindy_quests]
 
     for quest in excluded_quests:

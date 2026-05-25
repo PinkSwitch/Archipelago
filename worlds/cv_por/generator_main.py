@@ -62,7 +62,7 @@ def create_items(world) -> None:
                               "Clear Skies", "Time Stop", "Heal", "Cure Poison", "STR Boost",
                               "CON Boost", "INT Boost", "MIND Boost", "LUCK Boost", "ALL Boost", "Gale Force",
                               "Raging Fire", "Ice Fang", "Thunderbolt", "Tempest", "Piercing Beam", "Cocytus",
-                              "Nun's Habit", "Nun's Robes", "Nun's Shoes", "Long Sword", "Birthday Cake",]  # We want to specifically NEVER forcibly create these.
+                              "Nun's Habit", "Nun's Robes", "Nun's Shoes", "Long Sword", "Birthday Cake"]  # We want to specifically NEVER forcibly create these.
 
     if world.options.nest_of_evil_state == NestofEvil.option_removed:
         force_create_blacklist.remove("Cocytus")
@@ -286,7 +286,9 @@ def create_item(world, name: str) -> CVPoRItem:
     data = set_classifications(world, name)
     return CVPoRItem(name, data.classification, data.code, world.player)
 
-def create_item_as_event(world, name: str) -> CVPoRItem:
+def create_item_as_event(world, name: str, force_filler: bool = False) -> CVPoRItem:
     # The same as create item, but forces the code to None instead. This lets us create pseudochecks for inactive quests
     data = set_classifications(world, name)
+    if force_filler:
+        data.classification = ItemClassification.filler  # We don't want quest requirements on excluded checks to be progress
     return CVPoRItem(name, data.classification, None, world.player)

@@ -45,4 +45,4 @@ def place_static_items(world):
         world.get_location(quest).place_locked_item(create_item_as_event(world, quest_data[quest].vanilla_reward))
 
     for quest in world.excluded_quests:
-        world.get_location(quest).place_locked_item(create_item_as_event(world, get_filler_item_name(world)))
+        world.get_location(quest).place_locked_item(create_item_as_event(world, get_filler_item_name(world), True))
