@@ -60,7 +60,7 @@ quest_data = {
     "Quest: The Gambler": QuestData("Gambler Glasses", ["Spade", "Heart", "Diamond", "Club", "Joker"], True),
     "Quest: Hands of the Clock": QuestData("Time Stop"),
     "Quest: Poison vs. Poison": QuestData("Assassin Blade", ["Moldy Bread", "Amanita", "Long Sword"], True),
-    "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"]),
+    "Quest: Build Your Strength 1": QuestData("HP Max up", ["Beehive"], True),
     "Quest: Build Your Strength 2": QuestData("HP Max up", ["New York Steak"], True),
     "Quest: The Lonely Stage": QuestData("Record Player"),
     "Quest: Build Your Strength 3": QuestData("HP Max up", cakes + ["Gold Ring"]),
@@ -316,14 +316,13 @@ def set_quest_rules(world):
     the_gambler_active = CanReachLocation("Forest of Doom: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll("Spade", "Diamond", "Heart", "Club", "Joker"))
 
-    clock_hands_active = CanReachLocation("Tower of Death: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Death Defeated"))
+    clock_hands_active = CanReachLocation("Tower of Death: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True)
 
     poison_v_poison_active = CanReachLocation("Nation of Fools: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         HasAll("Moldy Bread", "Amanita", "Long Sword"))
 
     strength_1_active = CanReachLocation("Tower of Death: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Beehive") | CanReachRegion("Forest of Doom - Main"))
+                        Has("Beehive"))
 
     strength_2_active = And(CanReachLocation("Tower of Death: Boss Room"), CanReachLocation("Quest: Build Your Strength 1"), options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("New York Steak"))

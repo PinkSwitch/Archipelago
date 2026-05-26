@@ -2182,6 +2182,7 @@
     cmp r2, 0x70
     bgt @@End
     ; We're in range so we know this is a quest
+    
     cmp r0, 0x5B
     blt @@End
     cmp r0, 0x5D
