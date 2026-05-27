@@ -8,6 +8,7 @@
 
 @ServerItemType equ 0x02308ED0 ; 2 bytes
 @TotalItemsReceived equ 0x02308ED2 ; 2 bytes
+@BossKeys equ 0x02308ED4 ; 2 bytes
 
 @OptionFlag_BraunerRequired equ 0x1
 @OptionFlag_NestRequired equ 0x2
@@ -231,14 +232,24 @@
 
     ; Add our code into the free space.
     .org 0x0200786C
-    mov r0, 77h ; Load our new overlay, overlay 119.
-    bl 02007970h
-    bl 020078D4h ; Replaces the line of code at 02007860 that we overwrote to jump here.
-    b 02007864h ; Jump back.
-    
+        mov r0, 77h ; Load our new overlay, overlay 119.
+        bl 02007970h
+        bl 020078D4h ; Replaces the line of code at 02007860 that we overwrote to jump here.
+        b 02007864h ; Jump back.    
 
     .org 0x020E537C
         .dw  @PostBehemothRoom
+
+    ;CHANGE AS NEEDED!!!! ITEM COUNT!!!
+    .org 0x0203AE20
+        mov r0, 0x70 ; Max number of Consumables to check for the Inventory
+
+    .org 0x0203E6C0
+        b @CheckCustomInventory
+
+    .org 0x0203AB94
+        bl @ExpandItemNameIds
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
     ; Quest rewards, refitted for new format...
     .org 0x020DFD40 ; Preparation
@@ -406,8 +417,9 @@
     .org 0x021E37F0
         b @LoadBespokeRelicGraphics
 
-    ;.org 0x0221C101
-    ;    .dw @APItem
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    .org 0x021E46DC
+        b @GetCustomItemDataPointers
 
 
 ;overlay 9 0
@@ -2182,7 +2194,7 @@
     cmp r2, 0x70
     bgt @@End
     ; We're in range so we know this is a quest
-    
+
     cmp r0, 0x5B
     blt @@End
     cmp r0, 0x5D
@@ -2197,9 +2209,9 @@
     bge @@End
     cmp r3, 0
     blt @@End
-    cmp r3, 0x640
-    movlt r2, r5 ; Wind
-    movgt r2, r3 ; Guide
+    cmp r5, 0x640
+    movgt r2, r5 ; Wind
+    movlt r2, r3 ; Guide
     b @@HandleNextText
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2288,6 +2300,90 @@
     ldr r1, =@RelicGFX
     ldrh r0, [r1, r0]
     b 0x021E38D0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check for custom items separately from normal items
+@CheckCustomInventory:
+    cmp r0, 2 ; We only want to run this from the Consumable inventory. consumables are always 2 here
+    bne @@NormalItemCheck
+    cmp r4, 0x60 ; Item IDs 0-5F are for normal consumables
+    blt @@NormalItemCheck
+    sub r0, r4, 0x60
+    mov r1, 0x8
+    bl 0x020BD93C ; Divide the CustomID by 8
+    push r2
+    ldr r2, =@BossKeys ; Start of custom item data?
+    ldrb r0, [r2, r0]
+    mov r2, 1
+    mov r1, r2, lsl r1
+    ands r0, r0, r1
+    movne r0, 1 ; Pretend the owned count is 1 in this case
+    pop r2
+    b 0x0203E6C4
+@@NormalItemCheck:
+    bl 0x021E45A4
+    b 0x0203E6C4
+;;;;;;;;;
+@CustomItemData:
+    @BossKeyData:
+        .dh 0x0150 ; Item ID num
+        .dh 0x014A ; Icon
+        .dw 0 ; Price
+        .db 0x04 ; Set it as a key item
+        .db 0x00
+        .dh 0x0000
+.align 4
+; Redirect the game to loading our Custom item pointers if necessary
+@GetCustomItemDataPointers:
+    cmp r1, 0x60 ; Custom item range
+    blt 0x021E46F4
+    ; If I need to define items other than boss keys, set the pointer here
+    ldr r2, =@BossKeyData ; All Boss Keys should have the same data, so we do this to save on space
+    b 0x021E474C
+;;;;;;;;;;;;;;;;;
+@TexIDBase equ 0x749
+@CustomItemNames:
+    @BehemothKeyID:
+        .dw @TexIDBase + ((@BehemothKeyID - @CustomItemNames) / 4)
+    @KerementKeyID:
+        .dw @TexIDBase + ((@KerementKeyID - @CustomItemNames) / 4)
+    @StellaKeyID:
+        .dw @TexIDBase + ((@StellaKeyID - @CustomItemNames) / 4)
+    @DeathKeyID:
+        .dw @TexIDBase + ((@DeathKeyID - @CustomItemNames) / 4)
+    @SistersKeyID:
+        .dw @TexIDBase + ((@SistersKeyID - @CustomItemNames) / 4)
+    @DraculaKeyID:
+        .dw @TexIDBase + ((@DraculaKeyID - @CustomItemNames) / 4)
+    @DullahanKeyID:
+        .dw @TexIDBase + ((@DullahanKeyID - @CustomItemNames) / 4)
+    @AstarteKeyID:
+        .dw @TexIDBase + ((@AstarteKeyID - @CustomItemNames) / 4)
+    @LegionKeyID:
+        .dw @TexIDBase + ((@LegionKeyID - @CustomItemNames) / 4)
+    @DagonKeyID:
+        .dw @TexIDBase + ((@DagonKeyID - @CustomItemNames) / 4)
+    @WerewolfKeyID:
+        .dw @TexIDBase + ((@WerewolfKeyID - @CustomItemNames) / 4)
+    @MummyKeyID:
+        .dw @TexIDBase + ((@MummyKeyID - @CustomItemNames) / 4)
+    @MedusaKeyID:
+        .dw @TexIDBase + ((@MedusaKeyID - @CustomItemNames) / 4)
+    @CreatureKeyID:
+        .dw @TexIDBase + ((@CreatureKeyID - @CustomItemNames) / 4)
+    @DoppelgangerKeyID:
+        .dw @TexIDBase + ((@DoppelgangerKeyID - @CustomItemNames) / 4)
+;Key list is Behemoth, Keremet, Stella, Death, Sisters, Dracula, Dullahan, Astarte, Legion, Dagon, werewolf, mummy, medusa, creature, Doppelganger, *maybe*.
+    
+
+@ExpandItemNameIds:
+    cmp r0, 2 ; Is this a Consumable?
+    bne 0x021E4288
+    cmp r1, 0x60 ; Is this a Custom item?
+    blt 0x021E4288
+    sub r1, r1, 0x6C
+
+
+
 
 .pool
 
