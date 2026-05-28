@@ -238,9 +238,9 @@ def adjust_portrait_gfx(rom):
         for row in sprite:
             for i, pixel in enumerate(row):
                 if index % 2:
-                    row[i] = max(pixel | 0x80, 1)
+                    row[i] = pixel | 0x80
                 else:
-                    row[i] = pixel & 0x7F
+                    row[i] = max(pixel & 0x7F, 1)
 
     for i in range(4):
         portrait = sprite_order[i]

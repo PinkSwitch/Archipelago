@@ -168,7 +168,7 @@ class ActiveQuests(OptionSet):
        """
     display_name = "Randomized Quests"
     default = {}
-    valid_keys = frozenset(key.casefold() for key in quest_keys)
+    # valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
 
@@ -177,7 +177,7 @@ class ExcludedQuests(OptionSet):
        The same shortcuts from the above option apply."""
     display_name = "Excluded Quests"
     default = {"Quest: S Rank Hunter", "Quest: Hands of the Clock", "Quest: The Hundred Tasks", "Quest: Master the Holy Power", "Quest: Almighty", "Quest: The Great Sage"}
-    valid_keys = frozenset(key.casefold() for key in quest_keys)
+    # valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
 class RandomizeSpellChargeTimes(Toggle):

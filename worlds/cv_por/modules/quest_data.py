@@ -130,7 +130,7 @@ def setup_quests(world):
     from ..Options import NestofEvil
     selected_quests = {quest.casefold() for quest in world.options.randomized_quests.value}
     excluded_quests = {quest.casefold() for quest in world.options.excluded_quests.value}
-    spell_quests = ["Quest: Holy Apperance", "Quest: Number of Fortune", "Quest: Kill Gergoth",
+    spell_quests = ["Quest: Holy Appearance", "Quest: Number of Fortune", "Quest: Kill Gergoth",
                     "Quest: Hands of the Clock"]
 
     subweapon_quests = ["Quest: Ghosts of the Desert", "Quest: Art of the Zephyr", "Quest: The Statue's Tear",
@@ -206,26 +206,27 @@ def setup_quests(world):
     for quest in world.active_quests:
         world.important_quests.add(quest)
 
+    if "Quest: The Great Sage" in world.important_quests:
+        if world.options.nest_of_evil_state == NestofEvil.option_removed:
+            spell_quests.remove("Quest: Kill Gergoth")
+            
+        for quest in spell_quests:
+            if quest in world.vanilla_quests:
+                world.important_quests.add(quest)  # We need the rewards from these
+
+    if "Quest: Almighty" in world.important_quests:
+        for quest in subweapon_quests:
+            if quest in world.vanilla_quests:
+                world.important_quests.add(quest)
+
+    if "Quest: Master the Holy Power" in world.important_quests:
+        for quest in holy_quests:
+            if quest in world.vanilla_quests:
+                world.important_quests.add(quest)
+
     if not world.options.unlock_all_quests:
         #  These are quests that require you to have completed a previous Quest.
         #  We want these to be logical if you need to complete them.
-        if "Quest: The Great Sage" in world.important_quests:
-            if world.options.nest_of_evil_state == NestofEvil.option_removed:
-                spell_quests.remove("Quest: Kill Gergoth")
-            for quest in spell_quests:
-                if quest in world.vanilla_quests:
-                    world.important_quests.add(quest)  # We need the rewards from these
-
-        if "Quest: Almighty" in world.important_quests:
-            for quest in subweapon_quests:
-                if quest in world.vanilla_quests:
-                    world.important_quests.add(quest)
-
-        if "Quest: Master the Holy Power" in world.important_quests:
-            for quest in holy_quests:
-                if quest in world.vanilla_quests:
-                    world.important_quests.add(quest)
-
         if "Quest: Art of the Zephyr" in world.important_quests:
             world.important_quests.add("Quest: The Spinning Art")
 
