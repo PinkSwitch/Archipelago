@@ -253,6 +253,9 @@
     .org 0x02008D80
         b @LoadExpandedTextPointers_Menu
 
+    .org 0x0204FE88
+        bl @GetExtendedGlobalItemName
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
     ; Quest rewards, refitted for new format...
     .org 0x020DFD40 ; Preparation
@@ -426,6 +429,9 @@
 
     .org 0x021E41D4
         b @ExpandItemDescriptionIDs
+
+    .org 0x021E4780
+        b @ExpandItemGlobalIDs
 
 
 ;overlay 9 0
@@ -1029,6 +1035,19 @@
 @@SkipItem:
     bx lr ; Just don't do the give routine
 @@CustomItemHandler:
+    sub r0, r1, 0x60
+    mov r1, 8 ; Divide by this to figure out what to activate
+    push lr
+    bl 0x020BD93C
+    pop lr
+    push r2, r3
+    ldr r2, =@BossKeys
+    ldrb r0, [r2, r0] ; Index into the keys
+    mov r3, 1
+    mov r1, r3, lsl r1
+    orr r0, r0, r1 ; Set the bit for this item
+    strb r0, [r2]
+    pop r2,r3
     bx lr
 @@GiveSpecialWeapon:
     cmp r1, 1 ; Standard vampire killer
@@ -2370,6 +2389,16 @@
     add r0, r0, r1
     bx lr
 
+; Converts the item type/id into its new global id
+@ExpandItemGlobalIDs:
+    cmp r1, 0x60
+    blt 0x021E4798
+    ldr r0, =0x151 ; Global custom ID base
+    sub r1, r1, 0x60
+    add r0, r0, r1
+    bx lr
+
+
 ;;;;;;;;;;;;;;;;;;
 ; Redirect the game into getting expanded text pointers from IDs
 @LoadExpandedTextPointers_Menu:
@@ -2547,8 +2576,14 @@
     mov r1, r1, lsl 2
     ldr r0, [r0, r1]
     bx lr
-;;;;;;;;;;;;;;;;;;;;;;
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+@GetExtendedGlobalItemName:
+    cmp r1, 0x150
+    blt 0x0204FF1C
+    sub r1, r1, 0x150
+    ldr r0, =@TexIDBase
+    add r0, r0, r1
+    b 0x0204FF1C
 
 
 .pool
