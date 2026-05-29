@@ -27,13 +27,14 @@ def set_location_rules(world):
     set_rule(world.get_location("Great Stairway: Left Loft"), small_uppies)
     set_rule(world.get_location("Great Stairway: Left Loft Lower"), small_uppies)
     set_rule(world.get_location("Great Stairway: Central Nook"), medium_uppies)
-    set_rule(world.get_location("Great Stairway: Boss Room"), (Has("Cavern Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains"))
+    set_rule(world.get_location("Great Stairway: Boss Room"), (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")))
 
     set_rule(world.get_location("Tower of Death: Secret Room"), medium_uppies | (HasAll("Puppet Master", "Acrobat Cube") & has_call_cube))
     set_rule(world.get_location("Tower of Death: Elevator Room Lower"), big_uppies)
     set_rule(world.get_location("Tower of Death: Elevator Room Middle"), Has("Tower Elevator Active"))
     set_rule(world.get_location("Tower of Death: Elevator Room Top"), Has("Tower Elevator Active"))
     set_rule(world.get_location("Tower of Death: Above Motorcycles"), big_uppies | (HasAll("Stone of Flight", "Acrobat Cube") & has_call_cube))
+    set_rule(world.get_location("Tower of Death: Boss Room"), (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains")))
 
     set_rule(world.get_location("City of Haze: Cart Secret Left"), big_uppies)
     set_rule(world.get_location("City of Haze: Cart Secret Right"), big_uppies)
@@ -90,7 +91,7 @@ def set_location_rules(world):
         set_rule(world.get_location("The Throne Room: Above Throne Right"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Center"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Left"), big_uppies)
-        set_rule(world.get_location("The Throne Room: Dracula"), (Has("Throne Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Throne Key", "contains"))
+        set_rule(world.get_location("The Throne Room: Dracula"), (Has("Throne Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Throne Key", "contains")))
 
         #Has("Call Cube", options=[OptionFilter(StartWithCallCube, 0)], filtered_resolution=True)
 
