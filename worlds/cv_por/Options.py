@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup, StartInventoryPool, OptionSet
+from .Items import boss_keys
 from .modules.quest_data import quest_data
 
 
@@ -168,7 +169,7 @@ class ActiveQuests(OptionSet):
        """
     display_name = "Randomized Quests"
     default = {}
-    # valid_keys = frozenset(key.casefold() for key in quest_keys)
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
 
@@ -177,7 +178,7 @@ class ExcludedQuests(OptionSet):
        The same shortcuts from the above option apply."""
     display_name = "Excluded Quests"
     default = {"Quest: S Rank Hunter", "Quest: Hands of the Clock", "Quest: The Hundred Tasks", "Quest: Master the Holy Power", "Quest: Almighty", "Quest: The Great Sage"}
-    # valid_keys = frozenset(key.casefold() for key in quest_keys)
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
 class RandomizeSpellChargeTimes(Toggle):
@@ -188,6 +189,18 @@ class RandomizeSpellChargeTimes(Toggle):
 class StartWithCallCube(Toggle):
     """If enabled, you'll start with the Call Cube by default"""
     display_name = "Start with Call Cube"
+
+class AddBossKeys(Toggle):
+    """If enabled, all Boss Doors will be locked until you find its respective Key.
+       Key names are generally named after the room or area, and can be found on the Doc page."""
+    display_name = "Add Boss Keys"
+
+class ExcludedBossKeys(OptionSet):
+    """Boss Keys specified here will not be added to the pool and its boss door will not be locked."""
+    display_name = "Removed Boss Keys"
+    default = {"Gallery Key", "Throne Key"}
+    valid_keys = frozenset(key.casefold() for key in boss_keys)
+    valid_keys_casefold = True
 
 
 @dataclass
@@ -216,6 +229,8 @@ class PoROptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     random_spell_charge_times: RandomizeSpellChargeTimes
     start_with_call_cube: StartWithCallCube
+    add_boss_keys: AddBossKeys
+    removed_boss_keys: ExcludedBossKeys
 
 
 por_option_groups = [
@@ -242,6 +257,11 @@ por_option_groups = [
         StrongerGlove,
         RandomizeSpellChargeTimes
 
+    ]),
+
+    OptionGroup("World Options", [
+        AddBossKeys,
+        ExcludedBossKeys
     ]),
 
     OptionGroup("Quest Options", [

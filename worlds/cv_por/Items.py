@@ -114,6 +114,21 @@ item_table: Dict[str, ItemData] = {
     "Record 3": ItemData("Key Items", 0x025D, ItemClassification.filler, 0),
     "Record 4": ItemData("Key Items", 0x025E, ItemClassification.filler, 0),
     "Record 5": ItemData("Key Items", 0x025F, ItemClassification.filler, 0),
+    "Colosseum Key": ItemData("Boss Keys", 0x0260, ItemClassification.progression, 0),
+    "Cavern Key": ItemData("Boss Keys", 0x0261, ItemClassification.progression, 0),
+    "Tower Base Key": ItemData("Boss Keys", 0x0262, ItemClassification.progression, 0),
+    "Clock Key": ItemData("Boss Keys", 0x0263, ItemClassification.progression, 0),
+    "Gallery Key": ItemData("Boss Keys", 0x0264, ItemClassification.progression, 0),
+    "Throne Key": ItemData("Boss Keys", 0x0265, ItemClassification.progression, 0),
+    "City Key": ItemData("Boss Keys", 0x0266, ItemClassification.progression, 0),
+    "Sandy Key": ItemData("Boss Keys", 0x0267, ItemClassification.progression, 0),
+    "Circus Arena Key": ItemData("Boss Keys", 0x0268, ItemClassification.progression, 0),
+    "Forest Key": ItemData("Boss Keys", 0x0269, ItemClassification.progression, 0),
+    "Street Key": ItemData("Boss Keys", 0x026A, ItemClassification.progression, 0),
+    "Forgotten Key": ItemData("Boss Keys", 0x026B, ItemClassification.progression, 0),
+    "Burnt Key": ItemData("Boss Keys", 0x026C, ItemClassification.progression, 0),
+    "Academy Key": ItemData("Boss Keys", 0x026D, ItemClassification.progression, 0),
+    "Nest Key": ItemData("Boss Keys", 0x026E, ItemClassification.progression, 0),
 
     "Vampire Killer": ItemData("Whips", 0x0301, ItemClassification.useful, 0),  # The starter copy
     "Leather Whip": ItemData("Whips", 0x0302, ItemClassification.filler, 0),
@@ -570,4 +585,22 @@ good_food_table = [
     "Truffle",
     "Peking Duck",
     "Birthday Cake"
+]
+
+boss_keys = [
+    "Colosseum Key",
+    "Cavern Key",
+    "Tower Base Key",
+    "Clock Key",
+    "Gallery Key",
+    "Throne Key",
+    "City Key",
+    "Sandy Key",
+    "Circus Arena Key",
+    "Forest Key",
+    "Street Key",
+    "Forgotten Key",
+    "Burnt Key",
+    "Academy Key",
+    "Nest Key"
 ]

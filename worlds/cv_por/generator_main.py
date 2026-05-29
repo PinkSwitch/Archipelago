@@ -4,7 +4,7 @@ import pkgutil
 
 from BaseClasses import Item, ItemClassification
 from typing import Dict, TextIO
-from .Items import item_table
+from .Items import item_table, boss_keys
 from .Options import PortraitShuffle, NestofEvil
 from .modules.portrait_shuffle import portrait_data
 from .modules.quest_data import quest_data
@@ -85,6 +85,11 @@ def create_items(world) -> None:
             set_classifications(world, "Byakko"),
             set_classifications(world, "Gnebu"),
         ])
+
+    if world.options.add_boss_keys:
+        for key in boss_keys:
+            if key.casefold() not in world.options.removed_boss_keys.value:
+                pool.append(set_classifications(world, key))
 
     if not world.options.exclude_owl_morph:
         pool.append(set_classifications(world, "Owl Morph"))
