@@ -1,7 +1,7 @@
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies, is_smol, has_call_cube
-from .Options import NestofEvil, BraunerPortraits, Goal
+from .Options import NestofEvil, BraunerPortraits, Goal, AddBossKeys, ExcludedBossKeys
 from . modules.quest_data import set_quest_rules
 
 
@@ -27,6 +27,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Great Stairway: Left Loft"), small_uppies)
     set_rule(world.get_location("Great Stairway: Left Loft Lower"), small_uppies)
     set_rule(world.get_location("Great Stairway: Central Nook"), medium_uppies)
+    set_rule(world.get_location("Great Stairway: Boss Room"), (Has("Cavern Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains"))
 
     set_rule(world.get_location("Tower of Death: Secret Room"), medium_uppies | (HasAll("Puppet Master", "Acrobat Cube") & has_call_cube))
     set_rule(world.get_location("Tower of Death: Elevator Room Lower"), big_uppies)
@@ -89,5 +90,8 @@ def set_location_rules(world):
         set_rule(world.get_location("The Throne Room: Above Throne Right"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Center"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Left"), big_uppies)
+        set_rule(world.get_location("The Throne Room: Dracula"), (Has("Throne Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Throne Key", "contains"))
+
+        #Has("Call Cube", options=[OptionFilter(StartWithCallCube, 0)], filtered_resolution=True)
 
     set_quest_rules(world)

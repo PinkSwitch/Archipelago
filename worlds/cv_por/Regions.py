@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits, StartWithCallCube
+from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits, StartWithCallCube, AddBossKeys, ExcludedBossKeys
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -17,6 +17,7 @@ region_list = [
     "Entrance - Wind's Room",  # Used for quests/shops
     "Entrance - Hub",  # The entire starting area up through the hub
     "Entrance - Behemoth Area",  # The area past the first jump check, Behemoth's boss room
+    "Entrance - Post Behemoth",  # The area right of behemoth, for boss keys
     "Entrance - Underground Passage",  # The tunnel leading to the Nest of Evil portrait
     "Entrance - Hub Painting Room",  # The City of Haze portrait
     "Entrance - Upper Area",  # The upper route from the statue room
@@ -25,6 +26,7 @@ region_list = [
 
     "Great Stairway - Lower",  # Ground level up to Keremet and the check afterwards
     "Great Stairway - Staircases",  # The big stairs rooms and surrounding areas
+    "Great Stairway - Post Keremet",  # The item after Keremt, for boss keys
     "Great Stairway - Entrance Connector",  # The part that connects to the entrance and the wall switch. There's an awkward jump to the upper level that can't be made with acrobat.
     "Great Stairway - Upper",  # The towers to the left of the staircase rooms
     "Great Stairway - Central Painting Area",  # The painting but also the secret room with the nun robes
@@ -132,13 +134,23 @@ def connect_regions(world):
 
     world.get_region("Entrance - Upper Area").add_exits(["Entrance - Hub", "Great Stairway - Entrance Connector"])  # Stairway connector
 
-    world.get_region("Entrance - Behemoth Area").add_exits(["Entrance - Hub", "Great Stairway - Lower", "Buried Chamber"],
-                                                              {"Great Stairway - Lower": strongies})
+    world.get_region("Entrance - Behemoth Area").add_exits(["Entrance - Hub", "Entrance - Post Behemoth"],
+                                                              {"Entrance - Post Behemoth": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains")})
 
-    world.get_region("Buried Chamber").add_exits(["Entrance - Hub", "Great Stairway - Lower"])
+    world.get_region("Entrance - Post Behemoth").add_exits(["Entrance - Behemoth Area", "Great Stairway - Lower", "Buried Chamber"],
+                                                              {"Great Stairway - Lower": strongies,
+                                                              "Entrance - Behemoth Area": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains")})
 
-    world.get_region("Great Stairway - Lower").add_exits(["Entrance - Hub", "Great Stairway - Staircases", "Buried Chamber"],
-                                                          {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
+    world.get_region("Buried Chamber").add_exits(["Entrance - Post Behemoth", "Great Stairway - Lower"])
+
+    world.get_region("Great Stairway - Lower").add_exits(["Entrance - Post Behemoth", "Great Stairway - Staircases", "Buried Chamber", "Great Stairway - Post Keremet"],
+                                                          {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies,
+                                                          "Entrance - Post Behemoth": strongies,
+                                                          "Great Stairway - Post Keremet": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")})
+
+    world.get_region("Great Stairway - Post Keremet").add_exits(["Great Stairway - Lower", "Great Stairway - Staircases"],
+                                                                 {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0)) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains"),
+                                                                  "Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
 
     world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper"],
                                                           {"Tower of Death - Bottom": strongies,

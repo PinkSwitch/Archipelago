@@ -28,7 +28,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Entrance - Hub", "Entrance: Double Room Lower"),
         LocationData("Entrance - Behemoth Area", "Entrance: Double Room Upper"),
         LocationData("Entrance - Behemoth Area", "Entrance: Pre-Behemoth Boss Room"),
-        LocationData("Entrance - Behemoth Area", "Entrance: Right Hidden Room"),
+        LocationData("Entrance - Post Behemoth", "Entrance: Right Hidden Room"),
         LocationData("Entrance - Upper Area", "Entrance: Lilith Room"),
         LocationData("Entrance - Upper Area", "Entrance: Above Metal Block Room"),
         LocationData("Entrance - Upper Area", "Entrance: Center Hidden Room"),
@@ -45,7 +45,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Buried Chamber", "Buried Chamber: Right Shaft Top"),
         LocationData("Buried Chamber", "Buried Chamber: Eastmost Room"),
 
-        LocationData("Great Stairway - Lower", "Great Stairway: After Keremet Lower"),
+        LocationData("Great Stairway - Post Keremet", "Great Stairway: After Keremet Lower"),
         LocationData("Great Stairway - Lower", "Great Stairway: Before Keremet Room"),
         LocationData("Great Stairway - Lower", "Great Stairway: Boss Room", True),
 

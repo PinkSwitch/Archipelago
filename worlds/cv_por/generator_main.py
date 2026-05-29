@@ -53,6 +53,7 @@ def create_regions(world) -> None:
     init_areas(world)
     place_static_items(world)
 
+
 def create_items(world) -> None:
     from .modules.quest_data import cakes_notforsale
     force_create_blacklist = ["Gold Ring", "Knife Subweapon", "Cross", "Holy Water", "Bible",
@@ -83,12 +84,12 @@ def create_items(world) -> None:
             set_classifications(world, "Seiryu"),
             set_classifications(world, "Suzaku"),
             set_classifications(world, "Byakko"),
-            set_classifications(world, "Gnebu"),
+            set_classifications(world, "Gnebu")
         ])
 
     if world.options.add_boss_keys:
         for key in boss_keys:
-            if key.casefold() not in world.options.removed_boss_keys.value:
+            if key not in world.options.removed_boss_keys.value:
                 pool.append(set_classifications(world, key))
 
     if not world.options.exclude_owl_morph:
@@ -140,7 +141,6 @@ def create_items(world) -> None:
                     
                 if item not in pool and item not in force_create_blacklist:
                     pool.append(set_classifications(world, item))
-
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 
@@ -237,6 +237,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 
     }
 
+
 def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
     from .static_location_data import location_ids
     hint_struct = {
@@ -290,6 +291,7 @@ def get_filler_item_name(world) -> str:
 def create_item(world, name: str) -> CVPoRItem:
     data = set_classifications(world, name)
     return CVPoRItem(name, data.classification, data.code, world.player)
+
 
 def create_item_as_event(world, name: str, force_filler: bool = False) -> CVPoRItem:
     # The same as create item, but forces the code to None instead. This lets us create pseudochecks for inactive quests
