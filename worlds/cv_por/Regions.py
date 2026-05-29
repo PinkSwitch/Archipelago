@@ -52,6 +52,7 @@ region_list = [
 
     "City of Haze",
     "City of Haze - East",
+    "City of Haze - Post-Boss",
 
     "13th Street",
     "13th Street - Main",
@@ -219,6 +220,9 @@ def connect_regions(world):
                                                          
     world.get_region("City of Haze").add_exits(["City of Haze - East"],
                                                          {"City of Haze - East": Has("Puppet Master") | (has_change_cube & has_call_cube)})
+
+    world.get_region("City of Haze - East").add_exits(["City of Haze - Post-Boss"],
+                                                      {"City of Haze - Post-Boss": (Has("City Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "City Key", "contains"))})
 
     world.get_region("Sandy Grave").add_exits(["Sandy Grave - Upper Pyramid"],
                                                          {"Sandy Grave - Upper Pyramid": (small_uppies & Has("Puppet Master")) | medium_uppies})

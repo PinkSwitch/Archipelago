@@ -45,6 +45,7 @@ def set_location_rules(world):
     set_rule(world.get_location("City of Haze: Left Dance Hall Left Item"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("City of Haze: Left Dance Hall Right Item"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("City of Haze: Central Hallway Lower"), is_smol)
+    set_rule(world.get_location("City of Haze: Boss Room"), (Has("City Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "City Key", "contains")))
 
     set_rule(world.get_location("13th Street: Train Room Secret Left"), big_uppies)
     set_rule(world.get_location("13th Street: Train Room Secret Right"), big_uppies)
@@ -62,6 +63,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Sandy Grave: Upper Big Underground Top Right"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Sandy Grave: Eastmost Item"), small_uppies)
     set_rule(world.get_location("Sandy Grave: Pyramid East 1F"), big_uppies | Has("Stone of Flight"))
+    set_rule(world.get_location("Sandy Grave: Boss Room"), (Has("Sandy Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Sandy Key", "contains")))
+    set_rule(world.get_location("Sandy Grave: Pyramid 5F Nook"), (Has("Sandy Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Sandy Key", "contains")))
 
     set_rule(world.get_location("Forgotten City: Pyramid East 5F"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Forgotten City: Pyramid 1F Bricks"), big_uppies)
