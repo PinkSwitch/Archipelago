@@ -168,7 +168,7 @@ def connect_regions(world):
     world.get_region("Great Stairway - Central Painting Area").add_exits([world.portrait_connections["Nation of Fools"], "Great Stairway - Upper"])
 
     world.get_region("Tower of Death - Bottom").add_exits(["Tower of Death - First Gear Room", "Tower of Death - Motorcycles"],
-                                                          {"Tower of Death - Motorcycles": Has("Cog"),
+                                                          {"Tower of Death - Motorcycles": Has("Cog") & (Has("Tower Base Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Tower Base Key", "contains")),
                                                            "Tower of Death - First Gear Room": small_uppies})
 
     world.get_region("Tower of Death - Motorcycles").add_exits(["Tower of Death - Bottom", "Tower of Death - Belt Area"],
