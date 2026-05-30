@@ -228,8 +228,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "excluded_quests": world.options.excluded_quests.value,
         "start_with_call_cube": world.options.start_with_call_cube.value,
         "unlock_all_quests": world.options.unlock_all_quests.value,
-        "add_bosskeys": world.options.add_boss_keys.value
-        "disabled_bosskeys": world.options.removed_boss_keys.value
+        "add_bosskeys": world.options.add_boss_keys.value,
+        "disabled_bosskeys": world.options.removed_boss_keys.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],

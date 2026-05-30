@@ -1069,14 +1069,17 @@
     push lr
     bl 0x020BD93C
     pop lr
-    push r2, r3
+    push r2, r3, r4
     ldr r2, =@BossKeys
+    mov r4, r0
+
     ldrb r0, [r2, r0] ; Index into the keys
     mov r3, 1
     mov r1, r3, lsl r1
     orr r0, r0, r1 ; Set the bit for this item
-    strb r0, [r2]
-    pop r2,r3
+    strb r0, [r2, r4]
+    
+    pop r2,r3, r4
     bx lr
 @@GiveSpecialWeapon:
     cmp r1, 1 ; Standard vampire killer

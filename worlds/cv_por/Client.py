@@ -117,7 +117,7 @@ class PoRClient(BizHawkClient):
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
 
-        if "DeathLink" in ctx.tags:
+        if "DeathLink" in ctx.tags and game_state == 2 and not game_status & 0x100081:
             await self.handle_deathlink(game_status, ctx)
 
         await self.check_locations(read_state, ctx)
@@ -181,8 +181,9 @@ class PoRClient(BizHawkClient):
             if self.has_received_death:
                 current_death_state |= 0x40
                 # Kill the player
+                print("AAAAAAAAA")
                 await bizhawk.write(ctx.bizhawk_ctx, [(0x11174C, struct.pack("I", current_death_state), "Main RAM"),
-                                                       0x11216C, struct.pack("H", 0)])  # Player's HP
+                                                       (0x11216C, struct.pack("H", 0), "Main RAM")])  # Player's HP
             else:
                 # This should be normal gameplay after relaoding
                 self.has_reset_from_death = True
