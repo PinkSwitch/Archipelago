@@ -8,7 +8,6 @@ def setup_game(world):
     setup_quests(world)
     portrait_shuffle(world)
     world.options.removed_boss_keys.value = {value.title() for value in world.options.removed_boss_keys.value}
-    print(world.options.removed_boss_keys.value)
     if world.portrait_connections["Nest of Evil"] != "Nest of Evil" and world.options.nest_portraits.value == 8:
         world.options.nest_portraits.value = 7  # This would be otherwise impossible, so lower the count to 7
 

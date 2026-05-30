@@ -89,6 +89,8 @@ def create_items(world) -> None:
 
     if world.options.add_boss_keys:
         for key in boss_keys:
+            if key == "Nest Key" and world.options.nest_of_evil_state == NestofEvil.option_removed:
+                continue  # If nest is removed we want to forcibly ignore this one
             if key not in world.options.removed_boss_keys.value:
                 pool.append(set_classifications(world, key))
 

@@ -11,8 +11,9 @@ from .modules.quest_data import quest_data
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
+from .game_data import boss_doors
 
-world_version = "1.2.2"
+world_version = "1.3"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
@@ -123,6 +124,13 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309183, "overlay_119", bytearray([world.options.unlock_all_quests.value]))
     rom.write_to_file(0x02309184, "overlay_119", bytearray([world.options.exclude_owl_morph.value]))
     rom.write_to_file(0x02309185, "overlay_119", bytearray([world.options.start_with_call_cube.value]))
+
+    if world.options.add_boss_keys:
+        for door in boss_doors:
+            data = boss_doors[door]
+            if door not in world.options.removed_boss_keys.value:
+                for address in data.pointer_table:
+                    rom.write_to_file(address + 11, data.file, bytearray([0x80]))  # Set the high byte to tell the game the door is locked
 
     #  We need to zero out the price of certain equips so that they can't be sold
     if "Quest: Overcome the Curse" in world.active_quests:

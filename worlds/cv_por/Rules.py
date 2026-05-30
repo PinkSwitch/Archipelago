@@ -34,7 +34,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Tower of Death: Elevator Room Lower"), big_uppies)
     set_rule(world.get_location("Tower of Death: Elevator Room Middle"), Has("Tower Elevator Active"))
     set_rule(world.get_location("Tower of Death: Elevator Room Top"), Has("Tower Elevator Active"))
-    set_rule(world.get_location("Tower of Death: Above Motorcycles"), big_uppies | (HasAll("Stone of Flight", "Acrobat Cube") & has_call_cube))
+    set_rule(world.get_location("Tower of Death: Above Motorcycles"), big_uppies | (HasAll("Stone of Flight", "Acrobat Cube") & has_call_cube) | HasAll("Puppet Master", "Stone of Flight"))
     set_rule(world.get_location("Tower of Death: Boss Room"), (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains")))
 
     set_rule(world.get_location("City of Haze: Cart Secret Left"), big_uppies)

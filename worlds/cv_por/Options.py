@@ -199,7 +199,7 @@ class ExcludedBossKeys(OptionSet):
     """Boss Keys specified here will not be added to the pool and its boss door will not be locked."""
     display_name = "Removed Boss Keys"
     default = {"Gallery Key", "Throne Key", "Colosseum Key"}
-    valid_keys = frozenset(key.casefold() for key in boss_keys)
+    valid_keys = frozenset((key.casefold() for key in boss_keys))
     valid_keys_casefold = True
 
 

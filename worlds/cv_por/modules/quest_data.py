@@ -33,7 +33,6 @@ spells = ["Toad Morph", "Owl Morph", "Sanctuary", "Speed Up", "Berserker", "Eye 
           "Cocytus", "Thor's Bellow", "Summon Crow", "Summon Skeleton", "Summon Ghost", "Summon Gunman",
           "Summon Frog"]
 
-
 quest_data = {
     "Quest: Preparations": QuestData("Lizard Tail"),
     "Quest: Supersonic Punch": QuestData("Bullet Punch", ["Ground Meat"]),
@@ -41,7 +40,7 @@ quest_data = {
     "Quest: Defender of the Stairs": QuestData("Whip Skill 2"),
     "Quest: The Spinning Art": QuestData("Spinning Art"),
     "Quest: Art of the Zephyr": QuestData("Rocket Slash", ["Spinning Art"]),
-    "Quest: Find the King of Birds": QuestData("Thief Ring", ["Time Stop"]),
+    "Quest: Find the King of Birds": QuestData("Thief Ring", ["Time Stop", "Speed Up", "Thunderbolt", "Explosion", "Chain Lightning", "Piercing Beam", "Acidic Bubbles", "Javelin"]),
     "Quest: Overcome the Curse": QuestData("Blessed Ring", ["Skull Ring"]),
     "Quest: The Statue's Tear": QuestData("Holy Water", ["Statue's Tear"]),
     "Quest: The Martial Art": QuestData("Martial Art"),
@@ -209,7 +208,7 @@ def setup_quests(world):
     if "Quest: The Great Sage" in world.important_quests:
         if world.options.nest_of_evil_state == NestofEvil.option_removed:
             spell_quests.remove("Quest: Kill Gergoth")
-            
+
         for quest in spell_quests:
             if quest in world.vanilla_quests:
                 world.important_quests.add(quest)  # We need the rewards from these
@@ -278,7 +277,7 @@ def set_quest_rules(world):
                              Has("Spinning Art"))
 
     king_bird_active = CanReachLocation("Dark Academy: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        CanReachRegion("Forgotten City") & (can_cast_spell & Has("Time Stop")))
+                        CanReachRegion("Forgotten City") & ((can_cast_spell & HasAny("Time Stop", "Speed Up", "Raging Fire", "Thunderbolt", "Explosion", "Chain Lightning", "Piercing Beam", "Acidic Bubbles")) | Has("Javelin")))
     
     overcome_curse_active = CanReachLocation("Sandy Grave: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         Has("Skull Ring") | CanReachRegion("Entrance - Upper Area") | CanReachLocation("Tower of Death: Rampart Room") | CanReachRegion("Tower of Death - Ascent")) | CanReachRegion("Sandy Grave")
