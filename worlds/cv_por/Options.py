@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from Options import PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle, ExcludeLocations, OptionGroup, StartInventoryPool, OptionSet
+from Options import (PerGameCommonOptions, Choice, DefaultOnToggle, Range, NamedRange, Toggle,
+                     ExcludeLocations, OptionGroup, StartInventoryPool, OptionSet, DeathLink)
 from .Items import boss_keys
 from .modules.quest_data import quest_data
 
@@ -199,7 +200,7 @@ class ExcludedBossKeys(OptionSet):
     """Boss Keys specified here will not be added to the pool and its boss door will not be locked."""
     display_name = "Removed Boss Keys"
     default = {"Gallery Key", "Throne Key", "Colosseum Key"}
-    valid_keys = frozenset((key.casefold() for key in boss_keys))
+    valid_keys = frozenset(key.casefold() for key in boss_keys)
     valid_keys_casefold = True
 
 
@@ -231,6 +232,7 @@ class PoROptions(PerGameCommonOptions):
     start_with_call_cube: StartWithCallCube
     add_boss_keys: AddBossKeys
     removed_boss_keys: ExcludedBossKeys
+    death_link: DeathLink
 
 
 por_option_groups = [

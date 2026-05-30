@@ -124,6 +124,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309183, "overlay_119", bytearray([world.options.unlock_all_quests.value]))
     rom.write_to_file(0x02309184, "overlay_119", bytearray([world.options.exclude_owl_morph.value]))
     rom.write_to_file(0x02309185, "overlay_119", bytearray([world.options.start_with_call_cube.value]))
+    rom.write_to_file(0x02309187, "overlay_119", bytearray([world.options.death_link.value]))
 
     if world.options.add_boss_keys:
         for door in boss_doors:

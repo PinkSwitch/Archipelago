@@ -818,6 +818,9 @@
     @ROMFlag_NestDisabled: ;02309186
         .db 0x00
 
+    @OptionFlag_Deathlink: ;02309187
+        .db 0x00
+
     .align 4
 ;;;;;;;;;;;;;;;;;;;
 ; Gets an arbitrary item and gives it to the player. Used for Archipelago server items
@@ -1131,10 +1134,6 @@
     mov r1, 0x45
     mov r2, 1
     bl 0x021E4428 ; Give the player a magical ticket
-    ldr r0, =@BossKeys
-    ldrh r1, [r0]
-    orr r1, r1, 0x8000
-    strb r1, [r0] ; Add the Return Gem
 
     mov r1, 1
     ldr r0, = 0x02111EBC
@@ -1144,6 +1143,13 @@
     ldr r1, =@ServerItemType
     mov r2, 0x50 ; 50 bytes
     bl 0x0209E570 ; Wipe the 0x50 bytes of AP memory when starting a new file
+
+    ldr r0, =@BossKeys
+    ldrh r1, [r0]
+    orr r1, r1, 0x8000
+    strh r1, [r0] ; Add the Return Gem bit
+
+
     ldr r0, =@OptionFlag_StartWithChangeCube
     ldrb r0, [r0]
     cmp r0, 0

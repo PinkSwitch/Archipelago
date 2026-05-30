@@ -15,6 +15,8 @@ class PoRClient(BizHawkClient):
     patch_suffix = ".apcvpor"
     most_recent_connect: str = ""
     client_version: str = world_version
+    has_received_death: bool = False
+    has_reset_from_death: bool = True
 
     def __init__(self) -> None:
         super().__init__()
@@ -43,6 +45,12 @@ class PoRClient(BizHawkClient):
                     self.most_recent_connect = patch_version
                 return False
 
+            post_validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x309187, 0x01, "Main RAM")])
+                
+            death_link_flag = int.from_bytes(post_validation_data[0])
+            if death_link_flag:
+                await ctx.update_death_link(True)
+
             ctx.game = self.game
             ctx.items_handling = 0b101
             ctx.locations_checked = set()
@@ -59,6 +67,14 @@ class PoRClient(BizHawkClient):
 
         slot_name_bytes = slot_name_bytes[0].rstrip(b'\x00')
         ctx.auth = slot_name_bytes.decode("ascii")
+
+    def on_package(self, ctx: "BizHawkClientContext", cmd: str, args: dict) -> None:
+        if cmd != "Bounced":
+            return
+        if "tags" not in args:
+            return
+        if "DeathLink" in args["tags"]:
+            self.has_received_death = True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
 
@@ -84,23 +100,26 @@ class PoRClient(BizHawkClient):
                     (0x111EAC, 0x25, "Main RAM"),  # Quest data
                     (0x308ED0, 2, "Main RAM"),  # Received Item
                     (0x308ED2, 2, "Main RAM"),  # Total items
-                    (0x1119DC, 4, "Main RAM")  # Boss defeat flags
+                    (0x1119DC, 4, "Main RAM"),  # Boss defeat flags
+                    (0x11174C, 4, "Main RAM")  # State bitfield
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
         game_state = read_state[0][0]
         clock_time = struct.unpack("I", read_state[1])[0]
         game_mode = read_state[2][0]
-        # location_flags = read_state[3]
-        # quest_flags = read_state[4]
-        # last_received_item = read_state[5[1]
         boss_death_flags = struct.unpack("I", read_state[7])[0]
+        game_status = struct.unpack("I", read_state[8])[0]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
             #  Don't read data if we're on one of the title screens
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
+
+        if "DeathLink" in ctx.tags:
+            await self.handle_deathlink(game_status, ctx)
+
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
         if not ctx.finished_game and boss_death_flags & 0x20000:  # Dracula's defeat flag
@@ -146,5 +165,24 @@ class PoRClient(BizHawkClient):
             item = ctx.items_received[items_from_server]
             items_from_server += 1
             item_data = struct.pack("H", item.item)
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED0, item_data, "Main RAM")])
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED2, bytes([items_from_server]), "Main RAM")])
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED0, item_data, "Main RAM"),
+                                                  (0x308ED2, bytes([items_from_server]), "Main RAM")])
+
+    async def handle_deathlink(self, current_death_state, ctx):
+        if current_death_state & 0x40:  # If the player is currently dead
+            if self.has_received_death:  # This is the death that we just got from the server
+                self.has_received_death = False
+                self.has_reset_from_death = False
+            else:  # Received death is false, meaning the player actually died here
+                if self.has_reset_from_death: # We only want this to run once per death
+                    await ctx.send_death(f"{ctx.player_names[ctx.slot]} died!")
+                    self.has_reset_from_death = False
+        else:
+            if self.has_received_death:
+                current_death_state |= 0x40
+                # Kill the player
+                await bizhawk.write(ctx.bizhawk_ctx, [(0x11174C, struct.pack("I", current_death_state), "Main RAM"),
+                                                       0x11216C, struct.pack("H", 0)])  # Player's HP
+            else:
+                # This should be normal gameplay after relaoding
+                self.has_reset_from_death = True
