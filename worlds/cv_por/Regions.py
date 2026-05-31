@@ -79,7 +79,6 @@ region_list = [
 
     "Burnt Paradise",
     "Burnt Paradise - Entrance",
-    "Burnt Paradise - Bottom",
     "Nest of Evil"
 ]
 
@@ -257,9 +256,6 @@ def connect_regions(world):
 
     world.get_region("Burnt Paradise").add_exits(["Burnt Paradise - Entrance"],
                                                             {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})
-
-    world.get_region("Burnt Paradise - Entrance").add_exits(["Burnt Paradise - Bottom"],
-                                                            {"Burnt Paradise - Bottom": big_uppies})
 
     if world.options.goal:
         # Add a connection to the throne room if necessary
