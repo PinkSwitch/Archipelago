@@ -171,6 +171,20 @@ def patch_rom(world, rom, code_patch):
     # Brauner will never check if brauner is required...
     # If Nest of Evil is required, your goal (either brauner OR drac) will check it.
     rom.write_to_file(0x02309171, "overlay_119", bytearray([goal_requirements]))
+    #######################
+    # Drops & Shops
+    if world.options.shuffle_enemy_drops:
+        for i in range(0x89):
+            common_item = 0
+            rare_item = 0
+            if world.random.randint(1, 100) <= 66:  # 66% chance to have an Item1
+                print("a") 
+            if world.random.randint(1, 100) <= 41:  # 41% to have an Item2
+                print("b")
+
+            common_drop_rate = world.random.randint(1, 128)
+            rare_drop_rate = world.random.randint(1, 128)
+
     ####################################
     # Location handler
     for location in world.get_locations():
@@ -380,8 +394,6 @@ class PorPatchExtentions(APPatchExtension):
             rom.write_to_file(quest_address + 4, "arm9", struct.pack("H", data))
             quest_address += 0x10
 
-
-        exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_119", 2))[0]  # Read the multiplier
         return rom.get_bytes()
 
 

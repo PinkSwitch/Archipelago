@@ -250,7 +250,6 @@ def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
     }
     if world.options.portrait_shuffle:
         for connection in world.portrait_connections:
-            locations_per_region = []
             room = portrait_data[connection].spoiler_map_name
             destination = world.portrait_connections[connection]
             region = world.location_name_groups[destination]

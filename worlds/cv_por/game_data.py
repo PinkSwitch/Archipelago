@@ -5,6 +5,7 @@ class BossDoorData(NamedTuple):  # In-game information used to define each Locat
     pointer_table: list[int]
     file: str
 
+
 boss_doors = {
     "Colosseum Key": BossDoorData([0x022F91DC, 0x022F9248], "overlay_78"),
     "Cavern Key": BossDoorData([0x022FAD18, 0x022FAD78], "overlay_82"),

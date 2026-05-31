@@ -28,7 +28,8 @@ class PoRClient(BizHawkClient):
             if game_id != "CASTLEVANIA2ACBEA4":
                 return False  # Only check Portrtait roms
 
-            validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x308F20, 0x20, "Main RAM"), (0x0E537C, 0x04, "Main RAM")])
+            validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x308F20, 0x20, "Main RAM"),
+                                                                           (0x0E537C, 0x04, "Main RAM")])
             vanilla_check = struct.unpack("I", validation_data[1])[0]  # post-behemoth entity pointer
             if vanilla_check == 0x2304ee8:  # rando changes this; if we get this value, it's vanilla
                 if self.most_recent_connect != "Vanilla ROM":
@@ -174,14 +175,13 @@ class PoRClient(BizHawkClient):
                 self.has_received_death = False
                 self.has_reset_from_death = False
             else:  # Received death is false, meaning the player actually died here
-                if self.has_reset_from_death: # We only want this to run once per death
+                if self.has_reset_from_death:  # We only want this to run once per death
                     await ctx.send_death(f"{ctx.player_names[ctx.slot]} died!")
                     self.has_reset_from_death = False
         else:
             if self.has_received_death:
                 current_death_state |= 0x40
                 # Kill the player
-                print("AAAAAAAAA")
                 await bizhawk.write(ctx.bizhawk_ctx, [(0x11174C, struct.pack("I", current_death_state), "Main RAM"),
                                                        (0x11216C, struct.pack("H", 0), "Main RAM")])  # Player's HP
             else:

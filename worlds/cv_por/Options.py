@@ -182,6 +182,7 @@ class ExcludedQuests(OptionSet):
     valid_keys = frozenset(key.casefold() for key in quest_keys)
     valid_keys_casefold = True
 
+
 class RandomizeSpellChargeTimes(Toggle):
     """Randomizes the charge time of non-major spells."""
     display_name = "Randomize Spell Charge Time"
@@ -191,10 +192,12 @@ class StartWithCallCube(Toggle):
     """If enabled, you'll start with the Call Cube by default"""
     display_name = "Start with Call Cube"
 
+
 class AddBossKeys(Toggle):
     """If enabled, all Boss Doors will be locked until you find its respective Key.
        Key names are generally named after the room or area, and can be found on the Doc page."""
     display_name = "Add Boss Keys"
+
 
 class ExcludedBossKeys(OptionSet):
     """Boss Keys specified here will not be added to the pool and its boss door will not be locked."""
@@ -202,6 +205,11 @@ class ExcludedBossKeys(OptionSet):
     default = {"Gallery Key", "Throne Key", "Colosseum Key"}
     valid_keys = frozenset(key.casefold() for key in boss_keys)
     valid_keys_casefold = True
+
+
+class ShuffleEnemyDrops(Toggle):
+    """Randomizes what items enemies drop, and what the drop chances are."""
+    display_name = "Shuffle Enemy Drops"
 
 
 @dataclass
@@ -233,6 +241,7 @@ class PoROptions(PerGameCommonOptions):
     add_boss_keys: AddBossKeys
     removed_boss_keys: ExcludedBossKeys
     death_link: DeathLink
+    shuffle_enemy_drops: ShuffleEnemyDrops
 
 
 por_option_groups = [
@@ -280,7 +289,8 @@ por_option_groups = [
 
     OptionGroup("Enemy Settings", [
         ExperiencePercent,
-        SPMultiplier
+        SPMultiplier,
+        ShuffleEnemyDrops
 
     ]),
 
