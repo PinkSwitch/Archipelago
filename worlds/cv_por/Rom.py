@@ -12,6 +12,7 @@ from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
 from .game_data import boss_doors
+from .modules.filler_generator import generate_local_filler
 
 world_version = "1.3"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
@@ -175,15 +176,21 @@ def patch_rom(world, rom, code_patch):
     # Drops & Shops
     if world.options.shuffle_enemy_drops:
         for i in range(0x89):
+            address = 0x020BE568 + (0x20 * i)
             common_item = 0
             rare_item = 0
+            common_drop_rate = 0
+            rare_drop_rate = 0
             if world.random.randint(1, 100) <= 66:  # 66% chance to have an Item1
-                print("a") 
+                common_item = generate_local_filler(world)
+                common_drop_rate = world.random.randint(1, 128)
             if world.random.randint(1, 100) <= 41:  # 41% to have an Item2
-                print("b")
-
-            common_drop_rate = world.random.randint(1, 128)
-            rare_drop_rate = world.random.randint(1, 128)
+                rare_item = generate_local_filler(world)
+                rare_drop_rate = world.random.randint(1, 128)
+            rom.write_to_file(address + 8, "arm9", struct.pack("H", common_item))
+            rom.write_to_file(address + 10, "arm9", struct.pack("H", common_item))
+            rom.write_to_file(address + 22, "arm9", bytearray([common_drop_rate]))
+            rom.write_to_file(address + 23, "arm9", bytearray([rare_drop_rate]))
 
     ####################################
     # Location handler
