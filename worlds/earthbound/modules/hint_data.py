@@ -154,7 +154,13 @@ def setup_hints(world: "EarthBoundWorld") -> None:
         "your refrigerator may be running.",
         "you should always wash your hands after washing your hands.",
         "Clumsy Robot dislikes smoke.",
-        "you should check out the Archipelago Wiki!"
+        "you should check out the Archipelago Wiki!",
+        "Jeff loooves Tony!",
+        "your Princess is in Another Castle.",
+        "you just lost The Game.",
+        "Ice Soup is a cheap snack.",
+        "I'm tired of giving hints. Why don't you give me one this time?",
+        "your favorite APWorld will never release."
     ]
 
     hintable_location_groups = location_groups.copy()
