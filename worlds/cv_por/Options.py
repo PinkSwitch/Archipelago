@@ -211,6 +211,10 @@ class ShuffleEnemyDrops(Toggle):
     """Randomizes what items enemies drop, and what the drop chances are."""
     display_name = "Shuffle Enemy Drops"
 
+class ShopShuffle(Toggle):
+    """Randomizes what items are in the shop."""
+    display_name = "Randomize Shop Items"
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -242,6 +246,7 @@ class PoROptions(PerGameCommonOptions):
     removed_boss_keys: ExcludedBossKeys
     death_link: DeathLink
     shuffle_enemy_drops: ShuffleEnemyDrops
+    randomize_shop_items: ShopShuffle
 
 
 por_option_groups = [
@@ -259,14 +264,19 @@ por_option_groups = [
 
     ]),
 
-    OptionGroup("Item Options", [
+    OptionGroup("Item Pool Options", [
         ShuffleWhip,
         StartWithChangeCube,
         StartWithCallCube,
         AddExtraItems,
         ExcludeOwlMorph,
+
+    ]),
+
+    OptionGroup("Item Options", [
         StrongerGlove,
-        RandomizeSpellChargeTimes
+        RandomizeSpellChargeTimes,
+        ShopShuffle
 
     ]),
 

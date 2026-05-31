@@ -55,7 +55,7 @@ char_width_table = {" ": 3, "!": 1, '""': 3, "#": 6, "$": 5, "%": 7, "&": 5,
                     "\n": 0}
 
 
-def text_encoder(input_text, is_full_string = False) -> list:
+def text_encoder(input_text, is_full_string=False) -> list:
     output = []
     if is_full_string:
         output += [0x01, 0x00]  # Some kind of header? strings in game are appended with this pattern...

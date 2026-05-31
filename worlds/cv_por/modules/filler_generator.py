@@ -1,4 +1,5 @@
 from ..Items import item_table
+import struct
 
 subweapon_table = [
     "Knife Subweapon",
@@ -283,7 +284,7 @@ accessory_table = [
     "Hero's Cape",
     "Elven Cape",
     "Invisible Cape",
-    "Assassin's Cape"
+    "Assassin's Cape",
     "Holy Mantle",
     "Paludamentum",
     "Blessed Ankh",
@@ -827,9 +828,17 @@ global_item_ids = {
     "Book of Spirits": 0x1bc
 }
 
+shop_pools = {
+    0x020E0080: 13,
+    0x020E003E: 12,
+    0x020E00C6: 22,
+    0x020E005A: 12,
+    0x020E001A: 5
+}
 
-def generate_local_filler(world):
-    weights = {"subweapon": 5, "good_weapon": 7, "accessory": 8, "good_food": 10,
+
+def generate_local_filler(world, return_as_id = False):
+    weights = {"subweapon": 20, "good_weapon": 15, "accessory": 8, "good_food": 10,
                "good_armor": 15, "weapon": 30, "armor": 40, "consumable": 60}
 
     weight_table = {
@@ -846,4 +855,22 @@ def generate_local_filler(world):
     filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
     filler_item = world.random.choice(weight_table[filler_type])
     item_id = global_item_ids[filler_item]
-    return item_id
+    if return_as_id:
+        return item_id
+    else:
+        return filler_item
+
+def generate_shop_items(world, rom):
+    first_subweapon = world.random.choice(subweapon_table)
+    shop_pool = ["Potion", "Tonic", "Claymore", "CASTLE MAP 1", first_subweapon]
+    for pool in shop_pools:
+        for i in range(shop_pools[pool]):
+            item = "Potion"
+            while item in shop_pool:
+                item = generate_local_filler(world)
+            shop_pool.append(item)
+            if global_item_ids[item] > 0x150:
+                price = world.random.randint(1, 0x10)
+                skill_id = item_table[item].code - 0x800
+                rom.write_to_file(0x020E3B14 + (skill_id * 6) + 4, "arm9", struct.pack("H", price))
+            rom.write_to_file(pool + (i * 2), "arm9", struct.pack("H", global_item_ids[item]))
