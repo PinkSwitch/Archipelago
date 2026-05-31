@@ -863,6 +863,8 @@ def generate_local_filler(world, return_as_id = False):
 def generate_shop_items(world, rom):
     first_subweapon = world.random.choice(subweapon_table)
     shop_pool = ["Potion", "Tonic", "Claymore", "CASTLE MAP 1", first_subweapon]
+    skill_id = item_table[first_subweapon].code - 0x800
+    rom.write_to_file(0x020E3B14 + (skill_id * 6) + 4, "arm9", struct.pack("H", 1))
     for pool in shop_pools:
         for i in range(shop_pools[pool]):
             item = "Potion"
