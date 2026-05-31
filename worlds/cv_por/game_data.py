@@ -9,7 +9,7 @@ class BossDoorData(NamedTuple):  # In-game information used to define each Locat
 boss_doors = {
     "Colosseum Key": BossDoorData([0x022F91DC, 0x022F9248], "overlay_78"),
     "Cavern Key": BossDoorData([0x022FAD18, 0x022FAD78], "overlay_82"),
-    "Tower Base Key": BossDoorData([0x022FC53C, 0x022FC47C], "overlay_86"),
+    "Tower Base Key": BossDoorData([0x022FC554, 0x022FC47C], "overlay_86"),
     "Clock Key": BossDoorData([0x023061D8, 0x02306154], "overlay_85"),
     "Gallery Key": BossDoorData([0x022FBB60], "overlay_88"),
     "Throne Key": BossDoorData([0x022F1B24], "overlay_87"),

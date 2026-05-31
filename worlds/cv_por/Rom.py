@@ -183,10 +183,10 @@ def patch_rom(world, rom, code_patch):
             rare_drop_rate = 0
             if world.random.randint(1, 100) <= 66:  # 66% chance to have an Item1
                 common_item = generate_local_filler(world, True)
-                common_drop_rate = world.random.randint(1, 128)
+                common_drop_rate = world.random.randint(1, 0x15)
             if world.random.randint(1, 100) <= 41:  # 41% to have an Item2
                 rare_item = generate_local_filler(world, True)
-                rare_drop_rate = world.random.randint(1, 128)
+                rare_drop_rate = world.random.randint(1, 0x15)
             rom.write_to_file(address + 8, "arm9", struct.pack("H", common_item))
             rom.write_to_file(address + 10, "arm9", struct.pack("H", rare_item))
             rom.write_to_file(address + 22, "arm9", bytearray([common_drop_rate]))
