@@ -63,6 +63,34 @@ subweapon_table = [
     "Piercing Beam"
 ]
 
+jonathan_sub_table = [
+    "Knife Subweapon",
+    "Axe Subweapon",
+    "Bwaka Knife",
+    "Paper Airplane",
+    "Cream Pie",
+    "Grenade",
+    "Steel Ball",
+    "Stonewall",
+    "Offensive Form",
+    "Taunt",
+    "Knee Strike",
+    "Aura Blast",
+    "Javelin",
+    "Ricochet Rock",
+    "Boomerang",
+    "Shuriken",
+    "Yagyu Shuriken",
+    "Discus",
+    "Kunimitsu",
+    "Kunai",
+    "Crossbow",
+    "Dart",
+    "Defensive Form",
+    "Wrecking Ball",
+    "Rampage"
+]
+
 
 weapon_table = [
     "Encyclopedia",
@@ -861,8 +889,13 @@ def generate_local_filler(world, return_as_id = False):
         return filler_item
 
 def generate_shop_items(world, rom):
-    first_subweapon = world.random.choice(subweapon_table)
+    first_subweapon = world.random.choice(jonathan_sub_table)
     shop_pool = ["Potion", "Tonic", "Claymore", "CASTLE MAP 1", first_subweapon]
+    rom.write_to_file(0x020E007A, "arm9", struct.pack("H", 0x88))  # Claymore
+    rom.write_to_file(0x020E007C, "arm9", struct.pack("H", 0x4C))  # CASTLE MAP 1
+    rom.write_to_file(0x020E007E, "arm9", struct.pack("H", global_item_ids[first_subweapon]))  # First sub
+
+
     skill_id = item_table[first_subweapon].code - 0x800
     rom.write_to_file(0x020E3B14 + (skill_id * 6) + 4, "arm9", struct.pack("H", 1))
     for pool in shop_pools:
