@@ -88,6 +88,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Burnt Paradise: Lower Vertical Hall"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
     set_rule(world.get_location("Burnt Paradise: Boss Room"), (Has("Burnt Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Burnt Key", "contains")))
     set_rule(world.get_location("Burnt Paradise: Bottom Corner"), (Has("Burnt Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Burnt Key", "contains")))
+    set_rule(world.get_location("Burnt Paradise: Bottom Right Corner Room"), big_uppies | medium_uppies |(has_call_cube & HasAll("Acrobat Cube", "Puppet Master")))
 
     set_rule(world.get_location("Forest of Doom: Secret Cave Room"), big_uppies)
     set_rule(world.get_location("Forest of Doom: Boss Room"), (Has("Forest Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Forest Key", "contains")))
