@@ -13,6 +13,8 @@
 @OptionFlag_BraunerRequired equ 0x1
 @OptionFlag_NestRequired equ 0x2
 
+@CustomItemCount equ 0x70
+
 ;;;;;;;;;;;;;;;;;
 .open "ftc/arm9.bin", 02000000h
     .org 0x020523B0
@@ -139,7 +141,7 @@
         b @SwapQuestToAPText
 
     .org 0x02034F58
-        mov r0, 1 ; Allow the quest menu to always be opened
+        bl @ReloadQuestStates
 
     .org 0x0203F8BC
         b @Quests_CheckNestUnlock
@@ -243,7 +245,7 @@
 
     ;CHANGE AS NEEDED!!!! ITEM COUNT!!!
     .org 0x0203AE20
-        mov r0, 0x70 ; Max number of Consumables to check for the Inventory
+        mov r0, @CustomItemCount ; Max number of Consumables to check for the Inventory
 
     .org 0x0203E6C0
         b @CheckCustomInventory
@@ -904,6 +906,7 @@
     ldrb r1,[r1]
     cmp r1, 1
     beq @@SkipItemPopup ; If we're in the quest menu we don't want to show popups
+    ;TODO! Different SFX for equipment.
     mov r1, 0xF0
     bl 0x0204FE0C ; Display the got item popup
     mov r0, 0x31
@@ -2779,6 +2782,8 @@
     bl 0x02050544
     pop lr
     @@SkipPopupDisplay:
+    mov r1, 0
+    strb r1, [r5, 0x0D] ; Reset the door state so that it goes back to being unopened
     pop r1-r3
     b 0x02071E24
     @@KeyOwned:
@@ -2828,6 +2833,15 @@
     mov r3, 0x80
     mov r5, 0xA0
     b 0x0203A29C
+;;;;;;;;;;;;;;
+; This might be a data overflow from the greater item IDs?
+@ReloadQuestStates:
+    push lr
+    mov r0, 1
+    bl 0x0203F620
+    mov r0, 1
+    pop lr
+    bx lr
 
 
 

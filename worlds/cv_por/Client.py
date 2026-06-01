@@ -78,6 +78,7 @@ class PoRClient(BizHawkClient):
             self.has_received_death = True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
+        from CommonClient import logger
 
         if ctx.server_version.build > 0:
             ctx.connected = True
@@ -102,7 +103,8 @@ class PoRClient(BizHawkClient):
                     (0x308ED0, 2, "Main RAM"),  # Received Item
                     (0x308ED2, 2, "Main RAM"),  # Total items
                     (0x1119DC, 4, "Main RAM"),  # Boss defeat flags
-                    (0x11174C, 4, "Main RAM")  # State bitfield
+                    (0x11174C, 4, "Main RAM"),  # State bitfield
+                    (0x111BA0, 1, "Main RAM")  # DEBUG!!! REMOVE THIS
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
@@ -111,12 +113,16 @@ class PoRClient(BizHawkClient):
         game_mode = read_state[2][0]
         boss_death_flags = struct.unpack("I", read_state[7])[0]
         game_status = struct.unpack("I", read_state[8])[0]
+        debug_flag = read_state[9][0]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
             #  Don't read data if we're on one of the title screens
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
+
+        if debug_flag & 0x20:
+            logger.info("What the fuck!!!! motorcycles gone!!!!!!!!!!!!!!! :gorm: :gorm: :gorm:")
 
         if "DeathLink" in ctx.tags and game_state == 2 and not game_status & 0x100081:
             await self.handle_deathlink(game_status, ctx)
