@@ -17,6 +17,8 @@ class PoRClient(BizHawkClient):
     client_version: str = world_version
     has_received_death: bool = False
     has_reset_from_death: bool = True
+    seen_events: list = []
+    cur_map: int = 0
 
     def __init__(self) -> None:
         super().__init__()
@@ -104,6 +106,9 @@ class PoRClient(BizHawkClient):
                     (0x308ED2, 2, "Main RAM"),  # Total items
                     (0x1119DC, 4, "Main RAM"),  # Boss defeat flags
                     (0x11174C, 4, "Main RAM"),  # State bitfield
+                    (0x111BA8, 1, "Main RAM"),  # Elevator Switch
+                    (0x111785, 1, "Main RAM"),  # Current Map ID
+                    (0x111BA0, 1, "Main RAM"),  # DEBUG!!! REMOVE THIS
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
@@ -112,6 +117,7 @@ class PoRClient(BizHawkClient):
         game_mode = read_state[2][0]
         boss_death_flags = struct.unpack("I", read_state[7])[0]
         game_status = struct.unpack("I", read_state[8])[0]
+        debug_flag = read_state[11][0]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
@@ -124,6 +130,7 @@ class PoRClient(BizHawkClient):
 
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
+        await self.check_events(read_state, ctx)
         if not ctx.finished_game and boss_death_flags & 0x20000:  # Dracula's defeat flag
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
@@ -188,3 +195,62 @@ class PoRClient(BizHawkClient):
             else:
                 # This should be normal gameplay after relaoding
                 self.has_reset_from_death = True
+
+    async def check_events(self, read_state, ctx):
+        boss_death_flags = struct.unpack("I", read_state[7])[0]
+        elevator_switch = read_state[9][0]
+        map_id = read_state[10][0]
+        if map_id != self.cur_map:
+            await ctx.send_msgs(
+                [
+                    {
+                        "cmd": "Set",
+                        "key": "map_id",
+                        "default": 0,
+                        "want_reply": True,
+                        "operations": [{"operation": "replace", "value": map_id}],
+                    }
+                ]
+            )
+            self.cur_map = map_id
+
+        events = {
+            # We don't really need everyone, just people who lock quests/portrait clears
+            "ElevatorSwitch": (elevator_switch >> 4) & 1,
+            # "Behemoth": (boss_death_flags >> 1) & 1,
+            "Dullahan": (boss_death_flags >> 2) & 1,
+            "Keremet": (boss_death_flags >> 4) & 1,
+            "Legion": (boss_death_flags >> 5) & 1,
+            "Dagon": (boss_death_flags >> 6) & 1,
+            "Astarte": (boss_death_flags >> 7) & 1,
+            "Werewolf": (boss_death_flags >> 8) & 1,
+            "TheCreature": (boss_death_flags >> 9) & 1,
+            "MummyMan": (boss_death_flags >> 10) & 1,
+            "Medusa": (boss_death_flags >> 11) & 1,
+            # "Richter": (boss_death_flags >> 12) & 1,
+            "Stella": (boss_death_flags >> 13) & 1,
+            "Stella&Loretta": (boss_death_flags >> 14) & 1,
+            "Brauner": (boss_death_flags >> 15) & 1,
+            "Death": (boss_death_flags >> 16) & 1,
+            "Dracula": (boss_death_flags >> 18) & 1,
+            # "Balore": (boss_death_flags >> 19) & 1,
+            # "Gergoth": (boss_death_flags >> 20) & 1,
+            # "Zephyr": (boss_death_flags >> 21) & 1,
+            # "Aguni": (boss_death_flags >> 22) & 1,
+            # "Abaddon": (boss_death_flags >> 23) & 1,
+            "Doppelganger": (boss_death_flags >> 25) & 1,
+        }
+        for event, seen in events.items():
+            if bool(seen) != (event in self.seen_events):
+                await ctx.send_msgs(
+                    [
+                        {
+                            "cmd": "Set",
+                            "key": f"{event}",
+                            "default": 0,
+                            "want_reply": True,
+                            "operations": [{"operation": "replace", "value": seen}],
+                        }
+                    ]
+                )
+        self.seen_events = [e for e in events if events[e]]
