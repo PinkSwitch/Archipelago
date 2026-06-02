@@ -80,7 +80,6 @@ class PoRClient(BizHawkClient):
             self.has_received_death = True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        from CommonClient import logger
 
         if ctx.server_version.build > 0:
             ctx.connected = True
@@ -108,7 +107,6 @@ class PoRClient(BizHawkClient):
                     (0x11174C, 4, "Main RAM"),  # State bitfield
                     (0x111BA8, 1, "Main RAM"),  # Elevator Switch
                     (0x111785, 1, "Main RAM"),  # Current Map ID
-                    (0x111BA0, 1, "Main RAM"),  # DEBUG!!! REMOVE THIS
         ])
 
         menu_states = [0x05, 0x0A, 0x12, 0x14, 0x13, 0x16, 0x15, 0x1B]
@@ -117,7 +115,6 @@ class PoRClient(BizHawkClient):
         game_mode = read_state[2][0]
         boss_death_flags = struct.unpack("I", read_state[7])[0]
         game_status = struct.unpack("I", read_state[8])[0]
-        debug_flag = read_state[11][0]
 
         if not clock_time or game_state in menu_states or game_mode:
             #  Clock time will be 0 if a file hasn't been booted.
@@ -202,16 +199,13 @@ class PoRClient(BizHawkClient):
         map_id = read_state[10][0]
         if map_id != self.cur_map:
             await ctx.send_msgs(
-                [
-                    {
+                [{
                         "cmd": "Set",
                         "key": "map_id",
                         "default": 0,
                         "want_reply": True,
                         "operations": [{"operation": "replace", "value": map_id}],
-                    }
-                ]
-            )
+                    }])
             self.cur_map = map_id
 
         events = {
@@ -242,15 +236,11 @@ class PoRClient(BizHawkClient):
         }
         for event, seen in events.items():
             if bool(seen) != (event in self.seen_events):
-                await ctx.send_msgs(
-                    [
-                        {
+                await ctx.send_msgs([{
                             "cmd": "Set",
                             "key": f"{event}",
                             "default": 0,
                             "want_reply": True,
                             "operations": [{"operation": "replace", "value": seen}],
-                        }
-                    ]
-                )
+                        }])
         self.seen_events = [e for e in events if events[e]]
