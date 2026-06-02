@@ -125,9 +125,6 @@ class PoRClient(BizHawkClient):
             #  If the game mode is not 0, we've laoded something other than John/Charlotte
             return
 
-        if debug_flag & 0x20:
-            logger.info("What the fuck!!!! motorcycles gone!!!!!!!!!!!!!!! :gorm: :gorm: :gorm:")
-
         if "DeathLink" in ctx.tags and game_state == 2 and not game_status & 0x100081:
             await self.handle_deathlink(game_status, ctx)
 
