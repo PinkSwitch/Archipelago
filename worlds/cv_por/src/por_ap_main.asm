@@ -461,6 +461,9 @@
     .org 0x021E429C
         b @GetMoneyName
 
+    .org 0x021E40D4
+        b @LogNormalItem
+
 
 ;overlay 9 0
 .close
@@ -823,6 +826,9 @@
     @OptionFlag_Deathlink: ;02309187
         .db 0x00
 
+    @OptionFlag_OpenThrone: ;02309188
+        .db 0x00
+
     .align 4
 ;;;;;;;;;;;;;;;;;;;
 ; Gets an arbitrary item and gives it to the player. Used for Archipelago server items
@@ -900,18 +906,23 @@
 @@NormalItem:
     bl 0x021E43E4 ; Subroutine for granting regular items
     pop r0,r1
+    push r4
+    mov r4, r0 ;Save the TYPE
     bl 0x021E476C ; Get the global ID for the item
     bl @UnlockAdditionalInfo
     ldr r1, =@RamFlag_SkipArbitrarayPopup
     ldrb r1,[r1]
     cmp r1, 1
     beq @@SkipItemPopup ; If we're in the quest menu we don't want to show popups
-    ;TODO! Different SFX for equipment.
+    ;TODO! Different SFX for equipment. SFX 0x32.
     mov r1, 0xF0
     bl 0x0204FE0C ; Display the got item popup
-    mov r0, 0x31
+    cmp r4, 2
+    movgt r0, 0x32
+    movle r0, 0x31
     bl 0x0204D6B0 ; Play the sound effect for the item
     @@SkipItemPopup:
+    pop r4
     pop lr
     bx lr
 @@GetMaxUp:
@@ -1464,6 +1475,11 @@
     cmp r0, 0
     popeq r0
     beq 0x022E8894 ; If the goal is to fight Brauner, we don't want to access Dracula at all, so we bail
+    ldr r0, =@OptionFlag_OpenThrone
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@SkipNestRequirement ; If the throne is Open, automatically activate the barrier
+
 
     push lr
     bl @CheckPortraitClearCount ; Grab the cleared portraits
@@ -2744,6 +2760,10 @@
 .align 4
 
 @LockBossDoors:
+    ldrb r0, [r4, 4]
+    cmp r0, 0x11 ; Dracula door
+    beq @@CheckDracDoor
+@@DracDoorConPass: ; After all of that, we still want to check for the Throne Key.
     ldrb r0, [r4, 6] ; Check the door's VarB
     cmp r0, 0
     beq 0x02071A18
@@ -2789,6 +2809,40 @@
     @@KeyOwned:
     pop r1-r3
     b 0x02071A18
+@@CheckDracDoor:
+    ldr r0, =@OptionFlag_DraculaGoal
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipPopupDisplay ; We want this to always fail on Brauner goal
+    push lr
+    bl @CheckPortraitClearCount
+    pop lr
+    ldr r1, =@OptionFlag_DraculaPortraits
+    ldrb r1, [r1]
+    cmp r0, r1
+    blt @@SkipPopupDisplay  ; If we haven't cleared enough portraits, close the door
+
+    ldr r0, =@OptionFlag_DraculaRequirements
+    ldrb r0,[r0]
+    ands r0,r0, @OptionFlag_BraunerRequired
+    beq @@SkipBraunerCheck ; If Brauner is not set as required, we can just skip this
+    ldr r0, =0x021119DC
+    ldr r0,[r0] ; Get the boss death flags
+    ands r0, r0, 0x8000 ; Check Brauner's death flag
+    beq @@SkipPopupDisplay ; If Brauner is required but not defeated, lock the door
+@@SkipBraunerCheck:
+    ldr r0, =@OptionFlag_DraculaRequirements
+    ldrb r0,[r0]
+    ands r0,r0, @OptionFlag_NestRequired
+    beq @@DracDoorConPass
+    ldr r0, = 0x02111BC5
+    ldrb r0,[r0]
+    ands r0,r0,0x20 ; This is the pickup flag for the final item in Nest of Evil. All of its flags are otherwise temporary, so this is the closest we can get to a clear check
+    beq @@SkipPopupDisplay ; If Nest if required but not cleared, block
+    b @@DracDoorConPass
+
+
+
 ;;;;;;;;;;;;;;;
 @StoreLockedDoorFlag:
     strb r3, [r6, 4]
@@ -2842,6 +2896,14 @@
     mov r0, 1
     pop lr
     bx lr
+;;;;;;;;;;;;;;;;
+; Skip logging expanded items
+@LogNormalItem:
+    cmp r0, 0x150
+    bgt 0x021E4108 ; Skip if it's an Expanded ID
+    bl 0x021E4148 ; Log it
+    b 0x021E40D8
+
 
 
 

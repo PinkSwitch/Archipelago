@@ -278,16 +278,17 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Dark Academy - Main", "Dark Academy: Boss Room", True)
     ]
 
-    if world.options.goal:
+    if world.options.goal or world.options.open_throne:
         location_table += [
             LocationData("The Throne Room", "The Throne Room: Above Throne Left"),
             LocationData("The Throne Room", "The Throne Room: Great Stairs Under Stairs"),
             LocationData("The Throne Room", "The Throne Room: Great Stairs Center"),
             LocationData("The Throne Room", "The Throne Room: Above Throne Right"),
             LocationData("The Throne Room", "The Throne Room: Great Stairs Hidden"),
-            LocationData("The Throne Room", "The Throne Room: Great Stairs Left"),
-            LocationData("The Throne Room", "The Throne Room: Dracula", True),
+            LocationData("The Throne Room", "The Throne Room: Great Stairs Left")
         ]
+    if world.options.goal:
+        location_table.append(LocationData("The Throne Room", "The Throne Room: Dracula", True))
 
     if world.options.nest_of_evil_state != NestofEvil.option_removed:
         location_table += [

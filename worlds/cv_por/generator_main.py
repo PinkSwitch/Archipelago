@@ -34,6 +34,7 @@ def generate_early(world) -> None:
         world.options.unlock_all_quests.value = passthrough["unlock_all_quests"]
         world.options.add_boss_keys.value = passthrough["add_bosskeys"]
         world.options.removed_boss_keys.value = passthrough["disabled_bosskeys"]
+        world.options.open_throne.value = passthrough["open_throne"]
 
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
@@ -93,6 +94,9 @@ def create_items(world) -> None:
         for key in boss_keys:
             if key == "Nest Key" and world.options.nest_of_evil_state == NestofEvil.option_removed:
                 continue  # If nest is removed we want to forcibly ignore this one
+            elif key == "Throne Key" and not world.options.goal:
+                continue  # If the goal is Brauner, remove the Throne Key
+
             if key not in world.options.removed_boss_keys.value:
                 pool.append(set_classifications(world, key))
 
@@ -230,6 +234,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "unlock_all_quests": world.options.unlock_all_quests.value,
         "add_bosskeys": world.options.add_boss_keys.value,
         "disabled_bosskeys": world.options.removed_boss_keys.value,
+        "open_throne": world.options.open_throne.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],

@@ -97,7 +97,7 @@ def init_areas(world: "PoRWorld") -> None:
     regions = []
     active_regions = region_list.copy()
 
-    if not world.options.goal:
+    if not (world.options.goal or world.options.open_throne):
         active_regions.remove("The Throne Room")
 
     for area in active_regions:
@@ -263,3 +263,5 @@ def connect_regions(world):
             Has("Portrait Clear", FromOption(DraculaPortraits)) &
             Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
             CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
+    elif world.options.open_throne:
+         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier")  #  No logic in this case, since it's already been opened

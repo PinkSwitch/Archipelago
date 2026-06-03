@@ -215,6 +215,11 @@ class ShopShuffle(Toggle):
     """Randomizes what items are in the shop."""
     display_name = "Randomize Shop Items"
 
+class OpenThrone(Toggle):
+    """Unlocks the Throne Room by default. Your goal conditions will be checked
+       by Dracula's boss door instead of the throne barrier."""
+    display_name = "Open Throne"
+
 
 @dataclass
 class PoROptions(PerGameCommonOptions):
@@ -247,6 +252,7 @@ class PoROptions(PerGameCommonOptions):
     death_link: DeathLink
     shuffle_enemy_drops: ShuffleEnemyDrops
     randomize_shop_items: ShopShuffle
+    open_throne: OpenThrone
 
 
 por_option_groups = [
@@ -255,6 +261,7 @@ por_option_groups = [
         BraunerPortraits,
         DraculaPortraits,
         BraunerRequired,
+        OpenThrone
 
     ]),
 

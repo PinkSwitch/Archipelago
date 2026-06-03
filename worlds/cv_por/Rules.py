@@ -1,7 +1,7 @@
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Regions import small_uppies, big_uppies, can_cast_spell, medium_uppies, strongies, is_smol, has_call_cube
-from .Options import NestofEvil, BraunerPortraits, Goal, AddBossKeys, ExcludedBossKeys
+from .Options import NestofEvil, BraunerPortraits, Goal, AddBossKeys, ExcludedBossKeys, DraculaPortraits, BraunerRequired
 from . modules.quest_data import set_quest_rules
 
 
@@ -103,15 +103,18 @@ def set_location_rules(world):
              Has("Portrait Clear", FromOption(BraunerPortraits)) &
              CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required), OptionFilter(Goal, True)], filtered_resolution=True))
 
-    if world.options.goal:
+    if world.options.goal or world.options.open_throne:
         set_rule(world.get_location("The Throne Room: Great Stairs Under Stairs"), medium_uppies | (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube))
         set_rule(world.get_location("The Throne Room: Great Stairs Hidden"), big_uppies)
         set_rule(world.get_location("The Throne Room: Above Throne Left"), big_uppies)
         set_rule(world.get_location("The Throne Room: Above Throne Right"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Center"), big_uppies)
         set_rule(world.get_location("The Throne Room: Great Stairs Left"), big_uppies)
-        set_rule(world.get_location("The Throne Room: Dracula"), (Has("Throne Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Throne Key", "contains")))
 
-        #Has("Call Cube", options=[OptionFilter(StartWithCallCube, 0)], filtered_resolution=True)
+    if world.options.goal:
+        set_rule(world.get_location("The Throne Room: Dracula"), (Has("Throne Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Throne Key", "contains")) & (
+                                     Has("Portrait Clear", FromOption(DraculaPortraits)) &
+                                     Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
+                                     CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True)))
 
     set_quest_rules(world)
