@@ -857,7 +857,7 @@ global_item_ids = {
 }
 
 shop_pools = {
-    0x020E0080: 13,
+    0x020E0082: 12,
     0x020E003E: 12,
     0x020E00C6: 22,
     0x020E005A: 12,
@@ -865,7 +865,7 @@ shop_pools = {
 }
 
 
-def generate_local_filler(world, return_as_id = False):
+def generate_local_filler(world, return_as_id=False):
     weights = {"subweapon": 20, "good_weapon": 15, "accessory": 8, "good_food": 10,
                "good_armor": 15, "weapon": 30, "armor": 40, "consumable": 60}
 
@@ -888,13 +888,14 @@ def generate_local_filler(world, return_as_id = False):
     else:
         return filler_item
 
+
 def generate_shop_items(world, rom):
     first_subweapon = world.random.choice(jonathan_sub_table)
-    shop_pool = ["Potion", "Tonic", "Claymore", "CASTLE MAP 1", first_subweapon]
+    shop_pool = ["Potion", "Tonic", "Claymore", "CASTLE MAP 1", first_subweapon, "Blank Book"]
     rom.write_to_file(0x020E007A, "arm9", struct.pack("H", 0x88))  # Claymore
     rom.write_to_file(0x020E007C, "arm9", struct.pack("H", 0x4C))  # CASTLE MAP 1
     rom.write_to_file(0x020E007E, "arm9", struct.pack("H", global_item_ids[first_subweapon]))  # First sub
-
+    rom.write_to_file(0x020E0080, "arm9", struct.pack("H", 0x6E))  # Blank Book
 
     skill_id = item_table[first_subweapon].code - 0x800
     rom.write_to_file(0x020E3B14 + (skill_id * 6) + 4, "arm9", struct.pack("H", 1))

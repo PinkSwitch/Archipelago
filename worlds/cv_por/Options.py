@@ -211,9 +211,11 @@ class ShuffleEnemyDrops(Toggle):
     """Randomizes what items enemies drop, and what the drop chances are."""
     display_name = "Shuffle Enemy Drops"
 
+
 class ShopShuffle(Toggle):
     """Randomizes what items are in the shop."""
     display_name = "Randomize Shop Items"
+
 
 class OpenThrone(Toggle):
     """Unlocks the Throne Room by default. Your goal conditions will be checked

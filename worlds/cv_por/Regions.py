@@ -198,7 +198,6 @@ def connect_regions(world):
     world.get_region("Tower of Death - Top of the Tower").add_exits(["Tower of Death - Second Gear Room", "Tower of Death - Elevator Room"],
                                                                      {"Tower of Death - Second Gear Room": (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains"))})
 
-
     world.get_region("Master's Keep - Bridge").add_exits(["Tower of Death - Belt Area", "Tower of Death - Elevator Room"])
 
     world.get_region("Master's Keep - Lower").add_exits(["Tower of Death - Elevator Room", "Master's Keep - Bridge", "Master's Keep - Main"],
@@ -264,4 +263,4 @@ def connect_regions(world):
             Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
             CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
     elif world.options.open_throne:
-         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier")  #  No logic in this case, since it's already been opened
+        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier")  #  No logic in this case, since it's already been opened
