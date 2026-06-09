@@ -157,6 +157,26 @@ def setup_quests(world):
     if "grindy" in selected_quests:
         selected_quests |= grindy_quests
 
+    if "all" in excluded_quests:
+        for quest in quest_data:
+            if quest not in ["Quest: Preparations", "Quest: The Nest of Evil"]:
+                excluded_quests.add(quest)
+
+    if "simple" in excluded_quests:
+        excluded_quests |= simple_quests
+
+    if "requires item" in selected_quests:
+        excluded_quests |= item_required_quests
+
+    if "defeat enemies" in selected_quests:
+        excluded_quests |= enemy_quests
+
+    if "mastery" in excluded_quests:
+        excluded_quests |= mastery_quests
+
+    if "grindy" in excluded_quests:
+        excluded_quests |= grindy_quests
+
     for quest in quest_data:
         if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests or quest in selected_quests:
             world.active_quests.append(quest)
@@ -165,6 +185,9 @@ def setup_quests(world):
 
     if "Quest: Kill Gergoth" in world.active_quests and world.options.nest_of_evil_state == NestofEvil.option_removed:
         world.active_quests.remove("Quest: Kill Gergoth")  # This would be impossible, so remove it
+
+    if "Quest: Kill Gergoth" in excluded_quests and world.options.nest_of_evil_state == NestofEvil.option_removed:
+        excluded_quests.remove("Quest: Kill Gergoth")
 
     if "Quest: Preparations" in world.vanilla_quests:
         world.vanilla_quests.remove("Quest: Preparations")  # This should never be vanilla
