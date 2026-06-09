@@ -219,6 +219,9 @@ def setup_quests(world):
         world.active_quests = [quest for quest in world.active_quests if quest not in grindy_quests]
 
     for quest in excluded_quests:
+        if quest in world.vanilla_quests:
+            continue  # Ignore excluded but unrandomized quests
+
         if quest in world.active_quests:
             world.active_quests.remove(quest)
 
