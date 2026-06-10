@@ -117,8 +117,9 @@ grindy_quests = {
     "Quest: A Rank Hunter",
     "Quest: Mental Training 4",
     "Quest: S Rank Hunter",
-    "Quest: Strength Training 4",
+    "Quest: Build Your Strength 4",
     "Quest: The Hundred Tasks",
+    "Quest: The Spear of Legend",
     "Quest: Master the Holy Power",
     "Quest: Almighty",
     "Quest: The Great Sage"
