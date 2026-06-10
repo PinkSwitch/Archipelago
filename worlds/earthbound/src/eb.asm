@@ -9131,6 +9131,10 @@ ORG $EEBDA4
 db $0A
 dl SetupNessForMagicantBoost
 
+ORG $C7AB46
+db $0A
+dl MusicFade_NoSub ; Photo man, preventss script overflow
+
 
 ;New data table go here
 
@@ -11845,6 +11849,9 @@ LDX #$0000
 SEP #$20
 CMP $3280,X
 REP #$20
+;BUG REPORT! We're not checking for more than one of an item here
+
+
 BEQ .TossDuplicateItemNoPull
 INX
 CPX #$0045
@@ -18393,6 +18400,13 @@ db $19, $10, $01
 db $70
 db $0A
 dl $EEBDA8
+
+MusicFade_NoSub:
+db $1F, $07, $02
+db $10, $1E
+db $1F, $01, $00
+db $0A
+dl $C7AB4B
 
 ;ORG $C7617D
 ;dd DisplayAndGetMoney
