@@ -256,11 +256,12 @@ def connect_regions(world):
     world.get_region("Burnt Paradise").add_exits(["Burnt Paradise - Entrance"],
                                                             {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})
 
-    if world.options.goal:
-        # Add a connection to the throne room if necessary
-        world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier",
-            Has("Portrait Clear", FromOption(DraculaPortraits)) &
-            Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
-            CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
-    elif world.options.open_throne:
+    if world.options.open_throne:
         world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier")  #  No logic in this case, since it's already been opened
+    else:
+        if world.options.goal:
+            # Add a connection to the throne room if goal is on
+            world.get_region("Master's Keep - Upper Quarters").connect(world.get_region("The Throne Room"), "Throne Barrier",
+                Has("Portrait Clear", FromOption(DraculaPortraits)) &
+                Has("Brauner Defeated", options=[OptionFilter(BraunerRequired, 1)], filtered_resolution=True) &
+                CanReachLocation("Nest of Evil: Doppelganger Reward", options=[OptionFilter(NestofEvil, NestofEvil.option_required)], filtered_resolution=True))
