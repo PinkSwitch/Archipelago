@@ -14,7 +14,7 @@ from .Items import item_table
 from .game_data import boss_doors
 from .modules.filler_generator import generate_local_filler, generate_shop_items
 
-world_version = "1.3"
+world_version = "1.3.1"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
