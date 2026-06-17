@@ -197,22 +197,24 @@ class PoRClient(BizHawkClient):
         boss_death_flags = struct.unpack("I", read_state[7])[0]
         elevator_switch = read_state[9][0]
         map_id = read_state[10][0]
+        events_key = f"cv_por_events_{ctx.team}_{ctx.slot}"
+
         if map_id != self.cur_map:
             await ctx.send_msgs(
                 [{
-                        "cmd": "Set",
-                        "key": "map_id",
-                        "default": 0,
-                        "want_reply": True,
-                        "operations": [{"operation": "replace", "value": map_id}],
-                    }])
+                    "cmd": "Set",
+                    "key": f"{events_key}",
+                    "default": 0,
+                    "want_reply": True,
+                    "operations": [{"operation": "replace", "value": {"map_id": map_id}}],
+                }])
             self.cur_map = map_id
 
         events = {
-            # We don't really need everyone, just people who lock quests/portrait clears
+            # We don't really need everyone, just people who lock quests/portrait clears. But who cares?
             "ElevatorSwitch": (elevator_switch >> 4) & 1,
-            # "Behemoth": (boss_death_flags >> 1) & 1,
-            "Dullahan": (boss_death_flags >> 2) & 1,
+            "Dullahan": (boss_death_flags >> 1) & 1,
+            "Behemoth": (boss_death_flags >> 2) & 1,
             "Keremet": (boss_death_flags >> 4) & 1,
             "Legion": (boss_death_flags >> 5) & 1,
             "Dagon": (boss_death_flags >> 6) & 1,
@@ -221,26 +223,27 @@ class PoRClient(BizHawkClient):
             "TheCreature": (boss_death_flags >> 9) & 1,
             "MummyMan": (boss_death_flags >> 10) & 1,
             "Medusa": (boss_death_flags >> 11) & 1,
-            # "Richter": (boss_death_flags >> 12) & 1,
+            "Richter": (boss_death_flags >> 12) & 1,
             "Stella": (boss_death_flags >> 13) & 1,
             "Stella&Loretta": (boss_death_flags >> 14) & 1,
             "Brauner": (boss_death_flags >> 15) & 1,
             "Death": (boss_death_flags >> 16) & 1,
             "Dracula": (boss_death_flags >> 18) & 1,
-            # "Balore": (boss_death_flags >> 19) & 1,
-            # "Gergoth": (boss_death_flags >> 20) & 1,
-            # "Zephyr": (boss_death_flags >> 21) & 1,
-            # "Aguni": (boss_death_flags >> 22) & 1,
-            # "Abaddon": (boss_death_flags >> 23) & 1,
+            "Balore": (boss_death_flags >> 19) & 1,
+            "Gergoth": (boss_death_flags >> 20) & 1,
+            "Zephyr": (boss_death_flags >> 21) & 1,
+            "Aguni": (boss_death_flags >> 22) & 1,
+            "Abaddon": (boss_death_flags >> 23) & 1,
             "Doppelganger": (boss_death_flags >> 25) & 1,
         }
         for event, seen in events.items():
             if bool(seen) != (event in self.seen_events):
-                await ctx.send_msgs([{
-                            "cmd": "Set",
-                            "key": f"{event}",
-                            "default": 0,
-                            "want_reply": True,
-                            "operations": [{"operation": "replace", "value": seen}],
-                        }])
+                await ctx.send_msgs(
+                    [{
+                        "cmd": "Set",
+                        "key": f"{events_key}",
+                        "default": 0,
+                        "want_reply": True,
+                        "operations": [{"operation": "replace", "value": {event: seen}}],
+                    }])
         self.seen_events = [e for e in events if events[e]]
