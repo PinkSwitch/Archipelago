@@ -17,7 +17,7 @@ class PoRClient(BizHawkClient):
     client_version: str = world_version
     has_received_death: bool = False
     has_reset_from_death: bool = True
-    seen_events: list = []
+    seen_events_bitfield: int = 0
     cur_map: int = 0
 
     def __init__(self) -> None:
@@ -49,7 +49,7 @@ class PoRClient(BizHawkClient):
                 return False
 
             post_validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x309187, 0x01, "Main RAM")])
-                
+
             death_link_flag = int.from_bytes(post_validation_data[0])
             if death_link_flag:
                 await ctx.update_death_link(True)
@@ -204,46 +204,52 @@ class PoRClient(BizHawkClient):
                 [{
                     "cmd": "Set",
                     "key": f"{events_key}",
-                    "default": 0,
+                    "default": {"map_id": 0},
                     "want_reply": True,
-                    "operations": [{"operation": "replace", "value": {"map_id": map_id}}],
+                    "operations": [{"operation": "update", "value": {"map_id": map_id}}],
                 }])
             self.cur_map = map_id
 
-        events = {
+        events = [
             # We don't really need everyone, just people who lock quests/portrait clears. But who cares?
-            "ElevatorSwitch": (elevator_switch >> 4) & 1,
-            "Dullahan": (boss_death_flags >> 1) & 1,
-            "Behemoth": (boss_death_flags >> 2) & 1,
-            "Keremet": (boss_death_flags >> 4) & 1,
-            "Legion": (boss_death_flags >> 5) & 1,
-            "Dagon": (boss_death_flags >> 6) & 1,
-            "Astarte": (boss_death_flags >> 7) & 1,
-            "Werewolf": (boss_death_flags >> 8) & 1,
-            "TheCreature": (boss_death_flags >> 9) & 1,
-            "MummyMan": (boss_death_flags >> 10) & 1,
-            "Medusa": (boss_death_flags >> 11) & 1,
-            "Richter": (boss_death_flags >> 12) & 1,
-            "Stella": (boss_death_flags >> 13) & 1,
-            "Stella&Loretta": (boss_death_flags >> 14) & 1,
-            "Brauner": (boss_death_flags >> 15) & 1,
-            "Death": (boss_death_flags >> 16) & 1,
-            "Dracula": (boss_death_flags >> 18) & 1,
-            "Balore": (boss_death_flags >> 19) & 1,
-            "Gergoth": (boss_death_flags >> 20) & 1,
-            "Zephyr": (boss_death_flags >> 21) & 1,
-            "Aguni": (boss_death_flags >> 22) & 1,
-            "Abaddon": (boss_death_flags >> 23) & 1,
-            "Doppelganger": (boss_death_flags >> 25) & 1,
-        }
-        for event, seen in events.items():
-            if bool(seen) != (event in self.seen_events):
-                await ctx.send_msgs(
-                    [{
-                        "cmd": "Set",
-                        "key": f"{events_key}",
-                        "default": 0,
-                        "want_reply": True,
-                        "operations": [{"operation": "replace", "value": {event: seen}}],
-                    }])
-        self.seen_events = [e for e in events if events[e]]
+            (elevator_switch  >> 4 ) & 1, # Elevator Switch Flipped
+            (boss_death_flags >> 0 ) & 1,
+            (boss_death_flags >> 1 ) & 1, # Dullahan
+            (boss_death_flags >> 2 ) & 1, # Behemoth
+            (boss_death_flags >> 3 ) & 1,
+            (boss_death_flags >> 4 ) & 1, # Keremt
+            (boss_death_flags >> 5 ) & 1, # Legion
+            (boss_death_flags >> 6 ) & 1, # Dagon
+            (boss_death_flags >> 7 ) & 1, # Astarte
+            (boss_death_flags >> 8 ) & 1, # Werewolf
+            (boss_death_flags >> 9 ) & 1, # The Creature
+            (boss_death_flags >> 10) & 1, # Mummy Man
+            (boss_death_flags >> 11) & 1, # Medusa
+            (boss_death_flags >> 12) & 1, # Richter
+            (boss_death_flags >> 13) & 1, # Stella
+            (boss_death_flags >> 14) & 1, # Stella & Loretta
+            (boss_death_flags >> 15) & 1, # Brauner
+            (boss_death_flags >> 16) & 1, # Death
+            (boss_death_flags >> 17) & 1,
+            (boss_death_flags >> 18) & 1, # Dracula
+            (boss_death_flags >> 19) & 1, # Balore
+            (boss_death_flags >> 20) & 1, # Gergoth
+            (boss_death_flags >> 21) & 1, # Zephyr
+            (boss_death_flags >> 22) & 1, # Aguni
+            (boss_death_flags >> 23) & 1, # Abaddon
+            (boss_death_flags >> 24) & 1, # Trevor, Grant and Sypha? idk it didn't proc for me
+            (boss_death_flags >> 25) & 1, # Doppelganger
+        ]
+        event_bitfield = 0
+        for i, event in enumerate(events):
+            event_bitfield |= event << i
+        if event_bitfield != self.seen_events_bitfield:
+            await ctx.send_msgs(
+                [{
+                    "cmd": "Set",
+                    "key": f"{events_key}",
+                    "default": {"events": 0},
+                    "want_reply": True,
+                    "operations": [{"operation": "update", "value": {"events": event_bitfield}}],
+                }])
+            self.seen_events_bitfield = event_bitfield
