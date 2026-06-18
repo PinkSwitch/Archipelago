@@ -67,6 +67,7 @@ region_list = [
 
     "Nation of Fools",
     "Nation of Fools - Right Lower",
+    "Nation of Fools - Right Lower Medium Room",
     "Nation of Fools - Main",
 
     "Forest of Doom",
@@ -227,7 +228,10 @@ def connect_regions(world):
 
     world.get_region("Nation of Fools").add_exits(["Nation of Fools - Right Lower", "Nation of Fools - Main"],
                                                          {"Nation of Fools - Right Lower": small_uppies | Has("Puppet Master"),
-                                                          "Nation of Fools - Main": medium_uppies})
+                                                          "Nation of Fools - Main": medium_uppies | (has_call_cube & HasAll("Acrobat Cube", "Puppet Master"))})
+
+    world.get_region("Nation of Fools - Right Lower").add_exits(["Nation of Fools - Right Lower Medium Room"],
+                                                         {"Nation of Fools - Right Lower Medium Room": small_uppies | Has("Puppet Master")})
 
     world.get_region("Sandy Grave - Upper Pyramid").add_exits(["Sandy Grave - Pyramid Top"],
                                                          {"Sandy Grave - Pyramid Top": medium_uppies})

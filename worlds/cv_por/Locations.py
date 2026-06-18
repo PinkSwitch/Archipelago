@@ -218,7 +218,7 @@ def get_locations(world: "PoRWorld") -> List[LocationData]:
         LocationData("Nation of Fools - Main", "Nation of Fools: Crevice Item"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Top-Right Room Axe Item"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Left Bottom Corner Room"),
-        LocationData("Nation of Fools - Main", "Nation of Fools: Bottom Right Medium Square On Wall"),
+        LocationData("Nation of Fools - Right Lower Medium Room", "Nation of Fools: Bottom Right Medium Square On Wall"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Right Vertical Room"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Top-Right Room Bottom Item"),
         LocationData("Nation of Fools - Main", "Nation of Fools: Top-Left Room Right Building"),
