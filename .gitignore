@@ -32,6 +32,8 @@
 *.apsave
 *.BIN
 *.puml
+*.nds
+*.apcvooe
 
 setups
 build
