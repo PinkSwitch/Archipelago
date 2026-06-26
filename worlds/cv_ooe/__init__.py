@@ -52,7 +52,7 @@ class OoEWorld(World):
     ut_can_gen_without_yaml = True
 
     # location_name_groups = get_location_groups()
-    #options_dataclass = OoeOptions
+    options_dataclass = OoeOptions
     #options: OoEOptions
     #generate_early = generate_early
     #create_items = create_items
@@ -65,3 +65,17 @@ class OoEWorld(World):
     #set_rules = set_rules
     #write_spoiler_header = write_spoiler_header
     #extend_hint_information = extend_hint_information
+
+    def __init__(self, multiworld: MultiWorld, player: int):
+        self.rom_name_available_event = threading.Event()
+        super().__init__(multiworld, player)
+
+        self.location_cache = []
+        self.has_tried_master_ring = False
+        self.has_tried_queen_of_hearts: False
+        self.has_generated_output = False
+
+        self.glyph_filler_table = []
+        self.armor_table = []
+        self.good_armor_table = []
+        self.accessory_table = []
