@@ -309,18 +309,43 @@ location_ids = {
     # Mechnical tower room 8 s 6 has an oob chest?
 
     # Tin man chest?
-
-
-
-
-
-
-
-
-
-
     }
 
 location_data_table = {
     "Entrance: Drawbridge Pit Item": LocationInformation(0x022F9110, "overlay_78"),
 }
+
+
+def get_location_groups():
+    location_groups = {
+        "Wygol Village": set(),
+        "Ecclesia": set(),
+        "Training Hall": set(),
+        "Ruvas Forest": set(),
+        "Argila Swamp": set(),
+        "Kalidus Channel": set(),
+        "Somnus Reef": set(),
+        "Minera Prison Island": set(),
+        "Lighthouse": set(),
+        "Tymeo Mountains": set(),
+        "Tristis Pass": set(),
+        "Large Cavern": set(),
+        "Giant's Dwelling": set(),
+        "Mystery Manor": set(),
+        "Misty Forest Road": set(),
+        "Oblivion Ridge": set(),
+        "Skeleton Cave": set(),
+        "Monastery": set(),
+        "Castle Entrance": set(),
+        "Underground Labyrinth": set(),
+        "Library": set(),
+        "Barracks": set(),
+        "Mechanical Tower": set(),
+        "Arms Depot": set(),
+        "Forsaken Cloister": set(),
+        "Final Approach": set(),
+    }
+    for location in location_ids:
+        group = location.split(":")[0]
+        location_groups[group].add(location)
+    return location_groups

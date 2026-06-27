@@ -99,7 +99,6 @@ class StartingVillagers(OptionSet):
         "Monica",
         "Irina",
         "Daniela"}
-    valid_keys_casefold = True
 
 
 class RevealMap(DefaultOnToggle):
@@ -119,6 +118,37 @@ class RandomizeVillagers(Choice):
     default = 0
 
 
+class StartingArea(Choice):
+    """Which main Area you start with."""
+    display_name = "Starting Area"
+    option_none = 0
+    option_ruvas_forest = 1
+    option_argila_swamp = 2
+    option_kalidus_channel = 3
+    option_somnus_reef = 4
+    option_minera_prison_island = 5
+    option_lighthouse = 6
+    option_tymeo_mountains = 7
+    option_tristis_pass = 8
+    option_giants_dwelling = 9
+    option_mystery_manor = 10
+    option_misty_forest_road = 11
+    option_oblivion_ridge = 12
+    option_skeleton_cave = 13
+    option_monastery = 14
+    default = 14
+
+
+class RemoveLargeCavern(DefaultOnToggle):
+    """If enabled, Large Cavern will never be accessible."""
+    display_name = "Remove Large Cavern"
+
+
+class RemoveTrainingHall(DefaultOnToggle):
+    """If enabled, Training Hall will never be accessible."""
+    display_name = "Remove Training Hall"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -133,6 +163,9 @@ class OoEOptions(PerGameCommonOptions):
     reveal_hidden_walls: RevealBreakableWalls
     experience_percent: ExperiencePercent
     randomize_villagers: RandomizeVillagers
+    starting_area: StartingArea
+    remove_training_hall: RemoveTrainingHall
+    remove_large_cavern: RemoveLargeCavern
 
 
 ooe_option_groups = [
@@ -153,7 +186,12 @@ ooe_option_groups = [
         ShuffleDominus,
         AddBrownChests,
         RandomizeVillagers
+    ]),
 
+    OptionGroup("World Options", [
+        StartingArea,
+        RemoveTrainingHall,
+        RemoveLargeCavern
     ]),
 
     OptionGroup("Enemy Settings", [

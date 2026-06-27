@@ -1,5 +1,6 @@
 import typing
 import settings
+import threading
 
 from BaseClasses import Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
@@ -7,6 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
+from .generator_main import (generate_early)
 
 
 class OoEWeb(WebWorld):
@@ -52,9 +54,9 @@ class OoEWorld(World):
     ut_can_gen_without_yaml = True
 
     # location_name_groups = get_location_groups()
-    options_dataclass = OoeOptions
-    #options: OoEOptions
-    #generate_early = generate_early
+    options_dataclass = OoEOptions
+    options: OoEOptions
+    generate_early = generate_early
     #create_items = create_items
     #create_item = create_item
     #create_regions = create_regions
@@ -64,7 +66,6 @@ class OoEWorld(World):
     #get_filler_item_name = get_filler_item_name
     #set_rules = set_rules
     #write_spoiler_header = write_spoiler_header
-    #extend_hint_information = extend_hint_information
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
