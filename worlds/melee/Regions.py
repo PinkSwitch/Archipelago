@@ -1,3 +1,5 @@
+from rule_builder.rules import HasAny, Has, HasGroupUnique, HasAll
+
 from typing import List, Dict, TYPE_CHECKING
 from BaseClasses import Region, Location
 from .Locations import LocationData
@@ -51,43 +53,43 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
     multiworld.regions += regions
 
     multiworld.get_region("Game Base", player).add_exits(["Game Menu"],
-                                                    {"Game Menu": lambda state: state.has_group_unique("Characters", player)})
+                                                    {"Game Menu": HasGroupUnique("Characters", 1)})
 
     multiworld.get_region("Game Menu", player).add_exits(["Any Melee", "Adventure Mode", "Classic Mode",
                                                     "All-Star Mode", "Event Match Mode", "Target Test",
                                                     "Home-Run Contest", "Multi-Man Melee", "Lottery Base",
                                                     "Any Main 1-P"],
-                                                    {"Adventure Mode": lambda state: state.has("Adventure Mode", player),
-                                                     "Classic Mode": lambda state: state.has("Classic Mode", player),
-                                                     "All-Star Mode": lambda state: state.has("All-Star Mode", player),
-                                                     "Home-Run Contest": lambda state: state.has("Home-Run Contest", player),
-                                                     "Target Test": lambda state: state.has("Target Test", player),
-                                                     "Multi-Man Melee": lambda state: state.has("Multi-Man Melee", player),
-                                                     "Any Main 1-P": lambda state: state.has_any({"Adventure Mode", "Classic Mode", "All-Star Mode"}, player)})
+                                                    {"Adventure Mode": Has("Adventure Mode"),
+                                                     "Classic Mode": Has("Classic Mode"),
+                                                     "All-Star Mode": Has("All-Star Mode"),
+                                                     "Home-Run Contest": Has("Home-Run Contest"),
+                                                     "Target Test": Has("Target Test"),
+                                                     "Multi-Man Melee": Has("Multi-Man Melee"),
+                                                     "Any Main 1-P": HasAny("Adventure Mode", "Classic Mode", "All-Star Mode")})
 
     multiworld.get_region("Event Match Mode", player).add_exits(["Events 1-10", "Events 11-15", "Events 16-20", "Events 21-25", "Events 26-29", "Event 30", "Events 31-39", "Events 40-50", "Event 51"],
-                                                    {"Events 11-15": lambda state: state.has("Progressive Event Pack", player, 1),
-                                                    "Events 16-20": lambda state: state.has("Progressive Event Pack", player, 2),
-                                                    "Events 21-25": lambda state: state.has("Progressive Event Pack", player, 3),
-                                                    "Events 26-29": lambda state: state.has("Progressive Event Pack", player, 4),
-                                                    "Event 30": lambda state: state.has("Progressive Event Pack", player, 5),
-                                                    "Events 31-39": lambda state: state.has("Progressive Event Pack", player, 6),
-                                                    "Events 40-50": lambda state: state.has("Progressive Event Pack", player, 7),
-                                                    "Event 51": lambda state: state.has("Progressive Event Pack", player, 8)})
+                                                    {"Events 11-15": Has("Progressive Event Pack", 1),
+                                                    "Events 16-20": Has("Progressive Event Pack", 2),
+                                                    "Events 21-25": Has("Progressive Event Pack", 3),
+                                                    "Events 26-29": Has("Progressive Event Pack", 4),
+                                                    "Event 30": Has("Progressive Event Pack", 5),
+                                                    "Events 31-39": Has("Progressive Event Pack", 6),
+                                                    "Events 40-50": Has("Progressive Event Pack", 7),
+                                                    "Event 51": Has("Progressive Event Pack", 8)})
 
     if world.options.lottery_pool_mode:
         multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters", "Lottery 250 Trophies"],
-                                                        {"Lottery Adventure/Classic Clear": lambda state: state.has("Progressive Lottery Pool", player, 1) or state.has("Lottery Pool Upgrade (Adventure/Classic Clear)", player),
-                                                        "Lottery 200 Vs. Matches": lambda state: state.has("Progressive Lottery Pool", player, 2) or state.has("Lottery Pool Upgrade (200 Vs. Matches)", player),
-                                                        "Lottery Secret Characters": lambda state: state.has("Progressive Lottery Pool", player, 3) or state.has("Lottery Pool Upgrade (Secret Characters)", player),
-                                                        "Lottery 250 Trophies": lambda state: state.has("Progressive Lottery Pool", player, 4) or state.has("Lottery Pool Upgrade (250 Trophies)", player)})
+                                                        {"Lottery Adventure/Classic Clear": Has("Progressive Lottery Pool", 1) | Has("Lottery Pool Upgrade (Adventure/Classic Clear)"),
+                                                        "Lottery 200 Vs. Matches": Has("Progressive Lottery Pool", 2) | Has("Lottery Pool Upgrade (200 Vs. Matches)"),
+                                                        "Lottery Secret Characters": Has("Progressive Lottery Pool", 3) | Has("Lottery Pool Upgrade (Secret Characters)"),
+                                                        "Lottery 250 Trophies": Has("Progressive Lottery Pool", 4) | Has("Lottery Pool Upgrade (250 Trophies)")})
     else:
         multiworld.get_region("Lottery Base", player).add_exits(["Lottery Adventure/Classic Clear", "Lottery 200 Vs. Matches", "Lottery Secret Characters"],
-                                                        {"Lottery Adventure/Classic Clear": lambda state: state.has_all({"Adventure Mode", "Classic Mode"}, player),
-                                                        "Lottery Secret Characters": lambda state: state.has_all(secret_characters, player)})
+                                                        {"Lottery Adventure/Classic Clear": HasAll("Adventure Mode", "Classic Mode"),
+                                                        "Lottery Secret Characters": HasAll(*secret_characters)})
         if world.use_250_trophy_pool:
             multiworld.get_region("Lottery Base", player).add_exits(["Lottery 250 Trophies"],
-                                                            {"Lottery Adventure/Classic Clear": lambda state: state.has_group_unique("Trophies", player, 250)})
+                                                            {"Lottery Adventure/Classic Clear": HasGroupUnique("Trophies", 250)})
 
 
 def create_location(player: int, location_data: LocationData, region: Region) -> Location:

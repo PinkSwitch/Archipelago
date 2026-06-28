@@ -24,6 +24,7 @@ from .in_game_data import global_trophy_table
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
 from Utils import local_path
 
+
 def run_client(*args):
     print("Running SSBM Client")
     from .Client import launch

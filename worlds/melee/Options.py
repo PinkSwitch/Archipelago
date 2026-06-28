@@ -165,6 +165,21 @@ class GoalTriggers(OptionSet):
     default = {"Giga Bowser"}
     valid_keys = {"Giga Bowser", "Crazy Hand", "Event 51", "All Targets", "All Events", "Other Events", "Event 50"}
 
+
+class AdventureClearTrophies(DefaultOnToggle):
+    """Enables checks on each character's Adventure clear trophy"""
+    display_name = "Adventure Clear Trophies"
+
+
+class ClassicClearTrophies(DefaultOnToggle):
+    """Enables checks on each character's Classic clear trophy"""
+    display_name = "Classic Clear Trophies"
+
+
+class AllStarClearTrophies(DefaultOnToggle):
+    """Enables checks on each character's All-Star clear trophy"""
+    display_name = "All-Star Clear Trophies"
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -194,6 +209,9 @@ class SSBMOptions(PerGameCommonOptions):
     disable_tap_jump: DisableTapJump
     automatic_l_cancel: AutoLCancel
     start_inventory_from_pool: StartInventoryPool
+    adventure_clear_trophies: AdventureClearTrophies
+    classic_clear_trophies: ClassicClearTrophies
+    all_star_clear_trophies: AllStarClearTrophies
 
 
 ssbm_option_groups = [
@@ -207,6 +225,9 @@ ssbm_option_groups = [
     ]),
 
     OptionGroup("Check Settings", [
+        AdventureClearTrophies,
+        ClassicClearTrophies,
+        AllStarClearTrophies,
         BonusSanity,
         EventSanity,
         TargetSanity,

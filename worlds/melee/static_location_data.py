@@ -673,13 +673,13 @@ location_ids = {
     "Multi Man Melee - Marth 10-Man": 0x28A,
     "Multi Man Melee - Roy 10-Man": 0x28B
 
-    #"Event Match Milestone - 6 Events Clear": 0xF7,
-    #"Event Match Milestone - 10 Events Clear": 0xF8,
-    #"Event Match Milestone - 16 Events Clear": 0xF9,
-    #"Event Match Milestone - 22 Events Clear": 0xFA,
-    #"Event Match Milestone - 27 Events Clear": 0xFB,
-    #"Event Match Milestone - 30 Events Clear & Assorted Secret Characters": 0xFC,
-    #"Event Match Milestone - All Events Clear": 0xFD,
+    # "Event Match Milestone - 6 Events Clear": 0xF7,
+    # "Event Match Milestone - 10 Events Clear": 0xF8,
+    # "Event Match Milestone - 16 Events Clear": 0xF9,
+    # "Event Match Milestone - 22 Events Clear": 0xFA,
+    # "Event Match Milestone - 27 Events Clear": 0xFB,
+    # "Event Match Milestone - 30 Events Clear & Assorted Secret Characters": 0xFC,
+    # "Event Match Milestone - All Events Clear": 0xFD,
 }
 
 

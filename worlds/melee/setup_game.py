@@ -1,12 +1,13 @@
 import logging
 from .Rules import adventure_trophies, classic_trophies, allstar_trophies
 
+
 def setup_gamevars(world) -> None:
     character_selection = ["Dr. Mario", "Mario", "Luigi", "Bowser", "Peach",
-                            "Yoshi", "Donkey Kong", "Captain Falcon", "Ganondorf", "Falco",
-                            "Fox", "Ness", "Ice Climbers", "Kirby", "Samus",
-                            "Zelda", "Link", "Young Link", "Pichu", "Pikachu",
-                            "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth", "Roy"]
+                           "Yoshi", "Donkey Kong", "Captain Falcon", "Ganondorf", "Falco",
+                           "Fox", "Ness", "Ice Climbers", "Kirby", "Samus",
+                           "Zelda", "Link", "Young Link", "Pichu", "Pikachu",
+                           "Jigglypuff", "Mewtwo", "Mr. Game & Watch", "Marth", "Roy"]
 
     world.starting_character = character_selection[world.options.starting_character]
     world.multiworld.push_precollected(world.create_item(world.starting_character))
@@ -75,7 +76,7 @@ def setup_gamevars(world) -> None:
         world.location_count += 224
         
         if world.options.enable_rare_pokemon_checks:
-            world.location_count += 2 #Pokemon bonuses
+            world.location_count += 2  # Pokemon bonuses
 
         if world.options.enable_hard_bonuses:
             world.location_count += 13
@@ -87,11 +88,8 @@ def setup_gamevars(world) -> None:
             world.location_count += 1
 
 
-
-
 def place_static_items(world):
     world.get_location("Trophy Room - Admire Collection").place_locked_item(world.create_item("Sense of Accomplishment"))
-
 
     if "Giga Bowser" in world.options.goal_triggers:
         world.get_location("Goal: Giga Bowser Defeated").place_locked_item(world.create_item("Sense of Accomplishment"))
@@ -110,6 +108,7 @@ def place_static_items(world):
 
     if "Event 50" in world.options.goal_triggers:
         world.get_location("Goal: Event 50").place_locked_item(world.create_item("Sense of Accomplishment"))
+
 
 def calculate_trophy_based_locations(world):
     if adventure_trophies.issubset(world.picked_trophies):
