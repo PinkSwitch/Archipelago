@@ -18,7 +18,7 @@ from .Regions import init_areas
 from .Options import SSBMOptions, ssbm_option_groups
 from .Rules import set_location_rules
 from .Rom import apply_patch, MeleePlayerContainer
-from .static_location_data import location_ids
+from .static_location_data import location_ids, location_name_groups
 from .setup_game import setup_gamevars, place_static_items, calculate_trophy_based_locations
 from .in_game_data import global_trophy_table
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
@@ -66,6 +66,7 @@ class SSBMWorld(World):
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
+    location_name_groups = location_name_groups
 
     web = SSBMWeb()
     # topology_present = True
