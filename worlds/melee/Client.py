@@ -3,8 +3,7 @@ import struct
 import typing
 import traceback
 import uuid
-from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
-import Patch
+from CommonClient import CommonContext, ClientCommandProcessor, server_loop, logger, gui_enabled
 import Utils, NetUtils
 import asyncio
 import dolphin_memory_engine as dme
@@ -22,7 +21,7 @@ CONNECTION_CONNECTED_STATUS = "Dolphin connected successfully."
 CONNECTION_INITIAL_STATUS = "Dolphin connection has not been initiated."
 CONNECTION_REFUSED_GAME_STATUS = "Dolphin failed to connect. Ensure your randomized Melee patch is running. Trying again in 5 seconds..."
 
-AUTH_ID_ADDRESS = 0x803BAC5C #
+AUTH_ID_ADDRESS = 0x803BAC5C
 GAME_SEED_ADDRESS = 0x803BAC6A
 LAST_RECV_ITEM_ADDR = 0x8045C368
 COIN_COUNTER = 0x8045C10A
@@ -37,8 +36,10 @@ TROPHY_CLASS = 0x804A2853
 TROPHY_RIG_ADDRESS = 0x80001820
 LOTTO_PRIMED_ADDR = 0x80BEEBDE
 
+
 def read_bytes(console_address: int, length: int):
     return int.from_bytes(dme.read_bytes(console_address, length))
+
 
 def read_bytearray(console_address: int, length: int):
     return bytearray(dme.read_bytes(console_address, length))
@@ -65,6 +66,7 @@ async def write_bytes_and_validate(addr: int, ram_offset: list[str] | None, curr
         dme.write_bytes(addr, curr_value)
     else:
         dme.write_bytes(dme.follow_pointers(addr, ram_offset), curr_value)
+
 
 class SSBMCommandProcessor(ClientCommandProcessor):
     """
@@ -108,6 +110,7 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         """Rigs the lottery to give a specific available Lottery check. Requires 30 coins to use."""
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.rig_lottery(selected_trophy), name="Lottery Rig")
+
 
 class SSBMClient(CommonContext):
     command_processor = SSBMCommandProcessor 
@@ -267,7 +270,7 @@ class SSBMClient(CommonContext):
 
         coin_count = int.from_bytes(dme.read_bytes(COIN_COUNTER, 2))
         if coin_count < 300:
-            logger.info(f"It costs 30 coins to rig the lottery. You have {max(0,int(coin_count / 10))} coins.")
+            logger.info(f"It costs 30 coins to rig the lottery. You have {max(0, int(coin_count / 10))} coins.")
             return
         
         if f"{rigged_trophy_input} (trophy)" in insensitive_trophy_list:
@@ -438,7 +441,6 @@ class SSBMClient(CommonContext):
                     event_total = event_total.to_bytes(1, "big")
                     dme.write_bytes(AP_EVENT_COUNTER, event_total)
 
-
                     lottery_total = 0
                     lottery_bit = 0
                     lottery_pool_total = sum(1 for item in self.items_received if item.item == 0x151)
@@ -527,7 +529,7 @@ class SSBMClient(CommonContext):
 
             if "Event 50" in self.active_goals:
                 event_50_check = int.from_bytes(dme.read_bytes(0x8045C129, 1))
-                if event_50_check & 0x02: #CHECK THESE!!!
+                if event_50_check & 0x02:  # CHECK THESE!!!
                     self.event_50_complete = True
                 else:
                     self.event_50_complete = False
@@ -554,6 +556,7 @@ class SSBMClient(CommonContext):
                 elif not self.has_played_nag_message:
                     self.has_played_nag_message = True
                     logger.info("Detected Goal eligibility. Go to the Trophy Collection room to finish your game.")
+
 
 async def dolphin_sync_task(ctx: SSBMClient):
     while not ctx.exit_event.is_set():
@@ -610,6 +613,7 @@ async def dolphin_sync_task(ctx: SSBMClient):
 
 async def give_player_items(ctx: SSBMClient):
     from .in_game_data import coin_items, all_characters, mode_items
+
     async def wait_for_next_loop(time_to_wait: float):
         await asyncio.sleep(time_to_wait)
 
@@ -659,9 +663,9 @@ async def give_player_items(ctx: SSBMClient):
             dme.write_word(LAST_RECV_ITEM_ADDR, last_recv_idx)
         await wait_for_next_loop(0.5)
 
+
 def launch(connect=None, password=None):
     server_address: str = ""
-
 
     async def _main(connect, password):
         ctx = SSBMClient(server_address if server_address else connect, password)

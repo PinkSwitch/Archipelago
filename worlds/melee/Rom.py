@@ -1,16 +1,10 @@
-import os
-import Utils
-import typing
-import struct
-import settings
 import zipfile
 from worlds.Files import APPlayerContainer
-from typing import TYPE_CHECKING, Optional, Any
-from logging import warning
-from typing_extensions import override
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from . import SSBMWorld
+
 
 class MeleePlayerContainer(APPlayerContainer):
     game = "Super Smash Bros. Melee"
@@ -37,13 +31,13 @@ def apply_patch(world, basepatch, output):
         disable_class_upgrades = False
         
     result = template.render(
-            PLAYER_NAME = world.player_name,
-            GAME_FILE_NAME = world.encoded_slot_name,
-            SLOT_NUM = world.player,
-            AUTH_ID = world.authentication_id,
-            CSTICK_SMASH_SOLO = world.options.solo_cstick_smash,
-            AUTO_L_CANCEL = world.options.automatic_l_cancel,
-            DISABLE_TAP_JUMP = world.options.disable_tap_jump,
-            TROPHYCLASS_IN_POOL = disable_class_upgrades)
+            PLAYER_NAME=world.player_name,
+            GAME_FILE_NAME=world.encoded_slot_name,
+            SLOT_NUM=world.player,
+            AUTH_ID=world.authentication_id,
+            CSTICK_SMASH_SOLO=world.options.solo_cstick_smash,
+            AUTO_L_CANCEL=world.options.automatic_l_cancel,
+            DISABLE_TAP_JUMP=world.options.disable_tap_jump,
+            TROPHYCLASS_IN_POOL=disable_class_upgrades)
     return result
     

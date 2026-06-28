@@ -7,11 +7,9 @@ import base64
 import logging
 
 
-from typing import List, Set, Dict, TextIO
-from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
-from Fill import fill_restrictive
+from typing import List, Set, Dict
+from BaseClasses import Item, MultiWorld, Location, Tutorial
 from worlds.AutoWorld import World, WebWorld
-import settings
 from .Items import get_item_names_per_category, filler_item_table, item_table
 from .Locations import get_locations
 from .Regions import init_areas
@@ -21,7 +19,7 @@ from .Rom import apply_patch, MeleePlayerContainer
 from .static_location_data import location_ids, location_name_groups
 from .setup_game import setup_gamevars, place_static_items, calculate_trophy_based_locations
 from .in_game_data import global_trophy_table
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess, icon_paths
+from worlds.LauncherComponents import Component, Type, components, launch_subprocess, icon_paths
 from Utils import local_path
 
 

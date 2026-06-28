@@ -1,9 +1,9 @@
-global_trophy_table =["Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Alt Trophy)", "Donkey Kong (Trophy)", "Donkey Kong (Smash Trophy)",
+global_trophy_table = ["Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Alt Trophy)", "Donkey Kong (Trophy)", "Donkey Kong (Smash Trophy)",
                         "Donkey Kong (Smash Alt Trophy)", "Link (Trophy)", "Link (Smash Trophy)", "Link (Smash Alt Trophy)", "Samus Aran (Trophy)",
                         "Samus Aran (Smash Trophy)", "Samus Aran (Smash Alt Trophy)", "Yoshi (Trophy)", "Yoshi (Smash Trophy)", "Yoshi (Smash Alt Trophy)",
                         "Kirby (Trophy)", "Kirby (Smash Trophy)", "Kirby (Smash Alt Trophy)", "Fox McCloud (Trophy)", "Fox McCloud (Smash Trophy)", "Fox McCloud (Smash Alt Trophy)",
                         "Pikachu (Trophy)", "Pikachu (Smash Trophy)", "Pikachu (Smash Alt Trophy)", "Ness (Trophy)", "Ness (Smash Trophy)", "Ness (Smash Alt Trophy)",
-                        "Captain Falcon (Trophy)", "Captain Falcon (Smash Trophy)", "Captain Falcon (Smash Alt Trophy)","Bowser (Trophy)", "Bowser (Smash Trophy)", "Bowser (Smash Alt Trophy)",
+                        "Captain Falcon (Trophy)", "Captain Falcon (Smash Trophy)", "Captain Falcon (Smash Alt Trophy)", "Bowser (Trophy)", "Bowser (Smash Trophy)", "Bowser (Smash Alt Trophy)",
                         "Peach (Trophy)", "Peach (Smash Trophy)", "Peach (Smash Alt Trophy)", "Ice Climbers (Trophy)", "Ice Climbers (Smash Trophy)", "Ice Climbers (Smash Alt Trophy)",
                         "Zelda (Trophy)", "Zelda (Smash Trophy)", "Zelda (Smash Alt Trophy)", "Sheik (Trophy)", "Sheik (Smash Trophy)", "Sheik (Smash Alt Trophy)",
                         "Luigi (Trophy)", "Luigi (Smash Trophy)", "Luigi (Smash Alt Trophy)", "Jigglypuff (Trophy)", "Jigglypuff (Smash Trophy)", "Jigglypuff (Smash Alt Trophy)",
@@ -47,8 +47,7 @@ global_trophy_table =["Mario (Trophy)", "Mario (Smash Trophy)", "Mario (Smash Al
                         "Mr. Resetti (Trophy)", "Heririn (Trophy)", "Alpha (Trophy)", "Vacuum Luigi (Trophy)", "Pikmin (Trophy)", "Captain Olimar (Trophy)",
                         "Excitebike (Trophy)", "Tamagon (Trophy)", "Donkey Kong Junior (Trophy)", "Ducks (Trophy)", "Bubbles (Trophy)", "Eggplant Man (Trophy)",
                         "Mach Rider (Trophy)", "Balloon Fighter (Trophy)", "Stanley (Trophy)", "Pit (Trophy)", "Dr. Wright (Trophy)", "Donbe & Hikari (Trophy)",
-                        "Ayumi Tachibana (Trophy)", "Monster (Trophy)", "Sheriff (Trophy)", "Diskun (Trophy)", "GCN (Trophy)"
-                        ]
+                        "Ayumi Tachibana (Trophy)", "Monster (Trophy)", "Sheriff (Trophy)", "Diskun (Trophy)", "GCN (Trophy)"]
 
 bonus_checks = {
     0x01: [0, 0x1],
@@ -417,7 +416,7 @@ trophy_checks = {
     "Adventure Mode - Hard/Continueless Clear": 84,
     "Melee - 1000 VS. Matches": 85,
     "Melee - 10 VS. Matches": 86,
-    #Heart Container
+    # Heart Container
     "Any 1P Trophy - Warp Star": 88,
     "Base Trophy Pool - Ray Gun": 89,
     "Base Trophy Pool - Super Scope": 90,
