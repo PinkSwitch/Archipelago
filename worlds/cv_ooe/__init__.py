@@ -8,7 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
-from .generator_main import (generate_early)
+from .generator_main import (generate_early, create_regions)
 
 
 class OoEWeb(WebWorld):
@@ -59,7 +59,7 @@ class OoEWorld(World):
     generate_early = generate_early
     #create_items = create_items
     #create_item = create_item
-    #create_regions = create_regions
+    create_regions = create_regions
     #fill_slot_data = fill_slot_data
     #modify_multidata = modify_multidata
     #generate_output = generate_output

@@ -3,7 +3,7 @@ from .Options import StartingGlyph
 from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs
 
 
-def setup_game(world):
+def setup_game(world) -> None:
     if world.options.starting_glyph == StartingGlyph.option_random_base:
         world.starting_glyph = world.random.choice(base_glyphs)  # Pick a random base-level glyph
     elif world.options.starting_glyph == StartingGlyph.option_random_any:
@@ -14,4 +14,20 @@ def setup_game(world):
             raise OptionError(f"Option Error for Player {world.player_name}. Attempted to set invalid Starting Glyph '{glyph}'.")
         else:
             world.starting_glyph = glyph  # If valid custom glyph is found, use it as the starting glyph
-    world.multiworld.push_precollected(world.create_progress_event(world.starting_glyph))
+    world.multiworld.push_precollected(world.create_progress_event(world.starting_glyph))  # Collect the starting glyph as an Event item.
+
+    if world.options.start_with_lizard_tail:
+        world.multiworld.push_precollected(world.create_progress_event("Lizard Tail"))
+
+    if world.options.start_with_glyph_sleeve:
+        world.multiworld.push_precollected(world.create_progress_event("Glyph Sleeve"))
+
+    if world.options.start_with_glyph_union:
+        world.multiworld.push_precollected(world.create_progress_event("Glyph Union"))
+
+    for villager in world.options.starting_villagers:
+        world.multiworld.push_precollected(world.create_progress_event(villager))
+
+
+def place_static_items(world) -> None:
+    print("amogus")
