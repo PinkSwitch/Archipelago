@@ -6,7 +6,9 @@ from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, 
 # TODO - IMPLEMENT
 class StartingGlyph(TextChoice):
     """Which Arm Glyph you start the game with.
-       Random Base selects any base-power Glyph"""
+       Random Base selects any base-power Glyph.
+       You can additionanlly type in any valid Arm Glyph manually.
+       (ex. "Confodere = 1")"""
     option_random_base = 0
     option_random_any = 1
     default = 0

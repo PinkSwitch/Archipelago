@@ -1,4 +1,4 @@
-
+from .setup_game import setup_game
 
 def generate_early(world) -> None:
     from .setup_game import setup_game
@@ -13,3 +13,5 @@ def generate_early(world) -> None:
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
+
+# TODO; Options, starting stuff, events, make locations, filler gen, filler should be unique and removed, do one-time gens for master ring and queen of hearts
