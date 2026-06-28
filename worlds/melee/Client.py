@@ -581,6 +581,14 @@ async def dolphin_sync_task(ctx: SSBMClient):
                             dme.un_hook()
                             await asyncio.sleep(5)
                             continue
+                        if ctx.auth == "SuperSmashBros0110290334":  # Vanilla save code
+                            ctx.auth = None
+                            ctx.awaiting_rom = False
+                            logger.info("Archipelago patch not loaded. Please load a Melee Archipelago Riivolution patch and try again.")
+                            ctx.dolphin_status = CONNECTION_REFUSED_GAME_STATUS
+                            dme.un_hook()
+                            await asyncio.sleep(5)
+                            continue
                     if ctx.awaiting_rom:
                         await ctx.server_auth()
                 await asyncio.sleep(0.1)

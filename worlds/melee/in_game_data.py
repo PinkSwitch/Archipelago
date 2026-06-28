@@ -608,7 +608,7 @@ trophy_checks = {
     "Game - Pikmin Memory Card Data": 276,
     "Base Trophy Pool - Excitebike": 277,
     #Tamagon: 278,
-    "Adventure Mode - All Character Trophies": 279,
+    "Classic Mode - All Character Trophies": 279,
     "Base Trophy Pool - Ducks": 280,
     "Lottery - Bubbles": 281,
     "Lottery - Eggplant Man": 282,
