@@ -75,6 +75,7 @@ class OoEWorld(World):
         self.has_tried_master_ring = False
         self.has_tried_queen_of_hearts: False
         self.has_generated_output = False
+        self.starting_glyph = None
 
         self.glyph_filler_table = []
         self.armor_table = []
