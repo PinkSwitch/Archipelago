@@ -29,6 +29,8 @@ def create_er_regions(world: "TunicWorld") -> dict[Portal, Portal]:
     world.used_shop_numbers = set()
 
     for region_name, region_data in world.er_regions.items():
+        if region_name == "Zig Skip Exit":
+            continue
         if world.options.entrance_rando and region_name == "Zig Skip Exit":
             # need to check if there's a seed group for this first
             if world.options.entrance_rando.value not in EntranceRando.options.values():
@@ -113,13 +115,13 @@ def place_event_items(world: "TunicWorld", regions: dict[str, Region]) -> None:
             location.place_locked_item(
                 TunicERItem("Unseal the Heir", ItemClassification.progression, None, world.player))
         elif event_name.endswith("Bell"):
-            # if world.options.shuffle_bells:
-            #     continue
+            if world.options.shuffle_bells:
+                continue
             location.place_locked_item(
                 TunicERItem("Ring " + event_name, ItemClassification.progression, None, world.player))
         elif event_name.endswith("Fuse") or event_name.endswith("Fuses"):
-            # if world.options.shuffle_fuses:
-            #     continue
+            if world.options.shuffle_fuses:
+                continue
             location.place_locked_item(
                 TunicERItem("Activate " + event_name, ItemClassification.progression, None, world.player))
         region.locations.append(location)
@@ -200,10 +202,8 @@ def pair_portals(world: "TunicWorld", regions: dict[str, Region]) -> dict[Portal
     entrance_layout = world.options.entrance_layout
     laurels_location = world.options.laurels_location
     decoupled = world.options.decoupled
-    # shuffle_fuses = bool(world.options.shuffle_fuses.value)
-    # shuffle_bells = bool(world.options.shuffle_bells.value)
-    shuffle_fuses = False
-    shuffle_bells = False
+    shuffle_fuses = bool(world.options.shuffle_fuses.value)
+    shuffle_bells = bool(world.options.shuffle_bells.value)
     traversal_reqs = deepcopy(traversal_requirements)
     has_laurels = True
     waterfall_plando = False
@@ -216,6 +216,8 @@ def pair_portals(world: "TunicWorld", regions: dict[str, Region]) -> dict[Portal
         ladder_storage = seed_group["ladder_storage"]
         entrance_layout = seed_group["entrance_layout"]
         laurels_location = "10_fairies" if seed_group["laurels_at_10_fairies"] is True else False
+        shuffle_bells = seed_group["bell_shuffle"]
+        shuffle_fuses = seed_group["fuse_shuffle"]
 
     logic_tricks: tuple[bool, int, int] = (laurels_zips, ice_grappling, ladder_storage)
 
@@ -773,11 +775,17 @@ def pair_portals(world: "TunicWorld", regions: dict[str, Region]) -> dict[Portal
 # loop through our list of paired portals and make two-way connections
 def create_randomized_entrances(world: "TunicWorld", portal_pairs: dict[Portal, Portal], regions: dict[str, Region]) -> None:
     for portal1, portal2 in portal_pairs.items():
+        # this portal is completely inaccessible, so let's not make this connection
+        if portal1.region == "Zig Skip Exit":
+            continue
         # connect to the outlet region if there is one, if not connect to the actual region
         regions[portal1.region].connect(
             connecting_region=regions[get_portal_outlet_region(portal2, world)],
             name=portal1.name)
         if not world.options.decoupled or not world.options.entrance_rando:
+            # this portal is completely inaccessible, so let's not make this connection
+            if portal2.region == "Zig Skip Exit":
+                continue
             regions[portal2.region].connect(
                 connecting_region=regions[get_portal_outlet_region(portal1, world)],
                 name=portal2.name)
