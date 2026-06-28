@@ -1,5 +1,6 @@
 from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
+from .Locations import get_locations
 
 if TYPE_CHECKING:
     from . import OoEWorld
