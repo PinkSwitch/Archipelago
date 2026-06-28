@@ -1,3 +1,8 @@
+from BaseClasses import Item, ItemClassification
+
+
+class CVOoEItem(Item):
+    game: str = "Castlevania: Order of Ecclesia"
 
 
 def generate_early(world) -> None:
@@ -21,5 +26,19 @@ def create_regions(world) -> None:
 
     init_areas(world)
     place_static_items(world)
+
+
+def create_items(world) -> None:
+    print("TODO! Implement")
+
+
+def create_item(world, name: str) -> CVOoEItem:
+    data = set_classifications(world, name)
+    return CVOoEItem(name, data.classification, data.code, world.player)
+
+
+def create_progress_event(world, name: str) -> CVOoEItem:
+    # Create item name [str] as a Progression Event item.
+    return CVOoEItem(name, ItemClassification.progression, None, world.player)
 
 # TODO; Options, starting stuff, events, make locations, filler gen, filler should be unique and removed, do one-time gens for master ring and queen of hearts

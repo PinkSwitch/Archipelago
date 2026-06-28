@@ -61,7 +61,7 @@ location_ids = {
     "Wygol Village: Right Chest": 0x46,
     "Library: Hidden Room Free": 0x47,
     "Arms Depot: Post-Boss Item": 0x48, 
-    "Kalidus Chanel: Upper Exit": 0x49,
+    "Kalidus Channel: Upper Exit": 0x49,
     "Kalidus Channel: Depths Left Tall Room Chest": 0x4A,
     "Kalidus Channel: Depths Left Chest": 0x4B,
     "Kalidus Channel: Depths Central": 0x4C,
@@ -104,7 +104,7 @@ location_ids = {
     "Somnus Reef: Right Side Isolated Room": 0x74,
     "Tristis Pass: Ice Cave Chest": 0x75,
     "Castle Entrance: Paries Wall": 0x76,
-    "Lirary: First Chest": 0x77,
+    "Library: First Chest": 0x77,
     "Mechanical Tower: Upper Magnets Wall Item": 0x78,
     "Barracks: Left Secret Room": 0x79,
     "Arms Depot: Left Room Chest": 0x7A,
@@ -148,7 +148,7 @@ location_ids = {
     "Oblivion Ridge: Final Room In Wall": 0xB3,
     "Mystery Manor: Dark Room Chest": 0xB4,
     # B5 is reserved for the TinMan chest on island
-    "Lirary: Hidden Room Chest": 0xB6,
+    "Library: Hidden Room Chest": 0xB6,
     "Mechanical Tower: Hidden Room": 0xB7,
     "Giant's Dwelling: Entrance Item": 0xB8,
     "Tymeo Mountains: Lower Mountain Lower Paries Chest": 0xB9,
@@ -194,7 +194,7 @@ location_ids = {
     "Large Cavern: Rest Room 3": 0xE1,
     "Large Cavern: Rest Room 4": 0xE2,
     "Large Cavern: Final Reward 1": 0xE3,
-    "Underground Passage: Area Exit": 0xE4,
+    "Underground Labyrinth: Area Exit": 0xE4,
     "Misty Forest Road: Right Big Room Ledge": 0xE6,
     "Monastery: Second Big Room Upper Ledge": 0xE7,
     "Monastery: Final Shaft Chest": 0xE8,
@@ -233,7 +233,7 @@ location_ids = {
     "Tristis Pass: Waterfall Center": 0x010E,
     "Tymeo Mountains: Right Shaft Hidden Item": 0x113,
     "Kalidus Channel: Depths Rightmost Shaft Freestanding": 0x115,
-    "Kaldius Channel: Ship Room Center Right Chest": 0x117,
+    "Kalidus Channel: Ship Room Center Right Chest": 0x117,
     "Tristis Pass: Ice Exit Hidden Item": 0x119,
     "Final Approach: Final Stash Second From Right": 0x11A,
     "Oblivion Ridge: Post-Boss Wall Item": 0x11B,
@@ -245,7 +245,7 @@ location_ids = {
     "Tymeo Mountains: Lower Mountain Upper Paries Chest": 0x123,
     "Underground Labyrinth: Detour Chest": 0x124,
     "Somnus Reef: Left Big Room Right Chest": 0x125,
-    "Tristiss Past: Final Hill Tree Chest": 0x126,
+    "Tristis Pass: Final Hill Tree Chest": 0x126,
     "Mechanical Tower: Upper Magnets Chest": 0x127,
     "Barracks: Lowest Room": 0x128,
     "Monastery: Magnet Room Top Chest": 0x129,
@@ -297,7 +297,7 @@ location_ids = {
     "Tymeo Mountains: Right Exit": 0x15C,
     "Tymeo Mountains: Right Exit Item": 0x15D,
     "Tymeo Mountains: Cavern Chest": 0x15E,
-    "Tymeo Mountains Right Shaft Lower": 0x15F,
+    "Tymeo Mountains: Right Shaft Lower": 0x15F,
     "Tristis Pass: Waterfall Lower": 0x190,
     "Tristis Pass: Room Behind Waterfall": 0x191,
     "Castle Entrance: Past Paries Big Room Chest": 0x192,
@@ -344,8 +344,12 @@ def get_location_groups():
         "Arms Depot": set(),
         "Forsaken Cloister": set(),
         "Final Approach": set(),
+        "Enemy Glyphs": set()
     }
     for location in location_ids:
         group = location.split(":")[0]
-        location_groups[group].add(location)
+        if group not in location_groups:
+            location_groups["Enemy Glyphs"].add(location)
+        else:
+            location_groups[group].add(location)
     return location_groups
