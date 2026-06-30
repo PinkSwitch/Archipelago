@@ -215,7 +215,7 @@ class SSBMOptions(PerGameCommonOptions):
     classic_clear_trophies: ClassicClearTrophies
     all_star_clear_trophies: AllStarClearTrophies
     randomize_battle_items: RandomizeItems
-    remove_random_1P_trohpies: Disable1PRandomTrophies
+    remove_random_1P_trophies: Disable1PRandomTrophies
 
 
 ssbm_option_groups = [

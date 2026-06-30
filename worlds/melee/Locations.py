@@ -207,7 +207,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
         LocationData("Game Menu", "Trophy Room - Admire Collection", None),
     ]
 
-    if not world.options.remove_random_1P_trohpies:
+    if not world.options.remove_random_1P_trophies:
         location_table += [
             LocationData("Any Main 1-P", "Any 1P Trophy - Ayumi Tachibana", 0x214),
             LocationData("Any Main 1-P", "Any 1P Trophy - Banzai Bill", 0x215),

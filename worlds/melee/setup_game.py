@@ -12,21 +12,10 @@ def setup_gamevars(world) -> None:
     world.starting_character = character_selection[world.options.starting_character]
     world.multiworld.push_precollected(world.create_item(world.starting_character))
 
-    if world.options.lottery_pool_mode == 1:
-        for i in range(4):
-            world.multiworld.itempool.append(world.create_item("Progressive Lottery Pool"))
-            world.extra_item_count += 1
-    elif world.options.lottery_pool_mode == 2:
-        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (Adventure/Classic Clear)")),
-        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (Secret Characters)")),
-        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (200 Vs. Matches)")),
-        world.multiworld.itempool.append(world.create_item("Lottery Pool Upgrade (250 Trophies)")),
-        world.extra_item_count += 4
-
     world.total_trophy_count = world.options.trophies_required + world.options.extra_trophies
     if world.total_trophy_count > 293:
         logging.warning(f"""Warning: {world.multiworld.get_player_name(world.player)}'s generated Trophy Count is too high.
-                Required: {world.options.trophies_required} | Extra: {world.options.extra_trophies}. This will be automatically capped.""")
+                Required: {world.options.trophies_required} | Extra: {world.options.extra_trophies}. This will be automatically capped to 293.""")
         world.total_trophy_count = 293
         world.options.extra_trophies.value = 293 - world.options.trophies_required
 
@@ -73,19 +62,19 @@ def setup_gamevars(world) -> None:
         world.location_count += 3
 
     if world.options.adventure_clear_trophies:
-        world.location_count += 25
+        world.location_count += 26
 
     if world.options.classic_clear_trophies:
-        world.location_count += 25
+        world.location_count += 26
 
     if world.options.all_star_clear_trophies:
-        world.location_count += 25
+        world.location_count += 26
 
-    if world.options.remove_random_1P_trohpies:
-        world.location_count -= 27
+    if not world.options.remove_random_1P_trophies:
+        world.location_count += 27
 
     if world.options.bonus_checks:
-        world.location_count += 224
+        world.location_count += 223
         
         if world.options.enable_rare_pokemon_checks:
             world.location_count += 2  # Pokemon bonuses

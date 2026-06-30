@@ -44,23 +44,32 @@ def create_regions(world) -> None:
             world.options.trophies_required.value -= 1
 
     calculate_trophy_based_locations(world)  # If the Trophy Pool was adjusted, recalculate this to remove the locations
-
-    for trophy in world.picked_trophies:
-        if trophy not in world.options.start_inventory:  # Don't create any extra trophies that are in start inventory
-            world.multiworld.itempool.append(set_classifications(world, trophy))
-            world.extra_item_count += 1
-
     init_areas(world, get_locations(world))
     place_static_items(world)
 
 
 def create_items(world) -> None:
+    print(world.location_count)
+    print("AMOGUS!!!!!!!!!!")
     pool = []
     for name, data in item_table.items():
         for _ in range(data.default_count):
             item = set_classifications(world, name)
             pool.append(item)
     pool.remove(set_classifications(world, world.starting_character))  # Don't add a copy of the starter into the pool
+    if world.options.lottery_pool_mode == 1:
+        for i in range(4):
+            pool.append(set_classifications(world, "Progressive Lottery Pool"))
+    elif world.options.lottery_pool_mode == 2:
+        pool.append(set_classifications(world, "Lottery Pool Upgrade (Adventure/Classic Clear)")),
+        pool.append(set_classifications(world, "Lottery Pool Upgrade (Secret Characters)")),
+        pool.append(set_classifications(world, "Lottery Pool Upgrade (200 Vs. Matches)")),
+        pool.append(set_classifications(world, "Lottery Pool Upgrade (250 Trophies)")),
+
+    for trophy in world.picked_trophies:
+        if trophy not in world.options.start_inventory:  # Don't create any extra trophies that are in start inventory
+            pool.append(set_classifications(world, trophy))
+
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
     for i in range(filler_location_count):
         item = set_classifications(world, get_filler_item_name(world))
@@ -114,7 +123,6 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 
 
 def set_classifications(world, name) -> SSBMItem:
-    # Make quest items be prog, here.
     item_data = item_table[name]
     item = SSBMItem(name, item_data.classification, item_data.code, world.player)
     return item

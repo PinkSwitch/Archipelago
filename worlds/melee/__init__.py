@@ -85,12 +85,11 @@ class SSBMWorld(World):
         self.locked_locations = []
         self.location_cache = []
         self.apworld_version = "1.2"
-        self.extra_item_count = 0
         self.goal_count = 1
         self.picked_trophies = set()
         self.all_trophies = global_trophy_table.copy()
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 207
-        self.required_item_count = 50
+        self.location_count = 174
+        self.required_item_count = 49
