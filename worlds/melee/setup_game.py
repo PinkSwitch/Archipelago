@@ -135,6 +135,8 @@ def setup_gamevars(world) -> None:
         world.multiworld.push_precollected(world.create_item("Metal Box"))
         world.multiworld.push_precollected(world.create_item("Cloaking Device"))
         world.multiworld.push_precollected(world.create_item("Poké Ball"))
+    else:
+        world.required_item_count += 35
 
 
 def place_static_items(world):

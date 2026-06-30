@@ -123,6 +123,7 @@ everyone_besides_gamewatch = {
 
 def set_location_rules(world: "SSBMWorld") -> None:
     set_rule = world.set_rule
+    world.set_completion_rule(Has("Sense of Accomplishment", world.goal_count))
 
     can_meteor = {"Captain Falcon", "Donkey Kong", "Falco", "Fox", "Ganondorf",
                   "Ice Climbers", "Kirby", "Link", "Luigi", "Young Link",
@@ -242,7 +243,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     if world.options.ten_man_checks:
         for character in all_characters:
-            set_rule(world.get_location(f"Multi Man Melee - {character} 10-man"), Has(f"{character}"))
+            set_rule(world.get_location(f"Multi Man Melee - {character} 10-Man"), Has(f"{character}"))
 
     if world.options.bonus_checks:
         set_rule(world.get_location("Bonus - Meteor Smash"), HasAny(*can_meteor))
@@ -261,7 +262,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
             set_rule(world.get_location("Bonus - Quintuple KO"), HasAny("Adventure Mode", "All-Star Mode"))
 
     if world.options.diskun_trophy_check:
-        set_rule(world.get_location("Melee - All Bonuses"), HasAll("Adventure Mode", "All-Star Mode", "Classic Mode", "Luigi") & HasAny(*can_meteor) and HasAny(*can_reflect))
+        set_rule(world.get_location("Melee - All Bonuses"), HasAll("Adventure Mode", "All-Star Mode", "Classic Mode", "Luigi") & HasAny(*can_meteor) & HasAny(*can_reflect))
 
     if "All Targets" in world.options.goal_triggers:
         set_rule(world.get_location("Goal: All Targets Clear"), HasGroupUnique("Characters", 25))

@@ -381,7 +381,7 @@ def get_locations(world: "SSBMWorld") -> List[LocationData]:
     if "Event 50" in world.options.goal_triggers:
         world.goal_count += 1
         location_table += [
-            LocationData("Events 40-50", "Goal: Event 50 Clear", None)]
+            LocationData("Events 40-50", "Goal: Event 50", None)]
 
     if world.options.target_checks:
         location_table += [
