@@ -96,7 +96,7 @@ class SSBMWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.world_version = "1.1"
+        self.world_version = "1.2"
         self.extra_item_count = 0
         self.goal_count = 1
         self.picked_trophies = set()
@@ -104,7 +104,7 @@ class SSBMWorld(World):
         self.all_adventure_trophies = False
         self.all_classic_trophies = False
         self.all_allstar_trophies = False
-        self.location_count = 282
+        self.location_count = 207
         self.required_item_count = 50
 
     def create_regions(self) -> None:

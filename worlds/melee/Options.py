@@ -30,30 +30,6 @@ class EventSanity(Toggle):
     display_name = "Eventsanity"
 
 
-class GoalGigaBowser(DefaultOnToggle):
-    """If enabled, you will need to defeat Giga Bowser in Adventure Mode and collect your required trophies to win.
-       This option can stack with other Goals."""
-    display_name = "Giga Bowser Goal"
-
-
-class GoalCrazyHand(Toggle):
-    """If enabled, you will need to defeat Crazy Hand in Classic Mode and collect your required trophies to win.
-       This option can stack with other Goals."""
-    display_name = "Crazy Hand Goal"
-
-
-class GoalEvent51(Toggle):
-    """If enabled, you will need to complete Event 51 and collect your required trophies to win.
-       This option can stack with other Goals."""
-    display_name = "Event 51 Goal"
-
-
-class GoalAllEvents(Toggle):
-    """If enabled, you will need to complete every event besides 51 and collect your required trophies to win.
-       This option can stack with other Goals."""
-    display_name = "All Events Goal"
-
-
 class RarePokemonChecks(Toggle):
     """Enables 2 checks for seeing Mew and Celebi as well as 2 related Bonus checks."""
     display_name = "Pokemon Bonus Checks"
@@ -77,12 +53,6 @@ class DiskunTrophyCheck(Toggle):
 class MewtwoUnlockCheck(Toggle):
     """Enables a check on unlocking Mewtwo, which requires 1 total hour of VS play."""
     display_name = "Mewtwo Check"
-
-
-class GoalTargets(Toggle):
-    """If enabled, you will need to complete Target Test with every character and collect your required trophies to win.
-       This option can stack with other Goals."""
-    display_name = "All Targets Goal"
 
 
 class AnnoyingMultiMan(Toggle):
@@ -206,6 +176,17 @@ class AllStarClearTrophies(DefaultOnToggle):
     display_name = "All-Star Clear Trophies"
 
 
+class RandomizeItems(DefaultOnToggle):
+    """Adds in-battle Items to the multiworld pool. The item will not spawn in any mode until you find it.
+       (With the exception of All-Star Heart Containers)"""
+    display_name = "Randomize Battle Items"
+
+
+class Disable1PRandomTrophies(Toggle):
+    """Removes the random 1P mode trophies from the locations pool."""
+    display_name = "Remove 1P Trophies"
+
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -225,11 +206,6 @@ class SSBMOptions(PerGameCommonOptions):
     long_targettest_checks: LongTargetChecks
     lottery_pool_mode: LotteryPool
     event_checks: EventSanity
-    goal_giga_bowser: GoalGigaBowser
-    goal_crazy_hand: GoalCrazyHand
-    goal_event_51: GoalEvent51
-    goal_all_events: GoalAllEvents
-    goal_all_targets: GoalTargets
     goal_triggers: GoalTriggers
     solo_cstick_smash: SoloCSmash
     disable_tap_jump: DisableTapJump
@@ -238,6 +214,8 @@ class SSBMOptions(PerGameCommonOptions):
     adventure_clear_trophies: AdventureClearTrophies
     classic_clear_trophies: ClassicClearTrophies
     all_star_clear_trophies: AllStarClearTrophies
+    randomize_battle_items: RandomizeItems
+    remove_random_1P_trohpies: Disable1PRandomTrophies
 
 
 ssbm_option_groups = [
@@ -257,7 +235,12 @@ ssbm_option_groups = [
         BonusSanity,
         EventSanity,
         TargetSanity,
-        TenManSanity
+        TenManSanity,
+        Disable1PRandomTrophies
+    ]),
+
+    OptionGroup("Item Settings", [
+        RandomizeItems
     ]),
 
     OptionGroup("Annoying Checks", [
@@ -273,11 +256,6 @@ ssbm_option_groups = [
     ]),
 
     OptionGroup("Goal Settings", [
-        GoalGigaBowser,
-        GoalCrazyHand,
-        GoalEvent51,
-        GoalAllEvents,
-        GoalTargets,
         GoalTriggers
     ]),
 

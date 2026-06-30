@@ -72,6 +72,18 @@ def setup_gamevars(world) -> None:
     if world.options.long_targettest_checks:
         world.location_count += 3
 
+    if world.options.adventure_clear_trophies:
+        world.location_count += 25
+
+    if world.options.classic_clear_trophies:
+        world.location_count += 25
+
+    if world.options.all_star_clear_trophies:
+        world.location_count += 25
+
+    if world.options.remove_random_1P_trohpies:
+        world.location_count -= 27
+
     if world.options.bonus_checks:
         world.location_count += 224
         
@@ -86,6 +98,43 @@ def setup_gamevars(world) -> None:
         
         if world.options.hard_modes_clear:
             world.location_count += 1
+
+    if not world.options.randomize_battle_items:
+        world.multiworld.push_precollected(world.create_item("Capsule"))
+        world.multiworld.push_precollected(world.create_item("Crate"))
+        world.multiworld.push_precollected(world.create_item("Barrel"))
+        world.multiworld.push_precollected(world.create_item("Egg"))
+        world.multiworld.push_precollected(world.create_item("Party Ball"))
+        world.multiworld.push_precollected(world.create_item("Barrel Cannon"))
+        world.multiworld.push_precollected(world.create_item("Bob-omb"))
+        world.multiworld.push_precollected(world.create_item("Mr. Saturn"))
+        world.multiworld.push_precollected(world.create_item("Heart Container"))
+        world.multiworld.push_precollected(world.create_item("Maxim Tomato"))
+        world.multiworld.push_precollected(world.create_item("Starman"))
+        world.multiworld.push_precollected(world.create_item("Home-Run Bat"))
+        world.multiworld.push_precollected(world.create_item("Beam Sword"))
+        world.multiworld.push_precollected(world.create_item("Parasol"))
+        world.multiworld.push_precollected(world.create_item("Green Shell"))
+        world.multiworld.push_precollected(world.create_item("Red Shell"))
+        world.multiworld.push_precollected(world.create_item("Ray Gun"))
+        world.multiworld.push_precollected(world.create_item("Freezie"))
+        world.multiworld.push_precollected(world.create_item("Food"))
+        world.multiworld.push_precollected(world.create_item("Motion-Sensor Bomb"))
+        world.multiworld.push_precollected(world.create_item("Flipper"))
+        world.multiworld.push_precollected(world.create_item("Super Scope"))
+        world.multiworld.push_precollected(world.create_item("Star Rod"))
+        world.multiworld.push_precollected(world.create_item("Lip's Stick"))
+        world.multiworld.push_precollected(world.create_item("Fan"))
+        world.multiworld.push_precollected(world.create_item("Fire Flower"))
+        world.multiworld.push_precollected(world.create_item("Super Mushroom"))
+        world.multiworld.push_precollected(world.create_item("Poison Mushroom"))
+        world.multiworld.push_precollected(world.create_item("Hammer"))
+        world.multiworld.push_precollected(world.create_item("Warp Star"))
+        world.multiworld.push_precollected(world.create_item("Screw Attack"))
+        world.multiworld.push_precollected(world.create_item("Bunny Hood"))
+        world.multiworld.push_precollected(world.create_item("Metal Box"))
+        world.multiworld.push_precollected(world.create_item("Cloaking Device"))
+        world.multiworld.push_precollected(world.create_item("Poké Ball"))
 
 
 def place_static_items(world):
