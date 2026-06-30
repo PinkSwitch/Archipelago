@@ -49,8 +49,6 @@ def create_regions(world) -> None:
 
 
 def create_items(world) -> None:
-    print(world.location_count)
-    print("AMOGUS!!!!!!!!!!")
     pool = []
     for name, data in item_table.items():
         for _ in range(data.default_count):
@@ -65,6 +63,44 @@ def create_items(world) -> None:
         pool.append(set_classifications(world, "Lottery Pool Upgrade (Secret Characters)")),
         pool.append(set_classifications(world, "Lottery Pool Upgrade (200 Vs. Matches)")),
         pool.append(set_classifications(world, "Lottery Pool Upgrade (250 Trophies)")),
+
+    if world.options.randomize_battle_items:
+        pool.extend([
+        set_classifications(world, "Capsule"),
+        set_classifications(world, "Crate"),
+        set_classifications(world, "Barrel"),
+        set_classifications(world, "Egg"),
+        set_classifications(world, "Party Ball"),
+        set_classifications(world, "Barrel Cannon"),
+        set_classifications(world, "Bob-omb"),
+        set_classifications(world, "Mr. Saturn"),
+        set_classifications(world, "Heart Container"),
+        set_classifications(world, "Maxim Tomato"),
+        set_classifications(world, "Starman"),
+        set_classifications(world, "Home-Run Bat"),
+        set_classifications(world, "Beam Sword"),
+        set_classifications(world, "Parasol"),
+        set_classifications(world, "Green Shell"),
+        set_classifications(world, "Red Shell"),
+        set_classifications(world, "Ray Gun"),
+        set_classifications(world, "Freezie"),
+        set_classifications(world, "Food"),
+        set_classifications(world, "Motion-Sensor Bomb"),
+        set_classifications(world, "Flipper"),
+        set_classifications(world, "Super Scope"),
+        set_classifications(world, "Star Rod"),
+        set_classifications(world, "Lip's Stick"),
+        set_classifications(world, "Fan"),
+        set_classifications(world, "Fire Flower"),
+        set_classifications(world, "Super Mushroom"),
+        set_classifications(world, "Poison Mushroom"),
+        set_classifications(world, "Hammer"),
+        set_classifications(world, "Warp Star"),
+        set_classifications(world, "Screw Attack"),
+        set_classifications(world, "Bunny Hood"),
+        set_classifications(world, "Metal Box"),
+        set_classifications(world, "Cloaking Device"),
+        set_classifications(world, "Poké Ball")])
 
     for trophy in world.picked_trophies:
         if trophy not in world.options.start_inventory:  # Don't create any extra trophies that are in start inventory
