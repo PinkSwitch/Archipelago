@@ -62,7 +62,7 @@ def init_areas(world: "SSBMWorld", locations: List[LocationData]) -> None:
                                                     {"Adventure Mode": Has("Adventure Mode"),
                                                      "Classic Mode": Has("Classic Mode"),
                                                      "All-Star Mode": Has("All-Star Mode"),
-                                                     "Home-Run Contest": Has("Home-Run Contest"),
+                                                     "Home-Run Contest": HasAll("Home-Run Contest", "Home-Run Bat"),
                                                      "Target Test": Has("Target Test"),
                                                      "Multi-Man Melee": Has("Multi-Man Melee"),
                                                      "Any Main 1-P": HasAny("Adventure Mode", "Classic Mode", "All-Star Mode")})

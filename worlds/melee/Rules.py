@@ -136,6 +136,16 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     base_characters = {"Mario", "Donkey Kong", "Bowser", "Peach", "Captain Falcon", "Yoshi", "Fox", "Ness", "Ice Climbers", "Kirby", "Samus", "Link", "Pikachu", "Zelda"}
 
+    projectile_character = {"Mario", "Dr. Mario", "Luigi", "Yoshi", "Falco", "Fox", "Ness", "Ice Climbers", "Samus", "Zelda", "Link", "Young Link",
+                            "Pichu", "Pikachu", "Mewtwo", "Mr. Game & Watch"}
+
+    projectile_item = {"Ray Gun", "Super Scope"}
+
+    throwable_items = {"Ray Gun", "Super Scope", "Flipper", "Green Shell", "Red Shell", "Bob-omb", "Motion-Sensor Bomb", "Fire Flower", "Lip's Stick", "Star Rod", "Beam Sword", "Home-Run Bat", "Fan",
+                       "Freezie", "Mr. Saturn", "Poké Ball", "Parasol", "Screw Attack"}
+
+    selfdestruct_items = {"Green Shell", "Red Shell", "Flipper", "Motion-Sensor Bomb", "Bob-omb", "Warp Star"}
+
     good_hr_characters = {"Ganondorf", "Yoshi", "Jigglypuff", "Roy"}  # Can get over 1,400
     decent_hr_characters = {"Dr. Mario"}  # Can get over 1,326 casually
 
@@ -148,6 +158,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     set_rule(world.get_location("Game - Pikmin Memory Card Data"), Has("Pikmin Savefile"))
 
+    set_rule(world.get_location("Event Match - Pichu Unlock Match"), Has("Poké Ball"))
     if world.options.adventure_clear_trophies:
         for character in all_characters:
             set_rule(world.get_location(f"{character} - Adventure Trophy Unlock"), Has(f"{character}"))
@@ -220,7 +231,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Event Match - Lord of the Jungle"), Has("Donkey Kong"))
         set_rule(world.get_location("Event Match - Spare Change"), Has("Ness"))
         set_rule(world.get_location("Event Match - Yoshi's Egg"), Has("Yoshi"))
-        set_rule(world.get_location("Event Match - Kirby's Air-raid"), Has("Kirby"))
+        set_rule(world.get_location("Event Match - Kirby's Air-raid"), HasAll("Kirby", "Warp Star"))
         set_rule(world.get_location("Event Match - Bounty Hunters"), Has("Samus"))
         set_rule(world.get_location("Event Match - Link's Adventure"), Has("Link"))
         set_rule(world.get_location("Event Match - Peach's Peril"), Has("Mario"))
@@ -236,6 +247,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Event Match - En Garde!"), Has("Marth"))
         set_rule(world.get_location("Event Match - Trouble King 2"), Has("Luigi"))
         set_rule(world.get_location("Event Match - Birds of Prey"), Has("Fox"))
+        set_rule(world.get_location("Event Match - Pokémon Battle"), Has("Poké Ball"))
+        set_rule(world.get_location("Event Match - Legendary Pokémon"), Has("Poké Ball"))
     
     if world.options.target_checks:
         for character in all_characters:
@@ -246,13 +259,68 @@ def set_location_rules(world: "SSBMWorld") -> None:
             set_rule(world.get_location(f"Multi Man Melee - {character} 10-Man"), Has(f"{character}"))
 
     if world.options.bonus_checks:
+        set_rule(world.get_location("Bonus - Sniper"), HasAny(*projectile_character) | HasAny(*projectile_item))
+        set_rule(world.get_location("Bonus - Bull's-Eye KO"), HasAny(*projectile_item) | HasAny("Samus", "Mewtwo", "Ness"))
         set_rule(world.get_location("Bonus - Meteor Smash"), HasAny(*can_meteor))
+        set_rule(world.get_location("Bonus - Capsule KO"), Has("Capsule"))
                                                                                                             
         set_rule(world.get_location("Bonus - Meteor Clear"), HasAny(*can_meteor))
         set_rule(world.get_location("Bonus - Poser Power"), Has("Luigi"))
         set_rule(world.get_location("Bonus - Poser KO"), Has("Luigi"))
-        set_rule(world.get_location("Bonus - Bank-Shot KO"), HasAny(*can_reflect))
+        set_rule(world.get_location("Bonus - Bank-Shot KO"), HasAny(*can_reflect) & HasAny(*throwable_items))
         set_rule(world.get_location("Bonus - Metal Bros. KO"), Has("Luigi"))
+
+        set_rule(world.get_location("Bonus - Item Specialist"), HasAny("Fire Flower", "Ray Gun", "Beam Sword", "Home-Run Bat", "Super Scope", "Lip's Stick", "Star Rod", "Parasol", "Screw Attack",
+                                                                       "Fan", "Hammer", "Warp Star"))
+        set_rule(world.get_location("Bonus - Item Chucker"), HasAny(*throwable_items) | Has("Peach"))
+        set_rule(world.get_location("Bonus - Item Smasher"), HasAny("Lip's Stick", "Star Rod", "Beam Sword", "Home-Run Bat", "Fan"))
+        set_rule(world.get_location("Bonus - Carrier KO"), HasAny("Barrel", "Crate", "Party Ball"))
+        set_rule(world.get_location("Bonus - Weight Lifter"), HasAny("Barrel", "Crate", "Party Ball", "Barrel Cannon"))
+        set_rule(world.get_location("Bonus - Item Catcher"), HasAny(*throwable_items) | Has("Peach"))
+        set_rule(world.get_location("Bonus - Reciprocator"), HasAny(*throwable_items) | Has("Peach"))
+        set_rule(world.get_location("Bonus - Item Self-Destruct"), HasAny("Bob-omb", "Flipper", "Green Shell", "Red Shell", "Motion-Sensor Bomb", "Warp Star"))
+        set_rule(world.get_location("Bonus - Triple Items"), HasGroupUnique("Battle Items", 1))
+        set_rule(world.get_location("Bonus - Materialist"), HasAny(*throwable_items))
+        set_rule(world.get_location("Bonus - Item Hog"), HasGroupUnique("Battle Items", 10))
+        set_rule(world.get_location("Bonus - Item Collector"), HasGroupUnique("Battle Items", 1))
+        set_rule(world.get_location("Bonus - Connoisseur"), Has("Food"))
+        set_rule(world.get_location("Bonus - Gourmet"), Has("Food"))
+        set_rule(world.get_location("Bonus - Battering Ram"), HasAny("Lip's Stick", "Star Rod", "Beam Sword", "Home-Run Bat", "Fan", "Hammer"))
+        set_rule(world.get_location("Bonus - Straight Shooter"), HasAny(*projectile_item))
+        set_rule(world.get_location("Bonus - Wimp"), HasAny("Food", "Maxim Tomato", "Heart Container"))
+        set_rule(world.get_location("Bonus - Shape-Shifter"), HasAny("Super Mushroom", "Poison Mushroom", "Metal Box", "Cloaking Device", "Bunny Hood"))
+        set_rule(world.get_location("Bonus - Chuck Wagon"), HasAny("Mr. Saturn", "Capsule", "Poké Ball", "Green Shell", "Red Shell", "Freezie", "Bob-omb", "Motion-Sensor Bomb", "Barrel", "Crate"))
+        set_rule(world.get_location("Bonus - Parasol Finish"), Has("Parasol"))
+        set_rule(world.get_location("Bonus - Gardener Finish"), Has("Lip's Stick"))
+        set_rule(world.get_location("Bonus - Flower Finish"), Has("Lip's Stick"))
+        set_rule(world.get_location("Bonus - Super Scoper"), Has("Super Scope"))
+        set_rule(world.get_location("Bonus - Screwed Up"), Has("Screw Attack"))
+        set_rule(world.get_location("Bonus - Screw-Attack KO"), Has("Screw Attack"))
+        set_rule(world.get_location("Bonus - Warp-Star KO"), Has("Warp Star"))
+        set_rule(world.get_location("Bonus - Mycologist"), HasAny("Super Mushroom", "Poison Mushroom"))
+        set_rule(world.get_location("Bonus - Mario Maniac"), HasAll("Super Mushroom", "Fire Flower", "Starman"))
+        set_rule(world.get_location("Bonus - Metal KO"), Has("Metal Box"))
+        set_rule(world.get_location("Bonus - Freezie KO"), Has("Freezie"))
+        set_rule(world.get_location("Bonus - Flipper KO"), Has("Flipper"))
+        set_rule(world.get_location("Bonus - Mr. Saturn Fan"), Has("Mr. Saturn"))
+        set_rule(world.get_location("Bonus - Mrs. Saturn"), Has("Mr. Saturn"))
+        set_rule(world.get_location("Bonus - Saturn Siblings"), Has("Mr. Saturn"))
+        set_rule(world.get_location("Bonus - Saturn Ringer"), Has("Mr. Saturn"))
+        set_rule(world.get_location("Bonus - Giant KO"), Has("Super Mushroom"))
+        set_rule(world.get_location("Bonus - Tiny KO"), Has("Poison Mushroom"))
+        set_rule(world.get_location("Bonus - Invisible KO"), Has("Cloaking Device"))
+        set_rule(world.get_location("Bonus - Bunny-Hood Blast"), Has("Bunny Hood"))
+        set_rule(world.get_location("Bonus - Vegetarian"), Has("Maxim Tomato"))
+        set_rule(world.get_location("Bonus - Heartthrob"), Has("Heart Container"))
+        set_rule(world.get_location("Bonus - Invincible Finish"), Has("Starman"))
+        set_rule(world.get_location("Bonus - Invincible KO"), Has("Starman"))
+        set_rule(world.get_location("Bonus - Beam Swordsman"), Has("Beam Sword"))
+        set_rule(world.get_location("Bonus - Home-Run King"), Has("Home-Run Bat"))
+        set_rule(world.get_location("Bonus - Flame Thrower"), Has("Fire Flower"))
+        set_rule(world.get_location("Bonus - Hammer Throw"), Has("Hammer"))
+        set_rule(world.get_location("Bonus - Headless Hammer"), Has("Hammer"))
+        set_rule(world.get_location("Bonus - Bob-omb's Away"), Has("Bob-omb"))
+        set_rule(world.get_location("Bonus - Bob-omb Squad"), Has("Bob-omb"))
 
         if world.options.enable_hard_bonuses:
             set_rule(world.get_location("Bonus - Meteor Survivor"), HasAny(*can_meteor))
@@ -266,6 +334,10 @@ def set_location_rules(world: "SSBMWorld") -> None:
 
     if "All Targets" in world.options.goal_triggers:
         set_rule(world.get_location("Goal: All Targets Clear"), HasGroupUnique("Characters", 25))
+
+    if world.options.enable_rare_pokemon_checks:
+        set_rule(world.get_location("Melee - See Mew"), Has("Poké Ball"))
+        set_rule(world.get_location("Melee - See Celebi"), Has("Poké Ball"))
 
     if "Other Events" in world.options.goal_triggers:
         set_rule(world.get_location("Goal: Other Events Clear"), HasAll(*event_chars))
