@@ -295,7 +295,6 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Flower Finish"), Has("Lip's Stick"))
         set_rule(world.get_location("Bonus - Super Scoper"), Has("Super Scope"))
         set_rule(world.get_location("Bonus - Screwed Up"), Has("Screw Attack"))
-        set_rule(world.get_location("Bonus - Screw-Attack KO"), Has("Screw Attack"))
         set_rule(world.get_location("Bonus - Warp-Star KO"), Has("Warp Star"))
         set_rule(world.get_location("Bonus - Mycologist"), HasAny("Super Mushroom", "Poison Mushroom"))
         set_rule(world.get_location("Bonus - Mario Maniac"), HasAll("Super Mushroom", "Fire Flower", "Starman"))
@@ -317,20 +316,30 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Beam Swordsman"), Has("Beam Sword"))
         set_rule(world.get_location("Bonus - Home-Run King"), Has("Home-Run Bat"))
         set_rule(world.get_location("Bonus - Flame Thrower"), Has("Fire Flower"))
-        set_rule(world.get_location("Bonus - Hammer Throw"), Has("Hammer"))
         set_rule(world.get_location("Bonus - Headless Hammer"), Has("Hammer"))
         set_rule(world.get_location("Bonus - Bob-omb's Away"), Has("Bob-omb"))
         set_rule(world.get_location("Bonus - Bob-omb Squad"), Has("Bob-omb"))
 
         if world.options.enable_hard_bonuses:
+            set_rule(world.get_location("Bonus - Screw-Attack KO"), Has("Screw Attack"))
             set_rule(world.get_location("Bonus - Meteor Survivor"), HasAny(*can_meteor))
             set_rule(world.get_location("Bonus - Meteor Master"), HasAny(*can_meteor))
             set_rule(world.get_location("Bonus - Flying Meteor"), HasAny(*can_meteor))
             set_rule(world.get_location("Bonus - Quadruple KO"), HasAny("Adventure Mode", "All-Star Mode"))
             set_rule(world.get_location("Bonus - Quintuple KO"), HasAny("Adventure Mode", "All-Star Mode"))
 
+        if world.options.enable_extreme_bonuses:
+            set_rule(world.get_location("Bonus - Hammer Throw"), Has("Hammer"))
+
     if world.options.diskun_trophy_check:
-        set_rule(world.get_location("Melee - All Bonuses"), HasAll("Adventure Mode", "All-Star Mode", "Classic Mode", "Luigi") & HasAny(*can_meteor) & HasAny(*can_reflect))
+        set_rule(world.get_location("Melee - All Bonuses"), HasAll("Adventure Mode", "All-Star Mode", "Classic Mode", "Luigi", "Mr. Saturn",
+                                                                   "Bob-omb", "Starman", "Beam Sword", "Home-Run Bat", "Hammer", "Fire Flower",
+                                                                   "Super Mushroom", "Poison Mushroom", "Flipper", "Freezie", "Heart Container",
+                                                                   "Maxim Tomato", "Bunny Hood", "Cloaking Device", "Motion-Sensor Bomb",
+                                                                   "Poké Ball", "Food", "Super Scope", "Ray Gun", "Metal Box", "Parasol",
+                                                                   "Lip's Stick", "Screw Attack", "Capsule") & HasAny(*can_meteor) & HasAny(*can_reflect) & HasAny(
+                                                                    "Barrel", "Crate", "Party Ball"
+                                                                   ))
 
     if "All Targets" in world.options.goal_triggers:
         set_rule(world.get_location("Goal: All Targets Clear"), HasGroupUnique("Characters", 25))

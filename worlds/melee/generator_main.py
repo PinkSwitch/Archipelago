@@ -2,7 +2,7 @@ import pkgutil
 import os
 import typing
 import logging
-from BaseClasses import Item
+from BaseClasses import Item, ItemClassification
 from typing import Dict
 from .Items import filler_item_table, item_table
 from .Locations import get_locations
@@ -161,6 +161,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 def set_classifications(world, name) -> SSBMItem:
     item_data = item_table[name]
     item = SSBMItem(name, item_data.classification, item_data.code, world.player)
+    if item_data.category == "Battle Items" and world.options.bonus_checks:
+        item.classification = ItemClassification.progression
     return item
 
 
