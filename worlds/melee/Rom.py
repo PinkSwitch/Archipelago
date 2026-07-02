@@ -30,10 +30,13 @@ def apply_patch(world, basepatch, output):
         disable_class_upgrades = True
     else:
         disable_class_upgrades = False
+
+    world_version_hex = apworld_version.encode("ascii").hex()
         
     result = template.render(
             PLAYER_NAME=world.player_name,
             VERSION_NUMBER=apworld_version,
+            VERSION_NUM_ENCODED=world_version_hex,
             GAME_FILE_NAME=world.encoded_slot_name,
             SLOT_NUM=world.player,
             AUTH_ID=world.authentication_id,

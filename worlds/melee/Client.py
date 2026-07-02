@@ -440,6 +440,7 @@ class SSBMClient(CommonContext):
                     event_total = event_total.to_bytes(1, "big")
                     dme.write_bytes(AP_EVENT_COUNTER, event_total)
 
+
                     lottery_total = 0
                     lottery_bit = 0
                     lottery_pool_total = sum(1 for item in self.items_received if item.item == 0x151)
@@ -461,9 +462,9 @@ class SSBMClient(CommonContext):
 
                     if name in global_trophy_table:
                         trophy_id = global_trophy_table.index(name)
-                        trophy_address = 0x8045C394 + (trophy_id * 2)
+                        trophy_address = 0x8045C395 + (trophy_id * 2)
                         item_count = 1
-                        item_count = item_count.to_bytes(2, "big")
+                        item_count = item_count.to_bytes(1, "big")
                         dme.write_bytes(trophy_address, item_count)
 
                     if name == "Pikmin Savefile":
@@ -620,7 +621,6 @@ async def dolphin_sync_task(ctx: SSBMClient):
 
 async def give_player_items(ctx: SSBMClient):
     from .in_game_data import coin_items, all_characters, mode_items
-
     async def wait_for_next_loop(time_to_wait: float):
         await asyncio.sleep(time_to_wait)
 
@@ -659,13 +659,6 @@ async def give_player_items(ctx: SSBMClient):
                 logger.info(f"{name} has joined your roster!")
             elif name in mode_items:
                 logger.info(f"You can now play {name}!")
-            elif name in global_trophy_table:
-                trophy_id = global_trophy_table.index(name)
-                trophy_address = 0x8045C394 + (trophy_id * 2)
-                current_flags = int.from_bytes(dme.read_bytes(trophy_address, 1))
-                current_flags = struct.pack(">H", (current_flags | 0x02))
-
-                dme.write_bytes(0x8045C394, current_flags)
             last_recv_idx += 1
             dme.write_word(LAST_RECV_ITEM_ADDR, last_recv_idx)
         await wait_for_next_loop(0.5)
