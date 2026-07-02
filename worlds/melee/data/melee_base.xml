@@ -3,7 +3,7 @@
 		<region type="E"/> <!-- Only USA version supported -->
 	</id>
 	<options>
-		<section name="SSBM Archipelago Mod">
+		<section name="SSBM Archipelago Mod Version {{ VERSION_NUMBER }}">
 			<option name="Player: {{ PLAYER_NAME }} | Slot: {{ SLOT_NUM }} | Seed: {{AUTH_ID }}" id="SSBM" default="1">
 				<choice name="Enabled"><patch id="SSBMAP"/></choice>
 			</option>

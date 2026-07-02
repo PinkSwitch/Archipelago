@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from . import SSBMWorld
 
+apworld_version = "2.0"
 
 class MeleePlayerContainer(APPlayerContainer):
     game = "Super Smash Bros. Melee"
@@ -32,6 +33,7 @@ def apply_patch(world, basepatch, output):
         
     result = template.render(
             PLAYER_NAME=world.player_name,
+            VERSION_NUMBER=apworld_version,
             GAME_FILE_NAME=world.encoded_slot_name,
             SLOT_NUM=world.player,
             AUTH_ID=world.authentication_id,

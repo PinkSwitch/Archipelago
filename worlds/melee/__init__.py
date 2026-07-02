@@ -84,7 +84,6 @@ class SSBMWorld(World):
 
         self.locked_locations = []
         self.location_cache = []
-        self.apworld_version = "1.2"
         self.goal_count = 1
         self.picked_trophies = set()
         self.all_trophies = global_trophy_table.copy()
