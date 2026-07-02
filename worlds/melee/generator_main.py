@@ -163,6 +163,9 @@ def set_classifications(world, name) -> SSBMItem:
     item = SSBMItem(name, item_data.classification, item_data.code, world.player)
     if item_data.category == "Battle Items" and world.options.bonus_checks:
         item.classification = ItemClassification.progression
+        
+    if name == "Warp Star" and world.options.event_checks:
+        item.classification = ItemClassification.progression
     return item
 
 

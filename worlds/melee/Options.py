@@ -176,7 +176,7 @@ class AllStarClearTrophies(DefaultOnToggle):
     display_name = "All-Star Clear Trophies"
 
 
-class RandomizeItems(DefaultOnToggle):
+class RandomizeItems(Toggle):
     """Adds in-battle Items to the multiworld pool. The item will not spawn in any mode until you find it.
        (With the exception of All-Star Heart Containers)"""
     display_name = "Randomize Battle Items"
@@ -261,6 +261,7 @@ ssbm_option_groups = [
 
     OptionGroup("QOL Settings", [
         SoloCSmash,
-        DisableTapJump
+        DisableTapJump,
+        AutoLCancel
     ]),
 ]
