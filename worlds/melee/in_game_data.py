@@ -1040,3 +1040,42 @@ trophy_tables = {
     0x40: lottery_secret_chars,
     0x80: lottery_total_trophies
 }
+
+
+battle_items = {
+    "Capsule",
+    "Crate",
+    "Barrel",
+    "Egg",
+    "Party Ball",
+    "Barrel Cannon",
+    "Bob-omb",
+    "Mr. Saturn",
+    "Heart Container",
+    "Maxim Tomato",
+    "Starman",
+    "Home-Run Bat",
+    "Beam Sword",
+    "Parasol",
+    "Green Shell",
+    "Red Shell",
+    "Ray Gun",
+    "Freezie",
+    "Food",
+    "Motion-Sensor Bomb",
+    "Flipper",
+    "Super Scope",
+    "Star Rod",
+    "Lip's Stick",
+    "Fan",
+    "Fire Flower",
+    "Super Mushroom",
+    "Poison Mushroom",
+    "Hammer",
+    "Warp Star",
+    "Screw Attack",
+    "Bunny Hood",
+    "Metal Box",
+    "Cloaking Device",
+    "Poké Ball"
+}

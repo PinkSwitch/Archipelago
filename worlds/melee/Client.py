@@ -9,6 +9,7 @@ import dolphin_memory_engine as dme
 from .Helper_Functions import StringByteFunction as sbf
 from typing import Optional
 from .in_game_data import global_trophy_table
+from .Rom import apworld_version
 from . import SSBMWorld
 from MultiServer import mark_raw
 
@@ -34,6 +35,8 @@ LOTTERY_POOL_UPGRADES = 0x80001818
 TROPHY_CLASS = 0x804A2853
 TROPHY_RIG_ADDRESS = 0x80001820
 LOTTO_PRIMED_ADDR = 0x80BEEBDE
+BTL_ITEM_DATA = 0x80001824
+VERSION_ADDRESS = 0x80001AF0
 
 
 def read_bytes(console_address: int, length: int):
@@ -98,6 +101,11 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         """Checks unlocked characters"""
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.display_chars_obtained(), name="Check Characters Unlocked")
+
+    def _cmd_check_items(self):
+        """Checks unlocked battle items"""
+        if isinstance(self.ctx, SSBMClient):
+            Utils.async_start(self.ctx.display_btl_items_obtained(), name="Check Battle Items Unlocked")
 
     def _cmd_check_modes(self):
         """Checks unlocked Modes"""
@@ -231,6 +239,23 @@ class SSBMClient(CommonContext):
 
         logger.info(f"Characters Unlocked:")
         logger.info(displayed_character_array)
+        return
+
+    async def display_btl_items_obtained(self):
+        from .in_game_data import battle_items
+
+        displayed_item_array = []
+        if not (dme.is_hooked() and self.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            logger.info("Please connect to the server and game.")
+            return
+
+        for item in self.items_received:
+            name = self.item_names.lookup_in_game(item.item)
+            if name in battle_items:
+                displayed_item_array.append(name)
+
+        logger.info(f"Items Unlocked:")
+        logger.info(displayed_item_array)
         return
 
     async def display_modes_obtained(self):
@@ -398,7 +423,7 @@ class SSBMClient(CommonContext):
         await self.check_locations(self.locations_checked)
 
     async def give_majors(self, auth):
-        from .in_game_data import coin_items, secret_characters, all_characters, secret_stages, mode_items, lottery_pool_static
+        from .in_game_data import coin_items, secret_characters, all_characters, secret_stages, mode_items, lottery_pool_static, battle_items
         current_menu = int.from_bytes(dme.read_bytes(MENU_ID, 1))
         auth_id = read_bytearray(AUTH_ID_ADDRESS, 25)
         auth_id = auth_id.decode("ascii").rstrip("\x00")
@@ -434,6 +459,22 @@ class SSBMClient(CommonContext):
                         modes |= item_bit
                         modes = modes.to_bytes(1, "big")
                         dme.write_bytes(AP_CHAR_UNLOCKS, modes)
+
+                    if name in battle_items:
+                        item_id = item.item - 0x15A  # Get the proper ID of the item
+                        if item_id < 0x1F:  # Treat it as a normal bit
+                            item_data = int.from_bytes(dme.read_bytes(BTL_ITEM_DATA, 4))  #Read the byte for this i tem
+                            item_bit = (1 << item_id)
+                            item_data |= item_bit
+                            item_data = item_data.to_bytes(4, "big")
+                            dme.write_bytes(BTL_ITEM_DATA, item_data)
+                        else:  # Items above byte 4 need special handling
+                            item_data = int.from_bytes(dme.read_bytes(BTL_ITEM_DATA + 4, 1))
+                            item_bit = (1 << (item_id - 0x1F))
+                            item_data |= item_bit
+                            item_data = item_data.to_bytes(1, "big")
+                            dme.write_bytes(BTL_ITEM_DATA + 4, item_data)
+
 
                     event_total = sum(1 for item in self.items_received if item.item == 0x2B)
                     event_total = min(event_total, 8)
@@ -581,6 +622,7 @@ async def dolphin_sync_task(ctx: SSBMClient):
                             dme.un_hook()
                             await asyncio.sleep(5)
                             continue
+                        ###############################################
                         if ctx.auth == "SuperSmashBros0110290334":  # Vanilla save code
                             ctx.auth = None
                             ctx.awaiting_rom = False
@@ -589,6 +631,21 @@ async def dolphin_sync_task(ctx: SSBMClient):
                             dme.un_hook()
                             await asyncio.sleep(5)
                             continue
+                        ####################################################
+                        version_check = read_bytearray(VERSION_ADDRESS, 0x10)
+                        version_check = version_check.decode("ascii").rstrip("\x00")
+                        if version_check != apworld_version:  # Generated patch is different from loaded patch
+                            ctx.auth = None
+                            ctx.awaiting_rom = False
+                            if version_check:
+                                logger.info(f"Version Mismatch Error. Installed APworld is of version {apworld_version}, but patch is of world version {version_check}.")
+                            else:
+                                logger.info(f"Version Mismatch Error. Installed APworld is of version {apworld_version}. Installed version either not found or older than 2.0.")
+                            ctx.dolphin_status = CONNECTION_REFUSED_GAME_STATUS
+                            dme.un_hook()
+                            await asyncio.sleep(5)
+                            continue
+
                     if ctx.awaiting_rom:
                         await ctx.server_auth()
                 await asyncio.sleep(0.1)
