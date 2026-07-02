@@ -191,7 +191,8 @@ class SSBMClient(CommonContext):
                 message = "COMPLETE"
             else:
                 message = "INCOMPLETE"
-            logger.info(f"Complete All Events: {message}")
+            logger.info(f"Complete Other Events: {message}")
+            
         if "All Targets" in self.active_goals:
             if self.all_targets_complete:
                 message = "COMPLETE"
@@ -551,7 +552,7 @@ class SSBMClient(CommonContext):
                 self.all_targets_complete = True
 
             if "Other Events" in self.active_goals:
-                other_events_check = int.from_bytes(dme.read_table(0x8045C129, 7))
+                other_events_check = int.from_bytes(read_table(0x8045C129, 7))
                 if other_events_check & 0x1ffffffffffff == 0x1ffffffffffff:
                     self.other_events_complete = True
                 else:
