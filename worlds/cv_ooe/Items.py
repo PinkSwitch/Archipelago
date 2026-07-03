@@ -395,7 +395,10 @@ good_food_table = [
     "Thick Steak",
     "Curry",
     "Eisbein",
-    "Killer Fish BBQ",
+    "Killer Fish BBQ"
+],
+
+drops_table = [
     "Red Drops",
     "Blue Drops",
     "Green Drops",
