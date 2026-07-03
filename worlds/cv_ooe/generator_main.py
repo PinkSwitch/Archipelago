@@ -1,4 +1,5 @@
 from BaseClasses import Item, ItemClassification
+from .Items import item_table
 
 
 class CVOoEItem(Item):
@@ -29,7 +30,49 @@ def create_regions(world) -> None:
 
 
 def create_items(world) -> None:
-    print("TODO! Implement")
+    pool = []
+    for name, data in item_table.items():
+        for _ in range(data.default_count):
+            item = set_classifications(world, name)
+            pool.append(item)
+
+    if world.options.shuffle_dominus:
+        pool.extend([set_classifications(world, "Dominus Hatred"),
+                     set_classifications(world, "Dominus Anger"),
+                     set_classifications(world, "Dominus Agony")])
+
+    for villager in world.options.starting_villagers:
+        pool.remove(set_classifications(world, villager))
+
+    if world.options.start_with_glyph_sleeve:
+        pool.remove(set_classifications(world, "Glyph Sleeve"))
+
+    if world.options.start_with_glyph_union:
+        pool.remove(set_classifications(world, "Glyph Union"))
+
+    if world.options.start_with_lizard_tail:
+        pool.remove(set_classifications(world, "Lizard Tail"))
+
+    filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
+
+    for i in range(filler_location_count):
+        item = set_classifications(world, get_filler_item_name(world))
+        pool.append(item)
+
+    world.multiworld.itempool += pool
+
+
+def set_classifications(world, name) -> CVOoEItem:
+    # Make quest items be prog, here.
+    item_data = item_table[name]
+    item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
+    if item.name in world.quest_requirements:
+        if ItemClassification.trap in item.classification:
+            item.classification |= ItemClassification.progression  # Traps should be ProgTrap
+        else:
+            item.classification = ItemClassification.progression
+
+    return item
 
 
 def create_item(world, name: str) -> CVOoEItem:
@@ -40,5 +83,43 @@ def create_item(world, name: str) -> CVOoEItem:
 def create_progress_event(world, name: str) -> CVOoEItem:
     # Create item name [str] as a Progression Event item.
     return CVOoEItem(name, ItemClassification.progression, None, world.player)
+
+
+def get_filler_item_name(world) -> str:
+    from .Items import money_table, good_food_table, consumable_table
+    weights = {"glyph": 5, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
+               "armor": 40, "consumable": 60}
+
+    weight_table = {
+        "glyph": world.glyph_filler_table,
+        "armor": world.armor_table,
+        "good_armor": world.good_armor_table,
+        "money": money_table,
+        "consumable": consumable_table,
+        "good_food": good_food_table,
+        "accessory": world.accessory_table
+    }
+    for fill_type, table in weight_table.items():
+        if not table:  # Remove empty tables to prevent them from being chosen
+            weights[fill_type] = 0
+
+    filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
+    filler_item = world.random.choice(weight_table[filler_type])
+    if not world.has_tried_master_ring:
+        world.has_tried_master_ring = True
+        if world.random.randint(0, 101) <= 10:
+            filler_item = "Master Ring"
+            return filler_item
+
+    if not world.has_tried_queen_of_hearts:
+        world.has_tried_queen_of_hearts = True
+        if world.random.randint(0, 101) <= 10:
+            filler_item = "Queen of Hearts"
+            return filler_item
+
+    if filler_type not in ["consumable", "good_food", "money"]:
+        weight_table[filler_type].remove(filler_item)  # Remove equipment from the corresponding table so it doesn't gen again
+
+    return filler_item
 
 # TODO; Options, starting stuff, events, make locations, filler gen, filler should be unique and removed, do one-time gens for master ring and queen of hearts

@@ -151,6 +151,11 @@ class RemoveTrainingHall(DefaultOnToggle):
     display_name = "Remove Training Hall"
 
 
+class RevealHiddenChests(DefaultOnToggle):
+    """Hidden blue chests will automatically be revealed."""
+    display_name = "Reveal Hidden Chests"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -168,6 +173,7 @@ class OoEOptions(PerGameCommonOptions):
     starting_area: StartingArea
     remove_training_hall: RemoveTrainingHall
     remove_large_cavern: RemoveLargeCavern
+    reveal_hidden_chests: RevealHiddenChests
 
 
 ooe_option_groups = [
@@ -205,5 +211,6 @@ ooe_option_groups = [
     OptionGroup("Quality of Life", [
         RevealMap,
         RevealBreakableWalls,
+        RevealHiddenChests
     ])
 ]

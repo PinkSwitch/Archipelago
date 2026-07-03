@@ -8,7 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
-from .generator_main import (generate_early, create_regions, create_items, create_item)
+from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name)
 
 
 class OoEWeb(WebWorld):
@@ -63,7 +63,7 @@ class OoEWorld(World):
     #fill_slot_data = fill_slot_data
     #modify_multidata = modify_multidata
     #generate_output = generate_output
-    #get_filler_item_name = get_filler_item_name
+    get_filler_item_name = get_filler_item_name
     #set_rules = set_rules
     #write_spoiler_header = write_spoiler_header
 
@@ -77,7 +77,52 @@ class OoEWorld(World):
         self.has_generated_output = False
         self.starting_glyph = None
 
-        self.glyph_filler_table = []
+        self.glyph_filler_table = [
+            "Vol Confodere",
+            "Secare",
+            "Melio Secare",
+            "Hasta",
+            "Melio Macir",
+            "Arcus",
+            "Ascia",
+            "Vol Falcis",
+            "Vol Culter",
+            "Vol Scutum",
+            "Torpor",
+            "Ignis",
+            "Grando",
+            "Fulgur",
+            "Vol Luminatio",
+            "Nitesco",
+            "Acerbatus",
+            "Globus",
+            "Arma Felix",
+            "Arma Chiroptera",
+            "Fidelis Caries",
+            "Fidelis Alate",
+            "Fidelis Polkir",
+            "Fidelis Noctua",
+            "Fidelis Medusa",
+            "Fidelis Aranea",
+            "Fidelis Mortus"]
+            
         self.armor_table = []
+
         self.good_armor_table = []
-        self.accessory_table = []
+
+        self.accessory_table = [
+            "Protect Ring",
+            "Resist Ring",
+            "Archer Ring",
+            "Blow Ring",
+            "Wind Ring",
+            "Ruby Ring",
+            "Sapphire Ring",
+            "Emerald Ring",
+            "Diamond Ring",
+            "Onyx Ring",
+            "Heart Earrings",
+            "Gold Ring",
+            "Miser Ring",
+            "Lucky Clover",
+            "Thief Ring"]
