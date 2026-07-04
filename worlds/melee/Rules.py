@@ -163,13 +163,19 @@ def set_location_rules(world: "SSBMWorld") -> None:
         for character in all_characters:
             set_rule(world.get_location(f"{character} - Adventure Trophy Unlock"), Has(f"{character}"))
 
+        set_rule(world.get_location("Sheik - Adventure Trophy Unlock"), Has("Zelda"))
+
     if world.options.classic_clear_trophies:
         for character in all_characters:
             set_rule(world.get_location(f"{character} - Classic Trophy Unlock"), Has(f"{character}"))
 
+        set_rule(world.get_location("Sheik - Classic Trophy Unlock"), Has("Zelda"))
+
     if world.options.all_star_clear_trophies:
         for character in all_characters:
             set_rule(world.get_location(f"{character} - All-Star Trophy Unlock"), Has(f"{character}"))
+
+        set_rule(world.get_location("Sheik - All-Star Trophy Unlock"), Has("Zelda"))
 
     set_rule(world.get_location("Training Mode - 125 Combined Combos"), HasAll(*good_combo_char, "Bowser"))
     set_rule(world.get_location("Training Mode - 10-Hit Combo"), HasAny(*decent_combo_char) | (HasAny(*good_combo_char) & Has("Bowser")))
