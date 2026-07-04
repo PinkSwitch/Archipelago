@@ -86,9 +86,9 @@ def create_progress_event(world, name: str) -> CVOoEItem:
 
 
 def get_filler_item_name(world) -> str:
-    from .Items import money_table, good_food_table, consumable_table
-    weights = {"glyph": 5, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
-               "armor": 40, "consumable": 60}
+    from .Items import money_table, good_food_table, consumable_table, drops_table
+    weights = {"drops": 3, "glyph": 5, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
+               "armor": 40, "consumable": 60}  # TODO; tweak
 
     weight_table = {
         "glyph": world.glyph_filler_table,
@@ -97,7 +97,8 @@ def get_filler_item_name(world) -> str:
         "money": money_table,
         "consumable": consumable_table,
         "good_food": good_food_table,
-        "accessory": world.accessory_table
+        "accessory": world.accessory_table,
+        "drops": drops_table
     }
     for fill_type, table in weight_table.items():
         if not table:  # Remove empty tables to prevent them from being chosen
@@ -117,9 +118,9 @@ def get_filler_item_name(world) -> str:
             filler_item = "Queen of Hearts"
             return filler_item
 
-    if filler_type not in ["consumable", "good_food", "money"]:
+    if filler_type not in ["consumable", "good_food", "money", "drops"]:
         weight_table[filler_type].remove(filler_item)  # Remove equipment from the corresponding table so it doesn't gen again
 
     return filler_item
 
-# TODO; Options, starting stuff, events, make locations, filler gen, filler should be unique and removed, do one-time gens for master ring and queen of hearts
+# TODO; Options, starting stuff, events, make locations, generate filler for wood chests (but not the master/queen check)
