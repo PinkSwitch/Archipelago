@@ -8,7 +8,8 @@ from .modules.dungeon_er import shuffle_dungeons
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from . import EarthBoundWorld
-    
+
+
 def setup_gamevars(world: "EarthBoundWorld") -> None:
     """Initialize or roll most world variables"""
 
