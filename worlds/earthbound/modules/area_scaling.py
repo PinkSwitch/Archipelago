@@ -486,7 +486,7 @@ def calculate_scaling(world: "EarthBoundWorld") -> None:
             regions_that_were_already_scaled.append(last_region)
 
             if location.item.player == world.player and location.item.name == "Ness" and not scaled_chars["Ness"]:
-                if (location.name not in locations_with_item_requirements):
+                if (location.player == world.player) and (location.name not in locations_with_item_requirements):
                     world.Ness_region = location.parent_region.name
                 else:
                     world.Ness_region = last_region
