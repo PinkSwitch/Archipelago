@@ -24,7 +24,7 @@ components.append(
     Component("Super Smash Bros. Melee Client", func=run_client, component_type=Type.CLIENT, icon="melee_ap_logo")
 )
 
-icon_paths["melee_ap_logo"] = local_path("worlds/melee/data", "melee_ap_logo.png")
+icon_paths["melee_ap_logo"] = f"ap:{__name__}/data/melee_ap_logo.png"
 
 
 class SSBMWeb(WebWorld):
