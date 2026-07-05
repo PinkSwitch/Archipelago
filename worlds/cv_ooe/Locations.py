@@ -32,42 +32,43 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Argila Swamp", "Argila Swamp: Chest"),
         LocationData("Argila Swamp", "Argila Swamp: Area Exit"),
 
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Left Small Vertical Freestanding"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Left Tall Room Freestanding"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Upper Exit"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Left Tall Room Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Left Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Central"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Right Shaft Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Right Center Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Lower Exit"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Lower Left Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Lower Center Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Lower Right Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Deepest Room"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Right Depths Dead End Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Right Exit Underwater Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Center Left Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Right Side Underwater Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Secret Room Left Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Right Left Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: First Room Underwater"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Secret Room Right Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Hidden Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Right Side Hidden Item"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths First Room Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Hallway Item 1"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Third Room Underwater"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Secret Room Center Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Hallway Item 2"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Right Right Chest"),
+        LocationData("Kalidus Channel", "Kalidus Channel: Second Room Underwater"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Rightmost Shaft Freestanding"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Center Right Chest"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Depths Lower Left"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Upper Left"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Upper Right"),
+        LocationData("Kalidus Channel Depths", "Kalidus Channel: Ship Room Center Freestanding"),
+
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
@@ -196,14 +197,18 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
     ]
 
     if not world.options.remove_training_hall:
-        location_table.append(LocationData("Training Hall", "Training Hall: Freestanding"))  # Regular check
+        location_table.extend([
+            LocationData("Training Hall", "Training Hall: Freestanding"),
+            LocationData("Training Hall", "Training Hall: Top Chest"),
+            LocationData("Training Hall", "Training Hall: First Way Down Chest"),
+            LocationData("Training Hall", "Training Hall: Second Way Down Chest"),
+            LocationData("Training Hall", "Training Hall: Third Way Down Chest"),
+            LocationData("Training Hall", "Training Hall: Final Chest")])
 
-        if world.options.add_brown_chests == AddBrownChests.option_include:
-            location_table.extend([
-                LocationData("Training Hall", "Training Hall: Top Chest"),
-                LocationData("Training Hall", "Training Hall: First Way Down Chest"),
-                LocationData("Training Hall", "Training Hall: Second Way Down Chest"),
-                LocationData("Training Hall", "Training Hall: Third Way Down Chest"),
-                LocationData("Training Hall", "Training Hall: Final Chest")])
+    if world.options.add_brown_chests != AddBrownChests.option_include:
+        for location in location_table:
+            name = location.name
+            if location_data_table[name].location_type == "Wood Chest":
+                location_table.remove(location)
 
     return location_table
