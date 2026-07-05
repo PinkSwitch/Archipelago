@@ -23,10 +23,11 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Wygol Village", "Wygol Village: Right Chest"),
         LocationData("Wygol Village", "Wygol Village: Grounded Chest"),
 
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+        LocationData("Ruvas Forest", "Ruvas Forest: First Room Freestanding"),
+        LocationData("Ruvas Forest", "Ruvas Forest: Area Exit"),
+        LocationData("Ruvas Forest", "Ruvas Forest: Left Chest"),
+        LocationData("Ruvas Forest", "Ruvas Forest: Right Chest"),
+        
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
