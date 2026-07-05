@@ -42,6 +42,7 @@ region_list = [
     "Tristis Pass Waterfall",  # Needs to be unfrozen. Can reach the frozen waterfall glyph. Hard requires Magnes
     "Monastery Magnets Area",  # Magnes or flight
     "Mystery Manor Main",  # Uppes or speed,
+    "Minera Prison Island Main",  # Double Jump, Magnes, Flight
     "Minera Prison Island Final Segment",  # Flight or Magnes
 
     "Castle Entrance",  # Needs Uppes
