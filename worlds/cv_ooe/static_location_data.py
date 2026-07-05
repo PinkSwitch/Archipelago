@@ -313,7 +313,7 @@ location_ids = {
 
 #  Chests; VarA = Item ID, VarB = location ID
 #  Wooden Chests; Same as normal chests, however, their Object Type needs to be set to 16, and we need to write in their VarB Location ID
-#  Freestanding has special behavior on the item. Freestanding pickups use VarA as the Item ID, Subtype as Item Type, and VarB as the Location ID. Free Glyphs need to place statues.
+#  Freestanding; has special behavior on the item. Freestanding pickups use VarA as the Item ID, Subtype as Item Type, and VarB as the Location ID. Free Glyphs need to place statues.
 #  Area Exits; VarA Item ID, varB Location ID
 location_data_table = {
     "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
@@ -377,27 +377,28 @@ location_data_table = {
     "Kalidus Channel: Ship Room Upper Right": LocationInformation(0x022CF5EC, "overlay_47", "Freestanding"),
     "Kalidus Channel: Ship Room Center Freestanding": LocationInformation(0x022CF5F8, "overlay_47", "Freestanding"),
 
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Somnus Reef: Left Big Room Freestanding": LocationInformation(0x022DD1FC, "overlay_48", "Freestanding"),
+    "Somnus Reef: East Entrance Item": LocationInformation(0x022DD37C, "overlay_48", "Freestanding"),
+    "Somnus Reef: Right Side Isolated Room": LocationInformation(0x022DD52C, "overlay_48", "Chest"),
+    "Somnus Reef: Left Open Room Lower Chest": LocationInformation(0x022DD208, "overlay_48", "Chest"),
+    "Somnus Reef: Lower Left Right Chest": LocationInformation(0x022DD49C, "overlay_48", "Chest"),
+    "Somnus Reef: Right Side Cave Hidden Item": LocationInformation(0x022DD274, "overlay_48", "Freestanding"),
+    "Somnus Reef: Left Big Room Right Chest": LocationInformation(0x022DD148, "overlay_48", "Chest"),
+    "Somnus Reef: First Shaft Chest": LocationInformation(0x022DD07C, "overlay_48", "Wood Chest"),
+    "Somnus Reef: First Big Room Chest": LocationInformation(0x022DD0D0, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Hidden Room": LocationInformation(0x022DD124, "overlay_48", "Freestanding"),
+    "Somnus Reef: Left Big Room Left Chest": LocationInformation(0x022DD154, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Left Big Room Center Chest": LocationInformation(0x022DD160, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Left Big Room Upper Chest": LocationInformation(0x022DD214, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Right Side Cave Item": LocationInformation(0x022DD280, "overlay_48", "Freestanding"),
+    "Somnus Reef: Right Shaft": LocationInformation(0x022DD580, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Area Exit": LocationInformation(0x022DD3E8, "overlay_48", "Area Exit"),
+    "Somnus Reef: Lower Left Left Chest": LocationInformation(0x022DD490, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Lower Right Left Chest": LocationInformation(0x022DD4D8, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Lower Right Right Chest": LocationInformation(0x022DD4E4, "overlay_48", "Wood Chest"),
+    "Somnus Reef: Exit Shaft Chest": LocationInformation(0x022DD334, "overlay_48", "Wood Chest"),
+    "Somnus Reef: First Shaft Freestanding": LocationInformation(0x022DD088, "overlay_48", "Freestanding"),
+
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
