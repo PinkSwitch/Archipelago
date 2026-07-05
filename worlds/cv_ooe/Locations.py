@@ -115,11 +115,12 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Minera Prison Island Main", "Minera Prison Island: Entrance Pickup"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Room Past Albus"),
         LocationData("Minera Prison Island Final Segment", "Minera Prison Island: Area Exit"),
-        
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+
+        LocationData("Lighthouse Post-Boss", "Lighthouse: Searchlight Glyph"),
+        LocationData("Lighthouse Post-Boss", "Lighthouse: Exit Chest"),
+        LocationData("Lighthouse Post-Boss", "Lighthouse: Right Hall"),
+        LocationData("Lighthouse Post-Boss", "Lighthouse: Area Exit"),
+
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
