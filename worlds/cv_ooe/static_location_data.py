@@ -313,6 +313,7 @@ location_ids = {
 
 #  Chests; VarA = Item ID, VarB = location ID
 #  Wooden Chests; Same as normal chests, however, their Object Type needs to be set to 16, and we need to write in their VarB Location ID
+#  Freestanding has special behavior on the item. Freestanding pickups use VarA as the Item ID, Subtype as Item Type, and VarB as the Location ID. Free Glyphs need to place statues.
 location_data_table = {
     "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
     "Ecclesia: Hidden Chest": LocationInformation(0x022D307C, "overlay_42", "Chest"),
@@ -323,12 +324,13 @@ location_data_table = {
     "Wygol Village: Right Chest": LocationInformation(0x022C7BE4, "overlay_41", "Wood Chest"),
     "Wygol Village: Grounded Chest": LocationInformation(0x022C7C80, "overlay_41", "Chest"),
 
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Training Hall: Freestanding": LocationInformation(0x022CF8FC, "overlay_43", "Freestanding"),
+    "Training Hall: Top Chest": LocationInformation(0x022CF914, "overlay_43", "Wood Chest"),
+    "Training Hall: First Way Down Chest": LocationInformation(0x022CF920, "overlay_43", "Wood Chest"),
+    "Training Hall: Second Way Down Chest": LocationInformation(0x022CF92C, "overlay_43", "Wood Chest"),
+    "Training Hall: Third Way Down Chest": LocationInformation(0x022CF938, "overlay_43", "Wood Chest"),
+    "Training Hall: Final Chest": LocationInformation(0x022CF908, "overlay_43", "Wood Chest"),
+
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),

@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, Optional, NamedTuple, List
+from .Options import AddBrownChests
 
 if TYPE_CHECKING:
     from . import OoEWorld
@@ -21,13 +22,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Wygol Village", "Wygol Village: Left Chest"),
         LocationData("Wygol Village", "Wygol Village: Right Chest"),
         LocationData("Wygol Village", "Wygol Village: Grounded Chest"),
-        
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
@@ -196,5 +191,16 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
     ]
+
+    if not world.options.remove_training_hall:
+        location_table.append(LocationData("Training Hall", "Training Hall: Freestanding"))  # Regular check
+
+        if world.options.add_brown_chests == AddBrownChests.option_include:
+            location_table.extend([
+                LocationData("Training Hall", "Training Hall: Top Chest"),
+                LocationData("Training Hall", "Training Hall: First Way Down Chest"),
+                LocationData("Training Hall", "Training Hall: Second Way Down Chest"),
+                LocationData("Training Hall", "Training Hall: Third Way Down Chest"),
+                LocationData("Training Hall", "Training Hall: Final Chest")])
 
     return location_table
