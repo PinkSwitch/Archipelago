@@ -337,8 +337,9 @@ location_data_table = {
     "Ruvas Forest: Left Chest": LocationInformation(0x022CD480, "overlay_44", "Wood Chest"),
     "Ruvas Forest: Right Chest": LocationInformation(0x022CD48C, "overlay_44", "Wood Chest"),
 
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Argila Swamp: Chest": LocationInformation(0x022CA3A8, "overlay_45", "Wood Chest"),
+    "Argila Swamp: Area Exit": LocationInformation(0x022CA1E0, "overlay_45", "Area Exit"),
+    
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),

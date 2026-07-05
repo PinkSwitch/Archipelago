@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, Optional, NamedTuple, List
+from .static_location_data import location_data_table
 from .Options import AddBrownChests
 
 if TYPE_CHECKING:
@@ -27,9 +28,10 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Ruvas Forest", "Ruvas Forest: Area Exit"),
         LocationData("Ruvas Forest", "Ruvas Forest: Left Chest"),
         LocationData("Ruvas Forest", "Ruvas Forest: Right Chest"),
-        
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+
+        LocationData("Argila Swamp", "Argila Swamp: Chest"),
+        LocationData("Argila Swamp", "Argila Swamp: Area Exit"),
+
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
