@@ -315,7 +315,9 @@ location_ids = {
 #  Wooden Chests; Same as normal chests, however, their Object Type needs to be set to 16, and we need to write in their VarB Location ID
 #  Freestanding; has special behavior on the item. Freestanding pickups use VarA as the Item ID, Subtype as Item Type, and VarB as the Location ID. Free Glyphs need to place statues.
 #  Area Exits; VarA Item ID, varB Location ID
-#  Event Glyphs are treated as glyphs no matter what the item is. VarB on the Event Actor is used as the Item ID.
+#  Event Glyphs; treated as glyphs no matter what the item is. VarB on the Event Actor is used as the Item ID.
+#  Freestanding Glyph; The same as Freestanding, but we want to create it as a Glyph instead of a statue.
+#  Event Chest; Hardcoded chest spawns. VarA of the parent Event Actor is used for the Item ID
 location_data_table = {
     "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
     "Ecclesia: Hidden Chest": LocationInformation(0x022D307C, "overlay_42", "Chest"),
@@ -493,13 +495,14 @@ location_data_table = {
     "Giant's Dwelling: First Corner": LocationInformation(0x022D34F8, "overlay_59", "Freestanding"),
     "Giant's Dwelling: First Main Room Top": LocationInformation(0x022D3480, "overlay_59", "Chest"),
 
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Mystery Manor: Albus 3": LocationInformation(0x022D2CF8, "overlay_60", "Event Glyph"),
+    "Mystery Manor: Dark Room Glyph": LocationInformation(0x022D2920, "overlay_60", "Event Glyph"),
+    "Mystery Manor: Dark Room Chest": LocationInformation(0x022D2920, "overlay_60", "Event Chest"),
+    "Mystery Manor: Top Left Hidden Item": LocationInformation(0x022D2A88, "overlay_60", "Freestanding Glyph"),
+    "Mystery Manor: Dead End Chest": LocationInformation(0x022D2C68, "overlay_60", "Chest"),
+    "Mystery Manor: Top Left Free Item": LocationInformation(0x022D2A94, "overlay_60", "Freestanding"),
+    "Mystery Manor: Top Right Free Item": LocationInformation(0x022D2C2C, "overlay_60", "Freestanding"),
+
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),

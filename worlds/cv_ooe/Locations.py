@@ -176,14 +176,15 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Giant's Dwelling Main", "Giant's Dwelling: Area Exit"),
         LocationData("Giant's Dwelling Main", "Giant's Dwelling: First Corner"),
         LocationData("Giant's Dwelling Main", "Giant's Dwelling: First Main Room Top"),
-        
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
-        LocationData("Dummy", "Dummy"),
+
+        LocationData("Mystery Manor Main", "Mystery Manor: Albus 3"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Dark Room Glyph"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Dark Room Chest"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Top Left Hidden Item"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Dead End Chest"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Top Left Free Item"),
+        LocationData("Mystery Manor Main", "Mystery Manor: Top Right Free Item"),
+
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
         LocationData("Dummy", "Dummy"),
