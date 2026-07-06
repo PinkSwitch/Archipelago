@@ -279,6 +279,16 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
             LocationData("Training Hall", "Training Hall: Third Way Down Chest"),
             LocationData("Training Hall", "Training Hall: Final Chest")])
 
+    if not world.options.remove_large_cavern:
+        location_table.extend([
+            LocationData("Large Cavern", "Large Cavern: Rest Room 1"),
+            LocationData("Large Cavern", "Large Cavern: Rest Room 2"),
+            LocationData("Large Cavern", "Large Cavern: Rest Room 3"),
+            LocationData("Large Cavern", "Large Cavern: Rest Room 4"),
+            LocationData("Large Cavern", "Large Cavern: Final Reward 1"),
+            LocationData("Large Cavern", "Large Cavern: Final Reward 2")
+        ])
+
     if world.options.add_brown_chests != AddBrownChests.option_include:
         for location in location_table:
             name = location.name
