@@ -513,10 +513,11 @@ location_data_table = {
     "Misty Forest Road: Paries Room Hidden Item": LocationInformation(0x022D0AE8, "overlay_61", "Freestanding Glyph"),
     "Misty Forest Road: Area Exit": LocationInformation(0x022D09E0, "overlay_61", "Area Exit"),
     
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Oblivion Ridge: Final Room In Wall": LocationInformation(0x022C5F98, "overlay_62", "Freestanding Glyph"),
+    "Oblivion Ridge: Post-Boss Ledge Item": LocationInformation(0x022D050C, "overlay_63", "Freestanding"),
+    "Oblivion Ridge: Post-Boss Wall Item": LocationInformation(0x022D0500, "overlay_63", "Freestanding Glyph"),
+    "Oblivion Ridge: Pre-Boss Ledge": LocationInformation(0x022D05A8, "overlay_63", "Freestanding"),
+    
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
