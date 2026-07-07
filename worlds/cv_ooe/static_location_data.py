@@ -199,7 +199,7 @@ location_ids = {
     "Monastery: Final Shaft Chest": 0xE8,
     "Oblivion Ridge: Post-Boss Ledge Item": 0xE9,
     "Kalidus Channel: Second Room Underwater": 0xEA,
-    "Barracks: Lower Barracks Chest": 0xEB,
+    "Barracks: Lower Ramparts Chest": 0xEB,
     "Misty Forest Road: Ledge Item": 0xEC,
     "Barracks: Connector Chest": 0xED,
     "Monastery: First Shaft": 0xEF,
@@ -318,6 +318,7 @@ location_ids = {
 #  Freestanding Glyph; The same as Freestanding, but we want to create it as a Glyph instead of a statue.
 #  Event Chest; Hardcoded chest spawns. VarA of the parent Event Actor is used for the Item ID
 #  Inline; Special hardcoded absolute item. Write the Item ID to this exact address and do nothing else.
+#  Enemy Glyph; Glyph spawned by an Enemy. needs to write item ID to enemy data + 0x14
 location_data_table = {
     "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
     "Ecclesia: Hidden Chest": LocationInformation(0x022D307C, "overlay_42", "Chest"),
@@ -579,20 +580,21 @@ location_data_table = {
     "Library: Near End Hidden Item": LocationInformation(0x022CCDE8, "overlay_70", "Freestanding Glyph"),
     "Library: Hidden Room Chest": LocationInformation(0x022CCC98, "overlay_70", "Chest"),
 
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+    "Barracks: Basement Entrance Pickup": LocationInformation(0x022D5140, "overlay_71", "Freestanding"),
+    "Barracks: Left Secret Room": LocationInformation(0x022D5410, "overlay_71", "Chest"),
+    "Barracks: Lower Right Square Chest": LocationInformation(0x022D52F0, "overlay_71", "Chest"),
+    "Barracks: Left Corner": LocationInformation(0x022D5020, "overlay_71", "Chest"),
+    "Barracks: Right Secret Room": LocationInformation(0x022D53C8, "overlay_71", "Chest"),
+    "Barracks: Right Connector Hidden Chest": LocationInformation(0x022D53A4, "overlay_71", "Chest"),
+    "Barracks: Lower Ramparts Hidden Chest": LocationInformation(0x022D5230, "overlay_71", "Chest"),
+    "Barracks: Lower Ramparts Chest": LocationInformation(0x022D5224, "overlay_71", "Wood Chest"),
+    "Barracks: Connector Chest": LocationInformation(0x022D5368, "overlay_71", "Wood Chest"),
+    "Barracks: Top Right Square Hidden Item": LocationInformation(0x022D5284, "overlay_71", "Freestanding Glyph"),
+    "Barracks: Lowest Room": LocationInformation(0x022D53EC, "overlay_71", "Chest"),
+    "Barracks: Lower Ramparts Pickup": LocationInformation(0x022D523C, "overlay_71", "Freestanding"),
+    "Barracks: Upper Ramparts Left": LocationInformation(0x022D51DC, "overlay_71", "Freestanding"),
+    "Barracks: Upper Ramparts Right": LocationInformation(0x022D51E8, "overlay_71", "Freestanding"),
+
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
