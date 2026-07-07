@@ -12,7 +12,7 @@ class LocationInformation(NamedTuple):  # In-game information used to define eac
 
 location_ids = {
     "Library: Past Wallman": 0x05,
-
+    "Wallman Glyph": 0x06,
     "Giant's Dwelling: Bottom Right Room Pickup": 0x07,
     "Minera Prison Island: Albus 1": 0x09,
     "Tristis Pass: Second Hill Pickup": 0x0A,
@@ -303,8 +303,7 @@ location_ids = {
     "Castle Entrance: Before Switch Wall": 0x193,
     "Underground Labyrinth: First Shadow Room": 0x195,
     "Mechanical Tower: First Gears Room Chest": 0x197,
-    "Arms Depot: Right Room Chest": 0x198,
-    "Wallman Glyph": 0x274
+    "Arms Depot: Right Room Chest": 0x198
     # Mechnical tower room 8 s 6 has an oob chest?
 
     # Tin man chest?
@@ -547,15 +546,16 @@ location_data_table = {
     "Monastery: Lower Dead End": LocationInformation(0x022D7C94, "overlay_78", "Chest"),
     "Monastery: Magnet Room Top Chest": LocationInformation(0x022D7D6C, "overlay_78", "Chest"),
     "Monastery: Final Shaft Free Item": LocationInformation(0x022D8048, "overlay_78", "Freestanding"),
+
+    "Castle Entrance: Paries Wall": LocationInformation(0x022D053C, "overlay_65", "Chest"),
+    "Castle Entrance: Entry Chest": LocationInformation(0x022D0278, "overlay_65", "Chest"),
+    "Castle Entrance: Second Big Hidden Chest": LocationInformation(0x022D0398, "overlay_65", "Chest"),
+    "Castle Entrance: First Shaft Hidden Item": LocationInformation(0x022D032C, "overlay_65", "Freestanding Glyph"),
+    "Castle Entrance: Second Big Lower": LocationInformation(0x022D038C, "overlay_65", "Wood Chest"),
+    "Castle Entrance: Near Basement Center": LocationInformation(0x022CDDA0, "overlay_66", "Chest"),
+    "Castle Entrance: Past Paries Big Room Chest": LocationInformation(0x022CDC38, "overlay_66", "Wood Chest"),
+    "Castle Entrance: Before Switch Wall": LocationInformation(0x022CDE18, "overlay_66", "Wood Chest"),
     
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
@@ -721,8 +721,12 @@ def get_location_groups():
     }
     for location in location_ids:
         group = location.split(":")[0]
-        if group not in location_groups:
-            location_groups["Enemy Glyphs"].add(location)
-        else:
+        if group in location_groups:
             location_groups[group].add(location)
+        else:
+            group = location_data_table[location].location_type
+
+            if group == "Enemy Glyph":
+                location_groups["Enemy Glyphs"].add(location)
+
     return location_groups
