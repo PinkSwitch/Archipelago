@@ -286,7 +286,7 @@ def get_filler_item_name(world) -> str:
 
     filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
     filler_item = world.random.choice(weight_table[filler_type])
-    if not world.has_tried_magus_ring:
+    if not world.has_tried_magus_ring and not is_event:
         world.has_tried_magus_ring = True
         if world.random.randint(0, 101) <= 10:  # Magus ring should have a single 10/100 chance to be placed
             filler_item = "Magus Ring"
