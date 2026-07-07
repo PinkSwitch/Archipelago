@@ -317,6 +317,7 @@ location_ids = {
 #  Event Glyphs; treated as glyphs no matter what the item is. VarB on the Event Actor is used as the Item ID.
 #  Freestanding Glyph; The same as Freestanding, but we want to create it as a Glyph instead of a statue.
 #  Event Chest; Hardcoded chest spawns. VarA of the parent Event Actor is used for the Item ID
+#  Inline; Special hardcoded absolute item. Write the Item ID to this exact address and do nothing else.
 location_data_table = {
     "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
     "Ecclesia: Hidden Chest": LocationInformation(0x022D307C, "overlay_42", "Chest"),
@@ -555,19 +556,20 @@ location_data_table = {
     "Castle Entrance: Near Basement Center": LocationInformation(0x022CDDA0, "overlay_66", "Chest"),
     "Castle Entrance: Past Paries Big Room Chest": LocationInformation(0x022CDC38, "overlay_66", "Wood Chest"),
     "Castle Entrance: Before Switch Wall": LocationInformation(0x022CDE18, "overlay_66", "Wood Chest"),
-    
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
-    "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
+
+    "Underground Labyrinth: Boulder Room Glyph": LocationInformation(0x022EADC8, "overlay_68", "Event Glyph"),
+    "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_68", "Inline"),
+    "Underground Labyrinth: Exit Item": LocationInformation(0x022EB0D4, "overlay_68", "Freestanding Glyph"),
+    "Underground Labyrinth: Secret Passge Pickup": LocationInformation(0x022EB008, "overlay_68", "Freestanding"),
+    "Underground Labyrinth: Second Shadow Room": LocationInformation(0x022EA9CC, "overlay_68", "Chest"),
+    "Underground Labyrinth: Dead End Chest": LocationInformation(0x022EAF54, "overlay_68", "Chest"),
+    "Underground Labyrinth: Boulder Room Hidden Chest": LocationInformation(0x022EADD4, "overlay_68", "Chest"),
+    "Underground Labyrinth: Hidden Room Chest": LocationInformation(0x022EAF9C, "overlay_68", "Chest"),
+    "Underground Labyrinth: Area Exit": LocationInformation(0x022EB0C8, "overlay_68", "Area Exit"),
+    "Underground Labyrinth: Connector Shaft Bottom Hidden": LocationInformation(0x022EACB4, "overlay_68", "Freestanding Glyph"),
+    "Underground Labyrinth: Detour Chest": LocationInformation(0x022EA918, "overlay_68", "Chest"),
+    "Underground Labyrinth: First Shadow Room": LocationInformation(0x022EA858, "overlay_68", "Wood Chest"),
+
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
     "Dummy": LocationInformation(0x00000000, "dummy", "dummy"),
