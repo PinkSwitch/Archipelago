@@ -55,7 +55,7 @@ def set_location_rules(world):
     set_rule(world.get_location("13th Street: Boss Room"), (Has("Street Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Street Key", "contains")))
 
     set_rule(world.get_location("Sandy Grave: Behind Bricks"), big_uppies)
-    set_rule(world.get_location("Sandy Grave: Boulder Room Tunnel"), can_cast_spell & HasAny("Toad Morph", "Owl Morph"))
+    set_rule(world.get_location("Sandy Grave: Boulder Room Tunnel"), (can_cast_spell & HasAny("Toad Morph", "Owl Morph")) | HasAll("Lizard Tail", "Puppet Master"))
     set_rule(world.get_location("Sandy Grave: Boulder Room Corner Alcove"), big_uppies)
     set_rule(world.get_location("Sandy Grave: Lonely Mimic Alcove"), medium_uppies | (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube))
     set_rule(world.get_location("Sandy Grave: Lower Big Underground Room Top"), medium_uppies)
@@ -69,7 +69,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Forgotten City: Pyramid East 5F"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Forgotten City: Pyramid 1F Bricks"), big_uppies)
     set_rule(world.get_location("Forgotten City: Lower Boulder Room Upper Alcove"), big_uppies)
-    set_rule(world.get_location("Forgotten City: Lower Boulder Room Tunnel Alcove"), can_cast_spell & HasAny("Toad Morph", "Owl Morph"))
+    set_rule(world.get_location("Forgotten City: Lower Boulder Room Tunnel Alcove"), (can_cast_spell & HasAny("Toad Morph", "Owl Morph")) | HasAll("Lizard Tail", "Puppet Master"))
     set_rule(world.get_location("Forgotten City: Lower Underground Square Upper Item"), medium_uppies | (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube))
     set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube))
     set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube))
