@@ -35,21 +35,21 @@ region_list = [
     "Monastery",
 
     "Kalidus Channel Depths",
-    "Somnus Reef Main",  # Swim
-    "Lighthouse Past Spikes",  # Magnes, flight, speed, or Machina
-    "Lighthouse Post-Boss",  # Uppes or Magnes
-    "Giant's Dwelling Main",  # Need Uppes
-    "Tymeo Mountains Past Spikes Room",  # Magnes, flight, or Machina
-    "Tymeo Mountains East",  # Uppies or speed
-    "Tristis Pass Frozen Area",  # Uppes
-    "Tristis Pass Waterfall",  # Needs to be unfrozen. Can reach the frozen waterfall glyph. Hard requires Magnes
-    "Monastery Magnets Area",  # Magnes or flight
-    "Mystery Manor Main",  # Uppes or speed,
-    "Minera Prison Island Main",  # Double Jump, Magnes, Flight
-    "Minera Prison Island Final Segment",  # Flight or Magnes
+    "Somnus Reef Main",
+    "Lighthouse Past Spikes",
+    "Lighthouse Post-Boss",
+    "Giant's Dwelling Main",
+    "Tymeo Mountains Past Spikes Room",
+    "Tymeo Mountains East",
+    "Tristis Pass Frozen Area",
+    "Tristis Pass Waterfall",
+    "Monastery Magnets Area",
+    "Mystery Manor Main",
+    "Minera Prison Island Main",
+    "Minera Prison Island Final Segment",
 
-    "Castle Entrance",  # Needs Uppes
-    "Castle Entrance - Right Side",  # Needs Paries
+    "Castle Entrance",
+    "Castle Entrance - Right Side",
     "Library",
     "Library - Past Wallman",  # Paries
     "Forsaken Cloister - Left",
@@ -108,10 +108,37 @@ def connect_regions(world):
     for area in world_map_regions:
         world.get_region("World Map").add_exits([area], {area: Has(f"Map: {area}")})
 
-    world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia"], {
+    world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia", "Wygol Village"], {
                                              "Dracula's Castle": Has("Castle Access")})
 
     world.get_region("Ecclesia").add_exits(["World Map"])
 
-    world.get_region("Kalidus Channel").add_exits(["Kalidus Channel Depths"], {"Kalidus Channel Depths": Has("Serpent Scale")})
+    world.get_region("Kalidus Channel").connect(world.get_region("Kalidus Channel Depths"), rule=Has("Serpent Scale"))
+
+    world.get_region("Somnus Reef").connect(world.get_region("Somnus Reef Main"), rule=Has("Serpent Scale"))
+
+    world.get_region("Lighthouse").connect(world.get_region("Lighthouse Past Spikes"), rule=HasAny("Magnes", "Volaticus", "Rapidus Fio", "Arma Machina"))
+    world.get_region("Lighthouse Past Spikes").connect(world.get_region("Lighthouse Post-Boss"), rule=HasAny("Magnes", "Volaticus", "Ordinary Rock"))
+
+    world.get_region("Giant's Dwelling").connect(world.get_region("Giant's Dwelling Main"), rule=HasAny("Volaticus", "Ordinary Rock"))
+
+    world.get_region("Tymeo Mountains").connect(world.get_region("Tymeo Mountains Past Spikes Room"), rule=HasAny("Magnes", "Volaticus", "Arma Machina"))
+    world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
+
+    world.get_region("Tristis Pass").connect(world.get_region("Tristis Pass Frozen Area"), rule=HasAny("Ordinary Rock", "Volaticus"))
+    world.get_region("Tristis Pass Frozen Area").connect(world.get_region("Tristis Pass Waterfall"), rule=CanReachLocation("Tristis Pass: Frozen Waterfall Glyph"))
+    
+    world.get_region("Monastery").connect(world.get_region("Monastery Magnets Area"), rule=HasAny("Magnes", "Volaticus"))
+
+    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
+
+    world.get_region("Minera Prison Island").connect(world.get_region("Minera Prison Island Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Magnes"))
+    world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes"))
+
+    world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=HasAny("Volaticus", "Ordinary Rock"))
+    world.get_region("Castle Entrance").connect(world.get_region("Castle Entrance - Right Side"), rule=Has("Paries"))
+    world.get_region("Castle Entrance").connect(world.get_region("Library"))
+
+    world.get_region("Library").connect(world.get_region("Library - Past Wallman"), rule=Has("Paries"))
+
         

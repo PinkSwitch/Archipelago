@@ -84,7 +84,7 @@ item_table: Dict[str, ItemData] = {
     "Fidelis Aranea": ItemData("Back Glyphs", 0x4D, ItemClassification.filler, 0),
     "Fidelis Mortus": ItemData("Back Glyphs", 0x4E, ItemClassification.filler, 0),
     "Dominus Agony": ItemData("Back Glyphs", 0x4F, ItemClassification.progression),
-    "Agartha": ItemData("Back Glyphs", 0x50, ItemClassification.useful),
+    "Agartha": ItemData("Back Glyphs", 0x50, ItemClassification.useful, 0),
 
     "Lizard Tail": ItemData("Relics", 0x70, ItemClassification.progression),
     "Ordinary Rock": ItemData("Relics", 0x71, ItemClassification.progression),
