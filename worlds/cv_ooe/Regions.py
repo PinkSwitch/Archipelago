@@ -1,6 +1,7 @@
 from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
 from .Locations import get_locations
+from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 
 if TYPE_CHECKING:
     from . import OoEWorld
@@ -11,6 +12,8 @@ class OoELocation(Location):
 
 
 region_list = [
+    "World Map",
+
     "Dracula's Castle",  # World map areas
     "Ecclesia",
     "Wygol Village",
@@ -89,3 +92,26 @@ def create_locations(world):
             raise ValueError(f"Error: Region {location.region} is invalid for location {location.name}.")
         region = world.get_region(location.region)
         region.locations.append(OoELocation(world.player, location.name, None if location.is_event else location_ids[location.name], region))
+
+
+def connect_regions(world):
+    world_map_regions = ["Training Hall", "Ruvas Forest", "Argila Swamp", "Kalidus Channel", "Somnus Reef", "Minera Prison Island",
+                         "Lighthouse", "Tymeo Mountains", "Tristis Pass", "Large Cavern", "Giant's Dwelling", "Mystery Manor",
+                         "Misty Forest Road", "Oblivion Ridge", "Skeleton Cave", "Monastery"]
+
+    if world.options.remove_large_cavern:
+        world_map_regions.remove("Large Cavern")
+
+    if world.options.remove_training_hall:
+        world_map_regions.remove("Training Hall")
+
+    for area in world_map_regions:
+        world.get_region("World Map").add_exits([area], {area: Has(f"Map: {area}")})
+
+    world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia"], {
+                                             "Dracula's Castle": Has("Castle Access")})
+
+    world.get_region("Ecclesia").add_exits(["World Map"])
+
+    world.get_region("Kalidus Channel").add_exits(["Kalidus Channel Depths"], {"Kalidus Channel Depths": Has("Serpent Scale")})
+        

@@ -1,5 +1,5 @@
 from Options import OptionError
-from .Options import StartingGlyph, RandomizeVillagers
+from .Options import StartingGlyph, RandomizeVillagers, StartingArea
 from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs
 from .generator_main import create_progress_event
 
@@ -29,9 +29,13 @@ def setup_game(world) -> None:
     for villager in world.options.starting_villagers:
         world.multiworld.push_precollected(create_progress_event(world, villager))
 
+    if world.options.starting_area != StartingArea.option_none:
+        print(world.options.starting_area)
+
 
 def place_static_items(world) -> None:
     world.get_location("Final Approach: Dracula").place_locked_item(world.create_item("Dracula Defeated"))
+    world.get_location("Ecclesia: Barlowe Fight").place_locked_item(world.create_item("Castle Access"))
 
     if not world.options.shuffle_dominus:  # If the player turned this off, place these vanilla
         world.get_location("Minera Prison Island: Albus 1").place_locked_item(world.create_item("Dominus Hatred"))
@@ -59,6 +63,6 @@ def place_static_items(world) -> None:
             zip(world.random.shuffle(villager_pool.keys()), villager_pool.values())  # Shuffle as neeeded
 
         for villager in villager_pool:  # Place the corresponding items/locations here
-            if villager not in world.multiworld.precollected_items(world.player):
-                world.get_location(villager_pool[villager].place_locked_item(world.create_item(villager)))
+            if villager not in world.multiworld.precollected_items[world.player]:
+                world.get_location(villager_pool[villager]).place_locked_item(world.create_item(villager))
         

@@ -366,7 +366,10 @@ item_table: Dict[str, ItemData] = {
     "Map: Misty Forest Road": ItemData("Area Maps", 0x185, ItemClassification.progression),
     "Map: Oblivion Ridge": ItemData("Area Maps", 0x186, ItemClassification.progression),
     "Map: Skeleton Cave": ItemData("Area Maps", 0x187, ItemClassification.progression),
-    "Map: Monastery": ItemData("Area Maps", 0x188, ItemClassification.progression)}
+    "Map: Monastery": ItemData("Area Maps", 0x188, ItemClassification.progression),
+    
+    "Dracula Defeated": ItemData("Events", None, ItemClassification.progression),
+    "Castle Access": ItemData("Events", None, ItemClassification.progression)}
 
 
 def get_item_names_per_category() -> Dict[str, Set[str]]:
@@ -396,7 +399,7 @@ good_food_table = [
     "Curry",
     "Eisbein",
     "Killer Fish BBQ"
-],
+]
 
 drops_table = [
     "Red Drops",

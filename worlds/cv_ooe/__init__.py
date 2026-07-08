@@ -73,7 +73,7 @@ class OoEWorld(World):
 
         self.location_cache = []
         self.has_tried_master_ring = False
-        self.has_tried_queen_of_hearts: False
+        self.has_tried_queen_of_hearts = False
         self.has_generated_output = False
         self.starting_glyph = None
 

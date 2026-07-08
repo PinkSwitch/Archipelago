@@ -311,6 +311,8 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Final Approach", "Final Approach: Final Stash Second From Right"),
         LocationData("Final Approach", "Final Approach: Final Stash Second From Left"),
         LocationData("Final Approach", "Final Approach: Final Stash Far Left"),
+        
+        LocationData("Final Approach - Throne", "Final Approach: Dracula", True)
     ]
 
     if not world.options.remove_training_hall:
