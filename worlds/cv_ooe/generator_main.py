@@ -97,7 +97,7 @@ def create_progress_event(world, name: str) -> CVOoEItem:
 
 def get_filler_item_name(world) -> str:
     from .Items import money_table, good_food_table, consumable_table, drops_table
-    weights = {"drops": 3, "glyph": 5, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
+    weights = {"drops": 3, "glyph": 10, "accessory": 10, "good_food": 8, "good_armor": 15, "money": 20,
                "armor": 40, "consumable": 60}  # TODO; tweak
 
     weight_table = {

@@ -64,6 +64,6 @@ def place_static_items(world) -> None:
             zip(world.random.shuffle(villager_pool.keys()), villager_pool.values())  # Shuffle as neeeded
 
         for villager in villager_pool:  # Place the corresponding items/locations here
-            if villager not in world.multiworld.precollected_items[world.player]:
+            if world.create_item(villager) not in world.multiworld.precollected_items[world.player]:
                 world.get_location(villager_pool[villager]).place_locked_item(world.create_item(villager))
         

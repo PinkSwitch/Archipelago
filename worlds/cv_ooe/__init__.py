@@ -105,10 +105,80 @@ class OoEWorld(World):
             "Fidelis Medusa",
             "Fidelis Aranea",
             "Fidelis Mortus"]
-            
-        self.armor_table = []
 
-        self.good_armor_table = []
+        self.armor_table = [
+            "Casual Clothes",
+            "Military Wear",
+            "Rubber Suit",
+            "Reinforced Suit",
+            "Body Suit",
+            "Leather Cuirass",
+            "Copper Plate",
+            "Iron Plate",
+            "Silver Plate",
+            "Mirror Cuirass",
+            "Barbarian Belt",
+            "Crimson Mail",
+            "Cotton Dress",
+            "Silk Dress",
+            "Sequined Dress",
+            "Corset Dress",
+            "Eye for Decay",
+            "L. Eye of God",
+            "R. Eye of Devil",
+            "Garbo Hat",
+            "Treasure Hat",
+            "Dowsing Hat",
+            "Traveler's Hat",
+            "Babushka",
+            "Crochet",
+            "Barbarian Helm",
+            "Stephanie",
+            "Sword Helm",
+            "Rapier Helm",
+            "Lance Helm",
+            "Hammer Helm",
+            "Arrow Helm",
+            "Sickle Helm",
+            "Knife Helm",
+            "Shield Helm",
+            "Winged Boots",
+            "Combo Boots",
+            "Sabrina Shoes",
+            "Cossack Boots",
+            "Baggy Boots",
+            "Battle Boots",
+            "Ghillie Boots",
+            "Cavalier Boots",
+            "Iron Leggings",
+            "Barbarian Shoes",
+            "Crimson Greaves"
+
+        ]
+
+        self.good_armor_table = [
+            "Gold Plate",
+            "Platinum Plate",
+            "Knight Cuirass",
+            "Minerva Mail",
+            "Party Dress",
+            "Wedding Dress",
+            "Robe Decollete",
+            "Ribbon",
+            "Knight Helm",
+            "Minerva Mask",
+            "Ruby Pins",
+            "Sapphire Pins",
+            "Emerald Pins",
+            "Diamond Pins",
+            "Onyx Pins",
+            "Royal Crown",
+            "Silver Leggings",
+            "Gold Leggings",
+            "Plat Leggings",
+            "Knight Leggings",
+            "Minerva Greaves"
+        ]
 
         self.accessory_table = [
             "Protect Ring",
