@@ -1,5 +1,6 @@
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
+from .Options import RandomizeVillagers
 
 
 class CVOoEItem(Item):
@@ -41,8 +42,23 @@ def create_items(world) -> None:
                      set_classifications(world, "Dominus Anger"),
                      set_classifications(world, "Dominus Agony")])
 
-    for villager in world.options.starting_villagers:
-        pool.remove(set_classifications(world, villager))
+    if world.options.randomize_villagers == RandomizeVillagers.option_anywhere:
+        pool.extend([set_classifications(world, "Nikolai"),
+                     set_classifications(world, "Jacob"),
+                     set_classifications(world, "Abram"),
+                     set_classifications(world, "Laura"),
+                     set_classifications(world, "Eugen"),
+                     set_classifications(world, "Aeon"),
+                     set_classifications(world, "Marcel"),
+                     set_classifications(world, "George"),
+                     set_classifications(world, "Serge"),
+                     set_classifications(world, "Anna"),
+                     set_classifications(world, "Monica"),
+                     set_classifications(world, "Irina"),
+                     set_classifications(world, "Daniela")])
+
+        for villager in world.options.starting_villagers:
+            pool.remove(set_classifications(world, villager))
 
     if world.options.start_with_glyph_sleeve:
         pool.remove(set_classifications(world, "Glyph Sleeve"))

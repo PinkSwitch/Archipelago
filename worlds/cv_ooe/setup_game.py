@@ -30,7 +30,8 @@ def setup_game(world) -> None:
         world.multiworld.push_precollected(create_progress_event(world, villager))
 
     if world.options.starting_area != StartingArea.option_none:
-        print(world.options.starting_area)
+        world.starting_area = world.options.starting_area.current_key.replace("_", " ").title()
+        world.multiworld.push_precollected(create_progress_event(world, f"Map: {world.starting_area}"))
 
 
 def place_static_items(world) -> None:

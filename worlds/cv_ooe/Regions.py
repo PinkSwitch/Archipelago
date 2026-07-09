@@ -1,7 +1,7 @@
 from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
 from .Locations import get_locations
-from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
+from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation
 
 if TYPE_CHECKING:
     from . import OoEWorld

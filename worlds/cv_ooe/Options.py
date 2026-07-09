@@ -15,7 +15,6 @@ class StartingGlyph(TextChoice):
     display_name = "Starting Glyph"
 
 
-# TODO - Implement
 class ShuffleDominus(DefaultOnToggle):
     """Shuffles the three Dominus glyphs into the item pool."""
     display_name = "Shuffle Dominus"
