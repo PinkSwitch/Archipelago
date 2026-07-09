@@ -51,7 +51,7 @@ region_list = [
     "Castle Entrance",
     "Castle Entrance - Right Side",
     "Library",
-    "Library - Past Wallman",  # Paries
+    "Library - Past Wallman",
     "Forsaken Cloister - Left",
     "Underground Labyrinth",
     "Barracks",
@@ -136,9 +136,26 @@ def connect_regions(world):
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes"))
 
     world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=HasAny("Volaticus", "Ordinary Rock"))
+
     world.get_region("Castle Entrance").connect(world.get_region("Castle Entrance - Right Side"), rule=Has("Paries"))
     world.get_region("Castle Entrance").connect(world.get_region("Library"))
+    world.get_region("Castle Entrance - Right Side").connect(world.get_region("Underground Labyrinth"))
 
     world.get_region("Library").connect(world.get_region("Library - Past Wallman"), rule=Has("Paries"))
+    world.get_region("Library - Past Wallman").connect(world.get_region("Forsaken Cloister - Left"))
 
-        
+    world.get_region("Underground Labyrinth").connect(world.get_region("Barracks"))
+
+    world.get_region("Barracks").connect(world.get_region("Mechanical Tower"))
+
+    world.get_region("Mechanical Tower").add_exits(["Arms Depot", "Mechanical Tower Upper"], {
+                                             "Mechanical Tower Upper": HasAny("Magnes", "Volaticus")})
+
+    world.get_region("Mechanical Tower Upper").connect(world.get_region("Forsaken Cloister - Right"))
+
+    world.get_region("Forsaken Cloister - Right").connect(world.get_region("Forsaken Cloister - Left"))
+    world.get_region("Forsaken Cloister - Left").connect(world.get_region("Forsaken Cloister - Upper"), rule=HasAll("Dextro Custos", "Sinestro Custos", "Arma Custos"))
+    world.get_region("Forsaken Cloister - Upper").connect(world.get_region("Final Approach"))
+
+    world.get_region("Final Approach").connect(world.get_region("Final Approach - Throne"), rule=Has("Volaticus"))
+    

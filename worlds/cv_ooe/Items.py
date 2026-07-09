@@ -57,7 +57,7 @@ item_table: Dict[str, ItemData] = {
     "Acerbatus": ItemData("Arm Glyphs", 0x2E, ItemClassification.filler, 0),
     "Globus": ItemData("Arm Glyphs", 0x2F, ItemClassification.filler, 0),
     "Dextro Custos": ItemData("Arm Glyphs", 0x30, ItemClassification.progression),
-    "Sinestro Custos": ItemData("Arm Glyphs", 0x31, ItemClassification.progression, 0),
+    "Sinestro Custos": ItemData("Arm Glyphs", 0x31, ItemClassification.progression),
     "Dominus Hatred": ItemData("Arm Glyphs", 0x32, ItemClassification.progression, 0),
     "Dominus Anger": ItemData("Arm Glyphs", 0x33, ItemClassification.progression, 0),
 
@@ -83,7 +83,7 @@ item_table: Dict[str, ItemData] = {
     "Fidelis Medusa": ItemData("Back Glyphs", 0x4C, ItemClassification.filler, 0),
     "Fidelis Aranea": ItemData("Back Glyphs", 0x4D, ItemClassification.filler, 0),
     "Fidelis Mortus": ItemData("Back Glyphs", 0x4E, ItemClassification.filler, 0),
-    "Dominus Agony": ItemData("Back Glyphs", 0x4F, ItemClassification.progression),
+    "Dominus Agony": ItemData("Back Glyphs", 0x4F, ItemClassification.progression, 0),
     "Agartha": ItemData("Back Glyphs", 0x50, ItemClassification.useful, 0),
 
     "Lizard Tail": ItemData("Relics", 0x70, ItemClassification.progression),
@@ -368,8 +368,8 @@ item_table: Dict[str, ItemData] = {
     "Map: Skeleton Cave": ItemData("Area Maps", 0x187, ItemClassification.progression),
     "Map: Monastery": ItemData("Area Maps", 0x188, ItemClassification.progression),
     
-    "Dracula Defeated": ItemData("Events", None, ItemClassification.progression),
-    "Castle Access": ItemData("Events", None, ItemClassification.progression)}
+    "Dracula Defeated": ItemData("Events", None, ItemClassification.progression, 0),
+    "Castle Access": ItemData("Events", None, ItemClassification.progression, 0)}
 
 
 def get_item_names_per_category() -> Dict[str, Set[str]]:
