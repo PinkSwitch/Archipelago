@@ -50,7 +50,7 @@ class VillagersRequired(Range):
     display_name = "Villagers Required"
     range_start = 0
     range_end = 13
-    default = 1
+    default = 13
 
 
 class ExperiencePercent(NamedRange):  # TODO!!! IMPLEMENT

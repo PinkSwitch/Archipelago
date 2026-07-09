@@ -42,6 +42,9 @@ def create_items(world) -> None:
                      set_classifications(world, "Dominus Anger"),
                      set_classifications(world, "Dominus Agony")])
 
+    if world.starting_area:
+        pool.remove(set_classifications(world, f"Map: {world.starting_area}"))
+
     if world.options.randomize_villagers == RandomizeVillagers.option_anywhere:
         pool.extend([set_classifications(world, "Nikolai"),
                      set_classifications(world, "Jacob"),
@@ -76,6 +79,11 @@ def create_items(world) -> None:
         pool.append(item)
 
     world.multiworld.itempool += pool
+
+
+def set_rules(world) -> None:
+    from .Rules import set_location_rules
+    set_location_rules(world)
 
 
 def set_classifications(world, name) -> CVOoEItem:

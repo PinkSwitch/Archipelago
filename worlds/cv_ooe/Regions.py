@@ -34,7 +34,8 @@ region_list = [
     "Skeleton Cave",
     "Monastery",
 
-    "Kalidus Channel Depths",
+    "Kalidus Channel Depths Right",
+    "Kalidus Channel Depths Left",
     "Somnus Reef Main",
     "Lighthouse Past Spikes",
     "Lighthouse Post-Boss",
@@ -108,12 +109,13 @@ def connect_regions(world):
     for area in world_map_regions:
         world.get_region("World Map").add_exits([area], {area: Has(f"Map: {area}")})
 
-    world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia", "Wygol Village"], {
-                                             "Dracula's Castle": Has("Castle Access")})
+    world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia", "Wygol Village", "Kalidus Channel Depths Right"], {
+                                             "Dracula's Castle": Has("Castle Access"),
+                                             "Kalidus Channel Depths Right": Has("Map: Kalidus Channel", 2)})
 
     world.get_region("Ecclesia").add_exits(["World Map"])
 
-    world.get_region("Kalidus Channel").connect(world.get_region("Kalidus Channel Depths"), rule=Has("Serpent Scale"))
+    world.get_region("Kalidus Channel Depths Right").connect(world.get_region("Kalidus Channel Depths Left"), rule=Has("Lizard Tail"))
 
     world.get_region("Somnus Reef").connect(world.get_region("Somnus Reef Main"), rule=Has("Serpent Scale"))
 
@@ -158,4 +160,3 @@ def connect_regions(world):
     world.get_region("Forsaken Cloister - Upper").connect(world.get_region("Final Approach"))
 
     world.get_region("Final Approach").connect(world.get_region("Final Approach - Throne"), rule=Has("Volaticus"))
-    

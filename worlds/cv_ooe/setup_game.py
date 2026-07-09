@@ -32,6 +32,8 @@ def setup_game(world) -> None:
     if world.options.starting_area != StartingArea.option_none:
         world.starting_area = world.options.starting_area.current_key.replace("_", " ").title()
         world.multiworld.push_precollected(create_progress_event(world, f"Map: {world.starting_area}"))
+    else:
+        world.starting_area = None
 
 
 def place_static_items(world) -> None:
