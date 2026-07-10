@@ -8,7 +8,8 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
-from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules)
+from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules,
+                             fill_slot_data, modify_multidata, generate_output)
 
 
 class OoEWeb(WebWorld):
@@ -60,12 +61,11 @@ class OoEWorld(World):
     create_items = create_items
     create_item = create_item
     create_regions = create_regions
-    #fill_slot_data = fill_slot_data
-    #modify_multidata = modify_multidata
-    #generate_output = generate_output
+    fill_slot_data = fill_slot_data
+    modify_multidata = modify_multidata
+    generate_output = generate_output
     get_filler_item_name = get_filler_item_name
     set_rules = set_rules
-    #write_spoiler_header = write_spoiler_header
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()

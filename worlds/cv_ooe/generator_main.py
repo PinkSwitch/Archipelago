@@ -1,3 +1,8 @@
+import typing
+import os
+import pkgutil
+
+from typing import Dict
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
 from .Options import RandomizeVillagers
@@ -13,10 +18,17 @@ def generate_early(world) -> None:
         if "Castlevania: Order of Ecclesia" not in world.multiworld.re_gen_passthrough:
             return
         passthrough = world.multiworld.re_gen_passthrough["Castlevania: Order of Ecclesia"]
-        world.options.required_villagers.value = passthrough["required_villagers"]
+        world.options.starting_glyph.value = passthrough["starting_glyph"]
+        world.options.shuffle_dominus.value = passthrough["shuffle_dominus"]
+        world.options.villagers_required.value = passthrough["villagers_required"]
         world.options.starting_area.value = passthrough["starting_area"]
         world.options.remove_large_cavern.value = passthrough["remove_large_cavern"]
         world.options.remove_training_hall.value = passthrough["remove_training_hall"]
+        world.options.start_with_lizard_tail.value = passthrough["start_with_lizard_tail"]
+        world.options.start_with_glyph_union.value = passthrough["start_with_glyph_union"]
+        world.options.add_brown_chests.value = passthrough["add_brown_chests"]
+        world.options.starting_villagers.value = passthrough["add_brown_chests"]
+        world.options.randomize_villagers.value = passthrough["randomize_villagers"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -147,4 +159,44 @@ def get_filler_item_name(world) -> str:
 
     return filler_item
 
-# TODO; Options, starting stuff, events, make locations, generate filler for wood chests (but not the master/queen check)
+
+def fill_slot_data(world) -> Dict[str, typing.Any]:
+    return {
+        "starting_glyph": world.options.starting_glyph.value,
+        "shuffle_dominus": world.options.shuffle_dominus.value,
+        "start_with_lizard_tail": world.options.start_with_lizard_tail.value,
+        "start_with_glyph_union": world.options.start_with_glyph_union.value,
+        "add_brown_chests": world.options.add_brown_chests.value,
+        "villagers_required": world.options.villagers_required.value,
+        "starting_villagers": world.options.starting_villagers.value,
+        "randomize_villagers": world.options.randomize_villagers.value,
+        "starting_area": world.options.starting_area.value,
+        "remove_training_hall": world.options.remove_training_hall.value,
+        "remove_large_cavern": world.options.remove_large_cavern.value
+    }
+
+
+def generate_output(world, output_directory: str) -> None:
+    from .Rom import OoEProcPatch, patch_rom
+    try:
+        code_patch = pkgutil.get_data(__name__, "src/overlay_119.bin")
+        patch = OoEProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
+        patch.write_file("por_base.bsdiff4", pkgutil.get_data(__name__, "src/por_base.bsdiff4"))
+        patch_rom(world, patch, code_patch)
+
+        world.rom_name = patch.name
+
+        patch.write(os.path.join(output_directory,
+                                 f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
+    except Exception:
+        raise
+    finally:
+        world.rom_name_available_event.set()  #  make sure threading continues and errors are collected
+
+
+def modify_multidata(world, multidata: dict) -> None:
+    # wait for self.rom_name to be available.
+    world.rom_name_available_event.wait()
+    rom_name = getattr(world, "rom_name", None)
+    if rom_name:
+        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.multiworld.player_name[world.player]]
