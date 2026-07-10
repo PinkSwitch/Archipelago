@@ -179,9 +179,9 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 def generate_output(world, output_directory: str) -> None:
     from .Rom import OoEProcPatch, patch_rom
     try:
-        code_patch = pkgutil.get_data(__name__, "src/overlay_119.bin")
+        code_patch = pkgutil.get_data(__name__, "src/overlay_86.bin")
         patch = OoEProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
-        patch.write_file("por_base.bsdiff4", pkgutil.get_data(__name__, "src/por_base.bsdiff4"))
+        patch.write_file("ooe_base.bsdiff4", pkgutil.get_data(__name__, "src/ooe_base.bsdiff4"))
         patch_rom(world, patch, code_patch)
 
         world.rom_name = patch.name

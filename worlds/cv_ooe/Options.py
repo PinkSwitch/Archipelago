@@ -3,7 +3,6 @@ from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, 
                      NamedRange, Range, Choice, OptionSet)
 
 
-# TODO - IMPLEMENT
 class StartingGlyph(TextChoice):
     """Which Arm Glyph you start the game with.
        Random Base selects any base-power Glyph.
@@ -38,7 +37,6 @@ class StartWithGlyphSleeve(Toggle):
     display_name = "Start with Glyph Sleeve"
 
 
-# TODO - IMPLEMENT
 class RevealBreakableWalls(Toggle):
     """Automatically reveals all breakable walls/objects."""
     display_name = "Reveal Hidden Walls"
