@@ -27,12 +27,9 @@ def set_location_rules(world):
     set_rule(world.get_location("Tymeo Mountains: Wind Glyph"), Has("Magnes"))
     set_rule(world.get_location("Tymeo Mountains: Upper Hill Chest"), Has("Lizard Tail"))
 
-    set_rule(world.get_location("Tristis Pass: First Alcove"), Has("Lizard Tail"))
     set_rule(world.get_location("Tristis Pass: Frozen Waterfall Glyph"), Has("Magnes"))
-    set_rule(world.get_location("Tristis Pass: Lower Hill Left"), Has("Lizard Tail"))
     set_rule(world.get_location("Tristis Pass: Lower Hill Right"), Has("Lizard Tail"))
     set_rule(world.get_location("Tristis Pass: Second Hill Lowest Chest"), Has("Lizard Tail"))
-    set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Lizard Tail"))
     set_rule(world.get_location("Tristis Pass: Third Hill Right"), Has("Lizard Tail"))
 
     set_rule(world.get_location("Mystery Manor: Dark Room Chest"), Has("Arma Machina"))
@@ -80,7 +77,10 @@ def set_location_rules(world):
             set_rule(world.get_location("Training Hall: Third Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
             set_rule(world.get_location("Training Hall: Final Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
 
+    # Regular brown cheests
     if world.options.add_brown_chests == AddBrownChests.option_include:
         set_rule(world.get_location("Kalidus Channel: Third Room Underwater"), Has("Serpent Scale"))
         set_rule(world.get_location("Tymeo Mountains: Right Hill Alcove Chest"), Has("Lizard Tail"))
-        
+        set_rule(world.get_location("Tristis Pass: First Alcove"), Has("Lizard Tail"))
+        set_rule(world.get_location("Tristis Pass: Lower Hill Left"), Has("Lizard Tail"))
+        set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Lizard Tail"))
