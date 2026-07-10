@@ -43,7 +43,7 @@ class OoEWorld(World):
     game = "Castlevania: Order of Ecclesia"
     option_definitions = OoEOptions
     data_version = 1
-    origin_region_name = "Ecclesia"
+    origin_region_name = "Game Start"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids

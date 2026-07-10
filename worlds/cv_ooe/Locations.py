@@ -285,9 +285,10 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Mechanical Tower", "Mechanical Tower: Low Shaft Chest"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Upper Magnets Chest"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Center Room Chest"),
-        LocationData("Mechanical Tower", "Mechanical Tower: First Gears Room Chest"),
+        LocationData("Mechanical Tower Lower", "Mechanical Tower: First Gears Room Chest"),
 
         LocationData("Arms Depot", "Arms Depot: Upper Hall Item"),
+        LocationData("Arms Depot", "Arms Depot: Second Hall Pickup"),
         LocationData("Arms Depot", "Arms Depot: Near Dead End Pickup"),
         LocationData("Arms Depot", "Arms Depot: Post-Boss Item"),
         LocationData("Arms Depot", "Arms Depot: Left Room Chest"),

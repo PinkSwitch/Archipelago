@@ -12,6 +12,7 @@ class OoELocation(Location):
 
 
 region_list = [
+    "Game Start",
     "World Map",
 
     "Dracula's Castle",  # World map areas
@@ -58,6 +59,7 @@ region_list = [
     "Barracks",
     "Mechanical Tower",
     "Mechanical Tower Upper",  # Magnes or flight
+    "Mechanical Tower Lower",
     "Arms Depot",
     "Forsaken Cloister - Right",
     "Forsaken Cloister - Upper",
@@ -99,6 +101,8 @@ def connect_regions(world):
     world_map_regions = ["Training Hall", "Ruvas Forest", "Argila Swamp", "Kalidus Channel", "Somnus Reef", "Minera Prison Island",
                          "Lighthouse", "Tymeo Mountains", "Tristis Pass", "Large Cavern", "Giant's Dwelling", "Mystery Manor",
                          "Misty Forest Road", "Oblivion Ridge", "Skeleton Cave", "Monastery"]
+
+    world.get_region("Game Start").connect(world.get_region("Ecclesia"), rule=Has(world.starting_glyph))
 
     if world.options.remove_large_cavern:
         world_map_regions.remove("Large Cavern")
@@ -150,8 +154,9 @@ def connect_regions(world):
 
     world.get_region("Barracks").connect(world.get_region("Mechanical Tower"))
 
-    world.get_region("Mechanical Tower").add_exits(["Arms Depot", "Mechanical Tower Upper"], {
-                                             "Mechanical Tower Upper": HasAny("Magnes", "Volaticus")})
+    world.get_region("Mechanical Tower").add_exits(["Arms Depot", "Mechanical Tower Upper", "Mechanical Tower Lower"], {
+                                             "Mechanical Tower Upper": HasAny("Magnes", "Volaticus"),
+                                             "Mechanical Tower Lower": HasAny("Magnes", "Volaticus")})
 
     world.get_region("Mechanical Tower Upper").connect(world.get_region("Forsaken Cloister - Right"))
 

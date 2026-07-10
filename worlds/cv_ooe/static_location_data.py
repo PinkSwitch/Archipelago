@@ -27,7 +27,7 @@ location_ids = {
 
     "Minera Prison Island: Shaft Near Exit": 0x15,
     "Mystery Manor: Albus 3": 0x16,
-
+    "Arms Depot: Second Hall Pickup": 0x17,
     "Monastery: Central Freestanding": 0x18,
     "Arms Depot: Upper Hall Item": 0x1A,
     "Kalidus Channel: Depths Left Small Vertical Freestanding": 0x1B,
@@ -613,6 +613,7 @@ location_data_table = {
     "Arms Depot: Left Room Chest": LocationInformation(0x022D4DC0, "overlay_76", "Chest"),
     "Arms Depot: Before Boss": LocationInformation(0x022D50FC, "overlay_76", "Hidden Item"),
     "Arms Depot: Right Room Chest": LocationInformation(0x022D5018, "overlay_76", "Wood Chest"),
+    "Arms Depot: Second Hall Pickup": LocationInformation(0x022D4EC8, "overlay_76", "Freestanding"),
 
     "Forsaken Cloister: Central Shaft Hidden Item": LocationInformation(0x022CB170, "overlay_77", "Hidden Item"),
 

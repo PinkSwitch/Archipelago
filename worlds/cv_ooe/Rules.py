@@ -1,4 +1,4 @@
-from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation, HasGroupUnique
+from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique
 from rule_builder.field_resolvers import FromOption
 from .Options import VillagersRequired, AddBrownChests
 
@@ -51,9 +51,34 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Monastery: Big Room Ledge"), HasAny("Volaticus", "Ordinary Rock", "Rapidus Fio"))
     set_rule(world.get_location("Monastery: Big Room Under Shelf"), Has("Lizard Tail"))
-    set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", ""))
+    set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia"))
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus"))
 
+    set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAll("Fulgur", "Vol Fulgur"))
+
+    set_rule(world.get_location("Final Approach: Treasure Room Second From Right"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Treasure Room Far Right"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Treasure Room Far Left"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Treasure Room Second From Left"), Has("Volaticus"))
+
+    set_rule(world.get_location("Final Approach: Final Stash Far Right"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Final Stash Second From Left"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Final Stash Second From Right"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Final Stash Far Left"), Has("Volaticus"))
+    set_rule(world.get_location("Final Approach: Throne Right Chest"), Has("Paries"))
+    set_rule(world.get_location("Final Approach: Throne Left Chest"), Has("Paries"))
+
+    set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union"))
+
+    if not world.options.remove_training_hall:
+        set_rule(world.get_location("Training Hall: Freestanding"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+
+        if world.options.add_brown_chests == AddBrownChests.option_include:
+            set_rule(world.get_location("Training Hall: Top Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+            set_rule(world.get_location("Training Hall: First Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+            set_rule(world.get_location("Training Hall: Second Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+            set_rule(world.get_location("Training Hall: Third Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+            set_rule(world.get_location("Training Hall: Final Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
 
     if world.options.add_brown_chests == AddBrownChests.option_include:
         set_rule(world.get_location("Kalidus Channel: Third Room Underwater"), Has("Serpent Scale"))
