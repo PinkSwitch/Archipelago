@@ -76,6 +76,7 @@ class OoEWorld(World):
         self.has_tried_queen_of_hearts = False
         self.has_generated_output = False
         self.starting_glyph = None
+        self.starting_area = None
 
         self.glyph_filler_table = [
             "Vol Confodere",

@@ -111,7 +111,7 @@ def connect_regions(world):
 
     world.get_region("World Map").add_exits(["Dracula's Castle", "Ecclesia", "Wygol Village", "Kalidus Channel Depths Right"], {
                                              "Dracula's Castle": Has("Castle Access"),
-                                             "Kalidus Channel Depths Right": Has("Map: Kalidus Channel", 2)})
+                                             "Kalidus Channel Depths Right": Has("Map: Kalidus Channel", 2) & Has("Serpent Scale")})
 
     world.get_region("Ecclesia").add_exits(["World Map"])
 

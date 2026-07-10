@@ -229,6 +229,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Monastery", "Monastery: Lower Dead End"),
         LocationData("Monastery Magnets Area", "Monastery: Magnet Room Top Chest"),
         LocationData("Monastery Magnets Area", "Monastery: Final Shaft Free Item"),
+        LocationData("Monastery Magnets Area", "Monastery: Final Shaft Chest"),
 
         LocationData("Castle Entrance - Right Side", "Castle Entrance: Paries Wall"),
         LocationData("Castle Entrance", "Castle Entrance: Entry Chest"),

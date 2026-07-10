@@ -549,6 +549,7 @@ location_data_table = {
     "Monastery: Lower Dead End": LocationInformation(0x022D7C94, "overlay_78", "Chest"),
     "Monastery: Magnet Room Top Chest": LocationInformation(0x022D7D6C, "overlay_78", "Chest"),
     "Monastery: Final Shaft Free Item": LocationInformation(0x022D8048, "overlay_78", "Freestanding"),
+    "Monastery: Final Shaft Chest": LocationInformation(0x022D803C, "overlay_78", "Wood Chest"),
 
     "Castle Entrance: Paries Wall": LocationInformation(0x022D053C, "overlay_65", "Chest"),
     "Castle Entrance: Entry Chest": LocationInformation(0x022D0278, "overlay_65", "Chest"),
