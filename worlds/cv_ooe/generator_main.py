@@ -37,6 +37,9 @@ def create_items(world) -> None:
             item = set_classifications(world, name)
             pool.append(item)
 
+    if set_classifications(world, world.starting_glyph) in pool:
+        pool.remove(set_classifications(world, world.starting_glyph))
+
     if world.options.shuffle_dominus:
         pool.extend([set_classifications(world, "Dominus Hatred"),
                      set_classifications(world, "Dominus Anger"),
@@ -71,6 +74,9 @@ def create_items(world) -> None:
 
     if world.options.start_with_lizard_tail:
         pool.remove(set_classifications(world, "Lizard Tail"))
+
+    if world.starting_glyph in world.glyph_filler_table:
+        world.glyph_filler_table.remove(world.starting_glyph)
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 
