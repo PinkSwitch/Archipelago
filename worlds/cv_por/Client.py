@@ -172,7 +172,7 @@ class PoRClient(BizHawkClient):
             items_from_server += 1
             item_data = struct.pack("H", item.item)
             await bizhawk.write(ctx.bizhawk_ctx, [(0x308ED0, item_data, "Main RAM"),
-                                                  (0x308ED2, bytes([items_from_server]), "Main RAM")])
+                                                  (0x308ED2, struct.pack("H", items_from_server), "Main RAM")])
 
     async def handle_deathlink(self, current_death_state, ctx):
         if current_death_state & 0x40:  # If the player is currently dead
