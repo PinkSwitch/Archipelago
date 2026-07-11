@@ -5,6 +5,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
+from .game_data import area_list, villager_list
 from BaseClasses import ItemClassification
 from .Items import item_table
 
@@ -67,7 +68,9 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB220, "overlay_86", bytearray([world.options.reveal_hidden_chests.value]))
     rom.write_to_file(0x022EB22E, "overlay_86", bytearray([world.options.reveal_map.value]))
     rom.write_to_file(0x022EB223, "overlay_86", bytearray([world.options.reveal_hidden_walls.value]))
+    rom.write_to_file(0x022EB22F, "overlay_86", bytearray([world.options.experience_percent.value]))
 
+    #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
     if world.options.start_with_lizard_tail:
         starting_relics |= 0x01
@@ -79,6 +82,21 @@ def patch_rom(world, rom, code_patch):
         starting_relics |= 0x04
 
     rom.write_to_file(0x022EB222, "overlay_86", bytearray([starting_relics]))
+    #  Starting area  ###################
+    starting_area_value = 0
+    if world.starting_area:
+        starting_area_value = area_list.index(world.starting_area)
+
+    rom.write_to_file(0x022EB221, "overlay_86", bytearray([starting_area_value]))
+    #####################################################
+    #  Starting Villagers
+    starting_villagers = 0
+    for villager in world.options.starting_villagers:
+        starting_villagers |= villager_list.index(villager)
+    rom.write_to_file(0x022EB22A, "overlay_86", struct.pack("H", starting_villagers))
+    ################################################
+    rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))
+    rom.write_to_file(0x021E98BE, "overlay_0", struct.pack("H", world.options.villagers_required.value))  # Barlowe's dialogue in the bad ending
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -127,6 +145,7 @@ class OoEPatchExtensions(APPatchExtension):
                 f"Please use APWorld version {version} to patch your game.")
         return rom.get_bytes()
 
+    @staticmethod
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_86", 2))[0]  # Read the multiplier

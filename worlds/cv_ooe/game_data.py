@@ -108,3 +108,39 @@ valid_starting_glyphs = [  # All valid starting glyphs.
     "Acerbatus",
     "Globus"
 ]
+
+area_list = [
+    "Dracula's Castle",
+    "Wygol Village",
+    "Ecclesia",
+    "Training Hall",
+    "Ruvas Forest",
+    "Argila Swamp",
+    "Kalidus Channel",
+    "Somnus Reef",
+    "Minera Prison Island",
+    "Lighthouse",
+    "Tymeo Mountains",
+    "Tristis Pass",
+    "Large Cavern",
+    "Giant's Dwelling",
+    "Mystery Manor",
+    "Misty Forest Road",
+    "Oblivion Ridge",
+    "Skeleton Cave",
+    "Monastery"]
+
+villager_list = [
+    "Nikolai",
+    "Jacob",
+    "Abram",
+    "Laura",
+    "Eugen",
+    "Aeon",
+    "Marcel",
+    "George",
+    "Serge",
+    "Anna",
+    "Monica",
+    "Irina",
+    "Daniela"]
