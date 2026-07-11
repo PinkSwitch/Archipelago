@@ -164,7 +164,7 @@ class DoSClient(BizHawkClient):
             total_items_received += 1
             item_data = struct.pack(">H", item.item)
             await bizhawk.write(ctx.bizhawk_ctx, [(0x308940, item_data, "Main RAM")])
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x30894E, bytes([total_items_received]), "Main RAM")])
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x30894E, struct.pack("H", total_items_received), "Main RAM")])
 
         events = {
             "MoatDrained": (moat_switch >> 2) & 1,
