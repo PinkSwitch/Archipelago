@@ -40,7 +40,9 @@ class OoESettings(settings.Group):
 
 
 class OoEWorld(World):
-    """placeholder"""
+    """In the wake of the Belmont clan disappearing from history,
+       the Order of Ecclesia was formed to combat Dracula should he arise again.
+       Bearing the glyph of Dominus, will Shanoa be able to defeat him?"""
     game = "Castlevania: Order of Ecclesia"
     option_definitions = OoEOptions
     data_version = 1
