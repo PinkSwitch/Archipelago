@@ -191,7 +191,7 @@ def generate_output(world, output_directory: str) -> None:
     except Exception:
         raise
     finally:
-        world.rom_name_available_event.set()  #  make sure threading continues and errors are collected
+        world.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
 
 def modify_multidata(world, multidata: dict) -> None:

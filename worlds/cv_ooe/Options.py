@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
-                     NamedRange, Range, Choice, OptionSet)
+                     NamedRange, Range, Choice, OptionSet, StartInventoryPool)
 
 
 class StartingGlyph(TextChoice):
@@ -171,6 +171,7 @@ class OoEOptions(PerGameCommonOptions):
     remove_training_hall: RemoveTrainingHall
     remove_large_cavern: RemoveLargeCavern
     reveal_hidden_chests: RevealHiddenChests
+    start_inventory_from_pool: StartInventoryPool
 
 
 ooe_option_groups = [

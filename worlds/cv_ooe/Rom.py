@@ -1,5 +1,6 @@
 import hashlib
 import os
+import typing
 import Utils
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
@@ -20,7 +21,9 @@ class FilePointer(NamedTuple):
 
 
 file_pointers = {
-    "dummy": FilePointer(0x4000, 0x02000000, 0xFDBB7),
+    "overlay_0": FilePointer(0x103C00, 0x021DD280, 0x1F7DF),
+    "overlay_42": FilePointer(0x2ED600, 0x022C1FE0, 0x1117F),
+    "overlay_86": FilePointer(0x302E600, 0x022EB1A0, 0x32000),
 }
 
 
@@ -58,7 +61,8 @@ def patch_rom(world, rom, code_patch):
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
     patch_name.append(0)  # Add a terminator here
-    rom.write_to_file(0x022EB220, "overlay_86", code_patch)  # Apply the basepatch's data
+    rom.write_direct(0x0302E464, code_patch)  # Apply the basepatch's data. Inlined because it includes some padding
+
     rom.write_to_file(0x022EB200, "overlay_86", patch_name)  # Write in the player's name
     rom.write_to_file(0x022EB215, "overlay_86", world_version.encode("ascii"))  # Write the patch version
 
@@ -128,6 +132,9 @@ class OoEProcPatch(APProcedurePatch, APTokenMixin):
 
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+    def write_direct(self, offset: int, value: typing.Iterable[int]) -> None:
+        self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
 
 class OoEPatchExtensions(APPatchExtension):
