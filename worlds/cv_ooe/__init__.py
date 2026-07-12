@@ -200,3 +200,9 @@ class OoEWorld(World):
             "Miser Ring",
             "Lucky Clover",
             "Thief Ring"]
+
+        self.chest_filler_accessories = self.accessory_table.copy()
+
+        self.filler_chest_amror = self.armor_table.copy()
+
+        self.filler_chest_good_armor = self.good_armor_table.copy()

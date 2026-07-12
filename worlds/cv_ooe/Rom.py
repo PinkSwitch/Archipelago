@@ -9,6 +9,8 @@ from .static_location_data import location_data_table
 from .game_data import area_list, villager_list
 from BaseClasses import ItemClassification
 from .Items import item_table
+from .Options import AddBrownChests
+from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
 
 world_version = "1.0.0"
 hash_us = "e13bdcf706989486df939556eeb42ece"
@@ -23,6 +25,7 @@ class FilePointer(NamedTuple):
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFEE18),
     "overlay_0": FilePointer(0x103C00, 0x021DD280, 0x1F7DF),
+    "overlay_19": FilePointer(0x14A400, 0x021FFFC0, 0x23C7F),
     "overlay_42": FilePointer(0x2ED600, 0x022C1FE0, 0x1117F),
     "overlay_86": FilePointer(0x302E600, 0x022EB1A0, 0x32000),
     "comgfx_4": FilePointer(0x1A49200, 0, 0x1FFF),
@@ -105,6 +108,8 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))
     rom.write_to_file(0x021E98BE, "overlay_0", struct.pack("H", world.options.villagers_required.value))  # Barlowe's dialogue in the bad ending
     ###############################################
+    if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
+        shuffle_brown_chest_pool(world, rom)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -183,7 +188,7 @@ class OoEPatchExtensions(APPatchExtension):
                 source_sprite.append(source_tile_row)
 
             sprite = [[a[:4] + b[:4] + c[:4] + d[:4] for (a, b, c, d) in itertools.batched(source_sprite, 4)],
-                    [a[4:] + b[4:] + c[4:] + d[4:] for (a, b, c, d) in itertools.batched(source_sprite, 4)]]
+                     [a[4:] + b[4:] + c[4:] + d[4:] for (a, b, c, d) in itertools.batched(source_sprite, 4)]]
 
             row_new = []
             for half in sprite:  # We need to recombine this into a single 4-item Array
@@ -196,7 +201,6 @@ class OoEPatchExtensions(APPatchExtension):
         #  Coin sprite
         for i in range(2):
             for j in range(8):
-                print(f"writing from {hex(0x742 + (4 * j) + (0x1E * i))}")
                 source_sprite = rom.read_from_file(0x18 + (0x40 * j) + (0x2 * i), "comgfx_4", 2)
                 rom.write_to_file(0x742 + (4 * j) + (0x1E * i), "itemgfx_0", source_sprite)
 

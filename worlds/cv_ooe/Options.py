@@ -19,19 +19,16 @@ class ShuffleDominus(DefaultOnToggle):
     display_name = "Shuffle Dominus"
 
 
-# TODO - Implement
 class StartWithLizardTail(DefaultOnToggle):
     """If disabled, Lizard Tail will be shuffled into the item pool."""
     display_name = "Start with Lizard Tail"
 
 
-# TODO - Implement
 class StartWithGlyphUnion(DefaultOnToggle):
     """If disabled, Glyph Union will be shuffled into the item pool."""
     display_name = "Start with Glyph Union"
 
 
-# TODO - IMPLEMENT
 class StartWithGlyphSleeve(Toggle):
     """If enabled, you'll start with the Glyph Sleeve."""
     display_name = "Start with Glyph Sleeve"
@@ -42,7 +39,6 @@ class RevealBreakableWalls(Toggle):
     display_name = "Reveal Hidden Walls"
 
 
-# TODO - IMPLEMENT
 class VillagersRequired(Range):
     """How many Villagers you need to save in order to fight Barlowe."""
     display_name = "Villagers Required"
@@ -51,7 +47,7 @@ class VillagersRequired(Range):
     default = 13
 
 
-class ExperiencePercent(NamedRange):  # TODO!!! IMPLEMENT
+class ExperiencePercent(NamedRange):
     """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
     display_name = "Experience Percentage"
     range_start = 50
@@ -66,7 +62,6 @@ class ExperiencePercent(NamedRange):  # TODO!!! IMPLEMENT
     }
 
 
-# TODO- IMPLEMENT
 class AddBrownChests(Choice):
     """Brown chest behavior.
        Normal; Brown chests are untouched
@@ -76,10 +71,9 @@ class AddBrownChests(Choice):
     option_normal = 0
     option_random_rewards = 1
     option_include = 2
-    default = 2
+    default = 0
 
 
-# TODO- Implement and get Casefold working
 class StartingVillagers(OptionSet):
     """Specify which Villagers you want to start the game with."""
     display_name = "Starting Villagers"

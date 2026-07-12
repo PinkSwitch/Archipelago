@@ -44,9 +44,6 @@ class OoEClient(BizHawkClient):
                     self.most_recent_connect = patch_version
                 return False
 
-            if death_link_flag:
-                await ctx.update_death_link(True)
-
             ctx.game = self.game
             ctx.items_handling = 0b101
             ctx.locations_checked = set()
@@ -64,8 +61,5 @@ class OoEClient(BizHawkClient):
         slot_name_bytes = slot_name_bytes[0].rstrip(b'\x00')
         ctx.auth = slot_name_bytes.decode("ascii")
 
-
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
         print("Uh.")
-
-
