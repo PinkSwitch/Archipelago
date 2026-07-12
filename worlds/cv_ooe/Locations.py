@@ -337,10 +337,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         ])
 
     if world.options.add_brown_chests != AddBrownChests.option_include:
-        for location in location_table:
-            if not location.is_event:
-                name = location.name
-                if location_data_table[name].location_type == "Wood Chest":
-                    location_table.remove(location)
+        location_table = [location for location in
+                          location_table if location.is_event or location_data_table[location.name].location_type != "Wood Chest"]
 
     return location_table

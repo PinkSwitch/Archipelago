@@ -26,8 +26,12 @@ file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFEE18),
     "overlay_0": FilePointer(0x103C00, 0x021DD280, 0x1F7DF),
     "overlay_19": FilePointer(0x14A400, 0x021FFFC0, 0x23C7F),
+    "overlay_40": FilePointer(0x2DD000, 0x022C1FE0, 0xA73F),
     "overlay_41": FilePointer(0x2E7800, 0x022C1FE0, 0x5CDF),
     "overlay_42": FilePointer(0x2ED600, 0x022C1FE0, 0x1117F),
+    "overlay_43": FilePointer(0x2FE800, 0x022C1FE0, 0xDFDF),
+    "overlay_44": FilePointer(0x30C800, 0x022C1FE0, 0xB5FF),
+    "overlay_45": FilePointer(0x317E00, 0x022C1FE0, 0x843F),
     "overlay_46": FilePointer(0x320400, 0x022C1FE0, 0x22ABF),
     "overlay_47": FilePointer(0x343000, 0x022C1FE0, 0xD83F),
     "overlay_48": FilePointer(0x350A00, 0x022C1FE0, 0x1B5FF),
@@ -39,10 +43,11 @@ file_pointers = {
     "overlay_55": FilePointer(0x3BB000, 0x022C1FE0, 0xD99F),
     "overlay_56": FilePointer(0x3C8A00, 0x022C1FE0, 0x1421F),
     "overlay_57": FilePointer(0x3DCE00, 0x022C1FE0, 0xF17F),
+    "overlay_58": FilePointer(0x3EC000, 0x022C1FE0, 0x885F),
     "overlay_59": FilePointer(0x3F4A00, 0x022C1FE0, 0x1187F),
     "overlay_60": FilePointer(0x406400, 0x022C1FE0, 0x10E1F),
     "overlay_61": FilePointer(0x417400, 0x022C1FE0, 0xECBF),
-    "overlay_64": FilePointer(0x38A00, 0x022C1FE0, 0xBCBF),
+    "overlay_64": FilePointer(0x438A00, 0x022C1FE0, 0xBCBF),
     "overlay_65": FilePointer(0x444800, 0x022C1FE0, 0xE59F),
     "overlay_66": FilePointer(0x452E00, 0x022C1FE0, 0xBEDF),
     "overlay_68": FilePointer(0x466A00, 0x022C1FE0, 0x291BF),
@@ -139,7 +144,9 @@ def patch_rom(world, rom, code_patch):
         shuffle_brown_chest_pool(world, rom)
     ###############################################
     # Locations handler
+    handled_locations = []  # remove this after debugging
     for location in world.get_locations():
+        handled_locations.append(location.name)
         if not location.address:
             continue  # Skip over Events
 
@@ -149,7 +156,13 @@ def patch_rom(world, rom, code_patch):
 
         #  Location specs can be found with the data table
         if data.location_type == "Chest":
-            rom.write_to_file(data.pointer + 9, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            handled_locations.append(location.name)
+        elif data.location_type == "Wood Chest":
+            rom.write_to_file(data.pointer + 6, data.file, bytes([0x16]))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
+            handled_locations.append(location.name)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
