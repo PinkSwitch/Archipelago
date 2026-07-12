@@ -5,7 +5,7 @@ base_glyphs = [  # Base-level Arm glyphs
     "Macir",
     "Arcus",
     "Falcis",
-    "Culter",
+    # "Culter",
     "Lapiste",
     "Pneuma",
     "Ignis",
@@ -41,9 +41,9 @@ starting_glyph_pool = [  # All glyphs that are able to be randomly started with
     "Falcis",
     "Vol Falcis",
     "Melio Falcis",
-    "Culter",
-    "Vol Culter",
-    "Melio Culter",
+    # "Culter",
+    # "Vol Culter",
+    # "Melio Culter",
     # "Redire", Overpowered
     # "Cubus", Awkward
     "Lapiste",

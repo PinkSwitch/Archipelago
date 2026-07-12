@@ -138,7 +138,8 @@ def patch_rom(world, rom, code_patch):
     #  Starting Villagers
     starting_villagers = 0
     for villager in world.options.starting_villagers:
-        starting_villagers |= villager_list.index(villager)
+        starting_villagers |= 1 << villager_list.index(villager)
+        
     rom.write_to_file(0x022EB22A, "overlay_86", struct.pack("H", starting_villagers))
     ################################################
     rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))

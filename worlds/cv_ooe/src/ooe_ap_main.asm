@@ -434,7 +434,7 @@
     @OptionFlag_RevealMap: ;022EB22E
         .db 0x00
     @OptionFlag_EXPMult:
-        .db 0x00 ; 022EB22F
+        .dh 0x00 ; 022EB22F
 .align 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
