@@ -848,6 +848,7 @@
     bl 0x020AA94C ; Check if we've already unlocked Kalidus
     tst r0, 2
     pop r0
+    moveq r1, 1
     beq @@UnlockKalidus1 ; We have NOT be en to Kalidus yet, so just unlock the area normally
     mov r1, 0x01
     mov r2, 0x09
