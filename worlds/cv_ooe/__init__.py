@@ -8,6 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
+from .Client import OoEClient
 from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules,
                              fill_slot_data, modify_multidata, generate_output)
 

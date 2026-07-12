@@ -6,6 +6,7 @@ from typing import Dict
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
 from .Options import RandomizeVillagers
+from .Rom import patch_rom, OoEProcPatch
 
 
 class CVOoEItem(Item):
@@ -177,7 +178,6 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 
 
 def generate_output(world, output_directory: str) -> None:
-    from .Rom import OoEProcPatch, patch_rom
     try:
         code_patch = pkgutil.get_data(__name__, "src/overlay_86.bin")
         patch = OoEProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])

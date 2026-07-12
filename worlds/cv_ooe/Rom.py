@@ -21,9 +21,12 @@ class FilePointer(NamedTuple):
 
 
 file_pointers = {
+    "arm9": FilePointer(0x4000, 0x02000000, 0xFEE18),
     "overlay_0": FilePointer(0x103C00, 0x021DD280, 0x1F7DF),
     "overlay_42": FilePointer(0x2ED600, 0x022C1FE0, 0x1117F),
     "overlay_86": FilePointer(0x302E600, 0x022EB1A0, 0x32000),
+    "comgfx_4": FilePointer(0x1A49200, 0, 0x1FFF),
+    #"itemgfx_0": FilePointer(0x, 0, 0x)
 }
 
 
@@ -101,6 +104,8 @@ def patch_rom(world, rom, code_patch):
     ################################################
     rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))
     rom.write_to_file(0x021E98BE, "overlay_0", struct.pack("H", world.options.villagers_required.value))  # Barlowe's dialogue in the bad ending
+    ###############################################
+
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -112,9 +117,10 @@ class OoEProcPatch(APProcedurePatch, APTokenMixin):
     result_file_ending = ".nds"
     name: bytearray
     procedure = [
-        ("apply_bsdiff4", ["por_base.bsdiff4"]),
+        ("apply_bsdiff4", ["ooe_base.bsdiff4"]),
         ("apply_tokens", ["token_patch.bin"]),
         ("check_patch_version", []),
+        ("copy_money_gfx", []),
         ("apply_modifiers", [])
     ]
 
@@ -143,25 +149,35 @@ class OoEPatchExtensions(APPatchExtension):
     @staticmethod
     def check_patch_version(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        version_check = rom.read_from_file(0x02308F35, "overlay_119", 11)
+        version_check = rom.read_from_file(0x022EB215, "overlay_86", 11)
         version = version_check.rstrip(b"\x00")
         version = version.decode("ascii")
         if version != world_version:  # Installed world is different from generated world
             raise Exception(
-                f"Error! this patch was generated on Portrait of Ruin APworld version: {version}, but installed APworld is version: {world_version}. " +
+                f"Error! this patch was generated on Order of  Ecclesia APworld version: {version}, but installed APworld is version: {world_version}. " +
                 f"Please use APWorld version {version} to patch your game.")
         return rom.get_bytes()
 
     @staticmethod
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        exp_multiplier = struct.unpack("H", rom.read_from_file(0x02309176, "overlay_86", 2))[0]  # Read the multiplier
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB22F, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)
             enemy_exp = struct.unpack("H", rom.read_from_file(address + 16, "arm9", 2))[0]
             enemy_exp = int(min(0xFFFF, (enemy_exp * exp_multiplier)))
+
+        return rom.get_bytes()
+
+    @staticmethod
+    def copy_money_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        #  Money bag sprite
+        source_sprite = []
+        for i in range(16):
+            source_tile_row = rom.read_from_file(0x10 + (i * 0x40), "comgfx_4", 8)
 
         return rom.get_bytes()
 
