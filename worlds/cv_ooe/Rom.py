@@ -47,6 +47,7 @@ file_pointers = {
     "overlay_59": FilePointer(0x3F4A00, 0x022C1FE0, 0x1187F),
     "overlay_60": FilePointer(0x406400, 0x022C1FE0, 0x10E1F),
     "overlay_61": FilePointer(0x417400, 0x022C1FE0, 0xECBF),
+    "overlay_62": FilePointer(0x426200, 0x022C1FE0, 0x3FFF),
     "overlay_63": FilePointer(0x42A200, 0x022C1FE0, 0xE69F),
     "overlay_64": FilePointer(0x438A00, 0x022C1FE0, 0xBCBF),
     "overlay_65": FilePointer(0x444800, 0x022C1FE0, 0xE59F),
@@ -60,6 +61,7 @@ file_pointers = {
     "overlay_74": FilePointer(0x4E7600, 0x022C1FE0, 0x13B3F),
     "overlay_75": FilePointer(0x4FB200, 0x022C1FE0, 0xCF7F),
     "overlay_76": FilePointer(0x508200, 0x022C1FE0, 0x1321F),
+    "overlay_77": FilePointer(0x51B600, 0x022C1FE0, 0x939F),
     "overlay_78": FilePointer(0x524A00, 0x022C1FE0, 0x1633F),
     "overlay_86": FilePointer(0x302E600, 0x022EB1A0, 0x32000),
     "comgfx_4": FilePointer(0x1A49200, 0, 0x1FFF),
@@ -225,7 +227,7 @@ class OoEPatchExtensions(APPatchExtension):
                 source_sprite.append(source_tile_row)
 
             sprite = [[a[:4] + b[:4] + c[:4] + d[:4] for (a, b, c, d) in itertools.batched(source_sprite, 4)],
-                     [a[4:] + b[4:] + c[4:] + d[4:] for (a, b, c, d) in itertools.batched(source_sprite, 4)]]
+                      [a[4:] + b[4:] + c[4:] + d[4:] for (a, b, c, d) in itertools.batched(source_sprite, 4)]]
 
             row_new = []
             for half in sprite:  # We need to recombine this into a single 4-item Array
@@ -282,11 +284,9 @@ def get_item_id(world, item):
 
 
 def patch_locations(world, rom, locations):
-    handled_locations = []  # remove this after debugging
     for location in locations:
         if not location.address:
             continue  # Skip over Events
-        handled_locations.append(location.name)
         item = location.item
         data = location_data_table[location.name]
         item_id = get_item_id(world, location.item)
@@ -294,13 +294,11 @@ def patch_locations(world, rom, locations):
         #  Location specs can be found with the data table
         if data.location_type == "Chest":
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
 
         elif data.location_type == "Wood Chest":
             rom.write_to_file(data.pointer + 6, data.file, bytes([0x16]))
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
-            handled_locations.remove(location.name)
 
         elif data.location_type == "Freestanding":
             if item_id < 0x70:  # Glyphs need to be spawned as Glyph Statues
@@ -326,15 +324,12 @@ def patch_locations(world, rom, locations):
             rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
-            handled_locations.remove(location.name)
             
         elif data.location_type == "Area Exit":
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
-            handled_locations.remove(location.name)
         elif data.location_type == "Event Glyph":
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
         elif data.location_type == "Freestanding Glyph":
             #  This is handled the same way as Freestanding, except Glyphs are handled as Glyphs instead of statues
             if item_id in range(0x168, 0x175):  # Villagers need to be spawned as the rescuable Villager Obj
@@ -358,15 +353,24 @@ def patch_locations(world, rom, locations):
             rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
-            handled_locations.remove(location.name)
         elif data.location_type == "Event Chest":
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
         elif data.location_type == "Inline":
             rom.write_to_file(data.pointer, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
         elif data.location_type == "Enemy Glyph":
             rom.write_to_file(data.pointer + 0x14, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
-
-    print(handled_locations)
+        elif data.location_type == "Hidden Item":
+            #  This is handled the same way as Freestanding, except all items are just, their item.
+            if item_id in range(0x161, 0x168):  # Money
+                sub_type = 0x01
+                var_b = item_id - 0x161
+            elif item_id < 0x70:  # Glyphs
+                sub_type = 0x02
+                var_b = item_id
+            else:
+                sub_type = 0xFF
+                var_b = item_id
+            rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
+        else:
+            raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
