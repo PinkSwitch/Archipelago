@@ -26,7 +26,34 @@ file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xFEE18),
     "overlay_0": FilePointer(0x103C00, 0x021DD280, 0x1F7DF),
     "overlay_19": FilePointer(0x14A400, 0x021FFFC0, 0x23C7F),
+    "overlay_41": FilePointer(0x2E7800, 0x022C1FE0, 0x5CDF),
     "overlay_42": FilePointer(0x2ED600, 0x022C1FE0, 0x1117F),
+    "overlay_46": FilePointer(0x320400, 0x022C1FE0, 0x22ABF),
+    "overlay_47": FilePointer(0x343000, 0x022C1FE0, 0xD83F),
+    "overlay_48": FilePointer(0x350A00, 0x022C1FE0, 0x1B5FF),
+    "overlay_50": FilePointer(0x371000, 0x022C1FE0, 0xC87F),
+    "overlay_51": FilePointer(0x37DA00, 0x022C1FE0, 0xD73F),
+    "overlay_52": FilePointer(0x38B200, 0x022C1FE0, 0xAE1F),
+    "overlay_53": FilePointer(0x396200, 0x022C1FE0, 0xB8DF),
+    "overlay_54": FilePointer(0x3A1C00, 0x022C1FE0, 0x1937F),
+    "overlay_55": FilePointer(0x3BB000, 0x022C1FE0, 0xD99F),
+    "overlay_56": FilePointer(0x3C8A00, 0x022C1FE0, 0x1421F),
+    "overlay_57": FilePointer(0x3DCE00, 0x022C1FE0, 0xF17F),
+    "overlay_59": FilePointer(0x3F4A00, 0x022C1FE0, 0x1187F),
+    "overlay_60": FilePointer(0x406400, 0x022C1FE0, 0x10E1F),
+    "overlay_61": FilePointer(0x417400, 0x022C1FE0, 0xECBF),
+    "overlay_64": FilePointer(0x38A00, 0x022C1FE0, 0xBCBF),
+    "overlay_65": FilePointer(0x444800, 0x022C1FE0, 0xE59F),
+    "overlay_66": FilePointer(0x452E00, 0x022C1FE0, 0xBEDF),
+    "overlay_68": FilePointer(0x466A00, 0x022C1FE0, 0x291BF),
+    "overlay_69": FilePointer(0x48FC00, 0x022C1FE0, 0x1821F),
+    "overlay_70": FilePointer(0x4A8000, 0x022C1FE0, 0xAE9F),
+    "overlay_71": FilePointer(0x4B3000, 0x022C1FE0, 0x135BF),
+    "overlay_72": FilePointer(0x4C6600, 0x022C1FE0, 0x1AEFF),
+    "overlay_74": FilePointer(0x4E7600, 0x022C1FE0, 0x13B3F),
+    "overlay_75": FilePointer(0x4FB200, 0x022C1FE0, 0xCF7F),
+    "overlay_76": FilePointer(0x508200, 0x022C1FE0, 0x1321F),
+    "overlay_78": FilePointer(0x524A00, 0x022C1FE0, 0x1633F),
     "overlay_86": FilePointer(0x302E600, 0x022EB1A0, 0x32000),
     "comgfx_4": FilePointer(0x1A49200, 0, 0x1FFF),
     "itemgfx_0": FilePointer(0x1CFF200, 0, 0x1FFF)
@@ -110,6 +137,19 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
         shuffle_brown_chest_pool(world, rom)
+    ###############################################
+    # Locations handler
+    for location in world.get_locations():
+        if not location.address:
+            continue  # Skip over Events
+
+        item = location.item
+        data = location_data_table[location.name]
+        item_id = get_item_id(world, location.item)
+
+        #  Location specs can be found with the data table
+        if data.location_type == "Chest":
+            rom.write_to_file(data.pointer + 9, data.file, struct.pack("H", item_id))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -229,3 +269,16 @@ def get_base_rom_path(file_name: str = "") -> str:
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
+
+
+def get_item_id(world, item):
+    if item.player == world.player:
+        item_id = item_table[item.name].code
+    else:
+        if ItemClassification.progression or ItemClassification.trap in item.classification:
+            item_id = 0xD6
+        elif ItemClassification.useful in item.classification:
+            item_id = 0xD5
+        else:
+            item_id = 0xD4 
+    return item_id
