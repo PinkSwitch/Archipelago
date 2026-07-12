@@ -109,7 +109,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB215, "overlay_86", world_version.encode("ascii"))  # Write the patch version
 
     #  Options handling
-    rom.write_to_file(0x022D3040, "overlay_42", bytearray([item_table[world.starting_glyph].code]))  # Starting Glyph needs to be assigned to VarB of the intro object
+    rom.write_to_file(0x022D304A, "overlay_42", bytearray([item_table[world.starting_glyph].code]))  # Starting Glyph needs to be assigned to VarB of the intro object
 
     rom.write_to_file(0x022EB220, "overlay_86", bytearray([world.options.reveal_hidden_chests.value]))
     rom.write_to_file(0x022EB22E, "overlay_86", bytearray([world.options.reveal_map.value]))

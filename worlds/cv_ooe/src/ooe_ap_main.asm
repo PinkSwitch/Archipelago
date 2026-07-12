@@ -500,7 +500,6 @@
     ;add r1, r1, 0x12
     ;strh r0, [r1] ; Set the Starting Glyph as equipped in the menu
     ;strh r0, [r1, 2]
-    add r0, r0, 1
 
     bl @GetItemArbitrary
     pop r1
@@ -779,7 +778,7 @@
 @@ExpandedItems:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x06
+    cmp r0, 0x07
     movle r0, 0x44 ; Money glyphs
     bxle lr
     cmp r0, 0x15
@@ -803,7 +802,7 @@
 @@ExpandedItem:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 6
+    cmp r0, 7
     ble @@GetMoney
     cmp r0, 0x15
     bge @@GetMap
@@ -911,7 +910,7 @@
 @@ShowExpandedNames:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x06
+    cmp r0, 0x07
     bgt @@ShowVillager
     lsl r0, r0, 1
     ldr r2, =@MoneyValues
@@ -1231,7 +1230,7 @@
 @@ExpandedItems:
     sub r1, r1, 1
     sub r1, r1, 0x160
-    cmp r1, 0x06
+    cmp r1, 0x07
     bgt @@ItemSound ; Non-money mains
     mov r1, 0x0D ;Money
     ldr r0, =0x11A00000
@@ -1346,7 +1345,7 @@
 @@GetExtraData:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x06
+    cmp r0, 0x08
     blt @@MoneyPtr
     cmp r0, 0x15
     blt @@VillagerPtr
@@ -1446,7 +1445,7 @@
 @@CheckExpandedItemColors:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x06 ; Money uses brown chests
+    cmp r0, 0x07 ; Money uses brown chests
     movle r0, 0xFF
     ble @@End
     mov r0, 0x03 ; Villagers and maps always use gold chests
@@ -1500,7 +1499,7 @@
 @@GetExpandedText:
     sub r1, r1, 1
     sub r1, r1, 0x160
-    cmp r1, 0x06
+    cmp r1, 0x07
     movle r1, 0x58 ; money
     ble @@End
     cmp r1, 0x15
