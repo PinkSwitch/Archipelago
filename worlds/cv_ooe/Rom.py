@@ -192,6 +192,13 @@ class OoEPatchExtensions(APPatchExtension):
 
             for j, half in enumerate(row_new):
                 rom.write_to_file(0x500 + (0x200 * i) + (0x10 * j), "itemgfx_0", half)
+        ########################
+        #  Coin sprite
+        for i in range(2):
+            for j in range(8):
+                print(f"writing from {hex(0x742 + (4 * j) + (0x1E * i))}")
+                source_sprite = rom.read_from_file(0x18 + (0x40 * j) + (0x2 * i), "comgfx_4", 2)
+                rom.write_to_file(0x742 + (4 * j) + (0x1E * i), "itemgfx_0", source_sprite)
 
         return rom.get_bytes()
 
