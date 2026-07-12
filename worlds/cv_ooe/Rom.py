@@ -189,6 +189,11 @@ def patch_rom(world, rom, code_patch):
             rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Area Exit":
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
+            handled_locations.remove(location.name)
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
