@@ -146,54 +146,7 @@ def patch_rom(world, rom, code_patch):
         shuffle_brown_chest_pool(world, rom)
     ###############################################
     # Locations handler
-    handled_locations = []  # remove this after debugging
-    for location in world.get_locations():
-        handled_locations.append(location.name)
-        if not location.address:
-            continue  # Skip over Events
-
-        item = location.item
-        data = location_data_table[location.name]
-        item_id = get_item_id(world, location.item)
-
-        #  Location specs can be found with the data table
-        if data.location_type == "Chest":
-            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            handled_locations.remove(location.name)
-        elif data.location_type == "Wood Chest":
-            rom.write_to_file(data.pointer + 6, data.file, bytes([0x16]))
-            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
-            handled_locations.remove(location.name)
-        elif data.location_type == "Freestanding":
-            if item_id < 0x70:  # Glyphs need to be spawned as Glyph Statues
-                object_type = 0x02
-                sub_type = 0x02
-                var_a = 0x8000 | location.address
-                var_b = item_id
-            elif item_id in range(0x168, 0x175):  # Villagers need to be spawned as the rescuable Villager Obj
-                object_type = 0x02
-                sub_type = 0x89
-                var_a = villager_flags[item.name]
-                var_b = location.address
-            else:
-                object_type = 0x04  # Free pickup
-                if item_id in range(0x161, 0x168):  # Money
-                    sub_type = 0x01
-                    var_b = item_id - 0x161
-                else:
-                    sub_type = 0xFF
-                    var_b = item_id
-                var_a = location.address
-            rom.write_to_file(data.pointer + 5, data.file, bytes([object_type]))
-            rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
-            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
-            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
-            handled_locations.remove(location.name)
-        elif data.location_type == "Area Exit":
-            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
-            handled_locations.remove(location.name)
+    patch_locations(world, rom, world.get_locations())
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -326,3 +279,94 @@ def get_item_id(world, item):
         else:
             item_id = 0xD4 
     return item_id
+
+
+def patch_locations(world, rom, locations):
+    handled_locations = []  # remove this after debugging
+    for location in locations:
+        if not location.address:
+            continue  # Skip over Events
+        handled_locations.append(location.name)
+        item = location.item
+        data = location_data_table[location.name]
+        item_id = get_item_id(world, location.item)
+
+        #  Location specs can be found with the data table
+        if data.location_type == "Chest":
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            handled_locations.remove(location.name)
+
+        elif data.location_type == "Wood Chest":
+            rom.write_to_file(data.pointer + 6, data.file, bytes([0x16]))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
+            handled_locations.remove(location.name)
+
+        elif data.location_type == "Freestanding":
+            if item_id < 0x70:  # Glyphs need to be spawned as Glyph Statues
+                object_type = 0x02
+                sub_type = 0x02
+                var_a = 0x8000 | location.address
+                var_b = item_id
+            elif item_id in range(0x168, 0x175):  # Villagers need to be spawned as the rescuable Villager Obj
+                object_type = 0x02
+                sub_type = 0x89
+                var_a = villager_flags[item.name]
+                var_b = location.address
+            else:
+                object_type = 0x04  # Free pickup
+                if item_id in range(0x161, 0x168):  # Money
+                    sub_type = 0x01
+                    var_b = item_id - 0x161
+                else:
+                    sub_type = 0xFF
+                    var_b = item_id
+                var_a = location.address
+            rom.write_to_file(data.pointer + 5, data.file, bytes([object_type]))
+            rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
+            handled_locations.remove(location.name)
+            
+        elif data.location_type == "Area Exit":
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Event Glyph":
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", item_id))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Freestanding Glyph":
+            #  This is handled the same way as Freestanding, except Glyphs are handled as Glyphs instead of statues
+            if item_id in range(0x168, 0x175):  # Villagers need to be spawned as the rescuable Villager Obj
+                object_type = 0x02
+                sub_type = 0x89
+                var_a = villager_flags[item.name]
+                var_b = location.address
+            else:
+                object_type = 0x04  # Free pickup
+                if item_id in range(0x161, 0x168):  # Money
+                    sub_type = 0x01
+                    var_b = item_id - 0x161
+                elif item_id < 0x70:  # Glyphs
+                    sub_type = 0x02
+                    var_b = item_id
+                else:
+                    sub_type = 0xFF
+                    var_b = item_id
+                var_a = location.address
+            rom.write_to_file(data.pointer + 5, data.file, bytes([object_type]))
+            rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Event Chest":
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Inline":
+            rom.write_to_file(data.pointer, data.file, struct.pack("H", item_id))
+            handled_locations.remove(location.name)
+        elif data.location_type == "Enemy Glyph":
+            rom.write_to_file(data.pointer + 0x14, data.file, struct.pack("H", item_id))
+            handled_locations.remove(location.name)
+
+    print(handled_locations)

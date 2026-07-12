@@ -561,7 +561,7 @@ location_data_table = {
     "Castle Entrance: Before Switch Wall": LocationInformation(0x022CDE18, "overlay_66", "Wood Chest"),
 
     "Underground Labyrinth: Boulder Room Glyph": LocationInformation(0x022EADC8, "overlay_68", "Event Glyph"),
-    "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_68", "Inline"),
+    "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_86", "Inline"),
     "Underground Labyrinth: Exit Item": LocationInformation(0x022EB0D4, "overlay_68", "Freestanding Glyph"),
     "Underground Labyrinth: Secret Passge Pickup": LocationInformation(0x022EB008, "overlay_68", "Freestanding"),
     "Underground Labyrinth: Second Shadow Room": LocationInformation(0x022EA9CC, "overlay_68", "Chest"),
