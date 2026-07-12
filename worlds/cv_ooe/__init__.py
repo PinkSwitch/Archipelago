@@ -11,6 +11,7 @@ from .Options import OoEOptions, ooe_option_groups
 from .Client import OoEClient
 from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules,
                              fill_slot_data, modify_multidata, generate_output)
+from .modules.brown_chest_shuffler import chest_armor_table
 
 
 class OoEWeb(WebWorld):
@@ -203,6 +204,6 @@ class OoEWorld(World):
 
         self.chest_filler_accessories = self.accessory_table.copy()
 
-        self.filler_chest_amror = self.armor_table.copy()
+        self.filler_chest_amror = chest_armor_table.copy()
 
         self.filler_chest_good_armor = self.good_armor_table.copy()

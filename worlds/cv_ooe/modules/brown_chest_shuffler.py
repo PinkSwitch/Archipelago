@@ -74,6 +74,39 @@ rare_consumable_table = [
     "Black Drops"
 ]
 
+chest_armor_table = [
+    "Military Wear",
+    "Rubber Suit",
+    "Reinforced Suit",
+    "Body Suit",
+    "Leather Cuirass",
+    "Copper Plate",
+    "Iron Plate",
+    "Silver Plate",
+    "Mirror Cuirass",
+    "Barbarian Belt",
+    "Crimson Mail",
+    "Cotton Dress",
+    "Silk Dress",
+    "Sequined Dress",
+    "Corset Dress",
+    "Garbo Hat",
+    "Traveler's Hat",
+    "Babushka",
+    "Crochet",
+    "Barbarian Helm",
+    "Stephanie",
+    "Combo Boots",
+    "Sabrina Shoes",
+    "Cossack Boots",
+    "Baggy Boots",
+    "Battle Boots",
+    "Ghillie Boots",
+    "Cavalier Boots",
+    "Iron Leggings",
+    "Barbarian Shoes",
+    "Crimson Greaves"]
+
 
 def shuffle_brown_chest_pool(world, rom):
     common_weights = {"rare_consumable": 5, "good_consumable": 50, "consumable": 90}
