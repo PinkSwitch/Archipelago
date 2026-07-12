@@ -31,6 +31,8 @@ def setup_game(world) -> None:
 
     if world.options.starting_area != StartingArea.option_none:
         world.starting_area = world.options.starting_area.current_key.replace("_", " ").title()
+        if world.starting_area == "Giants Dwelling":
+            world.starting_area = "Giant's Dwelling"  # Fix that for logic
         world.multiworld.push_precollected(create_progress_event(world, f"Map: {world.starting_area}"))
 
 
@@ -61,7 +63,9 @@ def place_static_items(world) -> None:
             "Daniela": "Giant's Dwelling: First Corner"}
 
         if world.options.randomize_villagers == RandomizeVillagers.option_shuffled:
-            zip(world.random.shuffle(villager_pool.keys()), villager_pool.values())  # Shuffle as neeeded
+            pool = list(villager_pool.values())
+            world.random.shuffle(pool)
+            villager_pool = dict(zip(villager_pool, pool))
 
         for villager in villager_pool:  # Place the corresponding items/locations here
             if world.create_item(villager) not in world.multiworld.precollected_items[world.player]:
