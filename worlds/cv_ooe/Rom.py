@@ -150,6 +150,10 @@ def patch_rom(world, rom, code_patch):
     # Locations handler
     patch_locations(world, rom, world.get_locations())
 
+    #  This is the Glyph you're shown at the end of Oblivion Ridge. We want it to match the actual check.
+    rom.write_to_file(0x022C5F80, "overlay_62",
+                      struct.pack("H", get_item_id(world, world.get_location("Mystery Manor: Albus 3").item)))
+
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
 
