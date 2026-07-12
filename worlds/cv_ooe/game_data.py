@@ -144,3 +144,19 @@ villager_list = [
     "Monica",
     "Irina",
     "Daniela"]
+
+villager_flags = {
+    "Nikolai": 0x08,
+    "George": 0x0D,
+    "Jacob": 0x2A,
+    "Abram": 0x2D,
+    "Laura": 0x32,
+    "Eugen": 0x38,
+    "Aeon": 0x3C,
+    "Marcel": 0x40,
+    "Serge": 0x47,
+    "Anna": 0x4B,
+    "Monica": 0x4F,
+    "Irina": 0x53,
+    "Daniela": 0x57
+}

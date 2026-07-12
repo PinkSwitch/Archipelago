@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .static_location_data import location_data_table
-from .game_data import area_list, villager_list
+from .game_data import area_list, villager_list, villager_flags
 from BaseClasses import ItemClassification
 from .Items import item_table
 from .Options import AddBrownChests
@@ -47,6 +47,7 @@ file_pointers = {
     "overlay_59": FilePointer(0x3F4A00, 0x022C1FE0, 0x1187F),
     "overlay_60": FilePointer(0x406400, 0x022C1FE0, 0x10E1F),
     "overlay_61": FilePointer(0x417400, 0x022C1FE0, 0xECBF),
+    "overlay_63": FilePointer(0x42A200, 0x022C1FE0, 0xE69F),
     "overlay_64": FilePointer(0x438A00, 0x022C1FE0, 0xBCBF),
     "overlay_65": FilePointer(0x444800, 0x022C1FE0, 0xE59F),
     "overlay_66": FilePointer(0x452E00, 0x022C1FE0, 0xBEDF),
@@ -55,6 +56,7 @@ file_pointers = {
     "overlay_70": FilePointer(0x4A8000, 0x022C1FE0, 0xAE9F),
     "overlay_71": FilePointer(0x4B3000, 0x022C1FE0, 0x135BF),
     "overlay_72": FilePointer(0x4C6600, 0x022C1FE0, 0x1AEFF),
+    "overlay_73": FilePointer(0x4E1600, 0x022C1FE0, 0x5E9F),
     "overlay_74": FilePointer(0x4E7600, 0x022C1FE0, 0x13B3F),
     "overlay_75": FilePointer(0x4FB200, 0x022C1FE0, 0xCF7F),
     "overlay_76": FilePointer(0x508200, 0x022C1FE0, 0x1321F),
@@ -157,12 +159,36 @@ def patch_rom(world, rom, code_patch):
         #  Location specs can be found with the data table
         if data.location_type == "Chest":
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
-            handled_locations.append(location.name)
+            handled_locations.remove(location.name)
         elif data.location_type == "Wood Chest":
             rom.write_to_file(data.pointer + 6, data.file, bytes([0x16]))
             rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", item_id))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", location.address))
-            handled_locations.append(location.name)
+            handled_locations.remove(location.name)
+        elif data.location_type == "Freestanding":
+            if item_id < 0x70:  # Glyphs need to be spawned as Glyph Statues
+                object_type = 0x02
+                sub_type = 0x02
+                var_a = 0x8000 | location.address
+                var_b = item_id
+            elif item_id in range(0x168, 0x175):  # Villagers need to be spawned as the rescuable Villager Obj
+                object_type = 0x02
+                sub_type = 0x89
+                var_a = villager_flags[item.name]
+                var_b = location.address
+            else:
+                object_type = 0x04  # Free pickup
+                if item_id in range(0x161, 0x168):  # Money
+                    sub_type = 0x01
+                    var_b = item_id - 0x161
+                else:
+                    sub_type = 0xFF
+                    var_b = item_id
+                var_a = location.address
+            rom.write_to_file(data.pointer + 5, data.file, bytes([object_type]))
+            rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
+            rom.write_to_file(data.pointer + 8, data.file, struct.pack("H", var_a))
+            rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
