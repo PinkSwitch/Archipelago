@@ -82,9 +82,13 @@ class OoEClient(BizHawkClient):
                     (0x100398, 0x19F, "Main RAM"),  # Location flags
                     (0x2EB1B0, 2, "Main RAM"),  # Received Item
                     (0x2EB1B2, 2, "Main RAM"),  # Total items
+                    (0xFFCB9, 1, "Main RAM"),  # Current area
+                    (0x1003E4, 4, "Main RAM")  # Boss death flags
         ])
         game_mode = read_state[1][0]  # If the game mode is non-zero, return
         overlay22_entry = struct.unpack("I", read_state[0])[0]
+        boss_flags = struct.unpack("I", read_state[6])[0]
+        current_map = read_state[5][0]
 
         if game_mode or overlay22_entry != 0xE3A00064:
             #  We don't want to run AP if the game mode isn't regular Shanoa mode.
@@ -93,6 +97,14 @@ class OoEClient(BizHawkClient):
 
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
+
+        if (not boss_flags & 0x00004000) and current_map == 0x13 and (not ctx.finished_game):
+            #  Check that Dracula is dead and we're in the epilogue
+            await ctx.send_msgs([{
+                "cmd": "StatusUpdate",
+                "status": ClientStatus.CLIENT_GOAL
+            }])
+
 
     @staticmethod
     async def check_locations(read_state, ctx):
