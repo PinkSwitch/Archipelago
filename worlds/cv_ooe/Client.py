@@ -77,11 +77,54 @@ class OoEClient(BizHawkClient):
             return
 
         read_state = await bizhawk.read(ctx.bizhawk_ctx, [
-                    #(0x0F6284, 0x01, "Main RAM"),  # Game State
-                    #(0x1119E0, 4, "Main RAM"),  # Clock Time
+                    (0x223E00, 4, "Main RAM"),  # Start of Overlay 22
                     (0x100790, 1, "Main RAM"),  # Game Mode
                     (0x100398, 0x19F, "Main RAM"),  # Location flags
                     (0x2EB1B0, 2, "Main RAM"),  # Received Item
                     (0x2EB1B2, 2, "Main RAM"),  # Total items
         ])
-        #  Return if Game Mode is not 0
+        game_mode = read_state[1][0]  # If the game mode is non-zero, return
+        overlay22_entry = struct.unpack("I", read_state[0])[0]
+
+        if game_mode or overlay22_entry != 0xE3A00064:
+            #  We don't want to run AP if the game mode isn't regular Shanoa mode.
+            #  Aditionally, overlay 22 is loaded while we're in game, so if it's not loaded, don't do anything
+            return
+
+        await self.check_locations(read_state, ctx)
+        await self.give_items(read_state, ctx)
+
+    @staticmethod
+    async def check_locations(read_state, ctx):
+        new_checks = []
+        location_flags = read_state[2]
+
+        from .static_location_data import location_ids
+        for location_name in location_ids:
+            loc_id = location_ids[location_name]
+            if loc_id not in ctx.server_locations:
+                continue
+            if loc_id not in ctx.locations_checked:
+                offset = int(loc_id / 8)
+                bit = int(1 << (loc_id % 8))
+                flag = location_flags[offset]
+                if flag & bit:
+                    new_checks.append(loc_id)
+
+            for new_check_id in new_checks:
+                ctx.locations_checked.add(new_check_id)
+                # location = ctx.location_names.lookup_in_slot(new_check_id)
+                await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
+
+
+    @staticmethod
+    async def give_items(read_state, ctx):
+        currently_processed_item = struct.unpack("H", read_state[3])[0]
+        items_from_server = struct.unpack("H", read_state[4])[0]
+
+        if items_from_server < len(ctx.items_received) and not currently_processed_item:
+            item = ctx.items_received[items_from_server]
+            items_from_server += 1
+            item_data = struct.pack("H", item.item)
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x2EB1B0, item_data, "Main RAM"),
+                                                  (0x2EB1B2, struct.pack("H", items_from_server), "Main RAM")])

@@ -46,7 +46,7 @@ location_ids = {
     "Minera Prison Island: Albus 1": 0x33,
     "Giant's Dwelling: Albus 2": 0x34,
     "Mystery Manor: Albus 3": 0x35,
-    
+
     "Monastery: Magnet Room Free": 0x3A,  # todo. Set this flag.
     "Final Approach: Central Room Pickup": 0x3C,
     "Underground Labyrinth: Exit Item": 0x3D,
@@ -140,6 +140,7 @@ location_ids = {
     "Monastery: Big Room Ledge": 0xAA,
     "Kalidus Channel: Ship Room Hidden Chest": 0xAB,
     "Minera Prison Island: Hidden Room": 0xAC,
+    "Tymeo Mountains: Hidden Room": 0xAD,
     "Tymeo Mountains: Upper Mountain Hidden Chest": 0xAE,
     "Misty Forest Road: Paries Room Chest": 0xAF,
     "Tristis Pass: Waterfall Hidden Chest": 0xB0,
@@ -269,7 +270,6 @@ location_ids = {
     "Somnus Reef: Exit Shaft Chest": 0x13B,
     "Tristis Pass: Area Exit": 0x13D,
     "Tristis Pass: Final Hill Underground Chest": 0x13E,
-    "Tymeo Mountains: Hidden Room": 0x140,
     "Training Hall: Top Chest": 0x141,
     "Training Hall: First Way Down Chest": 0x142,
     "Training Hall: Second Way Down Chest": 0x143,
