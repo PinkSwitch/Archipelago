@@ -651,6 +651,10 @@
     push r0
     mov r0, 0x5A
     strh r0, [r1]
+    ldr r1, =0x020FFC8C
+    ldrb r0, [r1, 0x02]
+    orr r0, r0, 0x10 ; Set the Room Transition flag
+    strb r0, [r1, 0x02]
     pop r0
 @@SkipDelay:
     bl @GetItemArbitrary ; Use VarA as the Item ID to get.
@@ -1730,6 +1734,10 @@
     strh r1, [r0]
     b 0x0221D85C
 @@NoDelay:
+    ldr r1, =0x020FFC8C
+    ldrb r0, [r1, 0x02]
+    and r0, r0, 0xEF
+    strb r0, [r1, 0x0]
     mov r0, r4
     b 0x0221D6CC
 ;;;;;;;;;;;;;;;;;;;;
