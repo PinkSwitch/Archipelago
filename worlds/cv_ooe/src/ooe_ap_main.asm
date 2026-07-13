@@ -147,8 +147,11 @@
     .org 0x0221AFD8
         bl @MakeBlueChest
 
-    .org 0x0221D6C8
+    .org 0x0221D6F4
         b @DelayAreaFade
+
+    .org 0x0221D6B4
+        b @CheckAreaDelay
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_20", 0x021FFFC0
@@ -660,13 +663,6 @@
     push r0
     mov r0, 0x5A
     strh r0, [r1]
-    ldr r1, =0x020FFC8C
-    ldrb r0, [r1, 0x02]
-    orr r0, r0, 0x10 ; Set the Room Transition flag
-    strb r0, [r1, 0x02]
-    ldrb r0, [r1]
-    orr r0, r0, 0x01
-    strb r0, [r1]
     pop r0
 @@SkipDelay:
     bl @GetItemArbitrary ; Use VarA as the Item ID to get.
@@ -753,6 +749,7 @@
 @@Exit:
     mov r0, r1, asr 3
     bx lr
+.pool
 
 ;Same as the above but in the compare no load function
 @SwapExtendedGlyphIDPart2:
@@ -1736,26 +1733,6 @@
     pop lr
     bx lr
 ;;;;;;;;;;;;;;;;;;;;
-; Delays the area fadeout so we can actually see if we got an item
-@DelayAreaFade:
-    ldr r0, =@RamFlag_AreaExitDelay
-    ldrh r1, [r0]
-    cmp r1, 0
-    beq @@NoDelay
-    sub r1, r1, 1
-    strh r1, [r0]
-    b 0x0221D85C
-@@NoDelay:
-    ldr r1, =0x020FFC8C
-    ldrb r0, [r1, 0x02]
-    and r0, r0, 0xEF
-    strb r0, [r1, 0x02]
-    ldrb r0, [r1, 0x00]
-    and r0, r0, 0xFE
-    strb r0, [r1, 0x00]
-    mov r0, r4
-    b 0x0221D6CC
-;;;;;;;;;;;;;;;;;;;;
 ; If we already checked the Flag for this glyph, don't give it again.
 ; This is to prevent Progressives from proccing twice
 @RamFlag_GlyphUnlocked:
@@ -1839,6 +1816,60 @@
     strb r0, [r1]
     pop r0,r1
     bx lr
+;;;;;;;;;;;;;;;
+; Delay the fade when leaving an area so we can see what we got
+@DelayAreaFade:
+    push r0-r3
+    ldr r0, = @RamFlag_AreaExitDelay
+    ldrh r1, [r0]
+    cmp r1, 0 ; If this isn't set, we don't want to delay at all.
+    beq @@Exit
+    ldr r2, = 0x020FFC8C ; State flags
+    ldrb r3, [r2, 0x02]
+    orr r3, r3, 0x10 ; Set the RoomTransition flag so the player can't move
+    strb r3, [r2, 0x02]
+    sub r1, r1, 1
+    cmp r1, 0 ; If we JUST hit 0
+    beq @@ResetAndExit
+    strb r1, [r0]
+    pop r0-r3
+    b 0x0221D8BC  ; Exit without updating State so we don't proceed
+
+@@ResetAndExit:
+    ldrb r3, [r2, 0x02]
+    and r3, r3, 0xEF ; Reset the flag we just set
+    strb r3, [r2, 0x02]
+    strb r1, [r0] ; and reset the delay counter
+@@Exit:
+    pop r0-r3
+    bl 0x02027258
+    b 0x0221D6F8
+
+; Normally the flag for being busy skips this part, but we want to check it so our fade logic can run
+@CheckAreaDelay:
+    tst r0, 0x40
+    bne @@ResetOnDeath
+    push r0
+    ldr r0, =@RamFlag_AreaExitDelay
+    ldrh r0, [r0]
+    cmp r0, 0
+    pop r0
+    beq @@TestNormal
+    mov r5, 1 ; Ignore this check so we can run fade logic
+    b 0x0221D6BC
+@@TestNormal:
+    tst r0, 0x41
+    b 0x0221D6B8
+
+; I'm not sure we need the reset, but failsafe in case it happens
+@@ResetOnDeath:
+    push r0,r1
+    ldr r0, =@RamFlag_AreaExitDelay
+    mov r1, 0
+    strh r1, [r0] ; Clear so it doesn't go through on a reload
+    pop r0,r1
+    mov r5, 0
+    b 0x0221D6BC
 
 
 .pool
