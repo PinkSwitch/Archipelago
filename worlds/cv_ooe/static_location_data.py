@@ -368,7 +368,7 @@ location_data_table = {
     "Kalidus Channel: Depths Secret Room Right Chest": LocationInformation(0x022E47BC, "overlay_46", "Chest"),
     "Kalidus Channel: Ship Room Hidden Chest": LocationInformation(0x022CF5BC, "overlay_47", "Chest"),
     "Kalidus Channel: Right Side Hidden Item": LocationInformation(0x022E421C, "overlay_46", "Hidden Item"),
-    "Kalidus Channel: Depths First Room Chest": LocationInformation(0x022CF70C, "overlay_46", "Chest"),
+    "Kalidus Channel: Depths First Room Chest": LocationInformation(0x022CF70C, "overlay_47", "Chest"),
     "Kalidus Channel: Hallway Item 1": LocationInformation(0x022E4174, "overlay_46", "Freestanding"),
     "Kalidus Channel: Third Room Underwater": LocationInformation(0x022E4048, "overlay_46", "Wood Chest"),
     "Kalidus Channel: Depths Secret Room Center Chest": LocationInformation(0x022E47A4, "overlay_46", "Chest"),
