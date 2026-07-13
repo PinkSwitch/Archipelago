@@ -23,13 +23,13 @@ class OoEClient(BizHawkClient):
         try:
             game_id = await bizhawk.read(ctx.bizhawk_ctx, [(0x0, 0x12, "ROM")])
             game_id = game_id[0].decode("ascii")
-            if game_id != "CASTLEVANIA2ACBEA4":
-                return False  # Only check Portrtait roms
+            if game_id != "CASTLEVANIA3YR9EA4":
+                return False  # Only check Ecclesia roms
 
-            validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x308F20, 0x20, "Main RAM"),
-                                                                           (0x0E537C, 0x04, "Main RAM")])
-            vanilla_check = struct.unpack("I", validation_data[1])[0]  # post-behemoth entity pointer
-            if vanilla_check == 0x2304ee8:  # rando changes this; if we get this value, it's vanilla
+            validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x2EB200, 0x20, "Main RAM"),
+                                                                   (0x09D774, 0x04, "Main RAM")])
+            vanilla_check = struct.unpack("I", validation_data[1])[0]  # Extended data pointers
+            if vanilla_check != 0xE1A00000:  # NOP'd out in rando for extended data. If not present, assume vanilla
                 if self.most_recent_connect != "Vanilla ROM":
                     ctx.gui_error("Unrandomized ROM", f"Loaded ROM appears to be unmodified. Please load a Castlevania: Order of Ecclesia Archipelago ROM.")
                     self.most_recent_connect = "Vanilla ROM"
@@ -56,10 +56,32 @@ class OoEClient(BizHawkClient):
 
     async def set_auth(self, ctx: "BizHawkClientContext") -> None:
         slot_name_bytes = await bizhawk.read(
-            ctx.bizhawk_ctx, [(0x308F20, 0x14, "Main RAM")])
+            ctx.bizhawk_ctx, [(0x2EB200, 0x14, "Main RAM")])
 
         slot_name_bytes = slot_name_bytes[0].rstrip(b'\x00')
         ctx.auth = slot_name_bytes.decode("ascii")
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        print("Uh.")
+        if ctx.server_version.build > 0:
+            ctx.connected = True
+        else:
+            ctx.connected = False
+            ctx.refresh_connect = True
+
+        if ctx.slot_data is not None:
+            ctx.data_present = True
+        else:
+            ctx.data_present = False
+
+        if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
+            return
+
+        read_state = await bizhawk.read(ctx.bizhawk_ctx, [
+                    #(0x0F6284, 0x01, "Main RAM"),  # Game State
+                    #(0x1119E0, 4, "Main RAM"),  # Clock Time
+                    (0x100790, 1, "Main RAM"),  # Game Mode
+                    (0x100398, 0x19F, "Main RAM"),  # Location flags
+                    (0x2EB1B0, 2, "Main RAM"),  # Received Item
+                    (0x2EB1B2, 2, "Main RAM"),  # Total items
+        ])
+        #  Return if Game Mode is not 0
