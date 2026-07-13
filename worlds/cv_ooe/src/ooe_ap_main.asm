@@ -547,8 +547,11 @@
     bl 0x020AA95C ; Set Wygol village as unlocked
     ldr r0, =@OptionFlag_StartingArea
     ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipAreaUnlock
     mov r1, 1
     bl 0x020AA95C
+@@SkipAreaUnlock:
     push r2,r3
     mov r3, 0
     mov r2, 1
