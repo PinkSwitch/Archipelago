@@ -274,6 +274,9 @@
 
     .org 0x0229A2B8
         bl @SpawnVillagerInWall
+
+    .org 0x0223002C
+        b @SetEventGlyphFlag
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -319,6 +322,9 @@
     .org 0x022C25EC
         bl @AlbusEvntGlyphSkip ; Minera prison
 
+    .org 0x022C20E8
+        bl @SetMineraAlbusGlyph
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_52", 0x022C1Fe0
@@ -345,6 +351,9 @@
 .open "ftc/overlay9_59", 0x022C1FE0
     .org 0x022C25F0
         bl @AlbusEvntGlyphSkip ; Giant's dwelling
+
+    .org 0x022C20E8
+        bl @SetDwellingAlbusGlyph
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 
@@ -366,7 +375,7 @@
         bl @Albus3GlyphSpawn
 
     .org 0x022C25CC
-        nop ; Prevent r3 calculation
+        bl @SetManorAlbusGlyph ; Prevent r3 calculation & Set the flag for Albus 3's Glyph
 
     .org 0x022C2E4C
         bl @SetStaticChest  ; Sets an item for the dark room chest. Obj 54 VarA
@@ -1784,6 +1793,51 @@
     mov r1, 0
     strb r1, [r0]
     pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;
+; Checks for a flag to be set for the Albus events
+@RAMFlag_AlbusGlyphFlag:
+.dh 0x0000
+.align 4
+@SetEventGlyphFlag:
+    push r5
+    ldr r0, =@RAMFlag_AlbusGlyphFlag
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SetFlagNormal
+    mov r1, r0
+    ldr r0, =@RAMFlag_AlbusGlyphFlag
+    mov r5, 0
+    strb r5, [r0]
+    pop r5
+    b 0x02230030
+@@SetFlagNormal:
+    add r1, r1, 1
+    pop r5
+    b 0x02230030
+
+; Loads the flag for the Albus 1 Event.
+@SetMineraAlbusGlyph:
+    ldr r1, = @RAMFlag_AlbusGlyphFlag
+    mov r0, 0x33
+    strb r0, [r1]
+    mov r0, r4
+    bx lr
+
+; Loads the flag for the Albus 2 Event.
+@SetDwellingAlbusGlyph:
+    ldr r1, = @RAMFlag_AlbusGlyphFlag
+    mov r0, 0x34
+    strb r0, [r1]
+    mov r0, r4
+    bx lr
+
+@SetManorAlbusGlyph:
+    push r0,r1
+    ldr r1, = @RAMFlag_AlbusGlyphFlag
+    mov r0, 0x35
+    strb r0, [r1]
+    pop r0,r1
     bx lr
 
 

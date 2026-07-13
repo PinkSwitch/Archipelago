@@ -14,19 +14,16 @@ location_ids = {
     "Library: Past Wallman": 0x05,
     "Wallman Glyph": 0x06,
     "Giant's Dwelling: Bottom Right Room Pickup": 0x07,
-    "Minera Prison Island: Albus 1": 0x09,
     "Tristis Pass: Second Hill Pickup": 0x0A,
     "Barracks: Basement Entrance Pickup": 0x0B,
     "Ruvas Forest: First Room Freestanding": 0x0C,
     "Misty Forest Road: Right Big Room Pickup": 0x0D,
-    "Giant's Dwelling: Albus 2": 0x0F,
     "Somnus Reef: Left Big Room Freestanding": 0x10,
     "Misty Forest Road: Paries Room Pickup": 0x11,
 
     "Somnus Reef: East Entrance Item": 0x13,
 
     "Minera Prison Island: Shaft Near Exit": 0x15,
-    "Mystery Manor: Albus 3": 0x16,
     "Arms Depot: Second Hall Pickup": 0x17,
     "Monastery: Central Freestanding": 0x18,
     "Arms Depot: Upper Hall Item": 0x1A,
@@ -46,6 +43,10 @@ location_ids = {
     "Mechanical Tower: Generator Puzzle": 0x2D,
     "Library: Final Room Item": 0x31,  # todo. Set this flag
     "Mechanical Tower: Post-Boss": 0x32, 
+    "Minera Prison Island: Albus 1": 0x33,
+    "Giant's Dwelling: Albus 2": 0x34,
+    "Mystery Manor: Albus 3": 0x35,
+    
     "Monastery: Magnet Room Free": 0x3A,  # todo. Set this flag.
     "Final Approach: Central Room Pickup": 0x3C,
     "Underground Labyrinth: Exit Item": 0x3D,
