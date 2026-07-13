@@ -655,6 +655,9 @@
     ldrb r0, [r1, 0x02]
     orr r0, r0, 0x10 ; Set the Room Transition flag
     strb r0, [r1, 0x02]
+    ldrb r0, [r1]
+    orr r0, r0, 0x01
+    strb r0, [r1]
     pop r0
 @@SkipDelay:
     bl @GetItemArbitrary ; Use VarA as the Item ID to get.
@@ -1196,7 +1199,7 @@
     push lr
     push r0-r3,r12
     ldr r0, =@ReceivedItemID ; AP Data Block
-    ldr r1, =0x02100500
+    ldr r1, =0x02100590
     mov r2, 0x20
     bl 0x02008CD4
     pop r0-r3,r12
@@ -1207,7 +1210,7 @@
 @LoadAPData:
     push lr
     push r0-r3,r12
-    ldr r0, =0x02100500 ; AP Data Block
+    ldr r0, =0x02100590 ; AP Data Block
     ldr r1, =@ReceivedItemID
     mov r2, 0x20
     bl 0x02008CD4
@@ -1737,7 +1740,10 @@
     ldr r1, =0x020FFC8C
     ldrb r0, [r1, 0x02]
     and r0, r0, 0xEF
-    strb r0, [r1, 0x0]
+    strb r0, [r1, 0x02]
+    ldrb r0, [r1, 0x00]
+    and r0, r0, 0xFE
+    strb r0, [r1, 0x00]
     mov r0, r4
     b 0x0221D6CC
 ;;;;;;;;;;;;;;;;;;;;
