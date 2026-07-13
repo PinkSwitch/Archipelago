@@ -1738,13 +1738,29 @@
 @SkipExcessGlyphItems:
     push lr
     cmp r0, 0x168  ; We only care about our Progressive items here
-    blt @@SkipCheck
+    blt @@SkipExtendedCheck
+@@CheckForMax:
     ldr r0, =@RamFlag_GlyphUnlocked
     ldrb r1, [r0]
     cmp r1, 0
     bne @@SkipItem
     ldr r0, [r5, 0xD8]
-@@SkipCheck:
+    b @@GiveItem
+@@SkipExtendedCheck:
+    cmp r0, 0x80 ; max ups
+    blt @@GiveItem
+    cmp r0, 0x82
+    bgt @@GiveItem
+    b @@CheckForMax
+@@GiveItem:
+    cmp r0, 0x80
+    blt @@Normal
+    cmp r0, 0x82
+    bgt @@Normal
+    bl 0x02063EAC
+    b @@SkipItem
+
+@@Normal:
     bl 0x020635A4
 @@SkipItem:
     ldr r0, =@RamFlag_GlyphUnlocked
