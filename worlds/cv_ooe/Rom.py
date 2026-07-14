@@ -279,7 +279,7 @@ def get_item_id(world, item):
     if item.player == world.player:
         item_id = item_table[item.name].code
     else:
-        if ItemClassification.progression or ItemClassification.trap in item.classification:
+        if (ItemClassification.progression in item.classification) or ItemClassification.trap in item.classification:
             item_id = 0xD6
         elif ItemClassification.useful in item.classification:
             item_id = 0xD5

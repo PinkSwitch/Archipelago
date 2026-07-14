@@ -46,8 +46,8 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Monastery: Big Room Ledge"), HasAny("Volaticus", "Ordinary Rock", "Rapidus Fio"))
     set_rule(world.get_location("Monastery: Big Room Under Shelf"), Has("Lizard Tail"))
-    set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia"))
-    set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus"))
+    set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", "Umbra"))
+    set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
     set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAll("Fulgur", "Vol Fulgur"))
 
