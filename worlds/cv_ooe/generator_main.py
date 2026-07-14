@@ -28,7 +28,7 @@ def generate_early(world) -> None:
         world.options.start_with_lizard_tail.value = passthrough["start_with_lizard_tail"]
         world.options.start_with_glyph_union.value = passthrough["start_with_glyph_union"]
         world.options.add_brown_chests.value = passthrough["add_brown_chests"]
-        world.options.starting_villagers.value = passthrough["add_brown_chests"]
+        world.options.starting_villagers.value = passthrough["starting_villagers"]
         world.options.randomize_villagers.value = passthrough["randomize_villagers"]
 
     setup_game(world)
