@@ -211,7 +211,6 @@ class PoRClient(BizHawkClient):
         events = {
             # We don't really need everyone, just people who lock quests/portrait clears
             "ElevatorSwitch": (elevator_switch >> 4) & 1,
-            # "Behemoth": (boss_death_flags >> 1) & 1,
             "Dullahan": (boss_death_flags >> 2) & 1,
             "Keremet": (boss_death_flags >> 4) & 1,
             "Legion": (boss_death_flags >> 5) & 1,
@@ -221,17 +220,11 @@ class PoRClient(BizHawkClient):
             "TheCreature": (boss_death_flags >> 9) & 1,
             "MummyMan": (boss_death_flags >> 10) & 1,
             "Medusa": (boss_death_flags >> 11) & 1,
-            # "Richter": (boss_death_flags >> 12) & 1,
             "Stella": (boss_death_flags >> 13) & 1,
             "Stella&Loretta": (boss_death_flags >> 14) & 1,
             "Brauner": (boss_death_flags >> 15) & 1,
             "Death": (boss_death_flags >> 16) & 1,
             "Dracula": (boss_death_flags >> 18) & 1,
-            # "Balore": (boss_death_flags >> 19) & 1,
-            # "Gergoth": (boss_death_flags >> 20) & 1,
-            # "Zephyr": (boss_death_flags >> 21) & 1,
-            # "Aguni": (boss_death_flags >> 22) & 1,
-            # "Abaddon": (boss_death_flags >> 23) & 1,
             "Doppelganger": (boss_death_flags >> 25) & 1,
         }
         for event, seen in events.items():
