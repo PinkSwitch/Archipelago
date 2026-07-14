@@ -98,13 +98,12 @@ class OoEClient(BizHawkClient):
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
 
-        if (not boss_flags & 0x00004000) and current_map == 0x13 and (not ctx.finished_game):
+        if (boss_flags & 0x00004000) and current_map == 0x13 and (not ctx.finished_game):
             #  Check that Dracula is dead and we're in the epilogue
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
             }])
-
 
     @staticmethod
     async def check_locations(read_state, ctx):
@@ -127,7 +126,6 @@ class OoEClient(BizHawkClient):
                 ctx.locations_checked.add(new_check_id)
                 # location = ctx.location_names.lookup_in_slot(new_check_id)
                 await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
-
 
     @staticmethod
     async def give_items(read_state, ctx):

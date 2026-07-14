@@ -53,6 +53,12 @@ def create_items(world) -> None:
     if set_classifications(world, world.starting_glyph) in pool:
         pool.remove(set_classifications(world, world.starting_glyph))
 
+    if world.options.remove_large_cavern:
+        pool.remove(set_classifications(world, "Map: Large Cavern"))
+
+    if world.options.remove_training_hall:
+        pool.remove(set_classifications(world, "Map: Training Hall"))
+
     if world.options.shuffle_dominus:
         pool.extend([set_classifications(world, "Dominus Hatred"),
                      set_classifications(world, "Dominus Anger"),
