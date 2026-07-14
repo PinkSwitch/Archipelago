@@ -280,6 +280,9 @@
 
     .org 0x0223002C
         b @SetEventGlyphFlag
+
+    .org 0x022376E0
+        b 0x02237714  ; Part of Barlowe's initializer; prevent the game from using the post-Albus 1 Dialogue to skip the handler
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -1111,10 +1114,6 @@
     tst r0, 0x04000000 ; Don't check this if we've already dealt with Barlowe.
     movne r0, 0
     bne 0x022377C4
-    ;mov r0, 0x73 ; Glyph Union. Optional...?
-    ;bl 0x020633F0
-    ;cmp r0, 0
-    ;beq 0x022377C4
     mov r0, 0x32 ; Dominus Hatred
     bl 0x020633F0
     cmp r0, 0
@@ -1132,8 +1131,14 @@
     ldr r1, =@OptionFlag_RequiredVillagers
     ldrb r1, [r1]
     cmp r0, r1
-    blt 0x0223779C ; Trigger the abd ending
-    b 0x0223780C
+    blt @@BadEndingCheck 
+    b 0x0223780C  ; If the player has all 3 Dominus, and the right amount of villagers, start Barlowe's fight
+@@BadEndingCheck:
+    mov r0, 0x73 
+    bl 0x020633F0  ; If we're triggering the bad ending, we want to check that the player has Glyph Union so that they don't get softlocked
+    cmp r0, 0
+    beq 0x022377C4
+    b 0x0223779C ; Trigger the ending
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Skips the villager runthrough after getting the Bad Ending.
 @SkipBadEnding:
