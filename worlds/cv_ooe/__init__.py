@@ -115,8 +115,6 @@ class OoEWorld(World):
             "Casual Clothes",
             "Military Wear",
             "Rubber Suit",
-            "Reinforced Suit",
-            "Body Suit",
             "Leather Cuirass",
             "Copper Plate",
             "Iron Plate",
