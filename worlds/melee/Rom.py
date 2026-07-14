@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from . import SSBMWorld
 
-apworld_version = "2.0"
+apworld_version = "2.0.1"
 
 class MeleePlayerContainer(APPlayerContainer):
     game = "Super Smash Bros. Melee"
