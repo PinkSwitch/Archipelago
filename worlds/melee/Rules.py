@@ -325,6 +325,10 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Headless Hammer"), Has("Hammer"))
         set_rule(world.get_location("Bonus - Bob-omb's Away"), Has("Bob-omb"))
         set_rule(world.get_location("Bonus - Bob-omb Squad"), Has("Bob-omb"))
+        
+        if world.options.enable_rare_pokemon_checks:
+            set_rule(world.get_location("Bonus - Mew Catcher"), Has("Poké Ball"))
+            set_rule(world.get_location("Bonus - Celebi Catcher"), Has("Poké Ball"))
 
         if world.options.enable_hard_bonuses:
             set_rule(world.get_location("Bonus - Screw-Attack KO"), Has("Screw Attack"))
