@@ -817,8 +817,8 @@
     sub r0, r0, 1
     sub r0, r0, 0x160
     cmp r0, 0x07
-    movle r0, 0x44 ; Money glyphs
-    bxle lr
+    movlt r0, 0x44 ; Money glyphs
+    bxlt lr
     cmp r0, 0x15
     movge r0, 0x45 ; Maps
     bxge lr
@@ -841,7 +841,7 @@
     sub r0, r0, 1
     sub r0, r0, 0x160
     cmp r0, 7
-    ble @@GetMoney
+    blt @@GetMoney
     cmp r0, 0x15
     bge @@GetMap
     b @@GetVillager
@@ -950,7 +950,7 @@
     sub r0, r0, 1
     sub r0, r0, 0x160
     cmp r0, 0x07
-    bgt @@ShowVillager
+    bge @@ShowVillager
     lsl r0, r0, 1
     ldr r2, =@MoneyValues
     ldrh r0, [r2, r0]
@@ -1272,7 +1272,7 @@
     sub r1, r1, 1
     sub r1, r1, 0x160
     cmp r1, 0x07
-    bgt @@ItemSound ; Non-money mains
+    bge @@ItemSound ; Non-money mains
     mov r1, 0x0D ;Money
     ldr r0, =0x11A00000
     b @@Return
@@ -1386,7 +1386,7 @@
 @@GetExtraData:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x08
+    cmp r0, 0x07
     blt @@MoneyPtr
     cmp r0, 0x15
     blt @@VillagerPtr
@@ -1541,8 +1541,8 @@
     sub r1, r1, 1
     sub r1, r1, 0x160
     cmp r1, 0x07
-    movle r1, 0x58 ; money
-    ble @@End
+    movlt r1, 0x58 ; money
+    blt @@End
     cmp r1, 0x15
     bge @@MapText
     mov r1, 0x59 ; Villagers
@@ -1567,8 +1567,8 @@
 @@GetExpanded:
     sub r0, r0, 1
     sub r0, r0, 0x160
-    cmp r0, 0x06
-    ble @@MoneyText
+    cmp r0, 0x07
+    blt @@MoneyText
     cmp r0, 0x15
     blt @@VillagerText
     sub r0, r0, 0x15
