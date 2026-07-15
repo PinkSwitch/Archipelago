@@ -11,6 +11,7 @@ from BaseClasses import ItemClassification
 from .Items import item_table
 from .Options import AddBrownChests
 from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
+from .modules.text_builder import text_encoder
 
 world_version = "1.0.0"
 hash_us = "e13bdcf706989486df939556eeb42ece"
@@ -144,6 +145,7 @@ def patch_rom(world, rom, code_patch):
     ################################################
     rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))
     rom.write_to_file(0x021E98BE, "overlay_0", struct.pack("H", world.options.villagers_required.value))  # Barlowe's dialogue in the bad ending
+    #rom.write_to_file(0x021E98BE, "overlay_0", struct.pack("H", text_encoder(world.options.villagers_required.value)))  # Barlowe's dialogue in the bad ending
     ###############################################
     if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
         shuffle_brown_chest_pool(world, rom)
