@@ -354,6 +354,25 @@
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_58", 0x022C1FE0
+    .org 0x022C9094 ; Clear out the tunnel exiting Large Cavern
+        .dh 0x4000
+
+    .org 0x022C9096
+        .dh 0x4000
+
+    .org 0x022C9098
+        .dh 0x4000
+
+    .org 0x022C90B4
+        .dh 0x4000
+
+    .org 0x022C90B6
+        .dh 0x4000
+
+.close
+;;;;;;;;;;;;;;;;;;;;;
+
 .open "ftc/overlay9_59", 0x022C1FE0
     .org 0x022C25F0
         bl @AlbusEvntGlyphSkip ; Giant's dwelling
