@@ -163,6 +163,9 @@
 
     .org 0x022143B8
         cmp r0, 0xFF ; Make the first opening switch to the title faster
+
+    .org 0x02205F30
+        mov r0, 1 ; Hard mode
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -283,6 +286,9 @@
 
     .org 0x022376E0
         b 0x02237714  ; Part of Barlowe's initializer; prevent the game from using the post-Albus 1 Dialogue to skip the handler
+
+    .org 0x022A194C
+        bl @TinManChestItem
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -422,6 +428,11 @@
         nop ; Prevent the game from spawning George's scene actor
 
 .close
+;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_68", 0x022C1FE0
+    .org 0x022C2CB0
+        bl @SetStaticGlyph ; Labyrinth boulder room
+.close
 ;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_72", 0x022C1FE0
     .org 0x022C2354
@@ -469,6 +480,8 @@
         .db 0x00
     @OptionFlag_EXPMult:
         .dh 0x00 ; 022EB22F
+    @RomVar_TinManItem:
+        .dh 0x00 ; 022EB230
 .align 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -808,6 +821,11 @@
     cmp r0, 0xD4
     moveq r0, 0x42
     bxeq lr
+    cmp r0, 0xD5 ; AP Useful
+    moveq r0, 0x46
+    bxeq lr
+
+
     cmp r0, 0x160
     bgt @@ExpandedItems
     mov r0, 0x41 ; Regular items
@@ -1894,6 +1912,12 @@
     pop r0,r1
     mov r5, 0
     b 0x0221D6BC
+;;;;;;;;;;;;;;;;;;;;
+; Load into r3 the item on the Tin Man chest in Minera
+@TinManChestItem:
+    ldr r3, = @RomVar_TinManItem
+    ldrh r3, [r3]
+    bx lr
 
 
 .pool
