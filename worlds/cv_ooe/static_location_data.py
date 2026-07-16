@@ -231,8 +231,11 @@ location_ids = {
     "Underground Labyrinth: Connector Shaft Bottom Hidden": 0x109,
     "Misty Forest Road: Paries Room Hidden Item": 0x10A,
     "Mechanical Tower: Low Shaft Chest": 0x10B,
+    "Mechanical Tower: First Gears Room Chest": 0x10C,
+    "Underground Labyrinth: First Shadow Room": 0x10D,
     "Tristis Pass: Waterfall Center": 0x010E,
     "Tymeo Mountains: Right Shaft Hidden Item": 0x113,
+    "Mechanical Tower: First Gears Room Chest": 0x114,
     "Kalidus Channel: Depths Rightmost Shaft Freestanding": 0x115,
     "Kalidus Channel: Ship Room Center Right Chest": 0x117,
     "Tristis Pass: Ice Exit Hidden Item": 0x119,
@@ -242,6 +245,8 @@ location_ids = {
     "Mystery Manor: Dead End Chest": 0x11D,
     "Final Approach: Final Stash Far Left": 0x11E,
     "Kalidus Channel: Depths Lower Left": 0x11F,
+    "Arms Depot: Right Room Chest": 0x120,
+    "Castle Entrance: Before Switch Wall": 0x121,
     "Monastery: Lower Dead End": 0x122,
     "Tymeo Mountains: Lower Mountain Upper Paries Chest": 0x123,
     "Underground Labyrinth: Detour Chest": 0x124,
@@ -268,8 +273,11 @@ location_ids = {
     "Somnus Reef: Lower Right Left Chest": 0x139,
     "Somnus Reef: Lower Right Right Chest": 0x13A,
     "Somnus Reef: Exit Shaft Chest": 0x13B,
+    "Castle Entrance: Past Paries Big Room Chest": 0x13C,
     "Tristis Pass: Area Exit": 0x13D,
     "Tristis Pass: Final Hill Underground Chest": 0x13E,
+    "Tristis Pass: Waterfall Lower": 0x13F,
+    "Tristis Pass: Room Behind Waterfall": 0x140,
     "Training Hall: Top Chest": 0x141,
     "Training Hall: First Way Down Chest": 0x142,
     "Training Hall: Second Way Down Chest": 0x143,
@@ -297,14 +305,7 @@ location_ids = {
     "Tymeo Mountains: Right Exit": 0x15C,
     "Tymeo Mountains: Right Exit Item": 0x15D,
     "Tymeo Mountains: Cavern Chest": 0x15E,
-    "Tymeo Mountains: Right Shaft Lower": 0x15F,
-    "Tristis Pass: Waterfall Lower": 0x190,
-    "Tristis Pass: Room Behind Waterfall": 0x191,
-    "Castle Entrance: Past Paries Big Room Chest": 0x192,
-    "Castle Entrance: Before Switch Wall": 0x193,
-    "Underground Labyrinth: First Shadow Room": 0x195,
-    "Mechanical Tower: First Gears Room Chest": 0x197,
-    "Arms Depot: Right Room Chest": 0x198
+    "Tymeo Mountains: Right Shaft Lower": 0x15F
     # Mechnical tower room 8 s 6 has an oob chest?
 
     # Tin man chest?
