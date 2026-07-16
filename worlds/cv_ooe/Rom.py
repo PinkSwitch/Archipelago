@@ -212,7 +212,6 @@ class OoEPatchExtensions(APPatchExtension):
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB230, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
-        print(exp_multiplier)
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)
