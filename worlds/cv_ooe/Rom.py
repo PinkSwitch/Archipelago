@@ -13,7 +13,7 @@ from .Options import AddBrownChests
 from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
 from .modules.text_builder import text_encoder
 
-world_version = "1.0.0"
+world_version = "1.0.1"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 
@@ -115,7 +115,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB220, "overlay_86", bytearray([world.options.reveal_hidden_chests.value]))
     rom.write_to_file(0x022EB22E, "overlay_86", bytearray([world.options.reveal_map.value]))
     rom.write_to_file(0x022EB223, "overlay_86", bytearray([world.options.reveal_hidden_walls.value]))
-    rom.write_to_file(0x022EB22F, "overlay_86", struct.pack("H", world.options.experience_percent.value))
+    rom.write_to_file(0x022EB230, "overlay_86", struct.pack("H", world.options.experience_percent.value))
 
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
@@ -210,8 +210,9 @@ class OoEPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB22F, "overlay_86", 2))[0]  # Read the multiplier
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB230, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
+        print(exp_multiplier)
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)

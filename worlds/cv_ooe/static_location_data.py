@@ -430,7 +430,7 @@ location_data_table = {
     "Minera Prison Island: Entrance Pickup": LocationInformation(0x022CE624, "overlay_50", "Freestanding"),
     "Minera Prison Island: Room Past Albus": LocationInformation(0x022CF58C, "overlay_51", "Freestanding"),
     "Minera Prison Island: Area Exit": LocationInformation(0x022CCDB8, "overlay_52", "Area Exit"),
-    "Minera Prison Island: Tin Man Chest": LocationInformation(0x022EB230, "overlay_86", "Inline"),
+    "Minera Prison Island: Tin Man Chest": LocationInformation(0x022EB232, "overlay_86", "Inline"),
 
     "Lighthouse: Searchlight Glyph": LocationInformation(0x022CD790, "overlay_53", "Event Glyph"),
     "Lighthouse: Exit Chest": LocationInformation(0x022CD850, "overlay_53", "Chest"),
