@@ -153,7 +153,7 @@ def connect_regions(world):
                                                                  {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")),
                                                                   "Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
 
-    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper"],
+    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper", "Great Stairway - Post Keremet"],
                                                           {"Tower of Death - Bottom": strongies,
                                                            "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
 
