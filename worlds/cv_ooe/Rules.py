@@ -19,6 +19,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Minera Prison Island: Top Room"), HasAny("Ordinary Rock", "Volaticus"))
     set_rule(world.get_location("Minera Prison Island: Top Room Chest"), HasAny("Ordinary Rock", "Volaticus"))
     set_rule(world.get_location("Minera Prison Island: Right Vertical Hidden Item"), HasAny("Ordinary Rock", "Volaticus", "Magnes"))
+    set_rule(world.get_location("Minera Prison Island: Tin Man Chest"), HasAny("Fulgur", "Vol Fulgur", "Lumination", "Vol Luminatio", "Umbra", "Vol Umbra"))
 
     set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Chest"), Has("Lizard Tail"))
     set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), Has("Lizard Tail"))

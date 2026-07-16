@@ -148,7 +148,7 @@ location_ids = {
     "Monastery: Blocks Reward Chest": 0xB2,
     "Oblivion Ridge: Final Room In Wall": 0xB3,
     "Mystery Manor: Dark Room Chest": 0xB4,
-    # B5 is reserved for the TinMan chest on island
+    "Minera Prison Island: Tin Man Chest": 0xB5,
     "Library: Hidden Room Chest": 0xB6,
     "Mechanical Tower: Hidden Room": 0xB7,
     "Giant's Dwelling: Entrance Item": 0xB8,
@@ -430,6 +430,7 @@ location_data_table = {
     "Minera Prison Island: Entrance Pickup": LocationInformation(0x022CE624, "overlay_50", "Freestanding"),
     "Minera Prison Island: Room Past Albus": LocationInformation(0x022CF58C, "overlay_51", "Freestanding"),
     "Minera Prison Island: Area Exit": LocationInformation(0x022CCDB8, "overlay_52", "Area Exit"),
+    "Minera Prison Island: Tin Man Chest": LocationInformation(0x022EB230, "overlay_86", "Inline"),
 
     "Lighthouse: Searchlight Glyph": LocationInformation(0x022CD790, "overlay_53", "Event Glyph"),
     "Lighthouse: Exit Chest": LocationInformation(0x022CD850, "overlay_53", "Chest"),
