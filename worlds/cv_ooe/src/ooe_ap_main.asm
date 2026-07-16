@@ -478,10 +478,11 @@
         .dh 0x0000
     @OptionFlag_RevealMap: ;022EB22E
         .db 0x00
+        .db 0x00 ; Unused
     @OptionFlag_EXPMult:
-        .dh 0x00 ; 022EB22F
-    @RomVar_TinManItem:
         .dh 0x00 ; 022EB230
+    @RomVar_TinManItem:
+        .dh 0x00 ; 022EB232
 .align 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1505,8 +1506,8 @@
     sub r0, r0, 1
     sub r0, r0, 0x160
     cmp r0, 0x07 ; Money uses brown chests
-    movle r0, 0xFF
-    ble @@End
+    movlt r0, 0xFF
+    blt @@End
     mov r0, 0x03 ; Villagers and maps always use gold chests
     b @@End
 
