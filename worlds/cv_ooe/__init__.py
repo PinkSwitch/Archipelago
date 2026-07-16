@@ -96,7 +96,6 @@ class OoEWorld(World):
             "Torpor",
             "Ignis",
             "Grando",
-            "Fulgur",
             "Vol Luminatio",
             "Nitesco",
             "Acerbatus",

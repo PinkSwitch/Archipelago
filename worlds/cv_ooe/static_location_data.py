@@ -235,7 +235,7 @@ location_ids = {
     "Underground Labyrinth: First Shadow Room": 0x10D,
     "Tristis Pass: Waterfall Center": 0x010E,
     "Tymeo Mountains: Right Shaft Hidden Item": 0x113,
-    "Mechanical Tower: First Gears Room Chest": 0x114,
+    
     "Kalidus Channel: Depths Rightmost Shaft Freestanding": 0x115,
     "Kalidus Channel: Ship Room Center Right Chest": 0x117,
     "Tristis Pass: Ice Exit Hidden Item": 0x119,
@@ -356,7 +356,7 @@ location_data_table = {
     "Kalidus Channel: Depths Right Shaft Chest": LocationInformation(0x022E46FC, "overlay_46", "Wood Chest"),
     "Kalidus Channel: Depths Right Center Chest": LocationInformation(0x022E4930, "overlay_46", "Wood Chest"),
     "Kalidus Channel: Lower Exit": LocationInformation(0x022CF4C0, "overlay_47", "Area Exit"),
-    "Kalidus Channel: Ship Room Lower Left Chest": LocationInformation(0x022CF670, "overlay_47", "Wood Chest"),
+    "Kalidus Channel: Ship Room Lower Left Chest": LocationInformation(0x022CF610, "overlay_47", "Wood Chest"),
     "Kalidus Channel: Ship Room Lower Center Chest": LocationInformation(0x022CF604, "overlay_47", "Wood Chest"),
     "Kalidus Channel: Ship Room Lower Right Chest": LocationInformation(0x022CF61C, "overlay_47", "Wood Chest"),
     "Kalidus Channel: Deepest Room": LocationInformation(0x022CF6D0, "overlay_47", "Freestanding"),
