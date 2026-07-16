@@ -195,9 +195,9 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Misty Forest Road", "Misty Forest Road: Paries Room Hidden Item"),
         LocationData("Misty Forest Road", "Misty Forest Road: Area Exit"),
 
-        LocationData("Oblivion Ridge", "Oblivion Ridge: Final Room In Wall"),
-        LocationData("Oblivion Ridge", "Oblivion Ridge: Post-Boss Ledge Item"),
-        LocationData("Oblivion Ridge", "Oblivion Ridge: Post-Boss Wall Item"),
+        LocationData("Oblivion Ridge Beyond Boss", "Oblivion Ridge: Final Room In Wall"),
+        LocationData("Oblivion Ridge Beyond Boss", "Oblivion Ridge: Post-Boss Ledge Item"),
+        LocationData("Oblivion Ridge Beyond Boss", "Oblivion Ridge: Post-Boss Wall Item"),
         LocationData("Oblivion Ridge", "Oblivion Ridge: Pre-Boss Ledge"),
 
         LocationData("Skeleton Cave", "Skeleton Cave: Final Room Chest"),

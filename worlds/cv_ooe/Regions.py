@@ -32,6 +32,7 @@ region_list = [
     "Mystery Manor",
     "Misty Forest Road",
     "Oblivion Ridge",
+    "Oblivion Ridge Beyond Boss",
     "Skeleton Cave",
     "Monastery",
 
@@ -137,6 +138,8 @@ def connect_regions(world):
     world.get_region("Monastery").connect(world.get_region("Monastery Magnets Area"), rule=HasAny("Magnes", "Volaticus"))
 
     world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
+
+    world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=Has("Lizard Tail"))
 
     world.get_region("Minera Prison Island").connect(world.get_region("Minera Prison Island Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Magnes"))
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes"))
