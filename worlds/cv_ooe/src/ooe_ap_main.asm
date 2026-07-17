@@ -85,6 +85,9 @@
     .org 0x0206DA54
         bl @SkipExcessGlyphItems
 
+    .org 0x02065348
+        b @GetBossPortalPosition
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0x021DD280
@@ -289,9 +292,35 @@
 
     .org 0x022A194C
         bl @TinManChestItem
+
+    .org 0x0227934C
+        bl @SpawnPortal_GiantSkeleton
+
+    .org 0x02295E28
+        bl @PortalSpawn_ModeCheck
+
+    .org 0x022B6AA6  ; Boss rush portal position for Giant Skeleton on Minera.
+        .db 0x08, 0x00
+        .dh 0x20, 0xA0
+
+    .org 0x022B6B3E ; Some sort of order used for portals. Not sure why they dont just use varA....
+        .db 0x02 ; Set this to Giant Skeleton instead of 0
+
+    .org 0x02296120
+        bl @ResetBossFlagOnPortal
+
+    .org 0x02295F74
+        bl @SetPortalIndex
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
+
+.open "ftc/overlay9_24", 0x022B73A0
+    .org 0x022BA1EC
+        bl @SpawnPortal_Arthro
+.close
+;;;;;;;;;;;;;;;;;;;;;
+
 .open "ftc/overlay9_28", 0x022B73A0
     .org 0x022B9690
         mov r0, 6  ; Wallman's Glyph flag
@@ -483,6 +512,9 @@
         .dh 0x00 ; 022EB230
     @RomVar_TinManItem:
         .dh 0x00 ; 022EB232
+.align 4
+    @OptionFlag_MedalChests: ; 022Eb234
+        .db 0x01 ; TODO- set to zero
 .align 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1202,7 +1234,7 @@
     mov r0, r5
     strh r2, [r1, 0x3C]
     mov r2, 0
-    strh r0, [r1, 0x3E] ; 0 out VarB so it doesn't read as a loc flag
+    strh r2, [r1, 0x3E] ; 0 out VarB so it doesn't read as a loc flag
     bl 0x0223183C ; Spawn the villager
     ldr r0, =0x02231ABC ; ...And set their Update code
     str r0, [r5]
@@ -1595,7 +1627,8 @@
     add r0, r0, 1
     bx lr
 @@MoneyText:
-    add r0, r0, 0x3CC
+    add r0, r0, 0x430
+    add r0, r0, 0x0D
     bx lr
 @@VillagerText:
     sub r0, r0, 0x07
@@ -1919,7 +1952,169 @@
     ldr r3, = @RomVar_TinManItem
     ldrh r3, [r3]
     bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Spawn Arthroverta's Boss Portal
+@SpawnPortal_Arthro:
+    push lr
+    bl 0x02061F0C
+    mov r0, 1 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop lr
+    bx lr
 
+
+
+
+
+
+; Spawn Giant Skeleton's Boss Portal
+@SpawnPortal_GiantSkeleton:
+    push lr
+    bl 0x02061F0C
+    mov r0, 2 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop lr
+    bx lr
+
+; If we miss a Medal chest, we need to respawn it. Do that here.
+@RespawnBoss:
+    ; TODO; test that the boss is DEAD now
+    push lr
+    ldr r1, = @OptionFlag_MedalChests
+    ldrb r1, [r1]
+    cmp r1, 0 ; If the Medal Chest option is disabled, just bail out
+    beq @@Exit
+    ldr r2, = 0x021003E4
+    ldr r2, [r2]
+    mov r1, 1
+    lsl r1, r1, r0
+    tst r1, r2
+    beq @@Exit
+
+
+    mov r2, r0
+    sub r0, r0, 1
+    add r0, r0, 0x160 ; Loc flags for beating the boss with no damage
+    bl @CheckLocFlag
+    cmp r0, 0
+    bne @@Exit ; If we have already gotten this boss with no damage, don't spawn a portal
+    mov r0, r2
+    bl @SpawnBossPortal
+@@Exit:
+    pop lr
+    bx lr
+
+; Spawns a portal for r0 boss.
+@RamFlag_PortalSpawn:
+.db 0x00
+.align 4
+
+@SpawnBossPortal:
+    push lr
+    ldr r0, = @RamFlag_PortalSpawn
+    mov r1, 1
+    strb r2, [r0]
+    mov r0, 2
+    mov r1, 0x11
+    bl 0x0206520C ; Creat the portal object
+    ldr r0, = @RamFlag_PortalSpawn
+    mov r1, 0
+    strb r1, [r0]
+    pop lr
+    bx lr
+
+; Boss portals normally bail if you're not in Boss Rush mode.
+; if we're creating one, don't check this.
+@PortalSpawn_ModeCheck:
+    ldr r3, =@RamFlag_PortalSpawn
+    ldrb r3, [r3]
+    cmp r3, 0
+    beq @@Exit
+    mov r3, 1
+    cmp r3, 1 ; Force the cmp when we get back to fail
+    bx lr
+@@Exit:
+    cmp r1, 2
+    bx lr
+
+; Sets up the Position variables for our boss portals
+@GetBossPortalPosition:
+    push r0
+    ldr r0, = @RamFlag_PortalSpawn
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @Exit
+    pop r0
+
+    push r1
+    push r0
+    ldr r0, = 0x0213A5C0
+    ldrh r0, [r0, 0x38] ; Get the room width
+    mov r1, 2
+    bl 0x02023E68 ; Divide width  by 2
+    mov r1, 0x10
+    bl 0x02023E68 ; Divide THAT by 10
+
+
+    mov r1, r0
+    pop r0
+    strh r1, [r0, 0x32] ; Center the portal horizontally
+    mov r1, 0x0B
+    strh r1, [r0, 0x36] ; Need this for it to be visible
+    ldr r1, = @RamFlag_PortalSpawn
+    ldrh r1, [r1]
+    ;sub r1, r1, 1 ; Use this for Boss Index
+
+    add r0, r0, 0x100
+    strh r1, [r0, 0x3C]
+    sub r0, r0, 0x100
+
+
+    pop r1
+    blx r1 ; Spawn the object
+    b 0x02065354  ; Normally this function deletes the object after spawning it. We don't want to do that, so skip the delete code
+@Exit:
+    pop r0
+    blx r1
+    b 0x0206534C
+
+; We just entered a Boss Portal, so we want to reset its flag.
+@ResetBossFlagOnPortal:
+    ldr r0, = 0x02100790
+    ldrb r1, [r0]
+    cmp r1, 2 ; If we're using this portal in Boss Rush, just handle it like normal.
+    beq @@Exit
+    add r0, r4, 0x100
+    ldrh r0, [r0, 0x3C] ; grab the var A
+    mov r1, 1
+    lsl r0, r1, r0 ; SHift boss id into bit
+    ldr r1, =0x021003E4
+    ldr r2, [r1]
+    bic r2, r2, r0 ; We want to Unset the boss death flag here
+    str r2, [r1]
+@@Exit:
+    mov r0, 0
+    bx lr
+
+; Most bosses index their flag to find the next boss. So we sub 1 here.
+@SetPortalIndex:
+
+    ldrh r2, [r0, 0x3C]
+    ldr r1, =0x02100790
+    ldrb r1, [r1]
+    cmp r1, 2 ; boss rosh
+    beq @@Skip
+
+    cmp r2, 2 ; Skeleton
+    beq @@Skip
+    sub r2, r2, 1
+@@Skip:
+    bx lr
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 .pool
 .endarea
