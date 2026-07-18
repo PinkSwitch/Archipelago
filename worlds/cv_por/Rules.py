@@ -69,7 +69,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Forgotten City: Pyramid East 5F"), small_uppies | Has("Puppet Master"))
     set_rule(world.get_location("Forgotten City: Pyramid 1F Bricks"), big_uppies)
     set_rule(world.get_location("Forgotten City: Lower Boulder Room Upper Alcove"), big_uppies)
-    set_rule(world.get_location("Forgotten City: Lower Boulder Room Tunnel Alcove"), (can_cast_spell & HasAny("Toad Morph", "Owl Morph")) | HasAll("Lizard Tail", "Puppet Master"))
+    set_rule(world.get_location("Forgotten City: Lower Boulder Room Tunnel Alcove"), (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
     set_rule(world.get_location("Forgotten City: Lower Underground Square Upper Item"), medium_uppies | (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube))
     set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube))
     set_rule(world.get_location("Forgotten City: Pyramid East 1F"), big_uppies | (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube))
