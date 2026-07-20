@@ -311,6 +311,12 @@
 
     .org 0x02295F74
         bl @SetPortalIndex
+
+    .org 0x02296160
+        bl @TeleportOutOfBrach
+
+    .org 0x022B6AE8
+        .dh 0x02C0 ; Gravedorcus's Portal Position
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -320,6 +326,16 @@
         bl @SpawnPortal_Arthro
 .close
 ;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_26", 0x022B73A0
+    .org 0x022BAD68
+        bl @SpawnPortal_Maneater
+.close
+;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_27", 0x022B73A0
+    .org 0x022BB64C
+        bl @SpawnPortal_Rasulka
+.close
+;;;;;;;;;;;;;;;;;;;;;
 
 .open "ftc/overlay9_28", 0x022B73A0
     .org 0x022B9690
@@ -327,6 +343,24 @@
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_30", 0x022B73A0
+    .org 0x022B97BC
+        bl @SpawnPortal_Brach
+
+    .org 0x022B97CC
+        nop ; Second blue chest at 0, 0?????
+.close
+;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_32", 0x022B73A0
+    .org 0x022BC164
+        bl @SpawnPortal_Goliath
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_33", 0x022B73A0
+    .org 0x022BA0D0
+        bl @SpawnPortal_Dorcus
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
 
 .open "ftc/overlay9_41", 0x022C1FE0
     .org 0x022C2754
@@ -1563,6 +1597,7 @@
 @@End:
     pop lr
     bx lr
+.pool
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Handles text popups for extended glyphs
 @WriteExtendedGlyphName:
@@ -1963,11 +1998,6 @@
     pop lr
     bx lr
 
-
-
-
-
-
 ; Spawn Giant Skeleton's Boss Portal
 @SpawnPortal_GiantSkeleton:
     push lr
@@ -1977,6 +2007,80 @@
     bl @RespawnBoss
     pop lr
     bx lr
+
+
+; Spawn Brachyura's boss portal
+@SpawnPortal_Brach:
+    push r5, lr
+    bl 0x02061F0C
+    ldr r0, = 0x021003E4
+    ldr r0, [r0]
+    tst r0, 0x08
+    beq @@SpawnBrachPreBossPortal
+    mov r0, 3 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+@@IsSafe:
+    pop r5, lr
+    bx lr
+@@SpawnBrachPreBossPortal:
+    ; If the player lacks any movement, we want to spawn a portal to warp out of here
+    mov r0, 0x71
+    bl 0x020633F0 ; Check if we own Double Jump
+    cmp r0, 0
+    bne @@IsSafe ; If we're not softlocked, we dont need to spawn a backup portal
+    mov r0, 0x3B
+    bl 0x020633F0 ; Flight
+    cmp r0, 0
+    bne @@IsSafe
+    mov r0, 0x39 ; Magnes
+    bl 0x020633F0
+    cmp r0, 0
+    bne @@IsSafe
+    mov r2, 0xFF ; Use this as a special indicator for the portal
+    bl @SpawnBossPortal
+    b @@IsSafe
+
+; Spawn Man Eater's Boss Portal
+@SpawnPortal_Maneater:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 4 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+; Spawn Rasulka's portal
+@SpawnPortal_Rasulka:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 5 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+@SpawnPortal_Goliath:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 6 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+@SpawnPortal_Dorcus:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 7 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+
+
 
 ; If we miss a Medal chest, we need to respawn it. Do that here.
 @RespawnBoss:
@@ -2014,7 +2118,6 @@
 @SpawnBossPortal:
     push lr
     ldr r0, = @RamFlag_PortalSpawn
-    mov r1, 1
     strb r2, [r0]
     mov r0, 2
     mov r1, 0x11
@@ -2045,7 +2148,18 @@
     ldr r0, = @RamFlag_PortalSpawn
     ldrb r0, [r0]
     cmp r0, 0
-    beq @Exit
+    beq @@Exit
+    cmp r0, 3 ; Brachyura
+    popeq r0
+    beq @@LighthousePortalCoord
+    cmp r0, 0xFF ; Speical lighthouse exit
+    popeq r0
+    beq @@SpawnLighthouseNormalPortal
+    cmp r0, 0x07
+    popeq r0
+    beq @@PortalPos_Dorcus
+
+
     pop r0
 
     push r1
@@ -2057,12 +2171,12 @@
     mov r1, 0x10
     bl 0x02023E68 ; Divide THAT by 10
 
-
     mov r1, r0
     pop r0
     strh r1, [r0, 0x32] ; Center the portal horizontally
     mov r1, 0x0B
     strh r1, [r0, 0x36] ; Need this for it to be visible
+@@ExitLighthouseSpawn:
     ldr r1, = @RamFlag_PortalSpawn
     ldrh r1, [r1]
     ;sub r1, r1, 1 ; Use this for Boss Index
@@ -2075,10 +2189,31 @@
     pop r1
     blx r1 ; Spawn the object
     b 0x02065354  ; Normally this function deletes the object after spawning it. We don't want to do that, so skip the delete code
-@Exit:
+@@Exit:
     pop r0
     blx r1
     b 0x0206534C
+@@LighthousePortalCoord:
+    push r1
+    mov r1, 0x02 ; Spawn the portal in the door frame
+    strh r1, [r0, 0x32]
+    mov r1, 0xA4
+    strh r1, [r0, 0x36]
+    b @@ExitLighthouseSpawn
+    pop r1
+@@SpawnLighthouseNormalPortal:
+    push r1
+    mov r1, 0x03
+    strb r1, [r0, 0x0D] ; Set it to auto warp
+    b @@ExitLighthouseSpawn
+    pop r1
+@@PortalPos_Dorcus:
+    push r1
+    mov r1, 0x09 ; Dorcus has a special floor that's raised up too high for the portal
+    strb r1, [r0, 0x36]
+    mov r1, 0x18
+    strh r1, [r0, 0x32]
+    b @@ExitLighthouseSpawn
 
 ; We just entered a Boss Portal, so we want to reset its flag.
 @ResetBossFlagOnPortal:
@@ -2088,6 +2223,9 @@
     beq @@Exit
     add r0, r4, 0x100
     ldrh r0, [r0, 0x3C] ; grab the var A
+    cmp r0, 3
+    beq @@ResetLighthouse
+@@lightreset:
     mov r1, 1
     lsl r0, r1, r0 ; SHift boss id into bit
     ldr r1, =0x021003E4
@@ -2097,6 +2235,15 @@
 @@Exit:
     mov r0, 0
     bx lr
+@@ResetLighthouse:
+    ; Lighthouse needs to also reset the elevator flag
+    push r0
+    ldr r1, =0x02100378
+    ldrb r0, [r1]
+    bic r0, r0, 0x01
+    strb r0, [r1]
+    pop r0
+    b @@lightreset
 
 ; Most bosses index their flag to find the next boss. So we sub 1 here.
 @SetPortalIndex:
@@ -2109,10 +2256,38 @@
 
     cmp r2, 2 ; Skeleton
     beq @@Skip
+    cmp r2, 3 ; Brach
+    moveq r2, 2
     sub r2, r2, 1
 @@Skip:
     bx lr
 
+; Warp out of Brachyura's room so we dont softlock
+@TeleportOutOfBrach:
+    push r0
+    add r0, r4, 0x100
+    ldrh r0, [r0, 0x3C] ; Var a...
+    cmp r0, 0xFF ; This is the exit portal from brachyura...
+    beq @@WarpOut
+    pop r0
+@@End:
+    b 0x0203AFD0
+
+@@WarpOut:
+    ldr r0, = 0x020FFC8C
+    ldr r2, [r0]
+    bic r2, r2, 0x02 ; Clear the flag that we're in a boss fight
+    str r2, [r0]
+    pop r0
+    ldr r0, = 0x021DD038
+    mov r1, 0
+    strb r1, [r0] ; Reset the music mute
+    mov r2, 1
+    mov r3, 0xA0
+    strh r3, [r13]
+    mov r3, 0x80
+    mov r0, 0x09
+    b @@End
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
