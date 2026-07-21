@@ -288,7 +288,7 @@
         b @SetEventGlyphFlag
 
     .org 0x022376E0
-        b 0x02237714  ; Part of Barlowe's initializer; prevent the game from using the post-Albus 1 Dialogue to skip the handler
+        b 0x02237714  ; Don't give Barlowe's Albus 1 dialogue priority over the Dominus handler
 
     .org 0x022A194C
         bl @TinManChestItem
@@ -306,6 +306,9 @@
     .org 0x022B6B3E ; Some sort of order used for portals. Not sure why they dont just use varA....
         .db 0x02 ; Set this to Giant Skeleton instead of 0
 
+    .org 0x022B6B46 ; Some sort of order used for portals. Not sure why they dont just use varA....
+        .db 0x0A ; Set this to Wallman instead 0f 0
+
     .org 0x02296120
         bl @ResetBossFlagOnPortal
 
@@ -317,6 +320,12 @@
 
     .org 0x022B6AE8
         .dh 0x02C0 ; Gravedorcus's Portal Position
+
+    .org 0x02295F88
+        bl @DontExitGame
+
+    .org 0x02237720
+        b 0x0223774C ; Barlowe's dialogue after Albus 2. Skip this and defer to the generic handler
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -341,6 +350,9 @@
     .org 0x022B9690
         mov r0, 6  ; Wallman's Glyph flag
 
+    .org 0x022BA518
+        bl @SpawnPortal_Wallman
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_30", 0x022B73A0
@@ -349,19 +361,38 @@
 
     .org 0x022B97CC
         nop ; Second blue chest at 0, 0?????
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_32", 0x022B73A0
     .org 0x022BC164
         bl @SpawnPortal_Goliath
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_33", 0x022B73A0
     .org 0x022BA0D0
         bl @SpawnPortal_Dorcus
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_36", 0x022B73A0
+    .org 0x022B9068
+        bl @SpawnPortal_Albus
 
+    .org 0x022B8DB0
+        b @DontRespawnAlbusGlyph
+
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_37", 0x022B73A0
+    .org 0x022B73DC
+        bl @SpawnPortal_Barlowe
+
+    .org 0x022B8150
+        bl @HandlePostBarloweFight
+.close
+;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_41", 0x022C1FE0
     .org 0x022C2754
         ; These are for Nikolai in wygol village
@@ -375,6 +406,7 @@
 
     .org 0x022C28F0
         mov r1, -1 ; And the focus for the second camera pan
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_42", 0x022C1FE0
@@ -2079,6 +2111,45 @@
     pop r5, lr
     bx lr
 
+;NOTE!!!!
+;If I do Glyphsanity I'll need to respawn this portal even if the boss is dead if we don't have the check.
+@SpawnPortal_Albus:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 8 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+;NOTE!! If I do Glyphsanity I'll need to respawn this portal too
+@SpawnPortal_Barlowe:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 9 ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+@SpawnPortal_Wallman:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 0x0A ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+@SpawnPortal_Blackmore:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 0x0B ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
 
 
 
@@ -2158,6 +2229,9 @@
     cmp r0, 0x07
     popeq r0
     beq @@PortalPos_Dorcus
+    cmp r0, 0x0A
+    popeq r0
+    beq @@PortalPos_Wallman
 
 
     pop r0
@@ -2214,6 +2288,14 @@
     mov r1, 0x18
     strh r1, [r0, 0x32]
     b @@ExitLighthouseSpawn
+    pop r1
+@@PortalPos_Wallman:
+    push r1
+    mov r1, 0x0B
+    strb r1, [r0, 0x36]
+    mov r1, 0x07
+    strh r1, [r0, 0x32] ; Wallman's room is split in half, spawn the portal on the left side
+    b @@ExitLighthouseSpawn
 
 ; We just entered a Boss Portal, so we want to reset its flag.
 @ResetBossFlagOnPortal:
@@ -2256,6 +2338,10 @@
 
     cmp r2, 2 ; Skeleton
     beq @@Skip
+    cmp r2, 0x0A
+    bge @@Skip ; Drac bosses
+
+
     cmp r2, 3 ; Brach
     moveq r2, 2
     sub r2, r2, 1
@@ -2288,8 +2374,51 @@
     mov r3, 0x80
     mov r0, 0x09
     b @@End
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; If we're refighting Albus, don't trigger the glyph cutscene again
+@DontRespawnAlbusGlyph:
+    cmp r0, 0
+    bne 0x022B8DDC ; If in boss rush, ignore this completely
+    mov r0, 0x35 ; Albus 3's location flag
+    bl @CheckLocFlag
+    b 0x022B8DB4 ; Let the game's own CMP handle this
+
+; Prevent the game from trying to send us to the Boss Rush ending
+@DontExitGame:
+    cmp r0, 0x09 ; Final boss rush portal
+    beq @@ResetOnNormal
+@@End:
+    bx lr
+@@ResetOnNormal:
+    push r0
+    ldr r0, =0x02100790
+    ldrb r0, [r0]
+    cmp r0, 2 ; Boss Rush
+    pop r0
+    moveq r0, 9
+    b @@End
+;;;;;;;;;;;;;;;;;;;;;
+;Determine where we go afte rBarlowe
+@HandlePostBarloweFight:
+    push r0
+    ldr r0, = 0x0210038B
+    ldrb r0, [r0]
+    tst r0, 0x38  ; Flags that the Barlowe fight has been done before
+    bne @@UndoFadeout
+@@End:
+    pop r0
+    b 0x0203AFD0
+@@UndoFadeout:
+    ldr r0, = 0x0400006C
+    push r1,lr
+    mov r1, 0
+    strb r1, [r0, r1]
+    bl 0x02002CF4
+    pop r1,lr
+    b @@End
+
+
+
 
 .pool
 .endarea
