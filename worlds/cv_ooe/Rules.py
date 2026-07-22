@@ -30,6 +30,8 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Tristis Pass: Frozen Waterfall Glyph"), Has("Magnes"))
     set_rule(world.get_location("Tristis Pass: Second Hill Lowest Chest"), Has("Lizard Tail"))
+    set_rule(world.get_location("Tristis Pass: Final Hill Underground Pickup"), Has("Lizard Tail"))
+    set_rule(world.get_location("Tristis Pass: Final Hill Alcove"), Has("Lizard Tail"))
 
     set_rule(world.get_location("Mystery Manor: Dark Room Chest"), Has("Arma Machina"))
 
@@ -96,3 +98,5 @@ def set_location_rules(world):
         set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Lizard Tail"))
         set_rule(world.get_location("Tristis Pass: Lower Hill Right"), Has("Lizard Tail"))
         set_rule(world.get_location("Tristis Pass: Third Hill Right"), Has("Lizard Tail"))
+        set_rule(world.get_location("Tristis Pass: Final Hill Underground Chest"), Has("Lizard Tail"))
+        

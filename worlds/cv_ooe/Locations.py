@@ -244,7 +244,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Underground Labyrinth", "Underground Labyrinth: Boulder Room Glyph"),
         LocationData("Underground Labyrinth", "Underground Labyrinth: Fire Room"),
         LocationData("Underground Labyrinth", "Underground Labyrinth: Exit Item"),
-        LocationData("Underground Labyrinth", "Underground Labyrinth: Secret Passge Pickup"),
+        LocationData("Underground Labyrinth", "Underground Labyrinth: Secret Passage Pickup"),
         LocationData("Underground Labyrinth", "Underground Labyrinth: Second Shadow Room"),
         LocationData("Underground Labyrinth", "Underground Labyrinth: Dead End Chest"),
         LocationData("Underground Labyrinth", "Underground Labyrinth: Boulder Room Hidden Chest"),

@@ -54,7 +54,7 @@ location_ids = {
     "Kalidus Channel: Depths Left Tall Room Freestanding": 0x3F,
     "Oblivion Ridge: Pre-Boss Ledge": 0x40,
     "Tymeo Mountains: Left Hill Alcove Pickup": 0x41,
-    "Underground Labyrinth: Secret Passge Pickup": 0x42,
+    "Underground Labyrinth: Secret Passage Pickup": 0x42,
     "Tristis Pass: Final Hill Underground Pickup": 0x43,
     "Wygol Village: Chest In Right House": 0x44,
     "Wygol Village: Left Chest": 0x45,
