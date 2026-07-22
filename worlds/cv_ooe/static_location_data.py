@@ -305,10 +305,23 @@ location_ids = {
     "Tymeo Mountains: Right Exit": 0x15C,
     "Tymeo Mountains: Right Exit Item": 0x15D,
     "Tymeo Mountains: Cavern Chest": 0x15E,
-    "Tymeo Mountains: Right Shaft Lower": 0x15F
+    "Tymeo Mountains: Right Shaft Lower": 0x15F,
+
+    "Monastery: Arthroverta No-Hit Chest": 0x170,
+    "Minera Prison Island: Giant Skeleton No-Hit Chest": 0x171,
+    "Lighthouse: Brachyura No-Hit Chest": 0x172,
+    "Skeleton Cave: Maneater No-Hit Chest": 0x173,
+    "Somnus Reef: Rusalka No-Hit Chest": 0x174,
+    "Giant's Dwelling: Goliath No-Hit Chest": 0x175,
+    "Oblivion Ridge: Gravedorcus No-Hit Chest": 0x176,
+    "Mystery Manor: Albus No-Hit Chest": 0x177,
+    "Ecclesia: Barlowe No-Hit Chest": 0x178,
+    "Library: Wallman No-Hit Chest": 0x179,
+    "Underground Labyrinth: Blackmore No-Hit Chest": 0x17A,
+    "Arms Depot: Eligor No-Hit Chest": 0x17B,
+    "Mechanical Tower: Death No-Hit Chest": 0x17C
     # Mechnical tower room 8 s 6 has an oob chest?
 
-    # Tin man chest?
     }
 
 

@@ -147,6 +147,12 @@ class RevealHiddenChests(DefaultOnToggle):
     display_name = "Reveal Hidden Chests"
 
 
+class AddMedalChests(Toggle):
+    """Adds the no-hit Boss chests to the check pool, except for Dracula.
+       If you fail to get the chest, a portal will spawn in their room that lets you refight them."""
+    display_name = "Add Medal Chests"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -166,6 +172,7 @@ class OoEOptions(PerGameCommonOptions):
     remove_large_cavern: RemoveLargeCavern
     reveal_hidden_chests: RevealHiddenChests
     start_inventory_from_pool: StartInventoryPool
+    add_no_hit_chests: AddMedalChests
 
 
 ooe_option_groups = [
@@ -185,7 +192,8 @@ ooe_option_groups = [
     OptionGroup("Location Options", [
         ShuffleDominus,
         AddBrownChests,
-        RandomizeVillagers
+        RandomizeVillagers,
+        AddMedalChests
     ]),
 
     OptionGroup("World Options", [

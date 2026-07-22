@@ -341,4 +341,21 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         location_table = [location for location in
                           location_table if location.is_event or location_data_table[location.name].location_type != "Wood Chest"]
 
+    if world.options.add_no_hit_chests:
+        location_table.extend([
+            LocationData("Monastery Magnets Area", "Monastery: Arthroverta No-Hit Chest"),
+            LocationData("Minera Prison Island Main", "Minera Prison Island: Giant Skeleton No-Hit Chest"),
+            LocationData("Lighthouse Post-Boss", "Lighthouse: Brachyura No-Hit Chest"),
+            LocationData("Skeleton Cave", "Skeleton Cave: Maneater No-Hit Chest"),
+            LocationData("Somnus Reef Main", "Somnus Reef: Rusalka No-Hit Chest"),
+            LocationData("Giant's Dwelling Main", "Giant's Dwelling: Goliath No-Hit Chest"),
+            LocationData("Oblivion Ridge Beyond Boss", "Oblivion Ridge: Gravedorcus No-Hit Chest"),
+            LocationData("Mystery Manor Main", "Mystery Manor: Albus No-Hit Chest"),
+            LocationData("Ecclesia", "Ecclesia: Barlowe No-Hit Chest"),
+            LocationData("Library", "Library: Wallman No-Hit Chest"),
+            LocationData("Underground Labyrinth", "Underground Labyrinth: Blackmore No-Hit Chest"),
+            LocationData("Arms Depot", "Arms Depot: Eligor No-Hit Chest"),
+            LocationData("Mechanical Tower Upper", "Mechanical Tower: Death No-Hit Chest"),
+        ])
+
     return location_table

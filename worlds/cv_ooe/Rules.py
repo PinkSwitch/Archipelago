@@ -75,8 +75,7 @@ def set_location_rules(world):
             set_rule(world.get_location("Training Hall: Second Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
             set_rule(world.get_location("Training Hall: Third Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
             set_rule(world.get_location("Training Hall: Final Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-            
-    
+
     if not world.options.remove_large_cavern:
         if world.options.add_brown_chests == AddBrownChests.option_include:
             set_rule(world.get_location("Large Cavern: Rest Room 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
@@ -85,7 +84,6 @@ def set_location_rules(world):
             set_rule(world.get_location("Large Cavern: Rest Room 4"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
             set_rule(world.get_location("Large Cavern: Final Reward 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
             set_rule(world.get_location("Large Cavern: Final Reward 2"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-
 
     # Regular brown cheests
     if world.options.add_brown_chests == AddBrownChests.option_include:
@@ -96,3 +94,6 @@ def set_location_rules(world):
         set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Lizard Tail"))
         set_rule(world.get_location("Tristis Pass: Lower Hill Right"), Has("Lizard Tail"))
         set_rule(world.get_location("Tristis Pass: Third Hill Right"), Has("Lizard Tail"))
+
+    if world.options.add_no_hit_chests:
+        set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
