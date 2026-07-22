@@ -579,7 +579,7 @@ location_data_table = {
     "Underground Labyrinth: Boulder Room Glyph": LocationInformation(0x022EADC8, "overlay_68", "Event Glyph"),
     "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_86", "Inline"),
     "Underground Labyrinth: Exit Item": LocationInformation(0x022EB0D4, "overlay_68", "Freestanding Glyph"),
-    "Underground Labyrinth: Secret Passge Pickup": LocationInformation(0x022EB008, "overlay_68", "Freestanding"),
+    "Underground Labyrinth: Secret Passage Pickup": LocationInformation(0x022EB008, "overlay_68", "Freestanding"),
     "Underground Labyrinth: Second Shadow Room": LocationInformation(0x022EA9CC, "overlay_68", "Chest"),
     "Underground Labyrinth: Dead End Chest": LocationInformation(0x022EAF54, "overlay_68", "Chest"),
     "Underground Labyrinth: Boulder Room Hidden Chest": LocationInformation(0x022EADD4, "overlay_68", "Chest"),

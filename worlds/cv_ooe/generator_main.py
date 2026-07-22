@@ -30,6 +30,7 @@ def generate_early(world) -> None:
         world.options.add_brown_chests.value = passthrough["add_brown_chests"]
         world.options.starting_villagers.value = passthrough["starting_villagers"]
         world.options.randomize_villagers.value = passthrough["randomize_villagers"]
+        world.options.add_no_hit_chests.value = passthrough["add_medal_chests"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -115,6 +116,9 @@ def set_classifications(world, name) -> CVOoEItem:
     # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
+    if name == "Arma Felix" and not world.options.start_with_lizard_tail:
+        item.classification = ItemClassification.progression  # Can be used as a substitute 
+
     return item
 
 
@@ -179,7 +183,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "randomize_villagers": world.options.randomize_villagers.value,
         "starting_area": world.options.starting_area.value,
         "remove_training_hall": world.options.remove_training_hall.value,
-        "remove_large_cavern": world.options.remove_large_cavern.value
+        "remove_large_cavern": world.options.remove_large_cavern.value,
+        "add_medal_chests": world.options.add_no_hit_chests.value
     }
 
 
