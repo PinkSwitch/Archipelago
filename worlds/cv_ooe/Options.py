@@ -153,6 +153,12 @@ class AddMedalChests(Toggle):
     display_name = "Add Medal Chests"
 
 
+class BarloweRequired(DefaultOnToggle):
+    """If enabled, you'll need to defeat Barlowe before you can fight Dracula.
+       Of course, if Barlowe locks the castle, this won't have any noticable effect."""
+    display_name = "Barlowe Required"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -173,11 +179,13 @@ class OoEOptions(PerGameCommonOptions):
     reveal_hidden_chests: RevealHiddenChests
     start_inventory_from_pool: StartInventoryPool
     add_no_hit_chests: AddMedalChests
+    barlowe_required: BarloweRequired
 
 
 ooe_option_groups = [
     OptionGroup("Goal Settings", [
-        VillagersRequired
+        VillagersRequired,
+        BarloweRequired
     ]),
 
     OptionGroup("Starting Items", [

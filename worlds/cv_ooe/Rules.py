@@ -97,3 +97,7 @@ def set_location_rules(world):
 
     if world.options.add_no_hit_chests:
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
+
+    if world.options.barlowe_required:
+        set_rule(world.get_location("Final Approach: Dracula"), CanReachLocation("Ecclesia: Barlowe Fight"))
+        
