@@ -649,6 +649,21 @@ location_data_table = {
     "Final Approach: Final Stash Second From Right": LocationInformation(0x022D5748, "overlay_74", "Chest"),
     "Final Approach: Final Stash Second From Left": LocationInformation(0x022D573C, "overlay_74", "Chest"),
     "Final Approach: Final Stash Far Left": LocationInformation(0x022D5724, "overlay_74", "Chest"),
+
+    "Monastery: Arthroverta No-Hit Chest": LocationInformation(0x022EB240, "overlay_86", "Inline"),
+    "Minera Prison Island: Giant Skeleton No-Hit Chest": LocationInformation(0x022EB242, "overlay_86", "Inline"),
+    "Lighthouse: Brachyura No-Hit Chest": LocationInformation(0x022EB244, "overlay_86", "Inline"),
+    "Skeleton Cave: Maneater No-Hit Chest": LocationInformation(0x022EB246, "overlay_86", "Inline"),
+    "Somnus Reef: Rusalka No-Hit Chest": LocationInformation(0x022EB248, "overlay_86", "Inline"),
+    "Giant's Dwelling: Goliath No-Hit Chest": LocationInformation(0x022EB24A, "overlay_86", "Inline"),
+    "Oblivion Ridge: Gravedorcus No-Hit Chest": LocationInformation(0x022EB24C, "overlay_86", "Inline"),
+    "Mystery Manor: Albus No-Hit Chest": LocationInformation(0x022EB24E, "overlay_86", "Inline"),
+    "Ecclesia: Barlowe No-Hit Chest": LocationInformation(0x022EB250, "overlay_86", "Inline"),
+    "Library: Wallman No-Hit Chest": LocationInformation(0x022EB252, "overlay_86", "Inline"),
+    "Underground Labyrinth: Blackmore No-Hit Chest": LocationInformation(0x022EB254, "overlay_86", "Inline"),
+    "Arms Depot: Eligor No-Hit Chest": LocationInformation(0x022EB256, "overlay_86", "Inline"),
+    "Mechanical Tower: Death No-Hit Chest": LocationInformation(0x022EB258, "overlay_86", "Inline"),
+    
 }
 
 
