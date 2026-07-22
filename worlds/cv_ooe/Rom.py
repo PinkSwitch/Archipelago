@@ -118,6 +118,7 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB230, "overlay_86", struct.pack("H", world.options.experience_percent.value))
     rom.write_to_file(0x022EB234, "overlay_86", bytearray([world.options.add_no_hit_chests.value]))
     rom.write_to_file(0x022EB235, "overlay_86", bytearray([world.options.barlowe_required.value]))
+    rom.write_to_file(0x022EB236, "overlay_86", bytearray([world.options.ap_multiplier.value]))
 
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
@@ -214,12 +215,17 @@ class OoEPatchExtensions(APPatchExtension):
         rom = LocalRom(rom)
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB230, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
+        ap_multiplier = rom.read_from_file(0x022EB236, "overlay_86", 1)[0]
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)
             enemy_exp = struct.unpack("H", rom.read_from_file(address + 16, "arm9", 2))[0]
             enemy_exp = int(min(0xFFFF, (enemy_exp * exp_multiplier)))
             rom.write_to_file(address + 16, "arm9", struct.pack("H", enemy_exp))
+
+            enemy_ap = rom.read_from_file(address + 13, "arm9", 1)[0]
+            enemy_ap = int(min(255, (enemy_ap * ap_multiplier)))
+            rom.write_to_file(address + 13, "arm9", bytearray([enemy_ap]))
 
         return rom.get_bytes()
 

@@ -159,6 +159,15 @@ class BarloweRequired(DefaultOnToggle):
     display_name = "Barlowe Required"
 
 
+class APMultiplier(Range):
+    """Multiplier for the amount of AP given by enemies.
+       Does not affect AP not dropped by enemies."""
+    display_name = "AP Multiplier"
+    range_start = 1
+    range_end = 100
+    default = 1
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -180,6 +189,7 @@ class OoEOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     add_no_hit_chests: AddMedalChests
     barlowe_required: BarloweRequired
+    sp_multiplier: sp_multiplier
 
 
 ooe_option_groups = [
@@ -212,7 +222,7 @@ ooe_option_groups = [
 
     OptionGroup("Enemy Settings", [
         ExperiencePercent,
-        # APMultiplier,
+        APMultiplier
 
     ]),
 
