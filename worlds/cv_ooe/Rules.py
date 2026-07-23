@@ -22,7 +22,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Minera Prison Island: Tin Man Chest"), HasAny("Fulgur", "Vol Fulgur", "Lumination", "Vol Luminatio", "Umbra", "Vol Umbra"))
 
     set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Chest"), HasAny("Lizard Tail", "Arma Felix"))
-    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), Has("Lizard Tail", "Arma Felix"))
+    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), HasAny("Lizard Tail", "Arma Felix"))
     set_rule(world.get_location("Tymeo Mountains: Lower Mountain Lower Paries Chest"), Has("Paries"))
     set_rule(world.get_location("Tymeo Mountains: Lower Mountain Upper Paries Chest"), Has("Paries"))
     set_rule(world.get_location("Tymeo Mountains: Wind Glyph"), Has("Magnes"))
@@ -100,4 +100,3 @@ def set_location_rules(world):
 
     if world.options.barlowe_required:
         set_rule(world.get_location("Final Approach: Dracula"), CanReachLocation("Ecclesia: Barlowe Fight"))
-        

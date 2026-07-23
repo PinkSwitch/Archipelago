@@ -189,7 +189,7 @@ class OoEOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
     add_no_hit_chests: AddMedalChests
     barlowe_required: BarloweRequired
-    sp_multiplier: sp_multiplier
+    ap_multiplier: APMultiplier
 
 
 ooe_option_groups = [
