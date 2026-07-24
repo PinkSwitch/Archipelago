@@ -286,7 +286,7 @@ def set_quest_rules(world):
                         CanReachRegion("Forgotten City") & ((can_cast_spell & HasAny("Time Stop", "Speed Up", "Raging Fire", "Thunderbolt", "Explosion", "Chain Lightning", "Piercing Beam", "Acidic Bubbles")) | Has("Javelin")))
     
     overcome_curse_active = CanReachLocation("Sandy Grave: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
-                        Has("Skull Ring") | CanReachRegion("Entrance - Upper Area") | CanReachLocation("Tower of Death: Rampart Room") | CanReachRegion("Tower of Death - Ascent")) | CanReachRegion("Sandy Grave") | CanReachRegion("Forgotten City")
+                        Has("Skull Ring") | CanReachRegion("Entrance - Upper Area") | CanReachLocation("Tower of Death: Rampart Room") | CanReachRegion("Tower of Death - Ascent") | CanReachRegion("Sandy Grave") | CanReachRegion("Forgotten City"))
 
     statue_tear_active = CanReachLocation("Nation of Fools: Boss Room", options=[OptionFilter(UnlockAllQuests, 0)], filtered_resolution=True) & (
                         CanReachRegion("Nation of Fools - Main") | Has("Statue's Tear"))
