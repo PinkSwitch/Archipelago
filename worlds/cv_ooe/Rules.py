@@ -1,6 +1,6 @@
-from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique
+from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
 from rule_builder.field_resolvers import FromOption
-from .Options import VillagersRequired, AddBrownChests
+from .Options import VillagersRequired, AddBrownChests, BarloweRequired
 
 
 def set_location_rules(world):
@@ -64,7 +64,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Final Approach: Throne Right Chest"), Has("Paries"))
     set_rule(world.get_location("Final Approach: Throne Left Chest"), Has("Paries"))
 
-    set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union"))
+    set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union") &
+            CanReachLocation("Ecclesia: Barlowe Fight", options=[OptionFilter(BarloweRequired, True)], filtered_resolution=True))
 
     if not world.options.remove_training_hall:
         set_rule(world.get_location("Training Hall: Freestanding"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
