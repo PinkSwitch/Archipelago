@@ -88,6 +88,39 @@
     .org 0x02065348
         b @GetBossPortalPosition
 
+    .org 0x02061F48
+        bl @GetBossChestItems
+
+    .org 0x020378F4
+        bl @OneScreen_OpenMap
+
+    .org 0x02037388
+        b @ExitDebugMap
+
+    .org 0x0203735C
+        bl @DebugMap_DrawMarker
+
+    .org 0x020425EC
+        bl @DebugMap_DrawX
+
+    .org 0x02042620
+        bl @DebugMap_DrawY
+
+    .org 0x02045D08
+        b @DebugMap_Close
+
+    .org 0x02045C10
+        b @DebugMap_SkipWarpLogic
+
+    .org 0x020379B0
+        bl @OneScreen_DisableScreenSwap
+
+    .org 0x02045A74
+        b @DebugMap_SkipLogic2
+
+    .org 0x020379B4
+        bl @OneScreen_DontResetTopType
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0x021DD280
@@ -321,11 +354,23 @@
     .org 0x022B6AE8
         .dh 0x02C0 ; Gravedorcus's Portal Position
 
+    .org 0x022B6B1A
+        .dh 0x50 ; Eligor's Portal Position
+
     .org 0x02295F88
         bl @DontExitGame
 
     .org 0x02237720
         b 0x0223774C ; Barlowe's dialogue after Albus 2. Skip this and defer to the generic handler
+
+    .org 0x02296B0C
+        b @LockBossDoor
+
+    .org 0x022792CC
+        bl @SkeletonFlightDisable
+
+    .org 0x0223967C
+        bl @PostBarloweWarp
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -335,6 +380,11 @@
         bl @SpawnPortal_Arthro
 .close
 ;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_25", 0x022B73A0
+    .org 0x022BC2FC
+        bl @SpawnPortal_Death
+.close
+;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_26", 0x022B73A0
     .org 0x022BAD68
         bl @SpawnPortal_Maneater
@@ -364,6 +414,11 @@
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_31", 0x022B73A0
+    .org 0x022BD908
+        bl @SpawnPortal_Eligor
+.close
+;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_32", 0x022B73A0
     .org 0x022BC164
         bl @SpawnPortal_Goliath
@@ -374,6 +429,11 @@
     .org 0x022BA0D0
         bl @SpawnPortal_Dorcus
 
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_35", 0x022B73A0
+    .org 0x022B9A60
+        bl @SpawnPortal_Blackmore
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_36", 0x022B73A0
@@ -580,7 +640,31 @@
         .dh 0x00 ; 022EB232
 .align 4
     @OptionFlag_MedalChests: ; 022Eb234
-        .db 0x01 ; TODO- set to zero
+        .db 0x00
+    @OptionFlag_BarloweRequired: ;022Eb235
+        .db 0x00
+    @OptionFlag_APMult: ;022EB236
+        .db 0x01
+    @OptionFlag_OneScreenMode: ; 022EB237
+        .db 0x00
+    @OptionFlag_OpenCastle: ;022EB238
+        .db 0x00
+.align 0x10
+    @ROMTable_BossChestItems: ;022EB240
+        .dh 0xD8
+        .dh 0xD9
+        .dh 0xDA
+        .dh 0xDB
+        .dh 0xDC
+        .dh 0xDD
+        .dh 0xDE
+        .dh 0xDF
+        .dh 0xE0
+        .dh 0xE1
+        .dh 0xE2
+        .dh 0xE3
+        .dh 0xE4
+
 .align 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -627,9 +711,17 @@
     orr r0, r0, 0x02
     ldr r1, =0x02100388
     str r0, [r1] ; Set the event flag for this so it doesnt happen again
-    mov r0, 5
     mov r1, 1
     mov r2, 1
+    ldr r0, = @OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    moveq r0, 5
+    movne r0, 7
+    push r1
+    ldr r1, = 0x0210078D
+    strb r0, [r1]
+    pop r1
     bl 0x020657F8 ; Set the top screen to be the map
     push r1
     ldr r0, = 0x0004EBA0
@@ -669,6 +761,7 @@
     pop r0
     push r0
     bl @GetGlyphEXP
+    bl @GetGlyphAP
     bl 0x020635A4 ; Give the player the item in question
     pop r0
     bl @PlayItemSounds
@@ -691,6 +784,15 @@
     mov r0, 1
     mov r1, 1
     bl 0x020AA95C ; Set Wygol village as unlocked
+    ldr r0, = @OptionFlag_OpenCastle
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipCastleUnlock
+    mov r0, 0
+    mov r1, 1
+    bl 0x020AA95C ; Set Dracula's Castle as unlocked
+
+@@SkipCastleUnlock:
     ldr r0, =@OptionFlag_StartingArea
     ldrb r0, [r0]
     cmp r0, 0
@@ -2150,12 +2252,29 @@
     pop r5, lr
     bx lr
 
+@SpawnPortal_Eligor:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 0x0C ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
+@SpawnPortal_Death:
+    push r5, lr
+    bl 0x02061F0C
+    mov r0, 0x0D ; Boss death flag
+    mov r5, r6
+    bl @RespawnBoss
+    pop r5, lr
+    bx lr
+
 
 
 
 ; If we miss a Medal chest, we need to respawn it. Do that here.
 @RespawnBoss:
-    ; TODO; test that the boss is DEAD now
     push lr
     ldr r1, = @OptionFlag_MedalChests
     ldrb r1, [r1]
@@ -2232,6 +2351,12 @@
     cmp r0, 0x0A
     popeq r0
     beq @@PortalPos_Wallman
+    cmp r0, 0x0B
+    popeq r0
+    beq @@PortalPos_Black
+    cmp r0, 0x0C
+    popeq r0
+    beq @@PortalPos_Eligor
 
 
     pop r0
@@ -2296,6 +2421,22 @@
     mov r1, 0x07
     strh r1, [r0, 0x32] ; Wallman's room is split in half, spawn the portal on the left side
     b @@ExitLighthouseSpawn
+    pop r1
+@@PortalPos_Black:
+    push r1
+    mov r1, 0x0A
+    strb r1, [r0, 0x36]
+    mov r1, 0x10
+    strh r1, [r0, 0x32] ; Blackmore ALSO has a raised up floor
+    b @@ExitLighthouseSpawn
+    pop r1
+@@PortalPos_Eligor:
+    push r1
+    mov r1, 0x17
+    strb r1, [r0, 0x36]
+    mov r1, 0x04
+    strh r1, [r0, 0x32] ; Blackmore ALSO has a raised up floor
+    b @@ExitLighthouseSpawn
 
 ; We just entered a Boss Portal, so we want to reset its flag.
 @ResetBossFlagOnPortal:
@@ -2339,7 +2480,9 @@
     cmp r2, 2 ; Skeleton
     beq @@Skip
     cmp r2, 0x0A
-    bge @@Skip ; Drac bosses
+    beq @@Skip ; Drac bosses
+    cmp r2, 0x0B
+    subeq r2, r2, 1 ; Sub an extra for Blackmore
 
 
     cmp r2, 3 ; Brach
@@ -2416,8 +2559,294 @@
     bl 0x02002CF4
     pop r1,lr
     b @@End
+;;;;;;;;;;;;;;;;;;;;;;;
+; Loads the value for Boss Chests
+@GetBossChestItems:
+    ldr r1, = @ROMTable_BossChestItems
+    sub r0, r4, 1
+    mov r0, r0, lsl 1 ; Shift it
+    ldrh r1, [r1, r0] ; Load the value of this index
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Locks boss doors
+@LockBossDoor:
+    add r0, r5, 0x100
+    ldrh r0, [r0, 0x3E]
+    cmp r0, 0x0F ; Dracula
+    beq @@LockDraculaDoor
+@@DontLockDoor:
+    mov r0, r5
+    b 0x02296B10
+@@LockDraculaDoor:
+    ldr r0, = @OptionFlag_BarloweRequired
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@DontLockDoor
+    ldr r0, = 0x021003E4
+    ldr r0, [r0]
+    tst r0, 0x200 ; Barlowe's death flag
+    bne @@DontLockDoor
+    b 0x02297150 ; If we haven't beaten Barlowe, don;t open the door.
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Opens the map when Select is pushed
+@RamFlag_MapTimer:
+    .db 0x00
+.align 4
+@OneScreen_OpenMap:
+    push lr
+    bl 0x0203809C
+    ldr r0, = @RamFlag_MapTimer
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@MapInit
 
 
+    ldr r0, = 0x02101142
+    ldrh r0, [r0]
+    tst r0, 4 ; Select
+    bne @@MapInit
+@@End:
+    pop lr
+    bx lr
+@@MapInit:
+
+    ldr r0, = @OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r0, = 0x02100A9C
+    ldr r0, [r0]
+    cmp r0, 0
+    bne @@End ; Check a field of running fade timers. Don't open the map during a fade so it doesnt break after cutscenes...
+
+    ldr r0, = 0x020FFC8C
+    ldr r0, [r0]
+    ldr r1, = 0x88100041 ; Dead, busy, pausing, or room transition
+    tst r0, r1
+    bne @@End ; If any of the above bits are set, dont open the map
+    ldr r0, = 0x021000F4 ; Check if the player is frozen
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@End
+    ldr r0, =0x020FFC8C
+    ldr r1, [r0]
+    orr r1, r1, 0x80
+    str r1, [r0]
+
+    ldr r0, =@RamFlag_MapTimer
+    ldrb r1, [r0]
+    add r1, r1, 1
+    strb r1, [r0]
+    cmp r1, 2
+    blt @@End
+    mov r1, 0
+    strb r1, [r0] ; Reset the timer here
+
+
+    ldr r1, = 0x020FFC58
+    mov r0, 1
+    strb r0, [r1, 0x49C]
+
+    mov r0, 0x03
+    strb r0, [r1, 0x49E]
+    bl 0x0202D918
+
+
+    ldr r0, = 0x020FFCB9
+    ldrb r0, [r0]
+    bl 0x02043480 ; Draw the map
+    bl 0x0209DE14
+    bl 0x02042CE4 ; Show the map
+    mov r0, 1
+    bl 0x020418A8
+    b @@End
+
+;;;;;;;;;;;;;;;;;
+; Debug exit handler
+@ExitDebugMap:
+    tst r0, 0x07 ; Select, A, B
+    bne @@MapClose
+    b @@CheckTouch
+@@MapClose:
+    push r0,r1
+    ldr r0, = 0x020FFC8C
+    ldr r1, [r0]
+    bic r1, r1, 0x80
+    str r1, [r0] ; Unset the Hud Hide flag
+    pop r0, r1
+    bl 0x02045910
+    mov r0, 0x63
+    bl 0x0202D97C
+    b 0x0203760C
+@@CheckTouch:
+    ldr r0, = 0x02101125
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x0203760C ; Don't close the map unless the touch screen was only tapped
+
+    ldr r0, =0x02101124
+    ldrsh r1, [r0, 0x06] ; Check touch screen coordinates
+    ldrsh r0, [r0, 0x04]
+    cmp r0, 0x08
+    blt 0x0203760C ; X must be higher than 8
+    cmp r0, 0x18
+    bgt 0x0203760C ; And lower than 18
+    cmp r1, 0xA8
+    blt 0x0203760C
+    cmp r1, 0xB8
+    bgt 0x0203760C
+    b @@MapClose
+
+@RamFlag_InMap:
+    .db 0x00
+.align 4
+@DebugMap_DrawMarker:
+    push lr
+    ldr r0, = @RamFlag_InMap
+    mov r1, 1
+    strb r1, [r0]
+    push r0
+    ldr r0, = 0x0214B0F0
+    mov r1, 0 ; Zero out the current selected warp
+    strb r1, [r0]
+    bl 0x02045A58 ; Draws the darkness effect. technically the area select handler
+    mov r0, 1
+    bl 0x0204247C
+    pop r0
+    mov r1, 0
+    strb r1, [r0]
+    pop lr
+    bx lr
+
+
+; Get the player's X instead of warp room x
+@DebugMap_DrawX:
+    ldr r2, = @RamFlag_InMap
+    ldrb r2, [r2]
+    cmp r2, 0
+    beq @@NormalDraw
+    ldr r2, = 0x020FFCB0 ; Player's X
+    bx lr
+@@NormalDraw:
+    ldr r2, = 0x0214B0C7
+    bx lr
+
+; Get the player's y instead of warp room y
+@DebugMap_DrawY:
+    ldr r2, = @RamFlag_InMap
+    ldrb r2, [r2]
+    cmp r2, 0
+    beq @@NormalDraw
+    ldr r2, = 0x020FFCB4 ; Player's y
+    bx lr
+@@NormalDraw:
+    ldr r2, = 0x0214B0C8
+    bx lr
+
+; Skips over other map logic
+@DebugMap_Close:
+    ldr r1, =@RamFlag_InMap
+    ldrb r1, [r1]
+    cmp r1, 1
+    beq 0x020460FC
+    ldrh r1, [r0, 0x02]
+    b 0x02045D0C
+
+; Skips some logic from area exits that ignores the map
+@DebugMap_SkipWarpLogic:
+    cmp r0, 1
+    bne 0x02045C80
+    ldr r0, = @RamFlag_InMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq 0x02045C80
+    b 0x02045C14
+
+; Same as above
+@DebugMap_SkipLogic2:
+    cmp r0, 0
+    bne 0x02045C08
+    ldr r0, = @RamFlag_InMap
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq 0x02045C08
+    b 0x02045A7C
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Disable switching to the Map Screen in Onescreen mode
+@OneScreen_DisableScreenSwap:
+    ldr r0, = @OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    bxne lr
+    mov r0, r4
+    b 0x020657F8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Turns off Volaticus when entering the Minera boss room so we don't softlock
+@SkeletonFlightDisable:
+    ldr r0, = 0x021002C4
+    ldrh r0, [r0] ; Get the current R glyph
+    cmp r0, 3 ; Check if it's Volaticus
+    bne @@End
+    push lr
+    bl 0x0204DFB8 ; Disable the glyph if it is
+    pop lr
+@@End:
+    mov r3, 0x5200
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Gives the player +1 to all AP points when getting an arbitrary glyph
+@GetGlyphAP:
+    cmp r0, 0x70
+    bge @@End ; Any non-glyph
+    push r0-r2
+    ldr r0, = 0x0210031C
+    mov r2, 0
+@@GetNextPoint:
+    ldrh r1, [r0, r2]
+    add r1, r1, 1 ; +1 AP point
+    strh r1, [r0, r2]
+    cmp r2, 0x0C
+    bge @@ExitLoop
+    add r2, r2, 2
+    b @@GetNextPoint
+@@ExitLoop:
+    pop r0-r2
+@@End:
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;
+; If the castle is already open, don't show the castle cutscene
+@PostBarloweWarp:
+    ldr r0, = @OptionFlag_OpenCastle
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@NewWarp
+    mov r0, 0x13
+    b 0x0203AFD0
+@@NewWarp:
+    ldr r0, = 0x0210038B
+    ldrb r1, [r0]
+    orr r1, r1, 0x10
+    strb r1, [r0] ; Set the flag that we watched that cutscene
+    mov r0, 0xB0
+    strh r0, [r13]
+    mov r0, 0x02
+    mov r1, 0x00
+    mov r2, 0x06
+    mov r3, 0x140
+    b 0x0203AFD0
+;;;;;;;;;;;;;;;;;;;
+; Stop the game from setting the recent top type
+@OneScreen_DontResetTopType:
+    ldr r0, = @OptionFlag_OneScreenMode
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@ForceStatus
+@@End:
+    ldr r0, = 0x020FFC58
+    bx lr
+@@ForceStatus:
+    mov r4, 7
+    b @@End
 
 
 .pool
