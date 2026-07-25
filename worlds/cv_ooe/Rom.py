@@ -119,6 +119,8 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB234, "overlay_86", bytearray([world.options.add_no_hit_chests.value]))
     rom.write_to_file(0x022EB235, "overlay_86", bytearray([world.options.barlowe_required.value]))
     rom.write_to_file(0x022EB236, "overlay_86", bytearray([world.options.ap_multiplier.value]))
+    rom.write_to_file(0x022EB237, "overlay_86", bytearray([world.options.one_screen_mode.value]))
+    rom.write_to_file(0x022EB238, "overlay_86", bytearray([world.options.open_castle.value]))
 
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0

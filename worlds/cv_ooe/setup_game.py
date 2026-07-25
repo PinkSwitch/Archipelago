@@ -35,10 +35,18 @@ def setup_game(world) -> None:
             world.starting_area = "Giant's Dwelling"  # Fix that for logic
         world.multiworld.push_precollected(create_progress_event(world, f"Map: {world.starting_area}"))
 
+    if world.options.open_castle:
+        world.multiworld.push_precollected(create_progress_event(world, "Castle Access"))
+
 
 def place_static_items(world) -> None:
+    if world.options.open_castle:
+        barlowe_item = "Barlowe Defeated"
+    else:
+        barlowe_item = "Castle Access"
+
     world.get_location("Final Approach: Dracula").place_locked_item(world.create_item("Dracula Defeated"))
-    world.get_location("Ecclesia: Barlowe Fight").place_locked_item(world.create_item("Castle Access"))
+    world.get_location("Ecclesia: Barlowe Fight").place_locked_item(world.create_item(barlowe_item))
 
     if not world.options.shuffle_dominus:  # If the player turned this off, place these vanilla
         world.get_location("Minera Prison Island: Albus 1").place_locked_item(world.create_item("Dominus Hatred"))

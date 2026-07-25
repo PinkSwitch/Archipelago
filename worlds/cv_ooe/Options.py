@@ -168,6 +168,16 @@ class APMultiplier(Range):
     default = 1
 
 
+class OneScreenMode(Toggle):
+    """Allows the entire game to be played with only the bottom screen. Press Select to view the map."""
+    display_name = "One-Screen Mode"
+
+
+class OpenCastle(Toggle):
+    """Opens Dracula's Castle from the start of the game."""
+    display_name = "Open Castle"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -190,6 +200,8 @@ class OoEOptions(PerGameCommonOptions):
     add_no_hit_chests: AddMedalChests
     barlowe_required: BarloweRequired
     ap_multiplier: APMultiplier
+    one_screen_mode: OneScreenMode
+    open_castle: OpenCastle
 
 
 ooe_option_groups = [
@@ -217,7 +229,8 @@ ooe_option_groups = [
     OptionGroup("World Options", [
         StartingArea,
         RemoveTrainingHall,
-        RemoveLargeCavern
+        RemoveLargeCavern,
+        OpenCastle
     ]),
 
     OptionGroup("Enemy Settings", [
@@ -229,6 +242,7 @@ ooe_option_groups = [
     OptionGroup("Quality of Life", [
         RevealMap,
         RevealBreakableWalls,
-        RevealHiddenChests
+        RevealHiddenChests,
+        OneScreenMode
     ])
 ]

@@ -32,6 +32,7 @@ def generate_early(world) -> None:
         world.options.randomize_villagers.value = passthrough["randomize_villagers"]
         world.options.add_no_hit_chests.value = passthrough["add_medal_chests"]
         world.options.barlowe_required.value = passthrough["barlowe_required"]
+        world.options.open_castle.value = passthrough["open_castle"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -136,7 +137,7 @@ def create_progress_event(world, name: str) -> CVOoEItem:
 def get_filler_item_name(world) -> str:
     from .Items import money_table, good_food_table, consumable_table, drops_table
     weights = {"drops": 3, "glyph": 10, "accessory": 10, "good_food": 8, "good_armor": 15, "money": 20,
-               "armor": 40, "consumable": 60}  # TODO; tweak
+               "armor": 40, "consumable": 60}
 
     weight_table = {
         "glyph": world.glyph_filler_table,
@@ -186,7 +187,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "remove_training_hall": world.options.remove_training_hall.value,
         "remove_large_cavern": world.options.remove_large_cavern.value,
         "add_medal_chests": world.options.add_no_hit_chests.value,
-        "barlowe_required": world.options.barlowe_required.value
+        "barlowe_required": world.options.barlowe_required.value,
+        "open_castle": world.options.open_castle.value
     }
 
 
