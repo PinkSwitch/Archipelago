@@ -613,7 +613,7 @@ location_data_table = {
     "Barracks: Upper Ramparts Left": LocationInformation(0x022D51DC, "overlay_71", "Freestanding"),
     "Barracks: Upper Ramparts Right": LocationInformation(0x022D51E8, "overlay_71", "Freestanding"),
 
-    "Mechanical Tower: Generator Puzzle": LocationInformation(0x022DCE9C, "overlay_72", "Event Glyph"),
+    "Mechanical Tower: Generator Puzzle": LocationInformation(0x022DCEA8, "overlay_72", "Event Glyph"),
     "Mechanical Tower: Post-Boss": LocationInformation(0x022DCC74, "overlay_72", "Freestanding Glyph"),
     "Mechanical Tower: Outer Item": LocationInformation(0x022C7CE4, "overlay_73", "Freestanding"),
     "Mechanical Tower: Upper Magnets Wall Item": LocationInformation(0x022DCA1C, "overlay_72", "Hidden Item"),
