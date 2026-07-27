@@ -13,25 +13,31 @@ class Goal(Choice):
     option_abyss = 1
     default = 0
 
+
 class ReplaceMenaceWithSoma(Toggle):
     """Replaces Menace with Soma-Dracula"""
     display_name = "Soma Replaces Menace"
+
 
 class RemoveMoneyGates(DefaultOnToggle):
     """Removes the gates that require you to own a specific amount of money."""
     display_name = "Remove Money Gates"
 
+
 class DisableBossSeals(Toggle):
     """Removes the requirement to draw Magic Seals to defeat bosses."""
     display_name = "No Drawing Seals"
+
 
 class EarlySeal1(Toggle):
     """Places Magic Seal 1 early in your own game to prevent getting stuck early."""
     display_name = "Early Seal 1"
 
+
 class RevealMap(DefaultOnToggle):
     """Start with the entire map visible."""
     display_name = "Reveal Map"
+
 
 class StartingWeapon(TextChoice):
     """The weapon you start the game with.
@@ -43,23 +49,28 @@ class StartingWeapon(TextChoice):
     default = "Knife"
     display_name = "Starting Weapon"
 
+
 class FixLuck(DefaultOnToggle):
     """Fixes how the Luck stat is applied.
        With the fix applied, each point of luck gives +0.1% to any drop.
        Without the fix, each point of luck is +0.04% for souls, 0.25% for items."""
     display_name = "Fix Luck"
 
+
 class RevealBreakableWalls(Toggle):
     """Automatically destroys/reveals all breakable walls"""
     display_name = "Reveal Hidden Walls"
+
 
 class BoostSpeed(Toggle):
     """Increases Soma's base walking speed by 33%"""
     display_name = "Boost Speed"
 
+
 class OneScreenMode(Toggle):
     """Allows the entire game to be played with only the bottom screen. Press Select to view the map."""
     display_name = "One-Screen Mode"
+
 
 class SoulRandomizer(Choice):
     """Randomizes Enemy souls.
@@ -72,6 +83,7 @@ class SoulRandomizer(Choice):
     default = 0
     display_name = "Soul Randomizer"
 
+
 class SoulsanityLevel(Choice):
     """The maximum tier of soul rarity that have Locations on them.
        Rare souls always expect you to have the Soul Eater Ring."""
@@ -81,6 +93,7 @@ class SoulsanityLevel(Choice):
     default = 0
     display_name = "Soulsanity Level"
 
+
 class GuaranteedSouls(OptionSet):
     """The specified Souls will be guaranteed to have at least one copy in the item pool. Unspecified souls can still be randomly selected from the soul pool.
        You can also use Common, Uncommon, or Rare to add all souls of that rarity."""
@@ -89,21 +102,26 @@ class GuaranteedSouls(OptionSet):
     valid_keys = {soul.casefold() for soul in set(soul_filler_table) | {"common", "uncommon", "rare"}}
     valid_keys_casefold = True
 
+
 class RandomizeStartingWarp(Toggle):
     """Randomizes which Warp Room is unlocked by default."""
     display_name = "Random Starting Warp Room"
+
 
 class OpenDrawbridge(Toggle):
     """If enabled, the drawbridge in Lost Village will start open instead of closed."""
     display_name = "Open Drawbridge"
 
+
 class ShopRandomizer(Toggle):
     """Randomizes Hammer's shop items."""
     display_name = "Shop Randomizer"
 
+
 class ShuffleDrops(Toggle):
     """Randomizes items dropped by enemies"""
     display_name = "Drop Shuffle"
+
 
 class ExperiencePercent(NamedRange):
     """What percentage of EXP enemies give you. This is a percent of their original EXP amount."""
@@ -118,6 +136,7 @@ class ExperiencePercent(NamedRange):
         "quadruple": 400
     }
 
+
 class SoulDropPercent(NamedRange):
     """Percentage applied to an enemy's base chance of dropping their soul."""
     display_name = "Soul Drop Percentage"
@@ -131,30 +150,37 @@ class SoulDropPercent(NamedRange):
         "triple": 300
     }
 
+
 class AreaMusicShuffle(Toggle):
     """Randomizes area music."""
     display_name = "Area Music Randomizer"
+
 
 class BossMusicShuffle(Toggle):
     """Randomizes boss music."""
     display_name = "Boss Music Randomizer"
 
+
 class SoulWallRandomizer(Toggle):
     """Randomizes which souls are needed to break the red Soul Barriers."""
     display_name = "Soul Wall Randomizer"
+
 
 class RandomizeSynthSouls(Toggle):
     """Randomizes which souls are required for Synthesis crafting."""
     display_name = "Shuffle Synthesis Souls"
 
+
 class FreeBat(Toggle):
     """Removes Bat Company's MP cost"""
     display_name = "Free Bat"
+
 
 class PassiveSoulEaterRing(Toggle):
     """If enabled, you will gain the bonus from the Soul Eater Ring without needing to equip it
        as long as you have at least one in your inventory."""
     display_name = "Passive Soul Eater Ring"
+
 
 class GateItems(Choice):
     """Defines how the 4 metal switch gates act.
@@ -167,23 +193,28 @@ class GateItems(Choice):
     default = 0
     display_name = "Gate Items"
 
+
 class HardMode(Toggle):
     """Puts the game in Hard Mode. Enemies are tougher, sometimes have additional properties, but drop rates are increased.
        There are no checks exclusive to Hard Mode."""
     display_name = "Hard Mode"
 
+
 class BossShuffle(Toggle):
     """Randomizes boss fights."""
     display_name = "Boss Shuffle"
+
 
 class SealShuffle(Toggle):
     """Randomizes which seal is required for each boss/door.
        Early Seal 1 will guarantee Flying Armor to always use Seal 1."""
     display_name = "Seal Shuffle"
 
+
 class RandomizeSealPatterns(Toggle):
     """Randomizes the drawn pattern for Magic Seals, as well as their rotation."""
     display_name = "Randomize Seal Patterns"
+
 
 class MenaceCondition(Choice):
     """This Condition is required to be met before you can fight Menace.
@@ -198,6 +229,7 @@ class MenaceCondition(Choice):
     option_bosses = 3
     default = 0
 
+
 class MineCondition(Choice):
     """This Condition is required to be met before you can enter the Mine of Judgment.
        None: None
@@ -211,6 +243,7 @@ class MineCondition(Choice):
     option_bosses = 3
     default = 2
 
+
 class GardenCondition(Choice):
     """This Condition is required to be met before Celia appears in the Garden of Madness.
        None: None
@@ -221,7 +254,6 @@ class GardenCondition(Choice):
     option_throne_room = 1
     option_bosses = 2
     default = 0
-    display_name = "Garden Condition"
 
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
@@ -233,6 +265,7 @@ class GardenCondition(Choice):
     #option_revealed = 1
     #option_eye_spy = 2
     #default = 0
+
 
 @dataclass
 class DoSOptions(PerGameCommonOptions):
@@ -272,6 +305,7 @@ class DoSOptions(PerGameCommonOptions):
     menace_condition: MenaceCondition
     mine_condition: MineCondition
     garden_condition: GardenCondition
+
 
 dos_option_groups = [
     OptionGroup("Goal Options", [

@@ -4,8 +4,8 @@ import threading
 import pkgutil
 
 
-from typing import List, Set, Dict, TextIO
-from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
+from typing import TextIO
+from BaseClasses import Item, MultiWorld, Tutorial, ItemClassification
 from worlds.AutoWorld import World, WebWorld
 import settings
 from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, money_table
@@ -17,6 +17,7 @@ from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids
 from .setup_game import place_static_items, setup_game, place_static_souls
+from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data)
 
 
 class DoSWeb(WebWorld):
@@ -34,10 +35,6 @@ class DoSWeb(WebWorld):
 
     option_groups = dos_option_groups
     tutorials = [setup_en]
-
-
-class CVDoSItem(Item):
-    game: str = "Castlevania: Dawn of Sorrow"
 
 
 class DoSSettings(settings.Group):
@@ -58,31 +55,34 @@ class DoSWorld(World):
     game = "Castlevania: Dawn of Sorrow"
     option_definitions = DoSOptions
     data_version = 1
-    required_client_version = (0, 6, 0)
     origin_region_name = "Lost Village Upper"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
     item_name_groups = get_item_names_per_category()
-
     web = DoSWeb()
     settings: typing.ClassVar[DoSSettings]
     # topology_present = True
     ut_can_gen_without_yaml = True
 
+    location_name_groups = get_location_groups()
     options_dataclass = DoSOptions
     options: DoSOptions
-
-    locked_locations: List[str]
-    location_cache: List[Location]
+    generate_early = generate_early
+    create_items = create_items
+    create_item = create_item
+    create_regions = create_regions
+    fill_slot_data = fill_slot_data
+    modify_multidata = modify_multidata
+    generate_output = generate_output
+    get_filler_item_name = get_filler_item_name
+    set_rules = set_rules
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
         super().__init__(multiworld, player)
 
-        self.locked_locations = []
         self.location_cache = []
-        self.extra_item_count = 0
         self.has_tried_chaos_ring = False
         self.starting_warp_room = None
 
@@ -347,44 +347,6 @@ class DoSWorld(World):
             "Abaddon Soul"
         }
 
-    def generate_early(self) -> None:
-        if hasattr(self.multiworld, "re_gen_passthrough"):  # If UT
-           if "Castlevania: Dawn of Sorrow" not in self.multiworld.re_gen_passthrough: return
-           passthrough = self.multiworld.re_gen_passthrough["Castlevania: Dawn of Sorrow"]
-           self.options.goal = passthrough["goal"]
-           self.options.soul_randomizer = passthrough["soul_randomizer"]
-           self.options.soulsanity_level = passthrough["soulsanity_level"]
-           self.starting_warp_room = passthrough["starting_warp"]
-           self.options.open_drawbridge = passthrough["open_drawbridge"]
-           self.options.boost_speed = passthrough["speed_boost"]
-           self.red_soul_walls = passthrough["soul_walls"]
-           self.options.gate_items = passthrough["buttonsanity"]
-           self.magic_seal_table = passthrough["seals"]
-           self.options.menace_condition.value = passthrough["menace_condition"]
-           self.options.mine_condition.value = passthrough["mine_condition"]
-           self.options.garden_condition.value = passthrough["garden_condition"]
-        setup_game(self)
-
-        self.auth_id = self.random.getrandbits(32)
-
-    def create_regions(self) -> None:
-        init_areas(self, get_locations(self))
-        place_static_items(self)
-        if self.options.soul_randomizer != SoulRandomizer.option_soulsanity:
-            place_static_souls(self)
-        if self.options.soul_randomizer != SoulRandomizer.option_soulsanity or self.options.soulsanity_level < SoulsanityLevel.option_medium:
-            self.get_location("Imp Soul").place_locked_item(self.create_static_soul("Imp Soul"))
-
-    def create_items(self) -> None:
-        pool = self.get_item_pool(self.get_excluded_items())
-        self.fill_pool(pool)
-
-        self.multiworld.itempool += pool
-
-    def set_rules(self) -> None:
-        set_location_rules(self)
-        self.multiworld.completion_condition[self.player] = lambda state: state.has("Menace Defeated", self.player)
-
     def generate_output(self, output_directory: str) -> None:
         self.has_generated_output = True  # Make sure data defined in generate output doesn't get added to spoiler only mode
         try:
@@ -401,22 +363,6 @@ class DoSWorld(World):
             raise
         finally:
             self.rom_name_available_event.set()  # make sure threading continues and errors are collected
-
-    def fill_slot_data(self) -> Dict[str, typing.Any]:
-        return {
-            "goal": self.options.goal.value,
-            "starting_warp": self.starting_warp_room,
-            "soul_randomizer": self.options.soul_randomizer.value,
-            "soulsanity_level": self.options.soulsanity_level.value,
-            "open_drawbridge": self.options.open_drawbridge.value,
-            "speed_boost": self.options.boost_speed.value,
-            "soul_walls": self.red_soul_walls,
-            "buttonsanity": self.options.gate_items.value,
-            "seals": self.magic_seal_table,
-            "menace_condition": self.options.menace_condition.value,
-            "garden_condition": self.options.garden_condition.value,
-            "mine_condition": self.options.mine_condition.value
-        }
 
     def modify_multidata(self, multidata: dict) -> None:
         # wait for self.rom_name to be available.
@@ -487,37 +433,6 @@ class DoSWorld(World):
 
         return filler_item
 
-    def get_excluded_items(self) -> Set[str]:
-        excluded_items: Set[str] = set()
-        return excluded_items
-
-    def set_classifications(self, name: str) -> Item:
-        data = item_table[name]
-        item = CVDoSItem(name, data.classification, data.code, self.player)
-        if name in self.important_souls:
-            item.classification = ItemClassification.progression
-
-        if self.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-            if name == "Soul Eater Ring" and self.options.soulsanity_level == SoulsanityLevel.option_rare:
-                item.classification = ItemClassification.progression
-
-        return item
-
-    def fill_pool(self, pool: List[Item]) -> None:
-        for _ in range(len(self.multiworld.get_unfilled_locations(self.player)) - len(pool) - self.extra_item_count):  # Change to fix event count
-            item = self.set_classifications(self.get_filler_item_name())
-            pool.append(item)
-
-    def get_item_pool(self, excluded_items: Set[str]) -> List[Item]:
-        pool: List[Item] = []
-
-        for name, data in item_table.items():
-            if name not in excluded_items:
-                for _ in range(data.amount):
-                    item = self.set_classifications(name)
-                    pool.append(item)
-
-        return pool
 
     def create_static_soul(self, soul):
         data = item_table[soul]

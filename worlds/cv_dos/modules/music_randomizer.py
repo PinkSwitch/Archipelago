@@ -28,22 +28,22 @@ valid_boss_music = [
 boss_song_addresses = [
     0x381978,  # F. Armor
     0x364980,  # Balore
-    0xF7558, # Dimitrii
-    0x37E728, # Malphas
-    0x0F8394, # Dario
-    0x36BBA4, # P. Master
-    0x39DDCC, # Gergoth
-    0x37040C, # Rahab
-    0x38E5F4, # Zephyr
-    0x3A6BC8, # Bat Company
-    0x39D0A0, # Paranoia
-    0x39D09C, # Paranoia 2
-    0xFA4CC, # Dario 2
-    0x187E08, # Aguni
-    0x3931F8, # Death
-    0x3B0FB4, # Abaddon
-    0xFF9BC, # Menace
-    0x165544 # Soma
+    0xF7558,  # Dimitrii
+    0x37E728,  # Malphas
+    0x0F8394,  # Dario
+    0x36BBA4,  # P. Master
+    0x39DDCC,  # Gergoth
+    0x37040C,  # Rahab
+    0x38E5F4,  # Zephyr
+    0x3A6BC8,  # Bat Company
+    0x39D0A0,  # Paranoia
+    0x39D09C,  # Paranoia 2
+    0xFA4CC,  # Dario 2
+    0x187E08,  # Aguni
+    0x3931F8,  # Death
+    0x3B0FB4,  # Abaddon
+    0xFF9BC,  # Menace
+    0x165544  # Soma
 
 ]
 

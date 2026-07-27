@@ -5,9 +5,9 @@ from .modules.bullet_wall_randomizer import set_souls_for_walls
 from .modules.synthesis_randomizer import randomize_synthesis
 from .modules.boss_randomizer import randomize_bosses
 from .modules.seal_shuffle import set_seals
-from .set_goals import set_goal_triggers
-from BaseClasses import ItemClassification
+from .modules.set_goals import set_goal_triggers
 from logging import warning
+
 
 def setup_game(world):
     world.extra_soul_slots = 99  # Locations that can be filled by guaranteed souls
@@ -31,8 +31,8 @@ def setup_game(world):
             world.mine_status = "Disabled"  # Make sure we don't generate Mine checks if the Mine is unreachable.
 
         if world.options.menace_condition == MenaceCondition.option_throne_room or (
-            world.options.menace_condition == MenaceCondition.option_garden and world.options.garden_condition == GardenCondition.option_throne_room):
-            world.options.menace_condition.value = MenaceCondition.option_none  # This would be impossible so we switch it to no condition
+                world.options.menace_condition == MenaceCondition.option_garden and world.options.garden_condition == GardenCondition.option_throne_room):
+                world.options.menace_condition.value = MenaceCondition.option_none  # This would be impossible so we switch it to no condition
             
         if world.options.garden_condition == GardenCondition.option_throne_room:
             world.garden_chamber_available = False
@@ -42,7 +42,6 @@ def setup_game(world):
             world.mine_status = "Locked"
         else:
             world.mine_status = "Open"
-
 
     if world.options.early_seal_1:
         world.multiworld.local_early_items[world.player]["Magic Seal 1"] = 1
@@ -54,13 +53,6 @@ def setup_game(world):
             world.starting_warp_room = "Lost Village"
 
     world.starting_warp_region = warp_room_regions[world.starting_warp_room]
-
-    if world.options.gate_items:
-        world.multiworld.itempool.append(world.set_classifications("West Lab Gate Key"))
-        world.multiworld.itempool.append(world.set_classifications("East Lab Gate Key"))
-        world.multiworld.itempool.append(world.set_classifications("Garden Gate Key"))
-        world.multiworld.itempool.append(world.set_classifications("Cavern Gate Key"))
-        world.extra_item_count += 4
 
     if not world.magic_seal_table:  # If not doing UT passthrough
         set_seals(world)
@@ -74,6 +66,7 @@ def setup_game(world):
     world.menace_triggers = set_goal_triggers(world, world.options.menace_condition.current_key, "Menace")
     world.garden_triggers = set_goal_triggers(world, world.options.garden_condition.current_key, "Garden")
     world.mine_triggers = set_goal_triggers(world, world.options.mine_condition.current_key, "Mine")
+
 
 def place_static_items(world):
     world.get_location("Lost Village: Moat Drain Switch").place_locked_item(world.create_item("Moat Drained"))
@@ -192,6 +185,7 @@ def place_souls(world):
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 world.multiworld.itempool.append(world.set_classifications(soul))
                 world.extra_item_count += 1
+
 
 def place_static_souls(world):
     for soul in world.important_souls:

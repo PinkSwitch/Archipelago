@@ -1,4 +1,3 @@
-import itertools
 import struct
 from dataclasses import dataclass
 seal_list = [
@@ -27,17 +26,17 @@ seals = [
     "Magic Seal 5"
 ]
 
+
 @dataclass
 class SealData:
-    nodes: int # The number of nodes this seal has
-    line_count: int # How many connections this seal has
-    address: int # The address of the seal
+    nodes: int  # The number of nodes this seal has
+    line_count: int  # How many connections this seal has
+    address: int  # The address of the seal
     rotation_address: int  # address of the rotation value
 
-def set_seals(world):
-    #0222f294 + 4 * index
 
-    placed_seals = []
+def set_seals(world):
+    # 0222f294 + 4 * index
 
     world.magic_seal_table = {
         "Lost Village": "Magic Seal 1",
@@ -59,19 +58,11 @@ def set_seals(world):
 
     if world.options.seal_shuffle:
         for seal in world.magic_seal_table:
-            world.magic_seal_table[seal] = world.random.choice(seals) # Randomize the list
+            world.magic_seal_table[seal] = world.random.choice(seals)  # Randomize the list
 
         if world.options.early_seal_1:
             world.magic_seal_table["Lost Village"] = "Magic Seal 1"  # We still want to set this early so the player doesn't get stuck
 
-    for seal in world.magic_seal_table:
-        if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":
-            continue
-        else:
-            if world.magic_seal_table[seal] not in placed_seals:
-                world.multiworld.itempool.append(world.set_classifications(world.magic_seal_table[seal]))  # Create the seal items if necessary
-                world.extra_item_count += 1
-                placed_seals.append(world.magic_seal_table[seal])
 
 def write_seals(world, rom):
     for index, seal in enumerate(seal_list):
@@ -87,18 +78,18 @@ def randomize_seal_patterns(world, rom):
         "Magic Seal 5": SealData(6, 11, 0x15BFF0, 0x15C094),
     }
 
-
     for index, seal in enumerate(seals):
         rotation = world.random.randint(0, 0xFFFF)
-        valid_lines = {}
         data = seal_data[seal]
         built_seal = False
+        seal_array = []
         while not built_seal:
             seal_array = []
             valid_edges = {a: [] for a in range(data.nodes)}
             for a, edge_list in valid_edges.items():
                 for b in range(data.nodes):
-                    if a == b: continue
+                    if a == b:
+                        continue
                     edge_list.append(b)
 
             cur = world.random.randrange(data.nodes)
