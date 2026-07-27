@@ -11,6 +11,7 @@ class LocationInformation(NamedTuple):  # In-game information used to define eac
 
 
 location_ids = {
+
     "Library: Past Wallman": 0x05,
     "Wallman Glyph": 0x06,
     "Giant's Dwelling: Bottom Right Room Pickup": 0x07,
@@ -306,7 +307,7 @@ location_ids = {
     "Tymeo Mountains: Right Exit Item": 0x15D,
     "Tymeo Mountains: Cavern Chest": 0x15E,
     "Tymeo Mountains: Right Shaft Lower": 0x15F,
-
+    #  160-170 are reserved for checking if a boss was cleared damageless
     "Monastery: Arthroverta No-Hit Chest": 0x170,
     "Minera Prison Island: Giant Skeleton No-Hit Chest": 0x171,
     "Lighthouse: Brachyura No-Hit Chest": 0x172,
@@ -320,7 +321,7 @@ location_ids = {
     "Underground Labyrinth: Blackmore No-Hit Chest": 0x17A,
     "Arms Depot: Eligor No-Hit Chest": 0x17B,
     "Mechanical Tower: Death No-Hit Chest": 0x17C
-    # Mechnical tower room 8 s 6 has an oob chest?
+    #  Anything above 0x180 is OFF-LIMITS. These are reserved for Brown chests and reset!
 
     }
 
