@@ -50,7 +50,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", "Umbra"))
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
-    set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAll("Fulgur", "Vol Fulgur"))
+    set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAll("Fulgur"))
 
     set_rule(world.get_location("Final Approach: Treasure Room Second From Right"), Has("Volaticus"))
     set_rule(world.get_location("Final Approach: Treasure Room Far Right"), Has("Volaticus"))
