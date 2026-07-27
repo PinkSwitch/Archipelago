@@ -39,8 +39,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Misty Forest Road: Paries Room Pickup"), Has("Paries"))
     set_rule(world.get_location("Misty Forest Road: Paries Room Chest"), Has("Paries"))
 
-    set_rule(world.get_location("Oblivion Ridge: Pre-Boss Ledge"), HasAny("Volaticus", "Rapidus Fio"))
-    set_rule(world.get_location("Oblivion Ridge: Post-Boss Ledge Item"), HasAny("Volaticus", "Rapidus Fio"))
+    set_rule(world.get_location("Oblivion Ridge: Pre-Boss Ledge"), HasAny("Volaticus", "Rapidus Fio", "Ordinary Rock"))
+    set_rule(world.get_location("Oblivion Ridge: Post-Boss Ledge Item"), HasAny("Volaticus", "Rapidus Fio", "Ordinary Rock"))
 
     set_rule(world.get_location("Skeleton Cave: First Room"), HasAny("Volaticus", "Ordinary Rock", "Rapidus Fio"))
     set_rule(world.get_location("Skeleton Cave: Dead End Upper"), HasAny("Volaticus", "Ordinary Rock", "Rapidus Fio"))
