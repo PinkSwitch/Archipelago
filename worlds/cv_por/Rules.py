@@ -84,7 +84,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Nation of Fools: Boss Room"), (Has("Circus Arena Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Circus Arena Key", "contains")))
     set_rule(world.get_location("Nation of Fools: Legion Arena"), (Has("Circus Arena Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Circus Arena Key", "contains")))
 
-    set_rule(world.get_location("Burnt Paradise: Right Upper Big Corner On Wall"), big_uppies | (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube) | HasAll("Stone of Flight", "Puppet Master"))
+    set_rule(world.get_location("Burnt Paradise: Right Upper Big Corner On Wall"), big_uppies | Has("Stone of Flight"))
     set_rule(world.get_location("Burnt Paradise: Lower Vertical Hall"), Has("Puppet Master") | (can_cast_spell & HasAny("Toad Morph", "Owl Morph")))
     set_rule(world.get_location("Burnt Paradise: Boss Room"), (Has("Burnt Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Burnt Key", "contains")))
     set_rule(world.get_location("Burnt Paradise: Bottom Corner"), (Has("Burnt Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Burnt Key", "contains")))
