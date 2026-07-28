@@ -1,5 +1,6 @@
 from .Rules import big_uppies, small_uppies
 
+
 def create_soul_regions(world):
     player = world.player
     multiworld = world.multiworld

@@ -57,7 +57,6 @@ def setup_game(world):
     if not world.magic_seal_table:  # If not doing UT passthrough
         set_seals(world)
     set_souls_for_walls(world)
-    place_souls(world)
     randomize_synthesis(world)
 
     if world.options.boss_shuffle:
@@ -150,24 +149,21 @@ def place_souls(world):
             warning("WARNING: More Guranteed Souls exist than can be placed, no more Guaranteed Souls will be placed.")
             break  # Bail if we're out of room for more souls
         else:
-            world.multiworld.itempool.append(world.set_classifications(soul))
-            world.extra_item_count += 1
+            pool.append(world.create_item(soul))
             souls_added += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         # These items are only important on Rare tier
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
-            world.multiworld.itempool.append(world.set_classifications("Soul Eater Ring"))
-            world.extra_item_count += 1
+            pool.append(world.create_item("Soul Eater Ring"))
 
         for soul in world.important_souls:
             if soul not in world.options.guaranteed_souls:
                 extra_souls += 1
-                world.multiworld.itempool.append(world.set_classifications(soul))
+                pool.append(world.create_item(soul))
 
         soul_location_count += (len(world.common_souls) - extra_souls)
-        world.extra_item_count += extra_souls
 
         if world.options.soulsanity_level:
             soul_location_count += len(world.uncommon_souls)
@@ -176,15 +172,14 @@ def place_souls(world):
             soul_location_count += len(world.rare_souls)
 
         for i in range(soul_location_count - souls_added):
+            #TODO! Don't generate any Souls that have no level data
             world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
-            world.extra_item_count += 1
     else:
         if world.mine_status == "Disabled":
             goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
             world.excluded_static_souls.update(goal_locked_enemies)
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 world.multiworld.itempool.append(world.set_classifications(soul))
-                world.extra_item_count += 1
 
 
 def place_static_souls(world):

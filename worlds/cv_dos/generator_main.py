@@ -7,7 +7,7 @@ from BaseClasses import Item, ItemClassification
 from .Items import item_table
 from .Options import SoulRandomizer, SoulsanityLevel
 from .Rom import patch_rom, DoSProcPatch
-from .setup_game import setup_game
+from .setup_game import setup_game, place_souls
 
 
 class CVDoSItem(Item):
@@ -72,6 +72,8 @@ def create_items(world) -> None:
             if world.magic_seal_table[seal] not in placed_seals:
                 pool.append(set_classifications(world, world.magic_seal_table[seal]))  # Create the seal items if necessary)
                 placed_seals.append(world.magic_seal_table[seal])
+
+    place_souls(world)
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 

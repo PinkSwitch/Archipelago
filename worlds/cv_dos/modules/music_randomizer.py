@@ -47,6 +47,7 @@ boss_song_addresses = [
 
 ]
 
+
 def area_music_randomizer(world, rom):
     music_pool = valid_area_music.copy()
     for i in range(0x11):
@@ -55,6 +56,7 @@ def area_music_randomizer(world, rom):
         song = world.random.choice(music_pool)
         music_pool.remove(song)
         rom.write_bytes(0x9E634 + (i * 4), bytearray([song]))
+
 
 def boss_music_randomizer(world, rom):
     for address in boss_song_addresses:
