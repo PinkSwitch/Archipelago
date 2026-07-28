@@ -1,9 +1,11 @@
 from typing import NamedTuple
 
+
 class LocationInformation(NamedTuple):  # In-game information used to define each Location in the ROM.
     pointer: int
-    file: str
-    location_type: str
+    location_type: str = "Normal"
+    enemy_areas: list = []
+
 
 location_ids = {
     "Demon Guest House: Antechamber": 0x01,
@@ -246,7 +248,89 @@ location_ids = {
 }
 
 location_data_table = {
-    "Ecclesia: Center Chest": LocationInformation(0x022D3094, "overlay_42", "Chest"),
+    "Lost Village: Above Entrance": LocationInformation(0x020A0B6C),
+    "Lost Village: Upper Big Room Corner": LocationInformation(0x020A0EC0),
+    "Lost Village: Pre-Boss Room Upper": LocationInformation(0x020A12A4),
+    "Lost Village: Pre-Boss Room Lower": LocationInformation(0x020A1298),
+    "Lost Village: Drawbridge Room": LocationInformation(0x020A15EC),
+    "Lost Village: Above Drawbridge": LocationInformation(0x020A1604),
+    "Lost Village: In Moat": LocationInformation(0x020A15F8),
+    "Lost Village: Above Guest House Entrance": LocationInformation(0x020A164C),
+    "Lost Village: Flying Armor Indoor Room": LocationInformation(0x020A0FB0),
+    "Lost Village: West Plaza": LocationInformation(0x020A1718),
+    "Lost Village: West Building Upper": LocationInformation(0x020A0C8C),
+    "Lost Village: West Building Lower": LocationInformation(0x020A0C98),
+    "Lost Village: Central Building": LocationInformation(0x020A101C),
+    "Lost Village: East Plaza": LocationInformation(0x020A1118),
+    "Lost Village: Hidden Floor Room 1": LocationInformation(0x020A146C),
+    "Lost Village: Hidden Floor Room 2": LocationInformation(0x020A1478),
+    "Lost Village: Mirror Room Left": LocationInformation(0x020A1520),
+    "Lost Village: Mirror Room Right": LocationInformation(0x020A152C),
+    "Lost Village: Axe Armor Hallway": LocationInformation(0x020A0E3C),
+    "Lost Village: Underground Shaft": LocationInformation(0x020A11F0),
+
+    "Wizardry Lab: Mirror Room": LocationInformation(0x020A953C),
+    "Wizardry Lab: Mirror World": LocationInformation(0x020A9548),
+    "Wizardry Lab: Main Entry Shaft": LocationInformation(0x020A911C),
+    "Wizardry Lab: Upper Big Room": LocationInformation(0x020A923C),
+    "Wizardry Lab: West Gate": LocationInformation(0x020A8E34),
+    "Wizardry Lab: Behind West Gate": LocationInformation(0x020A8E28),
+    "Wizardry Lab: Ceiling Secret Room": LocationInformation(0x020A9584),
+    "Wizardry Lab: East Gate": LocationInformation(0x020A9458),
+    "Wizardry Lab: Money Gate": LocationInformation(0x020A95CC),
+    "Wizardry Lab: Underwater Left": LocationInformation(0x020A99BC),
+    "Wizardry Lab: Underwater Right": LocationInformation(0x020A99C8),
+    "Wizardry Lab: Above Water": LocationInformation(0x020A9A4C),
+
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
+    "Dummy": LocationInformation(0x020A6368),
 
 }
 
@@ -268,6 +352,9 @@ def get_location_groups():
     for location in location_ids:
         group = location.split(":")[0]
         if group in location_groups:
-            location_groups[group].add(location)  #TODO! Enemy groups, grouped to their source area
+            location_groups[group].add(location)
+        elif location_data_table[location].location_type == "Soul":
+            for area in location_data_table[location].enemy_areas:
+                location_groups[area].add(location)
 
     return location_groups
