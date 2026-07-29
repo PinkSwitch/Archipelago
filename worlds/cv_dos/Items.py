@@ -99,7 +99,7 @@ item_table: Dict[str, ItemData] = {
     "Burtgang": ItemData("Weapons", 0x319, ItemClassification.useful, 0),
     "Kaladbolg": ItemData("Weapons", 0x31A, ItemClassification.useful, 0),
     "Valmanway": ItemData("Weapons", 0x31B, ItemClassification.useful, 0),
-    "Alcuard Sword": ItemData("Weapons", 0x31C, ItemClassification.filler, 0),
+    "Alucard Sword": ItemData("Weapons", 0x31C, ItemClassification.filler, 0),
     "Claymore": ItemData("Weapons", 0x31D, ItemClassification.filler, 0),
     "Falchion": ItemData("Weapons", 0x31E, ItemClassification.filler, 0),
     "Great Sword": ItemData("Weapons", 0x31F, ItemClassification.filler, 0),

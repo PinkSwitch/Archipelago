@@ -15,7 +15,7 @@ from .Options import DoSOptions, dos_option_groups, SoulsanityLevel, SoulRandomi
 from .Rules import set_location_rules
 from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
-from .static_location_data import location_ids
+from .static_location_data import location_ids, get_location_groups
 from .setup_game import place_static_items, setup_game, place_static_souls
 from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data)
 
