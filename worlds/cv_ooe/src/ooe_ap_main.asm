@@ -371,6 +371,12 @@
 
     .org 0x0223967C
         bl @PostBarloweWarp
+
+    .org 0x02231B74
+        b 0x02231B88 ; The check for Anna's cat. This just crashes if we're out of the room...
+
+    .org 0x02230048
+        bl @ClampVillagerGlyphPos
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -1854,6 +1860,9 @@
     push r0
     mov r0, r2 ; Villager index
     bl @UnlockVillager
+    mov r0, 0x1F
+    bl @GetItemArbitrary ; get a free Torpor for every starting Villager
+
     pop r0
 @@VillagerNotSet:
     add r2, r2, 1
@@ -2847,7 +2856,12 @@
 @@ForceStatus:
     mov r4, 7
     b @@End
-
+;;;;;;;;;;;;;;;;;;;
+; If a villager's glyph would have a negative Y-pos (I.e. it's out of bounds off the top of the map), clamp it to Y 0 instead
+@ClampVillagerGlyphPos:
+    cmp r1, 0
+    movle r1, 0 ; If less than 0, clamp at 0
+    b 0x0206DDEC
 
 .pool
 .endarea
