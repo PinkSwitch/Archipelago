@@ -117,10 +117,12 @@ def shuffle_brown_chest_pool(world, rom):
         pool = world.random.randint(0, 0x0A)
         rom.write_to_file(0x02223B08 + i, "overlay_19", bytes([pool]))   # Randomize which com/rare pool each area uses
 
+    for i in range(0x0B):
         for j in range(4):
             item = generate_chest_items(world, common_weights)
-            rom.write_to_file(0x02223B20 + (2 * j) + (4 * i), "overlay_19", struct.pack("H", item))
+            rom.write_to_file(0x02223B20 + (2 * j) + (8 * i), "overlay_19", struct.pack("H", item))
 
+    for i in range(0x0B):
         for j in range(4):
             #  Blank these out if they're empty
             if not world.chest_filler_accessories:
@@ -133,7 +135,7 @@ def shuffle_brown_chest_pool(world, rom):
                 rare_weights["armor"] = 0
             item = generate_chest_items(world, rare_weights)
 
-            rom.write_to_file(0x02223B98 + (2 * j) + (4 * i), "overlay_19", struct.pack("H", item))
+            rom.write_to_file(0x2223B76 + (2 * j) + (8 * i), "overlay_19", struct.pack("H", item))
 
 
 def generate_chest_items(world, pool: dict):

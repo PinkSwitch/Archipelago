@@ -19,6 +19,15 @@ base_glyphs = [  # Base-level Arm glyphs
     "Globus"
 ]
 
+melee_glyphs = [  # Base-level Weapon glyphs
+    "Confodere",
+    "Secare",
+    "Hasta",
+    "Macir",
+    "Falcis"
+    # "Culter",
+]
+
 starting_glyph_pool = [  # All glyphs that are able to be randomly started with
     "Confodere",  # Some of them are difficult or awkward to use, so we don't
     "Vol Confodere",  # want those to get forced on randomly

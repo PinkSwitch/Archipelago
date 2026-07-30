@@ -6,10 +6,12 @@ from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, 
 class StartingGlyph(TextChoice):
     """Which Arm Glyph you start the game with.
        Random Base selects any base-power Glyph.
+       Random Melee selects a base-power melee weapon Glyph.
        You can additionanlly type in any valid Arm Glyph manually.
        (ex. "Confodere = 1")"""
     option_random_base = 0
-    option_random_any = 1
+    option_random_melee = 1
+    option_random_any = 2
     default = 0
     display_name = "Starting Glyph"
 

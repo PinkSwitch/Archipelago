@@ -1861,7 +1861,9 @@
     mov r0, r2 ; Villager index
     bl @UnlockVillager
     mov r0, 0x1F
-    bl @GetItemArbitrary ; get a free Torpor for every starting Villager
+    push r0-r2
+    bl 0x020635A4 ; get a free Torpor for every starting Villager
+    pop r0-r2
 
     pop r0
 @@VillagerNotSet:

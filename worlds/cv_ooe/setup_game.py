@@ -1,6 +1,6 @@
 from Options import OptionError
 from .Options import StartingGlyph, RandomizeVillagers, StartingArea
-from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs
+from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs, melee_glyphs
 from .generator_main import create_progress_event
 
 
@@ -9,6 +9,8 @@ def setup_game(world) -> None:
         world.starting_glyph = world.random.choice(base_glyphs)  # Pick a random base-level glyph
     elif world.options.starting_glyph == StartingGlyph.option_random_any:
         world.starting_glyph = world.random.choice(starting_glyph_pool)  # Pick any random valid glyph
+    elif world.options.starting_glyph == StartingGlyph.option_random_melee:
+        world.starting_glyph = world.random.choice(melee_glyphs)
     else:
         glyph = world.options.starting_glyph.value.title()
         if glyph not in valid_starting_glyphs:  # if it's not valid, error out
