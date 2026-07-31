@@ -10,7 +10,7 @@ from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
 from .Client import OoEClient
 from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules,
-                             fill_slot_data, modify_multidata, generate_output)
+                             fill_slot_data, modify_multidata, generate_output, write_spoiler_header)
 from .modules.brown_chest_shuffler import chest_armor_table
 
 
@@ -70,6 +70,7 @@ class OoEWorld(World):
     generate_output = generate_output
     get_filler_item_name = get_filler_item_name
     set_rules = set_rules
+    write_spoiler_header = write_spoiler_header
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
@@ -81,6 +82,10 @@ class OoEWorld(World):
         self.has_generated_output = False
         self.starting_glyph = None
         self.starting_area = None
+        self.glyph_attributes = {}
+        self.can_kill_tin_man = set()
+        self.generator_logic_glyphs = set()
+        self.logical_regular_glyphs = set()
 
         self.glyph_filler_table = [
             "Vol Confodere",

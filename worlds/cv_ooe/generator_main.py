@@ -5,7 +5,7 @@ import pkgutil
 from typing import Dict
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
-from .Options import RandomizeVillagers
+from .Options import RandomizeVillagers, RandomGlyphAttributes
 from .Rom import patch_rom, OoEProcPatch
 
 
@@ -33,6 +33,7 @@ def generate_early(world) -> None:
         world.options.add_no_hit_chests.value = passthrough["add_medal_chests"]
         world.options.barlowe_required.value = passthrough["barlowe_required"]
         world.options.open_castle.value = passthrough["open_castle"]
+        world.glyph_attributes = passthrough["glyph_attributes"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -118,9 +119,8 @@ def set_classifications(world, name) -> CVOoEItem:
     # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
-    if name == "Arma Felix" and not world.options.start_with_lizard_tail:
-        item.classification = ItemClassification.progression  # Can be used as a substitute 
-
+    if name in world.logical_regular_glyphs:
+        item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     return item
 
 
@@ -188,7 +188,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "remove_large_cavern": world.options.remove_large_cavern.value,
         "add_medal_chests": world.options.add_no_hit_chests.value,
         "barlowe_required": world.options.barlowe_required.value,
-        "open_castle": world.options.open_castle.value
+        "open_castle": world.options.open_castle.value,
+        "glyph_attributes": world.glyph_attributes
     }
 
 
@@ -207,6 +208,20 @@ def generate_output(world, output_directory: str) -> None:
         raise
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
+
+
+def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
+    if world.options.randomize_glyph_attributes:
+        spoiler_handle.write("""
+Glyph Attributes:
+""")
+
+    for index, glyph in enumerate(world.glyph_attributes):
+        if world.options.randomize_glyph_attributes != RandomGlyphAttributes.option_chaotic:
+            if any(x in glyph for x in ["Vol", "Melio"]) or index >= 47:
+                continue
+        attributes = " + ".join(world.glyph_attributes[glyph])
+        spoiler_handle.write(f" {glyph}: {attributes}\n")
 
 
 def modify_multidata(world, multidata: dict) -> None:

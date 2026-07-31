@@ -19,7 +19,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Minera Prison Island: Top Room"), HasAny("Ordinary Rock", "Volaticus"))
     set_rule(world.get_location("Minera Prison Island: Top Room Chest"), HasAny("Ordinary Rock", "Volaticus"))
     set_rule(world.get_location("Minera Prison Island: Right Vertical Hidden Item"), HasAny("Ordinary Rock", "Volaticus", "Magnes"))
-    set_rule(world.get_location("Minera Prison Island: Tin Man Chest"), HasAny("Fulgur", "Vol Fulgur", "Lumination", "Vol Luminatio", "Umbra", "Vol Umbra"))
+    set_rule(world.get_location("Minera Prison Island: Tin Man Chest"), HasAny(*world.can_kill_tin_man))
 
     set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Chest"), HasAny("Lizard Tail", "Arma Felix"))
     set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), HasAny("Lizard Tail", "Arma Felix"))
@@ -50,7 +50,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", "Umbra"))
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
-    set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAll("Fulgur"))
+    set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAny(*world.generator_logic_glyphs))
 
     set_rule(world.get_location("Final Approach: Treasure Room Second From Right"), Has("Volaticus"))
     set_rule(world.get_location("Final Approach: Treasure Room Far Right"), Has("Volaticus"))
@@ -98,4 +98,5 @@ def set_location_rules(world):
 
     if world.options.add_no_hit_chests:
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
+
         

@@ -11,6 +11,7 @@ from BaseClasses import ItemClassification
 from .Items import item_table
 from .Options import AddBrownChests
 from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
+from .modules.glyph_properties import write_glyph_attributes
 from .modules.text_builder import text_encoder
 
 world_version = "1.1.1"
@@ -153,6 +154,9 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
         shuffle_brown_chest_pool(world, rom)
+    ###############################################
+    if world.options.randomize_glyph_attributes:
+        write_glyph_attributes(world, rom)
     ###############################################
     # Locations handler
     patch_locations(world, rom, world.get_locations())

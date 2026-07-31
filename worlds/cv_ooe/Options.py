@@ -180,6 +180,17 @@ class OpenCastle(Toggle):
     display_name = "Open Castle"
 
 
+class RandomGlyphAttributes(Choice):
+    """Randomizes the Attributes of Arm Glyphs.
+       Consistent: All levels of the same Glyph will use the same attribute. Glyph Unions will inherit the Attributes of their constituent Glyphs.
+       Chaotic: All Glyphs and Glyph Unions will use random Attributes."""
+    display_name = "Randomize Glyph Attributes"
+    option_normal = 0
+    option_consistent = 1
+    option_chaotic = 2
+    default = 0
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -204,6 +215,7 @@ class OoEOptions(PerGameCommonOptions):
     ap_multiplier: APMultiplier
     one_screen_mode: OneScreenMode
     open_castle: OpenCastle
+    randomize_glyph_attributes: RandomGlyphAttributes
 
 
 ooe_option_groups = [
@@ -226,6 +238,10 @@ ooe_option_groups = [
         AddBrownChests,
         RandomizeVillagers,
         AddMedalChests
+    ]),
+
+    OptionGroup("Glyph Options", [
+        RandomGlyphAttributes,
     ]),
 
     OptionGroup("World Options", [
