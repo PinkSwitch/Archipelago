@@ -11,22 +11,30 @@ class LocationInformation(NamedTuple):  # In-game information used to define eac
 
 
 location_ids = {
-
+    "Bone Scimitar Glyph": 0x01,
+    "Axe Knight Glyph": 0x02,
+    "Necromancer Glyph": 0x03,
+    "Bone Archer Glyph": 0x04,
     "Library: Past Wallman": 0x05,
     "Wallman Glyph": 0x06,
     "Giant's Dwelling: Bottom Right Room Pickup": 0x07,
+    "Spear Guard Glyph": 0x08,
+    "Skull Spider Glyph": 0x09,
     "Tristis Pass: Second Hill Pickup": 0x0A,
     "Barracks: Basement Entrance Pickup": 0x0B,
     "Ruvas Forest: First Room Freestanding": 0x0C,
     "Misty Forest Road: Right Big Room Pickup": 0x0D,
+
     "Somnus Reef: Left Big Room Freestanding": 0x10,
     "Misty Forest Road: Paries Room Pickup": 0x11,
 
     "Somnus Reef: East Entrance Item": 0x13,
 
     "Minera Prison Island: Shaft Near Exit": 0x15,
+
     "Arms Depot: Second Hall Pickup": 0x17,
     "Monastery: Central Freestanding": 0x18,
+
     "Arms Depot: Upper Hall Item": 0x1A,
     "Kalidus Channel: Depths Left Small Vertical Freestanding": 0x1B,
 

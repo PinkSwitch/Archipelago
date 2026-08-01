@@ -121,6 +121,9 @@
     .org 0x020379B4
         bl @OneScreen_DontResetTopType
 
+    .org 0x02088174
+        bl @CheckIfEnemGlyphObtained  ; Used for the Top Screen enemy status
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0x021DD280
@@ -188,6 +191,9 @@
 
     .org 0x0221D6B4
         b @CheckAreaDelay
+
+    .org 0x0220576C
+        mov r2, 0x04  ; Bone Archer glyph flag
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_20", 0x021FFFC0
@@ -375,8 +381,32 @@
     .org 0x02231B74
         b 0x02231B88 ; The check for Anna's cat. This just crashes if we're out of the room...
 
+    .org 0x02231EF4
+        b 0x02231F04 ; The same, for when we're deleting the object
+
     .org 0x02230048
         bl @ClampVillagerGlyphPos
+
+    .org 0x02293074
+        mov r3, 0x01 ; Bone Scimitar glyph flag
+
+    .org 0x022629EC
+        mov r0, 0x02 ; Axe knight glyph flag
+
+    .org 0x0224E8B4
+        b @SetNecromancerGlyph
+
+    .org 0x0222B09C
+        bl @CheckIfEnemGlyphObtained  ; Used for the Guide menu
+
+    .org 0x0222D260
+        bl @CheckIfEnemGlyphObtained_BestMain ; Used on the Bestiary's top menu
+
+    .org 0x0227508C
+        bl @SetSpearGuardGlyph
+
+    .org 0x0228A464
+        mov r0, 
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -670,6 +700,74 @@
         .dh 0xE2
         .dh 0xE3
         .dh 0xE4
+    @ROMTable_EnemyGlyphIndex:  ; Indexed list of enemies which have Glyphs attached to them
+        .db 0x05
+        .db 0x08
+        .db 0x0B
+        .db 0x0C
+        .db 0x0D
+        .db 0x18
+        .db 0x1A
+        .db 0x1E
+        .db 0x22
+        .db 0x23
+        .db 0x28
+        .db 0x33
+        .db 0x38
+        .db 0x3B
+        .db 0x3C
+        .db 0x45
+        .db 0x4C
+        .db 0x50
+        .db 0x51
+        .db 0x55
+        .db 0x5A
+        .db 0x5E
+        .db 0x5F
+        .db 0x61
+        .db 0x63
+        .db 0x65
+        .db 0x67
+        .db 0x68
+        .db 0x72
+        .db 0x73
+        .db 0x74
+.align 4
+    @ROMTable_EnemyGlyphFlags:  ; Index of which flag each enemy uses for its Glyph.
+    ;  TODO! Set flags for these. Up to Sea Demon...
+        .dh 0x01 ; Bone Scimitar
+        .dh 0x02 ; Axe Knight
+        .dh 0x03 ; Necromancer
+        .dh 0x04 ; Bone Archer
+        .dh 0x08 ; Spear Guard
+        .dh 0x09 ; Skull Spider
+
+        .dh 0x1A ; Sea Demon
+        .dh 0x1E ; Fire Demon
+        .dh 0x22 ; Werebat
+        .dh 0x23 ; Black Formor
+        .dh 0x28 ; Dullahan
+        .dh 0x33 ; Miss Murder
+        .dh 0x38 ; Lizardman
+        .dh 0x3B ; Thunder Demon
+        .dh 0x3C ; Owl
+        .dh 0x45 ; White Formor
+        .dh 0x4C ; Black Panther
+        .dh 0x50 ; Polkir
+        .dh 0x51 ; Nova Skeleton
+        .dh 0x55 ; Red Smasher
+        .dh 0x5A ; Hammer Shaker
+        .dh 0x5E ; Spectral Sword
+        .dh 0x5F ; Automaton ZX27
+        .dh 0x61 ; Gorgon Head
+        .dh 0x63 ; Great Knight
+        .dh 0x65 ; Winged Skeleton
+        .dh 0x67 ; Jiang Shi
+        .dh 0x68 ; Demon Lord
+        .dh 0x72 ; Albus
+        .dh 0x73 ; Barlowe TODO! Portals for Albus and Barlowe if you miss their Glyphs.
+        .dh 0x06 ; Wallman
+    @EnemGlyphIndex_len equ @ROMTable_EnemyGlyphFlags - @ROMTable_EnemyGlyphIndex
 
 .align 4
 
@@ -2864,6 +2962,50 @@
     cmp r1, 0
     movle r1, 0 ; If less than 0, clamp at 0
     b 0x0206DDEC
+;;;;;;;;;;;;;;;;;;;
+; Necromancer needs to set r3 glyph flag here so it doesn't override other things
+@SetNecromancerGlyph:
+    mov r3, 0x03
+    stmfa [r13], r0, r3
+    b 0x0224E8B8
+;;;;;;;;;;;;;;;;;;;;
+; Checks if we've set the Flag for an enemy's Glyph (obtained it). r6 Enemy ID. returns 1 in r0 if we have.
+@CheckIfEnemGlyphObtained:
+    ldr r0, = @ROMTable_EnemyGlyphIndex
+    mov r1, 0
+@@CheckIndexNext:
+    ldrb r2, [r0, r1]
+    cmp r2, r6 ; Check if the current Index == the current enemy ID
+    beq @@GotEnemyIndex
+    cmp r1, @EnemGlyphIndex_len ; If we've exhausted the whole table...
+    bge @@Exit_SetFail ; Count this as a fail...? Does this code even get run? delete if not
+    add r1, r1, 1
+    b @@CheckIndexNext
+@@GotEnemyIndex:
+    ldr r0, = @ROMTable_EnemyGlyphFlags
+    mov r1, r1, lsl 1 ; Shift
+    ldrh r0, [r0, r1] ; use R1 counter value from the previous loop to look up which flag this is
+    push lr
+    bl @CheckLocFlag ; Check if this FLAG is set
+    pop lr ; 0 Is the result of the LOC flag, so we don't need anything else
+    bx lr
+@@Exit_SetFail:
+    mov r0, 0 ; Force a failure
+    bx lr
+
+; Used to determine if an enemie's drops have been 100% collected outside of its bestiary page
+@CheckIfEnemGlyphObtained_BestMain:
+    push r6, lr
+    add r6, r10, r1
+    bl @CheckIfEnemGlyphObtained
+    pop r6, lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;
+; Set flag r3
+@SetSpearGuardGlyph:
+    mov r0, r6
+    mov r3, 0x08
+    bx lr
 
 .pool
 .endarea
