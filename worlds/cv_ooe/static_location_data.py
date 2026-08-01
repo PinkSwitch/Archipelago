@@ -24,10 +24,11 @@ location_ids = {
     "Barracks: Basement Entrance Pickup": 0x0B,
     "Ruvas Forest: First Room Freestanding": 0x0C,
     "Misty Forest Road: Right Big Room Pickup": 0x0D,
-
+    "Sea Demon Glyph": 0x0E,
+    "Fire Demon Glyph": 0x0F,
     "Somnus Reef: Left Big Room Freestanding": 0x10,
     "Misty Forest Road: Paries Room Pickup": 0x11,
-
+    "Werebat Glyph": 0x12,
     "Somnus Reef: East Entrance Item": 0x13,
 
     "Minera Prison Island: Shaft Near Exit": 0x15,

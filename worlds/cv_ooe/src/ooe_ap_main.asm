@@ -406,7 +406,16 @@
         bl @SetSpearGuardGlyph
 
     .org 0x0228A464
-        mov r0, 
+        mov r0, 0x09 ; Skull Spider g flag
+
+    .org 0x0225C860
+        mov r0, 0x0E ; Sea Demon g flag
+
+    .org 0x0225AB24
+        mov r0, 0x0F ; Fire Demon g flag
+
+    .org 0x022524E4
+        bl @SetWerebatGlyphFlag
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -734,17 +743,17 @@
         .db 0x74
 .align 4
     @ROMTable_EnemyGlyphFlags:  ; Index of which flag each enemy uses for its Glyph.
-    ;  TODO! Set flags for these. Up to Sea Demon...
+    ;  TODO! Set flags for these. Up to Black Formro...
         .dh 0x01 ; Bone Scimitar
         .dh 0x02 ; Axe Knight
         .dh 0x03 ; Necromancer
         .dh 0x04 ; Bone Archer
         .dh 0x08 ; Spear Guard
         .dh 0x09 ; Skull Spider
+        .dh 0x0E ; Sea Demon
+        .dh 0x0F ; Fire Demon
+        .dh 0x12 ; Werebat
 
-        .dh 0x1A ; Sea Demon
-        .dh 0x1E ; Fire Demon
-        .dh 0x22 ; Werebat
         .dh 0x23 ; Black Formor
         .dh 0x28 ; Dullahan
         .dh 0x33 ; Miss Murder
@@ -3005,6 +3014,12 @@
 @SetSpearGuardGlyph:
     mov r0, r6
     mov r3, 0x08
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;
+; glyph flag re
+@SetWerebatGlyphFlag:
+    mov r3, 0x12
+    str r3, [r13, 0x0C]
     bx lr
 
 .pool
