@@ -462,6 +462,9 @@
     .org 0x02262338
         mov r0, 0x3B ; Winged Skeleton Glyph
 
+    .org 0x0225E73C
+        mov r0, 0x5E
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -496,6 +499,11 @@
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_29", 0x022B73A0
+    .org 0x022B94F8
+        mov r0, 0x58 ; Jiang Shi glyph flag
+.close
+;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_30", 0x022B73A0
     .org 0x022B97BC
         bl @SpawnPortal_Brach
@@ -531,8 +539,14 @@
     .org 0x022B9068
         bl @SpawnPortal_Albus
 
+    .org 0x022B906C
+        bl @SpawnAlbusMissedGlyph
+
     .org 0x022B8DB0
         b @DontRespawnAlbusGlyph
+
+    .org 0x022B8338
+        mov r0, 0x63 ; Albus Glyph Flag
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -540,8 +554,14 @@
     .org 0x022B73DC
         bl @SpawnPortal_Barlowe
 
+    .org 0x022B73E0
+        bl @SpawnBarloweMissedGlyph
+
     .org 0x022B8150
         bl @HandlePostBarloweFight
+
+    .org 0x022BA998
+        mov r0, 0x7C ; Barlowe glyph flag
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_38", 0x022B73A0
@@ -794,7 +814,6 @@
         .db 0x74
 .align 4
     @ROMTable_EnemyGlyphFlags:  ; Index of which flag each enemy uses for its Glyph.
-    ;  TODO! Set flags for these. Up to Jiang Shi...
         .dh 0x01 ; Bone Scimitar
         .dh 0x02 ; Axe Knight
         .dh 0x03 ; Necromancer
@@ -821,13 +840,15 @@
         .dh 0x38 ; Gorgon Head
         .dh 0x39 ; Great Knight
         .dh 0x3B ; Winged Skeleton
-
-        .dh 0x67 ; Jiang Shi
-        .dh 0x68 ; Demon Lord
-        .dh 0x72 ; Albus
-        .dh 0x73 ; Barlowe TODO! Portals for Albus and Barlowe if you miss their Glyphs.
+        .dh 0x58 ; Jiang Shi
+        .dh 0x5E ; Demon Lord
+        .dh 0x63 ; Albus
+        .dh 0x7C ; Barlowe
         .dh 0x06 ; Wallman
     @EnemGlyphIndex_len equ @ROMTable_EnemyGlyphFlags - @ROMTable_EnemyGlyphIndex
+.align 4
+    @OptionFlag_StolenGlyphChecks:
+        .db 0x01 ; 022ECE24
 
 .align 4
 
@@ -3119,7 +3140,83 @@
     mov r3, 0x39
     str r3, [r13]
     bx lr
+;;;;;;;;;;;;;;;;;;;;;;
+; Spawn's Barlowe's Glyph in case you missed it the first time
+@SpawnBarloweMissedGlyph:
+    ldr r0, = @OptionFlag_StolenGlyphChecks
+    ldrb r0, [r0] ; We don't need to do this if it's not a Check
+    cmp r0, 0
+    beq @@Exit
+    ldr r0, = 0x021003E4
+    ldr r0, [r0]
+    tst r0, 0x200
+    beq @@Exit ; We only want to do this if Barlowe isn't alive
 
+    mov r0, 0x7C
+    push lr
+    bl @CheckLocFlag ; Check if we've already gotten the Glyph
+    cmp r0, 1
+    beq @@ExitAndPop ; Don't spawn it if we already got it
+    push r1-r3
+    mov r0, -1
+    str r0, [r13] ; Glyph spawn timer
+    mov r0, 0
+    str r0, [r13, 4] ; Set Glyph as active
+    mov r0, 0x7C ; Barlowe's Glyph Flag
+    str r0, [r13, 0x08]
+    
+    ldr r1, =0x55000 ; Y pos
+    ldr r2, = 0x6000
+    mov r3, 0x73 ; Barlowe
+    mov r0, 0x100000 ; X pos
+    bl 0x0206DEE0 ; Spawn Barlowe's glyph
+    pop r1-r3
+@@ExitAndPop:
+    pop lr
+@@Exit:
+    ldr r0, = 0x020FFC58
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;
+; Same as the above but for Albus
+@SpawnAlbusMissedGlyph:
+    ldr r0, = @OptionFlag_StolenGlyphChecks
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@Exit
+    ldr r0, = 0x021003E4
+    ldr r0, [r0]
+    tst r0, 0x100
+    beq @@Exit ; We only want to do this if Albus isn't alive
+    ldr r0, = 0x02100388
+    ldr r0, [r0]
+    tst r0, 0x02000000
+    beq @@Exit  ; Make sure that we've cleared all the events out of this room first
+
+
+    mov r0, 0x63
+    push lr
+    bl @CheckLocFlag
+    cmp r0, 1
+    beq @@ExitAndPop
+    push r1-r3
+    mov r0, -1
+    str r0, [r13]
+    mov r0, 0
+    str r0, [r13, 4]
+    mov r0, 0x63
+    str r0, [r13, 0x08]
+
+    ldr r1, =0x55000 ; Y pos
+    ldr r2, = 0x6000
+    mov r3, 0x72 ; Albus
+    mov r0, 0x100000 ; X pos
+    bl 0x0206DEE0 ; Spawn Albus's glyph
+    pop r1-r3
+@@ExitAndPop:
+    pop lr
+@@Exit:
+    ldr r0, = 0x020FFC58
+    bx lr
 .pool
 .endarea
 .close
