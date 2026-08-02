@@ -14,7 +14,7 @@ from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
 from .modules.glyph_properties import write_glyph_attributes
 from .modules.text_builder import text_encoder
 
-world_version = "1.1.1"
+world_version = "1.2"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 

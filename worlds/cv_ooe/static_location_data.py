@@ -787,5 +787,4 @@ def get_location_groups():
     for area in enemy_glyphs_per_area:
         location_groups[area].update(enemy_glyphs_per_area[area])
 
-
     return location_groups

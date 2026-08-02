@@ -191,6 +191,37 @@ class RandomGlyphAttributes(Choice):
     default = 0
 
 
+class RandomStolenGlyphs(Choice):
+    """Randomizes Glyphs that can be stolen from enemies mid-attack.
+       Shuffled: Randomizes stealable Enemy glyphs only into other non-required Glyphs.
+       Glyphsanity: Adds these Glyphs into the check pool. Albus and Barlowe's Glyphs spawn
+        in their boss room after defeating them if you miss them during the fight."""
+    display_name = "Randomize Stolen Glyphs"
+    option_normal = 0
+    option_shuffled = 1
+    option_glyphsanity = 2
+    default = 0
+
+
+class RandomDropGlyphs(Choice):
+    """Randomizes Glyphs that can be dropped by enemies.
+       Shuffled: Randomizes dropped enemy Glyphs only into other non-required Glyphs.
+       Glyphsanity: Adds these Glyphs into the check pool."""
+    display_name = "Randomize Dropped Glyphs"
+    option_normal = 0
+    option_shuffled = 1
+    option_glyphsanity = 2
+    default = 0
+
+
+class GlyphDropMultiplier(Range):
+    """Multiplier for the drop rate of enemy Glyphs."""
+    display_name = "Glyph Drop Rate Multiplier"
+    range_start = 1
+    range_end = 100
+    default = 1
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -216,6 +247,9 @@ class OoEOptions(PerGameCommonOptions):
     one_screen_mode: OneScreenMode
     open_castle: OpenCastle
     randomize_glyph_attributes: RandomGlyphAttributes
+    randomize_stolen_glyphs: RandomStolenGlyphs
+    randomize_dropped_glyphs: RandomDropGlyphs
+    glyph_drop_multiplier: GlyphDropMultiplier
 
 
 ooe_option_groups = [
@@ -242,6 +276,9 @@ ooe_option_groups = [
 
     OptionGroup("Glyph Options", [
         RandomGlyphAttributes,
+        RandomStolenGlyphs,
+        RandomDropGlyphs,
+        GlyphDropMultiplier
     ]),
 
     OptionGroup("World Options", [
