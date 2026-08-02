@@ -752,16 +752,40 @@ def get_location_groups():
         "Arms Depot": set(),
         "Forsaken Cloister": set(),
         "Final Approach": set(),
-        "Enemy Glyphs": set()
     }
+
+    enemy_glyphs_per_area = {
+        "Ecclesia": ["Barlowe Glyph"],
+        "Training Hall": ["Nova Skeleton Glyph"],
+        "Ruvas Forest": ["Bone Scimitar Glyph", "Necromancer Glyph", "Axe Knight Glyph"],
+        "Kalidus Channel": ["Sea Demon Glyph", "Skull Spider Glyph"],
+        "Somnus Reef": ["Sea Demon Glyph"],
+        "Minera Prison Island": ["Spear Guard Glyph", "Bone Archer Glyph", "Axe Knight Glyph"],
+        "Tymeo Mountains": ["Fire Demon Glyph", "Skull Spider Glyph"],
+        "Tristis Pass": ["Owl Glyph", "Thunder Demon Glyph", "Lizardman Glyph"],
+        "Large Cavern": ["Demon Lord Glyph", "Jiang Shi Glyph"],
+        "Giant's Dwelling": ["Miss Murder Glyph"],
+        "Mystery Manor": ["White Fomor Glyph", "Albus Glyph"],
+        "Misty Forest Road": ["Werebat Glyph", "Black Fomor Glyph"],
+        "Oblivion Ridge": ["Lizardman Glyph"],
+        "Skeleton Cave": ["Dullahan Glyph"],
+        "Castle Entrance": ["Black Panther Glyph"],
+        "Underground Labyrinth": ["Polkir Glyph", "Nova Skeleton Glyph", "Hammer Shaker Glyph"],
+        "Library": ["Wallman Glyph", "Black Panther Glyph", "White Fomor Glyph", "Great Knight Glyph"],
+        "Barracks": ["Nova Skeleton Glyph", "Red Smasher Glyph", "Hammer Shaker Glyph"],
+        "Mechanical Tower": ["Hammer Shaker Glyph", "Automaton ZX27 Glyph", "Gorgon Head Glyph", "Red Smasher Glyph"],
+        "Arms Depot": ["Hammer Shaker Glyph", "Great Knight Glyph", "Red Smasher Glyph", "Spectral Sword Glyph"],
+        "Forsaken Cloister": ["Gorgon Head Glyph", "Nova Skeleton Glyph"],
+        "Final Approach": ["Winged Skeleton Glyph", "Spectral Sword Glyph", "Automaton ZX27 Glyph"]
+    }
+
     for location in location_ids:
         group = location.split(":")[0]
         if group in location_groups:
             location_groups[group].add(location)
-        else:
-            group = location_data_table[location].location_type
 
-            if group == "Enemy Glyph":
-                location_groups["Enemy Glyphs"].add(location)
+    for area in enemy_glyphs_per_area:
+        location_groups[area].update(enemy_glyphs_per_area[area])
+
 
     return location_groups
