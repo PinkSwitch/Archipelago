@@ -603,7 +603,7 @@ location_data_table = {
     "Castle Entrance: Before Switch Wall": LocationInformation(0x022CDE18, "overlay_66", "Wood Chest"),
 
     "Underground Labyrinth: Boulder Room Glyph": LocationInformation(0x022EADC8, "overlay_68", "Event Glyph"),
-    "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_86", "Inline"),
+    "Underground Labyrinth: Fire Room": LocationInformation(0x022EB224, "overlay_86", "Inline"),  # Even though this an Event Glyph, varB is used as a fire controller so we need to hardcode the item elsewhere
     "Underground Labyrinth: Exit Item": LocationInformation(0x022EB0D4, "overlay_68", "Freestanding Glyph"),
     "Underground Labyrinth: Secret Passage Pickup": LocationInformation(0x022EB008, "overlay_68", "Freestanding"),
     "Underground Labyrinth: Second Shadow Room": LocationInformation(0x022EA9CC, "overlay_68", "Chest"),
@@ -689,6 +689,37 @@ location_data_table = {
     "Underground Labyrinth: Blackmore No-Hit Chest": LocationInformation(0x022EB254, "overlay_86", "Inline"),
     "Arms Depot: Eligor No-Hit Chest": LocationInformation(0x022EB256, "overlay_86", "Inline"),
     "Mechanical Tower: Death No-Hit Chest": LocationInformation(0x022EB258, "overlay_86", "Inline"),
+
+    "Bone Scimitar Glyph": LocationInformation(0x020B6418, "arm9", "Enemy Glyph"),
+    "Axe Knight Glyph": LocationInformation(0x020B6484, "arm9", "Enemy Glyph"),
+    "Necromancer Glyph": LocationInformation(0x020B64F0, "arm9", "Enemy Glyph"),
+    "Bone Archer Glyph": LocationInformation(0x020B6514, "arm9", "Enemy Glyph"),
+    "Spear Guard Glyph": LocationInformation(0x020B6538, "arm9", "Enemy Glyph"),
+    "Skull Spider Glyph": LocationInformation(0x020B66C4, "arm9", "Enemy Glyph"),
+    "Sea Demon Glyph": LocationInformation(0x020B670C, "arm9", "Enemy Glyph"),
+    "Fire Demon Glyph": LocationInformation(0x020B679C, "arm9", "Enemy Glyph"),
+    "Werebat Glyph": LocationInformation(0x020B682C, "arm9", "Enemy Glyph"),
+    "Black Fomor Glyph": LocationInformation(0x020B6850, "arm9", "Enemy Glyph"),
+    "Dullahan Glyph": LocationInformation(0x020B6904, "arm9", "Enemy Glyph"),
+    "Miss Murder Glyph": LocationInformation(0x020B6A90, "arm9", "Enemy Glyph"),
+    "Lizardman Glyph": LocationInformation(0x020B6B44, "arm9", "Enemy Glyph"),
+    "Thunder Demon Glyph": LocationInformation(0x020B6BB0, "arm9", "Enemy Glyph"),
+    "Owl Glyph": LocationInformation(0x020B6BD4, "arm9", "Enemy Glyph"),
+    "White Fomor Glyph": LocationInformation(0x020B6D18, "arm9", "Enemy Glyph"),
+    "Black Panther Glyph": LocationInformation(0x020B6E14, "arm9", "Enemy Glyph"),
+    "Polkir Glyph": LocationInformation(0x020B6EA4, "arm9", "Enemy Glyph"),
+    "Nova Skeleton Glyph": LocationInformation(0x020B6EC8, "arm9", "Enemy Glyph"),
+    "Red Smasher Glyph": LocationInformation(0x020B6F58, "arm9", "Enemy Glyph"),
+    "Hammer Shaker Glyph": LocationInformation(0x020B700C, "arm9", "Enemy Glyph"),
+    "Spectral Sword Glyph": LocationInformation(0x020B709C, "arm9", "Enemy Glyph"),
+    "Automaton ZX27 Glyph": LocationInformation(0x020B70C0, "arm9", "Enemy Glyph"),
+    "Gorgon Head Glyph": LocationInformation(0x020B7108, "arm9", "Enemy Glyph"),
+    "Great Knight Glyph": LocationInformation(0x020B7150, "arm9", "Enemy Glyph"),
+    "Winged Skeleton Glyph": LocationInformation(0x020B7198, "arm9", "Enemy Glyph"),
+    "Jiang Shi Glyph": LocationInformation(0x020B71E0, "arm9", "Enemy Glyph"),
+    "Demon Lord Glyph": LocationInformation(0x020B7204, "arm9", "Enemy Glyph"),
+    "Albus Glyph": LocationInformation(0x020B736C, "arm9", "Enemy Glyph"),
+    "Barlowe Glyph": LocationInformation(0x020B7390, "arm9", "Enemy Glyph")
     
 }
 
