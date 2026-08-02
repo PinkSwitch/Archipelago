@@ -194,6 +194,9 @@
 
     .org 0x0220576C
         mov r2, 0x04  ; Bone Archer glyph flag
+
+    .org 0x02213944
+        mov r0, 0x2E ; Nova Skeleton glyh
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_20", 0x021FFFC0
@@ -416,6 +419,49 @@
 
     .org 0x022524E4
         bl @SetWerebatGlyphFlag
+
+    .org 0x0223E654
+        bl @SetDullahanGlyphFlag
+
+    .org 0x02249250
+        bl @SetMissMurderGlyphFlag
+
+    .org 0x0226E838
+        bl @SetLizardmanGlyphFlag
+
+    .org 0x02258F08
+        mov r0, 0x23 ; Thunder Demon glyph flag
+
+    .org 0x022B9E58
+        mov r0, 0x25 ; Owl glyph flag
+
+    .org 0x022502CC
+        bl @SpawnFomorGlyph
+
+    .org 0x0228AE44
+        mov r1, 0x2A ; Black Panther flag
+
+    .org 0x02276CBC
+        bl @SetPolkirGlyphFlag
+
+    .org 0x0224C05C
+        mov r1, 0x2F ; Red Smasher glyph
+
+    .org 0x0223121C
+        mov r0, 0x30 ; Hammer Shaker glyph
+
+    .org 0x0228CBD8
+        bl @SetAutomatonGlyphFlag
+
+    .org 0x02261A64
+        mov r0, 0x38 ; Gorgon Head glyph
+
+    .org 0x022520A4
+        bl @SetGreatKnightGlyphFlag
+
+    .org 0x02262338
+        mov r0, 0x3B ; Winged Skeleton Glyph
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -496,6 +542,11 @@
 
     .org 0x022B8150
         bl @HandlePostBarloweFight
+.close
+;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_38", 0x022B73A0
+    .org 0x022BE308
+        bl @SetSpecSwordGlyphFlag
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_41", 0x022C1FE0
@@ -743,7 +794,7 @@
         .db 0x74
 .align 4
     @ROMTable_EnemyGlyphFlags:  ; Index of which flag each enemy uses for its Glyph.
-    ;  TODO! Set flags for these. Up to Black Formro...
+    ;  TODO! Set flags for these. Up to Jiang Shi...
         .dh 0x01 ; Bone Scimitar
         .dh 0x02 ; Axe Knight
         .dh 0x03 ; Necromancer
@@ -753,24 +804,24 @@
         .dh 0x0E ; Sea Demon
         .dh 0x0F ; Fire Demon
         .dh 0x12 ; Werebat
+        .dh 0x14 ; Black Formor
+        .dh 0x16 ; Dullahan
+        .dh 0x19 ; Miss Murder
+        .dh 0x1C ; Lizardman
+        .dh 0x23 ; Thunder Demon
+        .dh 0x25 ; Owl
+        .dh 0x27 ; White Formor
+        .dh 0x2A ; Black Panther
+        .dh 0x2B ; Polkir
+        .dh 0x2E ; Nova Skeleton
+        .dh 0x2F ; Red Smasher
+        .dh 0x30 ; Hammer Shaker
+        .dh 0x36 ; Spectral Sword
+        .dh 0x37 ; Automaton ZX27
+        .dh 0x38 ; Gorgon Head
+        .dh 0x39 ; Great Knight
+        .dh 0x3B ; Winged Skeleton
 
-        .dh 0x23 ; Black Formor
-        .dh 0x28 ; Dullahan
-        .dh 0x33 ; Miss Murder
-        .dh 0x38 ; Lizardman
-        .dh 0x3B ; Thunder Demon
-        .dh 0x3C ; Owl
-        .dh 0x45 ; White Formor
-        .dh 0x4C ; Black Panther
-        .dh 0x50 ; Polkir
-        .dh 0x51 ; Nova Skeleton
-        .dh 0x55 ; Red Smasher
-        .dh 0x5A ; Hammer Shaker
-        .dh 0x5E ; Spectral Sword
-        .dh 0x5F ; Automaton ZX27
-        .dh 0x61 ; Gorgon Head
-        .dh 0x63 ; Great Knight
-        .dh 0x65 ; Winged Skeleton
         .dh 0x67 ; Jiang Shi
         .dh 0x68 ; Demon Lord
         .dh 0x72 ; Albus
@@ -3020,6 +3071,53 @@
 @SetWerebatGlyphFlag:
     mov r3, 0x12
     str r3, [r13, 0x0C]
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;
+@SetDullahanGlyphFlag:
+    mov r3, 0x16
+    str r3, [r13, 0x0C]
+    bx lr
+
+@SetMissMurderGlyphFlag:
+    mov r3, 0x19
+    str r3, [r13, 0x0C]
+    bx lr
+
+@SetLizardmanGlyphFlag:
+    mov r3, 0x1C
+    str r3, [r13, 0x0C]
+    bx lr
+
+; Black and White Fomors both set this same code path, so we need to differentiate them
+@SpawnFomorGlyph:
+    push r1
+    add r13, r13, 4
+    cmp r3, 0x45 ; White
+    moveq r1, 0x27
+    movne r1, 0x14 ; Black
+    str r1, [r13, 0x08]
+    sub r13, r13, 4
+    pop r1
+    b 0x0206DEE0
+
+@SetPolkirGlyphFlag:
+    mov r3, 0x2B
+    str r3, [r13, 0x0C]
+    bx lr
+
+@SetSpecSwordGlyphFlag:
+    mov r3, 0x36
+    str r3, [r13, 0x0C]
+    bx lr
+
+@SetAutomatonGlyphFlag:
+    mov r3, 0x37
+    str r3, [r13, 0x0C]
+    bx lr
+
+@SetGreatKnightGlyphFlag:
+    mov r3, 0x39
+    str r3, [r13]
     bx lr
 
 .pool

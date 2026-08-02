@@ -106,7 +106,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Minera Prison Island Final Segment", "Minera Prison Island: Exit Chest"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Left Lower Hall"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Lower Spear Hall Ending Chest"),
-        LocationData("Minera Prison Island Main", "Minera Prison Island: Right Vertical Chest"),
+        LocationData("Minera Prison Island Final Segment", "Minera Prison Island: Right Vertical Chest"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Hidden Room"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Top Room Chest"),
         LocationData("Minera Prison Island Main", "Minera Prison Island: Right Vertical Hidden Item"),
