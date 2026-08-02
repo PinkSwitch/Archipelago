@@ -98,18 +98,18 @@ location_ids = {
     "Wygol Village: Grounded Chest": 0x55,
     "Monastery: Final Dead End": 0x56,
     "Monastery: Long Hall Chest": 0x57,
-    
+    "Jiang Shi Glyph": 0x58,
     "Minera Prison Island: Entrance Chest": 0x59,
     "Minera Prison Island: Upper Spear Hall": 0x5A,
     "Minera Prison Island: Lower Spear Hall Later Chest": 0x5B,
     "Minera Prison Island: Right Entry Shaft Chest": 0x5C,
     "Minera Prison Island: Top Room": 0x5D,
-
+    "Demon Lord Glyph": 0x5E,
     "Minera Prison Island: Lowest Room": 0x5F,
     "Minera Prison Island: Lower Right Hall": 0x60,
     "Minera Prison Island: Right Central Room": 0x61,
     "Minera Prison Island: Right Spear Hall Chest": 0x62,
-
+    "Albus Glyph": 0x63,
     "Minera Prison Island: Area Exit": 0x64,
     "Lighthouse: Exit Chest": 0x65,
     "Skeleton Cave: Final Room Chest": 0x66,
@@ -134,7 +134,7 @@ location_ids = {
     "Barracks: Left Secret Room": 0x79,
     "Arms Depot: Left Room Chest": 0x7A,
     "Final Approach: Throne Right Chest": 0x7B,
-
+    "Barlowe Glyph": 0x7C,
     "Monastery: Pre-Boss Chest": 0x82,
     "Minera Prison Island: Lower Spear Hall Ending Chest": 0x83,
     "Kalidus Channel: Ship Room Center Left Chest": 0x84,
