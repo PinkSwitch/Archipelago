@@ -53,19 +53,30 @@ def shuffle_glyphs(world) -> None:
             world.glyph_drops[enemy] = new_glyph
 
     # Assign Enemy glyphs to the Filler generation pool
-    for enemy in world.glyph_steals:
-        glyph = world.glyph_steals[enemy]
-        if glyph != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
-            enemy_glyph_pool.add(glyph)
-            if glyph in world.glyph_pool:
-                world.glyph_pool.remove(glyph)
+    if world.options.randomize_stolen_glyphs != RandomStolenGlyphs.option_glyphsanity:
+        for enemy in world.glyph_steals:
+            glyph = world.glyph_steals[enemy]
+            if glyph != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
+                enemy_glyph_pool.add(glyph)
+                if glyph in world.glyph_pool:
+                    world.glyph_pool.remove(glyph)
+    else:
+        #  If Glyphsanity, ignore the shuffling logic and instead add the relevant glyphs to the static pool
+        world.glyph_pool.extend(["Fidelis Caries", "Grando", "Ignis", "Umbra", "Fulgur", "Vol Luminatio", "Nitesco",
+                                 "Fidelis Mortus", "Globus", "Acerbatus", "Globus"])
 
-    for enemy in world.glyph_drops:
-        glyph = world.glyph_drops[enemy]
-        if glyph != "Arma Machina":
-            enemy_glyph_pool.add(glyph)
-            if glyph in world.glyph_pool:
-                world.glyph_pool.remove(glyph)
+    if world.options.randomize_dropped_glyphs != RandomDropGlyphs.option_glyphsanity:
+        for enemy in world.glyph_drops:
+            glyph = world.glyph_drops[enemy]
+            if glyph != "Arma Machina":
+                enemy_glyph_pool.add(glyph)
+                if glyph in world.glyph_pool:
+                    world.glyph_pool.remove(glyph)
+    else:
+        world.glyph_pool.extend(["Secare", "Ascia", "Arcus", "Hasta", "Arma Chiroptera", "Fidelis Aranea",
+                                 "Fidelis Noctua", "Melio Secare", "Fidelis Medusa", "Arma Felix", "Fidelis Polkir",
+                                 "Vol Culter", "Melio Macir", "Melio Ascia", "Fidelis Alate", "Vol Confodere",
+                                 "Vol Falcis", "Vol Scutum"])
         
     world.glyph_filler_table.extend(enemy_glyph_pool)
 
