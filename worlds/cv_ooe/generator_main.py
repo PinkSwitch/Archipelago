@@ -5,7 +5,7 @@ import pkgutil
 from typing import Dict
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
-from .Options import RandomGlyphAttributes
+from .Options import RandomGlyphAttributes, RandomStolenGlyphs, RandomDropGlyphs
 from .Rom import patch_rom, OoEProcPatch
 
 
@@ -83,7 +83,6 @@ def set_classifications(world, name) -> CVOoEItem:
     if name in world.logical_regular_glyphs:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     elif name in world.glyph_pool:
-        print(name)
         item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
     return item
 
@@ -180,12 +179,25 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
 Glyph Attributes:
 """)
 
-    for index, glyph in enumerate(world.glyph_attributes):
-        if world.options.randomize_glyph_attributes != RandomGlyphAttributes.option_chaotic:
-            if any(x in glyph for x in ["Vol", "Melio"]) or index >= 47:
-                continue
-        attributes = " + ".join(world.glyph_attributes[glyph])
-        spoiler_handle.write(f" {glyph}: {attributes}\n")
+        for index, glyph in enumerate(world.glyph_attributes):
+            if world.options.randomize_glyph_attributes != RandomGlyphAttributes.option_chaotic:
+                if any(x in glyph for x in ["Vol", "Melio"]) or index >= 47:
+                    continue
+            attributes = " + ".join(world.glyph_attributes[glyph])
+            spoiler_handle.write(f" {glyph}: {attributes}\n")
+
+    if (world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled or
+            world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled):
+        spoiler_handle.write("\nEnemy Glyphs:")
+
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
+        for enemy in world.glyph_steals:
+            spoiler_handle.write(f"\n   {enemy}: {world.glyph_steals[enemy]}")
+
+    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
+        for enemy in world.glyph_drops:
+            spoiler_handle.write(f"\n   {enemy}: {world.glyph_drops[enemy]}")
+    spoiler_handle.write("\n")
 
 
 def modify_multidata(world, multidata: dict) -> None:

@@ -1633,7 +1633,7 @@
     push lr
     push r0-r3,r12
     ldr r0, =@ReceivedItemID ; AP Data Block
-    ldr r1, =0x02100590
+    ldr r1, =0x021005A0
     mov r2, 0x20
     bl 0x02008CD4
     pop r0-r3,r12
@@ -1644,7 +1644,7 @@
 @LoadAPData:
     push lr
     push r0-r3,r12
-    ldr r0, =0x02100590 ; AP Data Block
+    ldr r0, =0x021005A0 ; AP Data Block
     ldr r1, =@ReceivedItemID
     mov r2, 0x20
     bl 0x02008CD4
@@ -3217,6 +3217,24 @@
 @@Exit:
     ldr r0, = 0x020FFC58
     bx lr
+;;;;;;;;;;;;;;;;;;;;;
+@SaveData_New:
+    push r0-r3,lr
+    mov r2, 0x20
+    ldr r1, = 0x021DD048
+    ldr r1, [r1, 0x08]
+    ldr r0, = @ReceivedItemID
+    bl 0x02008CD4 ; Copy data into this buffer
+
+    ldr r0, =0x021DD048
+    ldr r0, [r0, 0x08]
+    mov r2, 0x20
+    mov r1, 0x1F00
+    bl 0x0202CB98
+    pop r0-r3,lr
+    bx lr
+
+
 .pool
 .endarea
 .close

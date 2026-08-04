@@ -1,9 +1,10 @@
+import struct
 from ..Options import RandomStolenGlyphs, RandomDropGlyphs
 
 
 def shuffle_glyphs(world) -> None:
     enemy_glyph_pool = set()
-    glyph_drops = {
+    world.glyph_drops = {
         "Bone Scimitar": "Secare",
         "Axe Knight": "Ascia",
         "Bone Archer": "Arcus",
@@ -25,7 +26,7 @@ def shuffle_glyphs(world) -> None:
         "Lizardman": "Vol Scutum",
     }
 
-    glyph_steals = {
+    world.glyph_steals = {
         "Necromancer": "Fidelis Caries",
         "Sea Demon": "Grando",
         "Fire Demon": "Ignis",
@@ -40,29 +41,48 @@ def shuffle_glyphs(world) -> None:
     }
 
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
-        for enemy in glyph_steals:
+        for enemy in world.glyph_steals:
             new_glyph = world.random.choice(world.glyph_pool)
             world.glyph_pool.remove(new_glyph)
-            glyph_steals[enemy] = new_glyph
+            world.glyph_steals[enemy] = new_glyph
 
     if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
-        for enemy in glyph_drops:
+        for enemy in world.glyph_drops:
             new_glyph = world.random.choice(world.glyph_pool)
-            glyph_drops[enemy] = new_glyph
+            world.glyph_pool.remove(new_glyph)
+            world.glyph_drops[enemy] = new_glyph
 
     # Assign Enemy glyphs to the Filler generation pool
-    for enemy in glyph_steals:
-        glyph = glyph_steals[enemy]
+    for enemy in world.glyph_steals:
+        glyph = world.glyph_steals[enemy]
         if glyph != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
             enemy_glyph_pool.add(glyph)
             if glyph in world.glyph_pool:
                 world.glyph_pool.remove(glyph)
 
-    for enemy in glyph_drops:
-        glyph = glyph_drops[enemy]
+    for enemy in world.glyph_drops:
+        glyph = world.glyph_drops[enemy]
         if glyph != "Arma Machina":
             enemy_glyph_pool.add(glyph)
-            world.glyph_pool.remove(glyph)
+            if glyph in world.glyph_pool:
+                world.glyph_pool.remove(glyph)
         
     world.glyph_filler_table.extend(enemy_glyph_pool)
-    print(world.glyph_pool)
+
+
+def write_shuffled_glyphs(world, rom) -> None:
+    from ..game_data import enemy_table
+    from ..Items import item_table
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
+        for enemy in world.glyph_steals:
+            glyph = world.glyph_steals[enemy]
+            glyph_id = item_table[glyph].code
+            index = enemy_table.index(enemy)
+            rom.write_to_file(0x020B6364 + (index * 0x24) + 0x14, "arm9", struct.pack("H", glyph_id))
+
+    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
+        for enemy in world.glyph_drops:
+            glyph = world.glyph_drops[enemy]
+            glyph_id = item_table[glyph].code
+            index = enemy_table.index(enemy)
+            rom.write_to_file(0x020B6364 + (index * 0x24) + 0x14, "arm9", struct.pack("H", glyph_id))
