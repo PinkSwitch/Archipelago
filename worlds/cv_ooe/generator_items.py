@@ -7,10 +7,10 @@ def create_conditional_items(world, pool):
         pool.remove(world.create_item(world.starting_glyph))
 
     if world.options.remove_large_cavern:
-        pool.remove(world.create_item(("Map: Large Cavern")))
+        pool.remove(world.create_item("Map: Large Cavern"))
 
     if world.options.remove_training_hall:
-        pool.remove(world.create_item(("Map: Training Hall")))
+        pool.remove(world.create_item("Map: Training Hall"))
 
     if world.options.shuffle_dominus:
         pool.extend([world.create_item("Dominus Hatred"),
@@ -52,9 +52,9 @@ def create_conditional_items(world, pool):
 
 
 def generate_emergency_glyphs(world, pool):
+    #  Generate Glyphs that need to be added here, if we didn't generate any via the pool or filler already
     from .game_data import villager_list
     from . import get_filler_item_name
-
 
     tin_man_glyphs = []
     generator_glyphs = []

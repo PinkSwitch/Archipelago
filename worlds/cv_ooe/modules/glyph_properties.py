@@ -13,19 +13,20 @@ glyph_attribute_list = [
     "Curse",
     "Stone"]
 
-generator_glyphs = ["Fulgur",
-                    "Ascia",
-                    "Vol Ascia",
-                    "Melio Ascia",
-                    "Redire",
-                    "Cubus",
-                    "Ignis",
-                    "Luminatio",
-                    "Vol Luminatio",
-                    "Umbra",
-                    "Vol Umbra",
-                    "Morbus",
-                    "Globus"]
+generator_glyphs = [
+    "Fulgur",
+    "Ascia",
+    "Vol Ascia",
+    "Melio Ascia",
+    "Redire",
+    "Cubus",
+    "Ignis",
+    "Luminatio",
+    "Vol Luminatio",
+    "Umbra",
+    "Vol Umbra",
+    "Morbus",
+    "Globus"]
 
 
 def set_glyph_attributes(world) -> None:

@@ -1,3 +1,6 @@
+from ..Options import RandomStolenGlyphs, RandomDropGlyphs
+
+
 def shuffle_glyphs(world) -> None:
     enemy_glyph_pool = set()
     glyph_drops = {
@@ -36,13 +39,30 @@ def shuffle_glyphs(world) -> None:
         "Barlowe": "Globus"
     }
 
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
+        for enemy in glyph_steals:
+            new_glyph = world.random.choice(world.glyph_pool)
+            world.glyph_pool.remove(new_glyph)
+            glyph_steals[enemy] = new_glyph
+
+    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
+        for enemy in glyph_drops:
+            new_glyph = world.random.choice(world.glyph_pool)
+            glyph_drops[enemy] = new_glyph
+
+    # Assign Enemy glyphs to the Filler generation pool
     for enemy in glyph_steals:
-        if glyph_steals[enemy] != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
-            enemy_glyph_pool.add(glyph_steals[enemy])
+        glyph = glyph_steals[enemy]
+        if glyph != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
+            enemy_glyph_pool.add(glyph)
+            if glyph in world.glyph_pool:
+                world.glyph_pool.remove(glyph)
 
     for enemy in glyph_drops:
-        if glyph_drops[enemy] != "Arma Machina":
-            enemy_glyph_pool.add(glyph_drops[enemy])
+        glyph = glyph_drops[enemy]
+        if glyph != "Arma Machina":
+            enemy_glyph_pool.add(glyph)
+            world.glyph_pool.remove(glyph)
         
     world.glyph_filler_table.extend(enemy_glyph_pool)
-    print(world.glyph_filler_table)
+    print(world.glyph_pool)

@@ -56,6 +56,9 @@ def create_items(world) -> None:
             item = set_classifications(world, name)
             pool.append(item)
 
+    for glyph in world.glyph_pool:  # Place all of the static glyphs here
+        pool.append(set_classifications(world, glyph))
+
     create_conditional_items(world, pool)
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
@@ -79,6 +82,9 @@ def set_classifications(world, name) -> CVOoEItem:
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
     if name in world.logical_regular_glyphs:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
+    elif name in world.glyph_pool:
+        print(name)
+        item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
     return item
 
 
