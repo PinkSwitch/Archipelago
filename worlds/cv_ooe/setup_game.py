@@ -3,6 +3,7 @@ from .Options import StartingGlyph, RandomizeVillagers, StartingArea
 from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs, melee_glyphs
 from .generator_main import create_progress_event
 from .modules.glyph_properties import set_glyph_attributes
+from .modules.glyph_shuffle import shuffle_glyphs
 
 
 def setup_game(world) -> None:
@@ -44,6 +45,7 @@ def setup_game(world) -> None:
         world.multiworld.push_precollected(create_progress_event(world, "Castle Access"))
         
     set_glyph_attributes(world)
+    shuffle_glyphs(world)
 
 
 def place_static_items(world) -> None:
