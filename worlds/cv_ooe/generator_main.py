@@ -5,7 +5,7 @@ import pkgutil
 from typing import Dict
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
-from .Options import RandomizeVillagers, RandomGlyphAttributes
+from .Options import RandomGlyphAttributes
 from .Rom import patch_rom, OoEProcPatch
 
 
@@ -48,64 +48,22 @@ def create_regions(world) -> None:
 
 
 def create_items(world) -> None:
+    from .generator_items import create_conditional_items, generate_emergency_glyphs
     pool = []
     for name, data in item_table.items():
+        #  First we fill the base pool, all items as set in the Items file
         for _ in range(data.default_count):
             item = set_classifications(world, name)
             pool.append(item)
 
-    if set_classifications(world, world.starting_glyph) in pool:
-        pool.remove(set_classifications(world, world.starting_glyph))
-
-    if world.options.remove_large_cavern:
-        pool.remove(set_classifications(world, "Map: Large Cavern"))
-
-    if world.options.remove_training_hall:
-        pool.remove(set_classifications(world, "Map: Training Hall"))
-
-    if world.options.shuffle_dominus:
-        pool.extend([set_classifications(world, "Dominus Hatred"),
-                     set_classifications(world, "Dominus Anger"),
-                     set_classifications(world, "Dominus Agony")])
-
-    if world.starting_area:
-        pool.remove(set_classifications(world, f"Map: {world.starting_area}"))
-
-    if world.options.randomize_villagers == RandomizeVillagers.option_anywhere:
-        pool.extend([set_classifications(world, "Nikolai"),
-                     set_classifications(world, "Jacob"),
-                     set_classifications(world, "Abram"),
-                     set_classifications(world, "Laura"),
-                     set_classifications(world, "Eugen"),
-                     set_classifications(world, "Aeon"),
-                     set_classifications(world, "Marcel"),
-                     set_classifications(world, "George"),
-                     set_classifications(world, "Serge"),
-                     set_classifications(world, "Anna"),
-                     set_classifications(world, "Monica"),
-                     set_classifications(world, "Irina"),
-                     set_classifications(world, "Daniela")])
-
-        for villager in world.options.starting_villagers:
-            pool.remove(set_classifications(world, villager))
-
-    if world.options.start_with_glyph_sleeve:
-        pool.remove(set_classifications(world, "Glyph Sleeve"))
-
-    if world.options.start_with_glyph_union:
-        pool.remove(set_classifications(world, "Glyph Union"))
-
-    if world.options.start_with_lizard_tail:
-        pool.remove(set_classifications(world, "Lizard Tail"))
-
-    if world.starting_glyph in world.glyph_filler_table:
-        world.glyph_filler_table.remove(world.starting_glyph)
+    create_conditional_items(world, pool)
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 
-    for i in range(filler_location_count):
+    for i in range(filler_location_count - 2):  # Leave a couple spaces open for Emergency glyphs
         item = set_classifications(world, get_filler_item_name(world))
         pool.append(item)
+    generate_emergency_glyphs(world, pool)
 
     world.multiworld.itempool += pool
 

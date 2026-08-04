@@ -182,7 +182,7 @@ def set_glyph_attributes(world) -> None:
         if world.options.randomize_glyph_attributes == RandomGlyphAttributes.option_consistent:
             world.glyph_attributes["Vol Secare"] = ["Strike"]
             world.glyph_attributes["Melio Secare"] = ["Strike"]
-            world.can_kill_tin_man.update("Vol Secare", "Melio Secare")
+            world.can_kill_tin_man.update({"Vol Secare", "Melio Secare"})
         world.can_kill_tin_man.add("Secare")
 
     if not world.generator_logic_glyphs:
@@ -197,8 +197,8 @@ def set_glyph_attributes(world) -> None:
     # We want to do this after the last step so they're not added to generator logic glyphs
     if "Torpor" in world.can_kill_tin_man:
         #  Every Villager also gives you a free Torpor glyph
-        world.can_kill_tin_man.update("Nikolai", "Jacob", "Abram", "Laura", "Eugen", "Aeon", "Marcel", "George",
-                                      "Serge", "Anna", "Monica", "Daniela", "Irina")
+        world.can_kill_tin_man.update({"Nikolai", "Jacob", "Abram", "Laura", "Eugen", "Aeon", "Marcel", "George",
+                                      "Serge", "Anna", "Monica", "Daniela", "Irina"})
 
 
 item_index = {

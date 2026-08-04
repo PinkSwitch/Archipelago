@@ -1,4 +1,5 @@
 def shuffle_glyphs(world) -> None:
+    enemy_glyph_pool = set()
     glyph_drops = {
         "Bone Scimitar": "Secare",
         "Axe Knight": "Ascia",
@@ -34,3 +35,14 @@ def shuffle_glyphs(world) -> None:
         "Albus": "Acerbatus",
         "Barlowe": "Globus"
     }
+
+    for enemy in glyph_steals:
+        if glyph_steals[enemy] != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
+            enemy_glyph_pool.add(glyph_steals[enemy])
+
+    for enemy in glyph_drops:
+        if glyph_drops[enemy] != "Arma Machina":
+            enemy_glyph_pool.add(glyph_drops[enemy])
+        
+    world.glyph_filler_table.extend(enemy_glyph_pool)
+    print(world.glyph_filler_table)

@@ -88,35 +88,7 @@ class OoEWorld(World):
         self.logical_regular_glyphs = set()
 
         self.glyph_filler_table = [
-            "Vol Confodere",
-            "Secare",
-            "Melio Secare",
-            "Hasta",
-            "Melio Macir",
-            "Arcus",
-            "Ascia",
-            "Melio Ascia",
-            "Vol Falcis",
-            "Vol Culter",
-            "Vol Scutum",
-            "Torpor",
-            "Ignis",
-            "Grando",
-            "Umbra",
-            "Fulgur",
-            "Vol Luminatio",
-            "Nitesco",
-            "Acerbatus",
-            "Globus",
-            "Arma Felix",
-            "Arma Chiroptera",
-            "Fidelis Caries",
-            "Fidelis Alate",
-            "Fidelis Polkir",
-            "Fidelis Noctua",
-            "Fidelis Medusa",
-            "Fidelis Aranea",
-            "Fidelis Mortus"]
+            "Torpor"]
 
         self.armor_table = [
             "Casual Clothes",
