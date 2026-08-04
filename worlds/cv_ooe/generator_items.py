@@ -62,7 +62,7 @@ def generate_emergency_glyphs(world, pool):
     for item in world.can_kill_tin_man:
         if item not in villager_list:
             tin_man_glyphs.append(world.create_item(item))
-    if len(set(tin_man_glyphs) & set(pool)) > 0 or "Torpor" in world.can_kill_tin_man:  # Torpor can be gotten from villagers
+    if len(set(tin_man_glyphs) & set(pool)) > 0 or "Torpor" in world.can_kill_tin_man or world.starting_glyph in world.can_kill_tin_man:  # Torpor can be gotten from villagers
         pool.append(world.create_item(get_filler_item_name(world)))  # If we don't need to do this, add a filler item
     else:
         pool.append(world.random.choice(tin_man_glyphs))
@@ -70,7 +70,7 @@ def generate_emergency_glyphs(world, pool):
     for item in world.generator_logic_glyphs:
         generator_glyphs.append(world.create_item(item))
 
-    if len(set(generator_glyphs) & set(pool)) > 0:  # If we didn't already generate any of these
+    if len(set(generator_glyphs) & set(pool)) > 0 or world.starting_glyph in world.generator_logic_glyphs:  # If we didn't already generate any of these
         pool.append(world.create_item(get_filler_item_name(world)))
     else:
         pool.append(world.random.choice(generator_glyphs))
