@@ -83,16 +83,19 @@ class OoEClient(BizHawkClient):
                     (0x2EB1B0, 2, "Main RAM"),  # Received Item
                     (0x2EB1B2, 2, "Main RAM"),  # Total items
                     (0xFFCB9, 1, "Main RAM"),  # Current area
-                    (0x1003E4, 4, "Main RAM")  # Boss death flags
+                    (0x1003E4, 4, "Main RAM"),  # Boss death flags
+                    (0x109820, 4, "Main RAM"),  # Player pointer
         ])
         game_mode = read_state[1][0]  # If the game mode is non-zero, return
         overlay22_entry = struct.unpack("I", read_state[0])[0]
         boss_flags = struct.unpack("I", read_state[6])[0]
         current_map = read_state[5][0]
+        player_pointer = struct.unpack("I", read_state[7])[0]
 
-        if game_mode or overlay22_entry != 0xE3A00064:
+        if game_mode or overlay22_entry != 0xE3A00064 or not player_pointer:
             #  We don't want to run AP if the game mode isn't regular Shanoa mode.
             #  Aditionally, overlay 22 is loaded while we're in game, so if it's not loaded, don't do anything
+            #  We ALSO want to make sure the Player is fully loaded to prevent the client from reading during loads
             return
 
         await self.check_locations(read_state, ctx)
