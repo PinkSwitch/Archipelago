@@ -14,6 +14,7 @@ from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
 from .modules.glyph_properties import write_glyph_attributes
 from .modules.text_builder import text_encoder
 from .modules.glyph_shuffle import write_shuffled_glyphs
+from .Options import RandomStolenGlyphs
 
 world_version = "1.2"
 hash_us = "e13bdcf706989486df939556eeb42ece"
@@ -126,6 +127,8 @@ def patch_rom(world, rom, code_patch):
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
         rom.write_to_file(0x022ECE24, "overlay_86", bytearray([0x01]))  # This is checked by Barlowe/Albus to spawn backup glyphs
 
+    rom.write_to_file(0x022ECE25, "overlay_86", bytearray([world.options.glyph_drop_multiplier.value]))
+
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
     if world.options.start_with_lizard_tail:
@@ -228,6 +231,7 @@ class OoEPatchExtensions(APPatchExtension):
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB230, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
         ap_multiplier = rom.read_from_file(0x022EB236, "overlay_86", 1)[0]
+        glyph_drops = rom.read_from_file(0x022ECE25, "overlay_86", 1)[0]
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)
@@ -238,6 +242,10 @@ class OoEPatchExtensions(APPatchExtension):
             enemy_ap = rom.read_from_file(address + 13, "arm9", 1)[0]
             enemy_ap = int(min(255, (enemy_ap * ap_multiplier)))
             rom.write_to_file(address + 13, "arm9", bytearray([enemy_ap]))
+
+            drop_chance = rom.read_from_file(address + 0x16, "arm9", 1)[0]
+            drop_chance = int(min(100, (drop_chance * glyph_drops)))
+            rom.write_to_file(address + 0x16, "arm9", bytearray([drop_chance]))
 
         return rom.get_bytes()
 
