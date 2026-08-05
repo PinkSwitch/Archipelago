@@ -151,6 +151,7 @@
         .dw @ItemGlyph
         .dw @MoneyGlyph
         .dw @VillagerGlyph
+        .dw @RelicGlyph
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -849,6 +850,8 @@
 .align 4
     @OptionFlag_StolenGlyphChecks:
         .db 0x01 ; 022ECE24
+    @OptionFlag_GlyphDropMult:
+        .db 0x00 ; 022ECE25
 
 .align 4
 
@@ -1214,6 +1217,10 @@
 
     cmp r0, 0x160
     bgt @@ExpandedItems
+    cmp r0, 0x75
+    movle r0, 0x47 ; Relics 
+    bxle lr
+
     mov r0, 0x41 ; Regular items
     bx lr
     ; Custom items here
@@ -1633,7 +1640,7 @@
     push lr
     push r0-r3,r12
     ldr r0, =@ReceivedItemID ; AP Data Block
-    ldr r1, =0x021005A0
+    ldr r1, =0x02100590
     mov r2, 0x20
     bl 0x02008CD4
     pop r0-r3,r12
@@ -1644,7 +1651,7 @@
 @LoadAPData:
     push lr
     push r0-r3,r12
-    ldr r0, =0x021005A0 ; AP Data Block
+    ldr r0, =0x02100590 ; AP Data Block
     ldr r1, =@ReceivedItemID
     mov r2, 0x20
     bl 0x02008CD4
@@ -1940,6 +1947,11 @@
     cmp r1, 0xD4
     moveq r1, 0x56 ; ap filler
     beq @@End
+    cmp r1, 0x75
+    movle r1, 0x5A ; Relics
+    ble @@End
+
+
     mov r1, 0x57 ; Normal items
     b @@End
 @@GetExpandedText:
@@ -2006,6 +2018,8 @@
         .db 0x01, 0x00, 0x30, 0x45, 0x43, 0x55, 0x4E, 0x49, 0x41, 0xEA
     @VillagerGlyph:
         .db 0x01, 0x00, 0x36, 0x49, 0x43, 0x41, 0x4E, 0x55, 0x53, 0xEA
+    @RelicGlyph:
+        .db 0x01, 0x00, 0x32, 0x45, 0x4C, 0x49, 0x51, 0x55, 0x49, 0x41, 0xEA
 .align 4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Handle a variable that this is a Blue chest so it skips the sprite func
@@ -3218,21 +3232,6 @@
     ldr r0, = 0x020FFC58
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;
-@SaveData_New:
-    push r0-r3,lr
-    mov r2, 0x20
-    ldr r1, = 0x021DD048
-    ldr r1, [r1, 0x08]
-    ldr r0, = @ReceivedItemID
-    bl 0x02008CD4 ; Copy data into this buffer
-
-    ldr r0, =0x021DD048
-    ldr r0, [r0, 0x08]
-    mov r2, 0x20
-    mov r1, 0x1F00
-    bl 0x0202CB98
-    pop r0-r3,lr
-    bx lr
 
 
 .pool
