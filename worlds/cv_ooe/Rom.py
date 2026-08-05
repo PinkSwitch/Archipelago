@@ -123,6 +123,8 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB236, "overlay_86", bytearray([world.options.ap_multiplier.value]))
     rom.write_to_file(0x022EB237, "overlay_86", bytearray([world.options.one_screen_mode.value]))
     rom.write_to_file(0x022EB238, "overlay_86", bytearray([world.options.open_castle.value]))
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
+        rom.write_to_file(0x022ECE24, "overlay_86", bytearray([0x01]))  # This is checked by Barlowe/Albus to spawn backup glyphs
 
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0

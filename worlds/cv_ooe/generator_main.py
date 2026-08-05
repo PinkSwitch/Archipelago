@@ -34,6 +34,8 @@ def generate_early(world) -> None:
         world.options.barlowe_required.value = passthrough["barlowe_required"]
         world.options.open_castle.value = passthrough["open_castle"]
         world.glyph_attributes = passthrough["glyph_attributes"]
+        world.options.randomize_stolen_glyphs.value = passthrough["stolen_glyphs"]
+        world.options.randomize_dropped_glyphs.value = passthrough["dropped_glyphs"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -152,7 +154,9 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "add_medal_chests": world.options.add_no_hit_chests.value,
         "barlowe_required": world.options.barlowe_required.value,
         "open_castle": world.options.open_castle.value,
-        "glyph_attributes": world.glyph_attributes
+        "glyph_attributes": world.glyph_attributes,
+        "stolen_glyphs": world.options.randomize_stolen_glyphs.value,
+        "dropped_glyphs": world.options.randomize_dropped_glyphs.value
     }
 
 
