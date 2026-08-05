@@ -175,9 +175,7 @@ def generate_output(world, output_directory: str) -> None:
 
 def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
     if world.options.randomize_glyph_attributes:
-        spoiler_handle.write("""
-Glyph Attributes:
-""")
+        spoiler_handle.write("\nGlyph Attributes:\n")
 
         for index, glyph in enumerate(world.glyph_attributes):
             if world.options.randomize_glyph_attributes != RandomGlyphAttributes.option_chaotic:

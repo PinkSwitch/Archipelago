@@ -2,6 +2,8 @@ from BaseClasses import Region, Location
 from typing import TYPE_CHECKING
 from .Locations import get_locations
 from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation
+from .glyph_regions import set_enemy_glyph_regions
+from .Options import RandomStolenGlyphs, RandomDropGlyphs
 
 if TYPE_CHECKING:
     from . import OoEWorld
@@ -55,6 +57,7 @@ region_list = [
     "Castle Entrance - Right Side",
     "Library",
     "Library - Past Wallman",
+    "Library Upper Exit",
     "Forsaken Cloister - Left",
     "Underground Labyrinth",
     "Barracks",
@@ -71,6 +74,17 @@ region_list = [
 
 def init_areas(world: "OoEWorld") -> None:
     regions = []
+    active_glyphs = []
+    #  Calculate the glyph pool
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
+        active_glyphs.extend(list(world.glyph_steals))
+        if world.options.remove_large_cavern:
+            #  Remove inaccessible glyph checks
+            active_glyphs = [glyph for glyph in active_glyphs if glyph not in ["Demon Lord", "Jiang Shi"]]
+
+    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_glyphsanity:
+        active_glyphs.extend(list(world.glyph_drops))
+
     active_regions = region_list.copy()
 
     if world.options.remove_training_hall:
@@ -79,20 +93,22 @@ def init_areas(world: "OoEWorld") -> None:
     if world.options.remove_large_cavern:
         active_regions.remove("Large Cavern")
 
+    active_regions.extend(active_glyphs)
+
     for area in active_regions:
         regions.append(Region(area, world.player, world.multiworld))
 
     world.multiworld.regions += regions
-    create_locations(world)
+    create_locations(world, active_regions)
     connect_regions(world)
 
 
-def create_locations(world):
+def create_locations(world, active_regions):
     from .static_location_data import location_ids
     all_locations = get_locations(world)
 
     for location in all_locations:
-        if location.region not in region_list:
+        if location.region not in active_regions:
             raise ValueError(f"Error: Region {location.region} is invalid for location {location.name}.")
         region = world.get_region(location.region)
         region.locations.append(OoELocation(world.player, location.name, None if location.is_event else location_ids[location.name], region))
@@ -151,7 +167,8 @@ def connect_regions(world):
     world.get_region("Castle Entrance - Right Side").connect(world.get_region("Underground Labyrinth"))
 
     world.get_region("Library").connect(world.get_region("Library - Past Wallman"), rule=Has("Paries"))
-    world.get_region("Library - Past Wallman").connect(world.get_region("Forsaken Cloister - Left"))
+    world.get_region("Library - Past Wallman").add_exits(["Forsaken Cloister - Left", "Library Upper Exit"], {
+                     "Library Upper Exit": Has("Volaticus")})
 
     world.get_region("Underground Labyrinth").connect(world.get_region("Barracks"))
 
@@ -167,4 +184,7 @@ def connect_regions(world):
     world.get_region("Forsaken Cloister - Left").connect(world.get_region("Forsaken Cloister - Upper"), rule=HasAll("Dextro Custos", "Sinestro Custos", "Arma Custos"))
     world.get_region("Forsaken Cloister - Upper").connect(world.get_region("Final Approach"))
 
-    world.get_region("Final Approach").connect(world.get_region("Final Approach - Throne"), rule=Has("Volaticus"))
+    world.get_region("Final Approach").add_exits(["Final Approach - Throne", "Library Upper Exit"], {
+                                                 "Final Approach - Throne": Has("Volaticus"),
+                                                 "Library Upper Exit": Has("Volaticus")})
+    set_enemy_glyph_regions(world)

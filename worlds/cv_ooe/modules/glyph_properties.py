@@ -316,7 +316,7 @@ def write_glyph_attributes(world, rom):
 
     for glyph in union_attributes:
         attribute_field = get_attribute_byte(union_attributes[glyph])
-        rom.write_to_file(0x020F0164 + (0x20 * item_index[glyph] + 0x0C), "arm9", attribute_field)
+        rom.write_to_file(0x020F0164 + (0x1C * item_index[glyph] + 0x0C), "arm9", attribute_field)
 
 
 def get_attribute_byte(attributes) -> bytes:

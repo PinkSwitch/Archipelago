@@ -757,6 +757,7 @@ def get_location_groups():
     enemy_glyphs_per_area = {
         "Ecclesia": ["Barlowe Glyph"],
         "Training Hall": ["Nova Skeleton Glyph"],
+        "Monastery": ["Bone Scimitar Glyph"],
         "Ruvas Forest": ["Bone Scimitar Glyph", "Necromancer Glyph", "Axe Knight Glyph"],
         "Kalidus Channel": ["Sea Demon Glyph", "Skull Spider Glyph"],
         "Somnus Reef": ["Sea Demon Glyph"],

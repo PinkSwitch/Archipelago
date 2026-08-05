@@ -127,7 +127,6 @@ class OoEClient(BizHawkClient):
 
             for new_check_id in new_checks:
                 ctx.locations_checked.add(new_check_id)
-                # location = ctx.location_names.lookup_in_slot(new_check_id)
                 await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
 
     @staticmethod

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Optional, NamedTuple, List
 from .static_location_data import location_data_table
-from .Options import AddBrownChests
+from .Options import AddBrownChests, RandomStolenGlyphs, RandomDropGlyphs
 
 if TYPE_CHECKING:
     from . import OoEWorld
@@ -356,6 +356,48 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
             LocationData("Underground Labyrinth", "Underground Labyrinth: Blackmore No-Hit Chest"),
             LocationData("Arms Depot", "Arms Depot: Eligor No-Hit Chest"),
             LocationData("Mechanical Tower Upper", "Mechanical Tower: Death No-Hit Chest"),
+        ])
+
+    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
+        location_table.extend([
+            LocationData("Necromancer", "Necromancer Glyph"),
+            LocationData("Sea Demon", "Sea Demon Glyph"),
+            LocationData("Fire Demon", "Fire Demon Glyph"),
+            LocationData("Black Fomor", "Black Fomor Glyph"),
+            LocationData("Thunder Demon", "Thunder Demon Glyph"),
+            LocationData("White Fomor", "White Fomor Glyph"),
+            LocationData("Nova Skeleton", "Nova Skeleton Glyph"),
+            LocationData("Albus", "Albus Glyph"),
+            LocationData("Barlowe", "Barlowe Glyph"),
+        ])
+        #  These enemies only spawn in Large Cavern, so don't create these if we can't get there
+        if not world.options.remove_large_cavern:
+            location_table.extend([
+                LocationData("Demon Lord", "Demon Lord Glyph"),
+                LocationData("Jiang Shi", "Jiang Shi Glyph"),
+            ])
+
+    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_glyphsanity:
+        location_table.extend([
+            LocationData("Bone Scimitar", "Bone Scimitar Glyph"),
+            LocationData("Axe Knight", "Axe Knight Glyph"),
+            LocationData("Bone Archer", "Bone Archer Glyph"),
+            LocationData("Spear Guard", "Spear Guard Glyph"),
+            LocationData("Werebat", "Werebat Glyph"),
+            LocationData("Skull Spider", "Skull Spider Glyph"),
+            LocationData("Owl", "Owl Glyph"),
+            LocationData("Spectral Sword", "Spectral Sword Glyph"),
+            LocationData("Automaton ZX27", "Automaton ZX27 Glyph"),
+            LocationData("Gorgon Head", "Gorgon Head Glyph"),
+            LocationData("Black Panther", "Black Panther Glyph"),
+            LocationData("Polkir", "Polkir Glyph"),
+            LocationData("Red Smasher", "Red Smasher Glyph"),
+            LocationData("Hammer Shaker", "Hammer Shaker Glyph"),
+            LocationData("Great Knight", "Great Knight Glyph"),
+            LocationData("Winged Skeleton", "Winged Skeleton Glyph"),
+            LocationData("Dullahan", "Dullahan Glyph"),
+            LocationData("Miss Murder", "Miss Murder Glyph"),
+            LocationData("Lizardman", "Lizardman Glyph"),
         ])
 
     return location_table
