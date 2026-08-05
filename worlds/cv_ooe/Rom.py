@@ -14,6 +14,7 @@ from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
 from .modules.glyph_properties import write_glyph_attributes
 from .modules.text_builder import text_encoder
 from .modules.glyph_shuffle import write_shuffled_glyphs
+from .modules.in_game_hints import write_cat_hints
 from .Options import RandomStolenGlyphs
 
 world_version = "1.2"
@@ -166,6 +167,7 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     write_shuffled_glyphs(world, rom)
     ###############################################
+    write_cat_hints(world, rom)
 
     # Locations handler
     patch_locations(world, rom, world.get_locations())
@@ -304,7 +306,7 @@ def get_base_rom_path(file_name: str = "") -> str:
     return file_name
 
 
-def get_item_id(world, item):
+def get_item_id(world, item) -> int:
     if item.player == world.player:
         item_id = item_table[item.name].code
     else:
@@ -317,7 +319,7 @@ def get_item_id(world, item):
     return item_id
 
 
-def patch_locations(world, rom, locations):
+def patch_locations(world, rom, locations) -> None:
     for location in locations:
         if not location.address:
             continue  # Skip over Events
