@@ -126,9 +126,9 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x022EB237, "overlay_86", bytearray([world.options.one_screen_mode.value]))
     rom.write_to_file(0x022EB238, "overlay_86", bytearray([world.options.open_castle.value]))
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
-        rom.write_to_file(0x022ECE24, "overlay_86", bytearray([0x01]))  # This is checked by Barlowe/Albus to spawn backup glyphs
+        rom.write_to_file(0x022EB2BB, "overlay_86", bytearray([0x01]))  # This is checked by Barlowe/Albus to spawn backup glyphs
 
-    rom.write_to_file(0x022ECE25, "overlay_86", bytearray([world.options.glyph_drop_multiplier.value]))
+    rom.write_to_file(0x022EB2BC, "overlay_86", bytearray([world.options.glyph_drop_multiplier.value]))
 
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
@@ -233,7 +233,7 @@ class OoEPatchExtensions(APPatchExtension):
         exp_multiplier = struct.unpack("H", rom.read_from_file(0x022EB230, "overlay_86", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
         ap_multiplier = rom.read_from_file(0x022EB236, "overlay_86", 1)[0]
-        glyph_drops = rom.read_from_file(0x022ECE25, "overlay_86", 1)[0]
+        glyph_drops = rom.read_from_file(0x022EB2BB, "overlay_86", 1)[0]
 
         for i in range(0x78):
             address = 0x020B6364 + (0x24 * i)

@@ -1,4 +1,7 @@
 from ..Options import RandomizeVillagers
+from ..game_data import enemy_table
+from .text_builder import text_encoder, calculate_text_width
+import re
 
 
 def write_cat_hints(world, rom):
@@ -47,7 +50,7 @@ def write_cat_hints(world, rom):
         if item.name in hintable_majors:
             hintable_majors.remove(item.name)
 
-    for i in range(4):
+    for i in range(3):
         if not hintable_majors:
             #  If the hint list is exhausted, mark it as no hint
             hinted_majors.append("None")
@@ -57,9 +60,22 @@ def write_cat_hints(world, rom):
             hintable_majors.remove(item)
 
     for hint in hinted_majors:
+        is_enemy_text = False
         location = world.multiworld.find_item(hint, world.player)
-        region = location.parent_region.name
+        groups = world.multiworld.worlds[location.player].location_name_groups
+        possible_groups = [group_name for group_name, group_locations in groups.items()
+                           if location.name in group_locations and group_name != "Everywhere"]
+        if possible_groups:
+            region = world.random.choice(possible_groups)
+        else:
+            region = location.parent_region.name
+
+        if world.player == location.player and location.parent_region.name in enemy_table:
+            region = location.parent_region.name
+            is_enemy_text = True
+
         hint_text = "I think that "
+
         if hint == "None":
             hint_text += "You don't need any more hints!"
         else:
@@ -71,9 +87,32 @@ def write_cat_hints(world, rom):
             if location.player != world.player:
                 #  If it's not local, append the finder
                 hint_text += f" by {world.multiworld.get_player_name(location.player)}"
-            #  TODO! Get location GROUPS here, fallback to region only if none are available
             if region == "Menu":
                 hint_text += f"."  # Menu would be weird so just say they can find it
             else:
-                hint_text += f" at {region}."  # Else show the region
+                if not is_enemy_text:
+                    hint_text += f" at {region}."  # Else show the region
+                else:
+                    hint_text += f" with {region}."
+            if len(hint_text) > 0x90:  # Max space allocated for this
+                hint_text[:-3] += "..."  # Trail off if we run out of room
+
+            text_split = re.split(r'( )', hint_text)  # Split by words
+            width = 0
+            lines = 0
+            for index, string in enumerate(text_split):
+                replace_char = "\n"  # If we run out of room, replace with a line break
+                if width >= 117:  # If we hit this, we need to line break
+                    lines += 1
+                    if lines == 3:
+                        replace_char = "\v"  # If we ran out the textbox, make a new page instead.
+                        lines = 0
+                    if string == " ":
+                        text_split[index] = replace_char
+                        width = 0
+                    else:
+                        text_split[index - 1] = replace_char  # If it's not a space, replace the last space
+                        width = 0
+                width += calculate_text_width(string)
+            hint_text = "".join(text_split)
             print(hint_text)
