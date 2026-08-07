@@ -3,6 +3,20 @@ from ..game_data import enemy_table
 from .text_builder import text_encoder, calculate_text_width, get_raw_str_length, string_reduce
 import re
 
+the_names = [  # Names we append "The" to
+    "Training Hall",
+    "Monastery",
+    "Lighthouse",
+    "Castle Entrance",
+    "Underground Labyrinth",
+    "Library",
+    "Barracks",
+    "Mechanical Tower",
+    "Arms Depot",
+    "Forsaken Cloister",
+    "Final Approach"
+]
+
 
 def write_cat_hints(world, rom):
     hintable_majors = ["Dextro Custos", "Sinestro Custos", "Dominus Hatred", "Dominus Anger",
@@ -74,7 +88,7 @@ def write_cat_hints(world, rom):
             region = location.parent_region.name
             is_enemy_text = True
 
-        hint_text = f"<txchrnm={0x15 - hint_num}>I think that "
+        hint_text = f"<txchrnm={0x13 + hint_num}>I think that "
 
         if hint == "None":
             hint_text += "you don't need any more hints!"
@@ -93,12 +107,15 @@ def write_cat_hints(world, rom):
                 hint_text += f"."  # Menu would be weird so just say they can find it
             else:
                 if not is_enemy_text:
-                    hint_text += f" at <txclr=12>{region}<txclr=1>."  # Else show the region
+                    if region in the_names:
+                        hint_text+= f" at the <txclr=12>{region}<txclr=1>!"
+                    else:
+                        hint_text += f" at <txclr=12>{region}<txclr=1>!"  # Else show the region
                 else:
-                    hint_text += f" with <txclr=12>{region}<txclr=1>."
+                    hint_text += f" with <txclr=12>{region}<txclr=1>!"
 
             string_length = get_raw_str_length(hint_text)
-            if string_length > 0x01:  # Max space allocated for this  TODO! Change back to 0x90
+            if string_length > 0x90:
                 string_reduce(hint_text)
 
             text_split = re.split(r'( )', hint_text)  # Split by words
@@ -120,5 +137,4 @@ def write_cat_hints(world, rom):
                 width += calculate_text_width(string)
             hint_text = "".join(text_split)
             hint_array = text_encoder(hint_text, True)
-            # TODO! Write the hint array into rom
-            # TODO! Make sure I'm not cutting off an opcode!
+            rom.write_to_file(0x022EB2C0 + (0xB0 * hint_num), "overlay_86", bytearray(hint_array))

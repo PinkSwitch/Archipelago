@@ -153,6 +153,15 @@
         .dw @VillagerGlyph
         .dw @RelicGlyph
 
+    .org 0x021FCA1C
+        .dw @CatHint1
+
+    .org 0x021FCA24
+        .dw @CatHint2
+
+    .org 0x021FCA2C
+        .dw @CatHint3
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_19", 0x021FFFC0
@@ -198,6 +207,15 @@
 
     .org 0x02213944
         mov r0, 0x2E ; Nova Skeleton glyh
+
+    .org 0x02223BF0
+        .dh 0x075B ; Cat 1 second text ID
+
+    .org 0x02223BF4
+        .dh 0x0757 ; Cat 2 second text ID
+
+    .org 0x02223BF8
+        .dh 0x0759 ; Cat 3 second text ID
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_20", 0x021FFFC0
@@ -212,6 +230,9 @@
 
     .org 0x02205F30
         mov r0, 1 ; Hard mode
+
+    .org 0x02206604
+        beq 0x022064F0 ; Fix being unable to back out of difficulty selection
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -433,9 +454,6 @@
     .org 0x02258F08
         mov r0, 0x23 ; Thunder Demon glyph flag
 
-    .org 0x022B9E58
-        mov r0, 0x25 ; Owl glyph flag
-
     .org 0x022502CC
         bl @SpawnFomorGlyph
 
@@ -568,6 +586,9 @@
 .open "ftc/overlay9_38", 0x022B73A0
     .org 0x022BE308
         bl @SetSpecSwordGlyphFlag
+
+    .org 0x022B9E58
+        mov r0, 0x25 ; Owl glyph flag
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_41", 0x022C1FE0
@@ -849,9 +870,16 @@
     @EnemGlyphIndex_len equ @ROMTable_EnemyGlyphFlags - @ROMTable_EnemyGlyphIndex
 .align 4
     @OptionFlag_StolenGlyphChecks:
-        .db 0x01 ; 022ECE24
+        .db 0x01 ; 022EB2BB
     @OptionFlag_GlyphDropMult:
-        .db 0x00 ; 022ECE25
+        .db 0x00 ; 022EB2BC
+.align 0x10
+    @CatHint1: ;022EB2C0
+        .fill 0xB0
+    @CatHint2:
+        .fill 0xB0 ;22EB370
+    @CatHint3:
+        .fill 0xB0 ; 22EB420
 
 .align 4
 
