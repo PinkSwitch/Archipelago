@@ -1,3 +1,6 @@
+import re
+pattern = re.compile(r'<(\w+)=(\d+)>')
+
 text_table = {" ": 0x00, "!": 0x01, '""': 0x02, "#": 0x03, "$": 0x04, "%": 0x05, "&": 0x06,
               "'": 0x07, "(": 0x08, ")": 0x09, "*": 0x0A, "+": 0x0B, ",": 0x0C, "-": 0x0D,
               ".": 0x0E, "/": 0x0F, "0": 0x10, "1": 0x11, "2": 0x12, "3": 0x13, "4": 0x14,
@@ -52,25 +55,50 @@ char_width_table = {" ": 3, "!": 1, '""': 3, "#": 6, "$": 5, "%": 7, "&": 5,
                     "ø": 7, "ù": 5, "ú": 5, "û": 5, "ü": 5, "ý": 5, "Œ": 7,
                     "œ": 7, "ˆ": 3, "“": 4, "‘": 2, "’": 2, "，": 2, "„": 3,
                     "…": 5, "※": 7, "€": 5, "™": 8, "«": 6, "»": 6, "∘": 4,
-                    "\n": 0}
+                    "\n": 0, "\v": 0}
 
+opcode_bytes = {
+    "txclr": 0xE8,
+    "txchrnm": 0xE7
+}
 
 
 def text_encoder(input_text, is_full_string=False) -> list:
+    matches = [m.span() for m in re.finditer(pattern, input_text)]
+    tex_opcode = pattern.findall(input_text)
+
     output = []
-    if is_full_string:
-        output += [0x01, 0x00]  # Some kind of header? strings in game are appended with this pattern...
-    for char in input_text:
+    for index, char in enumerate(input_text):
+        is_command = False
+        for op_index, match in enumerate(matches):  # Check if it's a special opcode
+            if index in range(*match):
+                is_command = True
+                if index == match[0]:
+                    # Opcodes should only be inserted on the index at which they were started
+                    opcode = tex_opcode[op_index][0]
+                    operand = int(tex_opcode[op_index][1])
+                    output.extend([opcode_bytes[opcode], operand])
+                continue
+        if is_command:  # Don't encode opcodes
+            continue
+
         if char in text_table:
             output.append(text_table[char])
+        elif char == "\v":
+            output.extend([0xE6, 0xE5, 0xE9])
         else:
             output.append(text_table["?"])
     if is_full_string:
-        output.append(0xEA)  # Terminator
+        output = [0x01, 0x00] + output  # Initializer
+        output.extend([0xE5, 0xE4, 0xEA])  # Terminator
     return output
 
 
 def calculate_text_width(input_text) -> int:
+    match = pattern.search(input_text)  # do this when you want to detect if the input matches the pattern
+    if match:
+        input_text = re.sub(pattern, "", input_text)
+
     width = 0
     for char in input_text:
         if char in char_width_table:
@@ -78,3 +106,22 @@ def calculate_text_width(input_text) -> int:
         else:
             width += (char_width_table["?"] + 1)
     return width
+
+
+def get_raw_str_length(input_text) -> int:
+    #  Get the raw length of an input string, ignoring opcodes
+    match = pattern.search(input_text)
+    if match:
+        input_text = re.sub(pattern, "", input_text)
+    return len(input_text)
+
+
+def string_reduce(input_text) -> str:
+    match = list(pattern.finditer(input_text))
+    last_cmd = match[len(match) - 1]
+    opcode = last_cmd.group(0)
+    opcode_pos = last_cmd.span(0)
+    input_text = input_text[:opcode_pos[0]] + input_text[opcode_pos[1]:]  # Split this to get the raw string
+    input_text = input_text[:-4]  # Remove 4 characters so we don't overflow the text
+    input_text += (opcode + "...")  # Reset the color and add 3 dots to trail off
+    return input_text

@@ -1,6 +1,6 @@
 from ..Options import RandomizeVillagers
 from ..game_data import enemy_table
-from .text_builder import text_encoder, calculate_text_width
+from .text_builder import text_encoder, calculate_text_width, get_raw_str_length, string_reduce
 import re
 
 
@@ -59,7 +59,7 @@ def write_cat_hints(world, rom):
             hinted_majors.append(item)
             hintable_majors.remove(item)
 
-    for hint in hinted_majors:
+    for hint_num, hint in enumerate(hinted_majors):
         is_enemy_text = False
         location = world.multiworld.find_item(hint, world.player)
         groups = world.multiworld.worlds[location.player].location_name_groups
@@ -74,28 +74,32 @@ def write_cat_hints(world, rom):
             region = location.parent_region.name
             is_enemy_text = True
 
-        hint_text = "I think that "
+        hint_text = f"<txchrnm={0x15 - hint_num}>I think that "
 
         if hint == "None":
-            hint_text += "You don't need any more hints!"
+            hint_text += "you don't need any more hints!"
         else:
             if "Map" in hint:
                 #  Split this so that it reads more naturally in dialogue
-                hint = f"a map to {hint.split('Map: ')[1]}"
-            hint_text += hint
+                hint = f"a map to <txclr=7>{hint.split('Map: ')[1]}<txclr=1>"
+                hint_text += hint
+            else:
+                hint_text += "<txclr=7>" + hint + "<txclr=1>"
             hint_text += " can be found"
             if location.player != world.player:
                 #  If it's not local, append the finder
-                hint_text += f" by {world.multiworld.get_player_name(location.player)}"
+                hint_text += f" by <txclr=11>{world.multiworld.get_player_name(location.player)}<txclr=1>"
             if region == "Menu":
                 hint_text += f"."  # Menu would be weird so just say they can find it
             else:
                 if not is_enemy_text:
-                    hint_text += f" at {region}."  # Else show the region
+                    hint_text += f" at <txclr=12>{region}<txclr=1>."  # Else show the region
                 else:
-                    hint_text += f" with {region}."
-            if len(hint_text) > 0x90:  # Max space allocated for this
-                hint_text[:-3] += "..."  # Trail off if we run out of room
+                    hint_text += f" with <txclr=12>{region}<txclr=1>."
+
+            string_length = get_raw_str_length(hint_text)
+            if string_length > 0x01:  # Max space allocated for this  TODO! Change back to 0x90
+                string_reduce(hint_text)
 
             text_split = re.split(r'( )', hint_text)  # Split by words
             width = 0
@@ -115,4 +119,6 @@ def write_cat_hints(world, rom):
                         width = 0
                 width += calculate_text_width(string)
             hint_text = "".join(text_split)
-            print(hint_text)
+            hint_array = text_encoder(hint_text, True)
+            # TODO! Write the hint array into rom
+            # TODO! Make sure I'm not cutting off an opcode!
