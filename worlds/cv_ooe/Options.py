@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
-                     NamedRange, Range, Choice, OptionSet, StartInventoryPool)
+                     NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink)
 
 
 class StartingGlyph(TextChoice):
@@ -250,6 +250,7 @@ class OoEOptions(PerGameCommonOptions):
     randomize_stolen_glyphs: RandomStolenGlyphs
     randomize_dropped_glyphs: RandomDropGlyphs
     glyph_drop_multiplier: GlyphDropMultiplier
+    death_link: DeathLink
 
 
 ooe_option_groups = [

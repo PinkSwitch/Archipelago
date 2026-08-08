@@ -124,6 +124,12 @@
     .org 0x02088174
         bl @CheckIfEnemGlyphObtained  ; Used for the Top Screen enemy status
 
+    .org 0x0204D0CC
+        bl @CreateAndClearDeaths
+
+    .org 0x020378FC
+        bl @RemoteKillPlayer
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_0", 0x021DD280
@@ -870,9 +876,14 @@
     @EnemGlyphIndex_len equ @ROMTable_EnemyGlyphFlags - @ROMTable_EnemyGlyphIndex
 .align 4
     @OptionFlag_StolenGlyphChecks:
-        .db 0x01 ; 022EB2BB
+        .db 0x01 ; 022EB2BC
     @OptionFlag_GlyphDropMult:
-        .db 0x00 ; 022EB2BC
+        .db 0x00 ; 022EB2BD
+    @OptionFlag_DeathLinkEnabled:
+        .db 0x00 ; 022EB2BE
+    @RAMFlag_ReceivedServerDeath:
+        .db 0x00 ; 022EB2BF
+
 .align 0x10
     @CatHint1: ;022EB2C0
         .fill 0xB0
@@ -2862,7 +2873,7 @@
     bne @@End
     ldr r0, =0x020FFC8C
     ldr r1, [r0]
-    orr r1, r1, 0x80
+    orr r1, r1, 0x80 ; Hide the hud so that it doesnt display garbage
     str r1, [r0]
 
     ldr r0, =@RamFlag_MapTimer
@@ -3260,6 +3271,58 @@
     ldr r0, = 0x020FFC58
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;
+; Clears deathlink data upon loading into a save
+@CreateAndClearDeaths:
+    push lr
+    bl 0x0204E6D8
+    push r0
+    ldr r0, = @RAMFlag_ReceivedServerDeath
+    ldrb r1, [r0]
+    tst r1, 0x02 ; Flag that a death has already been processed
+    beq @@SkipClear
+    mov r1, 0
+    strb r1, [r0]
+@@SkipClear:
+    pop r0
+    pop lr
+    bx lr
+
+@RemoteKillPlayer:
+    push lr
+    bl 0x0208C6BC
+    ldr r0, = @RAMFlag_ReceivedServerDeath
+    ldrb r1, [r0]
+    tst r1, 0x01 ; Flag that we received a death from the server
+    beq @@Exit
+    ;;;;;;;;;;;;;;;;;;
+    ;State checker
+    ldr r0, = 0x02100A9C
+    ldr r0, [r0]
+    cmp r0, 0
+    bne @@Exit ; Check a field of running fade timers. Don' kill during a fade so it doesnt break after cutscenes...
+    ldr r0, = 0x020FFC8C
+    ldr r0, [r0]
+    ldr r1, = 0x88100041 ; Dead, busy, pausing, or room transition
+    tst r0, r1
+    bne @@Exit ; If any of the above bits are set, ignore
+    ldr r0, = 0x021000F4 ; Check if the player is frozen
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@Exit
+    ;;;;;;;;;;;;;;;;;;
+    ldr r0, = @RAMFlag_ReceivedServerDeath
+    mov r1, 0x02 ; Set the processed flag
+    strb r1, [r0]
+    ldr r0, = 0x020FFC8C
+    ldr r1, [r0]
+    orr r1, r1, 0x40
+    str r1, [r0] ; Kill the player
+    ldr r0, = 0x21002B4
+    mov r1, 0
+    strh r1, [r0] ; Zero out the player's HP for the death transition
+@@Exit:
+    pop lr
+    bx lr
 
 
 .pool
