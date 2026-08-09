@@ -16,6 +16,7 @@ class OoEClient(BizHawkClient):
     most_recent_connect: str = ""
     client_version: str = world_version
     has_received_death: bool = False
+    just_died: bool = False
 
     def __init__(self) -> None:
         super().__init__()
@@ -45,11 +46,13 @@ class OoEClient(BizHawkClient):
                     self.most_recent_connect = patch_version
                 return False
 
-            post_validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x2EB2BE, 0x01, "Main RAM")])  #DL
+            post_validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x2EB2BE, 0x01, "Main RAM")])   # DL
 
             death_link_flag = int.from_bytes(post_validation_data[0])
             if death_link_flag:
                 await ctx.update_death_link(True)
+            else:
+                await ctx.update_death_link(False)
 
             ctx.game = self.game
             ctx.items_handling = 0b101
@@ -74,7 +77,10 @@ class OoEClient(BizHawkClient):
         if "tags" not in args:
             return
         if "DeathLink" in args["tags"]:
-            self.has_received_death = True
+            if not self.just_died:
+                self.has_received_death = True
+            else:
+                self.just_died = False
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
         if ctx.server_version.build > 0:
@@ -100,7 +106,8 @@ class OoEClient(BizHawkClient):
                     (0xFFCB9, 1, "Main RAM"),  # Current area
                     (0x1003E4, 4, "Main RAM"),  # Boss death flags
                     (0x109820, 4, "Main RAM"),  # Player pointer
-                    (0x2EB2BF, 1, "Main RAM")  # Death Link state
+                    (0x2EB2BF, 1, "Main RAM"),  # Death Link state
+                    (0x0FFC8C, 4, "Main RAM")  # General game flags
         ])
         game_mode = read_state[1][0]  # If the game mode is non-zero, return
         overlay22_entry = struct.unpack("I", read_state[0])[0]
@@ -108,6 +115,7 @@ class OoEClient(BizHawkClient):
         current_map = read_state[5][0]
         player_pointer = struct.unpack("I", read_state[7])[0]
         death_link_state = read_state[8][0]
+        game_flags = struct.unpack("I", read_state[9])[0]
 
         if game_mode or overlay22_entry != 0xE3A00064 or not player_pointer:
             #  We don't want to run AP if the game mode isn't regular Shanoa mode.
@@ -115,7 +123,9 @@ class OoEClient(BizHawkClient):
             #  We ALSO want to make sure the Player is fully loaded to prevent the client from reading during loads
             return
 
-        await self.handle_deathlink(death_link_state, ctx)
+        if "DeathLink" in ctx.tags:
+            await self.handle_deathlink(death_link_state, game_flags, ctx)
+            
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
 
@@ -162,6 +172,10 @@ class OoEClient(BizHawkClient):
     async def handle_deathlink(self, current_death_state, game_flags, ctx):
         if game_flags & 0x40 and not current_death_state:
             #  Detect a death, but don't if we just killed the player
+            self.just_died = True  # Set so we can't receieve our OWN death
             await ctx.send_death(f"{ctx.player_names[ctx.slot]} died!")
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x2EB2BF, bytearray([0x42]), "Main RAM")])
         elif self.has_received_death:
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x2EB2BF, bytearray([0x01]), "Main RAM")]) #  Flag that a death got processed...
+            #  Flag that a death got processed...
+            self.has_received_death = False
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x2EB2BF, bytearray([0x01]), "Main RAM")])

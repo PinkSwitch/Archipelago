@@ -38,7 +38,7 @@
         bl @SwapExtendedGlyphIDPart2
 
     .org 0x0206CEC4
-        bl @SwapGlyphFile4
+        ;bl @SwapGlyphFile4
 
     .org 0x020635B0
         b @GiveExpandedItems
@@ -129,6 +129,10 @@
 
     .org 0x020378FC
         bl @RemoteKillPlayer
+
+    .org 0x0200BED0
+        bl @SwapLoadedGlyphPointer
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1244,35 +1248,35 @@
 
 @GetExtendedGlyphNum:
     cmp r0, 0xD6
-    moveq r0, 0x43 ; AP prog 
+    ldreq r0, =0x343 ; AP prog 
     bxeq lr
     cmp r0, 0xD4
-    moveq r0, 0x42
+    ldreq r0, =0x342
     bxeq lr
     cmp r0, 0xD5 ; AP Useful
-    moveq r0, 0x46
+    ldreq r0, =0x346
     bxeq lr
 
 
     cmp r0, 0x160
     bgt @@ExpandedItems
     cmp r0, 0x75
-    movle r0, 0x47 ; Relics 
+    ldrle r0, =0x347 ; Relics 
     bxle lr
 
-    mov r0, 0x41 ; Regular items
+    ldr r0, = 0x341 ; Regular items
     bx lr
     ; Custom items here
 @@ExpandedItems:
     sub r0, r0, 1
     sub r0, r0, 0x160
     cmp r0, 0x07
-    movlt r0, 0x44 ; Money glyphs
+    ldrlt r0, =0x344 ; Money glyphs
     bxlt lr
     cmp r0, 0x15
-    movge r0, 0x45 ; Maps
+    ldrge r0, =0x345 ; Maps
     bxge lr
-    mov r0, 0x40; villagers
+    ldr r0, =0x340; villagers
     bx lr
 ;;;;;;;;;;;;;;;;;;;;
 ; Gives expanded Item IDs properly.
@@ -3323,7 +3327,18 @@
 @@Exit:
     pop lr
     bx lr
-
+;;;;;;;;;;;;;;;;;;
+; Switches the pointer we were going to load with the one for fsha04
+@SwapLoadedGlyphPointer:
+    push r0
+    ldr r0, = @RamFlag_ExtendedGlyphID
+    ldrh r0, [r0]
+    cmp r0, 0
+    beq @@End
+    ldr r1, = 0x020E1E72
+@@End:
+    pop r0
+    b 0x0200BDC8
 
 .pool
 .endarea

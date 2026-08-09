@@ -36,6 +36,8 @@ def generate_early(world) -> None:
         world.glyph_attributes = passthrough["glyph_attributes"]
         world.options.randomize_stolen_glyphs.value = passthrough["stolen_glyphs"]
         world.options.randomize_dropped_glyphs.value = passthrough["dropped_glyphs"]
+        world.can_kill_tin_man = passthrough["tin_man_glyph_logic"]
+        world.generator_logic_glyphs = passthrough["generator_logic"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -156,7 +158,9 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "open_castle": world.options.open_castle.value,
         "glyph_attributes": world.glyph_attributes,
         "stolen_glyphs": world.options.randomize_stolen_glyphs.value,
-        "dropped_glyphs": world.options.randomize_dropped_glyphs.value
+        "dropped_glyphs": world.options.randomize_dropped_glyphs.value,
+        "tin_man_glyph_logic": world.can_kill_tin_man,
+        "generator_logic": world.generator_logic_glyphs
     }
 
 
