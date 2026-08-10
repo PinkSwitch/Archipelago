@@ -218,6 +218,9 @@
     .org 0x02213944
         mov r0, 0x2E ; Nova Skeleton glyh
 
+    .org 0x0221312C
+        mov r0, 0x30 ; Hammer Shaker glyph
+
     .org 0x02223BF0
         .dh 0x075B ; Cat 1 second text ID
 
@@ -467,17 +470,14 @@
     .org 0x022502CC
         bl @SpawnFomorGlyph
 
-    .org 0x0228AE44
-        mov r1, 0x2A ; Black Panther flag
+    .org 0x0228AE54
+        bl @SetPantherGlyphFlag
 
     .org 0x02276CBC
         bl @SetPolkirGlyphFlag
 
     .org 0x0224C05C
         mov r1, 0x2F ; Red Smasher glyph
-
-    .org 0x0223121C
-        mov r0, 0x30 ; Hammer Shaker glyph
 
     .org 0x0228CBD8
         bl @SetAutomatonGlyphFlag
@@ -3164,6 +3164,11 @@
 @SetLizardmanGlyphFlag:
     mov r3, 0x1C
     str r3, [r13, 0x0C]
+    bx lr
+
+@SetPantherGlyphFlag:
+    mov r1, 0x2A
+    str r1, [r13, 0x0C]
     bx lr
 
 ; Black and White Fomors both set this same code path, so we need to differentiate them

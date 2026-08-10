@@ -247,6 +247,8 @@ class OoEPatchExtensions(APPatchExtension):
             rom.write_to_file(address + 13, "arm9", bytearray([enemy_ap]))
 
             drop_chance = rom.read_from_file(address + 0x16, "arm9", 1)[0]
+            if i == 0x63:
+                drop_chance = max(drop_chance, 1)  # Great Knight has a drop chance of 0 so it ignores the multiplier
             drop_chance = int(min(100, (drop_chance * glyph_drops)))
             rom.write_to_file(address + 0x16, "arm9", bytearray([drop_chance]))
 
