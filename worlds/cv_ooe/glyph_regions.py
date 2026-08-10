@@ -73,6 +73,8 @@ def set_enemy_glyph_regions(world):
 
         world.get_region("Final Approach").connect(world.get_region("Winged Skeleton"))
         world.get_region("Skeleton Cave").connect(world.get_region("Dullahan"))
+        world.get_region("Tymeo Mountains East").connect(world.get_region("Dullahan"))
+
         world.get_region("Giant's Dwelling Main").connect(world.get_region("Miss Murder"))
         world.get_region("Oblivion Ridge").connect(world.get_region("Lizardman"))
         world.get_region("Tristis Pass").connect(world.get_region("Lizardman"))

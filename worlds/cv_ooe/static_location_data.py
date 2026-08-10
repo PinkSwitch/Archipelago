@@ -762,7 +762,7 @@ def get_location_groups():
         "Kalidus Channel": ["Sea Demon Glyph", "Skull Spider Glyph"],
         "Somnus Reef": ["Sea Demon Glyph"],
         "Minera Prison Island": ["Spear Guard Glyph", "Bone Archer Glyph", "Axe Knight Glyph"],
-        "Tymeo Mountains": ["Fire Demon Glyph", "Skull Spider Glyph"],
+        "Tymeo Mountains": ["Fire Demon Glyph", "Skull Spider Glyph", "Dullahan Glyph"],
         "Tristis Pass": ["Owl Glyph", "Thunder Demon Glyph", "Lizardman Glyph"],
         "Large Cavern": ["Demon Lord Glyph", "Jiang Shi Glyph"],
         "Giant's Dwelling": ["Miss Murder Glyph"],
