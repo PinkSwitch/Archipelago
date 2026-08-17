@@ -255,7 +255,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Underground Labyrinth", "Underground Labyrinth: First Shadow Room"),
 
         LocationData("Library - Past Wallman", "Library: Past Wallman"),
-        LocationData("Library", "Wallman Glyph"),
+        LocationData("Wallman", "Wallman Glyph"),
         LocationData("Library - Past Wallman", "Library: Final Room Item"),
         LocationData("Library - Past Wallman", "Library: Hidden Room Free"),
         LocationData("Library", "Library: First Chest"),

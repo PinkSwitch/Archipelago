@@ -3,6 +3,9 @@ from rule_builder.rules import HasAll, CanReachLocation, Has, HasAny
 
 
 def set_enemy_glyph_regions(world):
+    world.get_region("Library").connect(world.get_region("Wallman"))
+    world.get_region("Library - Past Wallman").connect(world.get_region("Wallman"))
+
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
         world.get_region("Ruvas Forest").connect(world.get_region("Necromancer"))
         world.get_region("Kalidus Channel Depths Right").connect(world.get_region("Sea Demon"))

@@ -4,6 +4,7 @@ from .Locations import get_locations
 from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation
 from .glyph_regions import set_enemy_glyph_regions
 from .Options import RandomStolenGlyphs, RandomDropGlyphs
+from .modules.area_shuffle import shuffle_doors
 
 if TYPE_CHECKING:
     from . import OoEWorld
@@ -74,7 +75,7 @@ region_list = [
 
 def init_areas(world: "OoEWorld") -> None:
     regions = []
-    active_glyphs = []
+    active_glyphs = ["Wallman"]
     #  Calculate the glyph pool
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
         active_glyphs.extend(list(world.glyph_steals))
@@ -101,6 +102,8 @@ def init_areas(world: "OoEWorld") -> None:
     world.multiworld.regions += regions
     create_locations(world, active_regions)
     connect_regions(world)
+    #  If world.options.shuffle_castle_areas
+    shuffle_doors(world)
 
 
 def create_locations(world, active_regions):

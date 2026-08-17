@@ -50,6 +50,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", "Umbra", "Nitesco"))
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
+    set_rule(world.get_location("Underground Labyrinth: Boulder Room Glyph"), Has("Paries"))
+
     set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAny(*world.generator_logic_glyphs))
 
     set_rule(world.get_location("Final Approach: Treasure Room Second From Right"), Has("Volaticus"))
@@ -79,7 +81,7 @@ def set_location_rules(world):
 
     if not world.options.remove_large_cavern:
         if world.options.add_brown_chests == AddBrownChests.option_include:
-            set_rule(world.get_location("Large Cavern: Rest Room 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
+            set_rule(world.get_location("Large Cavern: Rest Room 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | HasAll("Volaticus"))
             set_rule(world.get_location("Large Cavern: Rest Room 2"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
             set_rule(world.get_location("Large Cavern: Rest Room 3"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
             set_rule(world.get_location("Large Cavern: Rest Room 4"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
