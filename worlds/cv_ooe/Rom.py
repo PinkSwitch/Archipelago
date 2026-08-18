@@ -17,7 +17,7 @@ from .modules.glyph_shuffle import write_shuffled_glyphs
 from .modules.in_game_hints import write_cat_hints
 from .Options import RandomStolenGlyphs
 
-world_version = "1.2"
+world_version = "1.2.1"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 
