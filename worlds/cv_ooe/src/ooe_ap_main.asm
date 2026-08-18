@@ -133,6 +133,9 @@
     .org 0x0200BED0
         bl @SwapLoadedGlyphPointer
 
+    .org 0x02088188
+        bl @GetExtendedItemsOnEnemies
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -191,7 +194,7 @@
         bl @SetFireGlyph
 
     .org 0x0221A6B0
-        bl @GetItemArbitrary
+        bl @GetItemArbitrary ; Chest item handler
         b 0x0221A778
 
     .org 0x0221D7C8
@@ -494,6 +497,21 @@
     .org 0x0225E73C
         mov r0, 0x5E
 
+    .org 0x022503AC
+        bl @OverrideFomorAttack
+
+    .org 0x0225C970
+        mov r0, 0x24 ; Make Sea Demon actually attack with Grando
+
+    .org 0x0225AC34
+        mov r0, 0x22 ; Same for Fire Demon
+
+    .org 0x02259018
+        mov r0, 0x26 ; Same for Thunder Demon
+
+    .org 0x0225E848
+        mov r0, 0x2F ; Demon Lord
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -525,6 +543,15 @@
 
     .org 0x022BA518
         bl @SpawnPortal_Wallman
+
+    .org 0x022BA658
+        bl @UnlockWallmanCamera
+
+    .org 0x022BA5F8
+        nop  ; Prevent wallman from trying to face the player. He's only intended to work from the left, so this causes weird offsets in his animations if you approach from the right
+
+    .org 0x022BA42C
+        bl @SpawnWallmanOrb
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -737,6 +764,18 @@
         bl @SetStaticGlyph ; Labyrinth boulder room
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;
+.open "ftc/overlay9_69", 0x022C1FE0
+    .org 0x022D9E48  ; Change Wallman's hider into a door for the right entrance
+        .dh 0x01F0 ; Xpos
+        .dh 0x00B0 ; Y pos
+        .db 0x00
+        .db 0x02 ; Set as special obj
+        .db 0x4B ; Boss Door
+        .db 0x00
+        .dh 0x0001 ; Boss-room door
+        .dh 0x000A ; Wallman's door
+.close
+;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_72", 0x022C1FE0
     .org 0x022C2354
         bl @SetStaticGlyph ; generator puzzle in mechanical tower
@@ -880,7 +919,7 @@
     @EnemGlyphIndex_len equ @ROMTable_EnemyGlyphFlags - @ROMTable_EnemyGlyphIndex
 .align 4
     @OptionFlag_StolenGlyphChecks:
-        .db 0x01 ; 022EB2BC
+        .db 0x00 ; 022EB2BC
     @OptionFlag_GlyphDropMult:
         .db 0x00 ; 022EB2BD
     @OptionFlag_DeathLinkEnabled:
@@ -1531,6 +1570,12 @@
     ldrb r0, [r0]
     cmp r0, 0
     bne @@Exit ; Don't want to get items while the screen isn't fully visible
+    ldr r0, = 0x021000F4 ; Check if the player is frozen
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@Exit
+
+
     ldr r0, =@ReceivedItemID
     ldrh r0, [r0] ; Current received item
     cmp r0, 0
@@ -3050,8 +3095,14 @@
     mov r2, 0
 @@GetNextPoint:
     ldrh r1, [r0, r2]
+    push r0
+    ldr r0, = 0xFFFF
+    cmp r1, r0
+    pop r0
+    beq @@SkipAPAdd
     add r1, r1, 1 ; +1 AP point
     strh r1, [r0, r2]
+@@SkipAPAdd:
     cmp r2, 0x0C
     bge @@ExitLoop
     add r2, r2, 2
@@ -3344,6 +3395,71 @@
 @@End:
     pop r0
     b 0x0200BDC8
+;;;;;;;;;;;;;;;;;;;
+; if we enter Wallman from the right, we don't want to lock the camera
+@UnlockWallmanCamera:
+    push lr
+    mov r0, r4 ; Get the pointer
+    bl 0x0205CE48 ; Check the player's X pos
+    pop lr
+    cmp r0, 0x00100000 ; Check if the player is in the second half of the room
+    bge @@SkipCameraLock
+    mov r0, 0
+    b 0x0203AAAC ; Lock the camera as expected
+@@SkipCameraLock:
+    bx lr
+;;;;;;;;;;;;;;;;;;
+; Black/White Fomors acutally spawn their glyph legitimately
+; This breaks, so we want them to always use their standard attacks
+@OverrideFomorAttack:
+    cmp r2, 0x45 ; White Fomor
+    moveq r0, 0x29 ; Vol Luminatio
+    movne r0, 0x2A ; Vol Umbra
+    bx lr
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Gets proper expanded names for enemy glyphs
+@GetExtendedItemsOnEnemies:
+    cmp r0, 0x160
+    ble 0x02063804 ; Get the normal name
+    sub r0, r0, 0x160
+    cmp r0, 0x07
+    ble @@MoneyTex
+    cmp r0, 0x15
+    ble @@VillagerTex
+    sub r0, r0, 0x16 ; Map textx
+    add r0, r0, 0x5A0
+    add r0, r0, 1
+    ldr r1, = 0x05A1
+    bx lr
+@@MoneyTex:
+    sub r0, r0, 1
+    add r0, r0, 0x430
+    add r0, r0, 0x0D
+    bx lr
+@@VillagerTex:
+    sub r0, r0, 0x08
+    add r0, r0, 0x03
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Spawns Wallman's orb on the right side of the room if needed
+@SpawnWallmanOrb:
+    push r1-r3, lr
+    mov r0, 0x3A
+    bl 0x020633F0 ; Check if the player owns Paries
+    cmp r0, 0
+    bgt @@SpawnOnLeft ; If the player does have Paries, act like normal and spawn it on the left side
+    bl 0x0205CE48 ; If the player does NOT have Paries, we check their current X coordinate
+    cmp r0, 0x100000 ; If the X-pos is >= 0x100000, the player is on the right side
+    blt @@SpawnOnLeft ; Spawn it on the left otherwise
+    mov r0, 0x180000
+    b @@SpawnOnRight
+
+@@SpawnOnLeft:
+    mov r0, 0x80000
+@@SpawnOnRight:
+    pop r1-r3, lr
+    b 0x02061284
 
 .pool
 .endarea
