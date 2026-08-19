@@ -52,6 +52,7 @@ def set_enemy_glyph_regions(world):
 
         world.get_region("Mechanical Tower").connect(world.get_region("Automaton ZX27"), rule=HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina"))
         world.get_region("Mechanical Tower Upper").connect(world.get_region("Automaton ZX27"))
+        world.get_region("Mechanical Tower Upper Exit").connect(world.get_region("Automaton ZX27"))
         world.get_region("Final Approach").connect(world.get_region("Automaton ZX27"))
 
         world.get_region("Forsaken Cloister - Upper").connect(world.get_region("Gorgon Head"))
