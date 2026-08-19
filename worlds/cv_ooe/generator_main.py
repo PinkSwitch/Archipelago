@@ -51,6 +51,12 @@ def create_regions(world) -> None:
     place_static_items(world)
 
 
+def connect_entrances(world) -> None:
+    from .modules.area_shuffle import shuffle_doors
+    #  If world.options.shuffle_castle_areas
+    shuffle_doors(world)
+
+
 def create_items(world) -> None:
     from .generator_items import create_conditional_items, generate_emergency_glyphs
     pool = []

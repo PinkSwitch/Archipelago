@@ -1,6 +1,7 @@
 from enum import IntEnum
 
 from BaseClasses import EntranceType
+from Utils import visualize_regions
 from entrance_rando import disconnect_entrance_for_randomization, randomize_entrances
 
 castle_entrances = [
@@ -63,8 +64,12 @@ def shuffle_doors(world):
         entrance.randomization_type = EntranceType.TWO_WAY
         if connection_room in left_facing_doors:
             entrance.randomization_group = DoorOrientation.Left
-            disconnect_entrance_for_randomization(entrance, DoorOrientation.Right)
+            disconnect_entrance_for_randomization(entrance, DoorOrientation.Left)
         else:
             entrance.randomization_group = DoorOrientation.Right
-            disconnect_entrance_for_randomization(entrance, DoorOrientation.Left)
+            disconnect_entrance_for_randomization(entrance, DoorOrientation.Right)
+    state = world.multiworld.get_all_state(False, allow_partial_entrances=True)
+    state.update_reachable_regions(world.player)
+    visualize_regions(world.get_region("Game Start"), "my_world.puml", show_entrance_names=True,
+                      regions_to_highlight=state.reachable_regions[world.player])
     randomize_entrances(world, True, entrance_map)

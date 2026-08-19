@@ -10,7 +10,7 @@ from .static_location_data import location_ids, get_location_groups
 from .Options import OoEOptions, ooe_option_groups
 from .Client import OoEClient
 from .generator_main import (generate_early, create_regions, create_items, create_item, get_filler_item_name, set_rules,
-                             fill_slot_data, modify_multidata, generate_output, write_spoiler_header)
+                             fill_slot_data, modify_multidata, generate_output, write_spoiler_header, connect_entrances)
 from .modules.brown_chest_shuffler import chest_armor_table
 
 
@@ -70,6 +70,7 @@ class OoEWorld(World):
     generate_output = generate_output
     get_filler_item_name = get_filler_item_name
     set_rules = set_rules
+    connect_entrances = connect_entrances
     write_spoiler_header = write_spoiler_header
 
     def __init__(self, multiworld: MultiWorld, player: int):
