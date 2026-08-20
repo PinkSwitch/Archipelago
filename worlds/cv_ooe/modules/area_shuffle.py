@@ -1,7 +1,6 @@
 from enum import IntEnum
 
 from BaseClasses import EntranceType
-from Utils import visualize_regions
 from entrance_rando import disconnect_entrance_for_randomization, randomize_entrances
 
 castle_entrances = [
@@ -45,6 +44,12 @@ left_facing_doors = {  # Left facing doors are doors that the player ENTERS WALK
     "Sec09Rm07"
 }
 
+entrance_names = {
+    "Sec00Rm07": "Castle Entrance: Upper Door",
+    "Sec01Rm03": "Castle Entrance: Lower Door",
+    "Sec01Rm07": "Castle Entrance: Shortcut Door",
+}
+
 
 class DoorOrientation(IntEnum):
     # Directions
@@ -68,8 +73,12 @@ def shuffle_doors(world):
         else:
             entrance.randomization_group = DoorOrientation.Right
             disconnect_entrance_for_randomization(entrance, DoorOrientation.Right)
-    state = world.multiworld.get_all_state(False, allow_partial_entrances=True)
-    state.update_reachable_regions(world.player)
-    visualize_regions(world.get_region("Game Start"), "my_world.puml", show_entrance_names=True,
-                      regions_to_highlight=state.reachable_regions[world.player])
-    randomize_entrances(world, True, entrance_map)
+    all_entrance_pairs = randomize_entrances(world, True, entrance_map).pairings
+    print(all_entrance_pairs)
+
+    for connection in all_entrance_pairs:
+        print(f"{connection[0]} GOES TO {connection[1]}")
+
+
+def patch_castle_connections(world, rom):
+    print("Us among")

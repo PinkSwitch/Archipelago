@@ -87,6 +87,7 @@ class OoEWorld(World):
         self.can_kill_tin_man = set()
         self.generator_logic_glyphs = set()
         self.logical_regular_glyphs = set()
+        self.connected_doors = {}
 
         self.glyph_filler_table = [
             "Torpor"]

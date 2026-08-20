@@ -222,6 +222,11 @@ class GlyphDropMultiplier(Range):
     default = 1
 
 
+class ShuffleCastleConnections(Toggle):
+    """Randomizes where the area transition doors in the Castle lead to."""
+    display_name = "Randomize Castle Doors"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -251,6 +256,7 @@ class OoEOptions(PerGameCommonOptions):
     randomize_dropped_glyphs: RandomDropGlyphs
     glyph_drop_multiplier: GlyphDropMultiplier
     death_link: DeathLink
+    randomize_castle_doors: ShuffleCastleConnections
 
 
 ooe_option_groups = [
@@ -286,7 +292,8 @@ ooe_option_groups = [
         StartingArea,
         RemoveTrainingHall,
         RemoveLargeCavern,
-        OpenCastle
+        OpenCastle,
+        ShuffleCastleConnections
     ]),
 
     OptionGroup("Enemy Settings", [

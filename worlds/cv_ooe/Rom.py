@@ -10,14 +10,9 @@ from .game_data import area_list, villager_list, villager_flags
 from BaseClasses import ItemClassification
 from .Items import item_table
 from .Options import AddBrownChests
-from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
-from .modules.glyph_properties import write_glyph_attributes
-from .modules.text_builder import text_encoder
-from .modules.glyph_shuffle import write_shuffled_glyphs
-from .modules.in_game_hints import write_cat_hints
 from .Options import RandomStolenGlyphs
 
-world_version = "1.2.1"
+world_version = "1.3"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 
@@ -105,6 +100,13 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, code_patch):
+    from .modules.brown_chest_shuffler import shuffle_brown_chest_pool
+    from .modules.glyph_properties import write_glyph_attributes
+    from .modules.text_builder import text_encoder
+    from .modules.glyph_shuffle import write_shuffled_glyphs
+    from .modules.in_game_hints import write_cat_hints
+    from .modules.area_shuffle import patch_castle_connections
+
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
     patch_name.append(0)  # Add a terminator here
@@ -167,6 +169,9 @@ def patch_rom(world, rom, code_patch):
         write_glyph_attributes(world, rom)
     ###############################################
     write_shuffled_glyphs(world, rom)
+    ###############################################
+    if world.options.randomize_castle_doors:
+        patch_castle_connections(world, rom)
     ###############################################
     write_cat_hints(world, rom)
 
