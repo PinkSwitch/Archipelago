@@ -50,6 +50,22 @@ entrance_names = {
     "Sec00Rm07": "Castle Entrance: Upper Door",
     "Sec01Rm03": "Castle Entrance: Lower Door",
     "Sec01Rm07": "Castle Entrance: Shortcut Door",
+    "Sec02Rm00": "Underground Labyrinth: West Door",
+    "Sec02Rm0E": "Underground Labyrinth: East Door",
+    "Sec03Rm00": "Library: West Door",
+    "Sec03Rm0B": "Library: Shortcut Exit Door",
+    "Sec03Rm10": "Library: East Door",
+    "Sec05Rm04": "Barracks: Lower West Door",
+    "Sec05Rm03": "Barracks: Upper West Door",
+    "Sec05Rm11": "Barracks: East Door",
+    "Sec07Rm01": "Mechanical Tower: Center Door",
+    "Sec06Rm0B": "Mechanical Tower: Upper Door",
+    "Sec06Rm01": "Mechanical Tower: Lower Door",
+    "Sec08Rm02": "Arms Depot: Exit Door",
+    "Sec09Rm03": "Forsaken Cloister: West Door",
+    "Sec09Rm07": "Forsaken Cloister: East Door",
+    "Sec0ARm01": "Final Approach: West Exit Door"
+
 }
 
 
@@ -125,4 +141,3 @@ def patch_castle_connections(world, rom):
         rom.write_to_file(address, "overlay_22", struct.pack("I", des_pointer))
         rom.write_to_file(address + 0x0A, "overlay_22", struct.pack("H", door_data[destination].x_pos))
         rom.write_to_file(address + 0x0C, "overlay_22", struct.pack("H", door_data[destination].y_pos))
-        print(f"{source} Links to {destination}")

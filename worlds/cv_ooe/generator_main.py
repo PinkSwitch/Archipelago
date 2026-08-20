@@ -188,6 +188,7 @@ def generate_output(world, output_directory: str) -> None:
 
 
 def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
+    from .modules.area_shuffle import left_facing_doors, entrance_names
     if world.options.randomize_glyph_attributes:
         spoiler_handle.write("\nGlyph Attributes:\n")
 
@@ -209,6 +210,13 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
     if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
         for enemy in world.glyph_drops:
             spoiler_handle.write(f"\n   {enemy}: {world.glyph_drops[enemy]}")
+
+    if world.options.randomize_castle_doors:
+        spoiler_handle.write("\nCastle Entrances:")
+        for door in world.connected_doors:
+            if door[0] not in left_facing_doors:
+                continue
+            spoiler_handle.write(f"\n     {entrance_names[door[0]]} <=> {entrance_names[door[1]]}")
     spoiler_handle.write("\n")
 
 
