@@ -38,6 +38,7 @@ def generate_early(world) -> None:
         world.options.randomize_dropped_glyphs.value = passthrough["dropped_glyphs"]
         world.can_kill_tin_man = passthrough["tin_man_glyph_logic"]
         world.generator_logic_glyphs = passthrough["generator_logic"]
+        world.connected_doors = passthrough["door_map"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -52,8 +53,11 @@ def create_regions(world) -> None:
 
 
 def connect_entrances(world) -> None:
-    from .modules.area_shuffle import shuffle_doors
-    if world.options.randomize_castle_doors:
+    from .modules.area_shuffle import shuffle_doors, set_ut_regions
+    if world.connected_doors:
+        set_ut_regions(world)
+
+    if world.options.randomize_castle_doors and not world.connected_doors:
         shuffle_doors(world)
 
 

@@ -141,3 +141,30 @@ def patch_castle_connections(world, rom):
         rom.write_to_file(address, "overlay_22", struct.pack("I", des_pointer))
         rom.write_to_file(address + 0x0A, "overlay_22", struct.pack("H", door_data[destination].x_pos))
         rom.write_to_file(address + 0x0C, "overlay_22", struct.pack("H", door_data[destination].y_pos))
+
+
+exit_regions = {
+    "Sec00Rm07": "Castle Entrance",
+    "Sec01Rm03": "Castle Entrance - Right Side",
+    "Sec01Rm07": "Castle Entrance - Barracks Shortcut",
+    "Sec02Rm00": "Underground Labyrinth",
+    "Sec02Rm0E": "Underground Labyrinth",
+    "Sec03Rm00": "Library",
+    "Sec03Rm0B": "Library Upper Exit",
+    "Sec03Rm10": "Forsaken Cloister - Left",
+    "Sec05Rm04": "Barracks",
+    "Sec05Rm03": "Barracks",
+    "Sec05Rm11": "Barracks",
+    "Sec07Rm01": "Mechanical Tower",
+    "Sec06Rm01": "Mechanical Tower Lower",
+    "Sec06Rm0B": "Mechanical Tower Upper Exit",
+    "Sec08Rm02": "Arms Depot",
+    "Sec09Rm03": "Forsaken Cloister - Left",
+    "Sec09Rm07": "Forsaken Cloister - Right",
+    "Sec0ARm01": "Final Approach - Shortcut"
+}
+
+
+def set_ut_regions(world):
+    for door in world.connected_doors:
+        world.get_entrance(door[0]).connected_region = world.get_region(exit_regions[door[1]])
