@@ -166,7 +166,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "stolen_glyphs": world.options.randomize_stolen_glyphs.value,
         "dropped_glyphs": world.options.randomize_dropped_glyphs.value,
         "tin_man_glyph_logic": world.can_kill_tin_man,
-        "generator_logic": world.generator_logic_glyphs
+        "generator_logic": world.generator_logic_glyphs,
+        "door_map": world.connected_doors
     }
 
 
@@ -197,26 +198,27 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
                 if any(x in glyph for x in ["Vol", "Melio"]) or index >= 47:
                     continue
             attributes = " + ".join(world.glyph_attributes[glyph])
-            spoiler_handle.write(f" {glyph}: {attributes}\n")
+            spoiler_handle.write(f"   {glyph}: {attributes}\n")
 
     if (world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled or
             world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled):
         spoiler_handle.write("\nEnemy Glyphs:")
 
-    if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
-        for enemy in world.glyph_steals:
-            spoiler_handle.write(f"\n   {enemy}: {world.glyph_steals[enemy]}")
+        if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
+            for enemy in world.glyph_steals:
+                spoiler_handle.write(f"\n   {enemy}: {world.glyph_steals[enemy]}")
 
-    if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
-        for enemy in world.glyph_drops:
-            spoiler_handle.write(f"\n   {enemy}: {world.glyph_drops[enemy]}")
+        if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
+            for enemy in world.glyph_drops:
+                spoiler_handle.write(f"\n   {enemy}: {world.glyph_drops[enemy]}")
+        spoiler_handle.write("\n")
 
     if world.options.randomize_castle_doors:
         spoiler_handle.write("\nCastle Entrances:")
         for door in world.connected_doors:
             if door[0] not in left_facing_doors:
                 continue
-            spoiler_handle.write(f"\n     {entrance_names[door[0]]} <=> {entrance_names[door[1]]}")
+            spoiler_handle.write(f"\n   {entrance_names[door[0]]} <=> {entrance_names[door[1]]}")
     spoiler_handle.write("\n")
 
 
