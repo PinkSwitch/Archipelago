@@ -227,6 +227,11 @@ class ShuffleCastleConnections(Toggle):
     display_name = "Randomize Castle Doors"
 
 
+class RestoreOnAreaExit(Toggle):
+    """If enabled, exiting to the World Map will fully heal you and automatically save the game."""
+    display_name = "Save on Area Exit"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -257,6 +262,7 @@ class OoEOptions(PerGameCommonOptions):
     glyph_drop_multiplier: GlyphDropMultiplier
     death_link: DeathLink
     randomize_castle_doors: ShuffleCastleConnections
+    save_on_area_exit: RestoreOnAreaExit
 
 
 ooe_option_groups = [
@@ -306,6 +312,7 @@ ooe_option_groups = [
         RevealMap,
         RevealBreakableWalls,
         RevealHiddenChests,
-        OneScreenMode
+        OneScreenMode,
+        RestoreOnAreaExit
     ])
 ]

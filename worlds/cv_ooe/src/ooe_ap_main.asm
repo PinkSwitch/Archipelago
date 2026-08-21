@@ -232,6 +232,13 @@
 
     .org 0x02223BF8
         .dh 0x0759 ; Cat 3 second text ID
+
+    .org 0x0221D844
+        bl @RestoreOnExit
+
+    .org 0x0221D648
+        b @WarpToMap
+
 .close
 ;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_20", 0x021FFFC0
@@ -249,6 +256,9 @@
 
     .org 0x02206604
         beq 0x022064F0 ; Fix being unable to back out of difficulty selection
+
+    .org 0x02200514
+        bl @SetupMapLoad
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -835,6 +845,8 @@
     @OptionFlag_OneScreenMode: ; 022EB237
         .db 0x00
     @OptionFlag_OpenCastle: ;022EB238
+        .db 0x00
+    @OptionFlag_HealOnExit: ;022EB239
         .db 0x00
 .align 0x10
     @ROMTable_BossChestItems: ;022EB240
@@ -3346,6 +3358,7 @@
     pop r0
     pop lr
     bx lr
+.pool
 
 @RemoteKillPlayer:
     push lr
@@ -3460,6 +3473,72 @@
 @@SpawnOnRight:
     pop r1-r3, lr
     b 0x02061284
+;;;;;;;;;;;;;;;;;;;;;;;
+; Restore's health and save (Act like we used a save statue) when exiting to the Map
+@RestoreOnExit:
+    push lr
+    bl 0x0204DFB8 ; Deactivate the glyph as normal
+    ldr r0, = @OptionFlag_HealOnExit
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@End
+    bl 0x0204E60C ; Fully heal the player
+    ldr r0, = 0x021006C0
+    mov r1, -10
+    str r1, [r0] ; Special Sector we use to trigger other stuff
+    bl 0x020AD3B0 ; Init saving
+@@ContinueSave:
+    bl 0x020AD474
+    cmp r0, 0
+    bne @@ContinueSave
+@@End:
+    pop lr
+    bx lr
+
+; Checks if we're loading a Map File on file load
+@RamFlag_LoadWorldMap:
+.db 0x00
+.align 4
+@SetupMapLoad:
+    push lr
+    push r0
+    ldr r0, =0x021006C0
+    ldr r0, [r0]
+    cmn r0, 0x0A ; map file marker
+    pop r0
+    beq @@MapLoadOverride
+@@Teleport:
+    bl 0x0203AFD0
+    pop lr
+    bx lr
+@@MapLoadOverride:
+    ldr r0, = @RamFlag_LoadWorldMap
+    mov r1, 1
+    strb r1, [r0]
+    b @@Teleport
+
+; Checks if the Load Map Flag is set, and if it is reset it and go to the map
+@WarpToMap:
+    ldr r0, = @RamFlag_LoadWorldMap
+    ldrb r1, [r0]
+    cmp r1, 0
+    bne @@OverrideToMap
+    ldr r0, = 0x020FFC58
+    b 0x0221D64C
+@@OverrideToMap:
+    push lr
+    mov r1, 0
+    strb r1, [r0] ; Reset the map flag
+    ldr r0, = 0x020FFCB9
+    ldrb r2, [r0]
+    mov r0, 0x02
+    mov r1, 0x01
+    bl 0x020AEDB4 ; Set the area name as the top screen value
+    pop lr
+    b 0x0221D848
+
+
+
 
 .pool
 .endarea
