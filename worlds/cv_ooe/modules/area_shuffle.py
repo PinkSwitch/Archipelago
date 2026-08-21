@@ -168,4 +168,3 @@ exit_regions = {
 def set_ut_regions(world):
     for door in world.connected_doors:
         world.get_entrance(door[0]).connected_region = world.get_region(exit_regions[door[1]])
-        

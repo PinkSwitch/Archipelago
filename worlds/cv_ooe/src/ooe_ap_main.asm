@@ -800,6 +800,12 @@
 
     .org 0x022C2AD4
         bl @AlbusEvent_Monastery
+
+    .org 0x022C305C
+        cmp r0, 0x40 ; Lower bound for the number of cubes needed to be destroyed for the cubes chest
+
+    .org 0x022C3068
+        cmp r0, 0x40 ; Higher bound for the cubes for cube chest
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_86", @Overlay86Start
