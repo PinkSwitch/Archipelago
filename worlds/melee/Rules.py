@@ -293,7 +293,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Gourmet"), Has("Food"))
         set_rule(world.get_location("Bonus - Battering Ram"), HasAny("Lip's Stick", "Star Rod", "Beam Sword", "Home-Run Bat", "Fan", "Hammer"))
         set_rule(world.get_location("Bonus - Straight Shooter"), HasAny(*projectile_item))
-        set_rule(world.get_location("Bonus - Wimp"), HasAny("Food", "Maxim Tomato", "Heart Container"))
+        set_rule(world.get_location("Bonus - Wimp"), Has("Heart Container"))
         set_rule(world.get_location("Bonus - Shape-Shifter"), HasAny("Super Mushroom", "Poison Mushroom", "Metal Box", "Cloaking Device", "Bunny Hood"))
         set_rule(world.get_location("Bonus - Chuck Wagon"), HasAny("Mr. Saturn", "Capsule", "Poké Ball", "Green Shell", "Red Shell", "Freezie", "Bob-omb", "Motion-Sensor Bomb", "Barrel", "Crate"))
         set_rule(world.get_location("Bonus - Parasol Finish"), Has("Parasol"))
@@ -325,6 +325,8 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Headless Hammer"), Has("Hammer"))
         set_rule(world.get_location("Bonus - Bob-omb's Away"), Has("Bob-omb"))
         set_rule(world.get_location("Bonus - Bob-omb Squad"), Has("Bob-omb"))
+        set_rule(world.get_location("Bonus - Laser Marksman"), Has("Ray Gun"))
+        set_rule(world.get_location("Bonus - Pokémon KO"), Has("Poké Ball"))
         
         if world.options.enable_rare_pokemon_checks:
             set_rule(world.get_location("Bonus - Mew Catcher"), Has("Poké Ball"))
