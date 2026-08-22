@@ -88,6 +88,7 @@ class OoEWorld(World):
         self.generator_logic_glyphs = set()
         self.logical_regular_glyphs = set()
         self.connected_doors = {}
+        self.logical_filler = set()
 
         self.glyph_filler_table = [
             "Torpor"]

@@ -71,7 +71,7 @@ item_table: Dict[str, ItemData] = {
     "Fides Fio": ItemData("Back Glyphs", 0x40, ItemClassification.filler, 0),
     "Felicem Fio": ItemData("Back Glyphs", 0x41, ItemClassification.filler, 0),
     "Inire Pecunia": ItemData("Back Glyphs", 0x42, ItemClassification.filler, 0),
-    "Arma Felix": ItemData("Back Glyphs", 0x43, ItemClassification.filler, 0),
+    "Arma Felix": ItemData("Back Glyphs", 0x43, ItemClassification.progression, 0),
     "Arma Chiroptera": ItemData("Back Glyphs", 0x44, ItemClassification.filler, 0),
     "Arma Machina": ItemData("Back Glyphs", 0x45, ItemClassification.progression),
     "Refectio": ItemData("Back Glyphs", 0x46, ItemClassification.filler, 0),

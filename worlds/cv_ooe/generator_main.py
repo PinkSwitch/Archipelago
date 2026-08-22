@@ -94,10 +94,11 @@ def set_classifications(world, name) -> CVOoEItem:
     # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
-    if name in world.logical_regular_glyphs:
+    if name in world.logical_regular_glyphs or name in world.logical_filler:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     elif name in world.glyph_pool:
         item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
+
     return item
 
 
@@ -193,7 +194,7 @@ def generate_output(world, output_directory: str) -> None:
 
 
 def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
-    from .modules.area_shuffle import left_facing_doors, entrance_names
+    from .modules.area_shuffle import door_data
     if world.options.randomize_glyph_attributes:
         spoiler_handle.write("\nGlyph Attributes:\n")
 
@@ -220,9 +221,9 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
     if world.options.randomize_castle_doors:
         spoiler_handle.write("\nCastle Entrances:")
         for door in world.connected_doors:
-            if door[0] not in left_facing_doors:
+            if not door_data[door].is_left_facing:
                 continue
-            spoiler_handle.write(f"\n   {entrance_names[door[0]]} <=> {entrance_names[door[1]]}")
+            spoiler_handle.write(f"\n   {door_data[door[0]].entrance_name} <=> {door_data[door[1]].entrance_name}")
     spoiler_handle.write("\n")
 
 

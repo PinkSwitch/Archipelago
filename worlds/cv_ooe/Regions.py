@@ -156,7 +156,7 @@ def connect_regions(world):
     
     world.get_region("Monastery").connect(world.get_region("Monastery Magnets Area"), rule=HasAny("Magnes", "Volaticus"))
 
-    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
+    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio", "Arma Felix"))
 
     world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=Has("Lizard Tail"))
 

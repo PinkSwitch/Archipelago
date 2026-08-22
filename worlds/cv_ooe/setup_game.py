@@ -23,8 +23,6 @@ def setup_game(world) -> None:
 
     if world.options.start_with_lizard_tail:
         world.multiworld.push_precollected(create_progress_event(world, "Lizard Tail"))
-    else:
-        world.logical_regular_glyphs.add("Arma Felix")  # Can substitute Slide in some checks
 
     if world.options.start_with_glyph_sleeve:
         world.multiworld.push_precollected(create_progress_event(world, "Glyph Sleeve"))

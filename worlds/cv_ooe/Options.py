@@ -232,6 +232,23 @@ class RestoreOnAreaExit(Toggle):
     display_name = "Save on Area Exit"
 
 
+class LogicTricks(OptionSet):
+    """todo: write"""
+    display_name = "Logic Tricks"
+    default = {"Monastery Cubes Glyph with Secare Union", "Redire Slides"}
+    valid_keys = {
+        "Redire Slides",
+        "Redire Flight",
+        "Gravedorcus without Slide",
+        "Monastery Cubes Glyph with Secare Union",
+        "Giant Skeleton without Movement",
+        "Minera Prison Final Area with Double Jump",
+        "Skeleton Cave First Chest with Rapidus",
+        "Tymeo Mountains Gap with Arma Felix",
+        "Training Hall without Rapidus",
+        "Tymeo Mountains Spike room with Arma Felix"}
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -263,6 +280,7 @@ class OoEOptions(PerGameCommonOptions):
     death_link: DeathLink
     randomize_castle_doors: ShuffleCastleConnections
     save_on_area_exit: RestoreOnAreaExit
+    logic_tricks: LogicTricks
 
 
 ooe_option_groups = [
@@ -299,7 +317,8 @@ ooe_option_groups = [
         RemoveTrainingHall,
         RemoveLargeCavern,
         OpenCastle,
-        ShuffleCastleConnections
+        ShuffleCastleConnections,
+        LogicTricks
     ]),
 
     OptionGroup("Enemy Settings", [
