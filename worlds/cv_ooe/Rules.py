@@ -53,7 +53,6 @@ def set_location_rules(world):
     set_rule(world.get_location("Underground Labyrinth: Boulder Room Glyph"), Has("Paries"))
 
     set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina") & HasAny(*world.generator_logic_glyphs))
-    set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes"))
 
     set_rule(world.get_location("Final Approach: Treasure Room Second From Right"), Has("Volaticus"))
     set_rule(world.get_location("Final Approach: Treasure Room Far Right"), Has("Volaticus"))
@@ -98,6 +97,7 @@ def set_location_rules(world):
         set_rule(world.get_location("Tristis Pass: Third Hill Left"), HasAny("Lizard Tail", "Arma Felix"))
         set_rule(world.get_location("Tristis Pass: Lower Hill Right"), HasAny("Lizard Tail", "Arma Felix"))
         set_rule(world.get_location("Tristis Pass: Third Hill Right"), HasAny("Lizard Tail", "Arma Felix"))
+        set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes"))
 
     if world.options.add_no_hit_chests:
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
