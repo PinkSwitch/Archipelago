@@ -120,6 +120,7 @@ def create_locations(world, active_regions):
 
 
 def connect_regions(world):
+    from .Rules import can_fly
     world_map_regions = ["Training Hall", "Ruvas Forest", "Argila Swamp", "Kalidus Channel", "Somnus Reef", "Minera Prison Island",
                          "Lighthouse", "Tymeo Mountains", "Tristis Pass", "Large Cavern", "Giant's Dwelling", "Mystery Manor",
                          "Misty Forest Road", "Oblivion Ridge", "Skeleton Cave", "Monastery"]
@@ -148,18 +149,18 @@ def connect_regions(world):
     world.get_region("Lighthouse").connect(world.get_region("Lighthouse Past Spikes"), rule=HasAny("Magnes", "Volaticus", "Rapidus Fio", "Arma Machina"))
     world.get_region("Lighthouse Past Spikes").connect(world.get_region("Lighthouse Post-Boss"), rule=HasAny("Magnes", "Volaticus", "Ordinary Rock"))
 
-    world.get_region("Giant's Dwelling").connect(world.get_region("Giant's Dwelling Main"), rule=HasAny("Volaticus", "Ordinary Rock"))
+    world.get_region("Giant's Dwelling").connect(world.get_region("Giant's Dwelling Main"), rule=Has("Ordinary Rock") | can_fly)
 
     world.get_region("Tymeo Mountains").connect(world.get_region("Tymeo Mountains Past Spikes Room"), rule=HasAny("Magnes", "Volaticus", "Arma Machina") |
                                                 Has("Arma Felix", options=[OptionFilter(LogicTricks, "Tymeo Mountains Spike Room With Arma Felix", operator="contains")]))
-    world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
+    world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Rapidus Fio") | can_fly)
 
-    world.get_region("Tristis Pass").connect(world.get_region("Tristis Pass Frozen Area"), rule=HasAny("Ordinary Rock", "Volaticus"))
+    world.get_region("Tristis Pass").connect(world.get_region("Tristis Pass Frozen Area"), rule=Has("Ordinary Rock") | can_fly)
     world.get_region("Tristis Pass Frozen Area").connect(world.get_region("Tristis Pass Waterfall"), rule=CanReachLocation("Tristis Pass: Frozen Waterfall Glyph"))
     
     world.get_region("Monastery").connect(world.get_region("Monastery Magnets Area"), rule=HasAny("Magnes", "Volaticus"))
 
-    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio", "Arma Felix"))
+    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Rapidus Fio", "Arma Felix") | can_fly)
 
     world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=Has("Lizard Tail") | OptionFilter(LogicTricks, "Gravedorcus Without Slide", operator="contains"))
 
@@ -169,7 +170,7 @@ def connect_regions(world):
                                                                                                          OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Final Area With Double Jump", operator="contains")]))
 
-    world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=HasAny("Volaticus", "Ordinary Rock"))
+    world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=Has("Ordinary Rock") | can_fly)
 
     if not world.options.remove_training_hall:
         world.get_region("Training Hall").connect(world.get_region("Training Hall Prize Area"),
@@ -188,7 +189,7 @@ def connect_regions(world):
     world.get_region("Library").connect(world.get_region("Castle Entrance"), "Sec03Rm00")
     world.get_region("Library").connect(world.get_region("Library - Past Wallman"), rule=Has("Paries"))
     world.get_region("Library - Past Wallman").add_exits({"Forsaken Cloister - Left": "Sec03Rm10", "Library Upper Exit": None, "Library": None}, {
-                     "Library Upper Exit": Has("Volaticus"),
+                     "Library Upper Exit": can_fly,
                      "Library": Has("Paries")})
 
     world.get_region("Library Upper Exit").add_exits({"Library - Past Wallman": None, "Final Approach - Shortcut": "Sec03Rm0B"})
@@ -209,7 +210,7 @@ def connect_regions(world):
     world.get_region("Mechanical Tower Upper Exit").connect(world.get_region("Mechanical Tower Upper"), rule=HasAny("Magnes", "Volaticus"))
 
     world.get_region("Mechanical Tower Lower").connect(world.get_region("Arms Depot"), "Sec06Rm01")
-    world.get_region("Mechanical Tower Lower").connect(world.get_region("Mechanical Tower"), rule=HasAny("Volaticus", "Magness"))
+    world.get_region("Mechanical Tower Lower").connect(world.get_region("Mechanical Tower"), rule=HasAny("Volaticus", "Magnes"))
     ########################################################
     world.get_region("Arms Depot").connect(world.get_region("Mechanical Tower Lower"), "Sec08Rm02")
     ########################################################
@@ -221,7 +222,7 @@ def connect_regions(world):
     ########################################################
 
     world.get_region("Final Approach").add_exits(["Final Approach - Throne", "Library Upper Exit"], {
-                                                 "Final Approach - Throne": Has("Volaticus"),
-                                                 "Final Approach - Shortcut": Has("Volaticus")})
+                                                 "Final Approach - Throne": can_fly,
+                                                 "Final Approach - Shortcut": can_fly})
     world.get_region("Final Approach - Shortcut").connect(world.get_region("Library Upper Exit"), "Sec0ARm01")
     set_enemy_glyph_regions(world)
