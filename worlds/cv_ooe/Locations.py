@@ -320,12 +320,12 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
 
     if not world.options.remove_training_hall:
         location_table.extend([
-            LocationData("Training Hall", "Training Hall: Freestanding"),
-            LocationData("Training Hall", "Training Hall: Top Chest"),
-            LocationData("Training Hall", "Training Hall: First Way Down Chest"),
-            LocationData("Training Hall", "Training Hall: Second Way Down Chest"),
-            LocationData("Training Hall", "Training Hall: Third Way Down Chest"),
-            LocationData("Training Hall", "Training Hall: Final Chest")])
+            LocationData("Training Hall Prize Area", "Training Hall: Freestanding"),
+            LocationData("Training Hall Prize Area", "Training Hall: Top Chest"),
+            LocationData("Training Hall Prize Area", "Training Hall: First Way Down Chest"),
+            LocationData("Training Hall Prize Area", "Training Hall: Second Way Down Chest"),
+            LocationData("Training Hall Prize Area", "Training Hall: Third Way Down Chest"),
+            LocationData("Training Hall Prize Area", "Training Hall: Final Chest")])
 
     if not world.options.remove_large_cavern:
         location_table.extend([
@@ -344,7 +344,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
     if world.options.add_no_hit_chests:
         location_table.extend([
             LocationData("Monastery Magnets Area", "Monastery: Arthroverta No-Hit Chest"),
-            LocationData("Minera Prison Island Main", "Minera Prison Island: Giant Skeleton No-Hit Chest"),
+            LocationData("Minera Prison Island", "Minera Prison Island: Giant Skeleton No-Hit Chest"),
             LocationData("Lighthouse Post-Boss", "Lighthouse: Brachyura No-Hit Chest"),
             LocationData("Skeleton Cave", "Skeleton Cave: Maneater No-Hit Chest"),
             LocationData("Somnus Reef Main", "Somnus Reef: Rusalka No-Hit Chest"),

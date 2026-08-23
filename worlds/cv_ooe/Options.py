@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
-                     NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink, OptionError)
+                     NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink)
 
 
 class StartingGlyph(TextChoice):
@@ -237,19 +237,8 @@ class LogicTricks(OptionSet):
        You can view the full list of available tricks and documentation on them from
        the Game Page document."""
 
-    @classmethod
-    def from_text(cls, text: str):
-        if text.lower() in {"off", "0", "false", "none", "null", "no"}:
-            raise OptionError('elevators_come_to_you is an OptionSet now. The equivalent of "false" is {}')
-        if text.lower() in {"on", "1", "true", "yes"}:
-            raise OptionError(
-                f'elevators_come_to_you is an OptionSet now. The equivalent of "true" is {set(cls.valid_keys)}'
-            )
-        return super().from_text(text)
-
-
     display_name = "Logic Tricks"
-    default = {"Monastery Cubes Glyph with Secare Union", "Redire Slides"}
+    default = {"Monastery Cubes Glyph With Secare Union", "Redire Slides"}
     valid_keys = {
         "Redire Slides",
         "Redire Flight",
@@ -261,6 +250,9 @@ class LogicTricks(OptionSet):
         "Skeleton Cave First Chest With Rapidus",
         "Training Hall Without Rapidus",
         "Tymeo Mountains Spike Room With Arma Felix"}
+    casefold_keys = {key.casefold() for key in valid_keys}
+    valid_keys.update(casefold_keys)
+    valid_keys_casefold = True
 
 
 @dataclass

@@ -1,6 +1,6 @@
 from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
 from rule_builder.field_resolvers import FromOption
-from .Options import VillagersRequired, AddBrownChests, BarloweRequired
+from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTricks
 
 
 def set_location_rules(world):
@@ -69,16 +69,6 @@ def set_location_rules(world):
     set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union") &
             CanReachLocation("Ecclesia: Barlowe Fight", options=[OptionFilter(BarloweRequired, True)], filtered_resolution=True))
 
-    if not world.options.remove_training_hall:
-        set_rule(world.get_location("Training Hall: Freestanding"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-
-        if world.options.add_brown_chests == AddBrownChests.option_include:
-            set_rule(world.get_location("Training Hall: Top Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-            set_rule(world.get_location("Training Hall: First Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-            set_rule(world.get_location("Training Hall: Second Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-            set_rule(world.get_location("Training Hall: Third Way Down Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-            set_rule(world.get_location("Training Hall: Final Chest"), HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
-
     if not world.options.remove_large_cavern:
         if world.options.add_brown_chests == AddBrownChests.option_include:
             set_rule(world.get_location("Large Cavern: Rest Room 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | HasAll("Volaticus"))
@@ -100,6 +90,7 @@ def set_location_rules(world):
         set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes"))
 
     if world.options.add_no_hit_chests:
+        set_rule(world.get_location("Minera Prison Island: Giant Skeleton No-Hit Chest"), HasAny("Ordinary Rock", "Magnes", "Volaticus") | OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
         set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
 

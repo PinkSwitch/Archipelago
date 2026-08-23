@@ -52,6 +52,7 @@ region_list = [
     "Mystery Manor Main",
     "Minera Prison Island Main",
     "Minera Prison Island Final Segment",
+    "Training Hall Prize Area",
 
     "Castle Entrance",
     "Castle Entrance - Right Side",
@@ -92,6 +93,7 @@ def init_areas(world: "OoEWorld") -> None:
 
     if world.options.remove_training_hall:
         active_regions.remove("Training Hall")
+        active_regions.remove("Training Hall Prize Area")
 
     if world.options.remove_large_cavern:
         active_regions.remove("Large Cavern")
@@ -168,6 +170,10 @@ def connect_regions(world):
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Final Area With Double Jump", operator="contains")]))
 
     world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=HasAny("Volaticus", "Ordinary Rock"))
+
+    if not world.options.remove_training_hall:
+        world.get_region("Training Hall").connect(world.get_region("Training Hall Prize Area"),
+                                                    rule= HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
 
     ###################################################
     world.get_region("Castle Entrance").connect(world.get_region("Castle Entrance - Right Side"), rule=Has("Paries"))

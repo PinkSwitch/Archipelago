@@ -24,7 +24,7 @@ it is possible to avoid Gravedorcus's charge by crouching and moving out from un
 ## • Giant Skeleton Without Movement
 ![](../src/tricks/giant_skeleton_jump.gif)
 
-It is possible to avoid the Giant Skeleton while it is walking backwards by performing a price backdash jump as it is moving towards you.
+It is possible to avoid the Giant Skeleton while it is walking backwards by performing a precise backdash jump as it is moving towards you.
 Due to the precise nature of this jump, the No-hit chest is not in logic with this Trick.
 ### --------------------------------------------------------------
 ## • Giant Skeleton No-Hit Without Movement

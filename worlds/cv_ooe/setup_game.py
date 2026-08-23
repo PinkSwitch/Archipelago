@@ -7,6 +7,8 @@ from .modules.glyph_shuffle import shuffle_glyphs
 
 
 def setup_game(world) -> None:
+    world.options.logic_tricks.value = {key.title() for key in world.options.logic_tricks.value}
+
     if world.options.starting_glyph == StartingGlyph.option_random_base:
         world.starting_glyph = world.random.choice(base_glyphs)  # Pick a random base-level glyph
     elif world.options.starting_glyph == StartingGlyph.option_random_any:
