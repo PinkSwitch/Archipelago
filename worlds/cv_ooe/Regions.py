@@ -148,7 +148,8 @@ def connect_regions(world):
 
     world.get_region("Giant's Dwelling").connect(world.get_region("Giant's Dwelling Main"), rule=HasAny("Volaticus", "Ordinary Rock"))
 
-    world.get_region("Tymeo Mountains").connect(world.get_region("Tymeo Mountains Past Spikes Room"), rule=HasAny("Magnes", "Volaticus", "Arma Machina"))
+    world.get_region("Tymeo Mountains").connect(world.get_region("Tymeo Mountains Past Spikes Room"), rule=HasAny("Magnes", "Volaticus", "Arma Machina") |
+                                                Has("Arma Felix", options=[OptionFilter(LogicTricks, "Tymeo Mountains Spike Room With Arma Felix", operator="contains")]))
     world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio"))
 
     world.get_region("Tristis Pass").connect(world.get_region("Tristis Pass Frozen Area"), rule=HasAny("Ordinary Rock", "Volaticus"))
@@ -158,13 +159,13 @@ def connect_regions(world):
 
     world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Rapidus Fio", "Arma Felix"))
 
-    world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=Has("Lizard Tail") | OptionFilter(LogicTricks, "Gravedorcus without Slide", operator="contains"))
+    world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=Has("Lizard Tail") | OptionFilter(LogicTricks, "Gravedorcus Without Slide", operator="contains"))
 
 
     world.get_region("Minera Prison Island").connect(world.get_region("Minera Prison Island Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Magnes") |
-                                                                                                         OptionFilter(LogicTricks, "Giant Skeleton without Movement", operator="contains") |
-                                                                                                         OptionFilter(LogicTricks, "Giant Skeleton No-Hit without Movement", operator="contains"))
-    world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Final Area with Double Jump", operator="contains")]))
+                                                                                                         OptionFilter(LogicTricks, "Giant Skeleton Without Movement", operator="contains") |
+                                                                                                         OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
+    world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Final Area With Double Jump", operator="contains")]))
 
     world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=HasAny("Volaticus", "Ordinary Rock"))
 
