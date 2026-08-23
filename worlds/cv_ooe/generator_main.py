@@ -222,7 +222,7 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
     if world.options.randomize_castle_doors:
         spoiler_handle.write("\nCastle Entrances:")
         for door in world.connected_doors:
-            if not door_data[door].is_left_facing:
+            if not door_data[door[0]].is_left_facing:
                 continue
             spoiler_handle.write(f"\n   {door_data[door[0]].entrance_name} <=> {door_data[door[1]].entrance_name}")
     spoiler_handle.write("\n")

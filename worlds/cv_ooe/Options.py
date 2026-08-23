@@ -243,7 +243,7 @@ class LogicTricks(OptionSet):
         "Monastery Cubes Glyph with Secare Union",
         "Giant Skeleton without Movement",
         "Giant Skeleton No-Hit without Movement",
-        "Minera Prison Final Area with Double Jump",
+        "Minera Prison Island Final Area with Double Jump",
         "Skeleton Cave First Chest with Rapidus",
         "Training Hall without Rapidus",
         "Tymeo Mountains Spike room with Arma Felix"}
