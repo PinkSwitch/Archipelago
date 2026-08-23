@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
-                     NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink)
+                     NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink, OptionError)
 
 
 class StartingGlyph(TextChoice):
@@ -233,20 +233,34 @@ class RestoreOnAreaExit(Toggle):
 
 
 class LogicTricks(OptionSet):
-    """todo: write"""
+    """Tricks that can be individually enabled to make logic harder.
+       You can view the full list of available tricks and documentation on them from
+       the Game Page document."""
+
+    @classmethod
+    def from_text(cls, text: str):
+        if text.lower() in {"off", "0", "false", "none", "null", "no"}:
+            raise OptionError('elevators_come_to_you is an OptionSet now. The equivalent of "false" is {}')
+        if text.lower() in {"on", "1", "true", "yes"}:
+            raise OptionError(
+                f'elevators_come_to_you is an OptionSet now. The equivalent of "true" is {set(cls.valid_keys)}'
+            )
+        return super().from_text(text)
+
+
     display_name = "Logic Tricks"
     default = {"Monastery Cubes Glyph with Secare Union", "Redire Slides"}
     valid_keys = {
         "Redire Slides",
         "Redire Flight",
-        "Gravedorcus without Slide",
-        "Monastery Cubes Glyph with Secare Union",
-        "Giant Skeleton without Movement",
-        "Giant Skeleton No-Hit without Movement",
-        "Minera Prison Island Final Area with Double Jump",
-        "Skeleton Cave First Chest with Rapidus",
-        "Training Hall without Rapidus",
-        "Tymeo Mountains Spike room with Arma Felix"}
+        "Gravedorcus Without Slide",
+        "Monastery Cubes Glyph With Secare Union",
+        "Giant Skeleton Without Movement",
+        "Giant Skeleton No-Hit Without Movement",
+        "Minera Prison Island Final Area With Double Jump",
+        "Skeleton Cave First Chest With Rapidus",
+        "Training Hall Without Rapidus",
+        "Tymeo Mountains Spike Room With Arma Felix"}
 
 
 @dataclass

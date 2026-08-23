@@ -26,3 +26,7 @@ New areas except for Dracula's Castle are unlocked by having Map items instead o
 Barlowe's event is triggered by entering his room with the 3 glyphs of Dominus. If you do not have enough Villagers, you will get the bad ending
 Likewise, Albus's event in Mystery Manor can no longer force you into the bad ending
 A couple cutscenes have been removed for stability.
+
+## Logic Tricks ##
+You can view the syntax and documentation for Logic Tricks at
+[the logic tricks page](logic_tricks.md).
