@@ -16,6 +16,7 @@ def set_enemy_glyph_regions(world):
         world.get_region("Tristis Pass Waterfall").connect(world.get_region("Thunder Demon"))
         world.get_region("Mystery Manor").connect(world.get_region("White Fomor"))
         world.get_region("Library").connect(world.get_region("White Fomor"))
+        world.get_region("Library - Past Wallman").connect(world.get_region("White Fomor"))
 
         world.get_region("Underground Labyrinth").connect(world.get_region("Nova Skeleton"))
         world.get_region("Barracks").connect(world.get_region("Nova Skeleton"))

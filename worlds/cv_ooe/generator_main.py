@@ -94,7 +94,7 @@ def set_classifications(world, name) -> CVOoEItem:
     # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
-    if name in world.logical_regular_glyphs or name in world.logical_filler:
+    if name in world.logical_regular_glyphs:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     elif name in world.glyph_pool:
         item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
@@ -146,7 +146,8 @@ def get_filler_item_name(world) -> str:
             return filler_item
 
     if filler_type not in ["consumable", "good_food", "money", "drops"]:
-        weight_table[filler_type].remove(filler_item)  # Remove equipment from the corresponding table so it doesn't gen again
+        # Remove equipment from the corresponding table so it doesn't gen again
+        weight_table[filler_type].remove(filler_item)
 
     return filler_item
 
@@ -232,4 +233,4 @@ def modify_multidata(world, multidata: dict) -> None:
     world.rom_name_available_event.wait()
     rom_name = getattr(world, "rom_name", None)
     if rom_name:
-        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.multiworld.player_name[world.player]]
+        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.player_name]

@@ -101,5 +101,6 @@ def set_location_rules(world):
 
     if world.options.add_no_hit_chests:
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
+        set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
 
         
