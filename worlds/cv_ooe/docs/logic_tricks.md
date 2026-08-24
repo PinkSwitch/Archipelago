@@ -42,11 +42,12 @@ You can absorb the Cubes Glyph in Monastery with only two uses of Sword Union by
 ![](../src/tricks/minera_final_area_with_double_jump.gif)
 
 It is possible to reach the final segment of Minera Prison Island by divekicking off of the breakable wall.
-### --------------------------------------------------------------
+<!--### --------------------------------------------------------------
 ## • Skeleton Cave First Chest With Rapidus
+This is currently always in logic. Debate if trick or not.
 ![](../src/tricks/skeleton_cave_first_chest_with_rapidus.gif)
 
-You can reach the first chest in Skeleton Cave by first killing the top Bone Pillar and jumping off the remaining stack with Rapidus.
+You can reach the first chest in Skeleton Cave by first killing the top Bone Pillar and jumping off the remaining stack with Rapidus.-->
 ### --------------------------------------------------------------
 ## • Training Hall Without Rapidus
 ![](../src/tricks/training_no_rapidus.gif)

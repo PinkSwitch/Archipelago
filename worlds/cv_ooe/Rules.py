@@ -4,6 +4,8 @@ from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTr
 
 can_fly = Has("Volaticus") | HasAll("Magnes", "Redire",
                                     options=[OptionFilter(LogicTricks, "Redire Flight", operator="contains")])
+can_slide = Has("Lizard Tail") | HasAll("Magnes", "Redire",
+                                    options=[OptionFilter(LogicTricks, "Redire Slides", operator="contains")])
 
 
 def set_location_rules(world):
@@ -17,22 +19,22 @@ def set_location_rules(world):
     set_rule(world.get_location("Kalidus Channel: Right Side Underwater Chest"), Has("Serpent Scale"))
     set_rule(world.get_location("Kalidus Channel: Right Exit Underwater Chest"), Has("Serpent Scale"))
 
-    set_rule(world.get_location("Somnus Reef: Hidden Room"), Has("Lizard Tail"))
+    set_rule(world.get_location("Somnus Reef: Hidden Room"), can_slide)
 
     set_rule(world.get_location("Minera Prison Island: Top Room"), Has("Ordinary Rock") | can_fly)
     set_rule(world.get_location("Minera Prison Island: Top Room Chest"), Has("Ordinary Rock") | can_fly)
     set_rule(world.get_location("Minera Prison Island: Right Vertical Hidden Item"), HasAny("Ordinary Rock", "Volaticus", "Magnes", "Redire"))
     set_rule(world.get_location("Minera Prison Island: Tin Man Chest"), HasAny(*world.can_kill_tin_man))
 
-    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Chest"), HasAny("Lizard Tail", "Arma Felix"))
-    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), HasAny("Lizard Tail", "Arma Felix"))
+    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Chest"), Has("Arma Felix") | can_slide)
+    set_rule(world.get_location("Tymeo Mountains: Left Hill Alcove Pickup"), Has("Arma Felix") | can_slide)
     set_rule(world.get_location("Tymeo Mountains: Lower Mountain Lower Paries Chest"), Has("Paries"))
     set_rule(world.get_location("Tymeo Mountains: Lower Mountain Upper Paries Chest"), Has("Paries"))
     set_rule(world.get_location("Tymeo Mountains: Wind Glyph"), Has("Magnes"))
-    set_rule(world.get_location("Tymeo Mountains: Upper Hill Chest"), HasAny("Lizard Tail", "Arma Felix"))
+    set_rule(world.get_location("Tymeo Mountains: Upper Hill Chest"), HasAny("Arma Felix") | can_slide)
 
     set_rule(world.get_location("Tristis Pass: Frozen Waterfall Glyph"), Has("Magnes"))
-    set_rule(world.get_location("Tristis Pass: Second Hill Lowest Chest"), HasAny("Lizard Tail", "Arma Felix"))
+    set_rule(world.get_location("Tristis Pass: Second Hill Lowest Chest"), Has("Arma Felix") | can_slide)
 
     set_rule(world.get_location("Mystery Manor: Dark Room Chest"), Has("Arma Machina"))
 
@@ -49,7 +51,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Skeleton Cave: Dead End Upper"), HasAny("Ordinary Rock", "Rapidus Fio") | can_fly)
 
     set_rule(world.get_location("Monastery: Big Room Ledge"), HasAny("Ordinary Rock", "Rapidus Fio") | can_fly)
-    set_rule(world.get_location("Monastery: Big Room Under Shelf"), Has("Lizard Tail"))
+    set_rule(world.get_location("Monastery: Big Room Under Shelf"), can_slide)
     set_rule(world.get_location("Monastery: Blocks Glyph"),
              HasAny("Redire", "Globus", "Melio Ascia", "Umbra", "Nitesco") |
              (HasAny("Luminatio", "Vol Luminatio") & HasAny("Umbra", "Vol Umbra") |
@@ -90,12 +92,12 @@ def set_location_rules(world):
     # Regular brown cheests
     if world.options.add_brown_chests == AddBrownChests.option_include:
         set_rule(world.get_location("Kalidus Channel: Third Room Underwater"), Has("Serpent Scale"))
-        set_rule(world.get_location("Tymeo Mountains: Right Hill Alcove Chest"), HasAny("Lizard Tail", "Arma Felix"))
-        set_rule(world.get_location("Tristis Pass: First Alcove"), HasAny("Lizard Tail", "Arma Felix"))
-        set_rule(world.get_location("Tristis Pass: Lower Hill Left"), HasAny("Lizard Tail", "Arma Felix"))
-        set_rule(world.get_location("Tristis Pass: Third Hill Left"), HasAny("Lizard Tail", "Arma Felix"))
-        set_rule(world.get_location("Tristis Pass: Lower Hill Right"), HasAny("Lizard Tail", "Arma Felix"))
-        set_rule(world.get_location("Tristis Pass: Third Hill Right"), HasAny("Lizard Tail", "Arma Felix"))
+        set_rule(world.get_location("Tymeo Mountains: Right Hill Alcove Chest"), Has("Arma Felix") | can_slide)
+        set_rule(world.get_location("Tristis Pass: First Alcove"), Has("Arma Felix") | can_slide)
+        set_rule(world.get_location("Tristis Pass: Lower Hill Left"), Has("Arma Felix") | can_slide)
+        set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Arma Felix") | can_slide)
+        set_rule(world.get_location("Tristis Pass: Lower Hill Right"), Has("Arma Felix") | can_slide)
+        set_rule(world.get_location("Tristis Pass: Third Hill Right"), Has("Arma Felix") | can_slide)
         set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes"))
 
     if world.options.add_no_hit_chests:

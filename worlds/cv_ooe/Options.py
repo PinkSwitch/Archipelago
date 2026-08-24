@@ -247,7 +247,7 @@ class LogicTricks(OptionSet):
         "Giant Skeleton Without Movement",
         "Giant Skeleton No-Hit Without Movement",
         "Minera Prison Island Final Area With Double Jump",
-        "Skeleton Cave First Chest With Rapidus",
+        # "Skeleton Cave First Chest With Rapidus", Always in logic, may not be trickworthy
         "Training Hall Without Rapidus",
         "Tymeo Mountains Spike Room With Arma Felix"}
     # casefold_keys = {key.casefold() for key in valid_keys} Add this back in if Casefolding ever gets fixed
