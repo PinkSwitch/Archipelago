@@ -255,6 +255,11 @@ class LogicTricks(OptionSet):
     # valid_keys_casefold = True
 
 
+class ShuffleEnemyDrops(Toggle):
+    """Randomizes what items enemies drop, and what the drop chances are."""
+    display_name = "Shuffle Enemy Drops"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -287,6 +292,7 @@ class OoEOptions(PerGameCommonOptions):
     randomize_castle_doors: ShuffleCastleConnections
     save_on_area_exit: RestoreOnAreaExit
     logic_tricks: LogicTricks
+    shuffle_enemy_drops: ShuffleEnemyDrops
 
 
 ooe_option_groups = [
@@ -329,7 +335,8 @@ ooe_option_groups = [
 
     OptionGroup("Enemy Settings", [
         ExperiencePercent,
-        APMultiplier
+        APMultiplier,
+        ShuffleEnemyDrops
 
     ]),
 

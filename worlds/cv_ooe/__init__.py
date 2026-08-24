@@ -107,6 +107,7 @@ class OoEWorld(World):
             "Cotton Dress",
             "Silk Dress",
             "Sequined Dress",
+            "Empire Dress",
             "Corset Dress",
             "Eye for Decay",
             "L. Eye of God",

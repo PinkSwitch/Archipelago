@@ -107,6 +107,7 @@ def patch_rom(world, rom, code_patch):
     from .modules.glyph_shuffle import write_shuffled_glyphs
     from .modules.in_game_hints import write_cat_hints
     from .modules.area_shuffle import patch_castle_connections
+    from .modules.drop_shuffle import shuffle_drops
 
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
@@ -166,6 +167,9 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
         shuffle_brown_chest_pool(world, rom)
+
+    if world.options.shuffle_enemy_drops:
+        shuffle_drops(world, rom)
     ###############################################
     if world.options.randomize_glyph_attributes:
         write_glyph_attributes(world, rom)
