@@ -49,7 +49,7 @@ weak_healing_table = [
     "Milk",
     "Coffee",
     "Earl Grey",
-    "Dajeerling Tear",
+    "Darjeeling Tea",
     "Amanita",
     "Rotten Meat",
     "Spoiled Milk"
@@ -68,7 +68,7 @@ mid_healing_table = [
 great_healing_table = [
     "Super Potion",
     "Super Tonic",
-    "Crepes Susette",
+    "Crepes Suzette",
     "Croque Monsieur",
     "Schnitzel",
     "Eisbein",
