@@ -92,7 +92,6 @@ def set_rules(world) -> None:
 
 
 def set_classifications(world, name) -> CVOoEItem:
-    # Make quest items be prog, here.
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
     if name in world.logical_regular_glyphs:
