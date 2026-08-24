@@ -174,7 +174,7 @@ def connect_regions(world):
 
     if not world.options.remove_training_hall:
         world.get_region("Training Hall").connect(world.get_region("Training Hall Prize Area"),
-                                                    rule= HasAll("Ordinary Rock", "Rapidus Fio", "Magnes", "Lizard Tail"))
+                                                    rule= HasAll("Ordinary Rock", "Magnes", "Lizard Tail"))
 
     ###################################################
     world.get_region("Castle Entrance").connect(world.get_region("Castle Entrance - Right Side"), rule=Has("Paries"))

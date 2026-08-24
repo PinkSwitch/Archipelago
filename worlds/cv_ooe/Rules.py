@@ -50,7 +50,13 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Monastery: Big Room Ledge"), HasAny("Ordinary Rock", "Rapidus Fio") | can_fly)
     set_rule(world.get_location("Monastery: Big Room Under Shelf"), Has("Lizard Tail"))
-    set_rule(world.get_location("Monastery: Blocks Glyph"), (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union")) | HasAny("Redire", "Globus", "Melio Ascia", "Umbra", "Nitesco"))
+    set_rule(world.get_location("Monastery: Blocks Glyph"),
+             HasAny("Redire", "Globus", "Melio Ascia", "Umbra", "Nitesco") |
+             (HasAny("Luminatio", "Vol Luminatio") & HasAny("Umbra", "Vol Umbra") |
+                 HasAny("Ignis", "Vol Ignis") & HasAny("Grando", "Vol Grando") & Has("Glyph Union")) |
+             (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union") &
+              OptionFilter(LogicTricks, "Monastery Cubes Glyph With Secare Union", operator="contains"))
+             )
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
     set_rule(world.get_location("Underground Labyrinth: Boulder Room Glyph"), Has("Paries"))

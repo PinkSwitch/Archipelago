@@ -250,9 +250,9 @@ class LogicTricks(OptionSet):
         "Skeleton Cave First Chest With Rapidus",
         "Training Hall Without Rapidus",
         "Tymeo Mountains Spike Room With Arma Felix"}
-    casefold_keys = {key.casefold() for key in valid_keys}
-    valid_keys.update(casefold_keys)
-    valid_keys_casefold = True
+    # casefold_keys = {key.casefold() for key in valid_keys} Add this back in if Casefolding ever gets fixed
+    # valid_keys.update(casefold_keys)
+    # valid_keys_casefold = True
 
 
 @dataclass

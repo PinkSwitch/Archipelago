@@ -39,6 +39,7 @@ def generate_early(world) -> None:
         world.can_kill_tin_man = passthrough["tin_man_glyph_logic"]
         world.generator_logic_glyphs = passthrough["generator_logic"]
         world.connected_doors = passthrough["door_map"]
+        world.options.logic_tricks.value = passthrough["logic_tricks"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -173,7 +174,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "dropped_glyphs": world.options.randomize_dropped_glyphs.value,
         "tin_man_glyph_logic": world.can_kill_tin_man,
         "generator_logic": world.generator_logic_glyphs,
-        "door_map": world.connected_doors
+        "door_map": world.connected_doors,
+        "logic_tricks": world.options.logic_tricks.value
     }
 
 
