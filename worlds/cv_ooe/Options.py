@@ -260,6 +260,12 @@ class ShuffleEnemyDrops(Toggle):
     display_name = "Shuffle Enemy Drops"
 
 
+class WeightEnemyDrops(DefaultOnToggle):
+    """Weights enemy drops so that rare drops are more likely to be good items.
+       This only applies when enemy drops are Shuffled."""
+    display_name = "Weight Shuffled Drops"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -293,6 +299,7 @@ class OoEOptions(PerGameCommonOptions):
     save_on_area_exit: RestoreOnAreaExit
     logic_tricks: LogicTricks
     shuffle_enemy_drops: ShuffleEnemyDrops
+    weight_shuffled_drops: WeightEnemyDrops
 
 
 ooe_option_groups = [
@@ -336,7 +343,8 @@ ooe_option_groups = [
     OptionGroup("Enemy Settings", [
         ExperiencePercent,
         APMultiplier,
-        ShuffleEnemyDrops
+        ShuffleEnemyDrops,
+        WeightEnemyDrops
 
     ]),
 

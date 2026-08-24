@@ -1,3 +1,4 @@
+import struct
 material_table = [
     "Salt",
     "Horse Hair",
@@ -221,6 +222,49 @@ accessory_table = [
 
 
 def shuffle_drops(world, rom) -> None:
+    for i in range(0x6B):
+        address = 0x020B6364 + (0x24 * i)
+        common_item = 0
+        rare_item = 0
+        common_chance = 1
+        rare_chance = 1
+        if world.random.randint(1, 100) <= 33:  # 33% chance for a Common
+            common_chance = world.random.randint(0x01, 0x10)
+            pool = get_drop_pool(world, common_chance)
+            common_item = get_drop_item(world, pool)
+
+        if world.random.randint(1, 100) <= 14:  # 14% chance for a Rare
+            rare_chance = world.random.randint(0x01, 0x10)
+            pool = get_drop_pool(world, rare_chance)
+            rare_item = get_drop_item(world, pool)
+        rom.write_to_file(address + 0x08, "arm9", struct.pack("H", common_item))
+        rom.write_to_file(address + 0x0A, "arm9", struct.pack("H", rare_item))
+
+        rom.write_to_file(address + 0x1A, "arm9", bytearray([common_chance]))
+        rom.write_to_file(address + 0x1B, "arm9", bytearray([rare_chance]))
+
+
+def get_drop_item(world, weight_map) -> int:
+    from ..Items import item_table
+    weight_table = {
+        "material": material_table,
+        "rare_material": rare_material_table,
+        "weak_healing": weak_healing_table,
+        "mid_healing": mid_healing_table,
+        "great_healing": great_healing_table,
+        "drops": drops_table,
+        "static_consumable": static_consumable_table,
+        "armor": armor_table,
+        "good_armor": good_armor_table,
+        "accessory": accessory_table
+    }
+
+    filler_type = world.random.choices(list(weight_map), weights=list(weight_map.values()), k=1)[0]
+    filler_item = world.random.choice(weight_table[filler_type])
+    return item_table[filler_item].code  # Return the item's internal ID number
+
+
+def get_drop_pool(world, rarity) -> dict:
     full = {"material": 1, "rare_material": 5, "weak_healing": 60, "mid_healing": 30, "great_healing": 10,
             "drops": 1, "static_consumable": 1, "armor": 40, "good_armor": 15, "accessory": 5}
 
@@ -239,33 +283,18 @@ def shuffle_drops(world, rom) -> None:
     star_tier_5 = {"material": 1, "rare_material": 5, "weak_healing": 10, "mid_healing": 50, "great_healing": 70,
                    "drops": 2, "static_consumable": 1, "armor": 40, "good_armor": 60, "accessory": 30}
 
-    for i in range(0x6B):
-        address = 0x020B6364 + (0x24 * i)
-        common_item = 0
-        rare_item = 0
-        if world.random.randint(1, 100) <= 33:  # 33% chance for a Common
-            print("Comm")
-            common_item = get_drop_item(world, full)
-            common_chance = world.random.randint(0x01, 0x10)
-
-        if world.random.randint(1, 100) <= 14:  # 14% chance for a Rare
-            print("Rare")
-            rare_item = get_drop_item(world, full)
-            rare_chance = world.random.randint(0x01, 0x10)
-
-
-def get_drop_item(world, weight_map) -> int:
-    weight_table = {
-        "material": material_table,
-        "rare_material": rare_material_table,
-        "weak_healing": weak_healing_table,
-        "mid_healing": mid_healing_table,
-        "great_healing": great_healing_table,
-        "drops": drops_table,
-        "static_consumable": static_consumable_table,
-        "armor": armor_table,
-        "good_armor": good_armor_table,
-        "accessory": accessory_table
-    }
-
-    print("b")
+    if world.options.weight_shuffled_drops:
+        #  Weight the pool by the rarity of the drop
+        if rarity in range(0, 3):
+            pool = star_tier_5
+        elif rarity in range(3, 6):
+            pool = star_tier_4
+        elif rarity in range(6, 9):
+            pool = star_tier_3
+        elif rarity in range(9, 12):
+            pool = star_tier_2
+        else:
+            pool = star_tier_1
+    else:
+        pool = full  # If it's not weighted, use the global pool
+    return pool
