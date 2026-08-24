@@ -236,7 +236,7 @@
     .org 0x0221D844
         bl @RestoreOnExit
 
-    .org 0x0221D648
+    .org 0x0221D5FC
         b @WarpToMap
 
 .close
@@ -3525,12 +3525,12 @@
 
 ; Checks if the Load Map Flag is set, and if it is reset it and go to the map
 @WarpToMap:
+    mov r7, r0
     ldr r0, = @RamFlag_LoadWorldMap
     ldrb r1, [r0]
     cmp r1, 0
     bne @@OverrideToMap
-    ldr r0, = 0x020FFC58
-    b 0x0221D64C
+    b 0x0221D600
 @@OverrideToMap:
     push lr
     mov r1, 0

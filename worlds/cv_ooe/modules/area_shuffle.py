@@ -55,7 +55,7 @@ door_data = {
     "Sec05Rm04": DoorTransitionData(0x022AD528, 0x022AD4E8, 0x00, 0x0180, "Barracks: Lower West Door"),
 
     "Sec01Rm07": DoorTransitionData(0x022AD458, 0x022AD468, 0x00, 0x00, "Castle Entrance: Shortcut Door", True),
-    "Sec05Rm03": DoorTransitionData(0x022AD4B8, 0x022AD488, 0x100, 0x00, "Barracks: Upper West Door"),
+    "Sec05Rm03": DoorTransitionData(0x022AD4B8, 0x022AD488, 0x00, 0x00, "Barracks: Upper West Door"),
 
     "Sec05Rm11": DoorTransitionData(0x022AE108, 0x022AE118, 0x00, 0x00, "Barracks: East Door", True),
     "Sec07Rm01": DoorTransitionData(0x022AE138, 0x022AE158, 0x100, 0x00, "Mechanical Tower: Center Door"),
