@@ -70,7 +70,7 @@ door_data = {
     "Sec06Rm01": DoorTransitionData(0x022AD9A8, 0x022AD9C8, 0x00, 0x00, "Mechanical Tower: Lower Door"),
 
     "Sec03Rm10": DoorTransitionData(0x022AF028, 0x022ACF80, 0x00, 0x0180, "Library: East Door", True),
-    "Sec09Rm03": DoorTransitionData(0x022AF018, 0x022AF078, 0x00, 0x00, "Forsaken Cloister: West Door")
+    "Sec09Rm03": DoorTransitionData(0x022AF058, 0x022AF078, 0x00, 0x00, "Forsaken Cloister: West Door")
 }
 
 

@@ -54,8 +54,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Monastery: Big Room Under Shelf"), can_slide)
     set_rule(world.get_location("Monastery: Blocks Glyph"),
              HasAny("Redire", "Globus", "Melio Ascia", "Umbra", "Nitesco") |
-             (HasAny("Luminatio", "Vol Luminatio") & HasAny("Umbra", "Vol Umbra") |
-                 HasAny("Ignis", "Vol Ignis") & Has("Glyph Union")) |
+             (((HasAny("Luminatio", "Vol Lumination") & HasAny("Umbra", "Vol Umbra")) | HasAny("Ignis", "Vol Ignis")) & Has("Glyph Union")) | 
              (HasAny("Secare", "Vol Secare", "Melio Secare") & Has("Glyph Union") &
               OptionFilter(LogicTricks, "Monastery Cubes Glyph With Secare Union", operator="contains"))
              )

@@ -42,7 +42,7 @@ item_table: Dict[str, ItemData] = {
     "Torpor": ItemData("Arm Glyphs", 0x1F, ItemClassification.filler, 0),
     "Lapiste": ItemData("Arm Glyphs", 0x20, ItemClassification.filler, 0),
     "Pneuma": ItemData("Arm Glyphs", 0x21, ItemClassification.filler, 0),
-    "Ignis": ItemData("Arm Glyphs", 0x22, ItemClassification.filler, 0),
+    "Ignis": ItemData("Arm Glyphs", 0x22, ItemClassification.progression, 0),
     "Vol Ignis": ItemData("Arm Glyphs", 0x23, ItemClassification.progression, 0),
     "Grando": ItemData("Arm Glyphs", 0x24, ItemClassification.filler, 0),
     "Vol Grando": ItemData("Arm Glyphs", 0x25, ItemClassification.filler, 0),

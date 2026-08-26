@@ -136,6 +136,12 @@
     .org 0x02088188
         bl @GetExtendedItemsOnEnemies
 
+    .org 0x020EF400
+        ;.db 0x58 ; Fix Light's sound
+
+    .org 0x020EF404
+        ;.db 0x57 ; Fix Dark's sound
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
