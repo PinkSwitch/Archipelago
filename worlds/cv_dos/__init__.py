@@ -348,23 +348,6 @@ class DoSWorld(World):
             "Abaddon Soul"
         }
 
-    def generate_output(self, output_directory: str) -> None:
-        self.has_generated_output = True  # Make sure data defined in generate output doesn't get added to spoiler only mode
-        try:
-            code_patch = pkgutil.get_data(__name__, "src/overlay_41.bin")
-            patch = DoSProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
-            patch.write_file("dos_base.bsdiff4", pkgutil.get_data(__name__, "src/dos_base.bsdiff4"))
-            patch_rom(self, patch, self.player, code_patch)
-
-            self.rom_name = patch.name
-
-            patch.write(os.path.join(output_directory,
-                                     f"{self.multiworld.get_out_file_name_base(self.player)}{patch.patch_file_ending}"))
-        except Exception:
-            raise
-        finally:
-            self.rom_name_available_event.set()  # make sure threading continues and errors are collected
-
     def modify_multidata(self, multidata: dict) -> None:
         # wait for self.rom_name to be available.
         self.rom_name_available_event.wait()

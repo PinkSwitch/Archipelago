@@ -132,7 +132,7 @@ def apply_souls_and_gfx(rom):
         rock_row = rom.read_bytes(0x10D6F30 + (i * 0x40), 0x10)
         rock_texture += rock_row  # Read the rock texture
 
-        #for i, pixel in enumerate(rock_texture):
+        # for i, pixel in enumerate(rock_texture):
             # Sprites are too hard to see against the texture so we brighten it a bit
         #   pixel_high = (pixel & 0xF0) >> 4
         #  pixel_low = pixel & 0x0F

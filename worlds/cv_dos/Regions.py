@@ -89,7 +89,7 @@ region_list = [
 ]
 
 
-def init_areas(world: "DoSWorld", locations: List[LocationData]) -> None:
+def init_areas(world: "DoSWorld") -> None:
     player = world.player
     regions = []
     if world.options.boost_speed:

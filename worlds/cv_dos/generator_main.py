@@ -59,7 +59,7 @@ def create_items(world) -> None:
 
     if world.options.gate_items:
         pool.extend([set_classifications(world, "West Lab Gate Key"),
-                     set_classifications(world,"East Lab Gate Key"),
+                     set_classifications(world, "East Lab Gate Key"),
                      set_classifications(world, "Garden Gate Key"),
                      set_classifications(world, "Cavern Gate Key")])
 
@@ -163,3 +163,22 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "garden_condition": world.options.garden_condition.value,
         "mine_condition": world.options.mine_condition.value
     }
+
+
+def generate_output(world, output_directory: str) -> None:
+    world.has_generated_output = True  # Make sure data defined in generate output doesn't get added to spoiler only mode
+    try:
+        code_patch = pkgutil.get_data(__name__, "src/overlay_41.bin")
+        patch = DoSProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
+        patch.write_file("dos_base.bsdiff4", pkgutil.get_data(__name__, "src/dos_base.bsdiff4"))
+        patch_rom(world, patch, world.player, code_patch)
+
+        world.rom_name = patch.name
+
+        patch.write(os.path.join(output_directory,
+                                 f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
+    except Exception:
+        raise
+    finally:
+        world.rom_name_available_event.set()  # make sure threading continues and errors are collected
+        
