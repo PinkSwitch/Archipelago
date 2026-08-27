@@ -5,10 +5,10 @@ import pkgutil
 
 
 from typing import TextIO
-from BaseClasses import Item, MultiWorld, Tutorial, ItemClassification
+from BaseClasses import MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 import settings
-from .Items import get_item_names_per_category, soul_filler_table, item_table, consumable_table, money_table
+from .Items import get_item_names_per_category, item_table
 from .Locations import get_locations
 from .Regions import init_areas
 from .Options import DoSOptions, dos_option_groups, SoulsanityLevel, SoulRandomizer
@@ -17,7 +17,8 @@ from .Client import DoSClient
 from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids, get_location_groups
 from .setup_game import place_static_items, setup_game, place_static_souls
-from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data)
+from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data, create_item,
+                             get_filler_item_name)
 
 
 class DoSWeb(WebWorld):
@@ -395,46 +396,3 @@ class DoSWorld(World):
                 else:
                     spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
 
-    def create_item(self, name: str) -> CVDoSItem:
-        data = self.set_classifications(name)
-
-        return CVDoSItem(name, data.classification, data.code, self.player)
-
-    def get_filler_item_name(self) -> str:
-        weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
-
-        # If these pools have been exhausted, set their weights to 0
-        if not self.weapon_table:
-            weights["weapon"] = 0
-
-        if not self.armor_table:
-            weights["armor"] = 0
-        
-        filler_type = self.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
-        weight_table = {
-            "soul": soul_filler_table,
-            "weapon": self.weapon_table,
-            "armor": self.armor_table,
-            "money": money_table,
-            "consumable": consumable_table,
-        }
-
-        filler_item = self.random.choice(weight_table[filler_type])
-
-        if filler_item in self.weapon_table:
-            self.weapon_table.remove(filler_item)
-        elif filler_item in self.armor_table:
-            self.armor_table.remove(filler_item)
-        
-        if not self.has_tried_chaos_ring:
-            self.has_tried_chaos_ring = True
-            if self.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
-                filler_item = "Chaos Ring"
-
-        return filler_item
-
-
-    def create_static_soul(self, soul):
-        data = item_table[soul]
-        item = Item(soul, ItemClassification.progression, None, self.player)  # Create an event item of the soul
-        return item

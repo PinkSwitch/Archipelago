@@ -97,10 +97,55 @@ def set_classifications(world, name: str) -> CVDoSItem:
     return item
 
 
+def create_item(world, name: str) -> CVDoSItem:
+    data = set_classifications(world, name)
+    return CVDoSItem(name, data.classification, data.code, world.player)
+
+
+def get_filler_item_name(world) -> str:
+    from .Items import consumable_table, money_table, soul_filler_table
+    weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
+
+    # If these pools have been exhausted, set their weights to 0
+    if not world.weapon_table:
+        weights["weapon"] = 0
+
+    if not world.armor_table:
+        weights["armor"] = 0
+
+    filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
+    weight_table = {
+        "soul": soul_filler_table,
+        "weapon": world.weapon_table,
+        "armor": world.armor_table,
+        "money": money_table,
+        "consumable": consumable_table,
+    }
+
+    filler_item = world.random.choice(weight_table[filler_type])
+
+    if filler_item in world.weapon_table:
+        world.weapon_table.remove(filler_item)
+    elif filler_item in world.armor_table:
+        world.armor_table.remove(filler_item)
+
+    if not world.has_tried_chaos_ring:
+        world.has_tried_chaos_ring = True
+        if world.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
+            filler_item = "Chaos Ring"
+
+    return filler_item
+
+
+def create_static_soul(world, soul):
+    data = item_table[soul]
+    item = Item(soul, ItemClassification.progression, None, world.player)  # Create an event item of the soul
+    return item
+
+
 def set_rules(world) -> None:
     from .Rules import set_location_rules
     set_location_rules(world)
-    self.multiworld.completion_condition[self.player] = lambda state: state.has("Menace Defeated", self.player)
 
 
 def fill_slot_data(world) -> Dict[str, typing.Any]:

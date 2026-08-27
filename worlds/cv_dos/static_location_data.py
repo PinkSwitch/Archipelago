@@ -316,17 +316,17 @@ location_data_table = {
     "Demon Guest House: Paranoia Mirror": LocationInformation(0x020A6368),
 
     "Dark Chapel: Entrance Alcove": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
-    "Dummy": LocationInformation(0x020A6368),
+    "Dark Chapel: Catacombs Top Left": LocationInformation(0x020A6368),
+    "Dark Chapel: Catacombs Middle Room": LocationInformation(0x020A6368),
+    "Dark Chapel: Catacombs Soul Barrier": LocationInformation(0x020A6368),
+    "Dark Chapel: Catacombs Mirror Room": LocationInformation(0x020A6368),
+    "Dark Chapel: Catacombs Mirror World": LocationInformation(0x020A6368),
+    "Dark Chapel: Big Square Room Alcove": LocationInformation(0x020A6368),
+    "Dark Chapel: Main Room": LocationInformation(0x020A6368),
+    "Dark Chapel: Bell Room In Bell": LocationInformation(0x020A6368),
+    "Dark Chapel: Bell Room Top Left": LocationInformation(0x020A6368),
+    "Dark Chapel: Bell Room Right": LocationInformation(0x020A6368),
+    "Dark Chapel: Post-Dimitrii Room": LocationInformation(0x020A6368),
     "Dummy": LocationInformation(0x020A6368),
     "Dummy": LocationInformation(0x020A6368),
     "Dummy": LocationInformation(0x020A6368),
@@ -369,6 +369,7 @@ location_data_table = {
     "Dummy": LocationInformation(0x020A6368),
 
 }
+
 
 def get_location_groups():
     location_groups = {
