@@ -84,8 +84,8 @@ class OoEWorld(World):
         self.starting_glyph = None
         self.starting_area = None
         self.glyph_attributes = {}
-        self.can_kill_tin_man = set()
-        self.generator_logic_glyphs = set()
+        self.can_kill_tin_man = []
+        self.generator_logic_glyphs = []
         self.logical_regular_glyphs = set()
         self.connected_doors = {}
         self.logical_filler = set()

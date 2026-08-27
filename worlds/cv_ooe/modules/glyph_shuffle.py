@@ -3,7 +3,7 @@ from ..Options import RandomStolenGlyphs, RandomDropGlyphs
 
 
 def shuffle_glyphs(world) -> None:
-    enemy_glyph_pool = set()
+    enemy_glyph_pool = []
     world.glyph_drops = {
         "Bone Scimitar": "Secare",
         "Axe Knight": "Ascia",
@@ -57,7 +57,7 @@ def shuffle_glyphs(world) -> None:
         for enemy in world.glyph_steals:
             glyph = world.glyph_steals[enemy]
             if glyph != "Arma Machina":  # Arma Machina is a 100% key item, so we can't Fillerize it
-                enemy_glyph_pool.add(glyph)
+                enemy_glyph_pool.append(glyph)
                 if glyph in world.glyph_pool:
                     world.glyph_pool.remove(glyph)
 
@@ -65,7 +65,7 @@ def shuffle_glyphs(world) -> None:
         for enemy in world.glyph_drops:
             glyph = world.glyph_drops[enemy]
             if glyph != "Arma Machina":
-                enemy_glyph_pool.add(glyph)
+                enemy_glyph_pool.append(glyph)
                 if glyph in world.glyph_pool:
                     world.glyph_pool.remove(glyph)
         

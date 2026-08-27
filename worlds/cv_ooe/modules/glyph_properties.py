@@ -171,11 +171,11 @@ def set_glyph_attributes(world) -> None:
             break
         if "Slash" not in world.glyph_attributes[glyph] and "Dominus" not in glyph:
             #  Tin Man needs a non-Slash and non-Dominus glyph to be in logic
-            world.can_kill_tin_man.add(glyph)
+            world.can_kill_tin_man.append(glyph)
 
         #  The generator needs a Lightning element glyph and also a hitbox that can hit both generators
         if "Lightning" in world.glyph_attributes[glyph] and "Dominus" not in glyph and glyph in generator_glyphs:
-            world.generator_logic_glyphs.add(glyph)
+            world.generator_logic_glyphs.append(glyph)
 
     if not world.can_kill_tin_man:
         #  If we somehow didn't generate a SINGLE glyph that can kill Tin Man, failsafe Secare to being Strike
@@ -183,23 +183,23 @@ def set_glyph_attributes(world) -> None:
         if world.options.randomize_glyph_attributes == RandomGlyphAttributes.option_consistent:
             world.glyph_attributes["Vol Secare"] = ["Strike"]
             world.glyph_attributes["Melio Secare"] = ["Strike"]
-            world.can_kill_tin_man.update({"Vol Secare", "Melio Secare"})
-        world.can_kill_tin_man.add("Secare")
+            world.can_kill_tin_man.extend(["Vol Secare", "Melio Secare"])
+        world.can_kill_tin_man.append("Secare")
 
     if not world.generator_logic_glyphs:
         #  If we didn't generate any Glyphs that can hit the generator, default to Fulgur
         world.glyph_attributes["Fulgur"] = ["Lightning"]
         if world.options.randomize_glyph_attributes == RandomGlyphAttributes.option_consistent:
             world.glyph_attributes["Vol Fulgur"] = ["Lightning"]
-        world.generator_logic_glyphs.add("Fulgur")
+        world.generator_logic_glyphs.append("Fulgur")
 
     world.logical_regular_glyphs.update(world.can_kill_tin_man, world.generator_logic_glyphs)
 
     # We want to do this after the last step so they're not added to generator logic glyphs
     if "Torpor" in world.can_kill_tin_man:
         #  Every Villager also gives you a free Torpor glyph
-        world.can_kill_tin_man.update({"Nikolai", "Jacob", "Abram", "Laura", "Eugen", "Aeon", "Marcel", "George",
-                                      "Serge", "Anna", "Monica", "Daniela", "Irina"})
+        world.can_kill_tin_man.extend(["Nikolai", "Jacob", "Abram", "Laura", "Eugen", "Aeon", "Marcel", "George",
+                                      "Serge", "Anna", "Monica", "Daniela", "Irina"])
 
 
 item_index = {
