@@ -12,7 +12,7 @@ from .Items import item_table
 from .Options import AddBrownChests
 from .Options import RandomStolenGlyphs
 
-world_version = "1.3.1"
+world_version = "1.3.2"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 

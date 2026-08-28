@@ -441,6 +441,12 @@
     .org 0x02231EF4
         b 0x02231F04 ; The same, for when we're deleting the object
 
+    .org 0x02232328
+        b 0x02232338 ; The same, AGAIN
+
+    .org 0x02231C54
+        b 0x02231C64 ; Prevent walking to the left when rescuing Anna
+
     .org 0x02230048
         bl @ClampVillagerGlyphPos
 
