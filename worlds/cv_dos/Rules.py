@@ -120,10 +120,10 @@ def set_location_rules(world: "DoSWorld") -> None:
                 set_rule(world.get_location(location), Has("Soul Eater Ring"))
             set_rule(world.get_location("Iron Golem Soul"), Has("Imp Soul"))
 
-    set_rule(world.get_location("Paranoia Soul"), lambda state: state.has(world.magic_seal_table["Demon Guest House Upper"], player) and state.has_all(paranoia_souls, player))
-    set_rule(world.get_location("Upper Guest House: Boss Room"), lambda state: state.has(world.magic_seal_table["Demon Guest House Upper"], player) and state.has_all(paranoia_souls, player))
+    set_rule(world.get_location("Paranoia Soul"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
+    set_rule(world.get_location("Upper Guest House: Boss Room"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
     set_rule(world.get_location("Demon Guest House: Paranoia Mirror"), lambda state: state.has_all({world.magic_seal_table["Demon Guest House Upper"], "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
-    set_rule(world.get_location("Demon Guest House: Beyond Paranoia"), lambda state: state.has(world.magic_seal_table["Demon Guest House Upper"], player) and state.has_all(paranoia_souls, player))
+    set_rule(world.get_location("Demon Guest House: Beyond Paranoia"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
     set_rule(world.get_location("Dark Chapel: Catacombs Soul Barrier"), lambda state: state.has(world.red_soul_walls[2], player))
 
     if not world.options.replace_menace_with_soma:
