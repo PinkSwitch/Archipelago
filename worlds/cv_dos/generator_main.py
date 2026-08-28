@@ -138,8 +138,7 @@ def get_filler_item_name(world) -> str:
 
 
 def create_static_soul(world, soul):
-    data = item_table[soul]
-    item = Item(soul, ItemClassification.progression, None, world.player)  # Create an event item of the soul
+    item = CVDoSItem(soul, ItemClassification.progression, None, world.player)  # Create an event item of the soul
     return item
 
 

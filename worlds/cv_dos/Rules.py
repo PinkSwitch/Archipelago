@@ -98,9 +98,9 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Abyss Center"), big_uppies)
     
     if world.options.goal:
-        set_rule(world.get_location("The Pinnacle: Beyond Throne Room"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
-        set_rule(world.get_location("Aguni Soul"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
-        set_rule(world.get_location("The Pinnacle: Throne Room"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
+        set_rule(world.get_location("The Pinnacle: Beyond Throne Room"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
+        set_rule(world.get_location("Aguni Soul"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
+        set_rule(world.get_location("The Pinnacle: Throne Room"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
     else:
         add_rule(world.get_location("Abyss Center", player), lambda state: state.has(world.magic_seal_table["The Pinnacle"], player))
 

@@ -339,4 +339,3 @@ class DoSWorld(World):
             "Aguni Soul",
             "Abaddon Soul"
         }
-

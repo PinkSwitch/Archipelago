@@ -6,8 +6,8 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
-                           base_check_address_table, easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
-                           boss_list, enemy_table, button_item_table)
+                           base_check_address_table, easter_egg_table, warp_room_bits, world_version,
+                           global_item_table, common_filler_pool, boss_list, enemy_table, button_item_table)
 from .modules.music_randomizer import area_music_randomizer, boss_music_randomizer
 from .modules.boss_randomizer import write_bosses
 from .modules.synthesis_randomizer import write_synthesis
@@ -117,7 +117,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xB84A9, bytearray([0x00]))
 
     if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
-        rom.write_bytes(0xBD508, bytearray([0x60, 0xDC])) #  ???
+        rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))  # ???
         rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
         rom.write_bytes(0xC1C38, bytearray([0xD0]))
@@ -133,14 +133,14 @@ def patch_rom(world, rom, player: int, code_patch):
         ######
 
     if world.mine_status == "Disabled":
-        rom.write_bytes(0x2F6DDFD, bytearray([0xFF])) # Remove Death, Abaddon, and Aguni from the Soulstiary
-        rom.write_bytes(0x2F6DDFE, bytearray([0xFF])) # IF MINE IS REMOVED!!!!
+        rom.write_bytes(0x2F6DDFD, bytearray([0xFF]))  # Remove Death, Abaddon, and Aguni from the Soulstiary
+        rom.write_bytes(0x2F6DDFE, bytearray([0xFF]))  # IF MINE IS REMOVED!!!!
 
     if not world.options.goal:
         rom.write_bytes(0x2F6DE02, bytearray([0xFF]))  # Clear Aguni if the goal is Throne
 
-    #if world.options.goal == 2:
-        #rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
+    # if world.options.goal == 2:
+        # rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
 
     if world.options.one_screen_mode:
         rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
@@ -152,7 +152,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
 
     if world.options.no_mp_bat:
-        rom.write_bytes(0xA1782, bytearray([0x00])) # Zero the Bat's MP cost
+        rom.write_bytes(0xA1782, bytearray([0x00]))  # Zero the Bat's MP cost
         
     if world.options.randomize_seal_patterns:
         randomize_seal_patterns(world, rom)
@@ -250,7 +250,7 @@ def patch_rom(world, rom, player: int, code_patch):
         boss_music_randomizer(world, rom)
 
     if world.options.randomize_red_soul_walls:
-        rom.write_bytes(0x2F6DE08, bytearray([0x01])) # Tell the rom we have this on
+        rom.write_bytes(0x2F6DE08, bytearray([0x01]))  # Tell the rom we have this on
 
         rom.write_bytes(0x158BC0, bytearray([global_soul_table.index(world.red_soul_walls[0])]))
         rom.write_bytes(0x158BBA, bytearray([global_soul_table.index(world.red_soul_walls[1])]))
@@ -295,7 +295,7 @@ def patch_rom(world, rom, player: int, code_patch):
                 index = (global_soul_table.index(location.name) * 2)
                 rom.write_bytes(soul_check_table + index, struct.pack("H", item_struct))
             elif location.name in easter_egg_table:
-                if item_id > 0xFF: # If this has a color
+                if item_id > 0xFF:  # If this has a color
                     item_type = (item_id & 0xFF00) >> 8  # Replace the type with the color if it has one
                     item_id = item_id & 0xFF
                 rom.write_bytes(easter_egg_table[location.name][0], bytearray([item_type]))
