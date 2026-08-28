@@ -125,49 +125,49 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Condemned Tower Main", "Gergoth Soul"),
         LocationData("Condemned Tower Main", "Condemned Tower: Boss Room", True),
 
-        LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Money Gate", 0x58),
-        LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Lower Corner Room", 0x59),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror Room", 0x5A),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror World", 0x5B),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Bugbear Hallway", 0x5C),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: East Gear Room", 0x5D),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Spike Room Secret", 0x5E),
-        LocationData("Cursed Clock Tower Boss Area", "Zephyr Soul", 0x5F),
+        LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Money Gate"),
+        LocationData("Cursed Clock Tower Entrance", "Cursed Clock Tower: Lower Corner Room"),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror Room"),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror World"),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Bugbear Hallway"),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: East Gear Room",),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Spike Room Secret"),
+        LocationData("Cursed Clock Tower Boss Area", "Zephyr Soul"),
         LocationData("Cursed Clock Tower Boss Area", "Cursed Clock Tower: Boss Room", None),
 
-        LocationData("Subterranean Hell Top Entrance", "Rahab Soul", 0x62),
+        LocationData("Subterranean Hell Top Entrance", "Rahab Soul"),
         LocationData("Subterranean Hell Top Entrance", "Subterranean Hell: Boss Room", None),
-        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Left", 0x63),
-        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Right", 0x64),
-        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Top Left", 0x65),
-        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Bottom Right", 0x66),
-        LocationData("Subterranean Hell Central Exit", "Subterranean Hell: Near Save Room", 0x67),
-        LocationData("Subterranean Hell Central Lower", "Subterranean Hell: Central Lower Room", 0x68),
-        LocationData("Subterranean Hell Central Upper", "Subterranean Hell: Central Upper Room", 0x69),
-        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Behind Waterfall", 0x6A),
-        LocationData("Subterranean Hell Shaft Bottom Stairs", "Subterranean Hell: Waterfall Room Lower", 0x6B),
-        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Middle", 0x6C),
-        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Upper", 0x6D),
+        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Left"),
+        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Right"),
+        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Top Left"),
+        LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Bottom Right"),
+        LocationData("Subterranean Hell Central Exit", "Subterranean Hell: Near Save Room"),
+        LocationData("Subterranean Hell Central Lower", "Subterranean Hell: Central Lower Room"),
+        LocationData("Subterranean Hell Central Upper", "Subterranean Hell: Central Upper Room"),
+        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Behind Waterfall"),
+        LocationData("Subterranean Hell Shaft Bottom Stairs", "Subterranean Hell: Waterfall Room Lower"),
+        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Middle"),
+        LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Upper"),
 
-        LocationData("Silenced Ruins", "Silenced Ruins: Ice Block Room", 0x6E),
-        LocationData("Silenced Ruins", "Bat Company Soul", 0x6F),
+        LocationData("Silenced Ruins", "Silenced Ruins: Ice Block Room"),
+        LocationData("Silenced Ruins", "Bat Company Soul"),
         LocationData("Silenced Ruins", "Silenced Ruins: Boss Room", None),
-        LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror Room", 0x70),
-        LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror World", 0x71),
+        LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror Room"),
+        LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror World"),
 
-        LocationData("The Pinnacle Lower", "The Pinnacle: Lower Hidden Room", 0x72),
-        LocationData("The Pinnacle", "The Pinnacle: Under Big Staircase", 0x73),
-        LocationData("The Pinnacle", "The Pinnacle: Central Indoor Room", 0x74),
-        LocationData("The Pinnacle", "The Pinnacle: Central Outdoor Room", 0x75),
+        LocationData("The Pinnacle Lower", "The Pinnacle: Lower Hidden Room"),
+        LocationData("The Pinnacle", "The Pinnacle: Under Big Staircase"),
+        LocationData("The Pinnacle", "The Pinnacle: Central Indoor Room"),
+        LocationData("The Pinnacle", "The Pinnacle: Central Outdoor Room"),
 
-        LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Left", 0x76),
-        LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Right", 0x77),
+        LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Left"),
+        LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Right"),
     ]
 
     if world.options.goal:  # Add the checks in the Throne Room and the Abyss
         location_table += [
-            LocationData("The Pinnacle Throne Room", "The Pinnacle: Beyond Throne Room", 0x78),
-            LocationData("The Pinnacle Throne Room", "Aguni Soul", 0x79),
+            LocationData("The Pinnacle Throne Room", "The Pinnacle: Beyond Throne Room"),
+            LocationData("The Pinnacle Throne Room", "Aguni Soul"),
             LocationData("The Pinnacle Throne Room", "The Pinnacle: Throne Room", None),
             LocationData("The Abyss Beyond Abaddon", "Abyss Center", None)
         ]
@@ -183,19 +183,19 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
 
     if world.mine_status != "Disabled":  # Add the Mine/Abyss checks
         location_table += [
-            LocationData("Mine of Judgment", "Death Soul", 0x7A),
+            LocationData("Mine of Judgment", "Death Soul"),
             LocationData("Mine of Judgment", "Mine of Judgment: Boss Room", None),
-            LocationData("The Abyss", "The Abyss: Sand Area", 0x7B),
-            LocationData("The Abyss", "The Abyss: Ice Area", 0x7C),
-            LocationData("The Abyss Beyond Abaddon", "Abaddon Soul", 0x7D),
+            LocationData("The Abyss", "The Abyss: Sand Area"),
+            LocationData("The Abyss", "The Abyss: Ice Area"),
+            LocationData("The Abyss Beyond Abaddon", "Abaddon Soul"),
             LocationData("The Abyss Beyond Abaddon", "The Abyss: Boss Room", None)]
 
     if world.options.gate_items == GateItems.option_buttonsanity:
         location_table += [
-        LocationData("Wizardry Lab West Gate", "Wizardry Lab: West Gate Button", 0xE3),
-        LocationData("Wizardry Lab East Gate", "Wizardry Lab: East Gate Button", 0xE4),
-        LocationData("Garden of Madness East Gate", "Garden of Madness: Gate Button", 0xE5),
-        LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button", 0xE6)]
+            LocationData("Wizardry Lab West Gate", "Wizardry Lab: West Gate Button"),
+            LocationData("Wizardry Lab East Gate", "Wizardry Lab: East Gate Button"),
+            LocationData("Garden of Madness East Gate", "Garden of Madness: Gate Button"),
+            LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button")]
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in world.common_souls:

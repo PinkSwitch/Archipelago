@@ -1,24 +1,16 @@
-import os
 import typing
 import threading
-import pkgutil
 
 
-from typing import TextIO
 from BaseClasses import MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 import settings
 from .Items import get_item_names_per_category, item_table
-from .Locations import get_locations
-from .Regions import init_areas
-from .Options import DoSOptions, dos_option_groups, SoulsanityLevel, SoulRandomizer
-from .Rules import set_location_rules
+from .Options import DoSOptions, dos_option_groups
 from .Client import DoSClient
-from .Rom import DoSProcPatch, patch_rom
 from .static_location_data import location_ids, get_location_groups
-from .setup_game import place_static_items, setup_game, place_static_souls
 from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data, create_item,
-                             get_filler_item_name)
+                             get_filler_item_name, modify_multidata, generate_output, write_spoiler_header)
 
 
 class DoSWeb(WebWorld):
@@ -347,35 +339,4 @@ class DoSWorld(World):
             "Aguni Soul",
             "Abaddon Soul"
         }
-
-    def modify_multidata(self, multidata: dict) -> None:
-        # wait for self.rom_name to be available.
-        self.rom_name_available_event.wait()
-        rom_name = getattr(self, "rom_name", None)
-        if rom_name:
-            multidata["connect_names"][self.rom_name] = multidata["connect_names"][self.multiworld.player_name[self.player]]
-
-    def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
-        if self.options.shuffle_starting_warp_room:
-            spoiler_handle.write(f"Default Warp Room:    {self.starting_warp_room}\n")
-
-        if self.options.randomize_red_soul_walls:
-            spoiler_handle.write(f"\nSoul Barriers:\n")
-            spoiler_handle.write(f" Paranoia 1:  {self.red_soul_walls[1]}\n")
-            spoiler_handle.write(f" Paranoia 2:  {self.red_soul_walls[0]}\n")
-            spoiler_handle.write(f" Paranoia 3:  {self.red_soul_walls[3]}\n")
-            spoiler_handle.write(f" Dark Chapel Catacombs:  {self.red_soul_walls[2]}\n")
-
-        if self.options.boss_shuffle:
-            spoiler_handle.write(f"\nBosses:\n")
-            for boss in self.boss_slots:
-                spoiler_handle.write(f" {boss}:  {self.boss_slots[boss].new_boss}\n")
-
-        if self.options.seal_shuffle:
-            spoiler_handle.write(f"\nMagic Seals:\n")
-            for seal in self.magic_seal_table:
-                if seal in ["Mine of Judgment", "The Abyss"] and self.mine_status == "Disabled":  # Ignore Magic Seals that are past the endgame trigger
-                    continue
-                else:
-                    spoiler_handle.write(f" {seal}:  {self.magic_seal_table[seal]}\n")
 

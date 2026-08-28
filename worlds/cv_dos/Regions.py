@@ -1,6 +1,6 @@
-from typing import List, Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING
 from BaseClasses import Region, Location
-from .Locations import LocationData, get_locations
+from .Locations import get_locations
 from .Rules import small_uppies, big_uppies
 from .soul_regions import create_soul_regions
 from .Options import GateItems
@@ -90,12 +90,7 @@ region_list = [
 
 
 def init_areas(world: "DoSWorld") -> None:
-    player = world.player
     regions = []
-    if world.options.boost_speed:
-        sub_hell_speed = lambda state: True
-    else:
-        sub_hell_speed = lambda state: state.has_any({"Flying Armor Soul", "Black Panther Soul"}, player)
 
     active_regions = region_list.copy()
 
@@ -136,7 +131,8 @@ def create_locations(world, active_regions):
 
 
 def connect_regions(world):
-    from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
+    from .Options import BoostSpeed
+    from rule_builder.rules import HasAll, HasAny, Has, OptionFilter
     # Lost Village
     world.get_region("Lost Village Upper").add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway"],
                                                      {"Wizardry Lab Main": Has("Moat Drained"),
@@ -289,7 +285,7 @@ def connect_regions(world):
                                                                  {"Subterranean Hell East": HasAll("Rahab Soul", world.magic_seal_table["Subterranean Hell"])})
 
     world.get_region("Subterranean Hell East").add_exits(["Subterranean Hell Top Entrance", "Subterranean Hell Central/East Connection", "Subterranean Hell Button Gate Room"],
-                                                         {"Subterranean Hell Top Entrance": lambda state: state.has_all({"Rahab Soul", world.magic_seal_table["Subterranean Hell"]}) and (state.has_any(small_uppies) or state.has("Puppet Master Soul")),
+                                                         {"Subterranean Hell Top Entrance": HasAll("Rahab Soul", world.magic_seal_table["Subterranean Hell"]) & (small_uppies | Has("Puppet Master Soul")),
                                                           "Subterranean Hell Central/East Connection": small_uppies | Has("Puppet Master Soul")})
 
     world.get_region("Subterranean Hell Central/East Connection").add_exits(["Subterranean Hell Central Upper", "Subterranean Hell East"],
@@ -297,7 +293,7 @@ def connect_regions(world):
                                                                              "Subterranean Hell East": small_uppies | Has("Puppet Master Soul")})
 
     world.get_region("Subterranean Hell Central Upper").add_exits(["Subterranean Hell Central/East Connection", "Subterranean Hell Central Exit", "Subterranean Hell Central Lower"],
-                                                                  {"Subterranean Hell Central Exit": lambda state: state.has_any(small_uppies) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}),
+                                                                  {"Subterranean Hell Central Exit": small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul"),
                                                                    "Subterranean Hell Central/East Connection": HasAny("Rahab Soul", "Malphas Soul")})
 
     world.get_region("Subterranean Hell Central Exit").add_exits(["Subterranean Hell Central Upper", "Garden of Madness Water Blocked"],
@@ -312,13 +308,13 @@ def connect_regions(world):
                                                                   "Subterranean Hell Shaft Top": big_uppies})
 
     world.get_region("Subterranean Hell Shaft Top").add_exits(["Subterranean Hell Shaft Middle", "Wizardry Lab East Gate", "Subterranean Hell Shaft Bottom Stairs"],
-                                                              {"Subterranean Hell Shaft Middle": sub_hell_speed})
+                                                              {"Subterranean Hell Shaft Middle": HasAny("Black Panther Soul", "Flying Armor Soul", options=[OptionFilter(BoostSpeed, True)], filtered_resolution=True)})
 
     world.get_region("Subterranean Hell Shaft Bottom").add_exits(["Subterranean Hell Spike Room East", "Silenced Ruins Antechamber", "Subterranean Hell Shaft Bottom Stairs"],
                                                                  {"Subterranean Hell Shaft Middle": small_uppies | Has("Puppet Master Soul"),
                                                                   "Subterranean Hell Shaft Bottom Stairs": small_uppies | Has("Puppet Master Soul"),
                                                                   "Subterranean Hell Spike Room East": small_uppies | Has("Puppet Master Soul"),
-                                                                  "Silenced Ruins Antechamber": lambda state: state.has_any(small_uppies) or state.has_any({"Puppet Master Soul", "Flying Armor Soul", "Black Panther Soul"})})
+                                                                  "Silenced Ruins Antechamber": small_uppies | HasAny("Puppet Master Soul", "Flying Armor Soul", "Black Panther Soul")})
 
     world.get_region("Subterranean Hell Shaft Bottom Stairs").add_exits(["Subterranean Hell Shaft Bottom", "Subterranean Hell Central/Shaft Divide"],
                                                                         {"Subterranean Hell Central/Shaft Divide": small_uppies | Has("Puppet Master Soul")})
@@ -343,7 +339,7 @@ def connect_regions(world):
 
     world.get_region("Silenced Ruins").add_exits(["Silenced Ruins Back Exit", "Silenced Ruins Upper Entrance", "Warp Room"],
                                                  {"Silenced Ruins Upper Entrance": small_uppies | Has("Puppet Master Soul"),
-                                                 "Silenced Ruins Back Exit": lambda state: state.has_any(small_uppies) or state.has_all({"Puppet Master Soul", "Black Panther Soul"})})
+                                                 "Silenced Ruins Back Exit": small_uppies | HasAll("Puppet Master Soul", "Black Panther Soul")})
 
     world.get_region("Silenced Ruins Back Exit").add_exits(["Silenced Ruins"])
     if world.options.gate_items < GateItems.option_buttonsanity:
@@ -366,7 +362,7 @@ def connect_regions(world):
     # Mine of Judgment
     if world.mine_status != "Disabled":
         world.get_region("Mine of Judgment").add_exits(["The Abyss", "Warp Room"],
-                                                       {"The Abyss": lambda state: (state.has_any(small_uppies) or state.has("Pupper Master Soul")) and state.has(world.magic_seal_table["Mine of Judgment"])})
+                                                       {"The Abyss": (small_uppies | Has("Puppet Master Soul")) & Has(world.magic_seal_table["Mine of Judgment"])})
 
         world.get_region("The Abyss").add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
                                                 {"Mine of Judgment": small_uppies,
@@ -376,39 +372,12 @@ def connect_regions(world):
 
     world.get_region("Warp Room").add_exits([world.starting_warp_region])
     world.get_region("Subterranean Hell Spike Room East").add_exits(["Subterranean Hell Spike Room West"],
-                                                                    {"Subterranean Hell Spike Room West": lambda state: state.has("Rahab Soul") and (state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}) or state.has("Bone Ark Soul"))})
+                                                                    {"Subterranean Hell Spike Room West": Has("Rahab Soul") & HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul")})
 
     world.get_region("Subterranean Hell Spike Room West").add_exits(["Subterranean Hell Spike Room East"],
-                                                                    {"Subterranean Hell Spike Room East": lambda state: state.has("Rahab Soul") and (state.has_all({"Puppet Master Soul", "Skeleton Ape Soul"}) or state.has("Bone Ark Soul"))})
+                                                                    {"Subterranean Hell Spike Room East": Has("Rahab Soul") & HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul")})
 
     create_soul_regions(world)
-
-
-def create_location(player: int, location_data: LocationData, region: Region) -> Location:
-    location = DoSLocation(player, location_data.name, location_data.code, region)
-    location.region = location_data.region
-
-    return location
-
-
-def create_region(world: "DoSWorld", player: int, locations_per_region: Dict[str, List[LocationData]], name: str) -> Region:
-    region = Region(name, player, world.multiworld)
-
-    if name in locations_per_region:
-        for location_data in locations_per_region[name]:
-            location = create_location(player, location_data, region)
-            region.locations.append(location)
-
-    return region
-
-
-def get_locations_per_region(locations: List[LocationData]) -> Dict[str, List[LocationData]]:
-    per_region: Dict[str, List[LocationData]] = {}
-
-    for location in locations:
-        per_region.setdefault(location.region, []).append(location)
-
-    return per_region
     
 
 # TODO; Skeletone Ape in tower with speedboost on

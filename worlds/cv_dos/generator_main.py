@@ -2,7 +2,7 @@ import typing
 import os
 import pkgutil
 
-from typing import Dict
+from typing import Dict, TextIO
 from BaseClasses import Item, ItemClassification
 from .Items import item_table
 from .Options import SoulRandomizer, SoulsanityLevel
@@ -181,4 +181,36 @@ def generate_output(world, output_directory: str) -> None:
         raise
     finally:
         world.rom_name_available_event.set()  # make sure threading continues and errors are collected
-        
+
+
+def modify_multidata(world, multidata: dict) -> None:
+    # wait for self.rom_name to be available.
+    world.rom_name_available_event.wait()
+    rom_name = getattr(world, "rom_name", None)
+    if rom_name:
+        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.player_name]
+
+
+def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
+    if world.options.shuffle_starting_warp_room:
+        spoiler_handle.write(f"Default Warp Room:    {world.starting_warp_room}\n")
+
+    if world.options.randomize_red_soul_walls:
+        spoiler_handle.write(f"\nSoul Barriers:\n")
+        spoiler_handle.write(f" Paranoia 1:  {world.red_soul_walls[1]}\n")
+        spoiler_handle.write(f" Paranoia 2:  {world.red_soul_walls[0]}\n")
+        spoiler_handle.write(f" Paranoia 3:  {world.red_soul_walls[3]}\n")
+        spoiler_handle.write(f" Dark Chapel Catacombs:  {world.red_soul_walls[2]}\n")
+
+    if world.options.boss_shuffle:
+        spoiler_handle.write(f"\nBosses:\n")
+        for boss in world.boss_slots:
+            spoiler_handle.write(f" {boss}:  {world.boss_slots[boss].new_boss}\n")
+
+    if world.options.seal_shuffle:
+        spoiler_handle.write(f"\nMagic Seals:\n")
+        for seal in world.magic_seal_table:
+            if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":  # Ignore Magic Seals that are past the endgame trigger
+                continue
+            else:
+                spoiler_handle.write(f" {seal}:  {world.magic_seal_table[seal]}\n")
