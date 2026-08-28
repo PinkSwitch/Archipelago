@@ -5,9 +5,7 @@ from .in_game_data import location_ram_table, global_soul_table, world_version, 
 from .static_location_data import location_ids
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
-import time
 import struct
-import asyncio
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -15,7 +13,7 @@ if TYPE_CHECKING:
 
 class DoSClient(BizHawkClient):
     game = "Castlevania: Dawn of Sorrow"
-    system = ("NDS")
+    system = "NDS"
     patch_suffix = ".apcvdos"
     most_recent_connect: str = ""
     client_version: str = world_version
@@ -32,7 +30,7 @@ class DoSClient(BizHawkClient):
         try:
             # Check ROM name/patch version
             validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x0, 18, "ROM"), (0x02F6DD7C, 16, "ROM"), (0x02F6DD8D, 1, "ROM")])
-            base_rom_name = validation_data[0].decode("ascii") # AP ROM name
+            base_rom_name = validation_data[0].decode("ascii")  # AP ROM name
 
             if not base_rom_name.startswith("CASTLEVANIA1ACVEA4"):
                 return False
@@ -79,7 +77,6 @@ class DoSClient(BizHawkClient):
             self.has_received_death = True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        from CommonClient import logger
         from .in_game_data import location_ram_table
 
         if ctx.server_version.build > 0:
@@ -96,20 +93,18 @@ class DoSClient(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
-
         read_state = await bizhawk.read(
             ctx.bizhawk_ctx, [
-                (0x0F7190, 0x10, "Main RAM"), # Check table
-                (0x0F7257, 0x01, "Main RAM"), # Game Mode
-                (0x11504C, 0x01, "Main RAM"), # Current Map
-                (0x0F703C, 0x04, "Main RAM"), # Gameplay timer. Will be 0 if not in game
-                (0x308930, 0x20, "Main RAM"), # AP data
-                (0x0F6DFC, 0x01, "Main RAM"), # Game state, we only care about the Dead flag
-                (0x0F7180, 0x01, "Main RAM"), # Moat Drain Switch flag
-                (0x0F7038, 0x02, "Main RAM"), # Boss Bitflags, used for Dario, Dmitrii and the Garden cutscene
+                (0x0F7190, 0x10, "Main RAM"),  # Check table
+                (0x0F7257, 0x01, "Main RAM"),  # Game Mode
+                (0x11504C, 0x01, "Main RAM"),  # Current Map
+                (0x0F703C, 0x04, "Main RAM"),  # Gameplay timer. Will be 0 if not in game
+                (0x308930, 0x20, "Main RAM"),  # AP data
+                (0x0F6DFC, 0x01, "Main RAM"),  # Game state, we only care about the Dead flag
+                (0x0F7180, 0x01, "Main RAM"),  # Moat Drain Switch flag
+                (0x0F7038, 0x02, "Main RAM"),  # Boss Bitflags, used for Dario, Dmitrii and the Garden cutscene
             ]
         )
-
 
         location_flag_table = bytearray(read_state[0])
         game_mode = int.from_bytes(read_state[1], "little")
@@ -199,7 +194,7 @@ class DoSClient(BizHawkClient):
                 self.has_received_death = False
                 self.has_reset_from_death = False
             else:  # Received death is false, meaning the player actually died here
-                if self.has_reset_from_death: # We only want this to run once per death
+                if self.has_reset_from_death:  # We only want this to run once per death
                     await ctx.send_death(f"{ctx.player_names[ctx.slot]} died!")
                     self.has_reset_from_death = False
         else:

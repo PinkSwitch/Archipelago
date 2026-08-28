@@ -17,11 +17,14 @@ location_ids = {
     "Lost Village: East Plaza": 0x07,
     "Dark Chapel: Main Room": 0x08,
     "Garden of Madness: Center Room": 0x09,
+    # A is reserved for the bottom tier of the hammer thing
     "Lost Village: Upper Big Room Corner": 0x0B,
     "Demon Guest House: Doll Alcove": 0x0C,
     "Dark Chapel: Big Room Lower": 0x0D,
+    # E is the second
     "Silenced Ruins: Mirror World": 0x0F,
     "Wizardry Lab: Underwater Right": 0x10,
+    # 11 is the third
     "Condemned Tower: 1F East": 0x12,
     "Wizardry Lab: Main Entry Shaft": 0x13,
     "The Abyss: Sand Area": 0x14,
@@ -31,6 +34,7 @@ location_ids = {
     "Silenced Ruins: Mirror Room": 0x18,
     "The Pinnacle: Central Indoor Room": 0x19,
     "Dark Chapel: Bell Room Top Left": 0x1A,
+
     "Condemned Tower: Top of the Tower": 0x1E,
     "Lost Village: West Building Lower": 0x1F,
     "Lost Village: Central Building": 0x20,
@@ -45,6 +49,9 @@ location_ids = {
     "The Pinnacle: Lower Hidden Room": 0x2A,
     "Lost Village: Hidden Floor Room 2": 0x2B,
     "Lost Village: Above Entrance": 0x2C,
+    "Cursed Clock Tower: Spike Room Secret": 0x2D,
+    "Demon Guest House: Central Main Chamber Bottom Room": 0x2E,
+    "Dark Chapel: Bell Room In Bell": 0x2F,
     "Subterranean Hell: Waterfall Room Upper": 0x30,
     "Subterranean Hell: Waterfall Room Lower": 0x31,
     "Subterranean Hell: Central Lower Room": 0x32,
@@ -75,6 +82,7 @@ location_ids = {
     "Garden of Madness: West Upper Room": 0x4B,
     "Wizardry Lab: East Gate": 0x4C,
     "Wizardry Lab: Above Water": 0x4D,
+    "Lost Village: Drawbridge Room": 0x4E,  # TODO! Set this flag in game!
     "Lost Village: Mirror Room Left": 0x4F,
     "Dark Chapel: Catacombs Middle Room": 0x50,
     "Lost Village: Above Drawbridge": 0x51,
@@ -117,14 +125,6 @@ location_ids = {
     "The Pinnacle: Central Outdoor Room": 0x77,
     "Wizardry Lab: Upper Big Room": 0x78,
     "Dark Chapel: Big Room Top Right": 0x79,
-
-
-
-
-    #"Demon Guest House: Central Main Chamber Bottom Room": 0x, # TODO! Pickup flag for this
-    #"Dark Chapel: Bell Room In Bell": 0x,
-    #"Lost Village: Drawbridge Room": 0x00,  # TODO! THIS NEEDS A REAL FLAG NOW
-    #     "Cursed Clock Tower: Spike Room Secret": 0x, # TODO! Pickup flag
 
     "Puppet Master Soul": 0x100,
     "Zephyr Soul": 0x101,
@@ -289,13 +289,13 @@ location_data_table = {
     "Garden of Madness: Hidden Room": LocationInformation(0x020AC248),
     "Garden of Madness: Center Room": LocationInformation(0x020ACC14),
     "Garden of Madness: Money Gate": LocationInformation(0x020ACA64),
-    "Garden of Madness: Underground Room": LocationInformation(0x020A6368),
-    "Garden of Madness: East Alcove": LocationInformation(0x020AC9E0),
+    "Garden of Madness: Underground Room": LocationInformation(0x020AC9E0),
+    "Garden of Madness: East Alcove": LocationInformation(0x020AC8B4),
 
-    "Demon Guest House: Secret Room": LocationInformation(0x00000000),  # TOdo. these addresses. Also easter egg addresses
-    "Demon Guest House: Antechamber": LocationInformation(0x020A6368),
-    "Demon Guest House: Lower Main Chamber Bottom Room": LocationInformation(0x020A6368),
-    "Demon Guest House: Puppet Hole": LocationInformation(0x020A6368),
+    "Demon Guest House: Secret Room": LocationInformation(0x020A6368),  # TOdo. these addresses. Also easter egg addresses
+    "Demon Guest House: Antechamber": LocationInformation(0x020A62FC),
+    "Demon Guest House: Lower Main Chamber Bottom Room": LocationInformation(0x020A6338),
+    "Demon Guest House: Puppet Hole": LocationInformation(0x020A608C),
     "Demon Guest House: Number 1 Room": LocationInformation(0x020A6368),
     "Demon Guest House: Number 5 Room": LocationInformation(0x020A6368),
     "Demon Guest House: Number 8 Room": LocationInformation(0x020A6368),
@@ -370,6 +370,33 @@ location_data_table = {
 
 }
 
+enemy_souls_per_area = {
+    "Lost Village": ["Yeti Soul", "Axe Armor Soul", "Warg Soul", "Skeleton Soul", "Bat Soul", "Armor Knight Soul",
+                     "Zombie Soul", "Peeping Eye Soul", "Skelerang Soul", "Spin Devil Soul", "Student Witch Soul",
+                     "Flying Armor Soul", "Ouija Table Soul", "Hell Boar Soul", "Skeleton Ape Soul", "Merman Soul",
+                     "Great Axe Armor Soul", "White Dragon Soul"],
+
+    "Demon Guest House": ["Nova Skeleton Glyph"],
+    "Wizardry Lab": ["Bone Scimitar Glyph"],
+    "Garden of Madness": ["Bone Scimitar Glyph", "Necromancer Glyph", "Axe Knight Glyph"],
+    "Dark Chapel": ["Sea Demon Glyph", "Skull Spider Glyph"],
+    "Condemned Tower": ["Sea Demon Glyph"],
+    "Subterranean Hell": ["Spear Guard Glyph", "Bone Archer Glyph", "Axe Knight Glyph"],
+    "Silenced Ruins": ["Fire Demon Glyph", "Skull Spider Glyph", "Dullahan Glyph"],
+    "Cursed Clock Tower": ["Owl Glyph", "Thunder Demon Glyph", "Lizardman Glyph"],
+
+    "The Pinnacle": ["Guillotiner Soul", "Mothman Soul", "Werewolf Soul", "Mushussu Soul", "Alastor Soul",
+                     "Dead Crusader Soul", "Erinys Soul", "Final Guard Soul", "Succubus Soul",
+                     "Malachi Soul", "Flame Demon Soul", "Bugbear Soul", "Dead Warrior Soul", "Aguni Soul"],
+
+    "Mine of Judgment": ["Slogra Soul", "Ripper Soul", "Gaibon Soul", "Tanjelly Soul", "Giant Slug Soul",
+                         "Bugbear Soul", "Death Soul"],
+
+    "The Abyss": ["Alastor Soul", "Mud Demon Soul", "Frozen Shade Soul", "Malachi Soul", "White Dragon Soul",
+                  "Malacoda Soul", "Arc Demon Soul", "Erinys Soul", "Heart Eater Soul", "Stolas Soul",
+                  "Final Guard Soul", "Abaddon Soul", "Black Panther Soul", "Succubus Soul", "Iron Golem Soul"]
+}
+
 
 def get_location_groups():
     location_groups = {
@@ -390,8 +417,8 @@ def get_location_groups():
         group = location.split(":")[0]
         if group in location_groups:
             location_groups[group].add(location)
-        elif location_data_table[location].location_type == "Soul":
-            for area in location_data_table[location].enemy_areas:
-                location_groups[area].add(location)
+
+    for area in enemy_souls_per_area:
+        location_groups[area].update(enemy_souls_per_area[area])
 
     return location_groups

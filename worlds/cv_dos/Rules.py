@@ -33,7 +33,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Wizardry Lab: Underwater Right"), Has("Rahab Soul"))
 
     set_rule(world.get_location("Garden of Madness: Hidden Room"), small_uppies)
-    set_rule(world.get_location("Garden of Madness: Underground Room"), lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player))
+    set_rule(world.get_location("Garden of Madness: Underground Room"), small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul"))
     set_rule(world.get_location("Garden of Madness: Boss Room"), Has(world.magic_seal_table["Garden of Madness"]))
 
     set_rule(world.get_location("Demon Guest House: Secret Room"), big_uppies)
@@ -59,10 +59,10 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     set_rule(world.get_location("Dark Chapel: Bell Room Right"), small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul"))
 
-    set_rule(world.get_location("Dark Chapel: Big Room Top Right"), lambda state: state.has_any(big_uppies, player) or (state.has("Puppet Master Soul", player) and state.has("Malphas Soul", player)))
-    set_rule(world.get_location("Dark Chapel: Big Room Lower"), lambda state: state.has_any(big_uppies, player))
-    set_rule(world.get_location("Malphas Soul"), lambda state: state.has(world.magic_seal_table["Dark Chapel Inner"], player) and state.has(world.magic_seal_table["Dark Chapel"], player))
-    set_rule(world.get_location("Dark Chapel: Inner Chapel Boss Room"), lambda state: state.has(world.magic_seal_table["Dark Chapel Inner"], player) and state.has(world.magic_seal_table["Dark Chapel"], player))
+    set_rule(world.get_location("Dark Chapel: Big Room Top Right"),     big_uppies | HasAll("Puppet Master Soul", "Malphas Soul"))
+    set_rule(world.get_location("Dark Chapel: Big Room Lower"), big_uppies)
+    set_rule(world.get_location("Malphas Soul"), HasAll(world.magic_seal_table["Dark Chapel Inner"], world.magic_seal_table["Dark Chapel"]))
+    set_rule(world.get_location("Dark Chapel: Inner Chapel Boss Room"), HasAll(world.magic_seal_table["Dark Chapel Inner"], world.magic_seal_table["Dark Chapel"]))
     set_rule(world.get_location("Dark Chapel: Boss Room"), Has(world.magic_seal_table["Dark Chapel Inner"]))
     set_rule(world.get_location("Dark Chapel: Post-Dimitrii Room"), Has(world.magic_seal_table["Dark Chapel Inner"]) & small_uppies)
 
@@ -88,7 +88,7 @@ def set_location_rules(world: "DoSWorld") -> None:
 
     set_rule(world.get_location("Subterranean Hell: Behind Waterfall"), small_uppies | HasAny("Flying Armor Soul", "Black Panther Soul"))
 
-    set_rule(world.get_location("Subterranean Hell: Waterfall Room Upper"), lambda state: state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player))
+    set_rule(world.get_location("Subterranean Hell: Waterfall Room Upper"), small_uppies | Has("Puppet Master Soul"))
 
     set_rule(world.get_location("Silenced Ruins: Ice Block Room"), Has("Balore Soul"))
     set_rule(world.get_location("Silenced Ruins: Mirror World"), Has("Paranoia Soul"))
@@ -98,15 +98,15 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Abyss Center"), big_uppies)
     
     if world.options.goal:
-        set_rule(world.get_location("The Pinnacle: Beyond Throne Room", player), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
-        set_rule(world.get_location("Aguni Soul", player), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
-        set_rule(world.get_location("The Pinnacle: Throne Room", player), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
+        set_rule(world.get_location("The Pinnacle: Beyond Throne Room"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
+        set_rule(world.get_location("Aguni Soul"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
+        set_rule(world.get_location("The Pinnacle: Throne Room"), lambda state: state.has_all({world.magic_seal_table["The Pinnacle"], "Paranoia Soul"}, player))
     else:
         add_rule(world.get_location("Abyss Center", player), lambda state: state.has(world.magic_seal_table["The Pinnacle"], player))
 
     if world.mine_status != "Disabled":
-        set_rule(world.get_location("Death Soul"), lambda state: state.has(world.magic_seal_table["Mine of Judgment"], player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)))
-        set_rule(world.get_location("Mine of Judgment: Boss Room"), lambda state: state.has(world.magic_seal_table["Mine of Judgment"], player) and (state.has_any(small_uppies, player) or state.has("Puppet Master Soul", player)))
+        set_rule(world.get_location("Death Soul"), Has(world.magic_seal_table["Mine of Judgment"]) & (small_uppies | Has("Puppet Master Soul")))
+        set_rule(world.get_location("Mine of Judgment: Boss Room"), Has(world.magic_seal_table["Mine of Judgment"]) & (small_uppies | Has("Puppet Master Soul")))
 
     if not world.options.boost_speed:
         # These jumps are trivial with the speedboost option on

@@ -16,7 +16,7 @@ from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
 from .modules.seal_shuffle import write_seals, randomize_seal_patterns
-from .set_goals import write_goal_triggers
+from .modules.set_goals import write_goal_triggers
 from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
@@ -52,7 +52,6 @@ def patch_rom(world, rom, player: int, code_patch):
     write_goal_triggers(world, rom)
 
     weapon = world.options.starting_weapon.value
-
 
     if isinstance(weapon, str):
         if weapon not in global_weapon_table:
@@ -122,9 +121,9 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
         rom.write_bytes(0xC1C38, bytearray([0xD0]))
-        #rom.write_bytes(0xB05A1, bytearray([0x00]))
+        # rom.write_bytes(0xB05A1, bytearray([0x00]))
 
-        ####  Wall off the final boss door in the Abyss
+        #  Wall off the final boss door in the Abyss
         rom.write_bytes(0x2DE0DC, bytearray([0x2F]))
         rom.write_bytes(0x2DE11C, bytearray([0x3F]))
         rom.write_bytes(0x2DE15C, bytearray([0x4F]))
@@ -259,13 +258,13 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
 
     if world.options.gate_items == GateItems.option_buttonsanity:
-        rom.write_bytes(0x2F6DE09, bytearray([0x01])) # Enables Button Check Mode
+        rom.write_bytes(0x2F6DE09, bytearray([0x01]))  # Enables Button Check Mode
 
     if world.options.hard_mode:
-        rom.write_bytes(0x2F6DE0A, bytearray([0x01])) # Hard mode set
+        rom.write_bytes(0x2F6DE0A, bytearray([0x01]))  # Hard mode set
 
     if world.options.passive_soul_eater_ring:
-        rom.write_bytes(0x2F6DE0B, bytearray([0x01])) # Passive souls
+        rom.write_bytes(0x2F6DE0B, bytearray([0x01]))  # Passive souls
 
     for location in world.multiworld.get_locations(player):
         item_type = 0
@@ -297,12 +296,12 @@ def patch_rom(world, rom, player: int, code_patch):
                 rom.write_bytes(soul_check_table + index, struct.pack("H", item_struct))
             elif location.name in easter_egg_table:
                 if item_id > 0xFF: # If this has a color
-                    item_type = (item_id & 0xFF00) >> 8 # Replace the type with the color if it has one
+                    item_type = (item_id & 0xFF00) >> 8  # Replace the type with the color if it has one
                     item_id = item_id & 0xFF
                 rom.write_bytes(easter_egg_table[location.name][0], bytearray([item_type]))
                 rom.write_bytes(easter_egg_table[location.name][1], bytearray([item_id]))
             elif location.name in button_item_table:
-                address = button_check_table + (button_item_table.index(location.name) * 4) # Set the address
+                address = button_check_table + (button_item_table.index(location.name) * 4)  # Set the address
                 item_color = item_id >> 8
                 item_id = item_id & 0xFF
                 rom.write_bytes(address, bytearray([item_type, item_id, item_color]))
@@ -409,7 +408,6 @@ class DoSPatchExtensions(APPatchExtension):
         if soul_wall_randomizer:
             apply_souls_and_gfx(rom)
         return rom.get_bytes()
-
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
