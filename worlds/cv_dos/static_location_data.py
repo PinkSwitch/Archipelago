@@ -377,8 +377,16 @@ enemy_souls_per_area = {
                      "Great Axe Armor Soul", "White Dragon Soul"],
 
     "Demon Guest House": ["Nova Skeleton Glyph"],
-    "Wizardry Lab": ["Bone Scimitar Glyph"],
-    "Garden of Madness": ["Bone Scimitar Glyph", "Necromancer Glyph", "Axe Knight Glyph"],
+    "Wizardry Lab": ["Slime Soul", "Axe Armor Soul", "Bomber Armor Soul", "Student Witch Soul", "Skull Archer Soul",
+                     "Skeleton Soul", "Slaughterer Soul", "Manticore Soul", "Armor Knight Soul", "Golem Soul",
+                     "Ghost Soul", "The Creature Soul", "Great Axe Armor Soul", "Heart Eater Soul", "Cave Troll Soul",
+                     "Mimic Soul", "Homunculus Soul", "Killer Fish Soul", "Larva Soul", "Iron Golem Soul",
+                     "Balore Soul"],
+
+    "Garden of Madness": ["Corpseweed Soul", "Une Soul", "Skelerang Soul", "Mandragora Soul", "Catoblepas Soul",
+                          "Mollusca Soul", "Yorick Soul", "Rycuda Soul", "Treant Soul", "Skeleton Ape Soul",
+                          "Skeleton Farmer Soul", "Mimic Soul", "Barbariccia Soul", "Ghoul Soul", "Wakwak Tree Soul"],
+
     "Dark Chapel": ["Sea Demon Glyph", "Skull Spider Glyph"],
     "Condemned Tower": ["Sea Demon Glyph"],
     "Subterranean Hell": ["Spear Guard Glyph", "Bone Archer Glyph", "Axe Knight Glyph"],

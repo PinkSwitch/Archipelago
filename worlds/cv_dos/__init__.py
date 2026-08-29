@@ -5,7 +5,7 @@ import threading
 from BaseClasses import MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 import settings
-from .Items import get_item_names_per_category, item_table
+from .Items import get_item_names_per_category, item_table, soul_filler_table
 from .Options import DoSOptions, dos_option_groups
 from .Client import DoSClient
 from .static_location_data import location_ids, get_location_groups
@@ -339,3 +339,5 @@ class DoSWorld(World):
             "Aguni Soul",
             "Abaddon Soul"
         }
+
+        self.filler_souls = soul_filler_table.copy()

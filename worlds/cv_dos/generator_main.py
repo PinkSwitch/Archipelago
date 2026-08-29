@@ -15,6 +15,7 @@ class CVDoSItem(Item):
 
 
 def generate_early(world) -> None:
+    from .setup_game import setup_souls
     if hasattr(world.multiworld, "re_gen_passthrough"):  # If UT
         if "Castlevania: Dawn of Sorrow" not in world.multiworld.re_gen_passthrough:
             return
@@ -32,6 +33,7 @@ def generate_early(world) -> None:
         world.options.mine_condition.value = passthrough["mine_condition"]
         world.options.garden_condition.value = passthrough["garden_condition"]
     setup_game(world)
+    setup_souls(world)
 
     world.auth_id = world.random.getrandbits(32)
 
@@ -47,7 +49,7 @@ def create_regions(world) -> None:
 
     if ((world.options.soul_randomizer != SoulRandomizer.option_soulsanity) or
             world.options.soulsanity_level < SoulsanityLevel.option_medium):
-        world.get_location("Imp Soul").place_locked_item(world.create_static_soul("Imp Soul"))
+        world.get_location("Imp Soul").place_locked_item(create_static_soul(world, "Imp Soul"))
 
 
 def create_items(world) -> None:
@@ -73,7 +75,7 @@ def create_items(world) -> None:
                 pool.append(set_classifications(world, world.magic_seal_table[seal]))  # Create the seal items if necessary)
                 placed_seals.append(world.magic_seal_table[seal])
 
-    place_souls(world)
+    place_souls(world, pool)
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 
@@ -103,7 +105,8 @@ def create_item(world, name: str) -> CVDoSItem:
 
 
 def get_filler_item_name(world) -> str:
-    from .Items import consumable_table, money_table, soul_filler_table
+    from .setup_game import update_soul_pool
+    from .Items import consumable_table, money_table
     weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
 
     # If these pools have been exhausted, set their weights to 0
@@ -115,7 +118,7 @@ def get_filler_item_name(world) -> str:
 
     filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
     weight_table = {
-        "soul": soul_filler_table,
+        "soul": world.filler_souls,
         "weapon": world.weapon_table,
         "armor": world.armor_table,
         "money": money_table,
@@ -124,15 +127,18 @@ def get_filler_item_name(world) -> str:
 
     filler_item = world.random.choice(weight_table[filler_type])
 
+    if not world.has_tried_chaos_ring:
+        world.has_tried_chaos_ring = True
+        if world.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
+            filler_item = "Chaos Ring"
+
     if filler_item in world.weapon_table:
         world.weapon_table.remove(filler_item)
     elif filler_item in world.armor_table:
         world.armor_table.remove(filler_item)
 
-    if not world.has_tried_chaos_ring:
-        world.has_tried_chaos_ring = True
-        if world.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
-            filler_item = "Chaos Ring"
+    if filler_item in world.filler_souls:
+        update_soul_pool(world, filler_item)
 
     return filler_item
 

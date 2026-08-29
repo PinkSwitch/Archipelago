@@ -1,5 +1,4 @@
 from .Options import SoulsanityLevel, SoulRandomizer, MineCondition, GardenCondition, MenaceCondition
-from .Items import soul_filler_table
 from .in_game_data import warp_room_regions, warp_room_table
 from .modules.bullet_wall_randomizer import set_souls_for_walls
 from .modules.synthesis_randomizer import randomize_synthesis
@@ -32,7 +31,7 @@ def setup_game(world):
 
         if world.options.menace_condition == MenaceCondition.option_throne_room or (
                 world.options.menace_condition == MenaceCondition.option_garden and world.options.garden_condition == GardenCondition.option_throne_room):
-                world.options.menace_condition.value = MenaceCondition.option_none  # This would be impossible so we switch it to no condition
+            world.options.menace_condition.value = MenaceCondition.option_none  # This would be impossible so we switch it to no condition
             
         if world.options.garden_condition == GardenCondition.option_throne_room:
             world.garden_chamber_available = False
@@ -94,11 +93,7 @@ def place_static_items(world):
         world.get_location("Garden of Madness: Central Chamber").place_locked_item(world.create_item("Power of Darkness"))
 
 
-def place_souls(world):
-    soul_location_count = 0
-    extra_souls = 0
-    souls_added = 0
-
+def setup_souls(world):
     world.important_souls.update(world.red_soul_walls)
     if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         world.important_souls.add("Imp Soul")
@@ -107,8 +102,6 @@ def place_souls(world):
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
         world.rare_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
-    
-    world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
     # Conver this to proper casing
     if "Common" in world.options.guaranteed_souls:
         for soul in world.common_souls:
@@ -127,6 +120,14 @@ def place_souls(world):
             if soul not in world.options.guaranteed_souls.value:
                 world.options.guaranteed_souls.value.add(soul)
         world.options.guaranteed_souls.value.remove("Rare")
+
+    world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
+
+
+def place_souls(world, pool):
+    soul_location_count = 0
+    extra_souls = 0
+    souls_added = 0
 
     if world.mine_status != "Disabled":
         world.extra_soul_slots += 4  # Mine checks count
@@ -150,17 +151,19 @@ def place_souls(world):
             break  # Bail if we're out of room for more souls
         else:
             pool.append(world.create_item(soul))
+            update_soul_pool(world, soul)
             souls_added += 1
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         # These items are only important on Rare tier
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
-            pool.append(world.create_item("Soul Eater Ring"))
+            pool.append(world.create_item("Soul Eater Ring"))  # Guarantee we get a Soul Eater Ring for rare's
 
         for soul in world.important_souls:
-            if soul not in world.options.guaranteed_souls:
+            if soul not in world.options.guaranteed_souls:  # First we need to create the souls that are always in
                 extra_souls += 1
+                update_soul_pool(world, soul)
                 pool.append(world.create_item(soul))
 
         soul_location_count += (len(world.common_souls) - extra_souls)
@@ -172,17 +175,26 @@ def place_souls(world):
             soul_location_count += len(world.rare_souls)
 
         for i in range(soul_location_count - souls_added):
-            #TODO! Don't generate any Souls that have no level data
-            world.multiworld.itempool.append(world.set_classifications(world.random.choice(soul_filler_table)))
+            soul = world.random.choice(world.filler_souls)
+            pool.append(world.set_classifications(world.random.choice(world.filler_souls)))
+            update_soul_pool(world, soul)
     else:
         if world.mine_status == "Disabled":
             goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
             world.excluded_static_souls.update(goal_locked_enemies)
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
-                world.multiworld.itempool.append(world.set_classifications(soul))
+                pool.append(world.create_item(soul))
 
 
 def place_static_souls(world):
+    from .generator_main import create_static_soul
     for soul in world.important_souls:
         if soul not in world.excluded_static_souls:
-            world.get_location(soul).place_locked_item(world.create_static_soul(soul))
+            world.get_location(soul).place_locked_item(create_static_soul(world, soul))
+
+
+def update_soul_pool(world, soul):
+    from .in_game_data import unleveled_standard_souls
+    # Remove leveled souls from the Filler pool of souls
+    if soul in unleveled_standard_souls and soul in world.filler_souls:
+        world.filler_souls.remove(soul)  # If the soul is present, remove it
