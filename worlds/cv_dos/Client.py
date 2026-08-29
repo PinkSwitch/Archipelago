@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from NetUtils import ClientStatus
-from .in_game_data import location_ram_table, global_soul_table, world_version, button_item_table
+from .in_game_data import global_soul_table, world_version, button_item_table
 from .static_location_data import location_ids
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient
@@ -77,7 +77,6 @@ class DoSClient(BizHawkClient):
             self.has_received_death = True
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        from .in_game_data import location_ram_table
 
         if ctx.server_version.build > 0:
             ctx.connected = True
@@ -127,7 +126,7 @@ class DoSClient(BizHawkClient):
         if game_mode == 1:  # Ignore AP handling if the game is in Julius mode
             return
 
-        if not game_timer: # The in-game itmer is only 0 when not in-game
+        if not game_timer:  # The in-game itmer is only 0 when not in-game
             return
 
         for location_name in location_ids:

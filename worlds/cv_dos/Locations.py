@@ -133,10 +133,10 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: East Gear Room",),
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Spike Room Secret"),
         LocationData("Cursed Clock Tower Boss Area", "Zephyr Soul"),
-        LocationData("Cursed Clock Tower Boss Area", "Cursed Clock Tower: Boss Room", None),
+        LocationData("Cursed Clock Tower Boss Area", "Cursed Clock Tower: Boss Room", True),
 
         LocationData("Subterranean Hell Top Entrance", "Rahab Soul"),
-        LocationData("Subterranean Hell Top Entrance", "Subterranean Hell: Boss Room", None),
+        LocationData("Subterranean Hell Top Entrance", "Subterranean Hell: Boss Room", True),
         LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Left"),
         LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Center Right"),
         LocationData("Subterranean Hell East", "Subterranean Hell: Giant Underwater Room Top Left"),
@@ -151,7 +151,7 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
 
         LocationData("Silenced Ruins", "Silenced Ruins: Ice Block Room"),
         LocationData("Silenced Ruins", "Bat Company Soul"),
-        LocationData("Silenced Ruins", "Silenced Ruins: Boss Room", None),
+        LocationData("Silenced Ruins", "Silenced Ruins: Boss Room", True),
         LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror Room"),
         LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror World"),
 
@@ -168,27 +168,27 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         location_table += [
             LocationData("The Pinnacle Throne Room", "The Pinnacle: Beyond Throne Room"),
             LocationData("The Pinnacle Throne Room", "Aguni Soul"),
-            LocationData("The Pinnacle Throne Room", "The Pinnacle: Throne Room", None),
-            LocationData("The Abyss Beyond Abaddon", "Abyss Center", None)
+            LocationData("The Pinnacle Throne Room", "The Pinnacle: Throne Room", True),
+            LocationData("The Abyss Beyond Abaddon", "Abyss Center", True)
         ]
     else:
         location_table += [
-            LocationData("The Pinnacle Throne Room", "Abyss Center", None),
+            LocationData("The Pinnacle Throne Room", "Abyss Center", True),
         ]
 
     if world.garden_chamber_available:
         location_table += [
-            LocationData("Garden of Madness Lower", "Garden of Madness: Central Chamber", None),
+            LocationData("Garden of Madness Lower", "Garden of Madness: Central Chamber", True),
         ]
 
     if world.mine_status != "Disabled":  # Add the Mine/Abyss checks
         location_table += [
             LocationData("Mine of Judgment", "Death Soul"),
-            LocationData("Mine of Judgment", "Mine of Judgment: Boss Room", None),
+            LocationData("Mine of Judgment", "Mine of Judgment: Boss Room", True),
             LocationData("The Abyss", "The Abyss: Sand Area"),
             LocationData("The Abyss", "The Abyss: Ice Area"),
             LocationData("The Abyss Beyond Abaddon", "Abaddon Soul"),
-            LocationData("The Abyss Beyond Abaddon", "The Abyss: Boss Room", None)]
+            LocationData("The Abyss Beyond Abaddon", "The Abyss: Boss Room", True)]
 
     if world.options.gate_items == GateItems.option_buttonsanity:
         location_table += [
@@ -207,16 +207,16 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
                 location_table.append(
                  LocationData(soul, soul, location_ids[soul]))
         else:
-            location_table.append(LocationData("Imp Soul", "Imp Soul", None))
+            location_table.append(LocationData("Imp Soul", "Imp Soul", True))
 
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             for soul in world.rare_souls:
                 location_table.append(
                  LocationData(soul, soul, location_ids[soul]))
     else:
-        location_table.append(LocationData("Imp Soul", "Imp Soul", None))
+        location_table.append(LocationData("Imp Soul", "Imp Soul", True))
         for soul in world.important_souls:
             if soul not in world.excluded_static_souls:  # Boss souls that are always in the pool
-                location_table.append(LocationData(soul, soul, None))
+                location_table.append(LocationData(soul, soul, True))
 
     return location_table

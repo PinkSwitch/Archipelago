@@ -366,7 +366,7 @@ def connect_regions(world):
 
         world.get_region("The Abyss").add_exits(["Mine of Judgment", "The Abyss Beyond Abaddon"],
                                                 {"Mine of Judgment": small_uppies,
-                                                 "The Abyss Beyond Abaddon": big_uppies & Has(world.magic_seal_table["The Absyss"])})
+                                                 "The Abyss Beyond Abaddon": big_uppies & Has(world.magic_seal_table["The Abyss"])})
 
         world.get_region("The Abyss Beyond Abaddon").add_exits(["Warp Room"])
 
