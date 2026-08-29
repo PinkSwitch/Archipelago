@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
+from rule_builder.rules import HasAll, HasAny, Has, OptionFilter
 if TYPE_CHECKING:
     from . import DoSWorld
 
@@ -8,6 +8,8 @@ small_uppies = HasAny("Hippogryph Soul", "Bat Company Soul", "Malphas Soul")
 
 
 def set_location_rules(world: "DoSWorld") -> None:
+    from .Options import BoostSpeed, Goal, GardenCondition
+
     set_rule = world.set_rule
     paranoia_souls = {wall for i, wall in enumerate(world.red_soul_walls) if i != 2}
     world.set_completion_rule(Has("Menace Defeated"))
@@ -19,6 +21,9 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Lost Village: Boss Room"), Has(world.magic_seal_table["Lost Village"]))
     set_rule(world.get_location("Lost Village: Mirror Room Right"), Has("Paranoia Soul"))
     set_rule(world.get_location("Lost Village: Above Guest House Entrance"), big_uppies)
+    set_rule(world.get_location("Lost Village: Moat Drain Switch", ),
+             (small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul", "Flying Armor Soul")) | OptionFilter(
+                 BoostSpeed, True))
 
     # Wizardry Lab
     set_rule(world.get_location("Wizardry Lab: Mirror Room"), Has("Balore Soul"))
@@ -48,6 +53,10 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Demon Guest House: Boss Room"), small_uppies & Has(world.magic_seal_table["Demon Guest House"]))
     set_rule(world.get_location("Demon Guest House: Ice Block Room Left"), small_uppies & Has("Balore Soul"))
     set_rule(world.get_location("Demon Guest House: Ice Block Room Right"), small_uppies & Has("Balore Soul"))
+    set_rule(world.get_location("Demon Guest House: West Wing Left"),
+             (small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul")) | OptionFilter(BoostSpeed, True))
+    set_rule(world.get_location("Demon Guest House: West Wing Right"),
+             (small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul")) | OptionFilter(BoostSpeed, True))
 
     set_rule(world.get_location("The Pinnacle: Under Big Staircase"), big_uppies)
 
@@ -95,24 +104,17 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Bat Company Soul"), Has(world.magic_seal_table["Silenced Ruins"]))
     set_rule(world.get_location("Silenced Ruins: Boss Room"), Has(world.magic_seal_table["Silenced Ruins"]))
 
-    set_rule(world.get_location("Abyss Center"), big_uppies)
+    set_rule(world.get_location("Abyss Center"), big_uppies & (Has(world.magic_seal_table["The Pinnacle"],
+                                                                   options=[OptionFilter(Goal, False)])))
     
     if world.options.goal:
         set_rule(world.get_location("The Pinnacle: Beyond Throne Room"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
         set_rule(world.get_location("Aguni Soul"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
         set_rule(world.get_location("The Pinnacle: Throne Room"), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
-    else:
-        add_rule(world.get_location("Abyss Center", player), lambda state: state.has(world.magic_seal_table["The Pinnacle"], player))
 
     if world.mine_status != "Disabled":
         set_rule(world.get_location("Death Soul"), Has(world.magic_seal_table["Mine of Judgment"]) & (small_uppies | Has("Puppet Master Soul")))
         set_rule(world.get_location("Mine of Judgment: Boss Room"), Has(world.magic_seal_table["Mine of Judgment"]) & (small_uppies | Has("Puppet Master Soul")))
-
-    if not world.options.boost_speed:
-        # These jumps are trivial with the speedboost option on
-        set_rule(world.get_location("Lost Village: Moat Drain Switch",), lambda state: state.has_any(small_uppies, player) or state.has_any({"Flying Armor Soul", "Puppet Master Soul", "Black Panther Soul"}, player))
-        set_rule(world.get_location("Demon Guest House: West Wing Left"), lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player))
-        set_rule(world.get_location("Demon Guest House: West Wing Right"), lambda state: state.has_any(small_uppies, player) or state.has_any({"Puppet Master Soul", "Black Panther Soul"}, player))
 
     if world.options.soul_randomizer == 2:
         if world.options.soulsanity_level == 2:
@@ -120,21 +122,14 @@ def set_location_rules(world: "DoSWorld") -> None:
                 set_rule(world.get_location(location), Has("Soul Eater Ring"))
             set_rule(world.get_location("Iron Golem Soul"), Has("Imp Soul"))
 
-    set_rule(world.get_location("Paranoia Soul"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
+    set_rule(world.get_location("Paranoia Soul"), Has(world.magic_seal_table["Demon Guest House Upper"]) & HasAll(*paranoia_souls))
     set_rule(world.get_location("Upper Guest House: Boss Room"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
-    set_rule(world.get_location("Demon Guest House: Paranoia Mirror"), lambda state: state.has_all({world.magic_seal_table["Demon Guest House Upper"], "Paranoia Soul"}, player) and state.has_all(paranoia_souls, player))
-    set_rule(world.get_location("Demon Guest House: Beyond Paranoia"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
-    set_rule(world.get_location("Dark Chapel: Catacombs Soul Barrier"), lambda state: state.has(world.red_soul_walls[2], player))
-
-    if not world.options.replace_menace_with_soma:
-        set_rule(world.get_location("Abyss Center"), lambda state: state.has_any(big_uppies, player))
-
-    if world.options.menace_condition:
-        add_rule(world.get_location("Abyss Center"), lambda state: state.has_all(world.menace_triggers, player))
+    set_rule(world.get_location("Demon Guest House: Paranoia Mirror"), HasAll(world.magic_seal_table["Demon Guest House Upper"], "Paranoia Soul") & HasAll(*paranoia_souls))
+    set_rule(world.get_location("Demon Guest House: Beyond Paranoia"), Has(world.magic_seal_table["Demon Guest House Upper"]) & HasAll(*paranoia_souls))
+    set_rule(world.get_location("Dark Chapel: Catacombs Soul Barrier"), Has(world.red_soul_walls[2]))
 
     if world.garden_chamber_available:
-        set_rule(world.get_location("Garden of Madness: Central Chamber"), lambda state: state.has_all({"Mina's Talisman", world.magic_seal_table["Castle Center"]}, player))
-        if world.options.garden_condition:
-            add_rule(world.get_location("Garden of Madness: Central Chamber"), lambda state: state.has_all(world.garden_triggers, player))
+        set_rule(world.get_location("Garden of Madness: Central Chamber"), HasAll("Mina's Talisman", world.magic_seal_table["Castle Center"] &
+                                                                                  HasAll(*world.garden_triggers), options=[OptionFilter(GardenCondition, GardenCondition.option_none, "ne")], filtered_resolution=True))
 
         #  021A3278 for walls
