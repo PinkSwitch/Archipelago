@@ -4,7 +4,7 @@ import Utils
 import typing
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
-from typing import Sequence
+from typing import Sequence, NamedTuple
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version,
                            global_item_table, common_filler_pool, boss_list, enemy_table, button_item_table)
@@ -26,6 +26,18 @@ soul_check_table = 0x2F6DC50
 button_check_table = 0x2F6DE0C
 
 
+class FilePointer(NamedTuple):
+    rom_address: int
+    base_address: int
+    file_size: int
+
+
+file_pointers = {
+    "arm9": FilePointer(0x00000, 0x00000, 0x00000),
+    "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000)
+}
+
+
 class LocalRom(object):
 
     def __init__(self, file: bytes, name: str | None = None) -> None:
@@ -35,11 +47,22 @@ class LocalRom(object):
     def read_byte(self, offset: int) -> int:
         return self.file[offset]
 
-    def read_bytes(self, offset: int, length: int) -> bytes:
-        return self.file[offset:offset + length]
+    def read_from_file(self, offset: int, file_name: str, length: int) -> bytes:
+        file = file_pointers[file_name]
+        address = offset - file.base_address
+        if address < 0 or (address + length > file.file_size):
+            raise ValueError(f"Out of Range: Tried to read at {hex(offset)} in {file_name}")
+        address = file.rom_address + address
 
-    def write_bytes(self, offset: int, values: Sequence[int]) -> None:
-        self.file[offset:offset + len(values)] = values
+        return self.file[address:address + length]
+
+    def write_to_file(self, offset: int, file_name: str, values: Sequence[int]) -> None:
+        file = file_pointers[file_name]
+        address = offset - file.base_address
+        if address < 0 or (address + len(values) > file.file_size):
+            raise ValueError(f"Out of Range: Tried to write {values} at {hex(offset)} in {file_name}")
+        address = file.rom_address + address
+        self.file[address:address + len(values)] = values
 
     def get_bytes(self) -> bytes:
         return bytes(self.file)
@@ -47,7 +70,7 @@ class LocalRom(object):
 
 def patch_rom(world, rom, player: int, code_patch):
     # This is the entirety of the patched code
-    rom.write_bytes(0x2F6DC50, code_patch)
+    rom.write_to_file(0x02308920, "overlay_41", code_patch)
 
     write_goal_triggers(world, rom)
 
@@ -65,7 +88,7 @@ def patch_rom(world, rom, player: int, code_patch):
     starting_weapon = global_weapon_table.index(weapon)
 
     # Options handling
-    rom.write_bytes(0x122E88, bytearray([starting_weapon]))
+    rom.write_to_file(0x021F6068, "overlay_0", bytearray([starting_weapon]))
 
     warp_room = warp_room_bits[world.starting_warp_room]
     rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  # The initial warp room bit
@@ -138,9 +161,6 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if not world.options.goal:
         rom.write_bytes(0x2F6DE02, bytearray([0xFF]))  # Clear Aguni if the goal is Throne
-
-    # if world.options.goal == 2:
-        # rom.write_bytes(0x2F6DD48, bytearray([0x01]))  # Abyss plus mode, flags the Garden event as requiring Aguni to be defeated
 
     if world.options.one_screen_mode:
         rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
@@ -318,7 +338,6 @@ def patch_rom(world, rom, player: int, code_patch):
                 rom.write_bytes(address + 6, bytearray([item_type]))
 
     rom.name = f"{world.player}_{world.auth_id}"
-    patch_name = rom.name + "\0"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
     rom.write_bytes(0x2F6DD50, patch_name)
     rom.write_bytes(0x2F6DD7C, world_version.encode("ascii"))
@@ -344,11 +363,19 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
 
-    def write_bytes(self, offset: int, value: typing.Iterable[int]) -> None:
-        self.write_token(APTokenTypes.WRITE, offset, bytes(value))
-    
+    def write_to_file(self, offset: int, file_name: str, value: bytearray) -> None:
+        file = file_pointers[file_name]
+        address = offset - file.base_address
+        if address < 0 or (address + len(value) > file.file_size):
+            raise ValueError(f"Out of Range: Tried to write {value} at {hex(offset)} in {file_name}")
+        address = file.rom_address + address
+        self.write_token(APTokenTypes.WRITE, address, bytes(value))
+
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+    def write_direct(self, offset: int, value: typing.Iterable[int]) -> None:
+        self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
 
 class DoSPatchExtensions(APPatchExtension):
