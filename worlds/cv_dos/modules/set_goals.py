@@ -101,13 +101,13 @@ def write_goal_triggers(world, rom):
 
     for index, trigger in enumerate(goal_settings):
         condition = trigger.current_key
-        rom.write_bytes(0x153F47 + 0x10 * index, bytearray([trigger_keys.index(condition)]))  # Write the actual condition key
+        rom.write_to_file(0x02225BB8 + 0x10 * index, "overlay_0", bytearray([trigger_keys.index(condition)]))  # Write the actual condition key
         required_flags = 0
         if condition in ["bosses"]:  # More will be added to this in the future
             condition_list = goal_rule_order[index]
             for flag in condition_list:
                 required_flags |= boss_flags[flag]
-        rom.write_bytes(0x153F48 + 0x10 * index, struct.pack("H", required_flags))
+        rom.write_to_file(0x02225BB9 + 0x10 * index, "overlay_0", struct.pack("H", required_flags))
 
         condition_text = "Yo, I've got some intel for you.\nTo access this area, you need to\n"
 
@@ -134,4 +134,4 @@ def write_goal_triggers(world, rom):
         if string_array[len(string_array) - 1] != 0xE9:
             string_array.append(0xE5)  # Add a button press to close out the text
         string_array.extend([0xE4, 0xEA])  # Close out the textbox
-        rom.write_bytes(0x15096F + (0x200 * index), bytearray(string_array))
+        rom.write_to_file(0x02229960 + (0x200 * index), "overlay_0", bytearray(string_array))

@@ -33,7 +33,8 @@ class FilePointer(NamedTuple):
 
 
 file_pointers = {
-    "arm9": FilePointer(0x00000, 0x00000, 0x00000),
+    "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
+    "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
     "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000)
 }
 
@@ -97,9 +98,9 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.copy_bytes(0x158C3C, 8, 0x158C34)  # Replace the menace warp coords with soma's
 
     if world.options.remove_money_gates:
-        rom.write_bytes(0xAD661, bytearray([0x00]))
-        rom.write_bytes(0xB0A2D, bytearray([0x00]))
-        rom.write_bytes(0xBD135, bytearray([0x00]))
+        rom.write_to_file(0x020A9661, "arm9", bytearray([0x00]))  # Wizardry lab gate
+        rom.write_to_file(0x020ACA2D, "arm9", bytearray([0x00]))  # Garden gate
+        rom.write_to_file(0x020B9135, "arm9", bytearray([0x00]))  # Clock Tower
 
     if world.options.disable_boss_seals:
         rom.write_bytes(0x11EA18, bytearray([0x00]))
@@ -144,7 +145,6 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
         rom.write_bytes(0xC1C38, bytearray([0xD0]))
-        # rom.write_bytes(0xB05A1, bytearray([0x00]))
 
         #  Wall off the final boss door in the Abyss
         rom.write_bytes(0x2DE0DC, bytearray([0x2F]))
