@@ -157,7 +157,7 @@ def place_souls(world, pool):
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         # These items are only important on Rare tier
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
-            world.armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
+            world.good_armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
             pool.append(world.create_item("Soul Eater Ring"))  # Guarantee we get a Soul Eater Ring for rare's
 
         for soul in world.important_souls:

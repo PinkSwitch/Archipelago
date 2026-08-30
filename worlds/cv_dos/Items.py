@@ -469,19 +469,14 @@ soul_filler_table = [
 consumable_table = [
     "Potion",
     "High Potion",
-    "Super Potion",
     "Mind Up",
     "High Mind Up",
-    "Mana Prism",
     "Anti-Venom",
     "Uncurse Potion",
     "Meat Strip",
-    "Tasty Meat",
     "Rice Ball",
     "Mushroom",
     "Corn Soup",
-    "Beef Curry",
-    "Noodles",
     "Cream Soda",
     "Cream Puff",
     "Milk",
@@ -489,7 +484,6 @@ consumable_table = [
     "Tea",
     "Pudding",
     "Strawberry",
-    "Melon",
     "Grapes",
     "Hamburger",
     "Fried Chicken",
@@ -498,9 +492,6 @@ consumable_table = [
     "Pancake",
     "Piroshki",
     "Tinned Spinach",
-    "Foie Gras",
-    "Caviar",
-    "Truffle",
     "Paella",
     "Spaghetti",
     "Ice Cream",
@@ -510,6 +501,18 @@ consumable_table = [
     "Rotten Meat",
     "Spoiled Milk",
     "Rusty Food Tin"
+]
+
+good_food_table = [
+    "Super Potion",
+    "Mana Prism",
+    "Tasty Meat",
+    "Beef Curry",
+    "Noodles",
+    "Melon",
+    "Foie Gras",
+    "Caviar",
+    "Truffle"
 ]
 
 money_table = [

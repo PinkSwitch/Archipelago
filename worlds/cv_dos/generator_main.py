@@ -106,8 +106,9 @@ def create_item(world, name: str) -> CVDoSItem:
 
 def get_filler_item_name(world) -> str:
     from .setup_game import update_soul_pool
-    from .Items import consumable_table, money_table
-    weights = {"soul": 10, "money": 20, "weapon": 30, "armor": 40, "consumable": 60}
+    from .Items import consumable_table, money_table, good_food_table
+    weights = {"good_weapon": 5, "soul": 10, "good_food": 8, "good_armor": 15, "money": 20,
+               "weapon": 30, "armor": 40, "consumable": 60}
 
     # If these pools have been exhausted, set their weights to 0
     if not world.weapon_table:
@@ -116,13 +117,22 @@ def get_filler_item_name(world) -> str:
     if not world.armor_table:
         weights["armor"] = 0
 
+    if not world.good_weapon_table:
+        weights["good_weapon"] = 0
+
+    if not world.good_armor_table:
+        weights["good_armor"] = 0
+
     filler_type = world.random.choices(list(weights), weights=list(weights.values()), k=1)[0]
     weight_table = {
         "soul": world.filler_souls,
+        "good_weapon": world.good_weapon_table,
         "weapon": world.weapon_table,
         "armor": world.armor_table,
+        "good_armor": world.good_armor_table,
         "money": money_table,
         "consumable": consumable_table,
+        "good_food": good_food_table
     }
 
     filler_item = world.random.choice(weight_table[filler_type])
@@ -136,6 +146,10 @@ def get_filler_item_name(world) -> str:
         world.weapon_table.remove(filler_item)
     elif filler_item in world.armor_table:
         world.armor_table.remove(filler_item)
+    elif filler_item in world.good_armor_table:
+        world.good_armor_table.remove(filler_item)
+    elif filler_item in world.good_weapon_table:
+        world.good_weapon_table.remove(filler_item)
 
     if filler_item in world.filler_souls:
         update_soul_pool(world, filler_item)
