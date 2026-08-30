@@ -193,25 +193,25 @@ def write_synthesis(world, rom):
     punchs = world.synth_souls[0x32:]
 
     for i, soul in enumerate(hammers):
-        rom.write_bytes(0xA0C4D + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CC4D + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(punchs):
-        rom.write_bytes(0xA0C59 + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CC59 + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(rapiers):
-        rom.write_bytes(0xA0C6D + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CC6D + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(katanas):
-        rom.write_bytes(0xA0C9D + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CC9D + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(greatswords):
-        rom.write_bytes(0xA0CDD + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CCDD + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(spears):
-        rom.write_bytes(0xA0D01 + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CD01 + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(shortswords):
-        rom.write_bytes(0xA0D65 + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CD65 + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))
 
     for i, soul in enumerate(axes):
-        rom.write_bytes(0xA0C85 + (4 * i), bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x209CC85 + (4 * i), "arm9", bytearray([global_soul_table.index(soul)]))

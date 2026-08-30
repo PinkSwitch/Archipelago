@@ -65,6 +65,7 @@ class LocalRom(object):
         address = file.rom_address + address
         self.file[address:address + len(values)] = values
 
+
     def get_bytes(self) -> bytes:
         return bytes(self.file)
 
@@ -92,7 +93,7 @@ def patch_rom(world, rom, player: int, code_patch):
     rom.write_to_file(0x021F6068, "overlay_0", bytearray([starting_weapon]))
 
     warp_room = warp_room_bits[world.starting_warp_room]
-    rom.write_bytes(0x2F6DD4E, struct.pack("H", warp_room))  # The initial warp room bit
+    rom.write_to_file(0x02308a6e, "overlay_41", struct.pack("H", warp_room))  # The initial warp room bit
 
     if world.options.replace_menace_with_soma:
         rom.copy_bytes(0x158C3C, 8, 0x158C34)  # Replace the menace warp coords with soma's
@@ -103,42 +104,42 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_to_file(0x020B9135, "arm9", bytearray([0x00]))  # Clock Tower
 
     if world.options.disable_boss_seals:
-        rom.write_bytes(0x11EA18, bytearray([0x00]))
-        rom.write_bytes(0x140A24, bytearray([0x01, 0x00, 0xA0, 0xE3]))
+        rom.write_to_file(0x21f1bf8, "overlay_0", bytearray([0x00]))
+        rom.write_to_file(0x2213c04, "overlay_0", bytearray([0x01, 0x00, 0xA0, 0xE3]))
 
     if world.options.reveal_map:
-        rom.write_bytes(0x260C7, bytearray([0xE1, 0x00, 0x00, 0xA0, 0xE1]))
-        rom.write_bytes(0x28BE8, bytearray([0x00, 0x00, 0xE0, 0xE3, 0x1E, 0xFF, 0x2F]))
+        rom.write_to_file(0x20220C7, "arm9", bytearray([0xE1, 0x00, 0x00, 0xA0, 0xE1]))
+        rom.write_to_file(0x2024BE8, "arm9", bytearray([0x00, 0x00, 0xE0, 0xE3, 0x1E, 0xFF, 0x2F]))
 
     if world.options.open_drawbridge:
-        rom.write_bytes(0x0CF046, bytearray([0xA0, 0xE1]))  # Make the drawbridge always be down
+        rom.write_to_file(0x21A2226, "overlay_0", bytearray([0xA0, 0xE1]))  # Make the drawbridge always be down
 
     if world.options.fix_luck:
-        rom.write_bytes(0xF087D, bytearray([0x22]))
-        rom.write_bytes(0xF0888, bytearray([0x02, 0x70]))
-        rom.write_bytes(0xF088D, bytearray([0x71]))
-        rom.write_bytes(0xF0890, bytearray([0x00, 0x00]))
-        rom.write_bytes(0xF0893, bytearray([0xE1]))
-        rom.write_bytes(0xF089A, bytearray([0xA0, 0xE3]))
-        rom.write_bytes(0xF08BE, bytearray([0x87, 0xE0]))
-        rom.write_bytes(0xF09A0, bytearray([0x00, 0x00, 0xA0, 0xE1]))
-        rom.write_bytes(0xF09C8, bytearray([0x02, 0x0A]))
-        rom.write_bytes(0xF09CB, bytearray([0xE3]))
-        rom.write_bytes(0xF09F0, bytearray([0x47, 0x91, 0x80, 0xE0]))
-        rom.write_bytes(0xF0A00, bytearray([0x89]))
-        rom.write_bytes(0xF0A04, bytearray([0x02, 0x0A]))
-        rom.write_bytes(0xF0A07, bytearray([0xE3]))
+        rom.write_to_file(0x21C3A5D, "overlay_0", bytearray([0x22]))
+        rom.write_to_file(0x21C3A68, "overlay_0", bytearray([0x02, 0x70]))
+        rom.write_to_file(0x21C3A6D, "overlay_0", bytearray([0x71]))
+        rom.write_to_file(0x21C3A70, "overlay_0", bytearray([0x00, 0x00]))
+        rom.write_to_file(0x21C3A73, "overlay_0", bytearray([0xE1]))
+        rom.write_to_file(0x21C3A7A, "overlay_0", bytearray([0xA0, 0xE3]))
+        rom.write_to_file(0x21C3A9E, "overlay_0", bytearray([0x87, 0xE0]))
+        rom.write_to_file(0x21C3B80, "overlay_0", bytearray([0x00, 0x00, 0xA0, 0xE1]))
+        rom.write_to_file(0x21C3BA8, "overlay_0", bytearray([0x02, 0x0A]))
+        rom.write_to_file(0x21C3BAB, "overlay_0", bytearray([0xE3]))
+        rom.write_to_file(0x21C3BD0, "overlay_0", bytearray([0x47, 0x91, 0x80, 0xE0]))
+        rom.write_to_file(0x21C3BE0, "overlay_0", bytearray([0x89]))
+        rom.write_to_file(0x21C3BE4, "overlay_0", bytearray([0x02, 0x0A]))
+        rom.write_to_file(0x21C3BE7, "overlay_0", bytearray([0xE3]))
 
     if world.options.reveal_hidden_walls:
-        rom.write_bytes(0xA5231, bytearray([0x00]))
-        rom.write_bytes(0xA57AD, bytearray([0x00]))
-        rom.write_bytes(0xAA45D, bytearray([0x00]))
-        rom.write_bytes(0xAD3E5, bytearray([0x00]))
-        rom.write_bytes(0xB0199, bytearray([0x00]))
-        rom.write_bytes(0xBEE21, bytearray([0x00]))
-        rom.write_bytes(0xBEE8D, bytearray([0x00]))
-        rom.write_bytes(0xBEFC5, bytearray([0x00]))
-        rom.write_bytes(0xB84A9, bytearray([0x00]))
+        rom.write_to_file(0x20A1231, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20A17AD, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20A645D, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20A93e5, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20AC199, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20BAE21, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20BAE8D, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20BAFC5, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x20B44A9, "arm9", bytearray([0x00]))
 
     if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
         rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))  # ???
@@ -177,9 +178,9 @@ def patch_rom(world, rom, player: int, code_patch):
     if world.options.randomize_seal_patterns:
         randomize_seal_patterns(world, rom)
 
-    rom.write_bytes(0x2F6DD8E, struct.pack("H", world.options.experience_percentage))
+    rom.write_to_file(0x2308AAE, "overlay_41", struct.pack("H", world.options.experience_percentage))
 
-    rom.write_bytes(0x2F6DD90, struct.pack("H", world.options.soul_drop_percentage))
+    rom.write_to_file(0x2308AB0, "overlay_41", struct.pack("H", world.options.soul_drop_percentage))
     soul_total = set(world.common_souls)
     if world.options.soulsanity_level:
         soul_total |= world.uncommon_souls
@@ -189,7 +190,7 @@ def patch_rom(world, rom, player: int, code_patch):
     soul_total = list(soul_total)
 
     for i, soul in enumerate(soul_total):  # Fill IDs of souls in the loc pool
-        rom.write_bytes(0x2F6DD94 + i, bytearray([global_soul_table.index(soul)]))
+        rom.write_to_file(0x2308ab4 + i, "overlay_41", bytearray([global_soul_table.index(soul)]))
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = [soul for soul in world.important_souls if soul not in world.excluded_static_souls]
@@ -373,6 +374,14 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
 
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+    def find_bytes_from_base(self, address: int, value: typing.Iterable[int]) -> None:
+        for file in file_pointers:
+            file_max = file_pointers[file].rom_address + file_pointers[file].file_size
+            offset = address - file_pointers[file].rom_address
+            if address < file_pointers[file].rom_address or address > file_max:
+                continue
+            print(f"Likely address for {hex(address)} is in {file} at {hex(offset + file_pointers[file].base_address)}")
 
     def write_direct(self, offset: int, value: typing.Iterable[int]) -> None:
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
