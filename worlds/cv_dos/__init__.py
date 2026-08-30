@@ -69,6 +69,7 @@ class DoSWorld(World):
     modify_multidata = modify_multidata
     generate_output = generate_output
     get_filler_item_name = get_filler_item_name
+    write_spoiler_header = write_spoiler_header
     set_rules = set_rules
 
     def __init__(self, multiworld: MultiWorld, player: int):

@@ -8,7 +8,7 @@ small_uppies = HasAny("Hippogryph Soul", "Bat Company Soul", "Malphas Soul")
 
 
 def set_location_rules(world: "DoSWorld") -> None:
-    from .Options import BoostSpeed, Goal, GardenCondition
+    from .Options import BoostSpeed, Goal
 
     set_rule = world.set_rule
     paranoia_souls = {wall for i, wall in enumerate(world.red_soul_walls) if i != 2}
@@ -78,7 +78,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Condemned Tower: 1F West"), big_uppies)
     set_rule(world.get_location("Condemned Tower: 2F East"), small_uppies | Has("Puppet Master Soul"))
     set_rule(world.get_location("Gergoth Soul"), Has(world.magic_seal_table["Condemned Tower"]))
-    set_rule(world.get_location("Condemned Tower: Boss Room"), (world.magic_seal_table["Condemned Tower"]))
+    set_rule(world.get_location("Condemned Tower: Boss Room"), Has(world.magic_seal_table["Condemned Tower"]))
 
     set_rule(world.get_location("Cursed Clock Tower: Mirror World"), Has("Paranoia Soul"))
     set_rule(world.get_location("Cursed Clock Tower: Spike Room Secret"), Has("Bat Company Soul"))
@@ -123,13 +123,15 @@ def set_location_rules(world: "DoSWorld") -> None:
             set_rule(world.get_location("Iron Golem Soul"), Has("Imp Soul"))
 
     set_rule(world.get_location("Paranoia Soul"), Has(world.magic_seal_table["Demon Guest House Upper"]) & HasAll(*paranoia_souls))
-    set_rule(world.get_location("Upper Guest House: Boss Room"), Has(world.magic_seal_table["Demon Guest House Upper"] & HasAll(*paranoia_souls)))
+    set_rule(world.get_location("Upper Guest House: Boss Room"), Has(world.magic_seal_table["Demon Guest House Upper"]) & HasAll(*paranoia_souls))
     set_rule(world.get_location("Demon Guest House: Paranoia Mirror"), HasAll(world.magic_seal_table["Demon Guest House Upper"], "Paranoia Soul") & HasAll(*paranoia_souls))
     set_rule(world.get_location("Demon Guest House: Beyond Paranoia"), Has(world.magic_seal_table["Demon Guest House Upper"]) & HasAll(*paranoia_souls))
     set_rule(world.get_location("Dark Chapel: Catacombs Soul Barrier"), Has(world.red_soul_walls[2]))
 
     if world.garden_chamber_available:
-        set_rule(world.get_location("Garden of Madness: Central Chamber"), HasAll("Mina's Talisman", world.magic_seal_table["Castle Center"] &
-                                                                                  HasAll(*world.garden_triggers), options=[OptionFilter(GardenCondition, GardenCondition.option_none, "ne")], filtered_resolution=True))
+        garden_rule = HasAll("Mina's Talisman", world.magic_seal_table["Castle Center"])
+        if world.options.garden_condition:
+            garden_rule & HasAll(*world.garden_triggers)
+        set_rule(world.get_location("Garden of Madness: Central Chamber"), garden_rule)
 
         #  021A3278 for walls

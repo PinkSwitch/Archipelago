@@ -24,7 +24,7 @@ dawn_text_map = {" ": 0x00, '"': 0x02, "#": 0x03, "$": 0x04, "%": 0x05,
                  "\v": [0xE5, 0xE9]}
 
 
-def set_goal_triggers(world, condition, area):
+def set_goal_triggers(world, condition, area) -> set:
     if condition == "throne_room":
         goal = {"Aguni Defeated"}
     elif condition == "garden":
