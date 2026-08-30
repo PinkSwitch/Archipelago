@@ -376,7 +376,13 @@ enemy_souls_per_area = {
                      "Flying Armor Soul", "Ouija Table Soul", "Hell Boar Soul", "Skeleton Ape Soul", "Merman Soul",
                      "Great Axe Armor Soul", "White Dragon Soul"],
 
-    "Demon Guest House": ["Nova Skeleton Glyph"],
+    "Demon Guest House": ["Axe Armor Soul", "Skeleton Soul", "Peeping Eye Soul", "Skelerang Soul",
+                          "Persephone Soul", "Devil Soul", "Lilith Soul", "Ghost Dancer Soul", "Killer Clown Soul",
+                          "Waiter Skeleton Soul", "Valkyrie Soul", "Killer Doll Soul", "Bone Pillar Soul",
+                          "Buer Soul", "Quetzalcoatl Soul", "Flame Demon Soul", "Malachi Soul", "Werewolf Soul",
+                          "Student Witch Soul", "Witch Soul", "Succubus Soul", "Iron Golem Soul", "Mimic Soul",
+                          "Puppet Master Soul", "Paranoia Soul"],
+
     "Wizardry Lab": ["Slime Soul", "Axe Armor Soul", "Bomber Armor Soul", "Student Witch Soul", "Skull Archer Soul",
                      "Skeleton Soul", "Slaughterer Soul", "Manticore Soul", "Armor Knight Soul", "Golem Soul",
                      "Ghost Soul", "The Creature Soul", "Great Axe Armor Soul", "Heart Eater Soul", "Cave Troll Soul",
@@ -387,11 +393,25 @@ enemy_souls_per_area = {
                           "Mollusca Soul", "Yorick Soul", "Rycuda Soul", "Treant Soul", "Skeleton Ape Soul",
                           "Skeleton Farmer Soul", "Mimic Soul", "Barbariccia Soul", "Ghoul Soul", "Wakwak Tree Soul"],
 
-    "Dark Chapel": ["Sea Demon Glyph", "Skull Spider Glyph"],
-    "Condemned Tower": ["Sea Demon Glyph"],
-    "Subterranean Hell": ["Spear Guard Glyph", "Bone Archer Glyph", "Axe Knight Glyph"],
-    "Silenced Ruins": ["Fire Demon Glyph", "Skull Spider Glyph", "Dullahan Glyph"],
-    "Cursed Clock Tower": ["Owl Glyph", "Thunder Demon Glyph", "Lizardman Glyph"],
+    "Dark Chapel": ["Guillotiner Soul", "Witch Soul", "Mini Devil Soul", "Amalaric Sniper Soul", "Ghost Dancer Soul",
+                    "Hell Boar Soul", "White Dragon Soul", "Great Armor Soul", "Quetzalcoatl Soul", "Ghoul Soul",
+                    "The Creature Soul", "Bone Pillar Soul", "Malphas Soul"],
+
+    "Condemned Tower": ["Draghignazzo Soul", "Skeleton Ape Soul", "Great Axe Armor Soul",
+                        "Buer Soul", "Disc Armor Soul", "Werewolf Soul", "Fleaman Soul"],
+
+    "Subterranean Hell": ["Cave Troll Soul", "Decarabia Soul", "Une Soul", "Dead Pirate Soul", "Merman Soul",
+                          "Fish Head Soul", "Needles Soul", "Frozen Shade Soul", "Killer Fish Soul",
+                          "Mimic Soul", "Procel Soul", "Alura Une Soul", "Ukoback Soul", "Medusa Head Soul",
+                          "Devil Soul", "Bone Ark Soul", "Rahab Soul"],
+
+    "Silenced Ruins": ["Dead Mate Soul", "Skeleton Soul", "Bat Soul", "Skull Archer Soul", "Devil Soul",
+                       "Larva Soul", "Skelerang Soul", "Ghoul Soul", "Dead Crusader Soul", "Bone Ark Soul",
+                       "Waiter Skeleton Soul", "Bat Company Soul"],
+
+    "Cursed Clock Tower": ["Harpy Soul", "Catoblepas Soul", "Imp Soul", "Malachi Soul", "Dead Pirate Soul",
+                           "Medusa Head Soul", "Tanjelly Soul", "Slime Soul", "Bugbear Soul", "Flying Humanoid Soul",
+                           "Devil Soul", "Zephyr Soul"],
 
     "The Pinnacle": ["Guillotiner Soul", "Mothman Soul", "Werewolf Soul", "Mushussu Soul", "Alastor Soul",
                      "Dead Crusader Soul", "Erinys Soul", "Final Guard Soul", "Succubus Soul",
