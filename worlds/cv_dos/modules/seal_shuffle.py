@@ -66,7 +66,7 @@ def set_seals(world):
 
 def write_seals(world, rom):
     for index, seal in enumerate(seal_list):
-        rom.write_bytes(0x15C0B4 + (index * 4), bytearray([seals.index(world.magic_seal_table[seal])]))
+        rom.write_to_file(0x222F294 + (index * 4), "overlay_0", bytearray([seals.index(world.magic_seal_table[seal])]))
 
 
 def randomize_seal_patterns(world, rom):
