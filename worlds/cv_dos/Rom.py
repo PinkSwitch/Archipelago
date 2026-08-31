@@ -7,7 +7,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from typing import Sequence, NamedTuple
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            base_check_address_table, easter_egg_table, warp_room_bits, world_version,
-                           global_item_table, common_filler_pool, boss_list, enemy_table, button_item_table)
+                           global_item_table, common_filler_pool, boss_list, enemy_table)
 from .modules.music_randomizer import area_music_randomizer, boss_music_randomizer
 from .modules.boss_randomizer import write_bosses
 from .modules.synthesis_randomizer import write_synthesis
@@ -22,8 +22,8 @@ from BaseClasses import ItemClassification
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
 base_enemy_address = 0x2078CAC
-soul_check_table = 0x2308970
-button_check_table = 0x2F6DE0C
+soul_check_table = 0x02308970
+button_check_table = 0x02308b2c
 
 
 class FilePointer(NamedTuple):
@@ -79,7 +79,6 @@ class LocalRom(object):
             raise ValueError(f"Out of Range: Tried to write {values} at {hex(offset)} in {file_name}")
         address = file.rom_address + address
         self.file[address:address + len(values)] = values
-
 
     def get_bytes(self) -> bytes:
         return bytes(self.file)
@@ -194,7 +193,7 @@ def patch_rom(world, rom, player: int, code_patch):
 
     if world.options.no_mp_bat:
         rom.write_to_file(0x209d782, "arm9", bytearray([0x00]))  # Zero the Bat's MP cost
-        
+
     if world.options.randomize_seal_patterns:
         randomize_seal_patterns(world, rom)
 
@@ -226,7 +225,7 @@ def patch_rom(world, rom, player: int, code_patch):
             rom.write_to_file(soul_check_table + (global_soul_table.index(soul) * 2), "overlay_41", soul_data)
 
     elif world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
-        rom.write_bytes(0x2F6DD49, bytearray([0x01]))
+        rom.write_to_file(0x2308a69, "overlay_41", bytearray([0x01]))
 
     if world.options.shop_randomizer:
         shop_pool = common_filler_pool.copy()
@@ -234,23 +233,23 @@ def patch_rom(world, rom, player: int, code_patch):
         for i in range(10):
             # Shop pool 2
             item = world.random.choice(shop_pool)
-            rom.write_bytes(0xA1F14 + i, bytearray([global_item_table.index(item) + 1]))
+            rom.write_to_file(0x209df14 + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
         for i in range(18):
             # Shop pool 1
             item = world.random.choice(shop_pool)
-            rom.write_bytes(0xA1F38 + i, bytearray([global_item_table.index(item) + 1]))
+            rom.write_to_file(0x209df38 + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
         for i in range(19):
             # Starting shop
             item = world.random.choice(shop_pool)
-            rom.write_bytes(0xA1F4F + i, bytearray([global_item_table.index(item) + 1]))
+            rom.write_to_file(0x209df4f + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
         # Claymore should always be available for breakable walls
-        rom.write_bytes(0xA1F4E, bytearray([global_item_table.index("Claymore") + 1]))
+        rom.write_to_file(0x209df4e, "arm9", bytearray([global_item_table.index("Claymore") + 1]))
 
     if world.options.shuffle_enemy_drops:
         drop_pool = common_filler_pool.copy()
@@ -299,7 +298,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
 
     if world.options.gate_items == GateItems.option_buttonsanity:
-        rom.write_bytes(0x2F6DE09, bytearray([0x01]))  # Enables Button Check Mode
+        rom.write_to_file(0x2308b29, "overlay_41", bytearray([0x01]))  # Enables Button Check Mode
 
     if world.options.hard_mode:
         rom.write_bytes(0x2F6DE0A, bytearray([0x01]))  # Hard mode set
@@ -488,9 +487,8 @@ def patch_locations(world, rom, locations) -> None:
         elif data.location_type == "Easter Egg":
             rom.write_to_file(data.pointer + 11, "arm9", bytearray([item_color]))
             rom.write_to_file(easter_egg_table[location.name], "overlay_0", bytearray([item_id]))
-        elif data.lcation_type == "Button":
-            #  TODO! What file is this in? Move the button check to the Data pointer
-            address = button_check_table + (button_item_table.index(location.name) * 4)  # Set the address
-            rom.write_bytes(address, bytearray([item_type, item_id, item_color]))
+        elif data.location_type == "Button":
+            address = button_check_table + ((location.address - 0x200) * 4)
+            rom.write_to_file(address, "overlay_41", bytearray([item_type, item_id, item_color]))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")

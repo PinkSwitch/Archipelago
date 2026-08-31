@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from NetUtils import ClientStatus
-from .in_game_data import global_soul_table, world_version, button_item_table
+from .in_game_data import global_soul_table, world_version
 from .static_location_data import location_ids
 import worlds._bizhawk as bizhawk
 from worlds._bizhawk.client import BizHawkClient

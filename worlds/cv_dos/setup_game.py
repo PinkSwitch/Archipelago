@@ -176,7 +176,7 @@ def place_souls(world, pool):
 
         for i in range(soul_location_count - souls_added):
             soul = world.random.choice(world.filler_souls)
-            pool.append(world.set_classifications(world.random.choice(world.filler_souls)))
+            pool.append(world.create_item(world.random.choice(world.filler_souls)))
             update_soul_pool(world, soul)
     else:
         if world.mine_status == "Disabled":

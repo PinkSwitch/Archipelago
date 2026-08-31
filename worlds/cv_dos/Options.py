@@ -255,6 +255,11 @@ class GardenCondition(Choice):
     option_bosses = 2
     default = 0
 
+
+class StartWithDoppelganger(Toggle):
+    """If enabled, you're start with the Doppelganger Soul already acquired."""
+    display_name = "Start with Doppelganger"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -305,6 +310,7 @@ class DoSOptions(PerGameCommonOptions):
     menace_condition: MenaceCondition
     mine_condition: MineCondition
     garden_condition: GardenCondition
+    start_with_doppelganger: StartWithDoppelganger
 
 
 dos_option_groups = [
@@ -367,7 +373,8 @@ dos_option_groups = [
         BoostSpeed,
         OneScreenMode,
         FreeBat,
-        PassiveSoulEaterRing
+        PassiveSoulEaterRing,
+        StartWithDoppelganger
     ]),
 
     OptionGroup("Music Randomizer", [
