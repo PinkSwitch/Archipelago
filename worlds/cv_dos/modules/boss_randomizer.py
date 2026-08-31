@@ -19,9 +19,10 @@ class DoSBossData:
     enemy_id: int  # The Enemy's internal ID number
     flag_index: int  # Index used for writing boss flags
     seal_index_pointers: list[int]  # Addresses for the seal index
+    file: str  # The file we write to
 
 
-base_enemy_address = 0x7CCAC  # I can't import this
+base_enemy_address = 0x2078CAC  # I can't import this
 
 
 def randomize_bosses(world):
@@ -43,37 +44,37 @@ def randomize_bosses(world):
     ]
 
     world.boss_slots = {
-        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0xA50B8, 1, "Flying Armor"),  # Flying Armor
-        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 3, 0xAD0B0, 2, "Balore"),  # Balore
-        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0xB2B58, 3, "Dimitrii"),  # Dimitrii
-        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0xB2B04, 4, "Malphas"),  # Malphas
-        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0xB0500, 5, "Dario"),   # Dario 1 Make sure this is the right address for the flag. Seems low.
-        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0xA96F0, 6, "Puppet Master"),  # Puppet Master
-        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0xB5BE0, 7, "Gergoth"),  # Gergoth
-        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0xBCDA0, 9, "Zephyr"),  # Zephyr
-        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0xB8B1C, 8, "Rahab"),  # Rahab
-        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0xBA4B0, 10, "Bat Company"),  # Bat Company
-        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0xA99A8, 12, "Paranoia"),  # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x153FA8, 11, "Aguni"),  # Aguni, not Dario 2
-        "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0xB6360, 13, "Death"),  # Death
-        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0xC2260, 15, "Abaddon")  # Abaddon
+        "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0x20A10b8, 1, "Flying Armor"),  # Flying Armor
+        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 3, 0x20A90b0, 2, "Balore"),  # Balore
+        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0x20AEb58, 3, "Dimitrii"),  # Dimitrii
+        "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0x20AEB04, 4, "Malphas"),  # Malphas
+        "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0x20AC500, 5, "Dario"),   # Dario 1 Make sure this is the right address for the flag. Seems low.
+        "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0x20A56f0, 6, "Puppet Master"),  # Puppet Master
+        "Condemned Tower": DoSBoss(0x80, 0x57, 1, 1, 0x20b1Be0, 7, "Gergoth"),  # Gergoth
+        "Cursed Clock Tower": DoSBoss(0x0200, 0x01, 1, 2, 0x20B8da0, 9, "Zephyr"),  # Zephyr
+        "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0x20B4b1c, 8, "Rahab"),  # Rahab
+        "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0x20B64B0, 10, "Bat Company"),  # Bat Company
+        "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0x20A59a8, 12, "Paranoia"),  # Paranoia
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x2227188, 11, "Aguni"),  # Aguni, not Dario 2
+        "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0x20B2360, 13, "Death"),  # Death
+        "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0x20BE260, 15, "Abaddon")  # Abaddon
     }
 
     world.boss_data = {
-        "Flying Armor": DoSBossData(0x65, 0, [0x3807BC, 0x381764]),
-        "Balore": DoSBossData(0x66, 2, [0x363D30, 0x364708]),
-        "Malphas": DoSBossData(0x67, 6, [0x37D72C, 0x37E884]),
-        "Dimitrii": DoSBossData(0x68, 4, [0]),
-        "Dario": DoSBossData(0x69, 8, [0]),
-        "Puppet Master": DoSBossData(0x6A, 10, [0x36A860, 0x36A958]),
-        "Rahab": DoSBossData(0x6B, 14, [0x370388, 0x3704A0]),
-        "Gergoth": DoSBossData(0x6C, 12, [0x39DAF0, 0x39EE40]),
-        "Zephyr": DoSBossData(0x6D, 16, [0x38B740, 0x38D108]),
-        "Bat Company": DoSBossData(0x6E, 18, [0x3A6AAC, 0x3A7370]),
-        "Paranoia": DoSBossData(0x6F, 22, [0x39D630, 0x39A7B8]),
-        "Aguni": DoSBossData(0x70, 20, [0x170994, 0x170B04]),
-        "Death": DoSBossData(0x71, 24, [0x390100, 0x392920]),
-        "Abaddon": DoSBossData(0x72, 26, [0x3B0EB0, 0x3B16FC])
+        "Flying Armor": DoSBossData(0x65, 0, [0x022ffb7c, 0x02300b24], "overlay_30"),
+        "Balore": DoSBossData(0x66, 2, [0x022ffcf0, 0x23006C8], "overlay_23"),
+        "Malphas": DoSBossData(0x67, 6, [0x022ffaec, 0x02300c44], "overlay_29"),
+        "Dimitrii": DoSBossData(0x68, 4, [0], "overlay_40"),
+        "Dario": DoSBossData(0x69, 8, [0], "overlay_25"),
+        "Puppet Master": DoSBossData(0x6A, 10, [0x022ffc20, 0x022ffd18], "overlay_25"),
+        "Rahab": DoSBossData(0x6B, 14, [0x022ffb48, 0x022ffc60], "overlay_26"),
+        "Gergoth": DoSBossData(0x6C, 12, [0x022ffab0, 0x02300e00], "overlay_36"),
+        "Zephyr": DoSBossData(0x6D, 16, [0x022ffb00, 0x023014C8], "overlay_33"),
+        "Bat Company": DoSBossData(0x6E, 18, [0x022ffa6c, 0x02300330], "overlay_37"),
+        "Paranoia": DoSBossData(0x6F, 22, [0x02305BF0, 0x02302D78], "overlay_35"),
+        "Aguni": DoSBossData(0x70, 20, [0x02243D94, 0x02243F04], "overlay_1"),
+        "Death": DoSBossData(0x71, 24, [0x022ffac0, 0x023022e0], "overlay_34"),
+        "Abaddon": DoSBossData(0x72, 26, [0x22FFA70, 0x23002BC], "overlay_39")
     }
 
     rahab_pool = [
@@ -123,10 +124,10 @@ def randomize_bosses(world):
 
 
 def write_bosses(world, rom):
-    rom.find_base_bytes(0x20a90C1, "arm9", bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
-    rom.find_base_bytes(0x20aeB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
-    rom.find_base_bytes(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
-    rom.find_base_bytes(0x20aeB75, "arm9", bytearray([0x00]))  # Hider for Dimitrii's Quetzalcoatl
+    rom.write_to_file(0x20A90C1, "arm9", bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
+    rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
+    rom.write_to_file(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
+    rom.write_to_file(0x20AEB75, "arm9", bytearray([0x00]))  # Hider for Dimitrii's Quetzalcoatl
     copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
@@ -141,10 +142,15 @@ def write_bosses(world, rom):
         slot = world.boss_slots[room]
         boss = slot.new_boss
         data = world.boss_data[boss]
-        rom.write_bytes(slot.boss_address_pointer + 6, bytearray([data.enemy_id]))  # Write the new boss into the room
-        rom.write_bytes(0x2F6DE1C + data.flag_index, struct.pack("H", slot.flag))  # Write the room's flag onto the new boss so the room still works properly
+
+        if slot.old_boss == "Aguni":  # Aguni's data is here instead of in the arm9
+            boss_file = "overlay_0"
+        else:
+            boss_file = "arm9"
+        rom.write_to_file(slot.boss_address_pointer + 6, boss_file, bytearray([data.enemy_id]))  # Write the new boss into the room
+        rom.write_to_file(0x2308B3c + data.flag_index, "overlay_41", struct.pack("H", slot.flag))  # Write the room's flag onto the new boss so the room still works properly
         address = base_enemy_address + (data.enemy_id * 0x24)
-        rom.write_bytes(address + 26, bytearray([slot.assigned_soul]))  # Give the enemy the boss slot soul so check logic still works
+        rom.write_to_file(address + 26, "arm9", bytearray([slot.assigned_soul]))  # Give the enemy the boss slot soul so check logic still works
         var_a = 0
         var_b = 0
         x_pos = 0
@@ -164,7 +170,7 @@ def write_bosses(world, rom):
         elif boss == "Dario":
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
             if slot.room_width == 1:
-                rom.write_bytes(0x18876C, struct.pack("I", 0xE1A02800))  # Halve Dario's teleport range so he doesn't go OOB.
+                rom.write_to_file(0x225BB6C, "overlay_1", struct.pack("I", 0xE1A02800))  # Halve Dario's teleport range so he doesn't go OOB.
         elif boss == "Dimitrii":
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
         elif boss == "Puppet Master":
@@ -178,54 +184,54 @@ def write_bosses(world, rom):
 
             if room != "Demon Guest House":  # Update hardcoded position for some extra entities
                 # Arms--------------------------------------------------
-                rom.write_bytes(0x36FEF0, struct.pack("H", x_pos))
-                rom.write_bytes(0x36FEF2, struct.pack("H", y_pos))
+                rom.write_to_file(0x23052b0, "overlay_25", struct.pack("H", x_pos))
+                rom.write_to_file(0x23052b2, "overlay_25", struct.pack("H", y_pos))
                 # Iron maidens------------------------------------------
-                rom.write_bytes(0x36FF90, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FF92, struct.pack("H", y_pos - 0x38))
+                rom.write_to_file(0x2305350, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305352, "overlay_25", struct.pack("H", y_pos - 0x38))
 
-                rom.write_bytes(0x36FF94, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FF96, struct.pack("H", y_pos + 0x38))
+                rom.write_to_file(0x2305354, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305356, "overlay_25", struct.pack("H", y_pos + 0x38))
 
-                rom.write_bytes(0x36FF98, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FF9A, struct.pack("H", y_pos - 0x38))
+                rom.write_to_file(0x2305358, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230535A, "overlay_25", struct.pack("H", y_pos - 0x38))
 
-                rom.write_bytes(0x36FF9C, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FF9E, struct.pack("H", y_pos + 0x38))
+                rom.write_to_file(0x230535C, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230535E, "overlay_25", struct.pack("H", y_pos + 0x38))
                 # Platforms----------------------------------------------
-                rom.write_bytes(0x36FF24, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FF26, struct.pack("H", y_pos - 0x18))
+                rom.write_to_file(0x23052e4, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x23052e6, "overlay_25", struct.pack("H", y_pos - 0x18))
 
-                rom.write_bytes(0x36FF28, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FF2A, struct.pack("H", y_pos - 0x18))
+                rom.write_to_file(0x23052e8, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x23052eA, "overlay_25", struct.pack("H", y_pos - 0x18))
                 # Player Teleport----------------------------------------
-                rom.write_bytes(0x36FFB0, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FFB2, struct.pack("H", y_pos - 0x38 + 0x17))
+                rom.write_to_file(0x2305370, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305372, "overlay_25", struct.pack("H", y_pos - 0x38 + 0x17))
 
-                rom.write_bytes(0x36FFB4, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FFB6, struct.pack("H", y_pos + 0x38 + 0x17))
+                rom.write_to_file(0x2305374, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305376, "overlay_25", struct.pack("H", y_pos + 0x38 + 0x17))
 
-                rom.write_bytes(0x36FFB8, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFBA, struct.pack("H", y_pos - 0x38 + 0x17))
+                rom.write_to_file(0x2305378, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230537A, "overlay_25", struct.pack("H", y_pos - 0x38 + 0x17))
 
-                rom.write_bytes(0x36FFBC, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFBE, struct.pack("H", y_pos + 0x38 + 0x17))
+                rom.write_to_file(0x230537C, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230537E, "overlay_25", struct.pack("H", y_pos + 0x38 + 0x17))
                 # Player damage effect------------------------------------
-                rom.write_bytes(0x36FFD0, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FFD2, struct.pack("H", y_pos - 0x38 + 0x14))
+                rom.write_to_file(0x2305390, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305392, "overlay_25", struct.pack("H", y_pos - 0x38 + 0x14))
 
-                rom.write_bytes(0x36FFD4, struct.pack("H", x_pos + 0x68))
-                rom.write_bytes(0x36FFD6, struct.pack("H", y_pos + 0x38 + 0x14))
+                rom.write_to_file(0x2305394, "overlay_25", struct.pack("H", x_pos + 0x68))
+                rom.write_to_file(0x2305396, "overlay_25", struct.pack("H", y_pos + 0x38 + 0x14))
 
-                rom.write_bytes(0x36FFD8, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFDA, struct.pack("H", y_pos - 0x38 + 0x14))
+                rom.write_to_file(0x2305398, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230539A, "overlay_25", struct.pack("H", y_pos - 0x38 + 0x14))
 
-                rom.write_bytes(0x36FFDC, struct.pack("H", x_pos - 0x68))
-                rom.write_bytes(0x36FFDE, struct.pack("H", y_pos + 0x38 + 0x14))
+                rom.write_to_file(0x230539c, "overlay_25", struct.pack("H", x_pos - 0x68))
+                rom.write_to_file(0x230539E, "overlay_25", struct.pack("H", y_pos + 0x38 + 0x14))
 
                 # NOP out P.M's camera lock in other rooms
-                rom.write_bytes(0x36A85C, struct.pack("I", 0xE1A00000))
-                rom.write_bytes(0x36A680, struct.pack("I", 0xE1A00000))
+                rom.write_to_file(0x22FFC1C, "overlay_25", struct.pack("I", 0xE1A00000))
+                rom.write_to_file(0x22FFC20, "overlay_25", struct.pack("I", 0xE1A00000))
 
         elif boss == "Gergoth":
             if room == "Condemned Tower":
@@ -256,22 +262,22 @@ def write_bosses(world, rom):
         x_pos = int(x_pos)  # Convert if it was centered
         # The X/Y pos here are overrides. If none is specified, use the vanilla value
         if x_pos:
-            rom.write_bytes(slot.boss_address_pointer, struct.pack("H", x_pos))
+            rom.write_to_file(slot.boss_address_pointer, boss_file, struct.pack("H", x_pos))
 
         if y_pos:
-            rom.write_bytes(slot.boss_address_pointer + 2, struct.pack("H", y_pos))
+            rom.write_to_file(slot.boss_address_pointer + 2, boss_file, struct.pack("H", y_pos))
 
-        rom.write_bytes(slot.boss_address_pointer + 8, bytearray([var_a]))
-        rom.write_bytes(slot.boss_address_pointer + 10, bytearray([var_b]))
+        rom.write_to_file(slot.boss_address_pointer + 8, boss_file, bytearray([var_a]))
+        rom.write_to_file(slot.boss_address_pointer + 10, boss_file, bytearray([var_b]))
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
-                rom.write_bytes(pointer, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
+                rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
 
         index = int(world.boss_data[slot.old_boss].flag_index / 2)
         rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
     
     for i in range(126):
-        rom.write_bytes(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
+        rom.write_direct(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
 
 
 def copy_boss_stats(world, rom):

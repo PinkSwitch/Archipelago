@@ -35,7 +35,21 @@ class FilePointer(NamedTuple):
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
     "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
+    "overlay_1": FilePointer(0x15D600, 0x02230A00, 0x69F1F),
+    "overlay_11": FilePointer(0x2A1200, 0x022DA4A0, 0x2551F),
     "overlay_13": FilePointer(0x2CA400, 0x022DA4A0, 0x186BF),
+    "overlay_23": FilePointer(0x363A00, 0x022FF9C0, 0x335F),
+    "overlay_25": FilePointer(0x36A600, 0x022FF9C0, 0x5BFF),
+    "overlay_26": FilePointer(0x370200, 0x022FF9C0, 0x42BF),
+    "overlay_29": FilePointer(0x37D600, 0x022FF9C0, 0x2E9F),
+    "overlay_30": FilePointer(0x380600, 0x022FF9C0, 0x3A5F),
+    "overlay_33": FilePointer(0x38B600, 0x022FF9C0, 0x499F),
+    "overlay_34": FilePointer(0x390000, 0x022FF9C0, 0x73DF),
+    "overlay_35": FilePointer(0x397400, 0x022FF9C0, 0x649F),
+    "overlay_36": FilePointer(0x39DA00, 0x022FF9C0, 0x8F5F),
+    "overlay_37": FilePointer(0x3A6A00, 0x022FF9C0, 0x2FDF),
+    "overlay_39": FilePointer(0x3B0E00, 0x022FF9C0, 0x19FF),
+    "overlay_40": FilePointer(0x3B2800, 0x022FF9C0, 0x14DF),
     "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000)
 }
 
