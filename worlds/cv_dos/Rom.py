@@ -22,7 +22,7 @@ from BaseClasses import ItemClassification
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
 base_enemy_address = 0x7CCAC
-soul_check_table = 0x2F6DC50
+soul_check_table = 0x2308970
 button_check_table = 0x2F6DE0C
 
 
@@ -420,33 +420,39 @@ def get_base_rom_path(file_name: str = "") -> str:
     return file_name
 
 
-def get_item_id(world, item) -> int:
+def get_item_data(world, item) -> tuple:
     if item.player == world.player:  # If this is an item for the player, we need to extract it's Type and ID
         item_type = (item.code & 0xFF00) >> 8
         item_id = item.code & 0x00FF
+        item_color = 0
     else:  # AP items are item type 2 and then use ID for progression.
         item_type = 2
         if ItemClassification.progression in item.classification:
-            item_id = 0x0C3B
+            item_id = 0x3B
+            item_color = 0x0C
         elif ItemClassification.useful in item.classification:
-            item_id = 0x073A
+            item_id = 0x3A
+            item_color = 0x07
         elif ItemClassification.trap in item.classification:
-            item_id = 0x063A
+            item_id = 0x3A
+            item_color = 0x06
         else:
-            item_id = 0x093A
-    return item_id
+            item_id = 0x3A
+            item_color = 0x09
+    return item_id, item_type, item_color
 
 
 def patch_locations(world, rom, locations) -> None:
-    # TODO! How are we supposed to be getting items? Where is the color coming from?
     from .static_location_data import location_data_table
     for location in locations:
-        item_type = 0
         if not location.address:
             continue
         item = location.item
         data = location_data_table[location.name]
-        item_id = get_item_id(world, item)
+        item_struct = get_item_data(world, item)
+        item_id = item_struct[0]
+        item_type = item_struct[1]
+        item_color = item_struct[2]
 
         if data.location_type == "Normal":
             address = data.pointer
@@ -454,25 +460,22 @@ def patch_locations(world, rom, locations) -> None:
                 # The item's actual ID is 3C with the Soul ID in the high byte.
                 item_id = 0x3C << 8 | item_id
                 item_type = 0x02  # Flag it as a standard item
-                rom.write_to_file(address + 9, "arm9",struct.pack("H", item_id))
+                rom.write_to_file(address + 9, "arm9", struct.pack("H", item_id))
             else:
+                item_id = item_color << 8 | item_id
                 rom.write_to_file(address + 9, "arm9", struct.pack(">H", item_id))
             rom.write_to_file(address + 6, "arm9", bytearray([item_type]))
+
         elif data.location_type == "Soul":
-            if item.player != world.player:
-                # AP items on souls can use the Type as the color
-                item_type = (item_id & 0xFF00) >> 8
-                item_id = item_id & 0xFF
-            item_struct = (item_type << 8) | item_id
+            item_struct = (item_color << 8) | item_id
             index = (global_soul_table.index(location.name) * 2)
-            rom.write_to_file(soul_check_table + index, struct.pack("H", item_struct))
+            rom.write_to_file(soul_check_table + index, "overlay_41", struct.pack("H", item_struct))
         elif data.location_type == "Easter Egg":
-            print("TODO! This")
+            rom.write_to_file(data.pointer + 11, "arm9", bytearray([item_color]))
+            rom.write_to_file(easter_egg_table[location.name], "overlay_0", bytearray([item_id]))
         elif data.lcation_type == "Button":
             #  TODO! What file is this in? Move the button check to the Data pointer
             address = button_check_table + (button_item_table.index(location.name) * 4)  # Set the address
-            item_color = item_id >> 8
-            item_id = item_id & 0xFF
             rom.write_bytes(address, bytearray([item_type, item_id, item_color]))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")

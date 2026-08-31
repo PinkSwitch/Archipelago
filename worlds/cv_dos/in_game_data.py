@@ -420,9 +420,9 @@ base_check_address_table = {
 }
 
 easter_egg_table = {
-    "Dark Chapel: Bell Room In Bell": [0xB2BE7, 0x158C6C],
-    "Demon Guest House: Central Main Chamber Bottom Room": [0xAA2BF, 0x158C60],
-    "Cursed Clock Tower: Spike Room Secret": [0xBCEE3, 0x158C54]
+    "Dark Chapel: Bell Room In Bell": 0x222BE4C,
+    "Demon Guest House: Central Main Chamber Bottom Room": 0x222BE40,
+    "Cursed Clock Tower: Spike Room Secret": 0x222BE34
 }
 
 warp_room_table = [
