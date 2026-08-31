@@ -120,6 +120,22 @@
 ;;;;;;;;;;;;;;;;;
 .org 0x02020BA8
     nop  ; Disable failsafe for item palettes greater than 2
+
+;;;;;;;;;;;;;;;;;
+.org 0x0203E548
+    b 0x0203E6C0 ; Skip to the last check of the opening logos
+
+.org 0x0203E6C8
+    nop ; Disable a timing check on the first logo
+
+.org 0x0203E794
+    nop ; Don't blank out the top screen when suspending
+
+.org 0x0202951C
+    nop ; same as above
+;;;;;;;;;;;;;;;;;;;;
+.org 0x0202DFF4
+    bl @AddCyanPaletteToItemNames
     
 
 .close
@@ -443,21 +459,31 @@ bl @GetItemFromSpecial
     bl @ResetMineFlags ;Skipped ver
 
 .org 0x02230310  ; Goal text ptrs
-    .dw 0x02223B4F
-    .dw 0x02223D4F
-    .dw 0x02223F4F
+    .dw 0x02229960
+    .dw 0x02229B60
+    .dw 0x02229D60
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Goal Conditionals
-.org 0x02227127
+.org 0x02225BB8
     .db 0x01, 0xFF, 0x0FF ;FOR TESTING ONLY
 
-.org 0x02227137
+.org 0x02225BC8
     .db 0x01, 0xFF, 0x0FF
 
-.org 0x02227147
+.org 0x02225BD8
     .db 0x01, 0xFF, 0x0FF
 ;;;;;;;;;;;;;;;;;;;;;;;;    
+.org 0x022196A6
+    .db 0x32, 0x45, 0x54, 0x55, 0x52, 0x4E, 0x00, 0x27, 0x45, 0x4D, 0xEA ; Return Gem over Castle Map 0
 
+.org 0x02218DC6
+    .db 0x21, 0x30, 0x00, 0x29, 0x54, 0x45, 0x4D, 0xEA ; AP Iem over Konami man
+
+.org 0x0222F41C
+    .dw 0x02218DC6 ; Set the other type of AP item to use the same named pointer
+
+.org 0x0222F714
+    .dw @ItemDescription_ReturnGem
 
 ;overlay 9 0
 .close
@@ -783,7 +809,7 @@ bl @GetItemFromSpecial
 .align 4
 
 @OptionFlag_OneScreenMode:
-    .db 0x00
+    .db 0x01
 @RAMFlag_IsPausedOpenMap:
     .db 0x00
 
@@ -1021,6 +1047,18 @@ bl @GetItemFromSpecial
 .dh 0x0004 ; Item type
 .dh 0x0000
 .dw 0
+;;;;;;;;;;;;;;;;;;
+@OptionFlag_StartWithDoppel: ; 02308D7C
+    .db 0x00
+.align 4
+
+@ItemDescription_ReturnGem:
+; An enchanted gemstone that can\n return you to the castle entrance
+.db 0x01, 0x00, 0x21, 0x4E, 0x00, 0x45, 0x4E, 0x43, 0x48, 0x41, 0x4E, 0x54, 0x45, 0x44
+.db 0x00, 0x47, 0x45, 0x4D, 0x53, 0x54, 0x4F, 0x4E, 0x45, 0x00, 0x54, 0x48, 0x41, 0x54
+.db 0x00, 0x43, 0x41, 0x4E, 0xE6, 0x52, 0x45, 0x54, 0x55, 0x52, 0x4E, 0x00, 0x59, 0x4F
+.db 0x55, 0x00, 0x54, 0x4F, 0x00, 0x54, 0x48, 0x45, 0x00, 0x43, 0x41, 0x53, 0x54, 0x4C
+.db 0x45, 0x00, 0x45, 0x4E, 0x54, 0x52, 0x41, 0x4E, 0x43, 0x45, 0x0E, 0xEA
 
 .align 4
 
@@ -1315,7 +1353,19 @@ bl @GetItemFromSpecial
     ldrb r0, [r0]
     ldr r1, =0x020F7259 ; Hard mode address
     strb r0, [r1]
-
+    ldr r0, =@OptionFlag_StartWithDoppel
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@NoDoppel
+    push r0-r3
+    mov r0, 0x76
+    mov r1, 1
+    bl 0x02210208
+    mov r1, 1
+    mov r0, 0x02
+    bl 0x0220F760 ; Activate the Soul
+    pop r0-r3
+@@NoDoppel:
     ldr r0, =0x02
     ldr r1, =0x2B
     bl 0x021E78F0
@@ -1482,6 +1532,10 @@ bl @GetItemFromSpecial
     ldr r0, =0x020F6DFC
     ldrb r0, [r0]
     ands r0, r0, 0x01
+    bne @ExitMap
+    ldr r0, = 0x020CA39A
+    ldrb r0, [r0] ;Frozen player flag
+    cmp r0, 0
     bne @ExitMap
     ldr r0, =@OptionFlag_OneScreenMode
     ldrb r0, [r0]
@@ -3182,7 +3236,7 @@ push r0
 ; 1 - mine
 ; 2 - menace
 @CheckGoal_Sub:
-    ldr r1, =0x02227127
+    ldr r1, =0x02225BB8
 @@CountPointer:
     cmp r0, 0
     beq @@EndMathLoop
@@ -3345,6 +3399,33 @@ push r0
     push lr
     bl 0x02018B24
     pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;;
+; Sets Text palette 0x0E as reserved for Fillers
+@ItemPalette_Cyan:
+        .dh 0x0000
+        .dh 0x0000
+        .dh 0x014E
+        .dh 0x0000
+        .dh 0x1A32
+        .dh 0x32D8
+        .dh 0x573C
+        .dh 0xFFFF
+        .dh 0xFFFF
+        .dh 0x7ECE
+        .dh 0x0000
+        .dh 0x0000
+        .dh 0x65E6
+        .dh 0x0000
+        .dh 0x0000
+        .dh 0x0000
+@AddCyanPaletteToItemNames:
+    cmp r6, 0x0E ; clearly oob so i use this for my stuff
+    bne @@LoadNormalPalette
+    ldr r11, = @ItemPalette_Cyan
+    bx lr
+@@LoadNormalPalette:
+    add r11, r11, r6, lsl 0x05
     bx lr
 
 .pool
