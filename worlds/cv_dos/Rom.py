@@ -184,16 +184,16 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_to_file(0x2308B22, "overlay_41", bytearray([0xFF]))  # Clear Aguni if the goal is Throne
 
     if world.options.one_screen_mode:
-        rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
+        rom.write_to_file(0x2308a6c, "overlay_41", bytearray([0x01]))
 
     if world.options.boost_speed:
         rom.write_to_file(0x222E489, "overlay_0", bytearray([0x20]))
 
     if world.options.death_link:
-        rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
+        rom.write_to_file(0x2308aad, "overlay_41", bytearray([0x01]))
 
     if world.options.no_mp_bat:
-        rom.write_bytes(0xA1782, bytearray([0x00]))  # Zero the Bat's MP cost
+        rom.write_to_file(0x209d782, "arm9", bytearray([0x00]))  # Zero the Bat's MP cost
         
     if world.options.randomize_seal_patterns:
         randomize_seal_patterns(world, rom)
@@ -223,7 +223,7 @@ def patch_rom(world, rom, player: int, code_patch):
 
         for soul in souls_output:
             soul_data = bytearray([global_soul_table.index(souls_output[soul]), 0x05])
-            rom.write_bytes(soul_check_table + (global_soul_table.index(soul) * 2), soul_data)
+            rom.write_to_file(soul_check_table + (global_soul_table.index(soul) * 2), "overlay_41", soul_data)
 
     elif world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         rom.write_bytes(0x2F6DD49, bytearray([0x01]))
@@ -305,7 +305,7 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_bytes(0x2F6DE0A, bytearray([0x01]))  # Hard mode set
 
     if world.options.passive_soul_eater_ring:
-        rom.write_bytes(0x2F6DE0B, bytearray([0x01]))  # Passive souls
+        rom.write_to_file(0x2308b2b, "overlay_41", bytearray([0x01]))  # Passive souls
     # Locations Handler
     patch_locations(world, rom, world.get_locations())
     rom.write_file("token_patch.bin", rom.get_token_binary())
