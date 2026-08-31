@@ -290,18 +290,18 @@ def patch_rom(world, rom, player: int, code_patch):
         boss_music_randomizer(world, rom)
 
     if world.options.randomize_red_soul_walls:
-        rom.write_bytes(0x2F6DE08, bytearray([0x01]))  # Tell the rom we have this on
+        rom.write_to_file(0x2308b28, "overlay_41", bytearray([0x01]))  # Tell the rom we have this on
 
-        rom.write_bytes(0x158BC0, bytearray([global_soul_table.index(world.red_soul_walls[0])]))
-        rom.write_bytes(0x158BBA, bytearray([global_soul_table.index(world.red_soul_walls[1])]))
-        rom.write_bytes(0x158BB4, bytearray([global_soul_table.index(world.red_soul_walls[2])]))
-        rom.write_bytes(0x158BC6, bytearray([global_soul_table.index(world.red_soul_walls[3])]))
+        rom.write_to_file(0x0222BDA0, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[0])]))
+        rom.write_to_file(0x0222BD9A, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[1])]))
+        rom.write_to_file(0x0222BD94, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[2])]))
+        rom.write_to_file(0x0222BDA6, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[3])]))
 
     if world.options.gate_items == GateItems.option_buttonsanity:
         rom.write_to_file(0x2308b29, "overlay_41", bytearray([0x01]))  # Enables Button Check Mode
 
     if world.options.hard_mode:
-        rom.write_bytes(0x2F6DE0A, bytearray([0x01]))  # Hard mode set
+        rom.write_to_file(0x2308b2a, "overlay_41", bytearray([0x01]))  # Hard mode set
 
     if world.options.passive_soul_eater_ring:
         rom.write_to_file(0x2308b2b, "overlay_41", bytearray([0x01]))  # Passive souls

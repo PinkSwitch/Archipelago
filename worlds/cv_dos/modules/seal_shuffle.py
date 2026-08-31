@@ -71,11 +71,11 @@ def write_seals(world, rom):
 
 def randomize_seal_patterns(world, rom):
     seal_data = {
-        "Magic Seal 1": SealData(3, 3, 0x15BFD0, 0x15C034),
-        "Magic Seal 2": SealData(4, 4, 0x15BFD4, 0x15C054),
-        "Magic Seal 3": SealData(4, 6, 0x15BFDC, 0x15C014),
-        "Magic Seal 4": SealData(6, 8, 0x15BFE4, 0x15C074),
-        "Magic Seal 5": SealData(6, 11, 0x15BFF0, 0x15C094),
+        "Magic Seal 1": SealData(3, 3, 0x222f1b0, 0x222f214),
+        "Magic Seal 2": SealData(4, 4, 0x222f1b4, 0x222f234),
+        "Magic Seal 3": SealData(4, 6, 0x222f1bc, 0x222f1f4),
+        "Magic Seal 4": SealData(6, 8, 0x222f1c4, 0x222f254),
+        "Magic Seal 5": SealData(6, 11, 0x222f1d0, 0x222f274),
     }
 
     for index, seal in enumerate(seals):
@@ -105,5 +105,5 @@ def randomize_seal_patterns(world, rom):
                 seal_array.append(cur)
             else:
                 built_seal = True
-        rom.write_bytes(data.address, bytearray(seal_array))
-        rom.write_bytes(data.rotation_address, struct.pack("H", rotation))
+        rom.write_to_file(data.address, "overlay_0", bytearray(seal_array))
+        rom.write_to_file(data.rotation_address, "overlay_0", struct.pack("H", rotation))
