@@ -134,7 +134,7 @@ def connect_regions(world):
     from .Options import BoostSpeed
     from rule_builder.rules import HasAll, HasAny, Has, OptionFilter
     # Lost Village
-    world.get_region("Lost Village Upper").add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway"],
+    world.get_region("Lost Village Upper").add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway", "Lost Village Lower"],
                                                      {"Wizardry Lab Main": Has("Moat Drained"),
                                                      "Lost Village Upper Doorway": small_uppies | (Has("Puppet Master Soul") & HasAny("Flying Armor Soul", "Skeleton Ape Soul")),
                                                       "Lost Village Lower": Has(world.magic_seal_table["Lost Village"])})  # Is the ape trick hard? Can be done without ape if speedboost on

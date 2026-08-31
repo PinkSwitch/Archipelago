@@ -123,10 +123,10 @@ def randomize_bosses(world):
 
 
 def write_bosses(world, rom):
-    rom.write_bytes(0xAD0C1, bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
-    rom.write_bytes(0xB2B69, bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
-    rom.write_bytes(0x2F6DE38, bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
-    rom.write_bytes(0xB2B75, bytearray([0x00]))  # Hider for Dimitrii's Quetzalcoatl
+    rom.find_base_bytes(0x20a90C1, "arm9", bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
+    rom.find_base_bytes(0x20aeB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
+    rom.find_base_bytes(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
+    rom.find_base_bytes(0x20aeB75, "arm9", bytearray([0x00]))  # Hider for Dimitrii's Quetzalcoatl
     copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":

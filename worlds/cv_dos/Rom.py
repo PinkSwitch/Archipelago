@@ -21,7 +21,7 @@ from BaseClasses import ItemClassification
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
-base_enemy_address = 0x7CCAC
+base_enemy_address = 0x2078CAC
 soul_check_table = 0x2308970
 button_check_table = 0x2F6DE0C
 
@@ -35,6 +35,7 @@ class FilePointer(NamedTuple):
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
     "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
+    "overlay_13": FilePointer(0x2CA400, 0x022DA4A0, 0x186BF),
     "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000)
 }
 
@@ -147,32 +148,32 @@ def patch_rom(world, rom, player: int, code_patch):
         rom.write_to_file(0x20B44A9, "arm9", bytearray([0x00]))
 
     if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
-        rom.write_bytes(0xBD508, bytearray([0x60, 0xDC]))  # ???
-        rom.write_bytes(0xBD50E, bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
-        rom.write_bytes(0xC1C30, bytearray([0xD4, 0x94]))
-        rom.write_bytes(0xC1C38, bytearray([0xD0]))
+        rom.write_to_file(0x20B9508, "arm9", bytearray([0x60, 0xDC]))  # ???
+        rom.write_to_file(0x20B950e, "arm9", bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
+        rom.write_to_file(0x20BDC30, "arm9", bytearray([0xD4, 0x94]))
+        rom.write_to_file(0x20BDC38, "arm9", bytearray([0xD0]))
 
         #  Wall off the final boss door in the Abyss
-        rom.write_bytes(0x2DE0DC, bytearray([0x2F]))
-        rom.write_bytes(0x2DE11C, bytearray([0x3F]))
-        rom.write_bytes(0x2DE15C, bytearray([0x4F]))
-        rom.write_bytes(0x2DE19C, bytearray([0x5F]))
-        rom.write_bytes(0x2DE1DC, bytearray([0x5F]))
-        rom.write_bytes(0x2DE21C, bytearray([0x41]))
+        rom.write_to_file(0x22EE17C, "overlay_13", bytearray([0x2F]))
+        rom.write_to_file(0x22EE1BC, "overlay_13", bytearray([0x3F]))
+        rom.write_to_file(0x22EE1FC, "overlay_13", bytearray([0x4F]))
+        rom.write_to_file(0x22EE23C, "overlay_13", bytearray([0x5F]))
+        rom.write_to_file(0x22EE27C, "overlay_13", bytearray([0x5F]))
+        rom.write_to_file(0x22EE2bC, "overlay_13", bytearray([0x41]))
         ######
 
     if world.mine_status == "Disabled":
-        rom.write_bytes(0x2F6DDFD, bytearray([0xFF]))  # Remove Death, Abaddon, and Aguni from the Soulstiary
-        rom.write_bytes(0x2F6DDFE, bytearray([0xFF]))  # IF MINE IS REMOVED!!!!
+        rom.write_to_file(0x02308B1D, "overlay_41", bytearray([0xFF]))  # Remove Death, Abaddon, and Aguni from the Soulstiary
+        rom.write_to_file(0x2308B1E, "overlay_41", bytearray([0xFF]))  # IF MINE IS REMOVED!!!!
 
     if not world.options.goal:
-        rom.write_bytes(0x2F6DE02, bytearray([0xFF]))  # Clear Aguni if the goal is Throne
+        rom.write_to_file(0x2308B22, "overlay_41", bytearray([0xFF]))  # Clear Aguni if the goal is Throne
 
     if world.options.one_screen_mode:
         rom.write_bytes(0x2F6DD4C, bytearray([0x01]))
 
     if world.options.boost_speed:
-        rom.write_bytes(0x15B2A9, bytearray([0x20]))
+        rom.write_to_file(0x222E489, "overlay_0", bytearray([0x20]))
 
     if world.options.death_link:
         rom.write_bytes(0x2F6DD8D, bytearray([0x01]))
@@ -260,8 +261,8 @@ def patch_rom(world, rom, player: int, code_patch):
             else:
                 rare_item = 0
 
-            rom.write_bytes(common_drop_address, bytearray([common_item]))
-            rom.write_bytes(rare_drop_address, bytearray([rare_item]))
+            rom.write_to_file(common_drop_address, "arm9", bytearray([common_item]))
+            rom.write_to_file(rare_drop_address, "arm9", bytearray([rare_item]))
 
     write_synthesis(world, rom)
     write_seals(world, rom)
@@ -325,7 +326,7 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
-    def find_bytes_from_base(self, address: int, value: typing.Iterable[int]) -> None:
+    def find_base_bytes(self, address: int, value: typing.Iterable[int]) -> None:
         for file in file_pointers:
             file_max = file_pointers[file].rom_address + file_pointers[file].file_size
             offset = address - file_pointers[file].rom_address
