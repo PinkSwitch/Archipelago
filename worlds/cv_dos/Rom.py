@@ -51,7 +51,8 @@ file_pointers = {
     "overlay_37": FilePointer(0x3A6A00, 0x022FF9C0, 0x2FDF),
     "overlay_39": FilePointer(0x3B0E00, 0x022FF9C0, 0x19FF),
     "overlay_40": FilePointer(0x3B2800, 0x022FF9C0, 0x14DF),
-    "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000)
+    "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000),
+    "bullet_wall_gfx": FilePointer(0x10D6000, 0x000000, 0x1FFF)
 }
 
 
@@ -81,13 +82,8 @@ class LocalRom(object):
         address = file.rom_address + address
         self.file[address:address + len(values)] = values
 
-    def find_base_bytes(self, address: int, value: typing.Iterable[int]) -> None:
-        for file in file_pointers:
-            file_max = file_pointers[file].rom_address + file_pointers[file].file_size
-            offset = address - file_pointers[file].rom_address
-            if address < file_pointers[file].rom_address or address > file_max:
-                continue
-            print(f"Likely address for {hex(address)} is in {file} at {hex(offset + file_pointers[file].base_address)}")
+    def read_direct(self, offset: int, length: int) -> bytes:
+        return self.file[offset:offset + length]
 
     def get_bytes(self) -> bytes:
         return bytes(self.file)

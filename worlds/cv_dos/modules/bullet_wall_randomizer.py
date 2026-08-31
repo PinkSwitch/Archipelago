@@ -115,10 +115,10 @@ def apply_souls_and_gfx(rom):
     # Can I outline sprites? Instead of converting transparency, only convert bytes that are 0x00? If they're not 0x00,
     # convert them to 0x01?
 
-    soul_wall_1 = int.from_bytes(rom.read_bytes(0x158BC0, 1))
-    soul_wall_2 = int.from_bytes(rom.read_bytes(0x158BBA, 1))
-    soul_wall_3 = int.from_bytes(rom.read_bytes(0x158BB4, 1))
-    soul_wall_4 = int.from_bytes(rom.read_bytes(0x158BC6, 1))
+    soul_wall_1 = int.from_bytes(rom.read_from_file(0x222bda0, "overlay_0", 1))
+    soul_wall_2 = int.from_bytes(rom.read_from_file(0x222bd9a, "overlay_0", 1))
+    soul_wall_3 = int.from_bytes(rom.read_from_file(0x222bd94, "overlay_0", 1))
+    soul_wall_4 = int.from_bytes(rom.read_from_file(0x222bda6, "overlay_0", 1))
 
     soul_walls = [
         global_soul_table[soul_wall_1],
@@ -129,7 +129,7 @@ def apply_souls_and_gfx(rom):
 
     rock_texture = []
     for i in range(0x1E):
-        rock_row = rom.read_bytes(0x10D6F30 + (i * 0x40), 0x10)
+        rock_row = rom.read_from_file(0x0F30 + (i * 0x40), "bullet_wall_gfx", 0x10)
         rock_texture += rock_row  # Read the rock texture
 
         # for i, pixel in enumerate(rock_texture):
@@ -145,7 +145,7 @@ def apply_souls_and_gfx(rom):
     for k in range(4):  # 4 Columns
         for j in range(4):  # Copy the rock 3 times per column
             for i in range(0x1E):  # rock is 0x1E tiles tall
-                rom.write_bytes(0x10D6000 + (i * 0x40) + (j * 0x780) + (k * 0x10), rock_texture[0x10 * i:0x10 * (i + 1)])
+                rom.write_to_file(0x0 + (i * 0x40) + (j * 0x780) + (k * 0x10), "bullet_wall_gfx", rock_texture[0x10 * i:0x10 * (i + 1)])
 
     for i, soul in enumerate(soul_walls):
         height = enem_sprite_data_table[soul].height
@@ -158,8 +158,8 @@ def apply_souls_and_gfx(rom):
         palette_sorted = sorted(palette, key=lum)  # Sort the palette by luminosity
 
         for j in range(height + 1):
-            tile_row = rom.read_bytes(address + (0x40 * j), width)  # Read each row of the image
-            wall_row = rom.read_bytes((0x10D6000 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), 0x10)
+            tile_row = rom.read_direct(address + (0x40 * j), width)  # Read each row of the image
+            wall_row = rom.read_from_file((0x0 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), "bullet_wall_gfx", 0x10)
 
             if enem_sprite_data_table[soul].convert_to_gradient:
                 tile_row = convert_sprite_to_new_palette(tile_row, palette, palette_sorted)  # Ramp the colors of sprites against the original texture
@@ -169,7 +169,7 @@ def apply_souls_and_gfx(rom):
             if enem_sprite_data_table[soul].mirror_sprite:
                 tile_row = mirror_tiles(tile_row)  # Sprites should face right. If they're not, mirror the image
                 
-            rom.write_bytes((0x10D6000 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), tile_row)  # Write the current tile over the wall we made earlier
+            rom.write_to_file((0x0 + (i * 0x10) + (j * 0x40) + (starting_height * 0x40)) + (int((16 - width) / 2)), "bullet_wall_gfx", tile_row)  # Write the current tile over the wall we made earlier
 
 
 def mirror_tiles(tile_row) -> bytearray:
@@ -211,7 +211,7 @@ def convert_transparency_and_colors(tile_row, color_invert, wall_row) -> bytearr
 
 def extract_palette(pointer, rom) -> list:
     palette_rgb = []
-    palette = rom.read_bytes(pointer, 0x20)
+    palette = rom.read_direct(pointer, 0x20)
     palette = list(struct.unpack("<{}H".format(len(palette)//2), palette))
     for color in palette:
         
