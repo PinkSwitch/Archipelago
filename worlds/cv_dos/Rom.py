@@ -203,6 +203,8 @@ def patch_rom(world, rom, code_patch):
     if world.options.no_mp_bat:
         rom.write_to_file(0x209d782, "arm9", bytearray([0x00]))  # Zero the Bat's MP cost
 
+    rom.write_to_file(0x02308D7C, "overlay_41", bytearray([world.options.start_with_doppelganger.value]))
+
     if world.options.randomize_seal_patterns:
         randomize_seal_patterns(world, rom)
 
@@ -455,7 +457,7 @@ def get_item_data(world, item) -> tuple:
             item_color = 0x06
         else:
             item_id = 0x3A
-            item_color = 0x09
+            item_color = 0x0E
     return item_id, item_type, item_color
 
 

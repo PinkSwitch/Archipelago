@@ -58,6 +58,8 @@ def create_items(world) -> None:
         for _ in range(data.default_count):
             item = set_classifications(world, name)
             pool.append(item)
+    if world.options.start_with_doppelganger:
+        pool.remove(set_classifications(world, "Doppelganger Soul"))
 
     if world.options.gate_items:
         pool.extend([set_classifications(world, "West Lab Gate Key"),
