@@ -6,8 +6,8 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
-                           base_check_address_table, easter_egg_table, warp_room_bits, world_version,
-                           global_item_table, common_filler_pool, boss_list, enemy_table)
+                           easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
+                           boss_list, enemy_table)
 from .modules.music_randomizer import area_music_randomizer, boss_music_randomizer
 from .modules.boss_randomizer import write_bosses
 from .modules.synthesis_randomizer import write_synthesis
@@ -18,6 +18,7 @@ from .Items import soul_filler_table
 from .modules.seal_shuffle import write_seals, randomize_seal_patterns
 from .modules.set_goals import write_goal_triggers
 from BaseClasses import ItemClassification
+from .static_location_data import location_data_table
 
 hash_us = "cc0f25b8783fb83cb4588d1c111bdc18"
 
@@ -80,11 +81,19 @@ class LocalRom(object):
         address = file.rom_address + address
         self.file[address:address + len(values)] = values
 
+    def find_base_bytes(self, address: int, value: typing.Iterable[int]) -> None:
+        for file in file_pointers:
+            file_max = file_pointers[file].rom_address + file_pointers[file].file_size
+            offset = address - file_pointers[file].rom_address
+            if address < file_pointers[file].rom_address or address > file_max:
+                continue
+            print(f"Likely address for {hex(address)} is in {file} at {hex(offset + file_pointers[file].base_address)}")
+
     def get_bytes(self) -> bytes:
         return bytes(self.file)
 
 
-def patch_rom(world, rom, player: int, code_patch):
+def patch_rom(world, rom, code_patch):
     # This is the entirety of the patched code
     rom.write_to_file(0x02308920, "overlay_41", code_patch)
     rom.name = f"{world.player}_{world.auth_id}"
@@ -339,14 +348,6 @@ class DoSProcPatch(APProcedurePatch, APTokenMixin):
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
-    def find_base_bytes(self, address: int, value: typing.Iterable[int]) -> None:
-        for file in file_pointers:
-            file_max = file_pointers[file].rom_address + file_pointers[file].file_size
-            offset = address - file_pointers[file].rom_address
-            if address < file_pointers[file].rom_address or address > file_max:
-                continue
-            print(f"Likely address for {hex(address)} is in {file} at {hex(offset + file_pointers[file].base_address)}")
-
     def write_direct(self, offset: int, value: typing.Iterable[int]) -> None:
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
@@ -357,54 +358,56 @@ class DoSPatchExtensions(APPatchExtension):
     @staticmethod
     def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        version_check = rom.read_bytes(0x2F6DD7C, 15)
-        version = version_check.rstrip(b"\x69")
+        version_check = rom.read_from_file(0x2308a9c, "overlay_41", 15)
+        version = version_check.rstrip(b"\xff")
         version = version.decode("ascii")
         if version != world_version:  # Installed world is different from generated world
             raise Exception(f"Error! this patch was generated on Dawn of Sorrow APworld version: {version}, but installed APworld is version: {world_version}. " +
                             f"Please use APWorld version {version} to patch your game.")
 
-        for check in base_check_address_table:
-            address = base_check_address_table[check]
-            item_type = int.from_bytes(rom.read_bytes(address + 6, 1))
-            item_id = int.from_bytes(rom.read_bytes(address + 10, 1))
+        for check in location_data_table:
+            if location_data_table[check].location_type != "Normal":
+                continue
+            address = location_data_table[check].pointer
+            item_type = int.from_bytes(rom.read_from_file(address + 6, "arm9", 1))
+            item_id = int.from_bytes(rom.read_from_file(address + 10, "arm9", 1))
             if (item_type == 0x01 and item_id < 4) or (item_type == 0x02 and item_id >= 0x3D):
                 # Coins and Magic Seals spawn slightly in the ground, so we need to raise them up a little bit
-                y_pos = int.from_bytes(rom.read_bytes(address + 2, 2), byteorder="little")
+                y_pos = int.from_bytes(rom.read_from_file(address + 2, "arm9", 2), byteorder="little")
                 y_pos -= 10
-                rom.write_bytes(address + 2, struct.pack("H", y_pos))
+                rom.write_to_file(address + 2, "arm9", struct.pack("H", y_pos))
 
         return rom.get_bytes()
 
     @staticmethod
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        exp_multiplier = struct.unpack("H", rom.read_bytes(0x2F6DD8E, 2))[0]  # Read the multiplier
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x2308aae, "overlay_41", 2))[0]  # Read the multiplier
         exp_multiplier = exp_multiplier / 100
 
-        soul_chance_multiplier = struct.unpack("H", rom.read_bytes(0x2F6DD90, 2))[0]
+        soul_chance_multiplier = struct.unpack("H", rom.read_from_file(0x2308ab0, "overlay_41", 2))[0]
         soul_chance_multiplier = soul_chance_multiplier / 100
 
         for enemy in enemy_table:
             address = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
             exp_address = address + 18  # Offset where EXP is stored
-            exp = rom.read_bytes(exp_address, 2)
+            exp = rom.read_from_file(exp_address, "arm9", 2)
             exp = struct.unpack("H", exp)[0]
             exp = int(min(0xFFFF, (exp * exp_multiplier)))
-            rom.write_bytes(exp_address, struct.pack("H", exp))
+            rom.write_to_file(exp_address, "arm9", struct.pack("H", exp))
 
             soul_chance_address = address + 20
-            soul_chance = int.from_bytes(rom.read_bytes(soul_chance_address, 1))
+            soul_chance = int.from_bytes(rom.read_from_file(soul_chance_address, "arm9", 1))
             if soul_chance:  # Only modify non-guaranteed Souls
                 soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
-                rom.write_bytes(soul_chance_address, bytearray([soul_chance]))
+                rom.write_to_file(soul_chance_address, "arm9", bytearray([soul_chance]))
 
         return rom.get_bytes()
 
     @staticmethod
     def modify_soulwall_gfx(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        soul_wall_randomizer = int.from_bytes(rom.read_bytes(0x2F6DE08, 1))
+        soul_wall_randomizer = int.from_bytes(rom.read_from_file(0x2308b28, "overlay_41", 1))
         if soul_wall_randomizer:
             apply_souls_and_gfx(rom)
         return rom.get_bytes()
@@ -457,7 +460,6 @@ def get_item_data(world, item) -> tuple:
 
 
 def patch_locations(world, rom, locations) -> None:
-    from .static_location_data import location_data_table
     for location in locations:
         if not location.address:
             continue

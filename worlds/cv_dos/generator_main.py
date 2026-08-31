@@ -190,7 +190,7 @@ def generate_output(world, output_directory: str) -> None:
         code_patch = pkgutil.get_data(__name__, "src/overlay_41.bin")
         patch = DoSProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
         patch.write_file("dos_base.bsdiff4", pkgutil.get_data(__name__, "src/dos_base.bsdiff4"))
-        patch_rom(world, patch, world.player, code_patch)
+        patch_rom(world, patch, code_patch)
 
         world.rom_name = patch.name
 
