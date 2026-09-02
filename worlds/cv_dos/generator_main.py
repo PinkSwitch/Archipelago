@@ -20,18 +20,19 @@ def generate_early(world) -> None:
         if "Castlevania: Dawn of Sorrow" not in world.multiworld.re_gen_passthrough:
             return
         passthrough = world.multiworld.re_gen_passthrough["Castlevania: Dawn of Sorrow"]
-        world.options.goal = passthrough["goal"]
-        world.options.soul_randomizer = passthrough["soul_randomizer"]
-        world.options.soulsanity_level = passthrough["soulsanity_level"]
+        world.options.goal.value = passthrough["goal"]
+        world.options.soul_randomizer.value = passthrough["soul_randomizer"]
+        world.options.soulsanity_level.value = passthrough["soulsanity_level"]
         world.starting_warp_room = passthrough["starting_warp"]
         world.options.open_drawbridge = passthrough["open_drawbridge"]
         world.options.boost_speed = passthrough["speed_boost"]
         world.red_soul_walls = passthrough["soul_walls"]
-        world.options.gate_items = passthrough["buttonsanity"]
+        world.options.gate_items.value = passthrough["buttonsanity"]
         world.magic_seal_table = passthrough["seals"]
         world.options.menace_condition.value = passthrough["menace_condition"]
         world.options.mine_condition.value = passthrough["mine_condition"]
         world.options.garden_condition.value = passthrough["garden_condition"]
+        world.connected_doors = passthrough["door_map"]
     setup_game(world)
     setup_souls(world)
 
@@ -191,7 +192,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "seals": world.magic_seal_table,
         "menace_condition": world.options.menace_condition.value,
         "garden_condition": world.options.garden_condition.value,
-        "mine_condition": world.options.mine_condition.value
+        "mine_condition": world.options.mine_condition.value,
+        "door_map": world.connected_doors,
     }
 
 
@@ -222,6 +224,7 @@ def modify_multidata(world, multidata: dict) -> None:
 
 
 def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
+    from .modules.area_shuffle import door_data
     if world.options.shuffle_starting_warp_room:
         spoiler_handle.write(f"Default Warp Room:    {world.starting_warp_room}\n")
 
@@ -244,3 +247,11 @@ def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
                 continue
             else:
                 spoiler_handle.write(f" {seal}:  {world.magic_seal_table[seal]}\n")
+
+    if world.options.randomize_doors:
+        spoiler_handle.write("\nEntrances:")
+        for door in world.connected_doors:
+            if not door_data[door[0]].is_left_facing:
+                continue
+            spoiler_handle.write(f"\n   {door_data[door[0]].entrance_name} <=> {door_data[door[1]].entrance_name}")
+    spoiler_handle.write("\n")

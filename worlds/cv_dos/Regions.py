@@ -84,6 +84,7 @@ region_list = [
     "The Pinnacle",
     "The Pinnacle Throne Room",
     "The Pinnacle Lower",
+    "The Pinnacle Left Exit",
     "Warp Room"
 
 
@@ -359,13 +360,15 @@ def connect_regions(world):
 
     ###############################
     # The Pinnacle
-    world.get_region("The Pinnacle Lower").add_exits(["The Pinnacle", "Demon Guest House Upper", "Cursed Clock Tower Exit", "Warp Room"],
-                                                     {"The Pinnacle": small_uppies,
-                                                      "Cursed Clock Tower Exit": small_uppies | Has("Puppet Master Soul"),
-                                                      "Warp Room": small_uppies | Has("Puppet Master Soul")})
+    world.get_region("The Pinnacle Lower").add_exits({"The Pinnacle": None, "Cursed Clock Tower Exit": "Sec09Rm1A", "The Pinnacle Left Exit": None},
+                                                     {"The Pinnacle": small_uppies})
 
     world.get_region("The Pinnacle").add_exits(["The Pinnacle Lower", "The Pinnacle Throne Room"],
                                                {"The Pinnacle Throne Room": big_uppies})
+
+    world.get_region("The Pinnacle Left Exit").add_exits({"Demon Guest House Upper": "Sec09Rm07", "The Pinnacle Lower": None, "Warp Room": None },
+                                                         {"The Pinnacle Lower": small_uppies,
+                                                          "Warp Room": small_uppies | Has("Puppet Master Soul")})
 
     ###############################
     # Mine of Judgment

@@ -90,6 +90,7 @@ class LocalRom(object):
 
 
 def patch_rom(world, rom, code_patch):
+    from .modules.area_shuffle import patch_castle_connections
     # This is the entirety of the patched code
     rom.write_to_file(0x02308970, "overlay_41", code_patch)
     rom.name = f"{world.player}_{world.auth_id}"
@@ -286,6 +287,7 @@ def patch_rom(world, rom, code_patch):
 
     write_synthesis(world, rom)
     write_seals(world, rom)
+    patch_castle_connections(world, rom)
 
     if world.options.boss_shuffle:
         write_bosses(world, rom)

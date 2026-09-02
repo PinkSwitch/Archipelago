@@ -164,9 +164,9 @@ def patch_castle_connections(world, rom):
         address = door_data[source].source_pointer
         des_pointer = door_data[destination].room_pointer
 
-        rom.write_to_file(address, "overlay_22", struct.pack("I", des_pointer))
-        rom.write_to_file(address + 0x0A, "overlay_22", struct.pack("H", door_data[destination].x_pos))
-        rom.write_to_file(address + 0x0C, "overlay_22", struct.pack("H", door_data[destination].y_pos))
+        rom.write_to_file(address, "arm9", struct.pack("I", des_pointer))
+        rom.write_to_file(address + 0x0A, "arm9", struct.pack("H", door_data[destination].x_pos))
+        rom.write_to_file(address + 0x0C, "arm9", struct.pack("H", door_data[destination].y_pos))
 
 
 exit_regions = {

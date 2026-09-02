@@ -110,6 +110,8 @@ def create_soul_regions(world):
     world.get_region("The Pinnacle Lower").add_exits(["Guillotiner Soul", "Succubus Soul", "Malachi Soul", "Mushussu Soul", "Werewolf Soul", "Flame Demon Soul",
                                                       "Bugbear Soul", "Dead Warrior Soul", "Erinys Soul"])
 
+    world.get_region("The Pinnacle Left Exit").add_exits(["Succubus Soul", "Erinys Soul"])
+
     if world.mine_status != "Disabled":
         world.get_region("Mine of Judgment").add_exits(["Slogra Soul", "Ripper Soul", "Gaibon Soul", "Tanjelly Soul", "Giant Slug Soul", "Bugbear Soul"])
         world.get_region("The Abyss").add_exits(["Alastor Soul", "Mud Demon Soul", "Frozen Shade Soul", "Malachi Soul", "White Dragon Soul", "Malacoda Soul",

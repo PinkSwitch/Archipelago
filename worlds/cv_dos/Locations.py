@@ -155,7 +155,7 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror Room"),
         LocationData("Silenced Ruins Back Exit", "Silenced Ruins: Mirror World"),
 
-        LocationData("The Pinnacle Lower", "The Pinnacle: Lower Hidden Room"),
+        LocationData("The Pinnacle Left Exit", "The Pinnacle: Lower Hidden Room"),
         LocationData("The Pinnacle", "The Pinnacle: Under Big Staircase"),
         LocationData("The Pinnacle", "The Pinnacle: Central Indoor Room"),
         LocationData("The Pinnacle", "The Pinnacle: Central Outdoor Room"),
