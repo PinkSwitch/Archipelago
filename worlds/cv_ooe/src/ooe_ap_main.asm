@@ -516,8 +516,8 @@
     .org 0x02262338
         mov r0, 0x3B ; Winged Skeleton Glyph
 
-    .org 0x0225E73C
-        mov r0, 0x5E
+    .org 0x0225E738
+        mov r0, 0x5E ; Demon Lord glyph
 
     .org 0x022503AC
         bl @OverrideFomorAttack
