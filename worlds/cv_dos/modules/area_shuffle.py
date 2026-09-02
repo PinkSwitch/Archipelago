@@ -70,65 +70,65 @@ castle_entrances = [
 ]
 
 door_data = {
-    "Sec00Rm07": DoorTransitionData(0x020A5214, 0x020A5224, 0x00, 0x00, "Example Door", True),
-    "Sec01Rm04": DoorTransitionData(0x020A1BEC, 0x020A1C0C, 0x00, 0x00, "Example Door"),
+    "Sec00Rm07": DoorTransitionData(0x020A5214, 0x020A5224, 0x00, 0x00, "Lost Village: Highest Door", True),
+    "Sec01Rm04": DoorTransitionData(0x020A1BEC, 0x020A1C0C, 0x00, 0x00, "Demon Guest House: Number Puzzle West Door"),
 
-    "Sec00Rm15": DoorTransitionData(0x020A8C58, 0x020A8C68, 0x00, 0x00, "Example Door", True),
-    "Sec02Rm07": DoorTransitionData(0x020A6E34, 0x020A6DD0, 0x00, 0x00, "Example Door"),
+    "Sec00Rm15": DoorTransitionData(0x020A8C58, 0x020A8C68, 0x00, 0x00, "Lost Village: Moat Door", True),
+    "Sec02Rm07": DoorTransitionData(0x020A6E34, 0x020A6DD0, 0x00, 0x00, "Wizardry Lab: Main Entrance"),
 
-    "Sec00Rm16": DoorTransitionData(0x020A5298, 0x020A52A8, 0x00, 0x00, "Example Door", True),
-    "Sec01Rm2A": DoorTransitionData(0x020A431C, 0x020A433C, 0x00, 0x00, "Example Door"),
+    "Sec00Rm16": DoorTransitionData(0x020A5298, 0x020A52A8, 0x00, 0x00, "Lost Village: Courtyard Door", True),
+    "Sec01Rm2A": DoorTransitionData(0x020A431C, 0x020A433C, 0x00, 0x00, "Demon Guest House: Lower Left Door"),
 
-    "Sec00Rm0DObj03": DoorTransitionData(0x020A8B50, 0x020A8B60, 0x00, 0x00, "Example Door", True),
-    "Sec02Rm00": DoorTransitionData(0x020A64D4, 0x020A64F4, 0x00, 0x00, "Example Door"),
+    "Sec00Rm0DObj03": DoorTransitionData(0x020A8B50, 0x020A8B60, 0x00, 0x00, "Lost Village: Underground Tunnel Upper Door", True),
+    "Sec02Rm00": DoorTransitionData(0x020A64D4, 0x020A64F4, 0x00, 0x00, "Wizardry Lab: Behind West Gate"),
 
-    "Sec00Rm0DObj04": DoorTransitionData(0x020A8BD4, 0x020A8BE4, 0x00, 0x00, "Example Door", True),
-    "Sec02Rm18": DoorTransitionData(0x020A8344, 0x020A8364, 0x00, 0x00, "Example Door"),
+    "Sec00Rm0DObj04": DoorTransitionData(0x020A8BD4, 0x020A8BE4, 0x00, 0x00, "Lost Village: Underground Tunnel Lower Door", True),
+    "Sec02Rm18": DoorTransitionData(0x020A8344, 0x020A8364, 0x00, 0x00, "Wizardry Lab: Iron Golem Hall"),
 
-    "Sec01Rm30": DoorTransitionData(0x020ABA40, 0x020ABA50, 0x00, 0x00, "Example Door", True),
-    "Sec03Rm00": DoorTransitionData(0x020ABA50, 0x020A9B7C, 0x00, 0xC0, "Example Door"),
+    "Sec01Rm30": DoorTransitionData(0x020ABA40, 0x020ABA50, 0x00, 0x00, "Demon Guest House: Lower Right Door", True),
+    "Sec03Rm00": DoorTransitionData(0x020ABA50, 0x020A9B7C, 0x00, 0xC0, "Garden of Madness: Central West Door"),
 
-    "Sec01Rm3F": DoorTransitionData(0x020ABAC4, 0x020AA6FC, 0x00, 0x00, "Example Door", True),
-    "Sec03Rm05": DoorTransitionData(0x020AA15C, 0x020AA138, 0x00, 0x00, "Example Door"),
+    "Sec01Rm3F": DoorTransitionData(0x020ABAC4, 0x020AA6FC, 0x00, 0x00, "Demon Guest House: Central Door", True),
+    "Sec03Rm05": DoorTransitionData(0x020AA15C, 0x020AA138, 0x00, 0x00, "Garden of Madness: Post-Boss Area"),
 
-    "Sec01Rm33": DoorTransitionData(0x020BAB14, 0x020BAB24, 0x00, 0x00, "Example Door", True),
-    "Sec09Rm07": DoorTransitionData(0x020B9854, 0x020B9874, 0x00, 0x00, "Example Door"),
+    "Sec01Rm33": DoorTransitionData(0x020BAB14, 0x020BAB24, 0x00, 0x00, "Demon Guest House: Upper Exit", True),
+    "Sec09Rm07": DoorTransitionData(0x020B9854, 0x020B9874, 0x00, 0x00, "The Pinnacle: West Exit"),
 
-    "Sec02Rm10": DoorTransitionData(0x020B3F78, 0x020B3F88, 0x00, 0x00, "Example Door", True),
-    "Sec06Rm01": DoorTransitionData(0x020B276C, 0x020B278C, 0x00, 0x00, "Example Door"),
+    "Sec02Rm10": DoorTransitionData(0x020B3F78, 0x020B3F88, 0x00, 0x00, "Wizardry Lab: East Gate", True),
+    "Sec06Rm01": DoorTransitionData(0x020B276C, 0x020B278C, 0x00, 0x00, "Subterranean Hell: Above Waterfall"),
 
-    "Sec02Rm15": DoorTransitionData(0x020ABB48, 0x020ABB58, 0x00, 0x00, "Example Door", True),
-    "Sec03Rm09": DoorTransitionData(0x020AA5EC, 0x020AA598, 0x00, 0x0240, "Example Door"),
+    "Sec02Rm15": DoorTransitionData(0x020ABB48, 0x020ABB58, 0x00, 0x00, "Wizardry Lab: East Exit", True),
+    "Sec03Rm09": DoorTransitionData(0x020AA5EC, 0x020AA598, 0x00, 0x0240, "Garden of Madness: Lower West Door"),
 
-    "Sec02Rm1E": DoorTransitionData(0x020B3EF4, 0x020B3F04, 0x00, 0x00, "Example Door", True),
-    "Sec06Rm00": DoorTransitionData(0x020B2670, 0x020B2690, 0x00, 0x00, "Example Door"),
+    "Sec02Rm1E": DoorTransitionData(0x020B3EF4, 0x020B3F04, 0x00, 0x00, "Wizardry Lab: East Underwater Room Door", True),
+    "Sec06Rm00": DoorTransitionData(0x020B2670, 0x020B2690, 0x00, 0x00, "Subterranean Hell: Spikes Chamber"),
 
-    "Sec03Rm13": DoorTransitionData(0x020ABC50, 0x020ABC60, 0x00, 0x00, "Example Door", True),
-    "Sec06Rm0E": DoorTransitionData(0x020B3460, 0x020B3480, 0x00, 0x00, "Example Door"),
+    "Sec03Rm13": DoorTransitionData(0x020ABC50, 0x020ABC60, 0x00, 0x00, "Garden of Madness: Water-locked Door", True),
+    "Sec06Rm0E": DoorTransitionData(0x020B3460, 0x020B3480, 0x00, 0x00, "Subterranean Hell: Central Area Door"),
 
-    "Sec03Rm16": DoorTransitionData(0x020ABCD4, 0x020AE5B4, 0x00, 0x00, "Example Door", True),
-    "Sec04Rm03": DoorTransitionData(0x020AD004, 0x020ACFC0, 0x00, 0xC0, "Example Door"),
+    "Sec03Rm16": DoorTransitionData(0x020ABCD4, 0x020AE5B4, 0x00, 0x00, "Garden of Madness: East Exit", True),
+    "Sec04Rm03": DoorTransitionData(0x020AD004, 0x020ACFC0, 0x00, 0xC0, "Dark Chapel: West Door"),
 
-    "Sec03Rm10": DoorTransitionData(0x020ABBCC, 0x020ABBDC, 0x00, 0x00, "Example Door", True),
-    "Sec08Rm02": DoorTransitionData(0x020B6710, 0x020B6720, 0x00, 0xC0, "Example Door"),
+    "Sec03Rm10": DoorTransitionData(0x020ABBCC, 0x020ABBDC, 0x00, 0x00, "Garden of Madness: Gate Door", True),
+    "Sec08Rm02": DoorTransitionData(0x020B6710, 0x020B6720, 0x00, 0xC0, "Cursed Clock Tower: Lower Exit"),
 
-    "Sec04Rm15": DoorTransitionData(0x020B0D58, 0x020B0D68, 0x00, 0x00, "Example Door", True),
-    "Sec05Rm01": DoorTransitionData(0x020AF10C, 0x020AF12C, 0x00, 0x00, "Example Door"),
+    "Sec04Rm15": DoorTransitionData(0x020B0D58, 0x020B0D68, 0x00, 0x00, "Dark Chapel: East Door", True),
+    "Sec05Rm01": DoorTransitionData(0x020AF10C, 0x020AF12C, 0x00, 0x00, "Condemned Tower: Lower Door"),
 
-    "Sec04Rm08": DoorTransitionData(0x020B4104, 0x020B4114, 0x00, 0x00, "Example Door", True),
-    "Sec06Rm13": DoorTransitionData(0x020B3978, 0x020B3954, 0x00, 0x00, "Example Door"),
+    "Sec04Rm08": DoorTransitionData(0x020B4104, 0x020B4114, 0x00, 0x00, "Dark Chapel: Catacombs Door", True),
+    "Sec06Rm13": DoorTransitionData(0x020B3978, 0x020B3954, 0x00, 0x00, "Subterranean Hell: Boss Area"),
 
-    "Sec06Rm06": DoorTransitionData(0x020B3FFC, 0x020B400C, 0x00, 0x00, "Example Door", True),
-    "Sec07Rm00": DoorTransitionData(0x020B4E74, 0x020B4E94, 0x00, 0x00, "Example Door"),
+    "Sec06Rm06": DoorTransitionData(0x020B3FFC, 0x020B400C, 0x00, 0x00, "Subterranean Hell: Lower Right Exit", True),
+    "Sec07Rm00": DoorTransitionData(0x020B4E74, 0x020B4E94, 0x00, 0x00, "Silenced Ruins: Antechamber Door"),
 
-    "Sec07Rm08": DoorTransitionData(0x020B4080, 0x020B4090, 0x00, 0x00, "Example Door", True),
-    "Sec06Rm11": DoorTransitionData(0x020B376C, 0x020B377C, 0x00, 0x00, "Example Door"),
+    "Sec07Rm08": DoorTransitionData(0x020B4080, 0x020B4090, 0x00, 0x00, "Silenced Ruins: Back Exit", True),
+    "Sec06Rm11": DoorTransitionData(0x020B376C, 0x020B377C, 0x00, 0x00, "Subterranean Hell: Gate Door"),
 
-    "Sec08Rm1E": DoorTransitionData(0x020B0CD4, 0x020B0CE4, 0x00, 0x00, "Example Door", True),
-    "Sec05Rm00": DoorTransitionData(0x020AF018, 0x020AF038, 0x00, 0x00, "Example Door"),
+    "Sec08Rm1E": DoorTransitionData(0x020B0CD4, 0x020B0CE4, 0x00, 0x00, "Cursed Clock Tower: East Exit", True),
+    "Sec05Rm00": DoorTransitionData(0x020AF018, 0x020AF038, 0x00, 0x00, "Condemned Tower: Upper Door"),
 
-    "Sec09Rm1A": DoorTransitionData(0x020BAB98, 0x020BABA8, 0x00, 0x00, "Example Door", True),
-    "Sec08Rm06": DoorTransitionData(0x020B6B18, 0x020B6B38, 0x00, 0x00, "Example Door"),
+    "Sec09Rm1A": DoorTransitionData(0x020BAB98, 0x020BABA8, 0x00, 0x00, "The Pinnacle: East Exit", True),
+    "Sec08Rm06": DoorTransitionData(0x020B6B18, 0x020B6B38, 0x00, 0x00, "Cursed Clock Tower: Spike Hall Door"),
 }
 
 
@@ -170,24 +170,55 @@ def patch_castle_connections(world, rom):
 
 
 exit_regions = {
-    "Sec00Rm07": "Castle Entrance",
-    "Sec01Rm03": "Castle Entrance - Right Side",
-    "Sec01Rm07": "Castle Entrance - Barracks Shortcut",
-    "Sec02Rm00": "Underground Labyrinth",
-    "Sec02Rm0E": "Underground Labyrinth",
-    "Sec03Rm00": "Library",
-    "Sec03Rm0B": "Library Upper Exit",
-    "Sec03Rm10": "Forsaken Cloister - Left",
-    "Sec05Rm04": "Barracks",
-    "Sec05Rm03": "Barracks",
-    "Sec05Rm11": "Barracks",
-    "Sec07Rm01": "Mechanical Tower",
-    "Sec06Rm01": "Mechanical Tower Lower",
-    "Sec06Rm0B": "Mechanical Tower Upper Exit",
-    "Sec08Rm02": "Arms Depot",
-    "Sec09Rm03": "Forsaken Cloister - Left",
-    "Sec09Rm07": "Forsaken Cloister - Right",
-    "Sec0ARm01": "Final Approach - Shortcut"
+    "Sec00Rm07": "Lost Village Upper Doorway",
+    "Sec00Rm15": "Lost Village Upper",
+    "Sec00Rm16": "Lost Village Courtyard",
+    "Sec00Rm0DObj03": "Lost Village Underground Middle",
+    "Sec00Rm0DObj04": "Lost Village Underground Bottom",
+
+    "Sec01Rm04": "Demon Guest House Number Puzzle West",
+    "Sec01Rm2A": "Demon Guest House Lower",
+    "Sec01Rm30": "Demon Guest House Lower",
+    "Sec01Rm3F": "Demon Guest House Main",
+    "Sec01Rm33": "Demon Guest House Upper",
+
+    "Sec02Rm07": "Wizardry Lab Main",
+    "Sec02Rm10": "Wizardry Lab East Gate",
+    "Sec02Rm15": "Wizardry Lab Main",
+    "Sec02Rm00": "Wizardry Lab West Gate",
+    "Sec02Rm18": "Wizardry Lab Sunken West Door",
+    "Sec02Rm1E": "Wizardry Lab Sunken East Door",
+
+    "Sec03Rm00": "Garden of Madness Lower",
+    "Sec03Rm09": "Garden of Madness Lower",
+    "Sec03Rm13": "Garden of Madness Water Blocked",
+    "Sec03Rm16": "Garden of Madness Lower",
+    "Sec03Rm10": "Garden of Madness East Gate",
+    "Sec03Rm05": "Garden of Madness Post-Boss",
+
+    "Sec04Rm03": "Dark Chapel",
+    "Sec04Rm15": "Dark Chapel Post-Button",
+    "Sec04Rm08": "Dark Chapel Catacombs Exit",
+
+    "Sec05Rm00": "Condemned Tower Post Wall",
+    "Sec05Rm01": "Condemned Tower Bottom",
+
+    "Sec06Rm00": "Subterranean Hell Spike Room West",
+    "Sec06Rm01": "Subterranean Hell Shaft Top",
+    "Sec06Rm06": "Subterranean Hell Shaft Bottom",
+    "Sec06Rm0E": "Subterranean Hell Central Exit",
+    "Sec06Rm11": "Subterranean Hell Button Gate Room",
+    "Sec06Rm13": "Subterranean Hell Top Entrance",
+
+    "Sec07Rm00": "Silenced Ruins Antechamber",
+    "Sec07Rm08": "Silenced Ruins Back Exit",
+
+    "Sec08Rm1E": "Cursed Clock Tower Entrance",
+    "Sec08Rm02": "Cursed Clock Tower Entrance",
+    "Sec08Rm06": "Cursed Clock Tower Exit",
+
+    "Sec09Rm1A": "The Pinnacle Lower",
+    "Sec09Rm07": "The Pinnacle Left Exit"
 }
 
 

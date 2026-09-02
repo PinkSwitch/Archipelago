@@ -236,7 +236,7 @@ def connect_regions(world):
     world.get_region("Demon Guest House West Wing").add_exits(["Demon Guest House Main", "Demon Guest House Number Puzzle", "Warp Room"],
                                                               {"Demon Guest House Main": HasAny("Puppet Master Soul", "Bat Company Soul")})
 
-    world.get_region("Demon Guest House Upper").add_exits({"Demon Guest House Main": None, "The Pinnacle Lower": "Sec01Rm33"})
+    world.get_region("Demon Guest House Upper").add_exits({"Demon Guest House Main": None, "The Pinnacle Left Exit": "Sec01Rm33"})
     ###############################
     # Dark Chapel
     world.get_region("Dark Chapel").add_exits({"Garden of Madness Lower": "Sec04Rm03", "Dark Chapel Catacombs Exit": None, "Dark Chapel Big Room": None, "Warp Room": None},
