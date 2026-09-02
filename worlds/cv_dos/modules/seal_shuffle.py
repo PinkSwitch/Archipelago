@@ -33,6 +33,7 @@ class SealData:
     line_count: int  # How many connections this seal has
     address: int  # The address of the seal
     rotation_address: int  # address of the rotation value
+    node_count_pointer: int  # Address where we write the number of nodes
 
 
 def set_seals(world):
@@ -71,11 +72,11 @@ def write_seals(world, rom):
 
 def randomize_seal_patterns(world, rom):
     seal_data = {
-        "Magic Seal 1": SealData(3, 3, 0x222f1b0, 0x222f214),
-        "Magic Seal 2": SealData(4, 4, 0x222f1b4, 0x222f234),
-        "Magic Seal 3": SealData(4, 6, 0x222f1bc, 0x222f1f4),
-        "Magic Seal 4": SealData(6, 8, 0x222f1c4, 0x222f254),
-        "Magic Seal 5": SealData(6, 11, 0x222f1d0, 0x222f274),
+        "Magic Seal 1": SealData(3, 3, 0x222f1b0, 0x222f214, 0x0222F21C),
+        "Magic Seal 2": SealData(4, 4, 0x222f1b4, 0x222f234, 0x0222F23C),
+        "Magic Seal 3": SealData(4, 6, 0x222f1bc, 0x222f1f4, 0x0222F1FC),
+        "Magic Seal 4": SealData(6, 8, 0x222f1c4, 0x222f254, 0x0222F25C),
+        "Magic Seal 5": SealData(6, 11, 0x222f1d0, 0x222f274, 0x0222F27C),
     }
 
     for index, seal in enumerate(seals):
@@ -105,5 +106,7 @@ def randomize_seal_patterns(world, rom):
                 seal_array.append(cur)
             else:
                 built_seal = True
+        seal_array.append(0xFF)  # Add the ending terminator
         rom.write_to_file(data.address, "overlay_0", bytearray(seal_array))
         rom.write_to_file(data.rotation_address, "overlay_0", struct.pack("H", rotation))
+        #rom.write(data.node_countpointer, node_count)
