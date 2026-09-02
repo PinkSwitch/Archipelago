@@ -260,6 +260,11 @@ class StartWithDoppelganger(Toggle):
     """If enabled, you're start with the Doppelganger Soul already acquired."""
     display_name = "Start with Doppelganger"
 
+
+class ShuffleCastleConnections(Toggle):
+    """Randomizes where the area transition doors lead to."""
+    display_name = "Randomize Doors"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -311,6 +316,7 @@ class DoSOptions(PerGameCommonOptions):
     mine_condition: MineCondition
     garden_condition: GardenCondition
     start_with_doppelganger: StartWithDoppelganger
+    randomize_doors: ShuffleCastleConnections
 
 
 dos_option_groups = [
@@ -353,7 +359,8 @@ dos_option_groups = [
     OptionGroup("World Settings", [
         RandomizeStartingWarp,
         OpenDrawbridge,
-        SoulWallRandomizer
+        SoulWallRandomizer,
+        ShuffleCastleConnections
 
     ]),
 

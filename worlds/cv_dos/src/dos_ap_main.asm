@@ -480,7 +480,7 @@ bl @GetItemFromSpecial
     .db 0x21, 0x30, 0x00, 0x29, 0x54, 0x45, 0x4D, 0xEA ; AP Iem over Konami man
 
 .org 0x0222F41C
-    .dw 0x02218DC6 ; Set the other type of AP item to use the same named pointer
+    .dw 0x02218DC4 ; Set the other type of AP item to use the same named pointer
 
 .org 0x0222F714
     .dw @ItemDescription_ReturnGem
@@ -1473,6 +1473,7 @@ bl @GetItemFromSpecial
     ;spawner is at 0x021AF558
     ;It's definitely at 0x021F5A8. this calls LoadSpriteSingleGFX. But how does it work...?
     ;r3 is the Palette Index
+    ; 021AF6E4 actually spawns the pickup obj
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 @SkipShowName:

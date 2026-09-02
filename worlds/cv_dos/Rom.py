@@ -91,12 +91,12 @@ class LocalRom(object):
 
 def patch_rom(world, rom, code_patch):
     # This is the entirety of the patched code
-    rom.write_to_file(0x02308920, "overlay_41", code_patch)
+    rom.write_to_file(0x02308970, "overlay_41", code_patch)
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
 
-    rom.write_to_file(0x2308A70, "overlay_41", patch_name)
-    rom.write_to_file(0x2308A9C, "overlay_41", world_version.encode("ascii"))
+    rom.write_to_file(0x02308A70, "overlay_41", patch_name)
+    rom.write_to_file(0x02308A9C, "overlay_41", world_version.encode("ascii"))
 
     write_goal_triggers(world, rom)
 
@@ -357,7 +357,7 @@ class DoSPatchExtensions(APPatchExtension):
     def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         version_check = rom.read_from_file(0x2308a9c, "overlay_41", 15)
-        version = version_check.rstrip(b"\xff")
+        version = version_check.rstrip(b"\x69")
         version = version.decode("ascii")
         if version != world_version:  # Installed world is different from generated world
             raise Exception(f"Error! this patch was generated on Dawn of Sorrow APworld version: {version}, but installed APworld is version: {world_version}. " +
@@ -485,7 +485,9 @@ def patch_locations(world, rom, locations) -> None:
             index = (global_soul_table.index(location.name) * 2)
             rom.write_to_file(soul_check_table + index, "overlay_41", struct.pack("H", item_struct))
         elif data.location_type == "Easter Egg":
-            rom.write_to_file(data.pointer + 11, "arm9", bytearray([item_color]))
+            if item_color:
+                item_id = item_id | (item_color << 8)
+            rom.write_to_file(data.pointer + 11, "arm9", bytearray([item_type]))
             rom.write_to_file(easter_egg_table[location.name], "overlay_0", bytearray([item_id]))
         elif data.location_type == "Button":
             address = button_check_table + ((location.address - 0x200) * 4)

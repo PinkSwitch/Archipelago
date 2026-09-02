@@ -52,6 +52,15 @@ def create_regions(world) -> None:
         world.get_location("Imp Soul").place_locked_item(create_static_soul(world, "Imp Soul"))
 
 
+def connect_entrances(world) -> None:
+    from .modules.area_shuffle import shuffle_doors, set_ut_regions
+    if world.connected_doors:
+        set_ut_regions(world)
+
+    if world.options.randomize_doors and not world.connected_doors:
+        shuffle_doors(world)
+
+
 def create_items(world) -> None:
     pool = []
     for name, data in item_table.items():

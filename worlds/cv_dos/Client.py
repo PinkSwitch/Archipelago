@@ -43,14 +43,14 @@ class DoSClient(BizHawkClient):
                 return False
 
             # This is a DoS ROM
-            patch_version = validation_data[0]
-            patch_version = patch_version[0x15:].split(bytes(1), 1)[0].decode("ascii")
+            patch_version = validation_data[0].rstrip(b"\x69")
+            patch_version = patch_version.decode("ascii")
 
             if patch_version != self.client_version:
-                if patch_version != self.most_recent_connect:
+                if "Bad patch version" != self.most_recent_connect:
                     # We only want to display this error once
                     ctx.gui_error("Bad Version", f"Installed Dawn of Sorrow APworld version {self.client_version} does not match patch version {patch_version}")
-                    self.most_recent_connect = patch_version
+                    self.most_recent_connect = "Bad patch version"
                 return False
 
             post_validation_data = await bizhawk.read(ctx.bizhawk_ctx, [(0x02F6DD8D, 1, "ROM")])  # DL

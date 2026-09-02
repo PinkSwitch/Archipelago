@@ -47,10 +47,12 @@ region_list = [
 
     "Dark Chapel",
     "Dark Chapel Big Room",
+    "Dark Chapel Post-Button",
     "Dark Chapel Catacombs Exit",
 
     "Condemned Tower Bottom",
     "Condemned Tower Main",
+    "Condemned Tower Post Wall",
     "Condemned Tower Top",
 
     "Cursed Clock Tower Entrance",
@@ -134,7 +136,7 @@ def connect_regions(world):
     from .Options import BoostSpeed
     from rule_builder.rules import HasAll, HasAny, Has, OptionFilter
     # Lost Village
-    world.get_region("Lost Village Upper").add_exits(["Wizardry Lab Main", "Lost Village Upper Doorway", "Lost Village Lower"],
+    world.get_region("Lost Village Upper").add_exits({"Wizardry Lab Main": "Sec00Rm15", "Lost Village Upper Doorway": None, "Lost Village Lower": None},
                                                      {"Wizardry Lab Main": Has("Moat Drained"),
                                                      "Lost Village Upper Doorway": small_uppies | (Has("Puppet Master Soul") & HasAny("Flying Armor Soul", "Skeleton Ape Soul")),
                                                       "Lost Village Lower": Has(world.magic_seal_table["Lost Village"])})  # Is the ape trick hard? Can be done without ape if speedboost on
@@ -146,42 +148,44 @@ def connect_regions(world):
         world.get_region("Lost Village Upper").add_exits(["Lost Village Courtyard"],
                                                          {"Lost Village Courtyard": small_uppies})
 
-    world.get_region("Lost Village Courtyard").add_exits(["Lost Village Upper", "Demon Guest House Lower"])
+    world.get_region("Lost Village Courtyard").add_exits({"Lost Village Upper": None, "Demon Guest House Lower": "Sec00Rm16"})
 
-    world.get_region("Lost Village Upper Doorway").add_exits(["Lost Village Upper", "Demon Guest House Number Puzzle West"])
+    world.get_region("Lost Village Upper Doorway").add_exits({"Lost Village Upper": None, "Demon Guest House Number Puzzle West": "Sec00Rm07"})
 
     world.get_region("Lost Village Lower").add_exits(["Lost Village Upper", "Warp Room"],
                                                      {"Lost Village Upper": Has(world.magic_seal_table["Lost Village"])})
 
-    world.get_region("Lost Village Underground Bottom").add_exits(["Lost Village Underground Middle", "Wizardry Lab Sunken"],
-                                                                  {"Lost Village Underground Middle": small_uppies | Has("Puppet Master Soul"),
-                                                                   "Wizardry Lab Sunken": Has("Rahab Soul")})
+    world.get_region("Lost Village Underground Bottom").add_exits({"Lost Village Underground Middle": None, "Wizardry Lab Sunken West Door": "Sec00Rm0DObj04"},
+                                                                  {"Lost Village Underground Middle": small_uppies | Has("Puppet Master Soul")})
 
-    world.get_region("Lost Village Underground Middle").add_exits(["Lost Village Underground Top", "Wizardry Lab West Gate", "Lost Village Underground Bottom"],
+    world.get_region("Lost Village Underground Middle").add_exits({"Lost Village Underground Top": None, "Wizardry Lab West Gate": "Sec00Rm0DObj03", "Lost Village Underground Bottom": None},
                                                                   {"Lost Village Underground Top": small_uppies | Has("Puppet Master Soul")})
 
     world.get_region("Lost Village Underground Top").add_exits(["Lost Village Lower", "Lost Village Underground Middle"])
     #######################
     # Wizardry Lab
 
-    world.get_region("Wizardry Lab Main").add_exits(["Lost Village Lower", "Garden of Madness Lower", "Warp Room", "Wizardry Lab West Gate", "Wizardry Lab East Gate"],
+    world.get_region("Wizardry Lab Main").add_exits({"Lost Village Lower": "Sec02Rm07", "Garden of Madness Lower": "Sec02Rm15",
+                                                     "Warp Room": None, "Wizardry Lab West Gate": None, "Wizardry Lab East Gate": None},
+
                                                     {"Lost Village Lower": Has("Moat Drained"),
                                                      "Garden of Madness Lower": small_uppies | Has("Balore Soul"),
                                                      "Wizardry Lab West Gate": Has("West Lab Gate Key"),
                                                      "Wizardry Lab East Gate": Has("East Lab Gate Key")})
 
-    world.get_region("Wizardry Lab West Gate").add_exits(["Lost Village Underground Middle"])
-    world.get_region("Wizardry Lab East Gate").add_exits(["Subterranean Hell Shaft Top"])
-    world.get_region("Wizardry Lab Sunken West Door").add_exits(["Lost Village Underground Bottom", "Wizardry Lab Sunken"],
+    world.get_region("Wizardry Lab West Gate").add_exits({"Lost Village Underground Middle": "Sec02Rm00"})
+    world.get_region("Wizardry Lab East Gate").add_exits({"Subterranean Hell Shaft Top": "Sec02Rm10"})
+    world.get_region("Wizardry Lab Sunken West Door").add_exits({"Lost Village Underground Bottom": "Sec02Rm18", "Wizardry Lab Sunken": None},
                                                                 {"Wizardry Lab Sunken": Has("Rahab Soul")})
 
     world.get_region("Wizardry Lab Sunken").add_exits(["Wizardry Lab Sunken West Door", "Wizardry Lab Sunken East Door"],
                                                       {"Wizardry Lab Sunken West Door": big_uppies})
 
-    world.get_region("Wizardry Lab Sunken East Door").add_exits(["Wizardry Lab Sunken", "Subterranean Hell Spike Room West"],
+    world.get_region("Wizardry Lab Sunken East Door").add_exits({"Wizardry Lab Sunken": None, "Subterranean Hell Spike Room West": "Sec02Rm1E"},
                                                                 {"Wizardry Lab Sunken": Has("Rahab Soul")})
     
     if world.options.gate_items < GateItems.option_buttonsanity:
+        #  Can I simplify this with connect and & rule where rule is true if not buttonsanity
         world.get_region("Wizardry Lab West Gate").add_exits(["Wizardry Lab Main"])
         world.get_region("Wizardry Lab East Gate").add_exits(["Wizardry Lab Main"])
     else:
@@ -191,21 +195,21 @@ def connect_regions(world):
                                                              {"Wizardry Lab Main": Has("East Lab Gate Key")})
     ##########################
     # Garden of Madness
-    world.get_region("Garden of Madness Lower").add_exits(["Wizardry Lab Main", "Garden of Madness Water Blocked", "Demon Guest House Lower", "Garden of Madness Upper", "Dark Chapel", "Warp Room"],
+    world.get_region("Garden of Madness Lower").add_exits({"Wizardry Lab Main": "Sec03Rm09", "Garden of Madness Water Blocked": None, "Demon Guest House Lower": "Sec03Rm00", "Garden of Madness Upper": None, "Dark Chapel": "Sec03Rm16", "Warp Room": None},
                                                           {"Garden of Madness Water Blocked": Has("Rahab Soul"),
                                                            "Garden of Madness Upper": small_uppies | Has("Puppet Master Soul")})
 
-    world.get_region("Garden of Madness Water Blocked").add_exits(["Garden of Madness Lower", "Subterranean Hell Central Exit"],
+    world.get_region("Garden of Madness Water Blocked").add_exits({"Garden of Madness Lower": None, "Subterranean Hell Central Exit": "Sec03Rm13"},
                                                                   {"Garden of Madness Lower": Has("Rahab Soul")})
 
     world.get_region("Garden of Madness Upper").add_exits(["Garden of Madness Lower", "Garden of Madness Post-Boss"],
                                                           {"Garden of Madness Post-Boss": Has(world.magic_seal_table["Garden of Madness"])})
 
-    world.get_region("Garden of Madness Post-Boss").add_exits(["Garden of Madness Upper", "Demon Guest House Main", "Garden of Madness East Gate"],
+    world.get_region("Garden of Madness Post-Boss").add_exits({"Garden of Madness Upper": None, "Demon Guest House Main": "Sec03Rm05", "Garden of Madness East Gate": None},
                                                               {"Garden of Madness Upper": Has(world.magic_seal_table["Garden of Madness"]),
                                                                "Garden of Madness East Gate": Has("Garden Gate Key")})
 
-    world.get_region("Garden of Madness East Gate").add_exits(["Cursed Clock Tower Entrance"])
+    world.get_region("Garden of Madness East Gate").add_exits({"Cursed Clock Tower Entrance": "Sec03Rm10"})
     if world.options.gate_items < GateItems.option_buttonsanity:
         world.get_region("Garden of Madness East Gate").add_exits(["Garden of Madness Post-Boss"])
     else:
@@ -213,38 +217,41 @@ def connect_regions(world):
                                                                   {"Garden of Madness Post-Boss": Has("Garden Gate Key")})
     #############################
     # Demon Guest House
-    world.get_region("Demon Guest House Main").add_exits(["Garden of Madness Post-Boss", "Demon Guest House Puppet Wall Right", "Demon Guest House Number Puzzle", "Demon Guest House West Wing"],
+    world.get_region("Demon Guest House Main").add_exits({"Garden of Madness Post-Boss": "Sec01Rm3F", "Demon Guest House Puppet Wall Right": None, "Demon Guest House Number Puzzle": None, "Demon Guest House West Wing": None},
                                                          {"Demon Guest House Puppet Wall Right": HasAny("Puppet Master Soul", "Bat Company Soul"),
                                                           "Demon Guest House West Wing": HasAny("Puppet Master Soul", "Bat Company Soul")})
 
     world.get_region("Demon Guest House Puppet Wall Right").add_exits(["Demon Guest House Main", "Demon Guest House Lower"],
                                                                       {"Demon Guest House Main": HasAny("Puppet Master Soul", "Bat Company Soul")})
 
-    world.get_region("Demon Guest House Lower").add_exits(["Lost Village Upper", "Garden of Madness Lower", "Demon Guest House Puppet Wall Right"],
+    world.get_region("Demon Guest House Lower").add_exits({"Lost Village Courtyard": "Sec01Rm2A", "Garden of Madness Lower": "Sec01Rm30", "Demon Guest House Puppet Wall Right": None},
                                                           {"Demon Guest House Puppet Wall Right": small_uppies | Has("Puppet Master Soul")})
 
     world.get_region("Demon Guest House Number Puzzle").add_exits(["Demon Guest House Main", "Demon Guest House West Wing", "Demon Guest House Number Puzzle West"],
                                                                   {"Demon Guest House West Wing": small_uppies | Has("Puppet Master Soul")})
 
-    world.get_region("Demon Guest House Number Puzzle West").add_exits(["Lost Village Upper Doorway"])
+    world.get_region("Demon Guest House Number Puzzle West").add_exits({"Lost Village Upper Doorway": "Sec01Rm04"})
 
     world.get_region("Demon Guest House West Wing").add_exits(["Demon Guest House Main", "Demon Guest House Number Puzzle", "Warp Room"],
                                                               {"Demon Guest House Main": HasAny("Puppet Master Soul", "Bat Company Soul")})
 
-    world.get_region("Demon Guest House Upper").add_exits(["Demon Guest House Main", "The Pinnacle Lower"])
+    world.get_region("Demon Guest House Upper").add_exits({"Demon Guest House Main": None, "The Pinnacle Lower": "Sec01Rm33"})
     ###############################
     # Dark Chapel
-    world.get_region("Dark Chapel").add_exits(["Garden of Madness Lower", "Dark Chapel Catacombs Exit", "Dark Chapel Big Room", "Warp Room"],
+    world.get_region("Dark Chapel").add_exits({"Garden of Madness Lower": "Sec04Rm03", "Dark Chapel Catacombs Exit": None, "Dark Chapel Big Room": None, "Warp Room": None},
                                               {"Dark Chapel Catacombs Exit": HasAny("Puppet Master Soul", "Bat Company Soul"),
                                                "Dark Chapel Big Room": HasAny("Puppet Master Soul", "Bat Company Soul")})
 
-    world.get_region("Dark Chapel Big Room").add_exits(["Condemned Tower Bottom", "Dark Chapel"])
+    world.get_region("Dark Chapel Big Room").add_exits(["Dark Chapel Post-Button", "Dark Chapel"])
 
-    world.get_region("Dark Chapel Catacombs Exit").add_exits(["Subterranean Hell Top Entrance", "Dark Chapel"],
+    world.get_region("Dark Chapel Catacombs Exit").add_exits({"Subterranean Hell Top Entrance": "Sec04Rm08", "Dark Chapel": None},
                                                              {"Dark Chapel": HasAny("Puppet Master Soul", "Bat Company Soul")})
+
+    world.get_region("Dark Chapel Post-Button").add_exits({"Dark Chapel": None, "Dark Chapel Big Room": None, "Condemned Tower Bottom": "Sec04Rm15"},
+                                                          {"Dark Chapel Big Room": HasAny("Puppet Master Soul", "Bat Company Soul")})
     ##########################################################################################################
     # Condemned Tower
-    world.get_region("Condemned Tower Bottom").add_exits(["Dark Chapel", "Dark Chapel Big Room", "Condemned Tower Main"],
+    world.get_region("Condemned Tower Bottom").add_exits({"Dark Chapel Post-Button": "Sec05Rm01", "Condemned Tower Main": None},
                                                          {"Condemned Tower Main": small_uppies | Has("Puppet Master Soul"),
                                                           "Dark Chapel Big Room": small_uppies})
     if world.mine_status != "Disabled":
@@ -254,18 +261,20 @@ def connect_regions(world):
             world.get_region("Condemned Tower Bottom").add_exits(["Mine of Judgment"],
                                                                  {"Mine of Judgment": HasAll(*world.mine_triggers)})
 
-    world.get_region("Condemned Tower Main").add_exits(["Condemned Tower Bottom", "Cursed Clock Tower Entrance", "Condemned Tower Top"],
-                                                       {"Cursed Clock Tower Entrance": Has("Tower Key"),
+    world.get_region("Condemned Tower Main").add_exits(["Condemned Tower Bottom", "Condemned Tower Post Wall", "Condemned Tower Top"],
+                                                       {"Condemned Tower Post Wall": Has("Tower Key"),
                                                         "Condemned Tower Top": Has(world.magic_seal_table["Condemned Tower"])})
+
+    world.get_region("Condemned Tower Post Wall").add_exits({"Cursed Clock Tower Entrance": "Sec05Rm00", "Condemned Tower Main": None},
+                                                            {"Condemned Tower Main": Has("Tower Key")})
 
     world.get_region("Condemned Tower Top").add_exits(["Condemned Tower Main", "Warp Room"],
                                                       {"Condemned Tower Main": Has(world.magic_seal_table["Condemned Tower"])})
                                                                     
     ################################
     # Cursed Clock Tower
-    world.get_region("Cursed Clock Tower Entrance").add_exits(["Garden of Madness East Gate", "Condemned Tower Main", "Cursed Clock Tower Central"],
-                                                              {"Cursed Clock Tower Central": small_uppies | Has("Puppet Master Soul"),
-                                                               "Condemned Tower Main": Has("Tower Key")})
+    world.get_region("Cursed Clock Tower Entrance").add_exits({"Garden of Madness East Gate": "Sec08Rm02", "Condemned Tower Post Wall": "Sec08Rm1E", "Cursed Clock Tower Central": None},
+                                                              {"Cursed Clock Tower Central": small_uppies | Has("Puppet Master Soul")})
 
     world.get_region("Cursed Clock Tower Central").add_exits(["Cursed Clock Tower Entrance", "Cursed Clock Tower Boss Area"],
                                                              {"Cursed Clock Tower Boss Area": small_uppies | Has("Puppet Master Soul")})
@@ -277,11 +286,11 @@ def connect_regions(world):
                                                                {"Cursed Clock Tower Boss Area": Has(world.magic_seal_table["Cursed Clock Tower"]),
                                                                 "Cursed Clock Tower Exit": Has("Bat Company Soul")})
 
-    world.get_region("Cursed Clock Tower Exit").add_exits(["Cursed Clock Tower Post-Boss", "The Pinnacle Lower"],
+    world.get_region("Cursed Clock Tower Exit").add_exits({"Cursed Clock Tower Post-Boss": None, "The Pinnacle Lower": "Sec08Rm06"},
                                                           {"Cursed Clock Tower Post-Boss": Has("Bat Comapny Soul")})
     ####################################################################################
     # Subterranean Hell
-    world.get_region("Subterranean Hell Top Entrance").add_exits(["Dark Chapel Catacombs Exit", "Subterranean Hell East"],
+    world.get_region("Subterranean Hell Top Entrance").add_exits({"Dark Chapel Catacombs Exit": "Sec06Rm13", "Subterranean Hell East": None},
                                                                  {"Subterranean Hell East": HasAll("Rahab Soul", world.magic_seal_table["Subterranean Hell"])})
 
     world.get_region("Subterranean Hell East").add_exits(["Subterranean Hell Top Entrance", "Subterranean Hell Central/East Connection", "Subterranean Hell Button Gate Room"],
@@ -296,7 +305,7 @@ def connect_regions(world):
                                                                   {"Subterranean Hell Central Exit": small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul"),
                                                                    "Subterranean Hell Central/East Connection": HasAny("Rahab Soul", "Malphas Soul")})
 
-    world.get_region("Subterranean Hell Central Exit").add_exits(["Subterranean Hell Central Upper", "Garden of Madness Water Blocked"],
+    world.get_region("Subterranean Hell Central Exit").add_exits({"Subterranean Hell Central Upper": None, "Garden of Madness Water Blocked": "Sec06Rm0E"},
                                                                  {"Subterranean Hell Central Upper": HasAny("Rahab Soul", "Malphas Soul")})
 
     world.get_region("Subterranean Hell Central Lower").add_exits(["Subterranean Hell Central Upper", "Subterranean Hell Central/Shaft Divide", "Warp Room", "Subterranean Hell Shaft Middle"],
@@ -307,10 +316,10 @@ def connect_regions(world):
                                                                  {"Subterranean Hell Central Lower": small_uppies | Has("Puppet Master Soul"),
                                                                   "Subterranean Hell Shaft Top": big_uppies})
 
-    world.get_region("Subterranean Hell Shaft Top").add_exits(["Subterranean Hell Shaft Middle", "Wizardry Lab East Gate", "Subterranean Hell Shaft Bottom Stairs"],
+    world.get_region("Subterranean Hell Shaft Top").add_exits({"Subterranean Hell Shaft Middle": None, "Wizardry Lab East Gate": "Sec06Rm01", "Subterranean Hell Shaft Bottom Stairs": None},
                                                               {"Subterranean Hell Shaft Middle": HasAny("Black Panther Soul", "Flying Armor Soul", options=[OptionFilter(BoostSpeed, True)], filtered_resolution=True)})
 
-    world.get_region("Subterranean Hell Shaft Bottom").add_exits(["Subterranean Hell Spike Room East", "Silenced Ruins Antechamber", "Subterranean Hell Shaft Bottom Stairs"],
+    world.get_region("Subterranean Hell Shaft Bottom").add_exits({"Subterranean Hell Spike Room East": None, "Silenced Ruins Antechamber": "Sec06Rm06", "Subterranean Hell Shaft Bottom Stairs": None},
                                                                  {"Subterranean Hell Shaft Middle": small_uppies | Has("Puppet Master Soul"),
                                                                   "Subterranean Hell Shaft Bottom Stairs": small_uppies | Has("Puppet Master Soul"),
                                                                   "Subterranean Hell Spike Room East": small_uppies | Has("Puppet Master Soul"),
@@ -321,17 +330,17 @@ def connect_regions(world):
 
     world.get_region("Subterranean Hell Spike Room East").add_exits(["Subterranean Hell Shaft Bottom"])
 
-    world.get_region("Subterranean Hell Spike Room West").add_exits(["Wizardry Lab Sunken East Door"])
+    world.get_region("Subterranean Hell Spike Room West").add_exits({"Wizardry Lab Sunken East Door": "Sec06Rm00"})
 
     world.get_region("Subterranean Hell Central/Shaft Divide").add_exits(["Subterranean Hell Central Lower", "Subterranean Hell Shaft Bottom Stairs"])
 
-    world.get_region("Subterranean Hell Button Gate Room").add_exits(["Subterranean Hell East", "Silenced Ruins Back Exit"],
+    world.get_region("Subterranean Hell Button Gate Room").add_exits({"Subterranean Hell East": None, "Silenced Ruins Back Exit": "Sec06Rm11"},
                                                                      {"Subterranean Hell East": small_uppies | Has("Puppet Master Soul"),
                                                                       "Silenced Ruins Back Exit": Has("Cavern Gate Key")})
 
     #####################################################
     # Silenced Ruins
-    world.get_region("Silenced Ruins Antechamber").add_exits(["Subterranean Hell Shaft Bottom", "Silenced Ruins Upper Entrance"],
+    world.get_region("Silenced Ruins Antechamber").add_exits({"Subterranean Hell Shaft Bottom": "Sec07Rm00", "Silenced Ruins Upper Entrance": None},
                                                              {"Silenced Ruins Upper Entrance": Has("Zephyr Soul")})
 
     world.get_region("Silenced Ruins Upper Entrance").add_exits(["Silenced Ruins Antechamber", "Silenced Ruins"],
@@ -343,9 +352,9 @@ def connect_regions(world):
 
     world.get_region("Silenced Ruins Back Exit").add_exits(["Silenced Ruins"])
     if world.options.gate_items < GateItems.option_buttonsanity:
-        world.get_region("Silenced Ruins Back Exit").add_exits(["Subterranean Hell Button Gate Room"])
+        world.get_region("Silenced Ruins Back Exit").add_exits({"Subterranean Hell Button Gate Room": "Sec07Rm08"})
     else:
-        world.get_region("Silenced Ruins Back Exit").add_exits(["Subterranean Hell Button Gate Room"],
+        world.get_region("Silenced Ruins Back Exit").add_exits({"Subterranean Hell Button Gate Room": "Sec07Rm08"},
                                                                {"Subterranean Hell Button Gate Room": Has("Cavern Gate Key")})
 
     ###############################

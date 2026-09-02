@@ -60,6 +60,7 @@ def create_soul_regions(world):
                                               {"Quetzalcoatl Soul": Has(world.magic_seal_table["Dark Chapel"])})
 
     world.get_region("Dark Chapel Big Room").add_exits(["Mini Devil Soul", "Quetzalcoatl Soul", "Valkyrie Soul"])
+    world.get_region("Dark Chapel Post-Button").add_exits(["Tombstone Soul"])
     world.get_region("Dark Chapel Catacombs Exit").add_exits(["Catoblepas Soul"])
     # CONDEMNED TOWER #####
     world.get_region("Condemned Tower Bottom").add_exits(["Draghignazzo Soul", "Skeleton Ape Soul", "Great Axe Armor Soul"])

@@ -10,7 +10,8 @@ from .Options import DoSOptions, dos_option_groups
 from .Client import DoSClient
 from .static_location_data import location_ids, get_location_groups
 from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data, create_item,
-                             get_filler_item_name, modify_multidata, generate_output, write_spoiler_header)
+                             get_filler_item_name, modify_multidata, generate_output, write_spoiler_header,
+                             connect_entrances)
 
 
 class DoSWeb(WebWorld):
@@ -71,6 +72,7 @@ class DoSWorld(World):
     get_filler_item_name = get_filler_item_name
     write_spoiler_header = write_spoiler_header
     set_rules = set_rules
+    connect_entrances = connect_entrances
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
@@ -79,6 +81,7 @@ class DoSWorld(World):
         self.location_cache = []
         self.has_tried_chaos_ring = False
         self.starting_warp_room = None
+        self.connected_doors = {}
 
         self.armor_table = [
             "Casual Clothes",
