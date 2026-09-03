@@ -105,6 +105,7 @@ def randomize_seal_patterns(world, rom):
             elif world.options.randomize_seal_details == RandomizeSealDetails.option_chaos:
                 data.nodes = world.random.randint(2, 10)
                 data.line_count = world.random.randint(2, max_node_counts[data.nodes])
+                print(f"Seal {index + 1} has {data.nodes} nodes drawing {data.line_count} lines.")
         else:
             file = "overlay_0"
 
@@ -139,3 +140,4 @@ def randomize_seal_patterns(world, rom):
         rom.write_to_file(data.rotation_address - 4, "overlay_0", bytearray([data.nodes]))
         # TODO! Higher timer if the Line count is especially high. Practice drawing high-line seals.
         # TODO! The item mover moved money up. The 254 seed. Check THAT out. It' in AP rando files for storage.
+        # TODO! Seal drawing. Is this even possible or am I just bad
