@@ -33,7 +33,7 @@ class SealData:
     line_count: int  # How many connections this seal has
     address: int  # The address of the seal
     rotation_address: int  # address of the rotation value
-    node_count_pointer: int  # Address where we write the number of nodes
+    seal_pointer: int  # Address that contains a pointer to the current seal
 
 
 def set_seals(world):
@@ -70,7 +70,21 @@ def write_seals(world, rom):
         rom.write_to_file(0x222F294 + (index * 4), "overlay_0", bytearray([seals.index(world.magic_seal_table[seal])]))
 
 
+max_node_counts = {
+    2: 2,
+    3: 4,
+    4: 6,
+    5: 10,
+    6: 12,
+    7: 14,
+    8: 16,
+    9: 18,
+    10: 20
+}
+
+
 def randomize_seal_patterns(world, rom):
+    from ..Options import RandomizeSealDetails
     seal_data = {
         "Magic Seal 1": SealData(3, 3, 0x222f1b0, 0x222f214, 0x0222F21C),
         "Magic Seal 2": SealData(4, 4, 0x222f1b4, 0x222f234, 0x0222F23C),
@@ -82,6 +96,18 @@ def randomize_seal_patterns(world, rom):
     for index, seal in enumerate(seals):
         rotation = world.random.randint(0, 0xFFFF)
         data = seal_data[seal]
+
+        if world.options.randomize_seal_details:
+            file = "overlay_41"  # We need to repoint the seals to a new file
+            data.address = (0x02308DD0 + (0x16 * index))
+            if world.options.randomize_seal_details == RandomizeSealDetails.option_simple:
+                print("TODO! Not implemented")
+            elif world.options.randomize_seal_details == RandomizeSealDetails.option_chaos:
+                data.nodes = world.random.randint(2, 10)
+                data.line_count = world.random.randint(2, max_node_counts[data.nodes])
+        else:
+            file = "overlay_0"
+
         built_seal = False
         seal_array = []
         while not built_seal:
@@ -107,6 +133,9 @@ def randomize_seal_patterns(world, rom):
             else:
                 built_seal = True
         seal_array.append(0xFF)  # Add the ending terminator
-        rom.write_to_file(data.address, "overlay_0", bytearray(seal_array))
+        rom.write_to_file(data.address, file, bytearray(seal_array))
         rom.write_to_file(data.rotation_address, "overlay_0", struct.pack("H", rotation))
-        #rom.write(data.node_countpointer, node_count)
+        rom.write_to_file(data.seal_pointer, "overlay_0", struct.pack("I", data.address))
+        rom.write_to_file(data.rotation_address - 4, "overlay_0", bytearray([data.nodes]))
+        # TODO! Higher timer if the Line count is especially high. Practice drawing high-line seals.
+        # TODO! The item mover moved money up. The 254 seed. Check THAT out. It' in AP rando files for storage.

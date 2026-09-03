@@ -265,6 +265,18 @@ class ShuffleCastleConnections(Toggle):
     """Randomizes where the area transition doors lead to."""
     display_name = "Randomize Doors"
 
+
+class RandomizeSealDetails(Choice):
+    """Randomizes how many Nodes exist per magic seal, and how many lines need to be drawn to complete the seal.
+       This won't do anything unless Randomize Seal Patterns is also enabled.
+       Simple: Each seal will have + or - 2 nodes and + or - 3 lines compared to the original seal.
+       Chaos: Each seal can have between 2 and 10 notes and 1-20 lines."""
+    display_name = "Randomize Seal Details"
+    option_normal = 0
+    option_simple = 1
+    option_chaos = 2
+    default = 0
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -317,6 +329,7 @@ class DoSOptions(PerGameCommonOptions):
     garden_condition: GardenCondition
     start_with_doppelganger: StartWithDoppelganger
     randomize_doors: ShuffleCastleConnections
+    randomize_seal_details: RandomizeSealDetails
 
 
 dos_option_groups = [
@@ -348,7 +361,8 @@ dos_option_groups = [
         DisableBossSeals,
         EarlySeal1,
         SealShuffle,
-        RandomizeSealPatterns
+        RandomizeSealPatterns,
+        RandomizeSealDetails
     ]),
 
     OptionGroup("Weapon Synth Settings", [
