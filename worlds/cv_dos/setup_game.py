@@ -94,6 +94,7 @@ def place_static_items(world):
 
 
 def setup_souls(world):
+    world.options.guaranteed_souls.value = {soul.title() for soul in world.options.guaranteed_souls.value}
     world.important_souls.update(world.red_soul_walls)
     if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         world.important_souls.add("Imp Soul")
@@ -120,6 +121,11 @@ def setup_souls(world):
             if soul not in world.options.guaranteed_souls.value:
                 world.options.guaranteed_souls.value.add(soul)
         world.options.guaranteed_souls.value.remove("Rare")
+
+    if world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
+        if world.mine_status == "Disabled":
+            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
+            world.excluded_static_souls.update(goal_locked_enemies)
 
     world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
 
@@ -179,9 +185,19 @@ def place_souls(world, pool):
             pool.append(world.create_item(world.random.choice(world.filler_souls)))
             update_soul_pool(world, soul)
     else:
+        place_inaccessible_souls = False
         if world.mine_status == "Disabled":
+            place_inaccessible_souls = True
+        elif world.mine_status == "Locked":
+            if "Upper Guest House Boss Clear" in world.mine_triggers:
+                place_inaccessible_souls = True
+            elif world.options.mine_condition == MineCondition.option_garden and world.garden_triggers:
+                # Place these if we need to reach garden and garden is bosses
+                if "Upper Guest House Boss Clear" in world.garden_triggers:
+                    place_inaccessible_souls = True
+
+        if place_inaccessible_souls:
             goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
-            world.excluded_static_souls.update(goal_locked_enemies)
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 pool.append(world.create_item(soul))
 

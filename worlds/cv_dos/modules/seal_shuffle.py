@@ -101,11 +101,14 @@ def randomize_seal_patterns(world, rom):
             file = "overlay_41"  # We need to repoint the seals to a new file
             data.address = (0x02308DD0 + (0x16 * index))
             if world.options.randomize_seal_details == RandomizeSealDetails.option_simple:
-                print("TODO! Not implemented")
+                data.nodes = world.random.randint(max(2, data.nodes - 2), data.nodes + 2)
+                new_line_count = world.random.randint(data.line_count - 3, data.line_count + 3)
+                new_line_count = max(2, new_line_count)
+                new_line_count = min(max_node_counts[data.nodes], new_line_count)
+                data.line_count = new_line_count
             elif world.options.randomize_seal_details == RandomizeSealDetails.option_chaos:
                 data.nodes = world.random.randint(2, 10)
                 data.line_count = world.random.randint(2, max_node_counts[data.nodes])
-                print(f"Seal {index + 1} has {data.nodes} nodes drawing {data.line_count} lines.")
         else:
             file = "overlay_0"
 
@@ -139,5 +142,4 @@ def randomize_seal_patterns(world, rom):
         rom.write_to_file(data.seal_pointer, "overlay_0", struct.pack("I", data.address))
         rom.write_to_file(data.rotation_address - 4, "overlay_0", bytearray([data.nodes]))
         # TODO! Higher timer if the Line count is especially high. Practice drawing high-line seals.
-        # TODO! The item mover moved money up. The 254 seed. Check THAT out. It' in AP rando files for storage.
         # TODO! Seal drawing. Is this even possible or am I just bad
