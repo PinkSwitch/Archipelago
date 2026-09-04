@@ -1,5 +1,4 @@
 from typing import List, Optional, NamedTuple, TYPE_CHECKING
-from .static_location_data import location_ids
 from .Options import GateItems, SoulsanityLevel, SoulRandomizer
 
 if TYPE_CHECKING:
@@ -200,19 +199,19 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in world.common_souls:
             location_table.append(
-             LocationData(soul, soul, location_ids[soul]))
+             LocationData(soul, soul))
 
         if world.options.soulsanity_level:
             for soul in world.uncommon_souls:
                 location_table.append(
-                 LocationData(soul, soul, location_ids[soul]))
+                 LocationData(soul, soul))
         else:
             location_table.append(LocationData("Imp Soul", "Imp Soul", True))
 
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             for soul in world.rare_souls:
                 location_table.append(
-                 LocationData(soul, soul, location_ids[soul]))
+                 LocationData(soul, soul))
     else:
         location_table.append(LocationData("Imp Soul", "Imp Soul", True))
         for soul in world.important_souls:

@@ -483,14 +483,16 @@ def patch_locations(world, rom, locations) -> None:
             rom.write_to_file(address + 6, "arm9", bytearray([item_type]))
 
         elif data.location_type == "Soul":
-            item_struct = (item_color << 8) | item_id
+            if item_color:
+                item_type = item_color
+            item_struct = (item_type << 8) | item_id
             index = (global_soul_table.index(location.name) * 2)
             rom.write_to_file(soul_check_table + index, "overlay_41", struct.pack("H", item_struct))
         elif data.location_type == "Easter Egg":
             if item_color:
                 item_id = item_id | (item_color << 8)
             rom.write_to_file(data.pointer + 11, "arm9", bytearray([item_type]))
-            rom.write_to_file(easter_egg_table[location.name], "overlay_0", bytearray([item_id]))
+            rom.write_to_file(easter_egg_table[location.name], "overlay_0", struct.pack("H", item_id))
         elif data.location_type == "Button":
             address = button_check_table + ((location.address - 0x200) * 4)
             rom.write_to_file(address, "overlay_41", bytearray([item_type, item_id, item_color]))

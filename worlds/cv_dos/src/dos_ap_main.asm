@@ -485,6 +485,9 @@ bl @GetItemFromSpecial
 .org 0x0222F714
     .dw @ItemDescription_ReturnGem
 
+.org 0x021E7D98
+    bl @GetProperSoulColor
+
 ;overlay 9 0
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -809,7 +812,7 @@ bl @GetItemFromSpecial
 .align 4
 
 @OptionFlag_OneScreenMode:
-    .db 0x01
+    .db 0x00
 @RAMFlag_IsPausedOpenMap:
     .db 0x00
 
@@ -3432,6 +3435,84 @@ push r0
 @@LoadNormalPalette:
     add r11, r11, r6, lsl 0x05
     bx lr
+;;;;;;;;;;;;;;;;;
+; Loads custom colors for Soul objects
+@GetProperSoulColor:
+    cmp r7, 0  ; -1 is reserved for special souls, such as Dimitrii's. Don't override them
+    blt @@Exit
+    push r0-r2
+    ldr r2, =@SoulTypeTable
+    mov r0, r7, lsl # 1
+    ldrh r1, [r2, r0] ;Look up the item
+    and r0, r1, 0xFF00
+    lsr r0, r0, 8
+    ; First, check the color to see if it would be an AP item
+    cmp r0, 0x0C ; AP Prog
+    beq @@SetPurpleSoul
+    cmp r0, 0x07 ; AP USeful
+    beq @@SetBlueSoul
+    cmp r0, 0x06 ; AP Trap
+    beq @@SetRedSoul
+    cmp r0, 0x0E ; AP Filler
+    beq @@SetCyanSoul
+    cmp r0, 0x05 ; If 5, we know this is specially a soul
+    beq @@GetColorAsSoul
+    ldr r0, = 0x0435
+    cmp r1, r0 ; Talisman
+    beq @@SetGoldSoul
+    ldr r0, = 0x0438
+    cmp r1, r0 ; Soul Ring
+    beq @@SetGoldSoul
+    ldr r0, = 0x043C
+    cmp r1, r0 ; Chaos
+    beq @@SetGoldSoul
+    ldr r0, = 0x0239
+    cmp r1, r0 ; Start of keys + seals
+    blt @@SetPoopSoul
+    ldr r0, = 0x02D1
+    cmp r1, r0
+    bgt @@SetPoopSoul
+    b @@SetGoldSoul
+@@LockSoulColor:
+    strh r0, [r5, 0x7A]
+    pop r0-r2
+@@Exit:
+    add r0, r13, 0x18
+    bx lr
+
+@@SetCyanSoul:
+    mov r0, -2 ; 22 could also work
+    b @@LockSoulColor
+@@SetRedSoul:
+    mov r0, 0
+    b @@LockSoulColor
+@@SetGoldSoul:
+    mov r0, 1
+    b @@LockSoulColor
+@@SetYellowSoul:
+    mov r0, 0x02
+    b @@LockSoulColor
+@@SetBlueSoul:
+    mov r0, 0x04
+    b @@LockSoulColor
+@@SetPurpleSoul:
+    mov r0, 0x05
+    b @@LockSoulColor
+@@SetPoopSoul:
+    mov r0, 0x06
+    b @@LockSoulColor
+@@SetGreySoul:
+    mov r0, 0x07
+    b @@LockSoulColor
+@@GetColorAsSoul:
+    ands r1, r1, 0xFF
+    cmp r1, 0x35
+    blt @@SetRedSoul
+    cmp r1, 0x59
+    blt @@SetBlueSoul
+    cmp r1, 0x74
+    blt @@SetYellowSoul
+    b @@SetGreySoul
 
 .pool
 .endarea
