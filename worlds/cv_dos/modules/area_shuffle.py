@@ -86,9 +86,9 @@ door_data = {
     "Sec02Rm18": DoorTransitionData(0x020A8344, 0x020A8364, 0x00, 0x00, "Wizardry Lab: Iron Golem Hall"),
 
     "Sec01Rm30": DoorTransitionData(0x020ABA40, 0x020ABA50, 0x00, 0x00, "Demon Guest House: Lower Right Door", True),
-    "Sec03Rm00": DoorTransitionData(0x020ABA50, 0x020A9B7C, 0x00, 0xC0, "Garden of Madness: Central West Door"),
+    "Sec03Rm00": DoorTransitionData(0x020A9C00, 0x020A9B7C, 0x00, 0xC0, "Garden of Madness: Central West Door"),
 
-    "Sec01Rm3F": DoorTransitionData(0x020ABAC4, 0x020AA6FC, 0x00, 0x00, "Demon Guest House: Central Door", True),
+    "Sec01Rm3F": DoorTransitionData(0x020ABAC4, 0x020ABAD4, 0x00, 0x00, "Demon Guest House: Central Door", True),
     "Sec03Rm05": DoorTransitionData(0x020AA15C, 0x020AA138, 0x00, 0x00, "Garden of Madness: Post-Boss Area"),
 
     "Sec01Rm33": DoorTransitionData(0x020BAB14, 0x020BAB24, 0x00, 0x00, "Demon Guest House: Upper Exit", True),
@@ -106,8 +106,8 @@ door_data = {
     "Sec03Rm13": DoorTransitionData(0x020ABC50, 0x020ABC60, 0x00, 0x00, "Garden of Madness: Water-locked Door", True),
     "Sec06Rm0E": DoorTransitionData(0x020B3460, 0x020B3480, 0x00, 0x00, "Subterranean Hell: Central Area Door"),
 
-    "Sec03Rm16": DoorTransitionData(0x020ABCD4, 0x020AE5B4, 0x00, 0x00, "Garden of Madness: East Exit", True),
-    "Sec04Rm03": DoorTransitionData(0x020AD004, 0x020ACFC0, 0x00, 0xC0, "Dark Chapel: West Door"),
+    "Sec03Rm16": DoorTransitionData(0x020ABCD4, 0x020ABCE4, 0x00, 0x00, "Garden of Madness: East Exit", True),
+    "Sec04Rm03": DoorTransitionData(0x020ACFF4, 0x020ACFC0, 0x00, 0xC0, "Dark Chapel: West Door"),
 
     "Sec03Rm10": DoorTransitionData(0x020ABBCC, 0x020ABBDC, 0x00, 0x00, "Garden of Madness: Gate Door", True),
     "Sec08Rm02": DoorTransitionData(0x020B6710, 0x020B6720, 0x00, 0xC0, "Cursed Clock Tower: Lower Exit"),
