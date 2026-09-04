@@ -113,6 +113,9 @@
 .org 0x020BE41C
     .dh 0x8003 ; menace
 
+.org 0x020A5684
+    .dh 0x8004 ; Puzzle back
+
 ;;;;;;;;;;;;;;;;;;;;
 .org 0x0202682C
     bl @ThroneBoss_MirrorEntities
@@ -2915,6 +2918,7 @@ push r0
 .dw @ExtEnt_TowerBackBossDoor
 .dw @ExtEnt_GardenConDisplay
 .dw @ExtEnt_MenaceConDisplay
+.dw @ExtEnt_NumberControlsBackup
 
 @ExtendEntityInfo:
     push r3
@@ -2957,6 +2961,11 @@ push r0
 
 @ChapelButton_SwapFlag:
 ; 0x021BAB80
+    push r1
+    ldr r1, = 0xFFFF
+    cmp r12, r1 ; Number emergency switch
+    pop r1
+    beq @@ResetPuzzle
     cmp r12, 0x44
     beq @@InvertFlag
     orr r0, r2, r1, lsl r0
@@ -2964,6 +2973,11 @@ push r0
 @@InvertFlag:
     eor r0, r2, 0x10
     bx lr
+@@ResetPuzzle:
+    push lr
+    bl 0x021B422C ; Should reset...
+    pop lr
+    b 0x021BAB88
 .pool
 
 @ExtEnt_TowerButton:
@@ -3513,6 +3527,20 @@ push r0
     cmp r1, 0x74
     blt @@SetYellowSoul
     b @@SetGreySoul
+;;;;;;;;;;;;;;;;;;;;
+@ExtEnt_NumberControlsBackup:
+;;;;;;;;;;;;;;;;;;;;;;
+;Special button that resets the Number Puzzle if pressed
+.dh 0x0070
+.dh 0x0230
+.db 0x00
+.db 0x02
+.db 0x28 ; Chapel button
+.db 0x00
+.dh 0x0000 
+.dh 0xFFFF ; Flag for the tower, (020F7188, 0x10)
+.dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 .pool
 .endarea
