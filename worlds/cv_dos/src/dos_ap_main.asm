@@ -502,7 +502,7 @@ bl @GetItemFromSpecial
 .org 0x021B5B94
     b @DontSpawnSparkles
 
-.org 0x021B5EF8
+.org 0x021B5EF4
     b @IgnoreSparkles
     
 
@@ -3604,31 +3604,27 @@ push r0
 @DontSpawnSparkles:
     str r4, [r5, 0x30]
     bl @GetSaveRoomBit
-    bne 0x021B5BB0 ; Skip this part entirely, draw no sparkles
+    bne @@SkipSparks ; Skip this part entirely, draw no sparkles
     ldr r0, = @RamFlag_SparklesPresent
     mov r1, 1
     strb r1, [r0]
     b 0x021B5B98
+@@SkipSparks:
+    ldr r0, = @RamFlag_SparklesPresent
+    mov r1, 0
+    strb r1, [r0]
+    b 0x021B5BB0 ; Skip this part entirely, draw no sparkles
 
 ; Prevent save rooms from waiting for sparkles that don't exist
 @IgnoreSparkles:
-    push r0, r1
-    bl @GetSaveRoomBit
-    pop r0, r1
-    bne @@DontWait
-@@SpawnActually:
-    cmp r0, 0
-    b 0x021B5EFC
-@@DontWait:
-    push r0,r1
-    ldr r0, = @RamFlag_SparklesPresent
-    ldrb r0, [r0]
-    cmp r0, 1 ; This is the same visit, so the sparkles are still here
-    popeq r0,r1
-    beq @@SpawnActually
-
-    pop r0,r1
-    b 0x021B5F00
+    ldr r0, = @RamFlag_SparklesPresent ; Check if they exist or not
+    ldrb r0, [r0, 0]
+    cmp r0, 0 ; they don't
+    moveq r0, 1
+    streqb r1, [r5, 0x0C]
+    beq 0x021B5EF8
+    ldrb r0, [r5, 0x0C]
+    b 0x021B5EF8
 
     
 
