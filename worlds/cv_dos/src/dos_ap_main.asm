@@ -12,6 +12,7 @@
 @TotalItemsReceived equ 0x0230894E ; 2 bytes
 @GateKeys equ 0x02308943 ; 1 byte
 @DoorKeys equ 0x02308944 ; 2 bytes ; Also includes the Chapel Gate
+@UsedSaveRooms equ 0x02308946 ; 2 bytes
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -490,6 +491,20 @@ bl @GetItemFromSpecial
 
 .org 0x021E7D98
     bl @GetProperSoulColor
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+.org 0x021B5E80
+    bl @LimitSaveHealing ; For when you reject the save itself
+
+.org 0x021B5E18
+    bl @LimitSaveHealing ; When you actually make a save
+
+.org 0x021B5B94
+    b @DontSpawnSparkles
+
+.org 0x021B5EF8
+    b @IgnoreSparkles
+    
 
 ;overlay 9 0
 .close
@@ -1069,6 +1084,9 @@ bl @GetItemFromSpecial
 
 @CustomSealTable:
 .fill 0x70, 0x62  ; Custom seals start here
+.align 4
+@ROMFlag_OneHealPerArea: ;02308E40
+    .db 0x01 ; TODO! REmove
 
 .align 4
 
@@ -3148,7 +3166,7 @@ push r0
 
 ;;;;;;;;;;;;
 ; Skip playing the Shop music if varA is set.
-@HammerShop_SkipMusic: ; TODO. if r5 is consistent, make a subroutine out of the varA check
+@HammerShop_SkipMusic:
     push r5
     add r5, r5, 0x0200
     add r5, r5, 0x06E
@@ -3541,6 +3559,78 @@ push r0
 .dh 0xFFFF ; Flag for the tower, (020F7188, 0x10)
 .dw 0x7FFF7FFF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Limits healing at save rooms to one per area (if enabled)
+@LimitSaveHealing:
+    push lr
+    ldr r0, = @ROMFlag_OneHealPerArea
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@ExitNormal
+    bl @GetSaveRoomBit
+    bne @@SkipHeal
+; Here we set the bit for the room being activated, so it won't be able to heal next time
+    orr r0, r1, r0
+    ldr r1, = @UsedSaveRooms
+    strh r0, [r1]
+@@ExitNormal:
+    bl 0x021F5E58
+@@SkipHeal:
+    pop lr
+    bx lr
+
+; Gets the bit for the current area for save rooms
+@GetSaveRoomBit:
+    push lr
+    ldr r1, = 0x0211504C
+    ldrb r1, [r1]
+    cmp r1, 5 ; C.Tower/Mine
+    bne @@ShiftSectorID
+    bl 0x02006ED4 ; Gets the player's current Area
+    cmp r0, 0x06 ; If this is set, we're in the Mine
+    moveq r1, 0x0A ; Use bit A as the Mine's save
+@@ShiftSectorID:
+    mov r0, 1
+    lsl r0, r0, r1 ; Shift the sector ID to get its bit
+    ldr r1, = @UsedSaveRooms
+    ldrh r1, [r1]
+    tst r0, r1
+    pop lr
+    bx lr
+
+; Prevent Save Rooms from spawning the sparkle effects if the player has already used that room
+@RamFlag_SparklesPresent:
+    .db 0x00
+.align 4
+@DontSpawnSparkles:
+    str r4, [r5, 0x30]
+    bl @GetSaveRoomBit
+    bne 0x021B5BB0 ; Skip this part entirely, draw no sparkles
+    ldr r0, = @RamFlag_SparklesPresent
+    mov r1, 1
+    strb r1, [r0]
+    b 0x021B5B98
+
+; Prevent save rooms from waiting for sparkles that don't exist
+@IgnoreSparkles:
+    push r0, r1
+    bl @GetSaveRoomBit
+    pop r0, r1
+    bne @@DontWait
+@@SpawnActually:
+    cmp r0, 0
+    b 0x021B5EFC
+@@DontWait:
+    push r0,r1
+    ldr r0, = @RamFlag_SparklesPresent
+    ldrb r0, [r0]
+    cmp r0, 1 ; This is the same visit, so the sparkles are still here
+    popeq r0,r1
+    beq @@SpawnActually
+
+    pop r0,r1
+    b 0x021B5F00
+
+    
 
 .pool
 .endarea
