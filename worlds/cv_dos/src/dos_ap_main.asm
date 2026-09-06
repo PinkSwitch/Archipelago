@@ -511,6 +511,12 @@ bl @GetItemFromSpecial
 
 .org 0x021B5EF4
     b @IgnoreSparkles
+
+.org 0x021C3DA0
+    b @SkipLevelUp
+
+.org 0x021FFB4C
+    bl @ForceLevelOnBoss
     
 
 ;overlay 9 0
@@ -1093,10 +1099,21 @@ bl @GetItemFromSpecial
 .fill 0x70, 0x62  ; Custom seals start here
 .align 4
 @ROMFlag_OneHealPerArea: ;02308E40
-    .db 0x01 ; TODO! REmove
+    .db 0x00
 
-@ROMFlag_HidePickups:
+@ROMFlag_HidePickups: ;02308E41
+    .db 0x00
+
+@ROMFlag_GearLock: ;02308E42
     .db 0x01 ; TODO! Remove
+
+@ROMFlag_LevelLock: ;02308E43
+    .db 0x01 ; TODO! Remove
+
+@RomFlag_StartingWeapon: ; 02308E44
+    .dh 0x0001
+@RomFlag_StartingArmor: ; 02308E46
+    .dh 0x0000
 
 .align 4
 
@@ -2386,6 +2403,7 @@ bl @GetItemFromSpecial
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SetFlag_FlyingArmor:
+    bl @CopperDawn_PostBossHandler
     push r1
     ldr r1, = @BossFlag_FlyingArmor
     ldrh r1, [r1]
@@ -2393,6 +2411,9 @@ bl @GetItemFromSpecial
     pop r1
     b 0x02300BBC
 @SetFlag_Balore:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r1
     ldr r1, = @BossFlag_Balore
     ldrh r1, [r1]
@@ -2401,6 +2422,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Dimitrii:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r1
     push r0-r3,lr
     ldr r0, =@GameFlag_ThroneIsShuffled
@@ -2417,6 +2441,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Malphas:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r1
     ldr r1, = @BossFlag_Malphas
     ldrh r1, [r1]
@@ -2425,6 +2452,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Dario:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r0-r3, lr
     ldr r0, =@GameFlag_ThroneIsShuffled
     ldrb r0, [r0] ; is boss shuffle on
@@ -2439,6 +2469,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_PuppetMaster:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r2
     ldr r2, = @BossFlag_PuppetMaster
     ldrh r2, [r2]
@@ -2447,6 +2480,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Gergoth:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r2
     ldr r2, = @BossFlag_Gergoth
     ldrh r2, [r2]
@@ -2455,6 +2491,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Rahab:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r2
     ldr r2, = @BossFlag_Rahab
     ldrh r2, [r2]
@@ -2463,6 +2502,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Zephyr:
+    push lr
+    bl @CopperDawn_PostBossHandler
+    pop lr
     push r1
     ldr r1, = @BossFlag_Zephyr
     ldrh r1, [r1]
@@ -2471,6 +2513,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_BatCompany:
+        push lr
+        bl @CopperDawn_PostBossHandler
+        pop lr
     push r1
     ldr r1, = @BossFlag_BatCompany
     ldrh r1, [r1]
@@ -2479,6 +2524,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Paranoia:
+        push lr
+        bl @CopperDawn_PostBossHandler
+        pop lr
     push r1
     ldr r1, = @BossFlag_Paranoia
     ldrh r1, [r1]
@@ -2487,6 +2535,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Aguni:
+        push lr
+        bl @CopperDawn_PostBossHandler
+        pop lr
     push r0-r3,lr
     ldr r0, =@GameFlag_ThroneIsShuffled
     ldrb r0, [r0] ; is boss shuffle on
@@ -2503,6 +2554,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Death:
+        push lr
+        bl @CopperDawn_PostBossHandler
+        pop lr
     push r2
     ldr r2, = @BossFlag_Death
     ldrh r2, [r2]
@@ -2511,6 +2565,9 @@ bl @GetItemFromSpecial
     bx lr
 
 @SetFlag_Abaddon:
+        push lr
+        bl @CopperDawn_PostBossHandler
+        pop lr
     push r2
     ldr r2, = @BossFlag_Abaddon
     ldrh r2, [r2]
@@ -3677,7 +3734,92 @@ push r0
     mov r0, 0x4D ; Force unknown items to use this sprite
 @@Exit:
     bx lr
-    
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Handles Post-boss things for CopperDawn
+@CopperDawn_PostBossHandler:
+    push r0-r3
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipGearLock
+;Reset all of the player's gear to base when defeating a boss
+    ldr r0, = 0x020F7420
+    ldr r1, = 0xFFFF
+    mov r3, r1
+    ldr r1, = @RomFlag_StartingWeapon
+    ldr r2, = @RomFlag_StartingArmor
+    ldrh r1, [r1] ; Weapon
+    ldrh r2, [r2] ; Armor
+    ; Equipped gear
+    strh r1, [r0]
+    ;Doppel set A
+    strh r1, [r0, 0x16] ; Weapon
+    strh r2, [r0, 0x18] ; Armor
+    strh r3, [r0, 0x1A] ; Acc
+    ;Doppel set B
+    strh r1, [r0, 0x1C]
+    strh r2, [r0, 0x1E]
+    strh r3, [r0, 0x20]
+    mov r0, 4
+    push lr
+    push r2
+    mov r1, 0xFE
+    bl 0x021F42A0 ; Force equip Nothing as an accessory
+    pop r2
+    mov r1, r2
+    mov r0, 4
+    bl 0x021E7AB4
+    bl 0x021F4344 ; Equip as armor
+    pop lr
+
+@@SkipGearLock:
+    ldr r0, = @ROMFlag_LevelLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    b @@Exit ;TODO! Implement this.
+    ldr r0, = @RamFlag_ForceLevel
+    mov r1, 1
+    strb r1, [r0]
+    push lr
+    bl 0x021FFB08 ; Recalculate new stats
+    ldr r0, = @RamFlag_ForceLevel
+    mov r1, 0
+    strb r1, [r0]
+    bl 0x0201D43C ; Display the Lvl animation
+    ldr r0, =0x012E
+    bl 0x02029BF0 ; And play the soundthe sound
+    pop lr
+@@Exit:
+    pop r0-r3
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Prevent the player from gaining exp normally
+@RamFlag_ForceLevel:
+    .db 0x00
+.align 4
+@SkipLevelUp:
+    ldr r0, = @ROMFlag_LevelLock
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq 0x021C3E2C ; Skip giving any exp
+    ldrh r0, [r4, 0x12]
+    b 0x021C3DA4
+
+; Forces the player to level up when beating a boss
+
+@ForceLevelOnBoss:
+    push r1
+    ldr r1, = @RamFlag_ForceLevel
+    ldrb r1, [r0]
+    cmp r1, 0
+    popeq r1
+    beq @@Exit
+    pop r1
+    mov r0, r1
+    bx lr
+@@Exit:
+    cmp r0, r1
+    bx lr
 
 .pool
 .endarea
