@@ -111,7 +111,7 @@ def randomize_seal_patterns(world, rom):
                 data.line_count = world.random.randint(2, max_node_counts[data.nodes])
         else:
             file = "overlay_0"
-        timer = 0xB4 + (6 * (max(0, data.line_count - 11)))
+        timer = 0xB4 + (10 * (max(0, data.line_count - 11)))
         rom.write_to_file(data.rotation_address + 0x18, "overlay_0", bytearray([timer]))
 
         built_seal = False
