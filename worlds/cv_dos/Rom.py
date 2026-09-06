@@ -114,14 +114,15 @@ def patch_rom(world, rom, code_patch):
 
     starting_weapon = global_weapon_table.index(weapon)
     ########### COPPER DAWN STUFF, TODO DELETE THIS
-    #starting_armor = world.random.choice(["Casual Clothes", "Cloth Tunic", "Leather Armor", "Silk Robe"])
-    #starting_armor = global_armor_table.index(starting_armor)
-    #rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
-    #rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))  # Hide Pickups
-    #rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))  # Gear Lock
-    #rom.write_to_file(0x02308E43, "overlay_41", bytearray([0x01]))  # Level Lock
-    #rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
-    #rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
+    if world.player_name == "ironsoul":
+        starting_armor = world.random.choice(["Casual Clothes", "Cloth Tunic", "Leather Armor", "Silk Robe"])
+        starting_armor = global_armor_table.index(starting_armor)
+        rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
+        rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))  # Hide Pickups
+        rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))  # Gear Lock
+        rom.write_to_file(0x02308E43, "overlay_41", bytearray([0x01]))  # Level Lock
+        rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
+        rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
     ############################
 
     # Options handling
