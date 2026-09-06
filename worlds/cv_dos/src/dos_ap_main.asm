@@ -140,6 +140,13 @@
 ;;;;;;;;;;;;;;;;;;;;
 .org 0x0202DFF4
     bl @AddCyanPaletteToItemNames
+
+;;;;;;;;;;;;;;;;;;;;
+.org 0x02020CE4
+    bl @LoadGenericGFXIcon_Page
+
+.org 0x02020D3C
+    bl @LoadGenericGFXIcon_Sprite
     
 
 .close
@@ -1087,6 +1094,9 @@ bl @GetItemFromSpecial
 .align 4
 @ROMFlag_OneHealPerArea: ;02308E40
     .db 0x01 ; TODO! REmove
+
+@ROMFlag_HidePickups:
+    .db 0x01 ; TODO! Remove
 
 .align 4
 
@@ -3625,7 +3635,48 @@ push r0
     beq 0x021B5EF8
     ldrb r0, [r5, 0x0C]
     b 0x021B5EF8
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+@LoadGenericGFXIcon_Page:
+    push r1,lr
+    ldrb r0, [r6, 2]
+    bl @LoadGenericGFXIcon
+    pop r1,lr
+    bx lr
 
+@LoadGenericGFXIcon_Sprite:
+    mov r7, 0
+    push r0,lr
+    mov r0, r2
+    bl @LoadGenericGFXIcon
+    mov r2, r0
+    pop r0,lr
+    bx lr
+
+@LoadGenericGFXIcon:
+    ldr r1, = @ROMFlag_HidePickups
+    ldrb r1, [r1]
+    cmp r1, 0 ; This is disabled...
+    beq @@Exit
+    ldr r1, = 0x020F6DFC
+    ldr r1, [r1] ; Check the global state flags
+    tst r1, 0x08000000 ; We don't want to run this while the player is in a menu
+    bne @@Exit
+    ldrh r1, [r6] ; Check the item's ID number
+    cmp r1, 0xCD
+    bgt @@Exit ; Custom items/keys that need to be shown
+    cmp r1, 0xC6 ; Talisma
+    beq @@Exit
+    cmp r1, 0xC9 ; Soul Ring
+    beq @@Exit
+    cmp r1, 0x41
+    bgt @@ForceUnknown ; Skip anything above seals
+    cmp r1, 0x38
+    blt @@ForceUnknown ; And anything below the key
+    b @@Exit
+@@ForceUnknown:
+    mov r0, 0x4D ; Force unknown items to use this sprite
+@@Exit:
+    bx lr
     
 
 .pool
