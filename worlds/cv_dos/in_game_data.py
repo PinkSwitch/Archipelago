@@ -208,6 +208,39 @@ global_weapon_table = [
     "Whip"
 ]
 
+global_armor_table = [
+    "Casual Clothes",
+    "Cloth Tunic",
+    "Gym Clothes",
+    "Kung Fu Suit",
+    "Biker Jacket",
+    "War Fatigues",
+    "Ninja Suit",
+    "Three 7s",
+    "Justaucorps",
+    "Army Jacket",
+    "Pitch Black Suit",
+    "Olrox's Suit",
+    "Dracula's Tunic",
+    "Leather Armor",
+    "Breastplate",
+    "Ring Mail",
+    "Scale Mail",
+    "Chain Mail",
+    "Hauberk",
+    "Cuirass",
+    "Blocking Mail",
+    "Eversing",
+    "Demon's Mail",
+    "Silk Robe",
+    "Mage Robe",
+    "Elfin Robe",
+    "Wyrm Robe",
+    "Aquarius",
+    "Serenity Robe",
+    "Death's Robe"
+]
+
 valid_random_starting_weapons = [
     "Knife",
     "Combat Knife",

@@ -515,8 +515,16 @@ bl @GetItemFromSpecial
 .org 0x021C3DA0
     b @SkipLevelUp
 
-.org 0x021FFB4C
-    ;bl @ForceLevelOnBoss
+.org 0x021E7880
+    bl @AutoEquipItem
+
+.org 0x0222DE74
+    .dw @EquipWeapon ; Pointers to the relevant equip functions
+    .dw @EquipArmor
+    .dw @EquipAccessory
+
+.org 0x021F6090
+    bl @GiveStartingArmor
     
 
 ;overlay 9 0
@@ -1105,10 +1113,10 @@ bl @GetItemFromSpecial
     .db 0x00
 
 @ROMFlag_GearLock: ;02308E42
-    .db 0x00 ; TODO! Remove
+    .db 0x00
 
 @ROMFlag_LevelLock: ;02308E43
-    .db 0x01 ; TODO! Remove
+    .db 0x00
 
 @RomFlag_StartingWeapon: ; 02308E44
     .dh 0x0001
@@ -2403,7 +2411,9 @@ bl @GetItemFromSpecial
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SetFlag_FlyingArmor:
+    ;push lr
     bl @CopperDawn_PostBossHandler
+    ;pop lr
     push r1
     ldr r1, = @BossFlag_FlyingArmor
     ldrh r1, [r1]
@@ -3652,7 +3662,13 @@ push r0
     ldrb r1, [r1]
     cmp r1, 5 ; C.Tower/Mine
     bne @@ShiftSectorID
+    push r2
+    ldr r0, = 0x0208AC20
+    ldr r2, = 0x36610
+    ldr r0, [r0]
+    add r0, r0, r2
     bl 0x02006ED4 ; Gets the player's current Area
+    pop r2
     cmp r0, 0x06 ; If this is set, we're in the Mine
     moveq r1, 0x0A ; Use bit A as the Mine's save
 @@ShiftSectorID:
@@ -3737,7 +3753,7 @@ push r0
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Handles Post-boss things for CopperDawn
 @CopperDawn_PostBossHandler:
-    push r0-r3
+    push r0-r3,r12
     ldr r0, = @ROMFlag_GearLock
     ldrb r0, [r0]
     cmp r0, 0
@@ -3769,6 +3785,7 @@ push r0
     mov r1, r2
     mov r0, 4
     bl 0x021E7AB4
+    mov r1, r0
     bl 0x021F4344 ; Equip as armor
     pop lr
 
@@ -3776,21 +3793,12 @@ push r0
     ldr r0, = @ROMFlag_LevelLock
     ldrb r0, [r0]
     cmp r0, 0
-    b @@Exit ;TODO! Implement this.
+    beq @@Exit
     ldr r0, = @RamFlag_ForceLevel
     mov r1, 1
     strb r1, [r0]
-    push lr
-    bl 0x021FFB08 ; Recalculate new stats
-    ldr r0, = @RamFlag_ForceLevel
-    mov r1, 0
-    strb r1, [r0]
-    bl 0x0201D43C ; Display the Lvl animation
-    ldr r0, =0x012E
-    bl 0x02029BF0 ; And play the soundthe sound
-    pop lr
 @@Exit:
-    pop r0-r3
+    pop r0-r3,r12
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Prevent the player from gaining exp normally
@@ -3801,25 +3809,121 @@ push r0
     ldr r0, = @ROMFlag_LevelLock
     ldrb r0, [r0]
     cmp r0, 1
-    beq 0x021C3E2C ; Skip giving any exp
+    beq @@SkipGiveEXP ; Skip giving any exp
     ldrh r0, [r4, 0x12]
     b 0x021C3DA4
-
-; Forces the player to level up when beating a boss
-
-@ForceLevelOnBoss:
-    push r1
-    ldr r1, = @RamFlag_ForceLevel
+@@SkipGiveEXP:
+    ldr r0, = @RamFlag_ForceLevel
     ldrb r1, [r0]
     cmp r1, 0
-    popeq r1
+    beq 0x021C3E2C
+    mov r1, 0
+    strb r1, [r0]
+    ldr r0, = 0x020F740C
+    bl 0x021FFC58
+    b 0x021C3DA4
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Forcibly equips weapons and armor on pickup
+@AutoEquipItem:
+    push r0,r1,lr
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
     beq @@Exit
-    pop r1
-    mov r0, r1
-    bx lr
+    cmp r5, 0x04
+    beq @@EquipArmor
+    cmp r5, 0x03
+    beq @@EquipWeapon
+    cmp r5, 0x02
+    beq @@LockConsumables
 @@Exit:
-    cmp r0, r1
+    pop r0,r1,lr
+    b 0x021E79CC
+@@EquipWeapon:
+    mov r0, r4
+    ldr r1, = 0x020F7420
+    strh r0, [r1]
+    strh r0, [r1, 0x16] ; Doppel A
+    strh r0, [r1, 0x1C] ; Doppel B
+    b @@Exit
+@@EquipArmor:
+    mov r0, r5 ; type
+    mov r1, r4 ; local id
+    cmp r1, 0x1E
+    bge @@EquipAccessory
+    bl 0x021E7AB4 ; Get the ID
+    ldr r1, = 0x020F7420
+    strh r4, [r1, 0x18]
+    strh r4, [r1, 0x1E]
+    mov r1, r0
+    bl 0x021F4344 ; Equip it to the active armor slot
+    b @@Exit
+@@EquipAccessory:
+    bl 0x021E7AB4 ; Get the ID
+    ldr r1, = 0x020F7420
+    strh r4, [r1, 0x1A]
+    strh r4, [r1, 0x20]
+    mov r1, r0
+    bl 0x021F42A0 ; Equip it to the active armor slot
+    b @@Exit
+@@LockConsumables:
+    ldr r0, = @ROMFlag_OneHealPerArea
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@Exit
+    popne r0,r1,lr
+    movne r0, 0
     bx lr
+
+; Disables Weapons on gearlock
+@EquipWeapon:
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x021F43E8 ; Equip this as normal
+    push lr
+    mov r0, 0x45
+    bl 0x02029BF0 ; Play the uh-uh noise
+    pop lr
+    bx lr
+
+; Disables armor on gearlock
+@EquipArmor:
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x021F4344 ; Equip this as normal
+    push lr
+    mov r0, 0x45
+    bl 0x02029BF0 ; Play the uh-uh noise
+    pop lr
+    bx lr
+
+;Disables accessory on gearlock
+@EquipAccessory:
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x021F42A0 ; Equip this as normal
+    ; We need to check important gear to allow them anyways
+    cmp r5, 0xC7 ; Mina's Talisman
+    beq 0x021F42A0
+    cmp r5, 0xCA ; Soul Eater ring
+    beq 0x021F42A0
+    push lr
+    mov r0, 0x45
+    bl 0x02029BF0 ; Play the uh-uh noise
+    pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;
+; Gives the starting armor
+@GiveStartingArmor:
+    ldr r3, = @RomFlag_StartingArmor
+    ldrh r3, [r3]
+    bx lr
+
 
 .pool
 .endarea

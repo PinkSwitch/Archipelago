@@ -7,7 +7,7 @@ from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchEx
 from typing import Sequence, NamedTuple
 from .in_game_data import (global_weapon_table, base_weapons, valid_random_starting_weapons, global_soul_table,
                            easter_egg_table, warp_room_bits, world_version, global_item_table, common_filler_pool,
-                           boss_list, enemy_table)
+                           boss_list, enemy_table, global_armor_table)
 from .modules.music_randomizer import area_music_randomizer, boss_music_randomizer
 from .modules.boss_randomizer import write_bosses
 from .modules.synthesis_randomizer import write_synthesis
@@ -113,12 +113,19 @@ def patch_rom(world, rom, code_patch):
             weapon = world.random.choice(valid_random_starting_weapons)
 
     starting_weapon = global_weapon_table.index(weapon)
+    ########### COPPER DAWN STUFF, TODO DELETE THIS
+    #starting_armor = world.random.choice(["Casual Clothes", "Cloth Tunic", "Leather Armor", "Silk Robe"])
+    #starting_armor = global_armor_table.index(starting_armor)
+    #rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
+    #rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))  # Hide Pickups
+    #rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))  # Gear Lock
+    #rom.write_to_file(0x02308E43, "overlay_41", bytearray([0x01]))  # Level Lock
+    #rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
+    #rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
+    ############################
 
     # Options handling
     rom.write_to_file(0x021F6068, "overlay_0", bytearray([starting_weapon]))
-    rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
-    # rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
-    # TODO! Random armor? Armor goes here
 
     warp_room = warp_room_bits[world.starting_warp_room]
     rom.write_to_file(0x02308a6e, "overlay_41", struct.pack("H", warp_room))  # The initial warp room bit
