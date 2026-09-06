@@ -116,6 +116,9 @@ def patch_rom(world, rom, code_patch):
 
     # Options handling
     rom.write_to_file(0x021F6068, "overlay_0", bytearray([starting_weapon]))
+    rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
+    # rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
+    # TODO! Random armor? Armor goes here
 
     warp_room = warp_room_bits[world.starting_warp_room]
     rom.write_to_file(0x02308a6e, "overlay_41", struct.pack("H", warp_room))  # The initial warp room bit
