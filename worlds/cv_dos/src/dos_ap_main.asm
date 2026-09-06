@@ -516,7 +516,7 @@ bl @GetItemFromSpecial
     b @SkipLevelUp
 
 .org 0x021FFB4C
-    bl @ForceLevelOnBoss
+    ;bl @ForceLevelOnBoss
     
 
 ;overlay 9 0
@@ -1105,7 +1105,7 @@ bl @GetItemFromSpecial
     .db 0x00
 
 @ROMFlag_GearLock: ;02308E42
-    .db 0x01 ; TODO! Remove
+    .db 0x00 ; TODO! Remove
 
 @ROMFlag_LevelLock: ;02308E43
     .db 0x01 ; TODO! Remove
@@ -3598,7 +3598,7 @@ push r0
     mov r0, 0x05
     b @@LockSoulColor
 @@SetPoopSoul:
-    mov r0, 0x06
+    mov r0, 0x03
     b @@LockSoulColor
 @@SetGreySoul:
     mov r0, 0x07
