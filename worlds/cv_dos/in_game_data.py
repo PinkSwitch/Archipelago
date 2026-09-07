@@ -1,4 +1,4 @@
-world_version = "3.0"
+world_version = "3.0.1"
 
 global_soul_table = [
     "Puppet Master Soul",

@@ -2411,9 +2411,9 @@ bl @GetItemFromSpecial
 .pool
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SetFlag_FlyingArmor:
-    ;push lr
+    push lr
     bl @CopperDawn_PostBossHandler
-    ;pop lr
+    pop lr
     push r1
     ldr r1, = @BossFlag_FlyingArmor
     ldrh r1, [r1]
