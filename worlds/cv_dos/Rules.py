@@ -21,7 +21,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Lost Village: Boss Room"), Has(world.magic_seal_table["Lost Village"]))
     set_rule(world.get_location("Lost Village: Mirror Room Right"), Has("Paranoia Soul"))
     set_rule(world.get_location("Lost Village: Above Guest House Entrance"), big_uppies)
-    if world.options.boost_speed:
+    if not world.options.boost_speed:
         set_rule(world.get_location("Lost Village: Moat Drain Switch"),(small_uppies | HasAny("Puppet Master Soul", "Black Panther Soul", "Flying Armor Soul")))
 
     # Wizardry Lab

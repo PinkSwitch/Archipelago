@@ -23,6 +23,8 @@ class DoSBossData:
 
 
 base_enemy_address = 0x2078CAC  # I can't import this
+direct_enemy_address = 0x7CCAC
+
 
 
 def randomize_bosses(world):
@@ -118,7 +120,7 @@ def randomize_bosses(world):
         else:
             # All other combinations are valid
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
-            
+
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
 
@@ -150,6 +152,7 @@ def write_bosses(world, rom):
         rom.write_to_file(slot.boss_address_pointer + 6, boss_file, bytearray([data.enemy_id]))  # Write the new boss into the room
         rom.write_to_file(0x2308B3c + data.flag_index, "overlay_41", struct.pack("H", slot.flag))  # Write the room's flag onto the new boss so the room still works properly
         address = base_enemy_address + (data.enemy_id * 0x24)
+        address_direct = direct_enemy_address + (data.enemy_id * 0x24)
         rom.write_to_file(address + 26, "arm9", bytearray([slot.assigned_soul]))  # Give the enemy the boss slot soul so check logic still works
         var_a = 0
         var_b = 0
@@ -231,7 +234,7 @@ def write_bosses(world, rom):
 
                 # NOP out P.M's camera lock in other rooms
                 rom.write_to_file(0x22FFC1C, "overlay_25", struct.pack("I", 0xE1A00000))
-                rom.write_to_file(0x22FFC20, "overlay_25", struct.pack("I", 0xE1A00000))
+                rom.write_to_file(0x22ffa40, "overlay_25", struct.pack("I", 0xE1A00000))
 
         elif boss == "Gergoth":
             if room == "Condemned Tower":
@@ -274,7 +277,7 @@ def write_bosses(world, rom):
                 rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
 
         index = int(world.boss_data[slot.old_boss].flag_index / 2)
-        rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
+        rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address_direct + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
     
     for i in range(126):
         rom.write_direct(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
@@ -285,7 +288,7 @@ def copy_boss_stats(world, rom):
     for boss in world.boss_data:
         data = world.boss_data[boss]
         index = int(data.flag_index / 2)
-        address = base_enemy_address + (data.enemy_id * 0x24)
+        address = direct_enemy_address + (data.enemy_id * 0x24)
         rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
 
 

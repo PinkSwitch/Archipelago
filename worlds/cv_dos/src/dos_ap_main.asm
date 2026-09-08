@@ -147,6 +147,16 @@
 
 .org 0x02020D3C
     bl @LoadGenericGFXIcon_Sprite
+
+;;;;;;;;;;;;;;;;;;;;;;
+.org 0x0203AA7C
+    b @HideEnemyPickups_Cmn
+
+.org 0x0203AB50
+    b @HideEnemyPickups_Rar
+
+.org 0x02028304
+    b @AllowSuspendsOnNewGame
     
 
 .close
@@ -525,6 +535,9 @@ bl @GetItemFromSpecial
 
 .org 0x021F6090
     bl @GiveStartingArmor
+
+.org 0x021C3BF0
+    b @NoRepeatDrops
     
 
 ;overlay 9 0
@@ -3923,6 +3936,61 @@ push r0
     ldr r3, = @RomFlag_StartingArmor
     ldrh r3, [r3]
     bx lr
+;;;;;;;;;;;;;;;;;;;
+; If Hide Pickups is enabled, report all enemy drops as ---
+@HideEnemyPickups_Cmn:
+    add r2, r4, 6
+    push r0
+    ldr r0, = @ROMFlag_HidePickups
+    ldrb r0, [r0]
+    cmp r0, 0
+    pop r0
+    beq 0x0203AA80
+    b 0x0203AB1C
+
+; Above but for Item2's
+@HideEnemyPickups_Rar:
+    add r1, r4, 7
+    push r0
+    ldr r0, = @ROMFlag_HidePickups
+    ldrb r0, [r0]
+    cmp r0, 0
+    pop r0
+    beq 0x0203AB54
+    b 0x0203ABF0
+
+; Prevent enemies from dropping an item if their drop flag is already set
+@NoRepeatDrops:
+    bge 0x021C3C4C ; Skip if we didnt have a drop anyways
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq 0x021C3BF4 ; If disabled, just drop the item
+    push r0-r5
+    mov r0, r4
+    mov r1, 8
+    bl 0x02075B28 ; Divide to find this enemy's set
+    ldr r2, = 0x0208AC20
+    ldr r2, [r2]
+    ldr r3, = 0x36980
+    add r2, r2, r3 ; Start of item flags
+    add r2, r2, r8, lsl 4 ; Shift if it's the rare item
+    ldrb r0, [r2, r0] ; Get the bit
+    mov r3, 1
+    lsl r1, r3, r1
+    tst r0, r1 ; and test it
+    pop r0-r5
+    beq 0x021C3BF4 ; If flag is not set, drop item
+    b 0x021C3C4C ; else skip
+;;;;;;;;;;;;;;;;;
+; Allow suspending on new game if Limited Healing is on
+@AllowSuspendsOnNewGame:
+    ldr r1, = @ROMFlag_OneHealPerArea
+    ldrb r1, [r1]
+    cmp r1, 0
+    ldr r1, = 0x44000007
+    subne r1, r1, 0x40000000 ; If enabled, get rid of the HasSaved flag
+    b 0x02028308
 
 
 .pool
