@@ -62,7 +62,8 @@ def set_seals(world):
             world.magic_seal_table[seal] = world.random.choice(seals)  # Randomize the list
 
         if world.options.early_seal_1:
-            world.magic_seal_table["Lost Village"] = "Magic Seal 1"  # We still want to set this early so the player doesn't get stuck
+            # We still want to set this early so the player doesn't get stuck
+            world.magic_seal_table["Lost Village"] = "Magic Seal 1"
 
 
 def write_seals(world, rom):
@@ -111,7 +112,7 @@ def randomize_seal_patterns(world, rom):
                 data.line_count = world.random.randint(2, max_node_counts[data.nodes])
         else:
             file = "overlay_0"
-        timer = 0xB4 + (10 * (max(0, data.line_count - 11)))
+        timer = 0xB4 + (15 * (max(0, data.line_count - 11)))
         rom.write_to_file(data.rotation_address + 0x18, "overlay_0", struct.pack("H", timer))
 
         built_seal = False
@@ -143,5 +144,3 @@ def randomize_seal_patterns(world, rom):
         rom.write_to_file(data.rotation_address, "overlay_0", struct.pack("H", rotation))
         rom.write_to_file(data.seal_pointer, "overlay_0", struct.pack("I", data.address))
         rom.write_to_file(data.rotation_address - 4, "overlay_0", bytearray([data.nodes]))
-        # TODO! Higher timer if the Line count is especially high. Practice drawing high-line seals.
-        # TODO! Seal drawing. Is this even possible or am I just bad
