@@ -80,7 +80,7 @@ def create_items(world) -> None:
     placed_seals = []
 
     for seal in world.magic_seal_table:
-        if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":
+        if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled" or world.iron_mode:
             continue
         else:
             if world.magic_seal_table[seal] not in placed_seals:
@@ -114,6 +114,11 @@ def set_classifications(world, name: str) -> CVDoSItem:
 def create_item(world, name: str) -> CVDoSItem:
     data = set_classifications(world, name)
     return CVDoSItem(name, data.classification, data.code, world.player)
+
+
+def create_progress_event(world, name: str) -> CVDoSItem:
+    # Create item name [str] as a Progression Event item.
+    return CVDoSItem(name, ItemClassification.progression, None, world.player)
 
 
 def get_filler_item_name(world) -> str:

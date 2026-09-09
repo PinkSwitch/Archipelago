@@ -26,7 +26,6 @@ base_enemy_address = 0x2078CAC  # I can't import this
 direct_enemy_address = 0x7CCAC
 
 
-
 def randomize_bosses(world):
     boss_pool = [
         "Puppet Master",

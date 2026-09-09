@@ -9,6 +9,18 @@ from logging import warning
 
 
 def setup_game(world):
+    from .generator_main import create_progress_event
+    if world.player_name == "ironsoul":
+        world.iron_mode = True
+
+    if world.iron_mode:
+        world.multiworld.push_precollected(create_progress_event(world, "Magic Seal 1"))
+        world.multiworld.push_precollected(create_progress_event(world, "Magic Seal 2"))
+        world.multiworld.push_precollected(create_progress_event(world, "Magic Seal 3"))
+        world.multiworld.push_precollected(create_progress_event(world, "Magic Seal 4"))
+        world.multiworld.push_precollected(create_progress_event(world, "Magic Seal 5"))
+        world.multiworld.local_early_items[world.player]["Malphas Soul"] = 1
+
     world.extra_soul_slots = 99  # Locations that can be filled by guaranteed souls
 
     world.mine_status = None

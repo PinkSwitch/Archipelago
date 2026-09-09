@@ -538,6 +538,9 @@ bl @GetItemFromSpecial
 
 .org 0x021C3BF0
     b @NoRepeatDrops
+
+.org 0x021A9B24
+    b @AutoUnlockSeals
     
 
 ;overlay 9 0
@@ -3801,23 +3804,12 @@ push r0
     mov r1, r0
     bl 0x021F4344 ; Equip as armor
     pop lr
-
 @@SkipGearLock:
-    ldr r0, = @ROMFlag_LevelLock
-    ldrb r0, [r0]
-    cmp r0, 0
-    beq @@Exit
-    ldr r0, = @RamFlag_ForceLevel
-    mov r1, 1
-    strb r1, [r0]
 @@Exit:
     pop r0-r3,r12
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Prevent the player from gaining exp normally
-@RamFlag_ForceLevel:
-    .db 0x00
-.align 4
+; Prevent the player from gaining exp normally:
 @SkipLevelUp:
     ldr r0, = @ROMFlag_LevelLock
     ldrb r0, [r0]
@@ -3826,12 +3818,10 @@ push r0
     ldrh r0, [r4, 0x12]
     b 0x021C3DA4
 @@SkipGiveEXP:
-    ldr r0, = @RamFlag_ForceLevel
-    ldrb r1, [r0]
-    cmp r1, 0
+    ldr r0, = 0x020F6DFC
+    ldr r0, [r0]
+    tst r0, 0x02
     beq 0x021C3E2C
-    mov r1, 0
-    strb r1, [r0]
     ldr r0, = 0x020F740C
     bl 0x021FFC58
     b 0x021C3DA4
@@ -3991,7 +3981,19 @@ push r0
     ldr r1, = 0x44000007
     subne r1, r1, 0x40000000 ; If enabled, get rid of the HasSaved flag
     b 0x02028308
+;;;;;;;;;;;;;;;;;;;;
+; Grants Magic Seals when touching a respective seal door
+@AutoUnlockSeals:
+    ldr r1, = @RomFlag_HidePickups
+    ldrb r1, [r1]
+    cmp r1, 0
+    beq @@EndNormal
+    bl 0x021E7540
+    b 0x021A9B00
 
+@@EndNormal:
+    ldr r1, =0x0208AC20
+    b 0x021A9B28
 
 .pool
 .endarea
