@@ -7,6 +7,7 @@
 
 @ReceivedItemID equ 0x022EB1B0 ; 2 bytes
 @TotalItemsReceived equ 0x022EB1B2 ; 2 bytes
+@SageCounter equ 0x022EB1B4 ; 1 byte
 
 ;;;;;;;;;;;;;;;;
 .open "ftc/arm9.bin", 0x02000000
@@ -533,6 +534,12 @@
 
     .org 0x0225E848
         mov r0, 0x2F ; Demon Lord
+
+    .org 0x02234BC4
+        b @QuestHandler_Abram
+
+    .org 0x02234E4C
+        b @QuestHandler_Laura
 
         
 .close
@@ -1432,10 +1439,24 @@
 @ShowExtendedGlyphName:
     cmp r0, 0x70
     blt @@ShowGlyphNormal
+    ldr r0, = @RamFlag_GlyphUnlocked
+    ldrb r0, [r0]
+    cmp r0, 0
+    bne @@ShowDupeItemGlyph
     b 0x0206D9C4 ; We want to always show a big popup if it's an Item glyph
 @@ShowGlyphNormal:
     bl 0x020633F0
     b 0x0206D9BC
+@@ShowDupeItemGlyph:
+    ldr r0, [r5, 0xD8]
+    push r1
+    mov r1, 0
+    add r0, r0, 0x15
+    bl 0x0209D170 ; Show the name in the corner
+    pop r1
+    mov r0, 1 ; Read the glyph as 0 so we don't pop a major text
+    b 0x0206D9BC
+
 ;;;;;;;;;;;;;;;;
 @ShowExtendedItemNames:
     sub r0, r0, 0x15 ; Subtract text index to get the item's ID
@@ -3554,9 +3575,143 @@
     bl 0x020AEDB4 ; Set the area name as the top screen value
     pop lr
     b 0x0221D848
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Abram's quests
+@QuestHandler_Abram:
+    ldr r4, = 0x440101FA
+    mov r0, 0x02 ; [Medicinal Ingredients Needed]
+    bl 0x020A9E28
+    cmp r0, 0x01 ; Check if Quest 2 has been accepted
+    beq @@CheckQuest2
+@@CheckOtherQuests:
+    mov r0, 0x01 ; [Running Out of Sage]
+    bl 0x020A9E28
+    cmp r0, 0x05 ; Check if Quest 1 has been completed yet
+    beq @@CheckQuest3
+@@CheckQuest1:
+; Here we check Quest 1 Completion
+    mov r0, 0xC1
+    bl 0x020636D8
+    cmp r0, 0
+    movne r0, 0
+    strneb r0, [r5, 0x151]
+    bne 0x02234C2C ; Run the code that properly completes this quest
+    b 0x02234BC8 ; Return to normal dialogue
+@@CheckQuest2:
+    mov r0, 0xC2 ; Chamomile
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckOtherQuests
+    mov r0, 0xC3 ; Rue
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckOtherQuests
+    mov r0, 1
+    strb r0, [r5, 0x151]
+    b 0x02234CC0 ;Run the code that completed this quest
+@@CheckQuest3:
+    mov r0, 0x03 ; [Mandrake is the Best Medicine]
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest4 ; If not accepted, go to the next quest
+    mov r0, 0xC4 ; Mandrake Root
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest4
+    mov r0, 2
+    strb r0, [r5, 0x151]
+    b 0x02234D34
+@@CheckQuest4:
+    mov r0, 0x04 ; [Unusual Medicine Components]
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne 0x02234BC8 ; Back to normal dialogue
+    mov r0, 0xC5 ; Merman Meat
+    bl 0x020636D8
+    cmp r0, 0
+    beq 0x02234BC8
+    mov r0, 3
+    strb r0, [r5, 0x151]
+    b 0x02234DF8
+;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Laura's quests
+; TODO! Give the player a Requesite item instead of a hardcoded one
+; TODO! When we do that, set the Loc flag
+; TODO! Test Laura's quest handler
+@QuestHandler_Laura:
+    ldr r4, = 0x440101FD
+    mov r0, 0x7D
+    bl @CheckLocFlag
+    cmp r0, 0x01 ; If we've already handled this, we don't need to do it again
+    beq @@CheckQuest1
+    mov r0, 0x1A ; [Tom and Jewelry]
+    bl 0x020A9E28
+    tst r0, 0x01 ; Test for whether or not we've Accepted this quest yet
+    beq @@CheckQuest1
+    mov r1, 0xC8 ; Chrysoberyl
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest1 ; If we have never owned Chrysoberyl, just check the normal quests...
+    b 0x02234E90
+@@CheckQuest1:
+    mov r0, 0x05
+    bl 0x020A9E28
+    cmp r1, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xC7 ; Lapis
+    bl 0x020636D8
+    cmp r0, 1
+    moveq r0, 0
+    streqb r0, [r5, 0x151]
+    beq 0x02234F14
+@@CheckQuest2:
+    mov r0, 0x06 ;[A pleasant Accessory]
+    bl 0x020A9E28
+    cmp r1, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xC9 ; Ruby
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
+    mov r0, 0xCA ; Sapphire
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
+    mov r0, 0xCB ; Emerald
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    b 0x02234FA0
+@@CheckQuest3:
+    mov r0, 0x07 ;[A Heartwarming Accessory]
+    bl 0x020A9E28
+    cmp r1, 0x01
+    bne @@CheckQuest4
+    mov r0, 0xCC ; Onyx
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest4
+    mov r0, 0xCD ; Diamond
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest4
+    mov r0, 0x02
+    strb r0, [r5, 0x151]
+    b 0x0223503C
+@@CheckQuest4:
+    mov r0, 0x08 ; [The Job of a Lifetime]
+    bl 0x020A9E28
+    cmp r1, 0x01
+    bne 0x02234E50
+    mov r0, 0xCE ; Alexandrite
+    bl 0x020636D8
+    cmp r0, 0
+    beq 0x02234E50
+    mov r1, 0x03
+    strb r0, [r5, 0x151]
+    b 0x022350D0
 
 .pool
 .endarea

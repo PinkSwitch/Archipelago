@@ -135,6 +135,7 @@ location_ids = {
     "Arms Depot: Left Room Chest": 0x7A,
     "Final Approach: Throne Right Chest": 0x7B,
     "Barlowe Glyph": 0x7C,
+    "Wygol Village: Item from Laura": 0x7D,
     "Monastery: Pre-Boss Chest": 0x82,
     "Minera Prison Island: Lower Spear Hall Ending Chest": 0x83,
     "Kalidus Channel: Ship Room Center Left Chest": 0x84,
