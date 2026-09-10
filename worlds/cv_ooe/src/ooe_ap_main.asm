@@ -562,6 +562,9 @@
     .org 0x022334FC
         bl @GetDelayedQuestItem
 
+    .org 0x02235114
+        b @QuestHandler_Eugen
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -3688,7 +3691,7 @@
     mov r0, 0x05
     mov r1, 0x03
     bl 0x020A9E54 ; Set the quest as Active and Primed
-    bne 0x02234F14
+    b 0x02234F14
 @@CheckQuest2:
     mov r0, 0x06 ;[A pleasant Accessory]
     bl 0x020A9E28
@@ -3874,7 +3877,59 @@
 @@Exit:
     pop r0,lr
     b 0x0222F038
+;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Eugen's quests
+;TODO! The Rewards handler is not giving me gold. Figure out why.
+@QuestHandler_Eugen:
+    ldr r4, = 0x44010207
+    mov r0, 0x09
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xD0 ; Iron Ore
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest2
+    mov r0, 0
+    mov r1, 1
+    strb r0, [r5, 0x151]
+    mov r0, 0x05
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235184
+@@CheckQuest2:
+    mov r0, 0x0A
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xD1 ; Silver Ore
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
 
+    mov r0, 1
+    mov r1, 1
+    strb r0, [r5, 0x151]
+    mov r0, 0x05
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x0223521C
+@@CheckQuest3:
+    mov r0, 0x0B
+    bl 0x020A9E28
+    cmp r0, 0x01  
+    bne 0x02235118  
+    mov r0, 0xD2 ; Gold Ore
+    bl 0x020636D8
+    cmp r0, 0
+    beq 0x02235118
+    mov r0, 2
+    mov r1, 1
+    strb r0, [r5, 0x151]
+    mov r0, 0x05
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x022352B4
 
 
 
