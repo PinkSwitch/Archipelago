@@ -565,6 +565,9 @@
     .org 0x02235114
         b @QuestHandler_Eugen
 
+    .org 0x02235310
+        b @QuestHandler_Aeon
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -3879,7 +3882,6 @@
     b 0x0222F038
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Eugen's quests
-;TODO! The Rewards handler is not giving me gold. Figure out why.
 @QuestHandler_Eugen:
     ldr r4, = 0x44010207
     mov r0, 0x09
@@ -3891,9 +3893,8 @@
     cmp r0, 0
     beq @@CheckQuest2
     mov r0, 0
-    mov r1, 1
     strb r0, [r5, 0x151]
-    mov r0, 0x05
+    mov r0, 0x09
     mov r1, 0x03
     bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x02235184
@@ -3908,9 +3909,8 @@
     beq @@CheckQuest3
 
     mov r0, 1
-    mov r1, 1
     strb r0, [r5, 0x151]
-    mov r0, 0x05
+    mov r0, 0x0A
     mov r1, 0x03
     bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x0223521C
@@ -3924,12 +3924,71 @@
     cmp r0, 0
     beq 0x02235118
     mov r0, 2
-    mov r1, 1
     strb r0, [r5, 0x151]
-    mov r0, 0x05
+    mov r0, 0x0B
     mov r1, 0x03
     bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x022352B4
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Aeon's quests
+@QuestHandler_Aeon:
+    ldreq r4, = 0x4401020D
+    push r1-r3
+    mov r0, 0x0C
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0x97 ; Salt
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest2
+    popne r1-r3
+    mov r0, 0
+    strb r0, [r5, 0x151]
+    mov r0, 0x0C
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x0223536C
+
+@@CheckQuest2:
+    mov r0, 0x0D
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0x86 ; Raw killer fish
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
+    popne r1-r3
+    mov r0, 1
+    strb r0, [r5, 0x151]
+    mov r0, 0x0D
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x022353FC
+
+@@CheckQuest3:
+    mov r0, 0x0E
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    mov r0, 0x84
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@Exit
+    popne r1-r3
+    mov r0, 2
+    strb r0, [r5, 0x151]
+    mov r0, 0x0E
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235494
+
+@@Exit:
+    pop r1-r3
+    ldr r0, = 0x020FFC58
+    ldr r0, [r0, 0x734]
+    b 0x02235314
 
 
 
