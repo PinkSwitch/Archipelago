@@ -158,6 +158,8 @@ def setup_quests(world):
     if "grindy" in selected_quests:
         selected_quests |= grindy_quests
 
+    selected_quests = sorted(selected_quests)
+
     for quest in quest_data:
         if quest.casefold() in selected_quests or quest.split(": ")[1].casefold() in selected_quests or quest in selected_quests:
             world.active_quests.append(quest)
@@ -200,6 +202,8 @@ def setup_quests(world):
     
     #  Filter any inactive quests out of exclusions.
     excluded_quests = {quest for quest in excluded_quests if quest in world.active_quests}
+
+    excluded_quests = sorted(excluded_quests)
 
     for quest in excluded_quests:
         if quest in world.active_quests:
