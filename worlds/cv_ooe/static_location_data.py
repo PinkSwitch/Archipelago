@@ -720,7 +720,9 @@ location_data_table = {
     "Jiang Shi Glyph": LocationInformation(0x020B71E0, "arm9", "Enemy Glyph"),
     "Demon Lord Glyph": LocationInformation(0x020B7204, "arm9", "Enemy Glyph"),
     "Albus Glyph": LocationInformation(0x020B736C, "arm9", "Enemy Glyph"),
-    "Barlowe Glyph": LocationInformation(0x020B7390, "arm9", "Enemy Glyph")
+    "Barlowe Glyph": LocationInformation(0x020B7390, "arm9", "Enemy Glyph"),
+
+    "Wygol Village: Item from Laura": LocationInformation(0x020F5A52, "arm9", "Inline")
     
 }
 

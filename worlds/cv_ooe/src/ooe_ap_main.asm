@@ -143,6 +143,12 @@
     .org 0x020EF404
         ;.db 0x57 ; Fix Dark's sound
 
+    .org 0x020A9A18
+        b @GetItemFromQuestHandler
+
+    .org 0x020F5A52
+        .dh 0xAE ; Cat Collar; The item Laura gives you for turning in Chrysoberyl
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -540,6 +546,21 @@
 
     .org 0x02234E4C
         b @QuestHandler_Laura
+
+    .org 0x0223387C
+        b @Laura_GetSubquestItem_Noskip
+
+    .org 0x02234704
+        b @Laura_GetSubquestItem_skip
+
+    .org 0x02227A1C
+        bl @QuestMenu_CheckAllQuestsComplete ; This is the invidual villager screen
+
+    .org 0x0222A360
+        bl @QuestMenu_CheckAllQuestsComplete ; This one checks when you have the full list pulled up
+
+    .org 0x022334FC
+        bl @GetDelayedQuestItem
 
         
 .close
@@ -3577,6 +3598,8 @@
     b 0x0221D848
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Abram's quests
+; TODO! Make sure Abram is GIVING you quest rewards, completing and shit!
+; This needs to be done by setting the quest status to 2 right as it's completed
 @QuestHandler_Abram:
     ldr r4, = 0x440101FA
     mov r0, 0x02 ; [Medicinal Ingredients Needed]
@@ -3635,9 +3658,6 @@
     b 0x02234DF8
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Laura's quests
-; TODO! Give the player a Requesite item instead of a hardcoded one
-; TODO! When we do that, set the Loc flag
-; TODO! Test Laura's quest handler
 @QuestHandler_Laura:
     ldr r4, = 0x440101FD
     mov r0, 0x7D
@@ -3656,18 +3676,23 @@
 @@CheckQuest1:
     mov r0, 0x05
     bl 0x020A9E28
-    cmp r1, 0x01
+    cmp r0, 0x01
     bne @@CheckQuest2
     mov r0, 0xC7 ; Lapis
     bl 0x020636D8
-    cmp r0, 1
-    moveq r0, 0
-    streqb r0, [r5, 0x151]
-    beq 0x02234F14
+    cmp r0, 0
+    beq @@CheckQuest2
+    mov r0, 0
+    mov r1, 1
+    strb r0, [r5, 0x151]
+    mov r0, 0x05
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    bne 0x02234F14
 @@CheckQuest2:
     mov r0, 0x06 ;[A pleasant Accessory]
     bl 0x020A9E28
-    cmp r1, 0x01
+    cmp r0, 0x01
     bne @@CheckQuest3
     mov r0, 0xC9 ; Ruby
     bl 0x020636D8
@@ -3682,12 +3707,16 @@
     cmp r0, 0
     beq @@CheckQuest3
     mov r0, 0x01
+    mov r1, 1
     strb r0, [r5, 0x151]
+    mov r0, 0x06
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x02234FA0
 @@CheckQuest3:
     mov r0, 0x07 ;[A Heartwarming Accessory]
     bl 0x020A9E28
-    cmp r1, 0x01
+    cmp r0, 0x01
     bne @@CheckQuest4
     mov r0, 0xCC ; Onyx
     bl 0x020636D8
@@ -3698,20 +3727,156 @@
     cmp r0, 0
     beq @@CheckQuest4
     mov r0, 0x02
+    mov r1, 1
     strb r0, [r5, 0x151]
+    mov r0, 0x07
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x0223503C
 @@CheckQuest4:
     mov r0, 0x08 ; [The Job of a Lifetime]
     bl 0x020A9E28
-    cmp r1, 0x01
+    cmp r0, 0x01
     bne 0x02234E50
     mov r0, 0xCE ; Alexandrite
     bl 0x020636D8
     cmp r0, 0
     beq 0x02234E50
-    mov r1, 0x03
+    mov r0, 0x03
+    mov r1, 1
     strb r0, [r5, 0x151]
+    mov r0, 0x08
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
     b 0x022350D0
+
+; Gives Laura's collar item when we're not skipping the scene
+@Laura_GetSubquestItem:
+    push lr
+    ldr r0, = 0x020F5A52 ; Tom and Jewelry's Requesite item
+    ldrh r0, [r0]
+    bl @GetItemFromQuest
+    mov r0, 0x7D
+    bl @SetLocFlag ; Set the flag for this
+    pop lr
+    bx lr
+
+; These get the Cat Collar item Laura gives you
+@Laura_GetSubquestItem_Noskip:
+    bl @Laura_GetSubquestItem
+    b 0x022338A0
+
+@Laura_GetSubquestItem_skip:
+    bl @Laura_GetSubquestItem
+    b 0x022347F8
+;;;;;;;;;;;;;;;;;;;;;;;;
+; Checks ALL of r0 villager's quests, instead of just the final one
+; to determine if all quests should be marked as Blue
+@QuestMenu_CheckAllQuestsComplete:
+    push lr
+    bl @CheckAllQuests
+    cmp r0, 1
+    moveq r0, 4
+    pop lr
+    bx lr
+    
+; A table of each villager's starting quest ID num
+@ROMTable_StartingQuestID:
+    .db 0x00
+    .db 0x00
+    .db 0x01
+    .db 0x05
+    .db 0x09
+    .db 0x0C
+    .db 0x0F
+    .db 0x12
+    .db 0x15
+    .db 0x18
+    .db 0x1B
+    .db 0x1E
+    .db 0x21
+.align 4
+; Returns 1 if all of r0 villager's quests are completed, 0 if any are NOT.
+@CheckAllQuests:
+    cmp r0, 1
+    movlt r0, 0
+    bxlt lr ; If the Villager is Jacob or Nikolai, automatically ret 0
+    cmp r0, 3
+    movgt r1, 0x3 ; All Villagers above Laura have 3 quests
+    movle r1, 0x04 ; And those 2 have 4
+    push r1-r3,lr
+    ldr r3, = @ROMTable_StartingQuestID
+    ldrb r0, [r3, r0]
+@@CheckNextQuest:
+    push r0-r1
+    bl 0x020A9E28
+    tst r0, 4
+    pop r0-r1
+    moveq r0, 0
+    beq @@Exit
+    sub r1, r1, 1
+    cmp r1, 0
+    moveq r0, 1
+    beq @@Exit
+    add r0, r0, 1
+    b @@CheckNextQuest
+@@Exit:
+    pop r1-r3,lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;;;
+@RamFlag_DelayedQuestItem:
+    .dh 0x00
+.align 4
+; Runs the arbitrary item gift after clearing any quest with an item
+@GetItemFromQuest:
+    push lr
+    push r0, r1
+    mov r0, 0
+    mov r1, 4
+    bl 0x02027184 ; Check if we're fading
+    cmp r0, 0
+    pop r0, r1
+    bne @@DelayItemForFade
+    bl @GetItemArbitrary
+    pop lr
+    bx lr
+@@DelayItemForFade:
+    ldr r1, = @RamFlag_DelayedQuestItem
+    strh r0, [r1]
+    pop lr
+    bx lr
+
+; Calls the quest item from the quest scene
+@GetItemFromQuestHandler:
+    bl @GetItemFromQuest
+    b 0x020A9A3C
+    
+
+;Delays quest items if we're in a Fade so we dont' miss what they are
+@GetDelayedQuestItem:
+    push r0,lr
+    ldr r0, = @RamFlag_DelayedQuestItem
+    ldrh r0, [r0]
+    cmp r0, 0
+    beq @@Exit
+    mov r1, 4
+    mov r0, 0x0
+    bl 0x02027184 ;Check if we're fading out or not
+    cmp r0, 1
+    beq @@Exit
+    ldr r1, = @RamFlag_DelayedQuestItem
+    ldrh r0, [r1]
+    push r1
+    bl @GetItemArbitrary
+    pop r1
+    mov r0, 0
+    strh r0, [r1]
+@@Exit:
+    pop r0,lr
+    b 0x0222F038
+
+
+
 
 .pool
 .endarea
