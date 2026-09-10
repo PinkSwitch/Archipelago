@@ -276,7 +276,8 @@ def write_bosses(world, rom):
                 rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
 
         index = int(world.boss_data[slot.old_boss].flag_index / 2)
-        rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address_direct + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
+        if not world.iron_mode:
+            rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address_direct + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
     
     for i in range(126):
         rom.write_direct(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards

@@ -102,9 +102,9 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Silenced Ruins: Mirror World"), Has("Paranoia Soul"))
     set_rule(world.get_location("Bat Company Soul"), Has(world.magic_seal_table["Silenced Ruins"]))
     set_rule(world.get_location("Silenced Ruins: Boss Room"), Has(world.magic_seal_table["Silenced Ruins"]))
-    abyss_rule = big_uppies
+    abyss_rule = big_uppies & HasAll(*world.menace_triggers)
     if not world.options.goal:
-        abyss_rule & Has(world.magic_seal_table["The Pinnacle"])
+        abyss_rule &= Has(world.magic_seal_table["The Pinnacle"])
 
     set_rule(world.get_location("Abyss Center"), abyss_rule)
     
@@ -132,7 +132,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     if world.garden_chamber_available:
         garden_rule = HasAll("Mina's Talisman", world.magic_seal_table["Castle Center"])
         if world.options.garden_condition:
-            garden_rule & HasAll(*world.garden_triggers)
+            garden_rule &= HasAll(*world.garden_triggers)
         set_rule(world.get_location("Garden of Madness: Central Chamber"), garden_rule)
 
         #  021A3278 for walls
