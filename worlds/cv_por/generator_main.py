@@ -47,6 +47,8 @@ def generate_early(world) -> None:
         world.portrait_connections["Nest of Evil"] = passthrough["passage_portrait"]
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
+    world.important_quests = sorted(world.important_quests)
+    world.quest_requirements = sorted(world.quest_requirements)
 
 
 def create_regions(world) -> None:
