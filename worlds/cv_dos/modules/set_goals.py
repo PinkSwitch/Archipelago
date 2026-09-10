@@ -101,13 +101,13 @@ def write_goal_triggers(world, rom):
 
     for index, trigger in enumerate(goal_settings):
         condition = trigger.current_key
-        rom.write_to_file(0x02225BB8 + 0x10 * index, "overlay_0", bytearray([trigger_keys.index(condition)]))  # Write the actual condition key
+        rom.write_to_file(0x02225BC0 + 0x10 * index, "overlay_0", bytearray([trigger_keys.index(condition)]))  # Write the actual condition key
         required_flags = 0
         if condition in ["bosses"]:  # More will be added to this in the future
             condition_list = goal_rule_order[index]
             for flag in condition_list:
                 required_flags |= boss_flags[flag]
-        rom.write_to_file(0x02225BB9 + 0x10 * index, "overlay_0", struct.pack("H", required_flags))
+        rom.write_to_file(0x02225BC2 + 0x10 * index, "overlay_0", struct.pack("H", required_flags))
 
         condition_text = "Yo, I've got some intel for you.\nTo access this area, you need to\n"
 
