@@ -222,7 +222,7 @@ def connect_regions(world):
     world.get_region("Forsaken Cloister - Upper").connect(world.get_region("Final Approach"))
     ########################################################
 
-    world.get_region("Final Approach").add_exits(["Final Approach - Throne", "Library Upper Exit"], {
+    world.get_region("Final Approach").add_exits(["Final Approach - Throne", "Final Approach - Shortcut"], {
                                                  "Final Approach - Throne": can_fly,
                                                  "Final Approach - Shortcut": can_fly})
     world.get_region("Final Approach - Shortcut").connect(world.get_region("Library Upper Exit"), "Sec0ARm01")
