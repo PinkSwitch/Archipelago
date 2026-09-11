@@ -1,17 +1,62 @@
 [
-  "Forneus",
-  "Spin Devil",
-  "Stolas",
-  "Necromancer",
-  "Mollusca",
-  "Giant Slug",
-  "Invisible Man",
-  "Quetzalcoatl",
-  "Ukoback",
-  "White Dragon",
-  "Bone Pillar",
-  "Fish Head",
-  "Bone Ark",
-  "Fleaman",
-  "Edimmu"
+  {
+    "id": null,
+    "name": "Forneus"
+  },
+  {
+    "id": 9,
+    "name": "Spin Devil"
+  },
+  {
+    "id": 96,
+    "name": "Stolas"
+  },
+  {
+    "id": null,
+    "name": "Necromancer"
+  },
+  {
+    "id": 19,
+    "name": "Mollusca"
+  },
+  {
+    "id": 89,
+    "name": "Giant Slug"
+  },
+  {
+    "id": null,
+    "name": "Invisible Man"
+  },
+  {
+    "id": 33,
+    "name": "Quetzalcoatl"
+  },
+  {
+    "id": 65,
+    "name": "Ukoback"
+  },
+  {
+    "id": 53,
+    "name": "White Dragon"
+  },
+  {
+    "id": 52,
+    "name": "Bone Pillar"
+  },
+  {
+    "id": 63,
+    "name": "Fish Head"
+  },
+  {
+    "id": 76,
+    "name": "Bone Ark"
+  },
+  {
+    "id": 46,
+    "name": "Fleaman"
+  },
+  {
+    "id": null,
+    "name": "Edimmu"
+  }
 ]
