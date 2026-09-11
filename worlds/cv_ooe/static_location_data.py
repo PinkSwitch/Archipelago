@@ -726,7 +726,8 @@ location_data_table = {
     "Barlowe Glyph": LocationInformation(0x020B7390, "arm9", "Enemy Glyph"),
 
     "Wygol Village: Item from Laura": LocationInformation(0x020F5A52, "arm9", "Inline"),
-    "Wygol Village: Item from Marcel": LocationInformation(0x020F59A2, "arm9", "Inline")
+    "Wygol Village: Item from Marcel": LocationInformation(0x020F59A2, "arm9", "Inline"),
+    "Wygol Village: Item from George": LocationInformation(0x020F59E2, "arm9", "Inline")
     
 }
 
