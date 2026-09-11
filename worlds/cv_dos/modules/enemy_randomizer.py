@@ -3,8 +3,8 @@ Enemy randomizer integration for cv_dos (partial).
 
 This module expects extracted tables to live in experimental/tabellen as JSON files.
 - experimental/tabellen/enemies.json         -> list of {"id": int, "name": str, "requires_overlay": int|None, "is_spawner": bool}
-- experimental/tabellen/resource_intensive.json -> list of enemy names (strings)
-- experimental/tabellen/boss_list.json       -> list of boss names or ids
+- experimental/tabellen/resource_intensive.json -> list of enemy names (strings) or objects with id/name
+- experimental/tabellen/boss_list.json       -> list of boss ids or objects
 
 This file implements:
 - generate_enemy_mapping(world, ...)
@@ -47,8 +47,8 @@ class EnemyInfo:
 
 def _load_tables():
     enemies: List[EnemyInfo] = []
-    resource_intensive_names: List[str] = []
-    boss_list = []
+    resource_intensive_entries: List[dict] = []
+    boss_list_raw = []
 
     if os.path.exists(ENEMIES_JSON):
         try:
@@ -62,22 +62,70 @@ def _load_tables():
     if os.path.exists(RESOURCE_INTENSIVE_JSON):
         try:
             with open(RESOURCE_INTENSIVE_JSON, "r", encoding="utf-8") as f:
-                resource_intensive_names = json.load(f)
+                resource_intensive_entries = json.load(f)
         except Exception:
             logger.exception("Failed to load resource_intensive.json")
 
     if os.path.exists(BOSS_LIST_JSON):
         try:
             with open(BOSS_LIST_JSON, "r", encoding="utf-8") as f:
-                boss_list = json.load(f)
+                boss_list_raw = json.load(f)
         except Exception:
             logger.exception("Failed to load boss_list.json")
 
-    return enemies, resource_intensive_names, boss_list
+    return enemies, resource_intensive_entries, boss_list_raw
+
+
+def _extract_boss_ids(boss_list_raw: List, enemies: List[EnemyInfo]) -> List[int]:
+    """Normalize boss_list entries into integer IDs.
+    boss_list_raw may contain ints or dicts like {"id":..., "name":...}.
+    """
+    name_to_id = {e.name: e.id for e in enemies}
+    ids = []
+    for item in boss_list_raw:
+        if isinstance(item, int):
+            ids.append(item)
+        elif isinstance(item, dict):
+            # prefer explicit id
+            if item.get("id") is not None:
+                ids.append(item.get("id"))
+            else:
+                nm = item.get("name")
+                if nm and nm in name_to_id:
+                    ids.append(name_to_id[nm])
+        elif isinstance(item, str):
+            if item in name_to_id:
+                ids.append(name_to_id[item])
+    # dedupe
+    seen = set(); out = []
+    for i in ids:
+        if i not in seen:
+            seen.add(i); out.append(i)
+    return out
 
 
 def _group_key(e: EnemyInfo):
     return (e.requires_overlay if e.requires_overlay is not None else -1, e.is_spawner)
+
+
+def _ensure_boss_preservation(mapping: Dict[int, int]):
+    """
+    Defensive check: ensure any boss IDs present in the boss_list are forced to map to themselves.
+    This guarantees bosses are not swapped even if upstream logic attempted to.
+    """
+    enemies, resource_entries, boss_list_raw = _load_tables()
+    boss_ids = set(_extract_boss_ids(boss_list_raw, enemies))
+    if not boss_ids:
+        return mapping
+    changed = False
+    for b in boss_ids:
+        if mapping.get(b, b) != b:
+            logger.warning("Reverting boss mapping for %02X to itself (was mapping to %02X).", b, mapping.get(b))
+            mapping[b] = b
+            changed = True
+    if changed:
+        logger.info("Boss preservation enforced for %d bosses.", len(boss_ids))
+    return mapping
 
 
 def generate_enemy_mapping(world, allow_bosses: bool = False, preserve_resource_intensive: bool = True, debug_subset: Optional[int] = None) -> Dict[int, int]:
@@ -85,21 +133,15 @@ def generate_enemy_mapping(world, allow_bosses: bool = False, preserve_resource_
     Generate mapping old_id -> new_id.
     Uses world.random for determinism (world.random must be provided by the world generator).
     """
-    enemies, resource_intensive_names, boss_list = _load_tables()
+    enemies, resource_intensive_entries, boss_list_raw = _load_tables()
     if not enemies:
         logger.warning("No enemy table found to randomize.")
         world.enemy_mapping = {}
         return {}
 
     name_to_id = {e.name: e.id for e in enemies}
-    resource_intensive_ids = {name_to_id.get(n) for n in resource_intensive_names if name_to_id.get(n) is not None}
-    boss_ids = set()
-    for b in boss_list:
-        if isinstance(b, int):
-            boss_ids.add(b)
-        else:
-            if b in name_to_id:
-                boss_ids.add(name_to_id[b])
+    resource_intensive_ids = {entry.get("id") for entry in resource_intensive_entries if entry.get("id") is not None}
+    boss_ids = set(_extract_boss_ids(boss_list_raw, enemies))
 
     rng = getattr(world, "random", None)
     if rng is None:
@@ -129,9 +171,10 @@ def generate_enemy_mapping(world, allow_bosses: bool = False, preserve_resource_
             mapping[s] = d
 
     # enforce protections
-    if not allow_bosses:
-        for b in boss_ids:
-            mapping[b] = b
+    # Always protect bosses for this project (defensive)
+    for b in boss_ids:
+        mapping[b] = b
+
     if preserve_resource_intensive:
         for r in resource_intensive_ids:
             if r is not None:
@@ -145,6 +188,9 @@ def generate_enemy_mapping(world, allow_bosses: bool = False, preserve_resource_
         for k in non_protected:
             if k in to_keep:
                 mapping[k] = k
+
+    # final defensive enforcement (ensure bosses preserved)
+    mapping = _ensure_boss_preservation(mapping)
 
     world.enemy_mapping = mapping
     logger.info("Generated enemy mapping with %d entries (allow_bosses=%s, preserve_resource_intensive=%s)", len(mapping), allow_bosses, preserve_resource_intensive)
@@ -180,6 +226,9 @@ def write_enemies(world, rom, mode: str = "full_swap", dry_run: bool = True):
     if mapping is None:
         logger.info("No enemy mapping present; skipping write.")
         return
+
+    # Defensive: ensure boss preservation before applying writes
+    mapping = _ensure_boss_preservation(mapping)
 
     swaps = []
     for old, new in mapping.items():
