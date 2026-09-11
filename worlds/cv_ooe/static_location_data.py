@@ -137,6 +137,7 @@ location_ids = {
     "Barlowe Glyph": 0x7C,
     "Wygol Village: Item from Laura": 0x7D,
     "Wygol Village: Item from Marcel": 0x7E,
+    "Wygol Village: Item from George": 0x7F,
 
     "Monastery: Pre-Boss Chest": 0x82,
     "Minera Prison Island: Lower Spear Hall Ending Chest": 0x83,

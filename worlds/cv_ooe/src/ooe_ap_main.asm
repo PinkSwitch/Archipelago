@@ -158,6 +158,12 @@
     .org 0x020F59AA
         .dh 0x7E ; Marcel's Subquest flag
 
+    .org 0x020F59E2
+        .dh 0xD7 ; Phonograph
+
+    .org 0x020F59EA
+        .dh 0x7F ; George's subquest flag
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -585,6 +591,15 @@
 
     .org 0x02234E90
         mov r2, 0x1A ; Tom and Jewlery, Laura's subquest number
+
+    .org 0x022356D0
+        b @QuestHandler_George
+
+    .org 0x022357C4
+        mov r0, 0x13 ; The Killing Scream, subquest ID for George
+
+    .org 0x02233800
+        b @GetSubquestItem_George
 
         
 .close
@@ -3909,6 +3924,7 @@
     b 0x0222F038
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Eugen's quests
+; TODO! Update all Quest text to say 1 item instead of 3
 @QuestHandler_Eugen:
     ldreq r4, = 0x44010207
     mov r0, 0x09
@@ -4082,8 +4098,78 @@
 @@Exit:
     pop r0-r3
     b 0x022354F8
-;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for George's quests
+; TODO! Again, CompleteQuest call here
+@QuestHandler_George:
+    ldr r4, = 0x44010218
+    mov r0, 0x13
+    bl 0x020A9E28
+    tst r0, 0x01 ; Check if that quest has been active
+    beq @@CheckQuest1
+    mov r0, 0x7F
+    bl @CheckLocFlag
+    cmp r0, 1
+    beq @@CheckQuest1
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    b 0x022357B0
+@@CheckQuest1:
+    mov r0, 0x12
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xBB ; Horse Hair
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest2
 
+    mov r0, 0x00
+    strb r0, [r5, 0x151]
+    mov r0, 0x12
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235740
+
+@@CheckQuest2:
+    mov r0, 0x13
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    tst r0, 0x02 ; Test that the quest was Complete
+    beq @@CheckQuest3
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    mov r0, 0x13
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x022357E4
+
+@@CheckQuest3:
+    mov r0, 0x14
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne 0x022356D4
+    mov r0, 0xBD ; Black Ink
+    bl 0x020636D8
+    cmp r0, 0
+    beq 0x022356D4
+    mov r0, 0xBC ; Eagle Feather
+    bl 0x020636D8
+    cmp r0, 0
+    beq 0x022356D4
+
+    mov r0, 0x02
+    strb r0, [r5, 0x151]
+    mov r0, 0x14
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x0223587C
+
+; For some reason not skipping georges cutscene runs a different handler
+@GetSubquestItem_George:
+    bl @GetSubquestItem
+    b 0x02233824
 
 .pool
 .endarea
