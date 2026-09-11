@@ -136,6 +136,8 @@ location_ids = {
     "Final Approach: Throne Right Chest": 0x7B,
     "Barlowe Glyph": 0x7C,
     "Wygol Village: Item from Laura": 0x7D,
+    "Wygol Village: Item from Marcel": 0x7E,
+
     "Monastery: Pre-Boss Chest": 0x82,
     "Minera Prison Island: Lower Spear Hall Ending Chest": 0x83,
     "Kalidus Channel: Ship Room Center Left Chest": 0x84,
@@ -722,7 +724,8 @@ location_data_table = {
     "Albus Glyph": LocationInformation(0x020B736C, "arm9", "Enemy Glyph"),
     "Barlowe Glyph": LocationInformation(0x020B7390, "arm9", "Enemy Glyph"),
 
-    "Wygol Village: Item from Laura": LocationInformation(0x020F5A52, "arm9", "Inline")
+    "Wygol Village: Item from Laura": LocationInformation(0x020F5A52, "arm9", "Inline"),
+    "Wygol Village: Item from Marcel": LocationInformation(0x020F59A2, "arm9", "Inline")
     
 }
 

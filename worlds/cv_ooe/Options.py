@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
                      NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink)
+from .game_data import villager_list
 
 
 class StartingGlyph(TextChoice):
@@ -266,6 +267,48 @@ class WeightEnemyDrops(DefaultOnToggle):
     display_name = "Weight Shuffled Drops"
 
 
+quest_keys = set()
+#for quest in quest_data:
+ #   quest_keys.add(quest)
+  #  quest_keys.add(quest.split(": ")[1])  # Truncate it to just the quest name
+
+for villager in villager_list:
+    if villager in ["Nikolai", "Jacob"]:  # They don't have quests so remove them
+        continue
+    quest_keys.add(villager)
+quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Simple"}
+
+
+class ActiveQuests(OptionSet):
+#  TODO! Has reward? Excluded? Some way to say "Hey, X quests but only ones that give a reward..."
+    """Specify which Quests have random items.
+       You can type any individual quest name, as well as the following shortcuts.
+       Additionally, you can type the name of a Villager to include all of that villager's Quests.
+
+       Shortcuts:
+       Requires Item: Any Quest which requires you to turn in an item.
+       Defeat Enemies: Any Quest which requires you to defeat specific enemies.
+       Simple: Any Quest which requires you to do some sort of specific task.
+       All: Enables ALL quests
+       """
+    display_name = "Randomized Quests"
+    default = {}
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
+    valid_keys_casefold = True
+
+
+
+class UnlockAllQuests(Toggle):
+    """If enabled, all Quests will be unlocked by default and you can complete them out of order."""
+    display_name = "Unlock All Quests"
+
+
+class RandomizeQuestKeyItems(Toggle):
+    """If enabled, quest-related Key Items will be randomized into the item pool, and the original location is
+       added as a check. Otherwise, they will be at their vanilla locations."""
+    display_name = "Randomize Quest Key Items"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -300,6 +343,9 @@ class OoEOptions(PerGameCommonOptions):
     logic_tricks: LogicTricks
     shuffle_enemy_drops: ShuffleEnemyDrops
     weight_shuffled_drops: WeightEnemyDrops
+    randomized_quests: ActiveQuests
+    unlock_all_quests: UnlockAllQuests
+    include_quest_key_items: RandomizeQuestKeyItems
 
 
 ooe_option_groups = [
@@ -322,6 +368,12 @@ ooe_option_groups = [
         AddBrownChests,
         RandomizeVillagers,
         AddMedalChests
+    ]),
+
+    OptionGroup("Quest Options", [
+        ActiveQuests,
+        UnlockAllQuests,
+        RandomizeQuestKeyItems
     ]),
 
     OptionGroup("Glyph Options", [

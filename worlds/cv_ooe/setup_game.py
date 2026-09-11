@@ -62,6 +62,13 @@ def place_static_items(world) -> None:
         world.get_location("Giant's Dwelling: Albus 2").place_locked_item(world.create_item("Dominus Anger"))
         world.get_location("Mystery Manor: Albus 3").place_locked_item(world.create_item("Dominus Agony"))
 
+    if not world.options.include_quest_key_items:
+        world.get_location("Wygol Village: Item from Laura").place_locked_item(create_progress_event(world, "Cat Collar"))
+        world.get_location("Wygol Village: Item from Marcel").place_locked_item(create_progress_event(world, "Camera"))
+        world.get_location("Wygol Village: Item from George").place_locked_item(create_progress_event(world, "Phonograph"))
+        world.get_location("Wygol Village: Item from Daniela").place_locked_item(create_progress_event(world, "Sketch Book"))
+        world.get_location("Kalidus Channel: Ship Room Mouse Pickup").place_locked_item(create_progress_event(world, "Mouse"))
+
     if world.options.randomize_villagers != RandomizeVillagers.option_anywhere:
         # A list of villagers and their corresponding original location
         villager_pool = {

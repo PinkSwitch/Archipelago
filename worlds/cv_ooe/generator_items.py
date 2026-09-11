@@ -17,6 +17,13 @@ def create_conditional_items(world, pool):
                      world.create_item("Dominus Anger"),
                      world.create_item("Dominus Agony")])
 
+    if world.options.include_quest_key_items:
+        pool.extend([world.create_item("Cat Collar"),
+                     world.create_item("Camera"),
+                     world.create_item("Phonograph"),
+                     world.create_item("Mouse"),
+                     world.create_item("Sketch Book")])
+
     if world.starting_area:
         pool.remove(world.create_item(f"Map: {world.starting_area}"))
 
