@@ -277,16 +277,35 @@ class RandomizeSealDetails(Choice):
     option_chaos = 2
     default = 0
 
-#class RevealBreakableWalls(Choice):
- #   """Controls how breakable walls act.
-  #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
-   #    Revealed: All breakable walls are already broken
-    #   Eye Spy: Breakable walls are breakable, you require Peeping Eye's soul to break them at all."""
-    #display_name = "Breakable Walls"
-    #option_normal = 0
-    #option_revealed = 1
-    #option_eye_spy = 2
-    #default = 0
+
+# Enemy randomizer specific option classes (minimal additions)
+class EnemyRandomizerMode(Choice):
+    """Enemy randomizer mode.
+    0 = Disabled, 1 = Full swap, 2 = Spawn/slot swap"""
+    display_name = "Enemy Randomizer Mode"
+    option_disabled = 0
+    option_full_swap = 1
+    option_spawn_swap = 2
+    default = 0
+
+
+class AllowBossSwaps(Toggle):
+    """Allow bosses to be swapped by the enemy randomizer (use with caution)."""
+    display_name = "Allow Boss Swaps"
+
+
+class PreserveResourceIntensive(Toggle):
+    """Preserve resource intensive enemies (default ON)."""
+    display_name = "Preserve Resource-Intensive Enemies"
+    default = True
+
+
+class EnemyRandomizerDebugSubset(NamedRange):
+    """When non-zero, only apply the randomization to a debug subset size (for testing)."""
+    display_name = "Enemy Randomizer Debug Subset"
+    range_start = 0
+    range_end = 500
+    default = 0
 
 
 @dataclass
@@ -330,6 +349,11 @@ class DoSOptions(PerGameCommonOptions):
     start_with_doppelganger: StartWithDoppelganger
     randomize_doors: ShuffleCastleConnections
     randomize_seal_details: RandomizeSealDetails
+    # Enemy randomizer options (added, non-destructive)
+    randomize_enemies: EnemyRandomizerMode
+    allow_boss_swaps: AllowBossSwaps
+    preserve_resource_intensive: PreserveResourceIntensive
+    enemy_randomizer_debug_subset: EnemyRandomizerDebugSubset
 
 
 dos_option_groups = [
@@ -379,6 +403,10 @@ dos_option_groups = [
     ]),
 
     OptionGroup("Enemy Settings", [
+        EnemyRandomizerMode,
+        AllowBossSwaps,
+        PreserveResourceIntensive,
+        EnemyRandomizerDebugSubset,
         ShuffleDrops,
         ExperiencePercent,
         HardMode,
