@@ -601,6 +601,9 @@
     .org 0x02233800
         b @GetSubquestItem_George
 
+    .org 0x02235978
+        b @QuestHandler_Serge
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -4170,6 +4173,30 @@
 @GetSubquestItem_George:
     bl @GetSubquestItem
     b 0x02233824
+;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Serge's quests
+@QuestHandler_Serge:
+    mov r0, 0x16 ; Serge's Quest2
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    ldr r0, = 0x021002C4 ; Check the back glyph
+    ldrsh r0, [r0]
+    cmp r0, 0x13 ; The owl
+    bne @@Exit
+    mov r0, 2
+    bl 0x0206AA6C ; Check if Owl is active
+    cmp r0, 0
+    ble @@Exit
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    mov r0, 0x16
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235C08
+@@Exit:
+    ldr r0, = 0x020FFC58
+    b 0x0223597C
 
 .pool
 .endarea
