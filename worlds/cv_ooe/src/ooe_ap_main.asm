@@ -149,6 +149,15 @@
     .org 0x020F5A52
         .dh 0xAE ; Cat Collar; The item Laura gives you for turning in Chrysoberyl
 
+    .org 0x020F5A5A
+        .dh 0x7D ; Laura's Subquest flag
+
+    .org 0x020F59A2
+        .dh 0xAF ; Camera
+
+    .org 0x020F59AA
+        .dh 0x7E ; Marcel's Subquest flag
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -548,10 +557,10 @@
         b @QuestHandler_Laura
 
     .org 0x0223387C
-        b @Laura_GetSubquestItem_Noskip
+        b @GetSubquestItem_Noskip
 
     .org 0x02234704
-        b @Laura_GetSubquestItem_skip
+        b @GetSubquestItem_skip
 
     .org 0x02227A1C
         bl @QuestMenu_CheckAllQuestsComplete ; This is the invidual villager screen
@@ -567,6 +576,15 @@
 
     .org 0x02235310
         b @QuestHandler_Aeon
+
+    .org 0x022354F4
+        b @QuestHandler_Marcel
+
+    .org 0x02235540
+        mov r0, 0x0F ; Case of the Vicious Blight, Marcel's Subquest ID number
+
+    .org 0x02234E90
+        mov r2, 0x1A ; Tom and Jewlery, Laura's subquest number
 
         
 .close
@@ -998,6 +1016,9 @@
         .fill 0xB0 ;22EB370
     @CatHint3:
         .fill 0xB0 ; 22EB420
+
+@OptionFlag_UnlockAllQuests: ;TODO! This.
+    .db 0x00
 
 .align 4
 
@@ -3664,6 +3685,7 @@
     b 0x02234DF8
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Laura's quests
+; TODO! Make sure we can get rewards for quests which don't normally give any. It doesn't. I need to add a CompleteQuest call.
 @QuestHandler_Laura:
     ldr r4, = 0x440101FD
     mov r0, 0x7D
@@ -3757,23 +3779,28 @@
     b 0x022350D0
 
 ; Gives Laura's collar item when we're not skipping the scene
-@Laura_GetSubquestItem:
+; The normal quest item [r4, 0x66] should be used as a Quest ID.
+; We then use that ID to look up relevant quest data for Loc flags and items.
+@GetSubquestItem:
     push lr
-    ldr r0, = 0x020F5A52 ; Tom and Jewelry's Requesite item
-    ldrh r0, [r0]
+    ldr r1, = 0x020F58B0
+    add r1, r1, r0, lsl 4 ; Shift r0 up 4 to get the Quest pointer
+    ldrh r0, [r1, 0x02] ; Get the Requesite item
+    push r1
     bl @GetItemFromQuest
-    mov r0, 0x7D
+    pop r1
+    ldrh r0, [r1, 0x0A] ; Used for the Loc flag
     bl @SetLocFlag ; Set the flag for this
     pop lr
     bx lr
 
 ; These get the Cat Collar item Laura gives you
-@Laura_GetSubquestItem_Noskip:
-    bl @Laura_GetSubquestItem
+@GetSubquestItem_Noskip:
+    bl @GetSubquestItem
     b 0x022338A0
 
-@Laura_GetSubquestItem_skip:
-    bl @Laura_GetSubquestItem
+@GetSubquestItem_skip:
+    bl @GetSubquestItem
     b 0x022347F8
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Checks ALL of r0 villager's quests, instead of just the final one
@@ -3883,7 +3910,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Eugen's quests
 @QuestHandler_Eugen:
-    ldr r4, = 0x44010207
+    ldreq r4, = 0x44010207
     mov r0, 0x09
     bl 0x020A9E28
     cmp r0, 0x01
@@ -3989,7 +4016,73 @@
     ldr r0, = 0x020FFC58
     ldr r0, [r0, 0x734]
     b 0x02235314
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Marcel's quests
+@QuestHandler_Marcel:
+    ldreq r4, = 0x44010212
+    push r0-r3
+    mov r0, 0x7E
+    bl @CheckLocFlag
+    cmp r0, 0
+    bne @@CheckQuest1
+    popeq r0-r3
+    b 0x0223552C ; Do the quest 1 dialogue so that we get the Camera check
+@@CheckQuest1:
+    mov r0, 0x0F
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    
+    mov r0, 0xB0 ; Photo 1
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@CheckQuest2
+    popne r0-r3
+    mov r0, 0
+    strb r0, [r5, 0x151]
+    mov r0, 0x0F
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x0223555C
 
+@@CheckQuest2:
+    mov r0, 0x10
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xB1 ; Photo 2
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@CheckQuest3
+    popne r0-r3
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    mov r0, 0x10
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x022355C4
+
+@@CheckQuest3:
+    mov r0, 0x11
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    mov r0, 0xB2 ; Photo 3
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@Exit
+    popne r0-r3
+    mov r0, 0x02
+    strb r0, [r5, 0x151]
+    mov r0, 0x11
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235684
+
+@@Exit:
+    pop r0-r3
+    b 0x022354F8
+;;;;;;;;;;;;;;;;
 
 
 .pool
