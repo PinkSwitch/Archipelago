@@ -1,0 +1,59 @@
+Entity types:
+
+00 Nothing.
+
+01 Enemy.
+  Subtype determines which enemy. It's equal to ID of enemy in the bestiary, except starting at 0 instead of at 1.
+
+02 Special object.
+  Subtype determines which object. See special object list for details on each object.
+
+03 Generic candle.
+  Unaffected by subtype.
+
+04 Pickup. Subtype:
+  00 Heart.
+    Var A: Flag for having picked up this heart.
+    Var B: The type of heart. 0: Small, 1: Big.
+    Byte 8: 1 for a mirror world item.
+  01 Money.
+    Var A: Flag for having picked up this money.
+    Var B: The amount of money. From 0 to 6: 1G 10G 50G 100G 500G 1000G 2000G.
+    Byte 8: 1 for a mirror world item.
+  02 Item: consumable.
+    Var A: Flag for having picked up this item.
+    Var B: The local ID of the consumable.
+    Byte 8: 1 for a mirror world item.
+  03 Item: weapon.
+    Var A: Flag for having picked up this item.
+    Var B: The local ID of the weapon.
+    Byte 8: 1 for a mirror world item.
+  04 Item: body armor/accessory.
+    Var A: Flag for having picked up this item.
+    Var B: The local ID of the body armor/accessory.
+    Byte 8: 1 for a mirror world item.
+  05+ Free soul.
+    Var A: Flag for having picked up this item.
+      Note that absorbing this soul won't set this flag, so you'd be able to absorb it over and over again by re-entering the room.
+      But if something else sets this flag, then this soul will no longer appear.
+    Var B: The global ID of the soul.
+
+05 Nothing? Unused?
+
+06 Entity hider.
+  Prematurely stop reading this entity list if a certain condition is met.
+  Entities before this one in the list will load the same as normal, but all ones after it will not appear.
+  Var A: The condition.
+    0 - Check if a boss death flag is set. Subtype is the index of the bit. (Bitfield starting at 020F7038.)
+    1 - Check if a miscellaneous flag is set. Subtype is the index of the bit. (Bitfield starting at 020F7180.)
+    2 - Check if an event flag is set. Subtype is the index of the bit. (Bitfield starting at 020F7188.)
+    3 - Checks if in the middle of a boss fight. (Bit 0x00000002 of bitfield 020F6DFC.)
+    4 - Checks if in Julius mode. (Byte 020F7257.)
+  Var B:
+    0 - Entities will disappear if the condition is NOT met.
+    1 - Entities will disappear if the condition IS met.
+
+07 Font loader.
+  Loads font for event text. Without this entity in the room, text will look like garbage.
+  Var A: Event flag to check. If this flag is set, the font won't be loaded. Should be the same the event's var A. This can also just be set to 0 and the font will always be loaded (like for save rooms).
+  Var B: Must be the same as the event's var B. For save rooms, must be the same as the save point's var B.

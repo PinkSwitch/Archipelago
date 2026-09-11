@@ -1,0 +1,151 @@
+
+Memory used for entities in DoS is 020CA3F0 - 020F6DEF. Each entity is 0x2A0 bytes long. They range from 0-10F.
+
+000,4: Pointer to update code.
+004,4: Pointer to draw code.
+00D,1: State of the entity. Each entity's update code handles this differently.
+010,2: 1? set when the entity is first created
+012,2: Globally unique ID for this entity.
+018,2: Timer 1.
+01A,2: Timer 2.
+01E,1: ???
+01F,1: If this isn't 0, the entity will flicker. 1E is related somehow?
+020,4: X pos on the screen.
+024,4: Y pos on the screen.
+028,4: Z position.
+02C,4: X pos.
+030,4: Y pos.
+034,4: Z pos.
+038,4: X velocity.
+03C,4: Y velocity.
+044,4: X friction.
+048,4: Y acceleration (gravity).
+050,4: Scale multiplier for the player's trail. 1000 means 1x.
+054,4: Scale multiplier for the player. Only does anything if the next value is nonzero.
+058,4: Enable player scaling.
+068,2: Sprite info index.
+  This is an index in the currently loaded sprite info list, 020C6260.
+06D,1: Light enable flags for polygon drawing.
+070,4: Bitfield related to sprite drawing.
+  00000020 - Ignore part palette indexes. Always used palette 0 for every part.
+    Note that things that affect the entire entity's palette are not affected by this, like the entity's palette offset. Only the palette specified by each sprite part is ignored.
+  00000080 - Direction. Set if facing left, clear if facing right. (Horizontal flip.)
+074,2: Current sprite frame index.
+076,2: Palette index in the list of globally loaded palettes.
+078,2: Palette index in the list of globally loaded palettes. (How is this different from 76,2? Both are used.)
+07A,1: Palette offset for this entity. Gets added to the value at 076,2.
+07C,2: Polygon mode for drawing this entity.
+07E,2: Other polygon attribute bits to enable for drawing this entity.
+080,1: Polygon ID for drawing this entity.
+081,1: Opacity. 1F is fully opaque.
+082,1: Upper left corner vertex's red color multiplier.
+083,1: Upper left corner vertex's green color multiplier.
+084,1: Upper left corner vertex's blue color multiplier.
+085,1: Upper left corner vertex's unused color multiplier.
+086,1: Lower left corner vertex's red color multiplier.
+087,1: Lower left corner vertex's green color multiplier.
+088,1: Lower left corner vertex's blue color multiplier.
+089,1: Lower left corner vertex's unused color multiplier.
+08A,1: Lower right corner vertex's red color multiplier.
+08B,1: Lower right corner vertex's green color multiplier.
+08C,1: Lower right corner vertex's blue color multiplier.
+08D,1: Lower right corner vertex's unused color multiplier.
+08E,1: Upper right corner vertex's red color multiplier.
+08F,1: Upper right corner vertex's green color multiplier.
+090,1: Upper right corner vertex's blue color multiplier.
+091,1: Upper right corner vertex's unused color multiplier.
+094,2: Sprite x offset relative to the entity's position.
+096,2: Sprite y offset relative to the entity's position.
+098,4: Pointer to sprite animation list.
+09C,2: Current animation index.
+09E,2: Current keyframe index in this animation.
+0A0,2: Bitfield of sprite animation properties.
+  01 - Animation finished. This is set automatically by SpriteAnimate when an animation finishes its first loop.
+  02 - Do not loop animation
+  04 - Play animation in reverse
+0A2,2: 
+0A4,1: Controls the iframes this entity should give.
+  This is an index in list 020763DC - a list of different iframes values. Each entry is 1 byte long.
+  This value is only read when the entity is initialized, changing it after the entity already exists has no effect.
+0A6,1: Hitbox bitfield.
+  Bits:
+  0x1: Whether this entity's hitboxes are active or not.
+0A7,1: Hitbox index.
+  This is an index in list 0210AF18.
+0A8,2: Damage.
+0AA,2: Defense.
+0AC,4: Bitfield of damage types.
+0B0,4: Bitfield of resistances.
+0B4,4: Bitfield of weaknesses.
+0B8,2: Number of iframes this entity gives.
+0BA,2: 
+0BC,2: 
+0BE,2: 
+0C8,4: On-hit-other callback function.
+0CC,4: On-get-hit callback function.
+0D4,4: Pointer to parent entity.
+0E4,4: Bitfield of ?
+  00000008 - For the player, this bit indicates they are sitting in a chair.
+250,4: Bitfield?
+  00000001 - Immune to being unloaded when there are too many enemies on screen?
+  00000020 - Horizontally flipped?
+  00000080 - ??? Set for all enemies
+260,1: Subtype.
+26E,2: Var A.
+270,2: Var B.
+
+For players:
+00D,1: Player's state.
+  01 - Normal
+  03 - Starting to walk
+  04 - Walking
+  06 - Backdashing
+  07 - Sliding
+  09 - Hitting the ground and after a long fall or jumpkick
+  0A - Hippogryph jumping
+  0B - Jumpkicking or using Succubus soul
+  0C - Super attacking
+  0E - Transforming into bat form
+  0F - In bat form
+  11 - Transforming out of bat form
+  12 - Taking damage
+0D0,4: Bitfield of player state booleans.
+0E0,4: Bitfield of what actions the player can do.
+  Copied from the player data.
+0F0,2: Player's next animation state to go to automatically when the current animation finishes playing.
+  If this is FFFF it means there's no next animation state to go to automatically.
+0F2,2: Player's current animation state. This is the index in their state->anim mapping list to get the new animation.
+138,4: Pointer to their state->anims mapping.
+144,4: Which player character index this player is. 1 is Julius, 3 is Alucard, etc.
+
+For the player trails:
+0E8,4: Pointer to the player entity this trail is for.
+
+For enemies:
+154,2: Max HP.
+258,2: Current HP.
+25A,2: Current MP.
+25C,2: Original global palette index (before 076,2 had the enemy's palette offset added to it).
+25E,1: Palette offset for this enemy.
+260,1: Enemy ID.
+26A,2: The attack value from the enemy DNA.
+26C,2: The defense value from the enemy DNA.
+
+For free souls:
+1E8,4: Affects homing?
+  Only does anything if the value at 1EC is 2.
+1EC,4: Affects homing?
+  0 - Homes toward the player.
+  1 - Circles the point (0,0)?
+  2 - Runs away from the player.
+
+For used souls:
+210,4: Bitfield.
+  00000001 - Horizontally flipped.
+  00000002 - Soul was used by an enemy (Dmitrii) as opposed to the player.
+    This overrides this soul's on-hurt-enemy callback function with a different one so that it hurts the player instead.
+    It also changes the damage calculation formula, so that it uses the enemy's attack value in place of the player's INT, and so the enemy's attack value is weighted more than the soul's damage multiplier.
+214,4: Pointer to the entity that used this soul (player/Dmitrii).
+21A,2: Soul index.
+21D,1: Soul index.
+220,4: Soul level.
