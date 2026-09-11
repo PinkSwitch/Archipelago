@@ -1,62 +1,92 @@
 [
   {
     "id": null,
-    "name": "Forneus"
+    "name": "Forneus",
+    "normalized": "forneus",
+    "suggested_match": null
   },
   {
     "id": 9,
-    "name": "Spin Devil"
+    "name": "Spin Devil",
+    "normalized": "spin devil",
+    "suggested_match": null
   },
   {
     "id": 96,
-    "name": "Stolas"
+    "name": "Stolas",
+    "normalized": "stolas",
+    "suggested_match": null
   },
   {
     "id": null,
-    "name": "Necromancer"
+    "name": "Necromancer",
+    "normalized": "necromancer",
+    "suggested_match": null
   },
   {
     "id": 19,
-    "name": "Mollusca"
+    "name": "Mollusca",
+    "normalized": "mollusca",
+    "suggested_match": null
   },
   {
     "id": 89,
-    "name": "Giant Slug"
+    "name": "Giant Slug",
+    "normalized": "giant slug",
+    "suggested_match": null
   },
   {
     "id": null,
-    "name": "Invisible Man"
+    "name": "Invisible Man",
+    "normalized": "invisible man",
+    "suggested_match": null
   },
   {
     "id": 33,
-    "name": "Quetzalcoatl"
+    "name": "Quetzalcoatl",
+    "normalized": "quetzalcoatl",
+    "suggested_match": null
   },
   {
     "id": 65,
-    "name": "Ukoback"
+    "name": "Ukoback",
+    "normalized": "ukoback",
+    "suggested_match": null
   },
   {
     "id": 53,
-    "name": "White Dragon"
+    "name": "White Dragon",
+    "normalized": "white dragon",
+    "suggested_match": null
   },
   {
     "id": 52,
-    "name": "Bone Pillar"
+    "name": "Bone Pillar",
+    "normalized": "bone pillar",
+    "suggested_match": null
   },
   {
     "id": 63,
-    "name": "Fish Head"
+    "name": "Fish Head",
+    "normalized": "fish head",
+    "suggested_match": null
   },
   {
     "id": 76,
-    "name": "Bone Ark"
+    "name": "Bone Ark",
+    "normalized": "bone ark",
+    "suggested_match": null
   },
   {
     "id": 46,
-    "name": "Fleaman"
+    "name": "Fleaman",
+    "normalized": "fleaman",
+    "suggested_match": null
   },
   {
     "id": null,
-    "name": "Edimmu"
+    "name": "Edimmu",
+    "normalized": "edimmu",
+    "suggested_match": null
   }
 ]
