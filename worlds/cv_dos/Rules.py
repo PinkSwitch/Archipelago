@@ -102,7 +102,9 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Silenced Ruins: Mirror World"), Has("Paranoia Soul"))
     set_rule(world.get_location("Bat Company Soul"), Has(world.magic_seal_table["Silenced Ruins"]))
     set_rule(world.get_location("Silenced Ruins: Boss Room"), Has(world.magic_seal_table["Silenced Ruins"]))
-    abyss_rule = big_uppies & HasAll(*world.menace_triggers)
+    abyss_rule = big_uppies
+    if world.options.menace_condition:
+        abyss_rule &= HasAll(*world.menace_triggers)
     if not world.options.goal:
         abyss_rule &= Has(world.magic_seal_table["The Pinnacle"])
 
