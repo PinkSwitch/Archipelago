@@ -604,6 +604,9 @@
     .org 0x02235978
         b @QuestHandler_Serge
 
+    .org 0x02235D88
+        b @QuestHandler_Anna
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -4197,6 +4200,61 @@
 @@Exit:
     ldr r0, = 0x020FFC58
     b 0x0223597C
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Anna's quests
+@QuestHandler_Anna:
+    mov r0, 0x18
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    tst r0, 0x02
+    beq @@CheckQuest2
+    mov r0, 0x00
+    strb r0, [r5, 0x151]
+    mov r0, 0x18
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235E0C
+
+
+@@CheckQuest2:
+    mov r0, 0x19
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xAD ; Mouse
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@CheckQuest3
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    mov r0, 0x19
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235E9C
+
+
+@@CheckQuest3:
+    mov r0, 0x1A
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    mov r0, 0xAE ; Cat Collar
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@Exit
+    mov r0, 0x02
+    strb r0, [r5, 0x151]
+    mov r0, 0x1A
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    b 0x02235F48
+
+@@Exit:
+    ldr r0, = 0x020FFC58
+    b 0x02235D8C
+
+
 
 .pool
 .endarea
