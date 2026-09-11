@@ -1,0 +1,608 @@
+[
+  {
+    "id": 0,
+    "name": "Zombie",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 1,
+    "name": "Bat",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 2,
+    "name": "Ghost",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 3,
+    "name": "Skeleton",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 4,
+    "name": "Ouija Table",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 5,
+    "name": "Peeping Eye",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 6,
+    "name": "Axe Armor",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 7,
+    "name": "Skull Archer",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 8,
+    "name": "Warg",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 9,
+    "name": "Spin Devil",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 10,
+    "name": "Armor Knight",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 11,
+    "name": "Student Witch",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 12,
+    "name": "Slaughterer",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 13,
+    "name": "Bomber Armor",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 14,
+    "name": "Golem",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 15,
+    "name": "Slime",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 16,
+    "name": "Une",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 17,
+    "name": "Skeleton Ape",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 18,
+    "name": "Manticore",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 19,
+    "name": "Mollusca",
+    "requires_overlay": 32,
+    "is_spawner": false
+  },
+  {
+    "id": 20,
+    "name": "Rycuda",
+    "requires_overlay": 32,
+    "is_spawner": false
+  },
+  {
+    "id": 21,
+    "name": "Mandragora",
+    "requires_overlay": 32,
+    "is_spawner": true
+  },
+  {
+    "id": 22,
+    "name": "Yorick",
+    "requires_overlay": 32,
+    "is_spawner": true
+  },
+  {
+    "id": 23,
+    "name": "Skeleton Farmer",
+    "requires_overlay": 32,
+    "is_spawner": true
+  },
+  {
+    "id": 24,
+    "name": "The Creature",
+    "requires_overlay": 32,
+    "is_spawner": true
+  },
+  {
+    "id": 25,
+    "name": "Catoblepas",
+    "requires_overlay": 32,
+    "is_spawner": true
+  },
+  {
+    "id": 26,
+    "name": "Ghoul",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 27,
+    "name": "Corpseweed",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 28,
+    "name": "Yeti",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 29,
+    "name": "Tombstone",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 30,
+    "name": "Ghost Dancer",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 31,
+    "name": "Flying Humanoid",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 32,
+    "name": "Mini Devil",
+    "requires_overlay": 28,
+    "is_spawner": false
+  },
+  {
+    "id": 33,
+    "name": "Quetzalcoatl",
+    "requires_overlay": 24,
+    "is_spawner": false
+  },
+  {
+    "id": 34,
+    "name": "Treant",
+    "requires_overlay": 24,
+    "is_spawner": false
+  },
+  {
+    "id": 35,
+    "name": "Amalaric Sniper",
+    "requires_overlay": 24,
+    "is_spawner": false
+  },
+  {
+    "id": 36,
+    "name": "Valkyrie",
+    "requires_overlay": 24,
+    "is_spawner": false
+  },
+  {
+    "id": 37,
+    "name": "Great Armor",
+    "requires_overlay": 24,
+    "is_spawner": false
+  },
+  {
+    "id": 38,
+    "name": "Killer Doll",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 39,
+    "name": "Waiter Skeleton",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 40,
+    "name": "Persephone",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 41,
+    "name": "Witch",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 42,
+    "name": "Buer",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 43,
+    "name": "Lilith",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 44,
+    "name": "Killer Clown",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 45,
+    "name": "Skelerang",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 46,
+    "name": "Fleaman",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 47,
+    "name": "Devil",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 48,
+    "name": "Guillotiner",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 49,
+    "name": "Draghignazzo",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 50,
+    "name": "Needles",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 51,
+    "name": "Hell Boar",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 52,
+    "name": "Bone Pillar",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 53,
+    "name": "White Dragon",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 54,
+    "name": "Wakwak Tree",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 55,
+    "name": "Imp",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 56,
+    "name": "Harpy",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 57,
+    "name": "Barbariccia",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 58,
+    "name": "Malachi",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 59,
+    "name": "Cave Troll",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 60,
+    "name": "Larva",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 61,
+    "name": "Heart Eater",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 62,
+    "name": "Merman",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 63,
+    "name": "Fish Head",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 64,
+    "name": "Medusa Head",
+    "requires_overlay": null,
+    "is_spawner": true
+  },
+  {
+    "id": 65,
+    "name": "Ukoback",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 66,
+    "name": "Killer Fish",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 67,
+    "name": "Mimic",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 68,
+    "name": "Dead Pirate",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 69,
+    "name": "Frozen Shade",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 70,
+    "name": "Homunculus",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 71,
+    "name": "Disc Armor",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 72,
+    "name": "Decarabia",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 73,
+    "name": "Dead Mate",
+    "requires_overlay": 32,
+    "is_spawner": false
+  },
+  {
+    "id": 74,
+    "name": "Bugbear",
+    "requires_overlay": 32,
+    "is_spawner": false
+  },
+  {
+    "id": 75,
+    "name": "Procel",
+    "requires_overlay": 32,
+    "is_spawner": false
+  },
+  {
+    "id": 76,
+    "name": "Bone Ark",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 77,
+    "name": "Gorgon",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 78,
+    "name": "Alura Une",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 79,
+    "name": "Great Axe Armor",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 80,
+    "name": "Mothman",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 81,
+    "name": "Mushussu",
+    "requires_overlay": 27,
+    "is_spawner": false
+  },
+  {
+    "id": 82,
+    "name": "Dead Crusader",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 83,
+    "name": "Dead Warrior",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 84,
+    "name": "Erinys",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 85,
+    "name": "Succubus",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 86,
+    "name": "Ripper",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 87,
+    "name": "Black Panther",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 88,
+    "name": "Mud Demon",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 89,
+    "name": "Giant Slug",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 90,
+    "name": "Werewolf",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 91,
+    "name": "Flame Demon",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 92,
+    "name": "Tanjelly",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 93,
+    "name": "Arc Demon",
+    "requires_overlay": 31,
+    "is_spawner": false
+  },
+  {
+    "id": 94,
+    "name": "Gaibon",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 95,
+    "name": "Slogra",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 96,
+    "name": "Stolas",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 97,
+    "name": "Final Guard",
+    "requires_overlay": 30,
+    "is_spawner": false
+  },
+  {
+    "id": 98,
+    "name": "Malacoda",
+    "requires_overlay": 30,
+    "is_spawner": false
+  },
+  {
+    "id": 99,
+    "name": "Alastor",
+    "requires_overlay": 30,
+    "is_spawner": false
+  },
+  {
+    "id": 100,
+    "name": "Iron Golem",
+    "requires_overlay": 30,
+    "is_spawner": false
+  },
+]

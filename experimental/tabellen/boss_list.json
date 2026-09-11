@@ -1,0 +1,104 @@
+[
+{
+  "id": 101,
+  "name": "Flying Armor",
+  "requires_overlay": 23,
+  "is_spawner": false
+},
+  {
+    "id": 102,
+    "name": "Balore",
+    "requires_overlay": 29,
+    "is_spawner": false
+  },
+  {
+    "id": 103,
+    "name": "Malphas",
+    "requires_overlay": 40,
+    "is_spawner": false
+  },
+  {
+    "id": 104,
+    "name": "Dmitrii",
+    "requires_overlay": 25,
+    "is_spawner": false
+  },
+  {
+    "id": 105,
+    "name": "Dario",
+    "requires_overlay": 25,
+    "is_spawner": false
+  },
+  {
+    "id": 106,
+    "name": "Puppet Master",
+    "requires_overlay": 26,
+    "is_spawner": false
+  },
+  {
+    "id": 107,
+    "name": "Rahab",
+    "requires_overlay": 33,
+    "is_spawner": false
+  },
+  {
+    "id": 108,
+    "name": "Gergoth",
+    "requires_overlay": 33,
+    "is_spawner": false
+  },
+  {
+    "id": 109,
+    "name": "Zephyr",
+    "requires_overlay": 37,
+    "is_spawner": false
+  },
+  {
+    "id": 110,
+    "name": "Bat Company",
+    "requires_overlay": 35,
+    "is_spawner": false
+  },
+  {
+    "id": 111,
+    "name": "Paranoia",
+    "requires_overlay": 35,
+    "is_spawner": false
+  },
+  {
+    "id": 112,
+    "name": "Aguni",
+    "requires_overlay": 39,
+    "is_spawner": false
+  },
+  {
+    "id": 113,
+    "name": "Death",
+    "requires_overlay": 39,
+    "is_spawner": false
+  },
+  {
+    "id": 114,
+    "name": "Abaddon",
+    "requires_overlay": 38,
+    "is_spawner": false
+  },
+  {
+    "id": 115,
+    "name": "Menace",
+    "requires_overlay": 38,
+    "is_spawner": false
+  },
+  {
+    "id": 116,
+    "name": "Soma",
+    "requires_overlay": null,
+    "is_spawner": false
+  },
+  {
+    "id": 117,
+    "name": "Dracula",
+    "requires_overlay": null,
+    "is_spawner": false
+  }
+]
