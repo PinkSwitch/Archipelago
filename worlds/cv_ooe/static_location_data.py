@@ -138,7 +138,7 @@ location_ids = {
     "Wygol Village: Item from Laura": 0x7D,
     "Wygol Village: Item from Marcel": 0x7E,
     "Wygol Village: Item from George": 0x7F,
-
+    "Kalidus Channel: Ship Room Mouse Pickup": 0x80,
     "Wygol Village: Item from Daniela": 0x81,
     "Monastery: Pre-Boss Chest": 0x82,
     "Minera Prison Island: Lower Spear Hall Ending Chest": 0x83,
@@ -729,7 +729,7 @@ location_data_table = {
     "Wygol Village: Item from Laura": LocationInformation(0x020F5A52, "arm9", "Inline"),
     "Wygol Village: Item from Marcel": LocationInformation(0x020F59A2, "arm9", "Inline"),
     "Wygol Village: Item from George": LocationInformation(0x020F59E2, "arm9", "Inline"),
-
+    "Kalidus Channel: Ship Room Mouse Pickup": LocationInformation(0x020F5A42, "arm9", "Inline"),
     "Wygol Village: Item from Daniela": LocationInformation(0x020F5AC2, "arm9", "Inline")
     
 }

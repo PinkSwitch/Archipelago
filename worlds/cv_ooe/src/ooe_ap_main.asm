@@ -170,6 +170,9 @@
     .org 0x020F5ACA
         .dh 0x81 ; Daniela's Subquest flag
 
+    .org 0x020F5A42
+        .dh 0xAD ; Mouse
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -624,6 +627,21 @@
 
     .org 0x02236424
         mov r0, 0x21 ; Beacon of Hope, Daniela's Subquest
+
+    .org 0x0229BB9C
+        bl @GetMouseItem
+
+    .org 0x02233784
+        b @RedirectNewRewardQuests
+
+    .org 0x02234F38
+        mov r1, 0x03 ; Set Laura's Quest1 to have a reward
+
+    .org 0x02234FC4
+        mov r1, 0x03 ; Set Laura's Quest2 to have a reward
+
+    .org 0x02235060
+        mov r1, 0x03 ; Set Laura's Quest3 to have a reward
 
         
 .close
@@ -3725,7 +3743,7 @@
     b 0x02234DF8
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Laura's quests
-; TODO! Make sure we can get rewards for quests which don't normally give any. It doesn't. I need to add a CompleteQuest call.
+; TODO! Test if this works with the implemented method
 @QuestHandler_Laura:
     ldr r4, = 0x440101FD
     mov r0, 0x7D
@@ -4100,7 +4118,6 @@
     b 0x022354F8
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for George's quests
-; TODO! Again, CompleteQuest call here
 @QuestHandler_George:
     ldr r4, = 0x44010218
     mov r0, 0x13
@@ -4111,8 +4128,6 @@
     bl @CheckLocFlag
     cmp r0, 1
     beq @@CheckQuest1
-    mov r0, 0x01
-    strb r0, [r5, 0x151]
     b 0x022357B0
 @@CheckQuest1:
     mov r0, 0x12
@@ -4126,6 +4141,7 @@
     mov r0, 0x7
     mov r1, 0x00
     bl @PrimeQuestForCompletion
+    mov r7, 3 ; Set this as an Item quest
     b 0x02235740
 
 @@CheckQuest2:
@@ -4140,6 +4156,7 @@
     mov r0, 0x7
     mov r1, 0x01
     bl @PrimeQuestForCompletion
+    mov r7, 3 ; Set this as an Item quest
     b 0x022357E4
 
 @@CheckQuest3:
@@ -4159,6 +4176,7 @@
     mov r0, 0x7
     mov r1, 0x02
     bl @PrimeQuestForCompletion
+    mov r7, 3 ; Set this as an Item quest
     b 0x0223587C
 
 ; For some reason not skipping georges cutscene runs a different handler
@@ -4412,6 +4430,58 @@
 @@Exit:
     pop r0
     b 0x022363DC
+;;;;;;;;;;;;;;;;;;
+; Gives the proper mouse item and sets a Loc flag for it
+@GetMouseItem:
+    push lr
+    mov r0, 0x80
+    bl @CheckLocFlag
+    cmp r0, 1
+    beq @@Exit
+    mov r0, 0x80
+    bl @SetLocFlag
+    ldr r0, = 0x020F5A42
+    ldrh r0, [r0]
+    bl @GetItemArbitrary
+@@Exit:
+    pop lr
+    bx lr
+;;;;;;;;;;;;;;;;;;;;;
+; Checks if this quest has a Reward so it can branch back
+@ROMTable_QuestsWithNoreward:
+    .db 0x01
+    .db 0x02
+    .db 0x03
+    .db 0x04
+    .db 0x05
+    .db 0x06
+    .db 0x07
+    .db 0x12
+    .db 0x13
+    .db 0x14
+    .db 0xFF
+.align 4
+@RedirectNewRewardQuests:
+    ldr r1, = @ROMTable_QuestsWithNoreward
+@@CheckNext:
+    ldrb r2, [r1]
+    cmp r0, r2
+    beq @@CloseDialogue ; This is a no-reward and we need to bail
+    cmp r2, 0xFF
+    beq @@Exit
+    add r1, r1, 1
+    b @@CheckNext
+@@Exit:
+    mov r0, 1
+    b 0x02233788
+@@CloseDialogue:
+    mov r0, r4
+    bl 0x0222f400 ; This one will set the game to a normal state
+    ldr r0, = 0x02159A30
+    ldrh r1, [r0]
+    bic r1, r1, 0x2 ; Clear the popup hide flag
+    strh r1, [r0]
+    b 0x022336A8
 
 
 
