@@ -211,6 +211,36 @@
 
     .org 0x021FCA2C
         .dw @CatHint3
+;;;;;;;;;;;;;;;;;;;;;
+; Changing 3 iron ore to 1 for Eugen's Quest1
+    .org 0x021E1353
+        .db 0x11 ; Num in desc
+
+    .org 0x021E135E
+        .db 0xE9 ; Skip the S in iron ores
+
+    .org 0x021E308D
+        .db 0x11 ; Post-accept dialogue
+
+    .org 0x021E8114
+        .db 0x11 ; Accept dialogue
+
+    .org 0x021E8154
+        .db 0x11 ; Accept dialogue 2
+;;;;;;;;;;;;;;;;;;;;;;
+; Changing 3 silver ore to 1 for Eugen's Quest2
+    .org 0x021EBD49
+        .db 0x11 ; Accept dialogue
+
+    .org 0x021E702C
+        .db 0x11 ; Post-Accept
+
+    .org 0x021E03E9
+        .db 0x11 ; Description
+
+    .org 0x021E03F6
+        .db 0xE9 ; Skip a letter
+;;;;;;;;;;;;;;;;;;;;;;;;
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3955,7 +3985,8 @@
     b 0x0222F038
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Eugen's quests
-; TODO! Update all Quest text to say 1 item instead of 3
+; TODO! Update all Quest text to say 1 item instead of 3. I got Quest 1 and QUest 2, just need to do quest 3
+;TEST!
 @QuestHandler_Eugen:
     ldreq r4, = 0x44010207
     mov r0, 0x09
