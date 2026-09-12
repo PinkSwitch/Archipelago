@@ -164,6 +164,12 @@
     .org 0x020F59EA
         .dh 0x7F ; George's subquest flag
 
+    .org 0x020F5AC2
+        .dh 0xB7 ; Sketch Book
+
+    .org 0x020F5ACA
+        .dh 0x81 ; Daniela's Subquest flag
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -612,6 +618,12 @@
 
     .org 0x02236204
         b @QuestHandler_Irina
+
+    .org 0x022363D8
+        b @QuestHandler_Daniela
+
+    .org 0x02236424
+        mov r0, 0x21 ; Beacon of Hope, Daniela's Subquest
 
         
 .close
@@ -4340,6 +4352,66 @@
     ldr r0, =0x020FFC58
     b 0x02236208
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Daniela's quests
+@QuestHandler_Daniela:
+    push r0
+    ldreq r4, =0x44010236
+    mov r0, 0x81
+    bl @CheckLocFlag
+    cmp r0, 1
+    beq @@CheckQuest1
+    popne r0
+    b 0x02236410 ; First quest text so we get sketchbook
+
+
+@@CheckQuest1:
+    mov r0, 0x21
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xB8 ; Lighthousee Art
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@CheckQuest2
+    popne r0
+    mov r0, 0xC
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
+    b 0x0223643C
+
+@@CheckQuest2:
+    mov r0, 0x22
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xB9 ; Waterfall Art
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@CheckQuest3
+    popne r0
+    mov r0, 0xC
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
+    b 0x022364CC
+
+@@CheckQuest3:
+    mov r0, 0x23
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    mov r0, 0xBA ; Lighthousee Art
+    bl 0x020633F0
+    cmp r0, 0
+    beq @@Exit
+    popne r0
+    mov r0, 0xC
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
+    b 0x02236554
+
+@@Exit:
+    pop r0
+    b 0x022363DC
 
 
 
