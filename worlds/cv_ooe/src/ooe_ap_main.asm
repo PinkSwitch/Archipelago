@@ -241,6 +241,18 @@
     .org 0x021E03F6
         .db 0xE9 ; Skip a letter
 ;;;;;;;;;;;;;;;;;;;;;;;;
+; Changing 3 gold ore to 1 for Eugen's Quest3
+    .org 0x021E1374
+        .db 0x11 ; desc
+
+    .org 0x021E137F
+        .db 0xE9 ; Skip a letter
+
+    .org 0x021EE817
+        .db 0x11 ; Accept dialogue
+
+    .org 0x021E7696
+        .db 0x11 ; Post-Accept
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -663,15 +675,6 @@
 
     .org 0x02233784
         b @RedirectNewRewardQuests
-
-    .org 0x02234F38
-        mov r1, 0x03 ; Set Laura's Quest1 to have a reward
-
-    .org 0x02234FC4
-        mov r1, 0x03 ; Set Laura's Quest2 to have a reward
-
-    .org 0x02235060
-        mov r1, 0x03 ; Set Laura's Quest3 to have a reward
 
         
 .close
@@ -3712,68 +3715,83 @@
     b 0x0221D848
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Abram's quests
-; TODO! Make sure Abram is GIVING you quest rewards, completing and shit!
-;TODO! Rewrite ALL of this. This is a mess.
-; This needs to be done by setting the quest status to 2 right as it's completed
+; TODO! Abram's quests are properly marked to give a reward. However, Bit 2 of the quest isn't getting set on completion, so it doesn't trigger it. Investigate
 @QuestHandler_Abram:
     ldr r4, = 0x440101FA
-    mov r0, 0x02 ; [Medicinal Ingredients Needed]
+    mov r0, 0x01
     bl 0x020A9E28
-    cmp r0, 0x01 ; Check if Quest 2 has been accepted
-    beq @@CheckQuest2
-@@CheckOtherQuests:
-    mov r0, 0x01 ; [Running Out of Sage]
-    bl 0x020A9E28
-    cmp r0, 0x05 ; Check if Quest 1 has been completed yet
-    beq @@CheckQuest3
-@@CheckQuest1:
-; Here we check Quest 1 Completion
-    mov r0, 0xC1
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xC1 ; Sage
     bl 0x020636D8
     cmp r0, 0
-    movne r0, 0
-    strneb r0, [r5, 0x151]
-    bne 0x02234C2C ; Run the code that properly completes this quest
-    b 0x02234BC8 ; Return to normal dialogue
+    beq @@CheckQuest2
+    mov r0, 0x1
+    mov r1, 0
+    bl @PrimeQuestForCompletion
+    mov r7, 0x03
+    b 0x02234C2C
+
 @@CheckQuest2:
+    mov r0, 0x02
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
     mov r0, 0xC2 ; Chamomile
     bl 0x020636D8
     cmp r0, 0
-    beq @@CheckOtherQuests
+    beq @@CheckQuest3
     mov r0, 0xC3 ; Rue
     bl 0x020636D8
     cmp r0, 0
-    beq @@CheckOtherQuests
-    mov r0, 1
-    strb r0, [r5, 0x151]
-    b 0x02234CC0 ;Run the code that completed this quest
+    beq @@CheckQuest3
+    mov r0, 0x1
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
+    mov r7, 0x03
+    b 0x02234CC0
+
 @@CheckQuest3:
-    mov r0, 0x03 ; [Mandrake is the Best Medicine]
+    mov r0, 0x03
     bl 0x020A9E28
     cmp r0, 0x01
-    bne @@CheckQuest4 ; If not accepted, go to the next quest
-    mov r0, 0xC4 ; Mandrake Root
+    bne @@CheckQuest4
+    mov r0, 0xC1 ; Sage
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest4
-    mov r0, 2
-    strb r0, [r5, 0x151]
-    b 0x02234D34
+    mov r0, 0xC4 ; Mandrake root
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest4
+    mov r0, 0x1
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
+    mov r7, 0x03
+    b 0x02234D5C
+
 @@CheckQuest4:
-    mov r0, 0x04 ; [Unusual Medicine Components]
+    mov r0, 0x01
     bl 0x020A9E28
     cmp r0, 0x01
-    bne 0x02234BC8 ; Back to normal dialogue
+    bne 0x02234BC8
+    mov r0, 0xC1 ; Sage
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest4
     mov r0, 0xC5 ; Merman Meat
     bl 0x020636D8
     cmp r0, 0
-    beq 0x02234BC8
-    mov r0, 3
-    strb r0, [r5, 0x151]
+    beq @@CheckQuest4
+    mov r0, 0x1
+    mov r1, 0x03
+    bl @PrimeQuestForCompletion
+    mov r7, 0x03
     b 0x02234DF8
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Laura's quests
-; TODO! Test if this works with the implemented method
 @QuestHandler_Laura:
     ldr r4, = 0x440101FD
     mov r0, 0x7D
@@ -3801,6 +3819,7 @@
     mov r0, 0x3
     mov r1, 0
     bl @PrimeQuestForCompletion
+    mov r7, 0x03
     b 0x02234F14
 @@CheckQuest2:
     mov r0, 0x06 ;[A pleasant Accessory]
@@ -3822,6 +3841,7 @@
     mov r0, 0x3
     mov r1, 0x01
     bl @PrimeQuestForCompletion
+    mov r7, 0x03
     b 0x02234FA0
 @@CheckQuest3:
     mov r0, 0x07 ;[A Heartwarming Accessory]
@@ -3839,6 +3859,7 @@
     mov r0, 0x3
     mov r1, 0x02
     bl @PrimeQuestForCompletion
+    mov r7, 0x03
     b 0x0223503C
 @@CheckQuest4:
     mov r0, 0x08 ; [The Job of a Lifetime]
@@ -3985,8 +4006,6 @@
     b 0x0222F038
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Eugen's quests
-; TODO! Update all Quest text to say 1 item instead of 3. I got Quest 1 and QUest 2, just need to do quest 3
-;TEST!
 @QuestHandler_Eugen:
     ldreq r4, = 0x44010207
     mov r0, 0x09
