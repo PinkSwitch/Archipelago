@@ -610,6 +610,9 @@
     .org 0x02235FA8
         b @QuestHandler_Monica
 
+    .org 0x02236204
+        b @QuestHandler_Irina
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -3650,6 +3653,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Abram's quests
 ; TODO! Make sure Abram is GIVING you quest rewards, completing and shit!
+;TODO! Rewrite ALL of this. This is a mess.
 ; This needs to be done by setting the quest status to 2 right as it's completed
 @QuestHandler_Abram:
     ldr r4, = 0x440101FA
@@ -4030,7 +4034,9 @@
 @@CheckQuest1:
     mov r0, 0x0F
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x01
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     
     mov r0, 0xB0 ; Photo 1
@@ -4046,7 +4052,9 @@
 @@CheckQuest2:
     mov r0, 0x10
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x01
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0xB1 ; Photo 2
     bl 0x020633F0
@@ -4061,7 +4069,9 @@
 @@CheckQuest3:
     mov r0, 0x11
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x01
+    beq @@Exit
+    tst r0, 0x04
     bne @@Exit
     mov r0, 0xB2 ; Photo 3
     bl 0x020633F0
@@ -4109,7 +4119,9 @@
 @@CheckQuest2:
     mov r0, 0x13
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x01
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     tst r0, 0x02 ; Test that the quest was Complete
     beq @@CheckQuest3
@@ -4210,6 +4222,7 @@
     b 0x02235D8C
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Monica's quests
+;TODO! Dialogue changed to 1 instead of 5
 @QuestHandler_Monica:
     push r0
     ldreq r4, = 0x4401022E
@@ -4278,6 +4291,55 @@
     bl 0x020A9E54 ; Set the quest as Active and Primed
     pop lr
     bx lr
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Irina's quests
+@QuestHandler_Irina:
+    mov r0, 0x1E
+    bl 0x020A9E28
+    tst r0, 0x01
+    beq @@CheckQuest2
+    tst r0, 0x04 ; If this quest is Complete or not Active
+    bne @@CheckQuest2
+
+    tst r0, 0x02
+    beq @@CheckQuest2
+    mov r0, 0xB
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
+    b 0x02236260
+@@CheckQuest2:
+    mov r0, 0x1F
+    bl 0x020A9E28
+    tst r0, 0x01
+    beq @@CheckQuest3
+    tst r0, 0x04
+    bne @@CheckQuest3
+
+    tst r0, 0x02
+    beq @@CheckQuest3
+    mov r0, 0xB
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
+    b 0x022362E8
+
+@@CheckQuest3:
+    mov r0, 0x20
+    bl 0x020A9E28
+    tst r0, 0x01
+    beq @@Exit
+    tst r0, 0x04
+    bne @@Exit
+
+    tst r0, 0x02
+    beq @@Exit
+    mov r0, 0xB
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
+    b 0x02236380
+@@Exit:
+    ldr r0, =0x020FFC58
+    b 0x02236208
+;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
