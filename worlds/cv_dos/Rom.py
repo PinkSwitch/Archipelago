@@ -114,7 +114,7 @@ def patch_rom(world, rom, code_patch):
 
     starting_weapon = global_weapon_table.index(weapon)
     ########### COPPER DAWN STUFF, TODO DELETE THIS
-    if world.player_name == "ironsoul":
+    if world.iron_mode:
         starting_armor = world.random.choice(["Casual Clothes", "Cloth Tunic", "Leather Armor", "Silk Robe"])
         starting_armor = global_armor_table.index(starting_armor)
         starting_weapon = world.random.choice(["Rapier", "Short Sword", "Claymore", "Mace", "Blunt Sword",

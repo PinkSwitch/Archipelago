@@ -353,4 +353,4 @@ class DoSWorld(World):
 
         self.filler_souls = soul_filler_table.copy()
 
-        self.iron_mode = bool(True)
+        self.iron_mode = bool(False)
