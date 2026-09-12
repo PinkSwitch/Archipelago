@@ -327,6 +327,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Bob-omb Squad"), Has("Bob-omb"))
         set_rule(world.get_location("Bonus - Laser Marksman"), Has("Ray Gun"))
         set_rule(world.get_location("Bonus - Pokémon KO"), Has("Poké Ball"))
+        set_rule(world.get_location("Bonus - Super Spy"), Has("Motion-Sensor Bomb"))
         
         if world.options.enable_rare_pokemon_checks:
             set_rule(world.get_location("Bonus - Mew Catcher"), Has("Poké Ball"))
