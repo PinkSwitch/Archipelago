@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from Options import (Toggle, Range, PerGameCommonOptions, StartInventoryPool,
-                     OptionGroup, DefaultOnToggle, Choice, OptionSet)
+                     OptionGroup, DefaultOnToggle, Choice, OptionSet, DeathLink)
 
 
 class TrophiesRequired(Range):
@@ -187,6 +187,17 @@ class Disable1PRandomTrophies(Toggle):
     display_name = "Remove 1P Trophies"
 
 
+class DeathLinkTrigger(Choice):
+    """Determine quand une mort est envoyee aux autres joueurs.
+
+    stock_loss : a chaque stock perdu.
+    match_loss : uniquement quand le dernier stock est perdu."""
+    display_name = "DeathLink Trigger"
+    option_stock_loss = 0
+    option_match_loss = 1
+    default = 1
+
+
 @dataclass
 class SSBMOptions(PerGameCommonOptions):
     starting_character: StartingCharacter
@@ -216,6 +227,8 @@ class SSBMOptions(PerGameCommonOptions):
     all_star_clear_trophies: AllStarClearTrophies
     randomize_battle_items: RandomizeItems
     remove_random_1P_trophies: Disable1PRandomTrophies
+    death_link: DeathLink
+    death_link_trigger: DeathLinkTrigger
 
 
 ssbm_option_groups = [
@@ -263,5 +276,10 @@ ssbm_option_groups = [
         SoloCSmash,
         DisableTapJump,
         AutoLCancel
+    ]),
+
+    OptionGroup("DeathLink", [
+        DeathLink,
+        DeathLinkTrigger
     ]),
 ]
