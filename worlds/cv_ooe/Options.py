@@ -268,20 +268,19 @@ class WeightEnemyDrops(DefaultOnToggle):
 
 
 quest_keys = set()
-#for quest in quest_data:
- #   quest_keys.add(quest)
-  #  quest_keys.add(quest.split(": ")[1])  # Truncate it to just the quest name
+for quest in quest_data:
+    quest_keys.add(quest)
+    quest_keys.add(quest.split(": ")[1])  # Truncate it to just the quest name
 
 for villager in villager_list:
     if villager in ["Nikolai", "Jacob"]:  # They don't have quests so remove them
         continue
     quest_keys.add(villager)
-quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Simple"}
+quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Simple", "Has Reward", "No Reward"}
 
 
 class ActiveQuests(OptionSet):
-#  TODO! Has reward? Excluded? Some way to say "Hey, X quests but only ones that give a reward..."
-    """Specify which Quests have random items.
+    """Specify which Quests have random items. Active quests that normally do not give items will if they are set here.
        You can type any individual quest name, as well as the following shortcuts.
        Additionally, you can type the name of a Villager to include all of that villager's Quests.
 
@@ -289,6 +288,8 @@ class ActiveQuests(OptionSet):
        Requires Item: Any Quest which requires you to turn in an item.
        Defeat Enemies: Any Quest which requires you to defeat specific enemies.
        Simple: Any Quest which requires you to do some sort of specific task.
+       Has Reward: Any Quest which directly gives you a reward for completing it.
+       No Reward: Quests which only send items to the shop and do not give you an item as a reward.
        All: Enables ALL quests
        """
     display_name = "Randomized Quests"
@@ -297,9 +298,17 @@ class ActiveQuests(OptionSet):
     valid_keys_casefold = True
 
 
+class ExcludedQuests(OptionSet):
+    """Specify Excluded randomized quests from the above option. Excluded Quests will still be randomized, but will always be your own junk items.
+       The same shortcuts from the above option apply."""
+    display_name = "Excluded Quests"
+    default = {"No Reward"}
+    valid_keys = frozenset(key.casefold() for key in quest_keys)
+    valid_keys_casefold = True
+
 
 class UnlockAllQuests(Toggle):
-    """If enabled, all Quests will be unlocked by default and you can complete them out of order."""
+    """If enabled, all Quests will be unlocked by default, and you can complete them out of order."""
     display_name = "Unlock All Quests"
 
 

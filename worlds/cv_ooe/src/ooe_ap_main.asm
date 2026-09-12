@@ -607,6 +607,9 @@
     .org 0x02235D88
         b @QuestHandler_Anna
 
+    .org 0x02235FA8
+        b @QuestHandler_Monica
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -3731,12 +3734,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest2
-    mov r0, 0
-    mov r1, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x05
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x3
+    mov r1, 0
+    bl @PrimeQuestForCompletion
     b 0x02234F14
 @@CheckQuest2:
     mov r0, 0x06 ;[A pleasant Accessory]
@@ -3755,12 +3755,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest3
-    mov r0, 0x01
-    mov r1, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x06
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x3
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x02234FA0
 @@CheckQuest3:
     mov r0, 0x07 ;[A Heartwarming Accessory]
@@ -3775,12 +3772,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest4
-    mov r0, 0x02
-    mov r1, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x07
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x3
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x0223503C
 @@CheckQuest4:
     mov r0, 0x08 ; [The Job of a Lifetime]
@@ -3791,12 +3785,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq 0x02234E50
-    mov r0, 0x03
-    mov r1, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x08
+    mov r0, 0x3
     mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    bl @PrimeQuestForCompletion
     b 0x022350D0
 
 ; Gives Laura's collar item when we're not skipping the scene
@@ -3941,11 +3932,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest2
-    mov r0, 0
-    strb r0, [r5, 0x151]
-    mov r0, 0x09
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x4
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
     b 0x02235184
 @@CheckQuest2:
     mov r0, 0x0A
@@ -3956,12 +3945,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest3
-
-    mov r0, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x0A
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x4
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x0223521C
 @@CheckQuest3:
     mov r0, 0x0B
@@ -3972,11 +3958,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq 0x02235118
-    mov r0, 2
-    strb r0, [r5, 0x151]
-    mov r0, 0x0B
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x4
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x022352B4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Aeon's quests
@@ -3992,11 +3976,9 @@
     cmp r0, 0
     beq @@CheckQuest2
     popne r1-r3
-    mov r0, 0
-    strb r0, [r5, 0x151]
-    mov r0, 0x0C
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x5
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
     b 0x0223536C
 
 @@CheckQuest2:
@@ -4009,11 +3991,9 @@
     cmp r0, 0
     beq @@CheckQuest3
     popne r1-r3
-    mov r0, 1
-    strb r0, [r5, 0x151]
-    mov r0, 0x0D
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x5
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x022353FC
 
 @@CheckQuest3:
@@ -4026,11 +4006,9 @@
     cmp r0, 0
     beq @@Exit
     popne r1-r3
-    mov r0, 2
-    strb r0, [r5, 0x151]
-    mov r0, 0x0E
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x5
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x02235494
 
 @@Exit:
@@ -4060,11 +4038,9 @@
     cmp r0, 0
     beq @@CheckQuest2
     popne r0-r3
-    mov r0, 0
-    strb r0, [r5, 0x151]
-    mov r0, 0x0F
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x6
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
     b 0x0223555C
 
 @@CheckQuest2:
@@ -4077,11 +4053,9 @@
     cmp r0, 0
     beq @@CheckQuest3
     popne r0-r3
-    mov r0, 0x01
-    strb r0, [r5, 0x151]
-    mov r0, 0x10
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x6
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x022355C4
 
 @@CheckQuest3:
@@ -4094,11 +4068,9 @@
     cmp r0, 0
     beq @@Exit
     popne r0-r3
-    mov r0, 0x02
-    strb r0, [r5, 0x151]
-    mov r0, 0x11
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x6
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x02235684
 
 @@Exit:
@@ -4129,12 +4101,9 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest2
-
-    mov r0, 0x00
-    strb r0, [r5, 0x151]
-    mov r0, 0x12
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x7
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
     b 0x02235740
 
 @@CheckQuest2:
@@ -4144,11 +4113,9 @@
     bne @@CheckQuest3
     tst r0, 0x02 ; Test that the quest was Complete
     beq @@CheckQuest3
-    mov r0, 0x01
-    strb r0, [r5, 0x151]
-    mov r0, 0x13
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x7
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x022357E4
 
 @@CheckQuest3:
@@ -4165,11 +4132,9 @@
     cmp r0, 0
     beq 0x022356D4
 
-    mov r0, 0x02
-    strb r0, [r5, 0x151]
-    mov r0, 0x14
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x7
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x0223587C
 
 ; For some reason not skipping georges cutscene runs a different handler
@@ -4191,11 +4156,9 @@
     bl 0x0206AA6C ; Check if Owl is active
     cmp r0, 0
     ble @@Exit
-    mov r0, 0x01
-    strb r0, [r5, 0x151]
-    mov r0, 0x16
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x8
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x02235C08
 @@Exit:
     ldr r0, = 0x020FFC58
@@ -4209,13 +4172,10 @@
     bne @@CheckQuest2
     tst r0, 0x02
     beq @@CheckQuest2
-    mov r0, 0x00
-    strb r0, [r5, 0x151]
-    mov r0, 0x18
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x9
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
     b 0x02235E0C
-
 
 @@CheckQuest2:
     mov r0, 0x19
@@ -4226,13 +4186,10 @@
     bl 0x020633F0
     cmp r0, 0
     beq @@CheckQuest3
-    mov r0, 0x01
-    strb r0, [r5, 0x151]
-    mov r0, 0x19
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x9
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
     b 0x02235E9C
-
 
 @@CheckQuest3:
     mov r0, 0x1A
@@ -4243,16 +4200,84 @@
     bl 0x020633F0
     cmp r0, 0
     beq @@Exit
-    mov r0, 0x02
-    strb r0, [r5, 0x151]
-    mov r0, 0x1A
-    mov r1, 0x03
-    bl 0x020A9E54 ; Set the quest as Active and Primed
+    mov r0, 0x9
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
     b 0x02235F48
 
 @@Exit:
     ldr r0, = 0x020FFC58
     b 0x02235D8C
+;;;;;;;;;;;;;;;;;;;;;;;;
+; Check handler for Monica's quests
+@QuestHandler_Monica:
+    push r0
+    ldreq r4, = 0x4401022E
+    mov r0, 0x1B
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest2
+    mov r0, 0xBE ; Cotton Thread
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest2
+    popne r0
+    mov r0, 0xA
+    mov r1, 0x00
+    bl @PrimeQuestForCompletion
+    b 0x02236000
+
+@@CheckQuest2:
+    mov r0, 0x1C
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@CheckQuest3
+    mov r0, 0xBF ; Silk Thread
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@CheckQuest3
+    popne r0
+    mov r0, 0x01
+    strb r0, [r5, 0x151]
+    mov r0, 0xA
+    mov r1, 0x01
+    bl @PrimeQuestForCompletion
+    b 0x02236090
+
+@@CheckQuest3:
+    mov r0, 0x1D
+    bl 0x020A9E28
+    cmp r0, 0x01
+    bne @@Exit
+    mov r0, 0xC0 ; Cashmere Thread
+    bl 0x020636D8
+    cmp r0, 0
+    beq @@Exit
+    popne r0
+    mov r0, 0xA
+    mov r1, 0x02
+    bl @PrimeQuestForCompletion
+    b 0x02236120
+
+@@Exit:
+    pop r0
+    b 0x02235FAC
+;;;;;;;;;;;;;;;;;;;;;;
+; Sets up Quest completion data
+; r0 - Villager id
+; r1 - local quest num
+@PrimeQuestForCompletion:
+    push lr
+    push r1
+    ldr r1, = @ROMTable_StartingQuestID
+    ldrb r0, [r1, r0] ; Index into this using villager number
+    pop r1
+    strb r1, [r5, 0x151] ; Set this as the current quest we're focused on
+    add r0, r0, r1 ;Base quest + questnumber
+    mov r1, 0x03
+    bl 0x020A9E54 ; Set the quest as Active and Primed
+    pop lr
+    bx lr
 
 
 
