@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from Options import (TextChoice, DefaultOnToggle, Toggle, PerGameCommonOptions, OptionGroup,
                      NamedRange, Range, Choice, OptionSet, StartInventoryPool, DeathLink)
+from .modules.quest_data import quest_data
 from .game_data import villager_list
 
 

@@ -1144,8 +1144,8 @@
     @CatHint3:
         .fill 0xB0 ; 22EB420
 
-@OptionFlag_UnlockAllQuests: ;TODO! This.
-    .db 0x00
+@OptionFlag_UnlockAllQuests: ;22EB4D0
+    .db 0x00 ; TODO! Reset
 
 .align 4
 
@@ -1273,8 +1273,14 @@
     mov r0, 0
     mov r1, 1
     bl 0x020AA95C ; Set Dracula's Castle as unlocked
-
 @@SkipCastleUnlock:
+    ldr r0, = @OptionFlag_UnlockAllQuests
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@SkipQuests
+    bl @ActivateAllQuests
+
+@@SkipQuests:
     ldr r0, =@OptionFlag_StartingArea
     ldrb r0, [r0]
     cmp r0, 0
@@ -4338,7 +4344,6 @@
     b 0x02235D8C
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Monica's quests
-;TODO! Dialogue changed to 1 instead of 5
 @QuestHandler_Monica:
     push r0
     ldreq r4, = 0x4401022E
@@ -4568,6 +4573,20 @@
     bic r1, r1, 0x2 ; Clear the popup hide flag
     strh r1, [r0]
     b 0x022336A8
+;;;;;;;;;;;;;;;;;;;
+; Sets all quests as active
+@ActivateAllQuests:
+    push r4,lr
+    mov r4, 0x01
+@@NextQuest:
+    mov r0, r4
+    mov r1, 0x01
+    bl 0x020A9E54
+    cmp r4, 0x23
+    addne r4, r4, 1
+    bne @@NextQuest
+    pop r4,lr
+    bx lr
 
 
 
