@@ -282,6 +282,7 @@ quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Simple", "Has Reward",
 
 class ActiveQuests(OptionSet):
     """Specify which Quests have random items. Active quests that normally do not give items will if they are set here.
+       Inlcuding Quests which do not normally give you rewards will give you an item.
        You can type any individual quest name, as well as the following shortcuts.
        Additionally, you can type the name of a Villager to include all of that villager's Quests.
 
@@ -295,8 +296,7 @@ class ActiveQuests(OptionSet):
        """
     display_name = "Randomized Quests"
     default = {}
-    valid_keys = frozenset(key.casefold() for key in quest_keys)
-    valid_keys_casefold = True
+    valid_keys = frozenset(key for key in quest_keys)
 
 
 class ExcludedQuests(OptionSet):
@@ -304,8 +304,7 @@ class ExcludedQuests(OptionSet):
        The same shortcuts from the above option apply."""
     display_name = "Excluded Quests"
     default = {"No Reward"}
-    valid_keys = frozenset(key.casefold() for key in quest_keys)
-    valid_keys_casefold = True
+    valid_keys = frozenset(key for key in quest_keys)
 
 
 class UnlockAllQuests(Toggle):
@@ -356,6 +355,7 @@ class OoEOptions(PerGameCommonOptions):
     randomized_quests: ActiveQuests
     unlock_all_quests: UnlockAllQuests
     include_quest_key_items: RandomizeQuestKeyItems
+    excluded_quests: ExcludedQuests
 
 
 ooe_option_groups = [
@@ -382,6 +382,7 @@ ooe_option_groups = [
 
     OptionGroup("Quest Options", [
         ActiveQuests,
+        ExcludedQuests,
         UnlockAllQuests,
         RandomizeQuestKeyItems
     ]),

@@ -7,6 +7,7 @@ from .modules.glyph_shuffle import shuffle_glyphs
 
 
 def setup_game(world) -> None:
+    from .modules.quest_data import setup_quests
     world.options.logic_tricks.value = {key.title() for key in world.options.logic_tricks.value}
 
     if world.options.starting_glyph == StartingGlyph.option_random_base:
@@ -46,6 +47,7 @@ def setup_game(world) -> None:
         
     set_glyph_attributes(world)
     shuffle_glyphs(world)
+    setup_quests(world)
 
 
 def place_static_items(world) -> None:
