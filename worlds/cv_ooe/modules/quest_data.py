@@ -9,6 +9,10 @@ class QuestData(NamedTuple):
 # TODO:
     # Add required items to the item pool. But make sure that we only add one guaranteed copy, so make
     # A local pool of ones that were already added. Check if it's not already in the iteem pool for like, cat col?
+    # Some wy to tell when EARLIER quests are required. Also, Requesites need to be able to say the relevant quest is Important!
+    # Logic
+    # Remove Unwelcome Guest entirely if Large Cavern is off
+
 
 quest_data = {
     "Quest: Running Out of Sage": QuestData("Nothing", "Abram", ["Sage"]),
