@@ -253,6 +253,40 @@
 
     .org 0x021E7696
         .db 0x11 ; Post-Accept
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Change 5 to 1 for Monica's quest
+    .org 0x021E0AA6
+        .db 0x11 ; Quest1 Description
+
+    .org 0x021E0AB6
+        .db 0xE9 ; Skip letter
+
+    .org 0x021E4591
+        .db 0x11 ; Quest2 Description
+
+    .org 0x021E1F5E
+        .db 0x11 ; Quest3 Desc
+
+    .org 0x021E1F70
+        .db 0xE9 ; Skip let
+
+    .org 0x021F47FD
+        .db 0x11 ; Quest 1 Accept text
+
+    .org 0x021E69A7
+        .db 0x11 ; Quest 1 Post-accept
+
+    .org 0x021F17A0
+        .db 0x11 ; Quest 2 accept
+
+    .org 0x021E3E79
+        .db 0x11 ; Quest 2 post accept
+
+    .org 0x021F26DF
+        .db 0x11 ; Quest 3 accept
+
+    .org 0x021EAB64
+        .db 0x11 ; quest 3 post
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -675,6 +709,9 @@
 
     .org 0x02233784
         b @RedirectNewRewardQuests
+
+    .org 0x02234B0C
+        tst r0, 0x200 ; Make Nikolai check the Minera Prison albus flag instead of the post-SkelCave flag...
 
         
 .close
@@ -3715,7 +3752,6 @@
     b 0x0221D848
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Abram's quests
-; TODO! Abram's quests are properly marked to give a reward. However, Bit 2 of the quest isn't getting set on completion, so it doesn't trigger it. Investigate
 @QuestHandler_Abram:
     ldr r4, = 0x440101FA
     mov r0, 0x01
@@ -3726,7 +3762,7 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest2
-    mov r0, 0x1
+    mov r0, 0x2
     mov r1, 0
     bl @PrimeQuestForCompletion
     mov r7, 0x03
@@ -3745,7 +3781,7 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest3
-    mov r0, 0x1
+    mov r0, 0x2
     mov r1, 0x01
     bl @PrimeQuestForCompletion
     mov r7, 0x03
@@ -3764,7 +3800,7 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest4
-    mov r0, 0x1
+    mov r0, 0x2
     mov r1, 0x02
     bl @PrimeQuestForCompletion
     mov r7, 0x03
@@ -3783,7 +3819,7 @@
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest4
-    mov r0, 0x1
+    mov r0, 0x2
     mov r1, 0x03
     bl @PrimeQuestForCompletion
     mov r7, 0x03
