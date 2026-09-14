@@ -30,6 +30,7 @@ region_list = [
     "Tymeo Mountains",
     "Tristis Pass",
     "Large Cavern",
+    "Large Cavern Can Battle",
     "Giant's Dwelling",
     "Mystery Manor",
     "Misty Forest Road",
@@ -97,6 +98,7 @@ def init_areas(world: "OoEWorld") -> None:
 
     if world.options.remove_large_cavern:
         active_regions.remove("Large Cavern")
+        active_regions.remove("Large Cavern Can Battle")
 
     active_regions.extend(active_glyphs)
 
@@ -170,12 +172,18 @@ def connect_regions(world):
                                                                                                          OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Island Final Area With Double Jump", operator="contains")]))
 
+
     world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=Has("Ordinary Rock") | can_fly)
 
     if not world.options.remove_training_hall:
         world.get_region("Training Hall").connect(world.get_region("Training Hall Prize Area"),
                                                   rule=(HasAll("Ordinary Rock", "Magnes") & can_slide) &
                                                   (Has("Rapidus Fio") | OptionFilter(LogicTricks, "Training Hall Without Rapidus", operator="contains")))
+
+    if not world.options.remove_large_cavern:
+        world.get_region("Large Cavern").connect(world.get_region("Large Cavern Can Battle"),
+                                                 rule=HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | HasAll(
+                                                     "Volaticus"))
 
     ###################################################
     world.get_region("Castle Entrance").connect(world.get_region("Castle Entrance - Right Side"), rule=Has("Paries"))

@@ -144,8 +144,13 @@ def set_quest_rules(world) -> None:
 
             # Quests with specific rules
             # Using has map if basic region access for performance
+            cave_troll_areas = (CanReachRegion("Forsaken Cloister - Left") | CanReachRegion("Forsaken Cloister - Right")
+                                | CanReachRegion("Tymeo Mountains East"))
+            if not world.options.remove_large_cavern:
+                cave_troll_areas |= CanReachRegion("Large Cavern Can Battle")
+
             if quest == "Quest: Case of the Vicious Blight":
-                rule &= (Has("Camera") & (CanReachRegion("Forsaken Cloister - Left") | CanReachRegion("Forsaken Cloister - Right") | CanReachRegion("Tymeo Mountains East"))) | Has("Photo 1")
+                rule &= (Has("Camera") & cave_troll_areas) | Has("Photo 1")
             elif quest == "Quest: Case of the Demon Horse":
                 rule &= Has("Camera") & HasAny("Photo 2", "Map: Argila Swamp")
             elif quest == "Quest: Case of the Hideous Snowman":
@@ -159,7 +164,7 @@ def set_quest_rules(world) -> None:
             elif quest == "Quest: Do You Hear Howling?":
                 rule &= Has("Map: Oblivion Ridge")
             elif quest == "Quest: An Unwelcome Guest":
-                rule &= CanReachRegion("Large Cavern")
+                rule &= CanReachRegion("Large Cavern Can Battle")
             elif quest == "Quest: A Beacon of Hope":
                 rule &= (Has("Sketch Book") & CanReachRegion("Lighthouse Post-Boss")) | Has("Lighthouse Art")
             elif quest == "Quest: Important Resting Place":

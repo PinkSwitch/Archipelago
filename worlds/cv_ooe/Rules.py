@@ -80,16 +80,7 @@ def set_location_rules(world):
     set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union") &
             CanReachLocation("Ecclesia: Barlowe Fight", options=[OptionFilter(BarloweRequired, True)], filtered_resolution=True))
 
-    if not world.options.remove_large_cavern:
-        if world.options.add_brown_chests == AddBrownChests.option_include:
-            set_rule(world.get_location("Large Cavern: Rest Room 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | HasAll("Volaticus"))
-            set_rule(world.get_location("Large Cavern: Rest Room 2"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-            set_rule(world.get_location("Large Cavern: Rest Room 3"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-            set_rule(world.get_location("Large Cavern: Rest Room 4"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-            set_rule(world.get_location("Large Cavern: Final Reward 1"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-            set_rule(world.get_location("Large Cavern: Final Reward 2"), HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-
-    # Regular brown cheests
+    #  Regular brown cheests
     if world.options.add_brown_chests == AddBrownChests.option_include:
         set_rule(world.get_location("Kalidus Channel: Third Room Underwater"), Has("Serpent Scale"))
         set_rule(world.get_location("Tymeo Mountains: Right Hill Alcove Chest"), Has("Arma Felix") | can_slide)

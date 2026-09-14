@@ -1,5 +1,5 @@
 from .Options import RandomStolenGlyphs, RandomDropGlyphs
-from rule_builder.rules import HasAll, CanReachLocation, Has, HasAny
+from rule_builder.rules import HasAll, CanReachLocation, HasAny
 
 
 def set_enemy_glyph_regions(world):
@@ -31,8 +31,8 @@ def set_enemy_glyph_regions(world):
                                                       rule=HasAll("Lizard Tail", "Ordinary Rock", "Magnes"))
 
         if not world.options.remove_large_cavern:
-            world.get_region("Large Cavern").connect(world.get_region("Jiang Shi"), rule=HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
-            world.get_region("Large Cavern").connect(world.get_region("Demon Lord"), rule=HasAll("Ordinary Rock", "Rapidus Fio", "Lizard Tail") | Has("Volaticus"))
+            world.get_region("Large Cavern Can Battle").connect(world.get_region("Jiang Shi"))
+            world.get_region("Large Cavern Can Battle").connect(world.get_region("Demon Lord"))
 
     if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_glyphsanity:
         world.get_region("Monastery Magnets Area").connect(world.get_region("Bone Scimitar"))
