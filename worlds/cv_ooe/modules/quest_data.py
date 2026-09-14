@@ -95,7 +95,16 @@ def setup_quests(world) -> None:
 
         if "Quest: An Unwelcome Guest" in world.active_quests:
             world.active_quests.remove("Quest: An Unwelcome Guest")
-    print(world.important_quests)
+
+    for quest in sorted(world.important_quests):
+        if quest_data[quest].required_items:
+            world.quest_items.extend(quest_data[quest].required_items)  # Add quest items to da list
+        elif quest_data[quest].villager == "Marcel":
+            world.quest_items.append("Camera")
+        elif quest_data[quest].villager == "Daniela":
+            world.quest_items.append("Sketch Book")
+        elif quest == "Quest: The Killing Scream":
+            world.quest_items.append("Phonograph")
 
 
 def get_filtered_quests(quests) -> set[str]:

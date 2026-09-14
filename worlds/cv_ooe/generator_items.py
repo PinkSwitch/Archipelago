@@ -57,6 +57,11 @@ def create_conditional_items(world, pool):
     if world.starting_glyph in world.glyph_filler_table:
         world.glyph_filler_table.remove(world.starting_glyph)
 
+    for item in world.quest_items:
+        if world.create_item(item) not in pool and item not in ["Cat Collar", "Mouse", "Camera", "Sketch Book",
+                                                                "Phonograph"]:
+            pool.append(world.create_item(item))
+
 
 def generate_emergency_glyphs(world, pool):
     #  Generate Glyphs that need to be added here, if we didn't generate any via the pool or filler already

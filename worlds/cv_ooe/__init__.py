@@ -92,6 +92,7 @@ class OoEWorld(World):
         self.active_quests = set()  # Quests that the player has specifically chosen to be active Locations.
         self.important_quests = set()  # Quests that logically need to be completable, selected or not.
         self.excluded_quests = set()  # Quests that the player chose, but then excluded.
+        self.quest_items = []
 
         self.glyph_filler_table = [
             "Torpor"]

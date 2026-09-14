@@ -98,6 +98,8 @@ def set_classifications(world, name) -> CVOoEItem:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     elif name in world.glyph_pool and ItemClassification.progression not in item.classification:  # Don't override actual progression glyphs
         item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
+    elif name in world.quest_items:
+        item.classification = ItemClassification.progression  # Force required quest items to be prog
 
     return item
 

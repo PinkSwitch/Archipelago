@@ -148,9 +148,9 @@ item_table: Dict[str, ItemData] = {
     "Record 6": ItemData("Key Items", 0xAA, ItemClassification.filler, 0),
     "Record 7": ItemData("Key Items", 0xAB, ItemClassification.filler, 0),
     "Record 8": ItemData("Key Items", 0xAC, ItemClassification.filler, 0),
-    "Mouse": ItemData("Key Items", 0xAD, ItemClassification.progression, 0),
-    "Cat Collar": ItemData("Key Items", 0xAE, ItemClassification.progression, 0),  # Quest progress
-    "Camera": ItemData("Key Items", 0xAF, ItemClassification.progression, 0),
+    "Mouse": ItemData("Key Items", 0xAD, ItemClassification.useful, 0),
+    "Cat Collar": ItemData("Key Items", 0xAE, ItemClassification.useful, 0),  # Quest progress
+    "Camera": ItemData("Key Items", 0xAF, ItemClassification.useful, 0),
     "Photo 1": ItemData("Key Items", 0xB0, ItemClassification.progression, 0),
     "Photo 2": ItemData("Key Items", 0xB1, ItemClassification.progression, 0),
     "Photo 3": ItemData("Key Items", 0xB2, ItemClassification.progression, 0),
@@ -158,7 +158,7 @@ item_table: Dict[str, ItemData] = {
     '"Frontier" Issue 1': ItemData("Key Items", 0xB4, ItemClassification.filler, 0),
     '"Frontier" Issue 2"': ItemData("Key Items", 0xB5, ItemClassification.filler, 0),
     '"Frontier" Final"': ItemData("Key Items", 0xB6, ItemClassification.filler, 0),
-    "Sketch Book": ItemData("Key Items", 0xB7, ItemClassification.progression, 0),
+    "Sketch Book": ItemData("Key Items", 0xB7, ItemClassification.useful, 0),
     "Lighthouse Art": ItemData("Key Items", 0xB8, ItemClassification.progression, 0),
     "Waterfall Art": ItemData("Key Items", 0xB9, ItemClassification.progression, 0),
     "Church Art": ItemData("Key Items", 0xBA, ItemClassification.progression, 0),
@@ -190,7 +190,7 @@ item_table: Dict[str, ItemData] = {
     # "AP Item": ItemData("Key Items", 0xD4, ItemClassification.progression, 0), reserved
     # "AP Item": ItemData("Key Items", 0xD5, ItemClassification.progression, 0),
     # "AP Item": ItemData("Key Items", 0xD6, ItemClassification.progression, 0),
-    "Phonograph": ItemData("Key Items", 0xD7, ItemClassification.progression, 0),
+    "Phonograph": ItemData("Key Items", 0xD7, ItemClassification.useful, 0),
     "Arthro Medal": ItemData("Medals", 0xD8, ItemClassification.useful, 0),
     "Skeleton Medal": ItemData("Medals", 0xD9, ItemClassification.useful, 0),
     "Brachyura Medal": ItemData("Medals", 0xDA, ItemClassification.useful, 0),
