@@ -362,7 +362,7 @@ location_data_table = {
 
     "The Pinnacle: Lower Hidden Room": LocationInformation(0x020BB02C),
     "The Pinnacle: Under Big Staircase": LocationInformation(0x020BAE4C),
-    "The Pinnacle: Central Indoor Room": LocationInformation(0x020BAE4C),
+    "The Pinnacle: Central Indoor Room": LocationInformation(0x020BB0C8),
     "The Pinnacle: Central Outdoor Room": LocationInformation(0x020BB158),
     "The Pinnacle: Before Throne Room Secret Left": LocationInformation(0x020BADEC),
     "The Pinnacle: Before Throne Room Secret Right": LocationInformation(0x020BADF8),
