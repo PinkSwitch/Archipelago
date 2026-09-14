@@ -108,6 +108,7 @@ def patch_rom(world, rom, code_patch):
     from .modules.in_game_hints import write_cat_hints
     from .modules.area_shuffle import patch_castle_connections
     from .modules.drop_shuffle import shuffle_drops
+    from .modules.quest_data import patch_event_quests
 
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
@@ -183,7 +184,9 @@ def patch_rom(world, rom, code_patch):
     write_cat_hints(world, rom)
 
     # Locations handler
-    patch_locations(world, rom, world.get_locations())
+    loc_list = world.get_locations()
+    patch_event_quests(world, rom, loc_list)
+    patch_locations(world, rom, loc_list)
 
     #  This is the Glyph you're shown at the end of Oblivion Ridge. We want it to match the actual check.
     rom.write_to_file(0x022C5F80 + 10, "overlay_62",

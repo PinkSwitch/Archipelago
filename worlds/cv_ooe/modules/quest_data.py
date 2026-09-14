@@ -7,14 +7,6 @@ class QuestData(NamedTuple):
     quest_number: int  # Which local quest number for this villager this is
     required_items: list = []  # Which items the player needs to complete this Quest
 
-# TODO:
-    # Add required items to the item pool. But make sure that we only add one guaranteed copy, so make
-    # A local pool of ones that were already added. Check if it's not already in the iteem pool for like, cat col?
-    # Some wy to tell when EARLIER quests are required. Also, Requesites need to be able to say the relevant quest is Important!
-    # TODO! Update important quests with subquests if necessary
-    # Logic
-    # Remove Unwelcome Guest entirely if Large Cavern is off
-
 
 quest_data = {
     "Quest: Running Out of Sage": QuestData("Nothing", "Abram", 1, ["Sage"]),
@@ -79,6 +71,11 @@ def setup_quests(world) -> None:
     world.important_quests.update(world.active_quests)  # Auto mark all active quests
     world.important_quests.difference_update(world.excluded_quests)  # Remove exclusions from the Important quests
     if not world.options.unlock_all_quests:
+        if world.options.include_quest_key_items:
+            # We need to add prereq quests to the subquest checks
+            world.important_quests.add("Quest: The Silent Violin")
+            world.important_quests.add("Quest: Mice Make for Good Eats")
+
         # Quests need to be done in order, so if a higher tier is active the lower tiers also need to be active
         quest_queue = list(world.important_quests)
         while quest_queue:
@@ -179,3 +176,18 @@ def set_quest_rules(world) -> None:
                                       and quest_data[quest].quest_number == data.quest_number - 1][0]
                     rule &= CanReachLocation(previous_quest)  # Get this villager's previous quest
             world.set_rule(world.get_location(quest), rule)
+
+
+def patch_event_quests(world, rom, locations) -> None:
+    # Patch handler for Event/disabled/vanilla quests
+    import struct
+    from ..Rom import get_item_id
+    from ..static_location_data import location_data_table
+    from ..Items import item_table
+    locations = [location.name for location in locations]
+    for quest in quest_data:
+        if quest in locations and not world.get_location(quest).address:
+            quest = world.get_location(quest)
+            name = quest.name
+            if quest.item.name in item_table:
+                rom.write_to_file(location_data_table[name].pointer, "arm9", struct.pack("H", get_item_id(world, quest.item)))
