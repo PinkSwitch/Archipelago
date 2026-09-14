@@ -768,7 +768,53 @@ location_data_table = {
     "Wygol Village: Item from Marcel": LocationInformation(0x020F59A2, "arm9", "Inline"),
     "Wygol Village: Item from George": LocationInformation(0x020F59E2, "arm9", "Inline"),
     "Kalidus Channel: Ship Room Mouse Pickup": LocationInformation(0x020F5A42, "arm9", "Inline"),
-    "Wygol Village: Item from Daniela": LocationInformation(0x020F5AC2, "arm9", "Inline")
+    "Wygol Village: Item from Daniela": LocationInformation(0x020F5AC2, "arm9", "Inline"),
+
+    "Quest: Running Out of Sage": LocationInformation(0x020F58C0, "arm9", "Quest"),
+    "Quest: Medicinal Ingredients Needed": LocationInformation(0x020F58D0, "arm9", "Quest"),
+    "Quest: Mandrake is the Best Medicine": LocationInformation(0x020F58E0, "arm9", "Quest"),
+    "Quest: Unusual Medicine Components": LocationInformation(0x020F58F0, "arm9", "Quest"),
+
+    "Quest: A Lucky Stone": LocationInformation(0x020F5900, "arm9", "Quest"),
+    "Quest: A Pleasant Accessory": LocationInformation(0x020F5910, "arm9", "Quest"),
+    "Quest: A Heartwarming Accessory": LocationInformation(0x020F5920, "arm9", "Quest"),
+    "Quest: The Job of a Lifetime": LocationInformation(0x020F5930, "arm9", "Quest"),
+
+    "Quest: Poor Preparation is Costly": LocationInformation(0x020F5940, "arm9", "Quest"),
+    "Quest: What the Blacksmith Does Best": LocationInformation(0x020F5950, "arm9", "Quest"),
+    "Quest: Work of the Finest Quality": LocationInformation(0x020F5960, "arm9", "Quest"),
+
+    "Quest: Needs More Salt": LocationInformation(0x020F5970, "arm9", "Quest"),
+    "Quest: I've Never Eaten That": LocationInformation(0x020F5980, "arm9", "Quest"),
+    "Quest: Can't Cook Without Ingredients": LocationInformation(0x020F5990, "arm9", "Quest"),
+
+    "Quest: Case of the Vicious Blight": LocationInformation(0x020F59A0, "arm9", "Quest"),
+    "Quest: Case of the Demon Horse": LocationInformation(0x020F59B0, "arm9", "Quest"),
+    "Quest: Case of the Hideous Snowman": LocationInformation(0x020F59C0, "arm9", "Quest"),
+
+    "Quest: The Silent Violin": LocationInformation(0x020F59D0, "arm9", "Quest"),
+    "Quest: The Killing Scream": LocationInformation(0x020F59E0, "arm9", "Quest"),
+    "Quest: Artists Can Be Selfish": LocationInformation(0x020F59F0, "arm9", "Quest"),
+
+    "Quest: Hide and Seek!": LocationInformation(0x020F5A00, "arm9", "Quest"),
+    "Quest: Show Me the Owl!": LocationInformation(0x020F5A10, "arm9", "Quest"),
+    "Quest: Can't Catch Me!": LocationInformation(0x020F5A20, "arm9", "Quest"),
+
+    "Quest: Finding Tom": LocationInformation(0x020F5A30, "arm9", "Quest"),
+    "Quest: Mice Make for Good Eats": LocationInformation(0x020F5A40, "arm9", "Quest"),
+    "Quest: Tom and Jewelry": LocationInformation(0x020F5A50, "arm9", "Quest"),
+
+    "Quest: Making a Dress!": LocationInformation(0x020F5A60, "arm9", "Quest"),
+    "Quest: Silkworm's Tragedy": LocationInformation(0x020F5A70, "arm9", "Quest"),
+    "Quest: Is That Cashmere?": LocationInformation(0x020F5A80, "arm9", "Quest"),
+
+    "Quest: Vicious Crows": LocationInformation(0x020F5A90, "arm9", "Quest"),
+    "Quest: Do You Hear Howling?": LocationInformation(0x020F5AA0, "arm9", "Quest"),
+    "Quest: An Unwelcome Guest": LocationInformation(0x020F5AB0, "arm9", "Quest"),
+
+    "Quest: A Beacon of Hope": LocationInformation(0x020F5AC0, "arm9", "Quest"),
+    "Quest: Important Resting Place": LocationInformation(0x020F5AD0, "arm9", "Quest"),
+    "Quest: Tragic Memories": LocationInformation(0x020F5AE0, "arm9", "Quest"),
     
 }
 

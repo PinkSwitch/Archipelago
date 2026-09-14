@@ -423,5 +423,7 @@ def patch_locations(world, rom, locations) -> None:
                 var_b = item_id
             rom.write_to_file(data.pointer + 6, data.file, bytes([sub_type]))
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
+        elif data.location_type == "Quest":
+            rom.write_to_file(data.pointer, data.file, struct.pack("H", item_id))
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")
