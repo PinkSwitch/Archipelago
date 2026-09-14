@@ -13,6 +13,7 @@ class LocationData(NamedTuple):
 
 
 def get_locations(world: "OoEWorld") -> List[LocationData]:
+    from .modules.quest_data import quest_data
     location_table: List[LocationData] = [
         LocationData("Ecclesia", "Ecclesia: Center Chest"),
         LocationData("Ecclesia", "Ecclesia: Hidden Chest"),
@@ -399,5 +400,21 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
             LocationData("Miss Murder", "Miss Murder Glyph"),
             LocationData("Lizardman", "Lizardman Glyph"),
         ])
+
+    quest_keys_as_event = True
+    if world.options.include_quest_key_items:
+        quest_keys_as_event = False
+
+    location_table.extend([
+        LocationData("Wygol Village", "Wygol Village: Item from Laura", quest_keys_as_event),
+        LocationData("Wygol Village", "Wygol Village: Item from Marcel", quest_keys_as_event),
+        LocationData("Wygol Village", "Wygol Village: Item from George", quest_keys_as_event),
+        LocationData("Wygol Village", "Wygol Village: Item from Daniela", quest_keys_as_event),
+        LocationData("Kalidus Channel Depths Left", "Kalidus Channel: Ship Room Mouse Pickup", quest_keys_as_event),
+    ])
+
+    for quest in quest_data:
+        if quest in world.active_quests:
+            location_table.append(LocationData("Wygol Village", quest))
 
     return location_table

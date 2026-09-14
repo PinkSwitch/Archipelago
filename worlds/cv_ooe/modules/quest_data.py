@@ -89,6 +89,14 @@ def setup_quests(world) -> None:
                                    quest_data[checked_quest].quest_number < quest_data[quest].quest_number and checked_quest not in quest_queue)
             world.important_quests.add(quest)
 
+    if world.options.remove_large_cavern:
+        if "Quest: An Unwelcome Guest" in world.important_quests:
+            world.important_quests.remove("Quest: An Unwelcome Guest")
+
+        if "Quest: An Unwelcome Guest" in world.active_quests:
+            world.active_quests.remove("Quest: An Unwelcome Guest")
+    print(world.important_quests)
+
 
 def get_filtered_quests(quests) -> set[str]:
     filtered_quests = set()
@@ -104,3 +112,53 @@ def get_filtered_quests(quests) -> set[str]:
                 ("All" in quests)):  # Set every quest active
             filtered_quests.add(quest)
     return filtered_quests
+
+
+def set_quest_rules(world) -> None:
+    from rule_builder.rules import HasAll, Has, CanReachRegion, HasAny, CanReachLocation
+    for quest in quest_data:
+        data = quest_data[quest]
+        if quest in world.important_quests:
+            rule = Has(data.villager)  # All quests need their respective villagers
+            if data.required_items:
+                rule &= HasAll(*set(data.required_items))  # Mark that we need all of the relevant items...
+            #  The 3 family quests can only be done if all of the members are rescued
+            if data.villager == "Serge":
+                rule &= HasAll("Anna", "Irina")
+            elif data.villager == "Anna":
+                rule &= HasAll("Serge", "Irina")
+            elif data.villager == "Irina":
+                rule &= HasAll("Serge", "Anna")
+
+            # Quests with specific rules
+            # Using has map if basic region access for performance
+            if quest == "Quest: Case of the Vicious Blight":
+                rule &= (Has("Camera") & (CanReachRegion("Forsaken Cloister - Left") | CanReachRegion("Forsaken Cloister - Right") | CanReachRegion("Tymeo Mountains East"))) | Has("Photo 1")
+            elif quest == "Quest: Case of the Demon Horse":
+                rule &= Has("Camera") & HasAny("Photo 2", "Map: Argila Swamp")
+            elif quest == "Quest: Case of the Hideous Snowman":
+                rule &= (Has("Camera") & CanReachRegion("Tymeo Mountains East")) | Has("Photo 3")
+            elif quest == "Quest: The Killing Scream":
+                rule &= HasAll("Phonograph", "Map: Monastery")
+            elif quest == "Quest: Finding Tom":
+                rule &= CanReachRegion("Tristis Pass Waterfall")
+            elif quest == "Quest: Vicious Crows":
+                rule &= Has("Map: Tymeo Mountains")
+            elif quest == "Quest: Do You Hear Howling?":
+                rule &= Has("Map: Oblivion Ridge")
+            elif quest == "Quest: An Unwelcome Guest":
+                rule &= CanReachRegion("Large Cavern")
+            elif quest == "Quest: A Beacon of Hope":
+                rule &= (Has("Sketch Book") & CanReachRegion("Lighthouse Post-Boss")) | Has("Lighthouse Art")
+            elif quest == "Quest: Important Resting Place":
+                rule &= HasAll("Map: Tristis Pass", "Sketch Book") | Has("Waterfall Art")
+            elif quest == "Quest: Tragic Memories":
+                rule &= (Has("Sketch Book") & CanReachRegion("Oblivion Ridge Beyond Boss") | Has("Church Art"))
+
+            # If not all quests are unlocked, earlier quests also need to be reached
+            if not world.options.unlock_all_quests:
+                if data.quest_number > 1:
+                    previous_quest = [quest for quest in quest_data if quest_data[quest].villager == data.villager
+                                      and quest_data[quest].quest_number == data.quest_number - 1][0]
+                    rule &= CanReachLocation(previous_quest)  # Get this villager's previous quest
+            world.set_rule(world.get_location(quest), rule)

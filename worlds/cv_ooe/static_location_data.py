@@ -350,8 +350,46 @@ location_ids = {
     "Library: Wallman No-Hit Chest": 0x179,
     "Underground Labyrinth: Blackmore No-Hit Chest": 0x17A,
     "Arms Depot: Eligor No-Hit Chest": 0x17B,
-    "Mechanical Tower: Death No-Hit Chest": 0x17C
+    "Mechanical Tower: Death No-Hit Chest": 0x17C,
     #  Anything above 0x180 is OFF-LIMITS. These are reserved for Brown chests and reset!
+    #  Quests are handled separately.
+
+    "Quest: Running Out of Sage": 0x201,
+    "Quest: Medicinal Ingredients Needed": 0x202,
+    "Quest: Mandrake is the Best Medicine": 0x203,
+    "Quest: Unusual Medicine Components": 0x204,
+    "Quest: A Lucky Stone": 0x205,
+    "Quest: A Pleasant Accessory": 0x206,
+    "Quest: A Heartwarming Accessory": 0x207,
+    "Quest: The Job of a Lifetime": 0x208,
+    "Quest: Poor Preparation is Costly": 0x209,
+    "Quest: What the Blacksmith Does Best": 0x20A,
+    "Quest: Work of the Finest Quality": 0x20B,
+    "Quest: Needs More Salt": 0x20C,
+    "Quest: I've Never Eaten That": 0x20D,
+    "Quest: Can't Cook Without Ingredients": 0x20E,
+    "Quest: Case of the Vicious Blight": 0x20F,
+    "Quest: Case of the Demon Horse": 0x210,
+    "Quest: Case of the Hideous Snowman": 0x211,
+    "Quest: The Silent Violin": 0x212,
+    "Quest: The Killing Scream": 0x213,
+    "Quest: Artists Can Be Selfish": 0x214,
+    "Quest: Hide and Seek!": 0x215,
+    "Quest: Show Me the Owl!": 0x216,
+    "Quest: Can't Catch Me!": 0x217,
+    "Quest: Finding Tom": 0x218,
+    "Quest: Mice Make for Good Eats": 0x219,
+    "Quest: Tom and Jewelry": 0x21A,
+    "Quest: Making a Dress!": 0x21B,
+    "Quest: Silkworm's Tragedy": 0x21C,
+    "Quest: Is That Cashmere?": 0x21D,
+    "Quest: Vicious Crows": 0x21E,
+    "Quest: Do You Hear Howling?": 0x21F,
+    "Quest: An Unwelcome Guest": 0x220,
+    "Quest: A Beacon of Hope": 0x221,
+    "Quest: Important Resting Place": 0x222,
+    "Quest: Tragic Memories": 0x223,
+
 
     }
 

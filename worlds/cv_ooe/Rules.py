@@ -5,10 +5,11 @@ from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTr
 can_fly = Has("Volaticus") | HasAll("Magnes", "Redire",
                                     options=[OptionFilter(LogicTricks, "Redire Flight", operator="contains")])
 can_slide = Has("Lizard Tail") | HasAll("Magnes", "Redire",
-                                    options=[OptionFilter(LogicTricks, "Redire Slides", operator="contains")])
+                                        options=[OptionFilter(LogicTricks, "Redire Slides", operator="contains")])
 
 
 def set_location_rules(world):
+    from .modules.quest_data import set_quest_rules
     set_rule = world.set_rule
     world.set_completion_rule(Has("Dracula Defeated"))
 
@@ -103,5 +104,7 @@ def set_location_rules(world):
         set_rule(world.get_location("Minera Prison Island: Giant Skeleton No-Hit Chest"), HasAny("Ordinary Rock", "Magnes", "Volaticus") | OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
         set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
+
+    set_quest_rules(world)
 
         
