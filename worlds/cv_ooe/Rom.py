@@ -182,7 +182,11 @@ def patch_rom(world, rom, code_patch):
         patch_castle_connections(world, rom)
     ###############################################
     write_cat_hints(world, rom)
-
+    ###############################################
+    # Patch in a list of which items need to be conditionally marked as important
+    for index, item in enumerate(world.quest_items):
+        #  Quest items are always ID's < 0x100, so we can allocate only one byte per item to save space
+        rom.write_to_file(0x22EB4D4 + index, "overlay_86", bytearray([item_table[item].code]))
     # Locations handler
     loc_list = world.get_locations()
     patch_event_quests(world, rom, loc_list)
