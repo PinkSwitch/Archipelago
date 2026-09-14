@@ -106,6 +106,9 @@ def setup_quests(world) -> None:
         elif quest == "Quest: The Killing Scream":
             world.quest_items.append("Phonograph")
 
+    if world.options.include_quest_key_items or "Quest: Tom and Jewelry" in world.important_quests:
+        world.quest_items.append("Chrysoberyl")
+
 
 def get_filtered_quests(quests) -> set[str]:
     filtered_quests = set()

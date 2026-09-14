@@ -244,7 +244,7 @@ def shuffle_drops(world, rom) -> None:
         rom.write_to_file(address + 0x1B, "arm9", bytearray([rare_chance]))
 
 
-def get_drop_item(world, weight_map) -> int:
+def get_drop_item(world, weight_map, as_id=True) -> int | str:
     from ..Items import item_table
     weight_table = {
         "material": material_table,
@@ -261,7 +261,10 @@ def get_drop_item(world, weight_map) -> int:
 
     filler_type = world.random.choices(list(weight_map), weights=list(weight_map.values()), k=1)[0]
     filler_item = world.random.choice(weight_table[filler_type])
-    return item_table[filler_item].code  # Return the item's internal ID number
+    if as_id:
+        return item_table[filler_item].code  # Return the item's internal ID number
+    else:
+        return filler_item
 
 
 def get_drop_pool(world, rarity) -> dict:

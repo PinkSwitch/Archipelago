@@ -105,6 +105,15 @@ def set_location_rules(world):
         set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
         set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
 
+    if world.options.include_quest_key_items:
+        laura_subquest_rule = Has("Chrysoberyl")
+        if not world.options.unlock_all_quests:
+            set_rule(world.get_location("Wygol Village: Item from George"), CanReachLocation("Quest: The Silent Violin"))
+            laura_subquest_rule &= CanReachLocation("Quest: Mice Make for Good Eats")
+            set_rule(world.get_location("Kalidus Channel: Ship Room Mouse Pickup"), CanReachLocation("Quest: Finding Tom"))
+
+        set_rule(world.get_location("Wygol Village: Item from Laura"), laura_subquest_rule)
+
     set_quest_rules(world)
 
         

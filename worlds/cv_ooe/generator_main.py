@@ -91,7 +91,11 @@ def set_rules(world) -> None:
     set_location_rules(world)
 
 
-def set_classifications(world, name) -> CVOoEItem:
+def set_classifications(world, name, as_filler=False) -> CVOoEItem:
+    if as_filler:
+        item_data = item_table[name]
+        item = CVOoEItem(name, ItemClassification.filler, item_data.code, world.player)
+        return item
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
     if name in world.logical_regular_glyphs:

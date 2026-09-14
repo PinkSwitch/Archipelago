@@ -415,6 +415,12 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
 
     for quest in quest_data:
         if quest in world.active_quests:
-            location_table.append(LocationData("Wygol Village", quest))
+            if quest in world.excluded_quests:
+                is_event = True  # Create Exclusion + Active as Events
+            else:
+                is_event = False
+            location_table.append(LocationData("Wygol Village", quest, is_event))
+        elif quest in world.important_quests:
+            location_table.append(LocationData("Wygol Village", quest, True))  # Place vanilla quests if necessary
 
     return location_table
