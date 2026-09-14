@@ -173,6 +173,18 @@
     .org 0x020F5A42
         .dh 0xAD ; Mouse
 
+    .org 0x020F58C0
+        .dh 0xFFFF ; Abram Quest1 Reward
+
+    .org 0x020F58D0
+        .dh 0xFFFF ; Abram Quest2 Reward
+
+    .org 0x020F58E0
+        .dh 0xFFFF ; Abram Quest3 Reward
+
+    .org 0x020F58F0
+        .dh 0xFFFF ; Abram Quest4 Reward
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1145,7 +1157,7 @@
         .fill 0xB0 ; 22EB420
 
 @OptionFlag_UnlockAllQuests: ;22EB4D0
-    .db 0x00 ; TODO! Reset
+    .db 0x00
 
 .align 4
 
@@ -4127,7 +4139,7 @@
     bl 0x020A9E28
     cmp r0, 0x01
     bne @@Exit
-    mov r0, 0x84
+    mov r0, 0x84 ; Tasty Meat
     bl 0x020636D8
     cmp r0, 0
     beq @@Exit

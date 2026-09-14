@@ -91,11 +91,16 @@ def set_rules(world) -> None:
     set_location_rules(world)
 
 
-def set_classifications(world, name, as_filler=False) -> CVOoEItem:
-    if as_filler:
+def set_classifications(world, name, as_filler=False, arbitrary_event=False) -> CVOoEItem:
+    if as_filler:  # Force this item to be classed as Filler so it's not used for logic
         item_data = item_table[name]
         item = CVOoEItem(name, ItemClassification.filler, item_data.code, world.player)
         return item
+
+    if arbitrary_event:  # Used for vanilla quests, make non-table items as Events
+        item = CVOoEItem(name, ItemClassification.filler, None, world.player)
+        return item
+
     item_data = item_table[name]
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
     if name in world.logical_regular_glyphs:

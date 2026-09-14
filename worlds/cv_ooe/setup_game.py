@@ -52,6 +52,7 @@ def setup_game(world) -> None:
 
 def place_static_items(world) -> None:
     from .modules.drop_shuffle import get_drop_item
+    from .modules.quest_data import quest_data
     from .generator_main import set_classifications
 
     if world.options.open_castle:
@@ -107,3 +108,7 @@ def place_static_items(world) -> None:
             if quest in world.active_quests:
                 item = set_classifications(world, get_drop_item(world, quest_filler, False), True)
                 world.get_location(quest).place_locked_item(item)
+
+        for quest in sorted(world.important_quests):
+            if quest not in world.active_quests:  # Required for logic but not set as active
+                world.get_location(quest).place_locked_item(set_classifications(world, quest_data[quest].vanilla_reward, arbitrary_event=True))
