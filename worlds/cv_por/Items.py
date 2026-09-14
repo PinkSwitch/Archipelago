@@ -447,8 +447,8 @@ item_table: Dict[str, ItemData] = {
     "Cocytus": ItemData("Spells", 0x084A, ItemClassification.useful, 0),
     "Thor's Bellow": ItemData("Spells", 0x084B, ItemClassification.filler, 0),
     "Summon Crow": ItemData("Spells", 0x084C, ItemClassification.filler, 0),
-    "Summon Skeleton": ItemData("Spells", 0x084D, ItemClassification.filler, 0),
-    "Summon Ghost": ItemData("Spells", 0x084E, ItemClassification.filler, 0),
+    "Summon Ghost": ItemData("Spells", 0x084D, ItemClassification.filler, 0),
+    "Summon Skeleton": ItemData("Spells", 0x084E, ItemClassification.filler, 0),
     "Summon Gunman": ItemData("Spells", 0x084F, ItemClassification.filler, 0),
     "Summon Frog": ItemData("Spells", 0x0850, ItemClassification.filler, 0),
 
