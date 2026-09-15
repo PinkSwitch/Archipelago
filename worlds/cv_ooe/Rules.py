@@ -89,7 +89,7 @@ def set_location_rules(world):
         set_rule(world.get_location("Tristis Pass: Third Hill Left"), Has("Arma Felix") | can_slide)
         set_rule(world.get_location("Tristis Pass: Lower Hill Right"), Has("Arma Felix") | can_slide)
         set_rule(world.get_location("Tristis Pass: Third Hill Right"), Has("Arma Felix") | can_slide)
-        set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes"))
+        set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room with Double Jump", operator="contains")]))
 
     if world.options.add_no_hit_chests:
         set_rule(world.get_location("Minera Prison Island: Giant Skeleton No-Hit Chest"), HasAny("Ordinary Rock", "Magnes", "Volaticus") | OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))

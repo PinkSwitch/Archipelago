@@ -58,3 +58,9 @@ If you fail to keep up with the moving platform, you can simply wait for it to c
 ![](../src/tricks/tymeo_spike_tackle.gif)
 
 You can time the invincibility frames of Arma Felix's tackle attack to get through the spike hallway in Tymeo Mountains without taking damage.
+### ---------------------------------------------------------------
+## • Mechanical Tower Lowest Gear Room with Double Jump
+![](../src/tricks/tower_jump_left.gif)
+![](../src/tricks/tower_jump_right.gif)
+
+You can dive kick off of the Imp in the lowest gears room to ascend both sides.

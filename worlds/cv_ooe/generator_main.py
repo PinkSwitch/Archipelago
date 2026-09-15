@@ -40,6 +40,10 @@ def generate_early(world) -> None:
         world.generator_logic_glyphs = passthrough["generator_logic"]
         world.connected_doors = passthrough["door_map"]
         world.options.logic_tricks.value = passthrough["logic_tricks"]
+        world.options.randomized_quests.value = passthrough["active_quests"]
+        world.options.excluded_quests.value = passthrough["excluded_quests"]
+        world.options.unlock_all_quests.value = passthrough["unlock_quests"]
+        world.options.include_quest_key_items.value = passthrough["include_quest_keys"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -105,10 +109,10 @@ def set_classifications(world, name, as_filler=False, arbitrary_event=False) -> 
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
     if name in world.logical_regular_glyphs:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
-    elif name in world.glyph_pool and ItemClassification.progression not in item.classification:  # Don't override actual progression glyphs
-        item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
     elif name in world.quest_items:
         item.classification = ItemClassification.progression  # Force required quest items to be prog
+    elif name in world.glyph_pool and ItemClassification.progression not in item.classification:  # Don't override actual progression glyphs
+        item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
 
     return item
 
@@ -185,7 +189,11 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "tin_man_glyph_logic": world.can_kill_tin_man,
         "generator_logic": world.generator_logic_glyphs,
         "door_map": world.connected_doors,
-        "logic_tricks": world.options.logic_tricks.value
+        "logic_tricks": world.options.logic_tricks.value,
+        "active_quests": world.options.randomized_quests.value,
+        "excluded_quests": world.options.excluded_quests.value,
+        "include_quest_keys": world.options.include_quest_key_items.value,
+        "unlock_quests": world.options.unlock_all_quests.value
     }
 
 

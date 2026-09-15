@@ -107,7 +107,8 @@ class OoEClient(BizHawkClient):
                     (0x1003E4, 4, "Main RAM"),  # Boss death flags
                     (0x109820, 4, "Main RAM"),  # Player pointer
                     (0x2EB2BF, 1, "Main RAM"),  # Death Link state
-                    (0x0FFC8C, 4, "Main RAM")  # General game flags
+                    (0x0FFC8C, 4, "Main RAM"),  # General game flags
+                    (0x1005F0, 0x12, "Main RAM")  # Quest flags
         ])
         game_mode = read_state[1][0]  # If the game mode is non-zero, return
         overlay22_entry = struct.unpack("I", read_state[0])[0]
@@ -138,8 +139,10 @@ class OoEClient(BizHawkClient):
 
     @staticmethod
     async def check_locations(read_state, ctx):
+        from .static_location_data import location_data_table
         new_checks = []
         location_flags = read_state[2]
+        quest_flags = read_state[10]
 
         from .static_location_data import location_ids
         for location_name in location_ids:
@@ -147,11 +150,22 @@ class OoEClient(BizHawkClient):
             if loc_id not in ctx.server_locations:
                 continue
             if loc_id not in ctx.locations_checked:
-                offset = int(loc_id / 8)
-                bit = int(1 << (loc_id % 8))
-                flag = location_flags[offset]
-                if flag & bit:
-                    new_checks.append(loc_id)
+                if location_data_table[location_name].location_type == "Quest":
+                    loc_id -= 0x0200  # Quests offset
+                    quest_byte = quest_flags[loc_id >> 1]
+                    if loc_id & 0x01:  # If the ID is odd
+                        flag = quest_byte >> 4  # Shift by 4 to get the high nybble
+                    else:
+                        flag = quest_byte & 0x0F  # Else, just and out the high bit
+
+                    if flag & 0x04:
+                        new_checks.append(loc_id + 0x200)
+                else:
+                    offset = int(loc_id / 8)
+                    bit = int(1 << (loc_id % 8))
+                    flag = location_flags[offset]
+                    if flag & bit:
+                        new_checks.append(loc_id)
 
             for new_check_id in new_checks:
                 ctx.locations_checked.add(new_check_id)

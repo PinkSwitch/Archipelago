@@ -65,6 +65,7 @@ def set_enemy_glyph_regions(world):
         world.get_region("Underground Labyrinth").connect(world.get_region("Polkir"))
         world.get_region("Barracks").connect(world.get_region("Red Smasher"))
         world.get_region("Mechanical Tower").connect(world.get_region("Red Smasher"))
+        world.get_region("Mechanical Tower Middle Area").connect(world.get_region("Red Smasher"))
         world.get_region("Arms Depot").connect(world.get_region("Red Smasher"))
 
         world.get_region("Underground Labyrinth").connect(world.get_region("Hammer Shaker"))

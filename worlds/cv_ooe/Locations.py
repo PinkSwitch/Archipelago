@@ -284,7 +284,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Mechanical Tower", "Mechanical Tower: Outer Item"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Upper Magnets Wall Item"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Hidden Room"),
-        LocationData("Mechanical Tower", "Mechanical Tower: Low Shaft Chest"),
+        LocationData("Mechanical Tower Middle Area", "Mechanical Tower: Low Shaft Chest"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Upper Magnets Chest"),
         LocationData("Mechanical Tower Upper", "Mechanical Tower: Center Room Chest"),
         LocationData("Mechanical Tower Lower", "Mechanical Tower: First Gears Room Chest"),

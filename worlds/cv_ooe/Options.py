@@ -251,7 +251,8 @@ class LogicTricks(OptionSet):
         "Minera Prison Island Final Area With Double Jump",
         # "Skeleton Cave First Chest With Rapidus", Always in logic, may not be trickworthy
         "Training Hall Without Rapidus",
-        "Tymeo Mountains Spike Room With Arma Felix"}
+        "Tymeo Mountains Spike Room With Arma Felix",
+        "Mechanical Tower Lowest Gear Room with Double Jump"}
     # casefold_keys = {key.casefold() for key in valid_keys} Add this back in if Casefolding ever gets fixed
     # valid_keys.update(casefold_keys)
     # valid_keys_casefold = True
