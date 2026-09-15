@@ -92,18 +92,29 @@ def set_location_rules(world):
         set_rule(world.get_location("Mechanical Tower: First Gears Room Chest"), HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room with Double Jump", operator="contains")]))
 
     if world.options.add_no_hit_chests:
-        set_rule(world.get_location("Minera Prison Island: Giant Skeleton No-Hit Chest"), HasAny("Ordinary Rock", "Magnes", "Volaticus") | OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
-        set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
-        set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
+        if "Giant Skeleton" not in world.options.excluded_no_hit_chests.value:
+            set_rule(world.get_location("Minera Prison Island: Giant Skeleton No-Hit Chest"), HasAny("Ordinary Rock", "Magnes", "Volaticus") | OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
 
-    if world.options.include_quest_key_items:
-        laura_subquest_rule = Has("Chrysoberyl")
+        if "Barlowe" not in world.options.excluded_no_hit_chests.value:
+            set_rule(world.get_location("Ecclesia: Barlowe No-Hit Chest"), CanReachLocation("Ecclesia: Barlowe Fight"))
+
+        if "Death" not in world.options.excluded_no_hit_chests.value:
+            set_rule(world.get_location("Mechanical Tower: Death No-Hit Chest"), Has("Lizard Tail"))
+
+    laura_subquest_rule = Has("Laura")
+    george_subquest_rule = Has("George")
+
+    if world.options.include_quest_key_items or "Quest: Tom and Jewelry" in world.important_quests:
+        laura_subquest_rule &= Has("Chrysoberyl")
         if not world.options.unlock_all_quests:
-            set_rule(world.get_location("Wygol Village: Item from George"), CanReachLocation("Quest: The Silent Violin"))
+            george_subquest_rule &= CanReachLocation("Quest: The Silent Violin")
             laura_subquest_rule &= CanReachLocation("Quest: Mice Make for Good Eats")
             set_rule(world.get_location("Kalidus Channel: Ship Room Mouse Pickup"), CanReachLocation("Quest: Finding Tom"))
 
-        set_rule(world.get_location("Wygol Village: Item from Laura"), laura_subquest_rule)
+    set_rule(world.get_location("Wygol Village: Item from Laura"), laura_subquest_rule)
+    set_rule(world.get_location("Wygol Village: Item from George"), george_subquest_rule)
+    set_rule(world.get_location("Wygol Village: Item from Marcel"), Has("Marcel"))
+    set_rule(world.get_location("Wygol Village: Item from Daniela"), Has("Daniela"))
 
     set_quest_rules(world)
 
