@@ -214,7 +214,7 @@ def connect_regions(world):
     world.get_region("Mechanical Tower").add_exits({"Mechanical Tower Upper": None, "Mechanical Tower Lower": None, "Mechanical Tower Middle Area": None, "Barracks": "Sec07Rm01"}, {
                                              "Mechanical Tower Upper": HasAny("Magnes", "Volaticus")})
 
-    world.get_location("Mechanical Tower Middle Area").add_exits({"Mechanical Tower", "Mechanical Tower Lower"}, {
+    world.get_region("Mechanical Tower Middle Area").add_exits({"Mechanical Tower", "Mechanical Tower Lower"}, {
         "Mechanical Tower Lower": HasAny("Magnes", "Volaticus") |
                                   Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room with Double Jump", operator="contains")]),
         "Mechanical Tower": HasAny("Magnes", "Volaticus")
