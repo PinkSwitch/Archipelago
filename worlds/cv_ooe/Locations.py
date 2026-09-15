@@ -343,7 +343,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
                           location_table if location.is_event or location_data_table[location.name].location_type != "Wood Chest"]
 
     if world.options.add_no_hit_chests:
-        location_table.extend([
+        no_hits = [
             LocationData("Monastery Magnets Area", "Monastery: Arthroverta No-Hit Chest"),
             LocationData("Minera Prison Island", "Minera Prison Island: Giant Skeleton No-Hit Chest"),
             LocationData("Lighthouse Post-Boss", "Lighthouse: Brachyura No-Hit Chest"),
@@ -357,7 +357,10 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
             LocationData("Underground Labyrinth", "Underground Labyrinth: Blackmore No-Hit Chest"),
             LocationData("Arms Depot", "Arms Depot: Eligor No-Hit Chest"),
             LocationData("Mechanical Tower Upper", "Mechanical Tower: Death No-Hit Chest"),
-        ])
+        ]
+        location_table.extend(loc for loc in no_hits if
+                              loc.name.split(": ")[1].split  # Split out the area
+                              (" No-Hit")[0] not in world.options.excluded_no_hit_chests)  # And the chest
 
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_glyphsanity:
         location_table.extend([

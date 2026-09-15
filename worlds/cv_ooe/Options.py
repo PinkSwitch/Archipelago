@@ -319,6 +319,28 @@ class RandomizeQuestKeyItems(Toggle):
     display_name = "Randomize Quest Key Items"
 
 
+class ExcludedNoHits(OptionSet):
+    """Specify bosses that should not include their No-Hit chest in the location pool,
+       if no-hit chests are enabled."""
+    display_name = "Excluded No-hit chests"
+    default = {}
+    valid_keys = {
+        "Arthroverta",
+        "Giant Skeleton",
+        "Brachyura",
+        "Maneater",
+        "Rusalka",
+        "Goliath",
+        "Gravedorcus",
+        "Albus",
+        "Barlowe",
+        "Wallman",
+        "Blackmore",
+        "Eligor",
+        "Death"
+    }
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -357,6 +379,7 @@ class OoEOptions(PerGameCommonOptions):
     unlock_all_quests: UnlockAllQuests
     include_quest_key_items: RandomizeQuestKeyItems
     excluded_quests: ExcludedQuests
+    excluded_no_hit_chests: ExcludedNoHits
 
 
 ooe_option_groups = [
@@ -378,7 +401,8 @@ ooe_option_groups = [
         ShuffleDominus,
         AddBrownChests,
         RandomizeVillagers,
-        AddMedalChests
+        AddMedalChests,
+        ExcludedNoHits
     ]),
 
     OptionGroup("Quest Options", [
