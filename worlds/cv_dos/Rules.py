@@ -136,43 +136,4 @@ def set_location_rules(world: "DoSWorld") -> None:
             garden_rule &= HasAll(*world.garden_triggers)
         set_rule(world.get_location("Garden of Madness: Central Chamber"), garden_rule)
 
-    if getattr(world.options, "enemy_sanity", False):
-        from .in_game_data import enemy_table, boss_list
-        water_enemies = {"Merman", "Fish Head", "Needles", "Killer Fish", "Ukoback"}
-
-        for enemy_name in enemy_table:
-            
-            if enemy_name in boss_list:
-                loc_name = f"Defeat {enemy_name}"
-
-                if "Flying Armor" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Lost Village"]))
-                elif "Balore" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Wizardry Lab"]))
-                elif "Puppet Master" in enemy_name:
-                    set_rule(world.get_location(loc_name), small_uppies & Has(world.magic_seal_table["Demon Guest House"]))
-                elif "Malphas" in enemy_name:
-                    set_rule(world.get_location(loc_name), HasAll(world.magic_seal_table["Dark Chapel Inner"], world.magic_seal_table["Dark Chapel"]))
-                elif "Gergoth" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Condemned Tower"]))
-                elif "Zephyr" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Cursed Clock Tower"]))
-                elif "Rahab" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Subterranean Hell"]))
-                elif "Bat Company" in enemy_name:
-                    set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Silenced Ruins"]))
-                elif "Aguni" in enemy_name:
-                    set_rule(world.get_location(loc_name), HasAll(world.magic_seal_table["The Pinnacle"], "Paranoia Soul"))
-                elif "Death" in enemy_name or "Abaddon" in enemy_name:
-                    if world.mine_status != "Disabled":
-                        set_rule(world.get_location(loc_name), Has(world.magic_seal_table["Mine of Judgment"]) & (small_uppies | Has("Puppet Master Soul")))
-                    else:
-                        set_rule(world.get_location(loc_name), abyss_rule)
-
-            
-            else:
-                loc_name = f"Enemysanity: {enemy_name}"
-                if enemy_name in water_enemies:
-                    set_rule(world.get_location(loc_name), Has("Rahab Soul"))
-                else:
-                    set_rule(world.get_location(loc_name), HasAny("Flying Armor Soul", "Starting Weapon") | OptionFilter(BoostSpeed, True))
+         #  021A3278 for walls
