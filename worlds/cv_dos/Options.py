@@ -74,9 +74,9 @@ class OneScreenMode(Toggle):
 
 class SoulRandomizer(Choice):
     """Randomizes Enemy souls.
-       Disabled: Enemy souls are unchanged.
-       Shuffled: Enemy souls will be shuffled amongst each other. Souls that unlock things are unchanged.
-       Soulsanity: Enemy soul drops can be anything, even important items or non-souls. You can change the expected soul rarity with Soulsanity level."""
+            Disabled: Enemy souls are unchanged.
+            Shuffled: Enemy souls will be shuffled amongst each other. Souls that unlock things are unchanged.
+            Soulsanity: Enemy soul drops can be anything, even important items or non-souls. You can change the expected soul rarity with Soulsanity level."""
     option_disabled = 0
     option_shuffled = 1
     option_soulsanity = 2
@@ -116,6 +116,8 @@ class OpenDrawbridge(Toggle):
 class ShopRandomizer(Toggle):
     """Randomizes Hammer's shop items."""
     display_name = "Shop Randomizer"
+
+
 class ShuffleDrops(Toggle):
     """Randomizes items dropped by enemies"""
     display_name = "Drop Shuffle"
@@ -275,13 +277,16 @@ class RandomizeSealDetails(Choice):
     option_chaos = 2
     default = 0
 
-
-
-class EnemyRandomizerToggle(Toggle):   #NEW
-    """Mische alle normalen Schlossgegner (IDs 0x00 bis 0x64) komplett zufällig durch.
-       Die Positionen in den Räumen (VRAM-Slots) und die Stats werden synchron angepasst.
-       Bosse bleiben hiervon unberührt und werden separat behandelt."""
-    display_name = "Enemy Randomizer"
+#class RevealBreakableWalls(Choice):
+ #   """Controls how breakable walls act.
+  #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
+   #    Revealed: All breakable walls are already broken
+    #   Eye Spy: Breakable walls are breakable, you require Peeping Eye's soul to break them at all."""
+    #display_name = "Breakable Walls"
+    #option_normal = 0
+    #option_revealed = 1
+    #option_eye_spy = 2
+    #default = 0
 
 
 @dataclass
@@ -317,7 +322,6 @@ class DoSOptions(PerGameCommonOptions):
     gate_items: GateItems
     hard_mode: HardMode
     boss_shuffle: BossShuffle
-    enemy_randomizer: EnemyRandomizerToggle  # NEW
     seal_shuffle: SealShuffle
     randomize_seal_patterns: RandomizeSealPatterns
     menace_condition: MenaceCondition
@@ -335,6 +339,7 @@ dos_option_groups = [
         MineCondition,
         GardenCondition,
         ReplaceMenaceWithSoma
+
     ]),
 
     OptionGroup("Soul Settings", [
@@ -342,12 +347,14 @@ dos_option_groups = [
         SoulsanityLevel,
         GuaranteedSouls,
         SoulDropPercent
+
     ]),
 
     OptionGroup("Item Options", [
         StartingWeapon,
         ShopRandomizer,
         GateItems
+
     ]),
 
     OptionGroup("Seal Settings", [
@@ -360,6 +367,7 @@ dos_option_groups = [
 
     OptionGroup("Weapon Synth Settings", [
         RandomizeSynthSouls,
+
     ]),
 
     OptionGroup("World Settings", [
@@ -367,14 +375,15 @@ dos_option_groups = [
         OpenDrawbridge,
         SoulWallRandomizer,
         ShuffleCastleConnections
+
     ]),
 
     OptionGroup("Enemy Settings", [
         ShuffleDrops,
         ExperiencePercent,
         HardMode,
-        BossShuffle,
-        EnemyRandomizerToggle   # NEW
+        BossShuffle
+
     ]),
 
     OptionGroup("Quality of Life", [
@@ -392,5 +401,6 @@ dos_option_groups = [
     OptionGroup("Music Randomizer", [
         AreaMusicShuffle,
         BossMusicShuffle
+
     ]),
 ]

@@ -895,7 +895,7 @@ enemy_table = [
     "Dracula"
 ]
 
-boss_list = [
+boss_list = {
     "Flying Armor",
     "Balore",
     "Malphas",
@@ -913,7 +913,7 @@ boss_list = [
     "Menace",
     "Soma",
     "Dracula"
-]
+}
 
 unleveled_standard_souls = [
     "Imp Soul",
@@ -959,7 +959,5 @@ unleveled_standard_souls = [
     "Ouija Table Soul",
     "Dead Crusader Soul",
     "Procel Soul",
-    "Mud Demon Soul",
-    "Slogra Soul",
-    "Ripper Soul"
+    "Mud Demon Soul"
 ]
