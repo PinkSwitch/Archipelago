@@ -35,26 +35,56 @@ class FilePointer(NamedTuple):
 
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
-    "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
-    "overlay_1": FilePointer(0x15D600, 0x02230A00, 0x69F1F),
-    "overlay_11": FilePointer(0x2A1200, 0x022DA4A0, 0x2551F),
-    "overlay_13": FilePointer(0x2CA400, 0x022DA4A0, 0x186BF),
-    "overlay_23": FilePointer(0x363A00, 0x022FF9C0, 0x335F),
-    "overlay_25": FilePointer(0x36A600, 0x022FF9C0, 0x5BFF),
-    "overlay_26": FilePointer(0x370200, 0x022FF9C0, 0x42BF),
-    "overlay_29": FilePointer(0x37D600, 0x022FF9C0, 0x2E9F),
-    "overlay_30": FilePointer(0x380600, 0x022FF9C0, 0x3A5F),
-    "overlay_33": FilePointer(0x38B600, 0x022FF9C0, 0x499F),
-    "overlay_34": FilePointer(0x390000, 0x022FF9C0, 0x73DF),
-    "overlay_35": FilePointer(0x397400, 0x022FF9C0, 0x649F),
-    "overlay_36": FilePointer(0x39DA00, 0x022FF9C0, 0x8F5F),
-    "overlay_37": FilePointer(0x3A6A00, 0x022FF9C0, 0x2FDF),
-    "overlay_39": FilePointer(0x3B0E00, 0x022FF9C0, 0x19FF),
-    "overlay_40": FilePointer(0x3B2800, 0x022FF9C0, 0x14DF),
+    "overlay_0": FilePointer(0x000CB200, 0x0219E3E0, 0x0009235F),
+    "overlay_1": FilePointer(0x0015D600, 0x02230A00, 0x00069F1F),
+    "overlay_2": FilePointer(0x001C7600, 0x0229A920, 0x00003CDF),   """Sprite data that isn't stored in individual files."""   
+    "overlay_3": FilePointer(0x001CB400, 0x0229E600, 0x0001B2FF),   """Sprite data that isn't stored in individual files."""
+    "overlay_4": FilePointer(0x001E6800, 0x022B9900, 0x0001D57F),   """GFX wrappers."""
+    "overlay_5": FilePointer(0x00203E00, 0x022D6E80, 0x0000361F),
+    
+    # SEKTOR ROOMS (6-22): Alle teilen sich im RAM Bank 0x022DA4A0!
+    "overlay_6": FilePointer(0x00207600, 0x022DA4A0, 0x0002219F),
+    "overlay_7": FilePointer(0x00229800, 0x022DA4A0, 0x00021F9F),
+    "overlay_8": FilePointer(0x0024B800, 0x022DA4A0, 0x0001927F),
+    "overlay_9": FilePointer(0x00264C00, 0x022DA4A0, 0x0001FD9F),
+    "overlay_10": FilePointer(0x00284A00, 0x022DA4A0, 0x0001C61F),
+    "overlay_11": FilePointer(0x002A1200, 0x022DA4A0, 0x0002551F),
+    "overlay_12": FilePointer(0x002C6800, 0x022DA4A0, 0x00003BBF),
+    "overlay_13": FilePointer(0x002CA400, 0x022DA4A0, 0x000186BF),
+    "overlay_14": FilePointer(0x002E2C00, 0x022DA4A0, 0x0001DD5F),
+    "overlay_15": FilePointer(0x00300A00, 0x022DA4A0, 0x0000CDBF),
+    "overlay_16": FilePointer(0x0030D800, 0x022DA4A0, 0x0001783F),
+    "overlay_17": FilePointer(0x00325200, 0x022DA4A0, 0x000246DF),
+    "overlay_18": FilePointer(0x00349A00, 0x022DA4A0, 0x0000583F),
+    "overlay_19": FilePointer(0x0034F400, 0x022DA4A0, 0x0000313F),
+    "overlay_20": FilePointer(0x00352600, 0x022DA4A0, 0x0000881F),
+    "overlay_21": FilePointer(0x0035AE00, 0x022DA4A0, 0x0000563F),
+    "overlay_22": FilePointer(0x00360800, 0x022DA4A0, 0x0000313F),
+    
+    # SEKTOR ENEMY CODE (23-40): Alle teilen sich im RAM Bank 0x022FF9C0!
+    "overlay_23": FilePointer(0x00363A00, 0x022FF9C0, 0x0000335F),
+    "overlay_24": FilePointer(0x00366E00, 0x022FF9C0, 0x000037DF),
+    "overlay_25": FilePointer(0x0036A600, 0x022FF9C0, 0x00005BFF),
+    "overlay_26": FilePointer(0x00370200, 0x022FF9C0, 0x000042BF),
+    "overlay_27": FilePointer(0x00374600, 0x022FF9C0, 0x0000333F),
+    "overlay_28": FilePointer(0x00377A00, 0x022FF9C0, 0x00005A7F),
+    "overlay_29": FilePointer(0x0037D600, 0x022FF9C0, 0x00002E9F),
+    "overlay_30": FilePointer(0x00380600, 0x022FF9C0, 0x00003A5F),
+    "overlay_31": FilePointer(0x00384200, 0x022FF9C0, 0x0000377F),
+    "overlay_32": FilePointer(0x00387A00, 0x022FF9C0, 0x000032FF),
+    "overlay_33": FilePointer(0x0038B600, 0x022FF9C0, 0x0000499F),
+    "overlay_34": FilePointer(0x00390000, 0x022FF9C0, 0x000073DF),
+    "overlay_35": FilePointer(0x00397400, 0x022FF9C0, 0x0000649F),
+    "overlay_36": FilePointer(0x0039DA00, 0x022FF9C0, 0x00008F5F),
+    "overlay_37": FilePointer(0x003A6A00, 0x022FF9C0, 0x00002FDF),
+    "overlay_38": FilePointer(0x003A9A00, 0x022FF9C0, 0x0000725F),
+    "overlay_39": FilePointer(0x003B0E00, 0x022FF9C0, 0x000019FF),
+    "overlay_40": FilePointer(0x003B2800, 0x022FF9C0, 0x000014DF),
+    
+    # DEINE ERWEITERTE FREISPEICHER-BASIS MIT MOD-SCHUTZ
     "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000),
-    "bullet_wall_gfx": FilePointer(0x10D6000, 0x000000, 0x1FFF)
+    "bullet_wall_gfx": FilePointer(0x10D6000, 0x00000000, 0x1FFF)
 }
-
 
 class LocalRom(object):
 
