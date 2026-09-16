@@ -3091,6 +3091,17 @@
     bne 0x022B8DDC ; If in boss rush, ignore this completely
     mov r0, 0x35 ; Albus 3's location flag
     bl @CheckLocFlag
+    cmp r0, 1
+    beq @@ResetAlbusEvent
+    b 0x022B8DB4 ; Let the game's own CMP handle this
+@@ResetAlbusEvent:
+    push r0,r1
+    ldr r0, =0x020FFC8C
+    ldr r1, [r0]
+    ands r1, r1, 0x7FFFFFFF ; Reset the In-Event flag
+    str r1, [r0]
+    pop r0,r1
+    cmp r0, 0
     b 0x022B8DB4 ; Let the game's own CMP handle this
 
 ; Prevent the game from trying to send us to the Boss Rush ending
@@ -3577,7 +3588,7 @@
     beq @@Exit ; We only want to do this if Albus isn't alive
     ldr r0, = 0x02100388
     ldr r0, [r0]
-    tst r0, 0x02000000
+    tst r0, 0x00400000
     beq @@Exit  ; Make sure that we've cleared all the events out of this room first
 
 
@@ -3897,11 +3908,11 @@
     bl 0x020A9E28
     tst r0, 0x01 ; Test for whether or not we've Accepted this quest yet
     beq @@CheckQuest1
-    mov r1, 0xC8 ; Chrysoberyl
+    mov r0, 0xC8 ; Chrysoberyl
     bl 0x020636D8
     cmp r0, 0
     beq @@CheckQuest1 ; If we have never owned Chrysoberyl, just check the normal quests...
-    b 0x02234E90
+    b 0x02234E8C
 @@CheckQuest1:
     mov r0, 0x05
     bl 0x020A9E28
