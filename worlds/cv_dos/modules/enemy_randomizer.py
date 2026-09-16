@@ -129,13 +129,19 @@ class EnemyRandomizer:
             rom.write_to_file(file_base_address + 0x1A, "arm9", [new_enemy_behavior.soul_local_id])          
 
             if CONF_BALANCED_STATS:
-                scaled_hp = max(1, int((original_slot_data.hp + new_enemy_behavior.hp) / 2))
-                scaled_exp = max(1, int((original_slot_data.exp + new_enemy_behavior.exp) / 2))
+                # Wir würfeln einen zufälligen Faktor zwischen 0.75 (-25%) und 1.50 (+50%)
+                stat_multiplier = random.uniform(0.75, 1.50)
+                
+                # Wir nehmen die Werte des neuen Gegners und skalisieren sie dynamisch
+                scaled_hp = max(1, int(new_enemy_behavior.hp * stat_multiplier))
+                scaled_exp = max(1, int(new_enemy_behavior.exp * stat_multiplier))
+                
                 rom.write_to_file(file_base_address + 0x0E, "arm9", list(struct.pack("<H", scaled_hp)))
                 rom.write_to_file(file_base_address + 0x10, "arm9", list(struct.pack("<H", original_slot_data.mp)))
                 rom.write_to_file(file_base_address + 0x12, "arm9", list(struct.pack("<H", scaled_exp)))
-                rom.write_to_file(file_base_address + 0x15, "arm9", [max(1, (original_slot_data.atk + new_enemy_behavior.atk) // 2)])
-                rom.write_to_file(file_base_address + 0x16, "arm9", [max(0, (original_slot_data.def_ + new_enemy_behavior.def_) // 2)])
+                rom.write_to_file(file_base_address + 0x15, "arm9", [max(1, int(new_enemy_behavior.atk * stat_multiplier))])
+                rom.write_to_file(file_base_address + 0x16, "arm9", [max(0, int(new_enemy_behavior.def_ * stat_multiplier))])
+
             else:
                 rom.write_to_file(file_base_address + 0x0E, "arm9", list(struct.pack("<H", new_enemy_behavior.hp)))
                 rom.write_to_file(file_base_address + 0x10, "arm9", list(struct.pack("<H", new_enemy_behavior.mp)))

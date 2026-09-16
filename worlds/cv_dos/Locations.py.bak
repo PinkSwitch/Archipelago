@@ -64,12 +64,10 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Garden of Madness Water Blocked", "Garden of Madness: Underground Room"),
         LocationData("Garden of Madness East Gate", "Garden of Madness: East Alcove"),
         LocationData("Garden of Madness Post-Boss", "Garden of Madness: Boss Room", True),
-
         LocationData("Demon Guest House Main", "Demon Guest House: Secret Room"),
         LocationData("Demon Guest House Main", "Demon Guest House: Antechamber"),
         LocationData("Demon Guest House Main", "Demon Guest House: Lower Main Chamber Bottom Room"),
         LocationData("Demon Guest House Puppet Wall Right", "Demon Guest House: Puppet Hole"),
-
         LocationData("Demon Guest House Number Puzzle West", "Demon Guest House: Number 1 Room"),
         LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 5 Room"),
         LocationData("Demon Guest House Number Puzzle", "Demon Guest House: Number 8 Room"),
@@ -129,7 +127,7 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror Room"),
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Mirror World"),
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Bugbear Hallway"),
-        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: East Gear Room",),
+        LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: East Gear Room"),
         LocationData("Cursed Clock Tower Central", "Cursed Clock Tower: Spike Room Secret"),
         LocationData("Cursed Clock Tower Boss Area", "Zephyr Soul"),
         LocationData("Cursed Clock Tower Boss Area", "Cursed Clock Tower: Boss Room", True),
@@ -147,7 +145,6 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Subterranean Hell Shaft Bottom Stairs", "Subterranean Hell: Waterfall Room Lower"),
         LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Middle"),
         LocationData("Subterranean Hell Shaft Middle", "Subterranean Hell: Waterfall Room Upper"),
-
         LocationData("Silenced Ruins", "Silenced Ruins: Ice Block Room"),
         LocationData("Silenced Ruins", "Bat Company Soul"),
         LocationData("Silenced Ruins", "Silenced Ruins: Boss Room", True),
@@ -162,8 +159,7 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Left"),
         LocationData("The Pinnacle Throne Room", "The Pinnacle: Before Throne Room Secret Right"),
     ]
-
-    if world.options.goal:  # Add the checks in the Throne Room and the Abyss
+    if world.options.goal:
         location_table += [
             LocationData("The Pinnacle Throne Room", "The Pinnacle: Beyond Throne Room"),
             LocationData("The Pinnacle Throne Room", "Aguni Soul"),
@@ -180,42 +176,47 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
             LocationData("Garden of Madness Lower", "Garden of Madness: Central Chamber", True),
         ]
 
-    if world.mine_status != "Disabled":  # Add the Mine/Abyss checks
+    if world.mine_status != "Disabled":
         location_table += [
             LocationData("Mine of Judgment", "Death Soul"),
             LocationData("Mine of Judgment", "Mine of Judgment: Boss Room", True),
             LocationData("The Abyss", "The Abyss: Sand Area"),
             LocationData("The Abyss", "The Abyss: Ice Area"),
             LocationData("The Abyss Beyond Abaddon", "Abaddon Soul"),
-            LocationData("The Abyss Beyond Abaddon", "The Abyss: Boss Room", True)]
+            LocationData("The Abyss Beyond Abaddon", "The Abyss: Boss Room", True)
+        ]
 
     if world.options.gate_items == GateItems.option_buttonsanity:
         location_table += [
             LocationData("Wizardry Lab West Gate", "Wizardry Lab: West Gate Button"),
             LocationData("Wizardry Lab East Gate", "Wizardry Lab: East Gate Button"),
             LocationData("Garden of Madness East Gate", "Garden of Madness: Gate Button"),
-            LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button")]
+            LocationData("Silenced Ruins Back Exit", "Subterranean Hell: Gate Button")
+        ]
+
+    # SYSTEM-FIX: Bricht hier ab, falls Enemysanity aktiv ist, um Duplikate zu vermeiden
+    if getattr(world.options, "enemy_sanity", False):
+        return location_table
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         for soul in world.common_souls:
-            location_table.append(
-             LocationData(soul, soul))
+            location_table.append(LocationData(soul, soul))
 
         if world.options.soulsanity_level:
             for soul in world.uncommon_souls:
-                location_table.append(
-                 LocationData(soul, soul))
+                location_table.append(LocationData(soul, soul))
         else:
-            location_table.append(LocationData("Imp Soul", "Imp Soul", True))
+            if not any(loc.name == "Imp Soul" for loc in location_table):
+                location_table.append(LocationData("Imp Soul", "Imp Soul", True))
 
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             for soul in world.rare_souls:
-                location_table.append(
-                 LocationData(soul, soul))
+                location_table.append(LocationData(soul, soul))
     else:
-        location_table.append(LocationData("Imp Soul", "Imp Soul", True))
+        if not any(loc.name == "Imp Soul" for loc in location_table):
+            location_table.append(LocationData("Imp Soul", "Imp Soul", True))
         for soul in world.important_souls:
-            if soul not in world.excluded_static_souls:  # Boss souls that are always in the pool
+            if soul not in world.excluded_static_souls:
                 location_table.append(LocationData(soul, soul, True))
 
     return location_table
