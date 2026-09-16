@@ -124,6 +124,7 @@ location_ids = {
     "The Pinnacle: Central Outdoor Room": 0x77,
     "Wizardry Lab: Upper Big Room": 0x78,
     "Dark Chapel: Big Room Top Right": 0x79,
+    "Lost Village: Moat Drain Switch": 0x7A,
 
     "Puppet Master Soul": 0x100,
     "Zephyr Soul": 0x101,
@@ -267,6 +268,7 @@ location_data_table = {
     "Lost Village: Mirror Room Right": LocationInformation(0x020A152C),
     "Lost Village: Axe Armor Hallway": LocationInformation(0x020A0E3C),
     "Lost Village: Underground Shaft": LocationInformation(0x020A11F0),
+    "Lost Village: Moat Drain Switch": LocationInformation(0x020A15F8),
 
     "Wizardry Lab: Mirror Room": LocationInformation(0x020A953C),
     "Wizardry Lab: Mirror World": LocationInformation(0x020A9548),

@@ -1,0 +1,2872 @@
+[
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "00",
+    "Room_pointer": "0209ED54",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "01",
+    "Room_pointer": "0209EE30",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "02",
+    "Room_pointer": "0209EF44",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "03",
+    "Room_pointer": "0209F050",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "04",
+    "Room_pointer": "0209F11C",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "05",
+    "Room_pointer": "0209F2C0",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "06",
+    "Room_pointer": "0209F414",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "07",
+    "Room_pointer": "0209F548",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "08",
+    "Room_pointer": "0209F6AC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "09",
+    "Room_pointer": "0209F798",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0A",
+    "Room_pointer": "0209F874",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0B",
+    "Room_pointer": "0209F960",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0C",
+    "Room_pointer": "0209FA74",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0D",
+    "Room_pointer": "0209FBE8",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0E",
+    "Room_pointer": "0209FD5C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "0F",
+    "Room_pointer": "0209FED0",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "10",
+    "Room_pointer": "0209FFBC",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "11",
+    "Room_pointer": "020A00E0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "12",
+    "Room_pointer": "020A01CC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "13",
+    "Room_pointer": "020A0310",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "14",
+    "Room_pointer": "020A03FC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "15",
+    "Room_pointer": "020A0530",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "16",
+    "Room_pointer": "020A0664",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "17",
+    "Room_pointer": "020A0738",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "18",
+    "Room_pointer": "020A07AC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "19",
+    "Room_pointer": "020A0820",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "1A",
+    "Room_pointer": "020A09F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Lost Village (overlay14)",
+    "Sector": 0,
+    "Room_NR": "1B",
+    "Room_pointer": "020A0AF0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "00",
+    "Room_pointer": "020A1864",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "01",
+    "Room_pointer": "020A1950",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "02",
+    "Room_pointer": "020A1A3C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "03",
+    "Room_pointer": "020A1B28",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "04",
+    "Room_pointer": "020A1C0C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "05",
+    "Room_pointer": "020A1D00",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "06",
+    "Room_pointer": "020A1DF4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "07",
+    "Room_pointer": "020A1EE8",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "08",
+    "Room_pointer": "020A1FEC",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "09",
+    "Room_pointer": "020A20D0",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0A",
+    "Room_pointer": "020A21E4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0B",
+    "Room_pointer": "020A22F8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0C",
+    "Room_pointer": "020A240C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0D",
+    "Room_pointer": "020A2520",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0E",
+    "Room_pointer": "020A2634",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "0F",
+    "Room_pointer": "020A2748",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "10",
+    "Room_pointer": "020A286C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "11",
+    "Room_pointer": "020A2990",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "12",
+    "Room_pointer": "020A2AA4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "13",
+    "Room_pointer": "020A2BB8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "14",
+    "Room_pointer": "020A2CDC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "15",
+    "Room_pointer": "020A2E00",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "16",
+    "Room_pointer": "020A2F14",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "17",
+    "Room_pointer": "020A3028",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "18",
+    "Room_pointer": "020A313C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "19",
+    "Room_pointer": "020A3250",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1A",
+    "Room_pointer": "020A3374",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1B",
+    "Room_pointer": "020A3460",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1C",
+    "Room_pointer": "020A3564",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1D",
+    "Room_pointer": "020A3630",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1E",
+    "Room_pointer": "020A374C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "1F",
+    "Room_pointer": "020A3858",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "20",
+    "Room_pointer": "020A3974",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "21",
+    "Room_pointer": "020A3A40",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "22",
+    "Room_pointer": "020A3B74",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "23",
+    "Room_pointer": "020A3C68",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "24",
+    "Room_pointer": "020A3D6C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "25",
+    "Room_pointer": "020A3E50",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "26",
+    "Room_pointer": "020A3F94",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "27",
+    "Room_pointer": "020A4090",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "28",
+    "Room_pointer": "020A4174",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "29",
+    "Room_pointer": "020A4258",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2A",
+    "Room_pointer": "020A433C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2B",
+    "Room_pointer": "020A4418",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2C",
+    "Room_pointer": "020A44E4",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2D",
+    "Room_pointer": "020A4608",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2E",
+    "Room_pointer": "020A472C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "2F",
+    "Room_pointer": "020A4870",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "30",
+    "Room_pointer": "020A493C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "31",
+    "Room_pointer": "020A4A48",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "32",
+    "Room_pointer": "020A4B24",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "33",
+    "Room_pointer": "020A4C10",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "34",
+    "Room_pointer": "020A4CEC",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "35",
+    "Room_pointer": "020A4DC8",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "36",
+    "Room_pointer": "020A4EA4",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "37",
+    "Room_pointer": "020A4F90",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "38",
+    "Room_pointer": "020A506C",
+    "Notes": ""
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "39",
+    "Room_pointer": "020A5148",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3A",
+    "Room_pointer": "020A5224",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3B",
+    "Room_pointer": "020A52A8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3C",
+    "Room_pointer": "020A531C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3D",
+    "Room_pointer": "020A5390",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3E",
+    "Room_pointer": "020A5404",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Demon Guest House (overlay11)",
+    "Sector": 1,
+    "Room_NR": "3F",
+    "Room_pointer": "020A5478",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "00",
+    "Room_pointer": "020A64F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "01",
+    "Room_pointer": "020A6618",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "02",
+    "Room_pointer": "020A679C",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "03",
+    "Room_pointer": "020A68E0",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "04",
+    "Room_pointer": "020A6A04",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "05",
+    "Room_pointer": "020A6B78",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "06",
+    "Room_pointer": "020A6CAC",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "07",
+    "Room_pointer": "020A6DD0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "08",
+    "Room_pointer": "020A6F44",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "09",
+    "Room_pointer": "020A70B8",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0A",
+    "Room_pointer": "020A722C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0B",
+    "Room_pointer": "020A7360",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0C",
+    "Room_pointer": "020A74A4",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0D",
+    "Room_pointer": "020A75C8",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0E",
+    "Room_pointer": "020A773C",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "0F",
+    "Room_pointer": "020A7860",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "10",
+    "Room_pointer": "020A79D4",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "11",
+    "Room_pointer": "020A7AF8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "12",
+    "Room_pointer": "020A7C5C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "13",
+    "Room_pointer": "020A7DA0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "14",
+    "Room_pointer": "020A7ED4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "15",
+    "Room_pointer": "020A8018",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "16",
+    "Room_pointer": "020A814C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "17",
+    "Room_pointer": "020A8290",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "18",
+    "Room_pointer": "020A8364",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "19",
+    "Room_pointer": "020A84A8",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1A",
+    "Room_pointer": "020A85CC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1B",
+    "Room_pointer": "020A8740",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1C",
+    "Room_pointer": "020A8884",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1D",
+    "Room_pointer": "020A8958",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1E",
+    "Room_pointer": "020A8A9C",
+    "Notes": ""
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "1F",
+    "Room_pointer": "020A8B60",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "20",
+    "Room_pointer": "020A8BE4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "21",
+    "Room_pointer": "020A8C68",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "22",
+    "Room_pointer": "020A8CDC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "23",
+    "Room_pointer": "020A8D50",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Wizardry Lab (overlay6)",
+    "Sector": 2,
+    "Room_NR": "24",
+    "Room_pointer": "020A8DC4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "00",
+    "Room_pointer": "020A9B7C",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "01",
+    "Room_pointer": "020A9CB8",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "02",
+    "Room_pointer": "020A9DE4",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "03",
+    "Room_pointer": "020A9F38",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "04",
+    "Room_pointer": "020AA04C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "05",
+    "Room_pointer": "020AA138",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "06",
+    "Room_pointer": "020AA274",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "07",
+    "Room_pointer": "020AA360",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "08",
+    "Room_pointer": "020AA4AC",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "09",
+    "Room_pointer": "020AA598",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0A",
+    "Room_pointer": "020AA6FC",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0B",
+    "Room_pointer": "020AA820",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0C",
+    "Room_pointer": "020AA944",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0D",
+    "Room_pointer": "020AAA48",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0E",
+    "Room_pointer": "020AABCC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "0F",
+    "Room_pointer": "020AACF0",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "10",
+    "Room_pointer": "020AADF4",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "11",
+    "Room_pointer": "020AAF30",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "12",
+    "Room_pointer": "020AB03C",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "13",
+    "Room_pointer": "020AB128",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "14",
+    "Room_pointer": "020AB28C",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "15",
+    "Room_pointer": "020AB398",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "16",
+    "Room_pointer": "020AB484",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "17",
+    "Room_pointer": "020AB5E0",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "18",
+    "Room_pointer": "020AB6F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "19",
+    "Room_pointer": "020AB7F8",
+    "Notes": ""
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1A",
+    "Room_pointer": "020AB93C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1B",
+    "Room_pointer": "020ABA50",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1C",
+    "Room_pointer": "020ABAD4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1D",
+    "Room_pointer": "020ABB58",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1E",
+    "Room_pointer": "020ABBDC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "1F",
+    "Room_pointer": "020ABC60",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "20",
+    "Room_pointer": "020ABCE4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "21",
+    "Room_pointer": "020ABD58",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "22",
+    "Room_pointer": "020ABDCC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "23",
+    "Room_pointer": "020ABE40",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Garten of Madeness (overlay16)",
+    "Sector": 3,
+    "Room_NR": "24",
+    "Room_pointer": "020ABEB4",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "00",
+    "Room_pointer": "020ACC94",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "01",
+    "Room_pointer": "020ACDB0",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "02",
+    "Room_pointer": "020ACECC",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "03",
+    "Room_pointer": "020ACFC0",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "04",
+    "Room_pointer": "020AD0FC",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "05",
+    "Room_pointer": "020AD208",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "06",
+    "Room_pointer": "020AD304",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "07",
+    "Room_pointer": "020AD440",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "08",
+    "Room_pointer": "020AD59C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "09",
+    "Room_pointer": "020AD6B8",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0A",
+    "Room_pointer": "020AD7B4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0B",
+    "Room_pointer": "020AD908",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0C",
+    "Room_pointer": "020ADA1C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0D",
+    "Room_pointer": "020ADB30",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0E",
+    "Room_pointer": "020ADC4C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "0F",
+    "Room_pointer": "020ADD38",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "10",
+    "Room_pointer": "020ADE4C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "11",
+    "Room_pointer": "020ADF50",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "12",
+    "Room_pointer": "020AE06C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "13",
+    "Room_pointer": "020AE188",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "14",
+    "Room_pointer": "020AE27C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "15",
+    "Room_pointer": "020AE3C0",
+    "Notes": ""
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "16",
+    "Room_pointer": "020AE4CC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "17",
+    "Room_pointer": "020AE540",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Dark Chapel (overlay8)",
+    "Sector": "04",
+    "Room_NR": "18",
+    "Room_pointer": "020AE5B4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "00",
+    "Room_pointer": "020AF038",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "01",
+    "Room_pointer": "020AF12C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "02",
+    "Room_pointer": "020AF220",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "03",
+    "Room_pointer": "020AF2F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "04",
+    "Room_pointer": "020AF418",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "05",
+    "Room_pointer": "020AF50C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "06",
+    "Room_pointer": "020AF600",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "07",
+    "Room_pointer": "020AF6D4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "08",
+    "Room_pointer": "020AF8D0",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "09",
+    "Room_pointer": "020AF9F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0A",
+    "Room_pointer": "020AFAE8",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0B",
+    "Room_pointer": "020AFBBC",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0C",
+    "Room_pointer": "020AFCE0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0D",
+    "Room_pointer": "020AFDF4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0E",
+    "Room_pointer": "020AFE88",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "0F",
+    "Room_pointer": "020AFFBC",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "10",
+    "Room_pointer": "020B0118",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "11",
+    "Room_pointer": "020B0274",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "12",
+    "Room_pointer": "020B03B0",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "13",
+    "Room_pointer": "020B053C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "14",
+    "Room_pointer": "020B0638",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "15",
+    "Room_pointer": "020B074C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "16",
+    "Room_pointer": "020B0920",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "17",
+    "Room_pointer": "020B0A5C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "18",
+    "Room_pointer": "020B0BC0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "19",
+    "Room_pointer": "020B0CE4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1A",
+    "Room_pointer": "020B0D68",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1B",
+    "Room_pointer": "020B0DFC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1C",
+    "Room_pointer": "020B0F10",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1D",
+    "Room_pointer": "020B0F84",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1E",
+    "Room_pointer": "020B0FF8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "1F",
+    "Room_pointer": "020B106C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "20",
+    "Room_pointer": "020B1100",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "21",
+    "Room_pointer": "020B121C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "22",
+    "Room_pointer": "020B1338",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "23",
+    "Room_pointer": "020B1454",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "24",
+    "Room_pointer": "020B1570",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "25",
+    "Room_pointer": "020B168C",
+    "Notes": ""
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "26",
+    "Room_pointer": "020B17A8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Condemned Tower & Mine of Judgment (overlay7)",
+    "Sector": "05",
+    "Room_NR": "27",
+    "Room_pointer": "020B18CC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "00",
+    "Room_pointer": "020B2690",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "01",
+    "Room_pointer": "020B278C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "02",
+    "Room_pointer": "020B2878",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "03",
+    "Room_pointer": "020B2974",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "04",
+    "Room_pointer": "020B2A50",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "05",
+    "Room_pointer": "020B2B8C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "06",
+    "Room_pointer": "020B2CC8",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "07",
+    "Room_pointer": "020B2DC4",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "08",
+    "Room_pointer": "020B2EB0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "09",
+    "Room_pointer": "020B2FAC",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0A",
+    "Room_pointer": "020B3070",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0B",
+    "Room_pointer": "020B317C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0C",
+    "Room_pointer": "020B3290",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0D",
+    "Room_pointer": "020B336C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0E",
+    "Room_pointer": "020B3480",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "0F",
+    "Room_pointer": "020B3564",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "10",
+    "Room_pointer": "020B3640",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "11",
+    "Room_pointer": "020B377C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "12",
+    "Room_pointer": "020B3878",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "13",
+    "Room_pointer": "020B3954",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "14",
+    "Room_pointer": "020B3A68",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "15",
+    "Room_pointer": "020B3B4C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "16",
+    "Room_pointer": "020B3C28",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "17",
+    "Room_pointer": "020B3D3C",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "18",
+    "Room_pointer": "020B3E00",
+    "Notes": ""
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "19",
+    "Room_pointer": "020B3F04",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1A",
+    "Room_pointer": "020B4F00",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1B",
+    "Room_pointer": "020B400C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1C",
+    "Room_pointer": "020B4090",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1D",
+    "Room_pointer": "020B4114",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1E",
+    "Room_pointer": "020B4188",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "1F",
+    "Room_pointer": "020B41FC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "20",
+    "Room_pointer": "020B4270",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Subterranean Hell (overlay17)",
+    "Sector": "06",
+    "Room_NR": "21",
+    "Room_pointer": "020B42E4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "00",
+    "Room_pointer": "020B4E94",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "01",
+    "Room_pointer": "020B4F80",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "02",
+    "Room_pointer": "020B504C",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "03",
+    "Room_pointer": "020B5178",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "04",
+    "Room_pointer": "020B5264",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "05",
+    "Room_pointer": "020B5340",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "06",
+    "Room_pointer": "020B540C",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "07",
+    "Room_pointer": "020B5508",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "08",
+    "Room_pointer": "020B5644",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "09",
+    "Room_pointer": "020B5730",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0A",
+    "Room_pointer": "020B581C",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0B",
+    "Room_pointer": "020B58E8",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0C",
+    "Room_pointer": "020B59F4",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0D",
+    "Room_pointer": "020B5AE0",
+    "Notes": ""
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0E",
+    "Room_pointer": "020B5BCC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "0F",
+    "Room_pointer": "020B5C88",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Silenced Ruins (overlay15)",
+    "Sector": "07",
+    "Room_NR": "10",
+    "Room_pointer": "020B5CFC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "00",
+    "Room_pointer": "020B6530",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "01",
+    "Room_pointer": "020B6644",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "02",
+    "Room_pointer": "020B6720",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "03",
+    "Room_pointer": "020B67FC",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "04",
+    "Room_pointer": "020B6910",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "05",
+    "Room_pointer": "020B6A24",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "06",
+    "Room_pointer": "020B6B38",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "07",
+    "Room_pointer": "020B6C4C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "08",
+    "Room_pointer": "020B6CE0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "09",
+    "Room_pointer": "020B6DBC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0A",
+    "Room_pointer": "020B6ED0",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0B",
+    "Room_pointer": "020B6FC4",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0C",
+    "Room_pointer": "020B70B0",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0D",
+    "Room_pointer": "020B719C",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0E",
+    "Room_pointer": "020B72E0",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "0F",
+    "Room_pointer": "020B7454",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "10",
+    "Room_pointer": "020B7560",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "11",
+    "Room_pointer": "020B7654",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "12",
+    "Room_pointer": "020B77B8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "13",
+    "Room_pointer": "020B784C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "14",
+    "Room_pointer": "020B7960",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "15",
+    "Room_pointer": "020B7A74",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "16",
+    "Room_pointer": "020B7BA8",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "17",
+    "Room_pointer": "020B7CCC",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "18",
+    "Room_pointer": "020B7E10",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "19",
+    "Room_pointer": "020B7F54",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1A",
+    "Room_pointer": "020B8058",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1B",
+    "Room_pointer": "020B816C",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1C",
+    "Room_pointer": "020B8228",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1D",
+    "Room_pointer": "020B8314",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1E",
+    "Room_pointer": "020B8438",
+    "Notes": ""
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "1F",
+    "Room_pointer": "020B855C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "20",
+    "Room_pointer": "020B8650",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Cursed Clock Tower (overlay9)",
+    "Sector": "08",
+    "Room_NR": "21",
+    "Room_pointer": "020B86C4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "00",
+    "Room_pointer": "020B9240",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "01",
+    "Room_pointer": "020B934C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "02",
+    "Room_pointer": "020B9418",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "03",
+    "Room_pointer": "020B94D4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "04",
+    "Room_pointer": "020B95D0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "05",
+    "Room_pointer": "020B967C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "06",
+    "Room_pointer": "020B97A8",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "07",
+    "Room_pointer": "020B9874",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "08",
+    "Room_pointer": "020B9948",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "09",
+    "Room_pointer": "020B9A4C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0A",
+    "Room_pointer": "020B9B38",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0B",
+    "Room_pointer": "020B9BF4",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0C",
+    "Room_pointer": "020B9CE8",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0D",
+    "Room_pointer": "020B9DD4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0E",
+    "Room_pointer": "020B9EF0",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "0F",
+    "Room_pointer": "020BA02C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "10",
+    "Room_pointer": "020BA188",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "11",
+    "Room_pointer": "020BA204",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "12",
+    "Room_pointer": "020BA310",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "13",
+    "Room_pointer": "020BA3FC",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "14",
+    "Room_pointer": "020BA520",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "15",
+    "Room_pointer": "020BA5EC",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "16",
+    "Room_pointer": "020BA6A8",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "17",
+    "Room_pointer": "020BA77C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "18",
+    "Room_pointer": "020BA8A0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "19",
+    "Room_pointer": "020BA98C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1A",
+    "Room_pointer": "020BAA78",
+    "Notes": ""
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1B",
+    "Room_pointer": "020BAB24",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1C",
+    "Room_pointer": "020BABA8",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1D",
+    "Room_pointer": "020BAC1C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1E",
+    "Room_pointer": "020BAC90",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Pinnacle (overlay10)",
+    "Sector": "09",
+    "Room_NR": "1F",
+    "Room_pointer": "020BAD04",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Menace (overlay 12)",
+    "Sector": "0A",
+    "Room_NR": "00",
+    "Room_pointer": "020BB498",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "00",
+    "Room_pointer": "020BB60C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "01",
+    "Room_pointer": "020BB680",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "02",
+    "Room_pointer": "020BB77C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "03",
+    "Room_pointer": "020BB848",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "04",
+    "Room_pointer": "020BB9CC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "05",
+    "Room_pointer": "020BBB50",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "06",
+    "Room_pointer": "020BBCD4",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "07",
+    "Room_pointer": "020BBE38",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "08",
+    "Room_pointer": "020BBF9C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "09",
+    "Room_pointer": "020BC100",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0A",
+    "Room_pointer": "020BC284",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0B",
+    "Room_pointer": "020BC408",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0C",
+    "Room_pointer": "020BC4E4",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0D",
+    "Room_pointer": "020BC5C0",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0E",
+    "Room_pointer": "020BC69C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "0F",
+    "Room_pointer": "020BC7F0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "10",
+    "Room_pointer": "020BC974",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "11",
+    "Room_pointer": "020BCAF8",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "12",
+    "Room_pointer": "020BCB94",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "13",
+    "Room_pointer": "020BCC80",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "14",
+    "Room_pointer": "020BCD3C",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "15",
+    "Room_pointer": "020BCEC0",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "16",
+    "Room_pointer": "020BD044",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "17",
+    "Room_pointer": "020BD158",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "18",
+    "Room_pointer": "020BD26C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "19",
+    "Room_pointer": "020BD380",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1A",
+    "Room_pointer": "020BD494",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1B",
+    "Room_pointer": "020BD618",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1C",
+    "Room_pointer": "020BD79C",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1D",
+    "Room_pointer": "020BD908",
+    "Notes": ""
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1E",
+    "Room_pointer": "020BDAA4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "1F",
+    "Room_pointer": "020BDC60",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "20",
+    "Room_pointer": "020BDCD4",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "21",
+    "Room_pointer": "020BDD48",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "22",
+    "Room_pointer": "020BDDBC",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "The Abyss (overlay 13)",
+    "Sector": "0B",
+    "Room_NR": "23",
+    "Room_pointer": "020BDE30",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Prolouge (overlay 18)",
+    "Sector": "0C",
+    "Room_NR": "00",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Epilouge (overlay 19)",
+    "Sector": "0D",
+    "Room_NR": "00",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "00",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "01",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "02",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "03",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "04",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "05",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "06",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "07",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "08",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "09",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "0A",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "0B",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "0C",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "0D",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Boss Rush (overlay 20)",
+    "Sector": "0E",
+    "Room_NR": "0E",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "00",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "01",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "02",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "03",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "04",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "05",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Enemie Set Mode (overlay 21)",
+    "Sector": "0F",
+    "Room_NR": "06",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  },
+  {
+    "Area": "Throne Room (overlay 22)",
+    "Sector": "10",
+    "Room_NR": "00",
+    "Room_pointer": "",
+    "Notes": "nicht randomizen"
+  }
+]

@@ -485,13 +485,13 @@ bl @GetItemFromSpecial
     .dw 0x02229D60
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Goal Conditionals
-.org 0x02225BB8
+.org 0x02225BC0
     .db 0x01, 0xFF, 0x0FF ;FOR TESTING ONLY
 
-.org 0x02225BC8
+.org 0x02225BD0
     .db 0x01, 0xFF, 0x0FF
 
-.org 0x02225BD8
+.org 0x02225BE0
     .db 0x01, 0xFF, 0x0FF
 ;;;;;;;;;;;;;;;;;;;;;;;;    
 .org 0x022196A6
@@ -3369,7 +3369,7 @@ push r0
 ; 1 - mine
 ; 2 - menace
 @CheckGoal_Sub:
-    ldr r1, =0x02225BB8
+    ldr r1, =0x02225BC0
 @@CountPointer:
     cmp r0, 0
     beq @@EndMathLoop
@@ -3405,7 +3405,7 @@ push r0
     bx lr
 @@Goal_Bosses:
 ; Compare the player's Boss Defeat flags with pointer + 1 boss defeat flags
-    ldrh r1, [r1, 1] ; 1 byte after the goal is the Boss Bitfield
+    ldrh r1, [r1, 2] ; 1 byte after the goal is the Boss Bitfield
     ldr r0, = 0x020F7038
     ldrh r0, [r0] ; Get the boss flags
     ands r0, r0, r1 ; AND the required flags and the boss flags
@@ -3988,6 +3988,9 @@ push r0
     ldrb r1, [r1]
     cmp r1, 0
     beq @@EndNormal
+    ldrb r0, [r4, 0x35]
+    ldr r1, = 0x222F290
+    ldr r0, [r1, r0, lsl 2]
     bl 0x021E7540
     b 0x021A9B00
 

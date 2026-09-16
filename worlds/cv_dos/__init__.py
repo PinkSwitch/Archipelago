@@ -12,6 +12,7 @@ from .static_location_data import location_ids, get_location_groups
 from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data, create_item,
                              get_filler_item_name, modify_multidata, generate_output, write_spoiler_header,
                              connect_entrances)
+from .modules import enemy_randomizer
 
 
 class DoSWeb(WebWorld):
@@ -46,9 +47,11 @@ class DoSWorld(World):
        Having rejected his fate, the cult seeks to create a new Dark Lord in his stead.
        Explore a new castle and defeat the Dark Lord Candidates!"""
     
+    import pkgutil
     game = "Castlevania: Dawn of Sorrow"
     option_definitions = DoSOptions
     data_version = 1
+    zipped_data_valid = True
     origin_region_name = "Lost Village Upper"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
@@ -353,4 +356,4 @@ class DoSWorld(World):
 
         self.filler_souls = soul_filler_table.copy()
 
-        self.iron_mode = bool(True)
+        self.iron_mode = bool(False)

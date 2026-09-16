@@ -74,9 +74,9 @@ class OneScreenMode(Toggle):
 
 class SoulRandomizer(Choice):
     """Randomizes Enemy souls.
-            Disabled: Enemy souls are unchanged.
-            Shuffled: Enemy souls will be shuffled amongst each other. Souls that unlock things are unchanged.
-            Soulsanity: Enemy soul drops can be anything, even important items or non-souls. You can change the expected soul rarity with Soulsanity level."""
+       Disabled: Enemy souls are unchanged.
+       Shuffled: Enemy souls will be shuffled amongst each other. Souls that unlock things are unchanged.
+       Soulsanity: Enemy soul drops can be anything, even important items or non-souls. You can change the expected soul rarity with Soulsanity level."""
     option_disabled = 0
     option_shuffled = 1
     option_soulsanity = 2
@@ -116,8 +116,6 @@ class OpenDrawbridge(Toggle):
 class ShopRandomizer(Toggle):
     """Randomizes Hammer's shop items."""
     display_name = "Shop Randomizer"
-
-
 class ShuffleDrops(Toggle):
     """Randomizes items dropped by enemies"""
     display_name = "Drop Shuffle"
@@ -278,36 +276,12 @@ class RandomizeSealDetails(Choice):
     default = 0
 
 
-# Enemy randomizer specific option classes (minimal additions)
-class EnemyRandomizerMode(Choice):
-    """Enemy randomizer mode.
-    0 = Disabled, 1 = Full swap, 2 = Spawn/slot swap"""
-    display_name = "Enemy Randomizer Mode"
-    option_disabled = 0
-    option_full_swap = 1
-    option_spawn_swap = 2
-    default = 0
 
-
-class AllowBossSwaps(Toggle):
-    """Allow bosses to be swapped by the enemy randomizer (use with caution)."""
-    display_name = "Allow Boss Swaps"
-
-
-class PreserveResourceIntensive(Toggle):
-    """Preserve resource intensive enemies (default ON)."""
-    display_name = "Preserve Resource-Intensive Enemies"
-    default = True
-
-
-class EnemyRandomizerDebugSubset(NamedRange):
-    """When non-zero, only apply the randomization to a debug subset size (for testing)."""
-    display_name = "Enemy Randomizer Debug Subset"
-    range_start = 0
-    range_end = 500
-    default = 0
-
-
+class EnemyRandomizerToggle(Toggle):
+    """Mische alle normalen Schlossgegner (IDs 0x00 bis 0x64) komplett zufällig durch.
+       Die Positionen in den Räumen (VRAM-Slots) und die Stats werden synchron angepasst.
+       Bosse bleiben hiervon unberührt und werden separat behandelt."""
+    display_name = "Enemy Randomizer"
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -341,6 +315,7 @@ class DoSOptions(PerGameCommonOptions):
     gate_items: GateItems
     hard_mode: HardMode
     boss_shuffle: BossShuffle
+    enemy_randomizer: EnemyRandomizerToggle  # Im System registriert
     seal_shuffle: SealShuffle
     randomize_seal_patterns: RandomizeSealPatterns
     menace_condition: MenaceCondition
@@ -349,11 +324,6 @@ class DoSOptions(PerGameCommonOptions):
     start_with_doppelganger: StartWithDoppelganger
     randomize_doors: ShuffleCastleConnections
     randomize_seal_details: RandomizeSealDetails
-    # Enemy randomizer options (added, non-destructive)
-    randomize_enemies: EnemyRandomizerMode
-    allow_boss_swaps: AllowBossSwaps
-    preserve_resource_intensive: PreserveResourceIntensive
-    enemy_randomizer_debug_subset: EnemyRandomizerDebugSubset
 
 
 dos_option_groups = [
@@ -363,7 +333,6 @@ dos_option_groups = [
         MineCondition,
         GardenCondition,
         ReplaceMenaceWithSoma
-
     ]),
 
     OptionGroup("Soul Settings", [
@@ -371,14 +340,12 @@ dos_option_groups = [
         SoulsanityLevel,
         GuaranteedSouls,
         SoulDropPercent
-
     ]),
 
     OptionGroup("Item Options", [
         StartingWeapon,
         ShopRandomizer,
         GateItems
-
     ]),
 
     OptionGroup("Seal Settings", [
@@ -391,7 +358,6 @@ dos_option_groups = [
 
     OptionGroup("Weapon Synth Settings", [
         RandomizeSynthSouls,
-
     ]),
 
     OptionGroup("World Settings", [
@@ -399,19 +365,14 @@ dos_option_groups = [
         OpenDrawbridge,
         SoulWallRandomizer,
         ShuffleCastleConnections
-
     ]),
 
     OptionGroup("Enemy Settings", [
-        EnemyRandomizerMode,
-        AllowBossSwaps,
-        PreserveResourceIntensive,
-        EnemyRandomizerDebugSubset,
         ShuffleDrops,
         ExperiencePercent,
         HardMode,
-        BossShuffle
-
+        BossShuffle,
+        EnemyRandomizerToggle   
     ]),
 
     OptionGroup("Quality of Life", [
@@ -429,6 +390,5 @@ dos_option_groups = [
     OptionGroup("Music Randomizer", [
         AreaMusicShuffle,
         BossMusicShuffle
-
     ]),
 ]
