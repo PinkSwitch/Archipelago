@@ -3,6 +3,7 @@ import random
 import json
 import pkgutil
 import os
+import re
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set
 
@@ -262,6 +263,7 @@ def write_enemies(world, rom, mode="normal"):
         except Exception as e:
             print(f"[Fehler] Raum {hex(room_header_ram)} ({area_string}): {e}")
             import tracebacktrace
+            back.print_exc()
             continue
 
  
