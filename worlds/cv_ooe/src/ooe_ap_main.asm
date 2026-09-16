@@ -730,6 +730,9 @@
     .org 0x02234B0C
         tst r0, 0x200 ; Make Nikolai check the Minera Prison albus flag instead of the post-SkelCave flag...
 
+    .org 0x022335EC
+        b @CantTalkIfItemDelay
+
         
 .close
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -4696,6 +4699,18 @@
 @@Exit:
     pop r0,r2
     bx lr
+;;;;;;;;;;;;;;;;;
+; Prevents dialogue from being pulled up if we're waiting on a quest item fade
+@CantTalkIfItemDelay:
+    ldr r0, = @RamFlag_DelayedQuestItem
+    ldrh r0, [r0]
+    cmp r0, 0
+    bne @@Skip ; Don't open dialogue if this isn't zero!
+    mov r0, r4
+    bl 0x02234A58
+    b 0x022335F0
+@@Skip:
+    b 0x02234854
 
 
 
