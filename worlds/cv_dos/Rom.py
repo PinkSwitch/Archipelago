@@ -32,6 +32,7 @@ class FilePointer(NamedTuple):
     base_address: int
     file_size: int
 
+
 file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
     "overlay_0": FilePointer(0x000CB200, 0x0219E3E0, 0x0009235F),
@@ -116,9 +117,11 @@ class LocalRom(object):
 
     def get_bytes(self) -> bytes:
         return bytes(self.file)
+
+
 def patch_rom(world, rom, code_patch):
     from .modules.area_shuffle import patch_castle_connections
-    
+    # This is the entirety of the patched code
     rom.write_to_file(0x02308970, "overlay_41", code_patch)
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x14]
@@ -140,32 +143,34 @@ def patch_rom(world, rom, code_patch):
             weapon = world.random.choice(valid_random_starting_weapons)
 
     starting_weapon = global_weapon_table.index(weapon)
-    
-    if world.player_name == "ironsoul":
+    ########### COPPER DAWN STUFF, TODO DELETE THIS
+    if world.iron_mode:
         starting_armor = world.random.choice(["Casual Clothes", "Cloth Tunic", "Leather Armor", "Silk Robe"])
         starting_armor = global_armor_table.index(starting_armor)
         starting_weapon = world.random.choice(["Rapier", "Short Sword", "Claymore", "Mace", "Blunt Sword",
                                                "Axe", "Spear", "Handgun", "Brass Knuckles"])
         starting_weapon = global_weapon_table.index(starting_weapon)
-        rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))
-        rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))
-        rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))
-        rom.write_to_file(0x02308E43, "overlay_41", bytearray([0x01]))
-        rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))
-        rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))
+        rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
+        rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))  # Hide Pickups
+        rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))  # Gear Lock
+        rom.write_to_file(0x02308E43, "overlay_41", bytearray([0x01]))  # Level Lock
+        rom.write_to_file(0x02308E44, "overlay_41", struct.pack("H", starting_weapon))  # For Gear Lock
+        rom.write_to_file(0x02308E46, "overlay_41", struct.pack("H", starting_armor))  # For Gear Lock
+    ############################
 
+    # Options handling
     rom.write_to_file(0x021F6068, "overlay_0", bytearray([starting_weapon]))
 
     warp_room = warp_room_bits[world.starting_warp_room]
-    rom.write_to_file(0x02308a6e, "overlay_41", struct.pack("H", warp_room))
+    rom.write_to_file(0x02308a6e, "overlay_41", struct.pack("H", warp_room))  # The initial warp room bit
 
     if world.options.replace_menace_with_soma:
-        rom.copy_bytes(0x158C3C, 8, 0x158C34)
+        rom.copy_bytes(0x158C3C, 8, 0x158C34)  # Replace the menace warp coords with soma's
 
     if world.options.remove_money_gates:
-        rom.write_to_file(0x020A9661, "arm9", bytearray([0x00]))
-        rom.write_to_file(0x020ACA2D, "arm9", bytearray([0x00]))
-        rom.write_to_file(0x020B9135, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x020A9661, "arm9", bytearray([0x00]))  # Wizardry lab gate
+        rom.write_to_file(0x020ACA2D, "arm9", bytearray([0x00]))  # Garden gate
+        rom.write_to_file(0x020B9135, "arm9", bytearray([0x00]))  # Clock Tower
 
     if world.options.disable_boss_seals:
         rom.write_to_file(0x21f1bf8, "overlay_0", bytearray([0x00]))
@@ -176,7 +181,23 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x2024BE8, "arm9", bytearray([0x00, 0x00, 0xE0, 0xE3, 0x1E, 0xFF, 0x2F]))
 
     if world.options.open_drawbridge:
-        rom.write_to_file(0x21A2226, "overlay_0", bytearray([0xA0, 0xE1]))
+        rom.write_to_file(0x21A2226, "overlay_0", bytearray([0xA0, 0xE1]))  # Make the drawbridge always be down
+
+    if world.options.fix_luck:
+        rom.write_to_file(0x21C3A5D, "overlay_0", bytearray([0x22]))
+        rom.write_to_file(0x21C3A68, "overlay_0", bytearray([0x02, 0x70]))
+        rom.write_to_file(0x21C3A6D, "overlay_0", bytearray([0x71]))
+        rom.write_to_file(0x21C3A70, "overlay_0", bytearray([0x00, 0x00]))
+        rom.write_to_file(0x21C3A73, "overlay_0", bytearray([0xE1]))
+        rom.write_to_file(0x21C3A7A, "overlay_0", bytearray([0xA0, 0xE3]))
+        rom.write_to_file(0x21C3A9E, "overlay_0", bytearray([0x87, 0xE0]))
+        rom.write_to_file(0x21C3B80, "overlay_0", bytearray([0x00, 0x00, 0xA0, 0xE1]))
+        rom.write_to_file(0x21C3BA8, "overlay_0", bytearray([0x02, 0x0A]))
+        rom.write_to_file(0x21C3BAB, "overlay_0", bytearray([0xE3]))
+        rom.write_to_file(0x21C3BD0, "overlay_0", bytearray([0x47, 0x91, 0x80, 0xE0]))
+        rom.write_to_file(0x21C3BE0, "overlay_0", bytearray([0x89]))
+        rom.write_to_file(0x21C3BE4, "overlay_0", bytearray([0x02, 0x0A]))
+        rom.write_to_file(0x21C3BE7, "overlay_0", bytearray([0xE3]))
 
     if world.options.reveal_hidden_walls:
         rom.write_to_file(0x20A1231, "arm9", bytearray([0x00]))
@@ -189,24 +210,27 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x20BAFC5, "arm9", bytearray([0x00]))
         rom.write_to_file(0x20B44A9, "arm9", bytearray([0x00]))
 
-    if not world.options.goal:
-        rom.write_to_file(0x20B9508, "arm9", bytearray([0x60, 0xDC]))
+    if not world.options.goal:  # Remove the better ending trigger and replace Dario with Menace
+        rom.write_to_file(0x20B9508, "arm9", bytearray([0x60, 0xDC]))  # ???
         rom.write_to_file(0x20B950e, "arm9", bytearray([0xFF, 0xFE, 0xD0, 0xFF]))
         rom.write_to_file(0x20BDC30, "arm9", bytearray([0xD4, 0x94]))
         rom.write_to_file(0x20BDC38, "arm9", bytearray([0xD0]))
 
+        #  Wall off the final boss door in the Abyss
         rom.write_to_file(0x22EE17C, "overlay_13", bytearray([0x2F]))
         rom.write_to_file(0x22EE1BC, "overlay_13", bytearray([0x3F]))
         rom.write_to_file(0x22EE1FC, "overlay_13", bytearray([0x4F]))
         rom.write_to_file(0x22EE23C, "overlay_13", bytearray([0x5F]))
         rom.write_to_file(0x22EE27C, "overlay_13", bytearray([0x5F]))
         rom.write_to_file(0x22EE2bC, "overlay_13", bytearray([0x41]))
+        ######
+
     if world.mine_status == "Disabled":
-        rom.write_to_file(0x02308B1D, "overlay_41", bytearray([0xFF]))
-        rom.write_to_file(0x2308B1E, "overlay_41", bytearray([0xFF]))
+        rom.write_to_file(0x02308B1D, "overlay_41", bytearray([0xFF]))  # Remove Death, Abaddon, and Aguni from the Soulstiary
+        rom.write_to_file(0x2308B1E, "overlay_41", bytearray([0xFF]))  # IF MINE IS REMOVED!!!!
 
     if not world.options.goal:
-        rom.write_to_file(0x2308B22, "overlay_41", bytearray([0xFF]))
+        rom.write_to_file(0x2308B22, "overlay_41", bytearray([0xFF]))  # Clear Aguni if the goal is Throne
 
     if world.options.one_screen_mode:
         rom.write_to_file(0x2308a6c, "overlay_41", bytearray([0x01]))
@@ -218,7 +242,7 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x2308aad, "overlay_41", bytearray([0x01]))
 
     if world.options.no_mp_bat:
-        rom.write_to_file(0x209d782, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x209d782, "arm9", bytearray([0x00]))  # Zero the Bat's MP cost
 
     rom.write_to_file(0x02308D7C, "overlay_41", bytearray([world.options.start_with_doppelganger.value]))
 
@@ -226,22 +250,24 @@ def patch_rom(world, rom, code_patch):
         randomize_seal_patterns(world, rom)
 
     rom.write_to_file(0x2308AAE, "overlay_41", struct.pack("H", world.options.experience_percentage))
-    rom.write_to_file(0x2308AB0, "overlay_41", struct.pack("H", world.options.soul_drop_percentage))
 
+    rom.write_to_file(0x2308AB0, "overlay_41", struct.pack("H", world.options.soul_drop_percentage))
     soul_total = set(world.common_souls)
     if world.options.soulsanity_level:
         soul_total |= world.uncommon_souls
+
     if world.options.soulsanity_level == SoulsanityLevel.option_rare:
         soul_total |= world.rare_souls
     soul_total = list(soul_total)
 
-    for i, soul in enumerate(soul_total):
+    for i, soul in enumerate(soul_total):  # Fill IDs of souls in the loc pool
         rom.write_to_file(0x2308ab4 + i, "overlay_41", bytearray([global_soul_table.index(soul)]))
 
     if world.options.soul_randomizer == SoulRandomizer.option_shuffled:
         vanilla_souls = [soul for soul in world.important_souls if soul not in world.excluded_static_souls]
-        shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]
-        souls_output = {key: key for key in soul_filler_table.copy()}
+
+        shuffled_keys = [item for item in soul_filler_table.copy() if item not in vanilla_souls]  # Will this break with Aguni/Abaddon since they're not filler?
+        souls_output = {key: key for key in soul_filler_table.copy()}  # this is assuming all vanilla souls are in soul_filler_table
         shuffled_vals = world.random.sample(shuffled_keys, k=len(shuffled_keys))
         for key, val in zip(shuffled_keys, shuffled_vals):
             souls_output[key] = val
@@ -257,38 +283,44 @@ def patch_rom(world, rom, code_patch):
         shop_pool = common_filler_pool.copy()
         shop_pool = [item for item in shop_pool if item not in ["Potion", "Mind Up", "Claymore"]]
         for i in range(10):
+            # Shop pool 2
             item = world.random.choice(shop_pool)
             rom.write_to_file(0x209df14 + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
         for i in range(18):
+            # Shop pool 1
             item = world.random.choice(shop_pool)
             rom.write_to_file(0x209df38 + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
         for i in range(19):
+            # Starting shop
             item = world.random.choice(shop_pool)
             rom.write_to_file(0x209df4f + i, "arm9", bytearray([global_item_table.index(item) + 1]))
             shop_pool.remove(item)
 
+        # Claymore should always be available for breakable walls
         rom.write_to_file(0x209df4e, "arm9", bytearray([global_item_table.index("Claymore") + 1]))
 
     if world.options.shuffle_enemy_drops:
         drop_pool = common_filler_pool.copy()
         for enemy in enemy_table:
-            if enemy in boss_list:
+            if enemy in boss_list:  # We don't want to shuffle drops for bosses
                 continue
 
             index = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
             common_drop_address = index + 8
             rare_drop_address = index + 10
             if world.random.randint(0, 99) < 45:
+                # Common drop
                 item = world.random.choice(drop_pool)
                 common_item = global_item_table.index(item) + 1
             else:
                 common_item = 0
 
             if world.random.randint(0, 99) < 29:
+                # Rare drop
                 item = world.random.choice(drop_pool)
                 rare_item = global_item_table.index(item) + 1
             else:
@@ -296,13 +328,6 @@ def patch_rom(world, rom, code_patch):
 
             rom.write_to_file(common_drop_address, "arm9", bytearray([common_item]))
             rom.write_to_file(rare_drop_address, "arm9", bytearray([rare_item]))
-
-
-    if getattr(world.options, "enemy_randomizer", False):
-        from .modules import enemy_randomizer
-        enemy_randomizer.write_enemies(world, rom, mode="normal")
-        print(f"[{world.player_name}] Gegner-Mischer erfolgreich injiziert!")
-
 
     write_synthesis(world, rom)
     write_seals(world, rom)
@@ -318,25 +343,22 @@ def patch_rom(world, rom, code_patch):
         boss_music_randomizer(world, rom)
 
     if world.options.randomize_red_soul_walls:
-        rom.write_to_file(0x2308b28, "overlay_41", bytearray([0x01]))
-        
-        # 🛠️ ORIGINAL-RESTORE: Konvertiert das Set in eine Liste, damit die Indizes 
-        # der vier originalen roten Seelen (Red Souls) exakt zugewiesen werden.
-        walls_list = list(world.red_soul_walls)
-        rom.write_to_file(0x0222BDA0, "overlay_0", bytearray([global_soul_table.index(walls_list[0])]))
-        rom.write_to_file(0x0222BD9A, "overlay_0", bytearray([global_soul_table.index(walls_list[1])]))
-        rom.write_to_file(0x0222BD94, "overlay_0", bytearray([global_soul_table.index(walls_list[2])]))
-        rom.write_to_file(0x0222BDA6, "overlay_0", bytearray([global_soul_table.index(walls_list[3])]))
+        rom.write_to_file(0x2308b28, "overlay_41", bytearray([0x01]))  # Tell the rom we have this on
+
+        rom.write_to_file(0x0222BDA0, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[0])]))
+        rom.write_to_file(0x0222BD9A, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[1])]))
+        rom.write_to_file(0x0222BD94, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[2])]))
+        rom.write_to_file(0x0222BDA6, "overlay_0", bytearray([global_soul_table.index(world.red_soul_walls[3])]))
 
     if world.options.gate_items == GateItems.option_buttonsanity:
-        rom.write_to_file(0x2308b29, "overlay_41", bytearray([0x01]))
+        rom.write_to_file(0x2308b29, "overlay_41", bytearray([0x01]))  # Enables Button Check Mode
 
     if world.options.hard_mode:
-        rom.write_to_file(0x2308b2a, "overlay_41", bytearray([0x01]))
+        rom.write_to_file(0x2308b2a, "overlay_41", bytearray([0x01]))  # Hard mode set
 
     if world.options.passive_soul_eater_ring:
-        rom.write_to_file(0x2308b2b, "overlay_41", bytearray([0x01]))
-        
+        rom.write_to_file(0x2308b2b, "overlay_41", bytearray([0x01]))  # Passive souls
+    # Locations Handler
     patch_locations(world, rom, world.get_locations())
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -381,9 +403,11 @@ class DoSPatchExtensions(APPatchExtension):
     def adjust_item_positions(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
         version_check = rom.read_from_file(0x2308a9c, "overlay_41", 15)
-        version = version_check.rstrip(b"\x69").decode("ascii")
-        if version != world_version:
-            raise Exception(f"Version Mismatch! Generated: {version}, Installed: {world_version}")
+        version = version_check.rstrip(b"\x69")
+        version = version.decode("ascii")
+        if version != world_version:  # Installed world is different from generated world
+            raise Exception(f"Error! this patch was generated on Dawn of Sorrow APworld version: {version}, but installed APworld is version: {world_version}. " +
+                            f"Please use APWorld version {version} to patch your game.")
 
         for check in location_data_table:
             if location_data_table[check].location_type != "Normal":
@@ -392,7 +416,8 @@ class DoSPatchExtensions(APPatchExtension):
             item_type = int.from_bytes(rom.read_from_file(address + 6, "arm9", 1))
             item_id = int.from_bytes(rom.read_from_file(address + 10, "arm9", 1))
             if (item_type == 0x01 and item_id < 4) or (item_type == 0x02 and item_id >= 0x3D):
-                y_pos = struct.unpack("H", rom.read_from_file(address + 2, "arm9", 2))[0]
+                # Coins and Magic Seals spawn slightly in the ground, so we need to raise them up a little bit
+                y_pos = int.from_bytes(rom.read_from_file(address + 2, "arm9", 2), byteorder="little")
                 y_pos -= 10
                 rom.write_to_file(address + 2, "arm9", struct.pack("H", y_pos))
 
@@ -401,19 +426,23 @@ class DoSPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_modifiers(caller: APProcedurePatch, rom: bytes) -> bytes:
         rom = LocalRom(rom)
-        exp_multiplier = struct.unpack("H", rom.read_from_file(0x2308aae, "overlay_41", 2))[0] / 100
-        soul_chance_multiplier = struct.unpack("H", rom.read_from_file(0x2308ab0, "overlay_41", 2))[0] / 100
+        exp_multiplier = struct.unpack("H", rom.read_from_file(0x2308aae, "overlay_41", 2))[0]  # Read the multiplier
+        exp_multiplier = exp_multiplier / 100
+
+        soul_chance_multiplier = struct.unpack("H", rom.read_from_file(0x2308ab0, "overlay_41", 2))[0]
+        soul_chance_multiplier = soul_chance_multiplier / 100
 
         for enemy in enemy_table:
             address = (base_enemy_address + (enemy_table.index(enemy) * 0x24))
-            exp_address = address + 18
-            exp = struct.unpack("H", rom.read_from_file(exp_address, "arm9", 2))[0]
+            exp_address = address + 18  # Offset where EXP is stored
+            exp = rom.read_from_file(exp_address, "arm9", 2)
+            exp = struct.unpack("H", exp)[0]
             exp = int(min(0xFFFF, (exp * exp_multiplier)))
             rom.write_to_file(exp_address, "arm9", struct.pack("H", exp))
 
             soul_chance_address = address + 20
             soul_chance = int.from_bytes(rom.read_from_file(soul_chance_address, "arm9", 1))
-            if soul_chance:
+            if soul_chance:  # Only modify non-guaranteed Souls
                 soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
                 rom.write_to_file(soul_chance_address, "arm9", bytearray([soul_chance]))
 
@@ -437,7 +466,8 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
         if hash_us != basemd5.hexdigest():
-            raise Exception('Base ROM Hash Mismatch!')
+            raise Exception('Supplied Base Rom does not match known MD5 for US release. '
+                            'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
     return base_rom_bytes
 
@@ -452,11 +482,11 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 
 def get_item_data(world, item) -> tuple:
-    if item.player == world.player:
+    if item.player == world.player:  # If this is an item for the player, we need to extract it's Type and ID
         item_type = (item.code & 0xFF00) >> 8
         item_id = item.code & 0x00FF
         item_color = 0
-    else:
+    else:  # AP items are item type 2 and then use ID for progression.
         item_type = 2
         if ItemClassification.progression in item.classification:
             item_id = 0x3B
@@ -487,8 +517,9 @@ def patch_locations(world, rom, locations) -> None:
         if data.location_type == "Normal":
             address = data.pointer
             if item.name in global_soul_table and item.player == world.player:
+                # The item's actual ID is 3C with the Soul ID in the high byte.
                 item_id = 0x3C << 8 | item_id
-                item_type = 0x02
+                item_type = 0x02  # Flag it as a standard item
                 rom.write_to_file(address + 9, "arm9", struct.pack("H", item_id))
             else:
                 item_id = item_color << 8 | item_id
@@ -498,9 +529,9 @@ def patch_locations(world, rom, locations) -> None:
         elif data.location_type == "Soul":
             if item_color:
                 item_type = item_color
-            item_struct_val = (item_type << 8) | item_id
+            item_struct = (item_type << 8) | item_id
             index = (global_soul_table.index(location.name) * 2)
-            rom.write_to_file(soul_check_table + index, "overlay_41", struct.pack("H", item_struct_val))
+            rom.write_to_file(soul_check_table + index, "overlay_41", struct.pack("H", item_struct))
         elif data.location_type == "Easter Egg":
             if item_color:
                 item_type = item_color
