@@ -202,7 +202,6 @@ class BossShuffle(Toggle):
     """Randomizes boss fights."""
     display_name = "Boss Shuffle"
 
-
 class SealShuffle(Toggle):
     """Randomizes which seal is required for each boss/door.
        Early Seal 1 will guarantee Flying Armor to always use Seal 1."""
@@ -275,13 +274,14 @@ class RandomizeSealDetails(Choice):
     option_chaos = 2
     default = 0
 
-
-
-class EnemyRandomizerToggle(Toggle):
+class EnemyRandomizerToggle(Toggle): # NEW
     """Mische alle normalen Schlossgegner (IDs 0x00 bis 0x64) komplett zufällig durch.
        Die Positionen in den Räumen (VRAM-Slots) und die Stats werden synchron angepasst.
        Bosse bleiben hiervon unberührt und werden separat behandelt."""
     display_name = "Enemy Randomizer"
+
+
+
 @dataclass
 class DoSOptions(PerGameCommonOptions):
     goal: Goal
@@ -315,7 +315,7 @@ class DoSOptions(PerGameCommonOptions):
     gate_items: GateItems
     hard_mode: HardMode
     boss_shuffle: BossShuffle
-    enemy_randomizer: EnemyRandomizerToggle  # Im System registriert
+    enemy_randomizer: EnemyRandomizerToggle  # NEW
     seal_shuffle: SealShuffle
     randomize_seal_patterns: RandomizeSealPatterns
     menace_condition: MenaceCondition
@@ -372,7 +372,7 @@ dos_option_groups = [
         ExperiencePercent,
         HardMode,
         BossShuffle,
-        EnemyRandomizerToggle   
+        EnemyRandomizerToggle   # NEW
     ]),
 
     OptionGroup("Quality of Life", [
