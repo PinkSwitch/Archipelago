@@ -60,8 +60,6 @@ def connect_entrances(world) -> None:
 
     if world.options.randomize_doors and not world.connected_doors:
         shuffle_doors(world)
-
-
 def create_items(world) -> None:
     pool = []
     for name, data in item_table.items():
@@ -84,7 +82,7 @@ def create_items(world) -> None:
             continue
         else:
             if world.magic_seal_table[seal] not in placed_seals:
-                pool.append(set_classifications(world, world.magic_seal_table[seal]))  # Create the seal items if necessary)
+                pool.append(set_classifications(world, world.magic_seal_table[seal]))
                 placed_seals.append(world.magic_seal_table[seal])
 
     place_souls(world, pool)
@@ -117,17 +115,13 @@ def create_item(world, name: str) -> CVDoSItem:
 
 
 def create_progress_event(world, name: str) -> CVDoSItem:
-    # Create item name [str] as a Progression Event item.
     return CVDoSItem(name, ItemClassification.progression, None, world.player)
-
-
 def get_filler_item_name(world) -> str:
     from .setup_game import update_soul_pool
     from .Items import consumable_table, money_table, good_food_table
     weights = {"good_weapon": 5, "soul": 10, "good_food": 8, "good_armor": 15, "money": 20,
                "weapon": 30, "armor": 40, "consumable": 60}
 
-    # If these pools have been exhausted, set their weights to 0
     if not world.weapon_table:
         weights["weapon"] = 0
 
@@ -152,12 +146,17 @@ def get_filler_item_name(world) -> str:
         "good_food": good_food_table
     }
 
-    filler_item = world.random.choice(weight_table[filler_type])
+    
+    choices = weight_table[filler_type]
+    if isinstance(choices, set):
+        choices = list(choices)
+    filler_item = world.random.choice(choices)
 
     if not world.has_tried_chaos_ring:
         world.has_tried_chaos_ring = True
-        if world.random.randint(0, 101) <= 10:  # Chaos ring should have a single 10/100 chance to be placed
+        if world.random.randint(0, 101) <= 10:
             filler_item = "Chaos Ring"
+
 
     if filler_item in world.weapon_table:
         world.weapon_table.remove(filler_item)
@@ -175,7 +174,7 @@ def get_filler_item_name(world) -> str:
 
 
 def create_static_soul(world, soul):
-    item = CVDoSItem(soul, ItemClassification.progression, None, world.player)  # Create an event item of the soul
+    item = CVDoSItem(soul, ItemClassification.progression, None, world.player)
     return item
 
 
@@ -185,6 +184,8 @@ def set_rules(world) -> None:
 
 
 def fill_slot_data(world) -> Dict[str, typing.Any]:
+    # 🚨 TRACKER-FIX: Übermittelt deine neuen Gegner-Optionen an den Archipelago-Server,
+    # damit Ingame-Tracker die Bestiariums-Checks und Modifikationen korrekt anzeigen können!
     return {
         "goal": world.options.goal.value,
         "starting_warp": world.starting_warp_room,
@@ -203,7 +204,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
 
 
 def generate_output(world, output_directory: str) -> None:
-    world.has_generated_output = True  # Make sure data defined in generate output doesn't get added to spoiler only mode
+    world.has_generated_output = True
     try:
         code_patch = pkgutil.get_data(__name__, "src/overlay_41.bin")
         patch = DoSProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
@@ -217,11 +218,10 @@ def generate_output(world, output_directory: str) -> None:
     except Exception:
         raise
     finally:
-        world.rom_name_available_event.set()  # make sure threading continues and errors are collected
+        world.rom_name_available_event.set()
 
 
 def modify_multidata(world, multidata: dict) -> None:
-    # wait for self.rom_name to be available.
     world.rom_name_available_event.wait()
     rom_name = getattr(world, "rom_name", None)
     if rom_name:
@@ -248,7 +248,7 @@ def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
     if world.options.seal_shuffle:
         spoiler_handle.write(f"\nMagic Seals:\n")
         for seal in world.magic_seal_table:
-            if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":  # Ignore Magic Seals that are past the endgame trigger
+            if seal in ["Mine of Judgment", "The Abyss"] and world.mine_status == "Disabled":
                 continue
             else:
                 spoiler_handle.write(f" {seal}:  {world.magic_seal_table[seal]}\n")
