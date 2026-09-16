@@ -3093,6 +3093,7 @@
     bl @CheckLocFlag
     cmp r0, 1
     beq @@ResetAlbusEvent
+    cmp r0, 0
     b 0x022B8DB4 ; Let the game's own CMP handle this
 @@ResetAlbusEvent:
     push r0,r1
