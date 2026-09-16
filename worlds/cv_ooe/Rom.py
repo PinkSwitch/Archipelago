@@ -210,7 +210,8 @@ class OoEProcPatch(APProcedurePatch, APTokenMixin):
         ("apply_tokens", ["token_patch.bin"]),
         ("check_patch_version", []),
         ("copy_money_gfx", []),
-        ("apply_modifiers", [])
+        ("apply_modifiers", []),
+        ("set_quest_types", [])
     ]
 
     @classmethod
@@ -301,6 +302,17 @@ class OoEPatchExtensions(APPatchExtension):
                 source_sprite = rom.read_from_file(0x18 + (0x40 * j) + (0x2 * i), "comgfx_4", 2)
                 rom.write_to_file(0x742 + (4 * j) + (0x1E * i), "itemgfx_0", source_sprite)
 
+        return rom.get_bytes()
+
+    @staticmethod
+    def set_quest_types(caller: APProcedurePatch, rom: bytes) -> bytes:
+        rom = LocalRom(rom)
+        for i in range(35):
+            is_item_flag = rom.read_from_file(0x020F58C0 + (0x10 * i) + 0x09, "arm9", 1)[0]
+            quest_flags = rom.read_from_file(0x020F58C0 + (0x10 * i) + 0x08, "arm9", 1)[0]
+            if is_item_flag:
+                quest_flags &= 0xFE  # Unset the money flag
+            rom.write_to_file(0x020F58C0 + (0x10 * i) + 0x08, "arm9", bytearray([quest_flags]))
         return rom.get_bytes()
 
 
@@ -432,5 +444,6 @@ def patch_locations(world, rom, locations) -> None:
             rom.write_to_file(data.pointer + 10, data.file, struct.pack("H", var_b))
         elif data.location_type == "Quest":
             rom.write_to_file(data.pointer, data.file, struct.pack("H", item_id))
+            rom.write_to_file(data.pointer + 0x09, "arm9", bytearray([0x01]))  # Is item flag
         else:
             raise ValueError(f"Error! Location {location.name} has invalid location type {data.location_type}!")

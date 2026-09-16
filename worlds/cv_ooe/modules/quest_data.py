@@ -191,3 +191,4 @@ def patch_event_quests(world, rom, locations) -> None:
             name = quest.name
             if quest.item.name in item_table:
                 rom.write_to_file(location_data_table[name].pointer, "arm9", struct.pack("H", get_item_id(world, quest.item)))
+                rom.write_to_file(location_data_table[name].pointer +0x09, "arm9", bytearray([0x01])) # Is item flag

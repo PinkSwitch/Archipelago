@@ -7,7 +7,6 @@
 
 @ReceivedItemID equ 0x022EB1B0 ; 2 bytes
 @TotalItemsReceived equ 0x022EB1B2 ; 2 bytes
-@SageCounter equ 0x022EB1B4 ; 1 byte
 
 ;;;;;;;;;;;;;;;;
 .open "ftc/arm9.bin", 0x02000000
@@ -184,6 +183,12 @@
 
     .org 0x020F58F0
         .dh 0xFFFF ; Abram Quest4 Reward
+
+    .org 0x020A9730
+        bl 0x020636D8 ; Change quests to check if ever owned instead of ownership
+
+    .org 0x020A96FC
+        bl 0x020636D8 ; Same as the above, but for multi-item quests
 
 
 .close
@@ -1161,6 +1166,11 @@
 
 .align 4
 
+@ROMTable_QuestItems: ;22EB4D4
+    .fill 0x28, 0xFF
+
+.align 4
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Allows Glyphs to be shown when opening a chest
 @ShowItemFromChest:
@@ -1516,6 +1526,15 @@
     b 0x02033048
 
 @GetExtendedGlyphNum:
+    push r1
+    push lr
+    bl @CheckIfIsQuestItem
+    pop lr
+    cmp r1, 1
+    pop r1
+    ldreq r0, = 0x348 ; Use this glyph for required quest items
+    bxeq lr
+
     cmp r0, 0xD6
     ldreq r0, =0x343 ; AP prog 
     bxeq lr
@@ -2204,6 +2223,15 @@
 ; 1 - Standard chests
 ; 3- Gold
 @GetChestColor:
+    push r1
+    push lr
+    bl @CheckIfIsQuestItem
+    pop lr
+    cmp r1, 1
+    pop r1
+    moveq r0, 3 ; If it's a required quest item, mark the chest as Gold.
+    beq @@End
+
     cmp r0, 0x160 ; Expanded item IDs
     bgt @@CheckExpandedItemColors
     cmp r0, 0x76 ; All relics and Glyphs should use gold chests.
@@ -3774,8 +3802,11 @@
     ldr r4, = 0x440101FA
     mov r0, 0x01
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
+
     mov r0, 0xC1 ; Sage
     bl 0x020636D8
     cmp r0, 0
@@ -3789,8 +3820,11 @@
 @@CheckQuest2:
     mov r0, 0x02
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
+
     mov r0, 0xC2 ; Chamomile
     bl 0x020636D8
     cmp r0, 0
@@ -3808,7 +3842,9 @@
 @@CheckQuest3:
     mov r0, 0x03
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest4
+    tst r0, 0x04
     bne @@CheckQuest4
     mov r0, 0xC1 ; Sage
     bl 0x020636D8
@@ -3827,7 +3863,9 @@
 @@CheckQuest4:
     mov r0, 0x01
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq 0x02234BC8
+    tst r0, 0x04
     bne 0x02234BC8
     mov r0, 0xC1 ; Sage
     bl 0x020636D8
@@ -3864,7 +3902,9 @@
 @@CheckQuest1:
     mov r0, 0x05
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0xC7 ; Lapis
     bl 0x020636D8
@@ -3878,7 +3918,9 @@
 @@CheckQuest2:
     mov r0, 0x06 ;[A pleasant Accessory]
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0xC9 ; Ruby
     bl 0x020636D8
@@ -3900,7 +3942,9 @@
 @@CheckQuest3:
     mov r0, 0x07 ;[A Heartwarming Accessory]
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest4
+    tst r0, 0x04
     bne @@CheckQuest4
     mov r0, 0xCC ; Onyx
     bl 0x020636D8
@@ -3918,7 +3962,9 @@
 @@CheckQuest4:
     mov r0, 0x08 ; [The Job of a Lifetime]
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq 0x02234E50
+    tst r0, 0x04
     bne 0x02234E50
     mov r0, 0xCE ; Alexandrite
     bl 0x020636D8
@@ -4064,7 +4110,9 @@
     ldreq r4, = 0x44010207
     mov r0, 0x09
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0xD0 ; Iron Ore
     bl 0x020636D8
@@ -4077,8 +4125,10 @@
 @@CheckQuest2:
     mov r0, 0x0A
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
     bne @@CheckQuest3
+    tst r0, 0x04
+    beq @@CheckQuest3
     mov r0, 0xD1 ; Silver Ore
     bl 0x020636D8
     cmp r0, 0
@@ -4090,8 +4140,10 @@
 @@CheckQuest3:
     mov r0, 0x0B
     bl 0x020A9E28
-    cmp r0, 0x01  
-    bne 0x02235118  
+    tst r0, 0x02
+    beq 0x02235118
+    tst r0, 0x04
+    bne 0x02235118
     mov r0, 0xD2 ; Gold Ore
     bl 0x020636D8
     cmp r0, 0
@@ -4107,7 +4159,9 @@
     push r1-r3
     mov r0, 0x0C
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0x97 ; Salt
     bl 0x020636D8
@@ -4122,7 +4176,9 @@
 @@CheckQuest2:
     mov r0, 0x0D
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0x86 ; Raw killer fish
     bl 0x020636D8
@@ -4137,7 +4193,9 @@
 @@CheckQuest3:
     mov r0, 0x0E
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@Exit
+    tst r0, 0x04
     bne @@Exit
     mov r0, 0x84 ; Tasty Meat
     bl 0x020636D8
@@ -4168,7 +4226,7 @@
 @@CheckQuest1:
     mov r0, 0x0F
     bl 0x020A9E28
-    tst r0, 0x01
+    tst r0, 0x02
     beq @@CheckQuest2
     tst r0, 0x04
     bne @@CheckQuest2
@@ -4186,7 +4244,7 @@
 @@CheckQuest2:
     mov r0, 0x10
     bl 0x020A9E28
-    tst r0, 0x01
+    tst r0, 0x02
     beq @@CheckQuest3
     tst r0, 0x04
     bne @@CheckQuest3
@@ -4203,7 +4261,7 @@
 @@CheckQuest3:
     mov r0, 0x11
     bl 0x020A9E28
-    tst r0, 0x01
+    tst r0, 0x02
     beq @@Exit
     tst r0, 0x04
     bne @@Exit
@@ -4236,7 +4294,9 @@
 @@CheckQuest1:
     mov r0, 0x12
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0xBB ; Horse Hair
     bl 0x020636D8
@@ -4266,7 +4326,9 @@
 @@CheckQuest3:
     mov r0, 0x14
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq 0x022356D4
+    tst r0, 0x04
     bne 0x022356D4
     mov r0, 0xBD ; Black Ink
     bl 0x020636D8
@@ -4326,7 +4388,9 @@
 @@CheckQuest2:
     mov r0, 0x19
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0xAD ; Mouse
     bl 0x020633F0
@@ -4340,7 +4404,9 @@
 @@CheckQuest3:
     mov r0, 0x1A
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@Exit
+    tst r0, 0x04
     bne @@Exit
     mov r0, 0xAE ; Cat Collar
     bl 0x020633F0
@@ -4361,7 +4427,9 @@
     ldreq r4, = 0x4401022E
     mov r0, 0x1B
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0xBE ; Cotton Thread
     bl 0x020636D8
@@ -4376,7 +4444,9 @@
 @@CheckQuest2:
     mov r0, 0x1C
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0xBF ; Silk Thread
     bl 0x020636D8
@@ -4393,7 +4463,9 @@
 @@CheckQuest3:
     mov r0, 0x1D
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@Exit
+    tst r0, 0x04
     bne @@Exit
     mov r0, 0xC0 ; Cashmere Thread
     bl 0x020636D8
@@ -4488,7 +4560,9 @@
 @@CheckQuest1:
     mov r0, 0x21
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest2
+    tst r0, 0x04
     bne @@CheckQuest2
     mov r0, 0xB8 ; Lighthousee Art
     bl 0x020633F0
@@ -4503,7 +4577,9 @@
 @@CheckQuest2:
     mov r0, 0x22
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@CheckQuest3
+    tst r0, 0x04
     bne @@CheckQuest3
     mov r0, 0xB9 ; Waterfall Art
     bl 0x020633F0
@@ -4518,7 +4594,9 @@
 @@CheckQuest3:
     mov r0, 0x23
     bl 0x020A9E28
-    cmp r0, 0x01
+    tst r0, 0x02
+    beq @@Exit
+    tst r0, 0x04
     bne @@Exit
     mov r0, 0xBA ; Lighthousee Art
     bl 0x020633F0
@@ -4598,6 +4676,25 @@
     addne r4, r4, 1
     bne @@NextQuest
     pop r4,lr
+    bx lr
+;;;;;;;;;;;;;;;;;
+; Returns 1 in r1 if Item ID r0 is in the Quest Items list. Else, returns 0.
+@CheckIfIsQuestItem:
+    push r0,r2
+    ldr r1, = @ROMTable_QuestItems
+    ands r0, r0, 0xFF ; Chop off the top byte
+@@Loop:
+    ldrb r2, [r1]
+    cmp r0, r2
+    moveq r1, 0x01
+    beq @@Exit
+    cmp r2, 0xFF
+    moveq r1, 0x00
+    beq @@Exit
+    add r1, r1, 1
+    b @@Loop
+@@Exit:
+    pop r0,r2
     bx lr
 
 
