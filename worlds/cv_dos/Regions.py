@@ -384,10 +384,10 @@ def connect_regions(world):
 
     world.get_region("Warp Room").add_exits([world.starting_warp_region])
     world.get_region("Subterranean Hell Spike Room East").add_exits(["Subterranean Hell Spike Room West"],
-                                                                    {"Subterranean Hell Spike Room West": Has("Rahab Soul") & HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul")})
+                                                                    {"Subterranean Hell Spike Room West": Has("Rahab Soul") & (HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul"))})
 
     world.get_region("Subterranean Hell Spike Room West").add_exits(["Subterranean Hell Spike Room East"],
-                                                                    {"Subterranean Hell Spike Room East": Has("Rahab Soul") & HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul")})
+                                                                    {"Subterranean Hell Spike Room East": Has("Rahab Soul") & (HasAll("Puppet Master Soul", "Skeleton Ape Soul") | Has("Bone Ark Soul"))})
 
     create_soul_regions(world)
     
