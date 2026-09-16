@@ -4129,9 +4129,9 @@
     mov r0, 0x0A
     bl 0x020A9E28
     tst r0, 0x02
-    bne @@CheckQuest3
-    tst r0, 0x04
     beq @@CheckQuest3
+    tst r0, 0x04
+    bne @@CheckQuest3
     mov r0, 0xD1 ; Silver Ore
     bl 0x020636D8
     cmp r0, 0
