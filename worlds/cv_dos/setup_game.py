@@ -115,7 +115,7 @@ def setup_souls(world):
         world.common_souls.update(["Slogra Soul", "Black Panther Soul"])
         world.uncommon_souls.update(["Ripper Soul", "Mud Demon Soul", "Gaibon Soul", "Malacoda Soul"])
         world.rare_souls.update(["Giant Slug Soul", "Stolas Soul", "Arc Demon Soul"])
-    # Conver this to proper casing
+    # Convert this to proper casing
     if "Common" in world.options.guaranteed_souls:
         for soul in world.common_souls:
             if soul not in world.options.guaranteed_souls.value:
@@ -136,12 +136,10 @@ def setup_souls(world):
 
     if world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
         if world.mine_status == "Disabled":
-            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
+            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inaccessible if Mine is removed
             world.excluded_static_souls.update(goal_locked_enemies)
 
     world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
-
-
 def place_souls(world, pool):
     soul_location_count = 0
     extra_souls = 0
@@ -209,16 +207,23 @@ def place_souls(world, pool):
                     place_inaccessible_souls = True
 
         if place_inaccessible_souls:
-            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
+            goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inaccessible if Mine is removed
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 pool.append(world.create_item(soul))
 
 
 def place_static_souls(world):
+    # 🚨 ENEMYSANITY-SCHUTZ: Verhindert doppelt belegte Standorte, wenn das Bestiarium-
+    # System aktiv ist. Die Seelen werden stattdessen regulär im Multiworld-Pool verteilt.
+    if getattr(world.options, "enemy_sanity", False):
+        return
+
     from .generator_main import create_static_soul
     for soul in world.important_souls:
         if soul not in world.excluded_static_souls:
-            world.get_location(soul).place_locked_item(create_static_soul(world, soul))
+            location = world.get_location(soul)
+            if location is not None:
+                location.place_locked_item(create_static_soul(world, soul))
 
 
 def update_soul_pool(world, soul):
