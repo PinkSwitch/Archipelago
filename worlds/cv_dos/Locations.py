@@ -213,7 +213,6 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
                 location_table.append(
                  LocationData(soul, soul))
     else:
-        location_table.append(LocationData("Imp Soul", "Imp Soul", True))
         for soul in sorted(world.important_souls):
             if soul not in world.excluded_static_souls:  # Boss souls that are always in the pool
                 location_table.append(LocationData(soul, soul, True))

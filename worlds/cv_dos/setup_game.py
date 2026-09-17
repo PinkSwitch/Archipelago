@@ -134,6 +134,9 @@ def setup_souls(world):
                 world.options.guaranteed_souls.value.add(soul)
         world.options.guaranteed_souls.value.remove("Rare")
 
+    if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        world.important_souls.update(["Mandragora Soul", "Rycuda Soul", "Waiter Skeleton Soul"])  # Always required for sanity
+
     if world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
         if world.mine_status == "Disabled":
             goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed

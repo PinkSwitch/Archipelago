@@ -339,10 +339,7 @@ class DoSWorld(World):
 
         self.important_souls = {
             "Bone Ark Soul",
-            "Skeleton Ape Soul",
-            "Mandragora Soul",
-            "Rycuda Soul",
-            "Waiter Skeleton Soul"
+            "Skeleton Ape Soul"
         }
         # These souls are always required for movment logic
 

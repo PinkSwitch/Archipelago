@@ -48,10 +48,6 @@ def create_regions(world) -> None:
     if world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
         place_static_souls(world)
 
-    if ((world.options.soul_randomizer != SoulRandomizer.option_soulsanity) or
-            world.options.soulsanity_level < SoulsanityLevel.option_medium):
-        world.get_location("Imp Soul").place_locked_item(create_static_soul(world, "Imp Soul"))
-
 
 def connect_entrances(world) -> None:
     from .modules.area_shuffle import shuffle_doors, set_ut_regions
