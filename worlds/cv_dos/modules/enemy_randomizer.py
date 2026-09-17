@@ -97,7 +97,9 @@ class EnemyRandomizer:
             world_random.shuffle(shuffled_ids)
         self.mappings = dict(zip(pool_ids, shuffled_ids))
         print("[DNA-Engine] Enemie stats generatet.")
-
+#=========================
+    # step 3 write enemie stats 
+#======================
     def patch_rom_enemy_dna(self, rom):
         ARM9_RAM_BASE = 0x02000000
         BASE_ENEMY_ADDRESS = ARM9_RAM_BASE + 0x7CCAC 
