@@ -83,6 +83,16 @@ max_node_counts = {
     10: 20
 }
 
+min_node_counts = {
+    3: 3,
+    4: 3,
+    5: 4,
+    6: 4,
+    7: 5,
+    8: 5,
+    9: 5,
+}
+
 
 def randomize_seal_patterns(world, rom):
     from ..Options import RandomizeSealDetails
@@ -110,6 +120,21 @@ def randomize_seal_patterns(world, rom):
             elif world.options.randomize_seal_details == RandomizeSealDetails.option_chaos:
                 data.nodes = world.random.randint(2, 10)
                 data.line_count = world.random.randint(2, max_node_counts[data.nodes])
+            elif world.options.randomize_seal_details == RandomizeSealDetails.option_chaos_weighted:
+                data.line_count = world.random.randint(2, 20)
+                if data.line_count == 2:
+                    data.nodes = 2
+                elif data.line_count == 20:
+                    data.nodes = 10
+                else:
+                    if data.line_count >= 10:
+                        node_target = data.line_count // 2
+                    else:
+                        node_target = min_node_counts[data.line_count]
+
+                    data.nodes = max(2, min(10, world.random.randint(node_target, node_target + 1)))
+                print(f"{data.nodes} nodes, {data.line_count} lines.")
+
         else:
             file = "overlay_0"
         timer = 0xB4 + (15 * (max(0, data.line_count - 11)))

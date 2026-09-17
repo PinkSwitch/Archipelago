@@ -270,11 +270,13 @@ class RandomizeSealDetails(Choice):
     """Randomizes how many Nodes exist per magic seal, and how many lines need to be drawn to complete the seal.
        This won't do anything unless Randomize Seal Patterns is also enabled.
        Simple: Each seal will have + or - 2 nodes and + or - 3 lines compared to the original seal.
-       Chaos: Each seal can have between 2 and 10 notes and 1-20 lines."""
+       Chaos: Each seal can have between 2 and 10 nodes and 1-20 lines.
+       Chaos Weighted: Similar to Chaos, but the number of nodes is balanced more closely to the number of lines."""
     display_name = "Randomize Seal Details"
     option_normal = 0
     option_simple = 1
     option_chaos = 2
+    option_chaos_weighted = 3
     default = 0
 
 
