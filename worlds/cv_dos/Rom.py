@@ -41,7 +41,7 @@ file_pointers = {
     "overlay_4": FilePointer(0x001E6800, 0x022B9900, 0x0001D57F),   """GFX wrappers."""
     "overlay_5": FilePointer(0x00203E00, 0x022D6E80, 0x0000361F),
     
-    # SEKTOR ROOMS (6-22): Alle teilen sich im RAM Bank 0x022DA4A0!
+    # overlay for most rooms (6-22): all are one the same ram point cause the load dynamic
     "overlay_6": FilePointer(0x00207600, 0x022DA4A0, 0x0002219F),
     "overlay_7": FilePointer(0x00229800, 0x022DA4A0, 0x00021F9F),
     "overlay_8": FilePointer(0x0024B800, 0x022DA4A0, 0x0001927F),
@@ -60,7 +60,7 @@ file_pointers = {
     "overlay_21": FilePointer(0x0035AE00, 0x022DA4A0, 0x0000563F),
     "overlay_22": FilePointer(0x00360800, 0x022DA4A0, 0x0000313F),
     
-    # SEKTOR ENEMY CODE (23-40): Alle teilen sich im RAM Bank 0x022FF9C0!
+    # overlay for most enemie date also loaded on the same ram point beacuse the load dynamic
     "overlay_23": FilePointer(0x00363A00, 0x022FF9C0, 0x0000335F),
     "overlay_24": FilePointer(0x00366E00, 0x022FF9C0, 0x000037DF),
     "overlay_25": FilePointer(0x0036A600, 0x022FF9C0, 0x00005BFF),
@@ -80,7 +80,7 @@ file_pointers = {
     "overlay_39": FilePointer(0x003B0E00, 0x022FF9C0, 0x000019FF),
     "overlay_40": FilePointer(0x003B2800, 0x022FF9C0, 0x000014DF),
     
-    # DEINE ERWEITERTE FREISPEICHER-BASIS MIT MOD-SCHUTZ
+    # overlay 41 an bullet wall gfx
     "overlay_41": FilePointer(0x2F6DC00, 0x02308920, 0xC000),
     "bullet_wall_gfx": FilePointer(0x10D6000, 0x00000000, 0x1FFF)
 }
@@ -297,11 +297,11 @@ def patch_rom(world, rom, code_patch):
             rom.write_to_file(common_drop_address, "arm9", bytearray([common_item]))
             rom.write_to_file(rare_drop_address, "arm9", bytearray([rare_item]))
 
-
+###enemier randomizer injection
     if getattr(world.options, "enemy_randomizer", False):
         from .modules import enemy_randomizer
         enemy_randomizer.write_enemies(world, rom, mode="normal")
-        print(f"[{world.player_name}] Gegner-Mischer erfolgreich injiziert!")
+        print(f"[{world.player_name}] enemie randomizer succsefully injected!")
 
 
     write_synthesis(world, rom)
@@ -320,8 +320,6 @@ def patch_rom(world, rom, code_patch):
     if world.options.randomize_red_soul_walls:
         rom.write_to_file(0x2308b28, "overlay_41", bytearray([0x01]))
         
-        # 🛠️ ORIGINAL-RESTORE: Konvertiert das Set in eine Liste, damit die Indizes 
-        # der vier originalen roten Seelen (Red Souls) exakt zugewiesen werden.
         walls_list = list(world.red_soul_walls)
         rom.write_to_file(0x0222BDA0, "overlay_0", bytearray([global_soul_table.index(walls_list[0])]))
         rom.write_to_file(0x0222BD9A, "overlay_0", bytearray([global_soul_table.index(walls_list[1])]))
