@@ -143,6 +143,8 @@ def setup_souls(world):
             world.excluded_static_souls.update(goal_locked_enemies)
 
     world.options.guaranteed_souls.value = {item.title() for item in world.options.guaranteed_souls.value}
+    if world.options.no_logical_grinding:
+        world.excluded_static_souls.update(world.important_souls)  # Do this so they don't get forced vanilla
 
 
 def place_souls(world, pool):
@@ -174,6 +176,13 @@ def place_souls(world, pool):
             pool.append(world.create_item(soul))
             update_soul_pool(world, soul)
             souls_added += 1
+
+    if world.options.no_logical_grinding and world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
+        for soul in sorted(world.important_souls):
+            if soul not in world.options.guaranteed_souls:
+                pool.append(world.create_item(soul))
+                souls_added += 1
+                update_soul_pool(world, soul)
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         # These items are only important on Rare tier
@@ -211,7 +220,7 @@ def place_souls(world, pool):
                 if "Upper Guest House Boss Clear" in world.garden_triggers:
                     place_inaccessible_souls = True
 
-        if place_inaccessible_souls:
+        if place_inaccessible_souls and not world.options.no_logical_grinding:
             goal_locked_enemies = {"Malacoda Soul", "Slogra Soul", "Ripper Soul"}  # These enemies are inacessible if Mine is removed
             for soul in (item for item in world.red_soul_walls if item in goal_locked_enemies):
                 pool.append(world.create_item(soul))
