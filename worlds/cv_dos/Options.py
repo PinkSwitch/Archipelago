@@ -277,7 +277,7 @@ class RandomizeSealDetails(Choice):
 
 
 
-class EnemyRandomizerToggle(Toggle):   #NEW
+class EnemyRandomizerToggle(Toggle):   #NEW implementation
     """Mische alle normalen Schlossgegner (IDs 0x00 bis 0x64) komplett zufällig durch.
        Die Positionen in den Räumen (VRAM-Slots) und die Stats werden synchron angepasst.
        Bosse bleiben hiervon unberührt und werden separat behandelt."""
@@ -317,7 +317,7 @@ class DoSOptions(PerGameCommonOptions):
     gate_items: GateItems
     hard_mode: HardMode
     boss_shuffle: BossShuffle
-    enemy_randomizer: EnemyRandomizerToggle  # NEW
+    enemy_randomizer: EnemyRandomizerToggle  # NEW implementation
     seal_shuffle: SealShuffle
     randomize_seal_patterns: RandomizeSealPatterns
     menace_condition: MenaceCondition
@@ -374,7 +374,7 @@ dos_option_groups = [
         ExperiencePercent,
         HardMode,
         BossShuffle,
-        EnemyRandomizerToggle   # NEW
+        EnemyRandomizerToggle   # NEW implementation
     ]),
 
     OptionGroup("Quality of Life", [
