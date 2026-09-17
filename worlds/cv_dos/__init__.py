@@ -12,7 +12,7 @@ from .static_location_data import location_ids, get_location_groups
 from .generator_main import (generate_early, create_regions, set_rules, create_items, fill_slot_data, create_item,
                              get_filler_item_name, modify_multidata, generate_output, write_spoiler_header,
                              connect_entrances)
-from .modules import enemy_randomizer
+from .modules import enemy_randomizer  ## implementation
 
 
 class DoSWeb(WebWorld):
