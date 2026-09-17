@@ -7,22 +7,22 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set
 
 # ============================================================================
-# TEIL 1: DNA-STRUKTUR NACH GEGNER-SPEZIFIKATION (DOKUMENT 5)
+# step 1 : randomize enemie stats 
 # ============================================================================
 
 @dataclass
 class EnemyDataBlock:
-    """
-    EnemieDNA is 36 bytes long (0x24) in arm9.
-    """
+    #===============
+    # EnemieDNA is 36 bytes long (0x24) in arm9.
+    #===============
     enemy_id: int
     rom_offset: int                 
     create_code_pointer: bytes      # 0x00 (4 Bytes) -> create pointer
-    sprite_update_pointer: bytes    # 0x04 (4 Bytes) -> update pointer
+    update_pointer: bytes           # 0x04 (4 Bytes) -> update pointer
     item1_id: int                   # 0x08 (2 Bytes) -> Drop-Item 1
     item2_id: int                   # 0x0A (2 Bytes) -> Drop-Item 2
     petrify_palette: int            # 0x0C (1 Byte)  -> pallete if petrified
-    power_index: int                 # 0x0D (1 Byte)  -> Unknown maybe level class zombie has 1 dracula 99
+    power_index: int                # 0x0D (1 Byte)  -> Unknown maybe level class zombie has 1 dracula 99
     hp: int                         # 0x0E (2 Bytes) -> hp
     mp: int                         # 0x10 (2 Bytes) -> mp
     exp: int                        # 0x12 (2 Bytes) -> exp
@@ -67,9 +67,9 @@ class EnemyRandomizer:
             file_address = arm9_info.rom_address + BASE_ENEMY_FILE_OFFSET + (enemy_id * 0x24)
             
             create_ptr = bytes(base_rom_data[file_address + 0x00 : file_address + 0x04])
-            sprite_ptr = bytes(base_rom_data[file_address + 0x04 : file_address + 0x08])
+            update_ptr = bytes(base_rom_data[file_address + 0x04 : file_address + 0x08])
             
-            gfx_set = base_rom_data[file_address + 0x0D]
+            power_index = base_rom_data[file_address + 0x0D]
             hp = int.from_bytes(base_rom_data[file_address + 0x0E : file_address + 0x10], byteorder='little')
             mp = int.from_bytes(base_rom_data[file_address + 0x10 : file_address + 0x12], byteorder='little')
             exp = int.from_bytes(base_rom_data[file_address + 0x12 : file_address + 0x14], byteorder='little')
@@ -81,9 +81,9 @@ class EnemyRandomizer:
             
             data = EnemyDataBlock(
                 enemy_id=enemy_id, rom_offset=(BASE_ENEMY_FILE_OFFSET + (enemy_id * 0x24) + 0x02000000),
-                create_code_pointer=create_ptr, sprite_update_pointer=sprite_ptr,
+                create_code_pointer=create_ptr, update_pointer=update_pointer,
                 item1_id=0, item2_id=0, petrify_palette=0,
-                power_index=gfx_set, hp=hp, mp=mp, exp=exp,
+                power_index=power_index, hp=hp, mp=mp, exp=exp,
                 soul_drop_chance=soul_chance, atk=atk, def_=def_,
                 item_drop_chance=item_chance, unknown_space=0,
                 soul_local_id=soul_id, set_mode_slots=0, weaknesses=0, resistances=0
@@ -107,7 +107,7 @@ class EnemyRandomizer:
         fallback_table_bytes = []
         for enemy_id in range(0x65):
             enemy_behavior = self.enemies[enemy_id].data
-            fallback_table_bytes.extend(list(enemy_behavior.sprite_update_pointer))
+            fallback_table_bytes.extend(list(enemy_behavior.update_pointer))
             
         rom.write_to_file(SAFE_GFX_CACHE_RAM, "overlay_41", fallback_table_bytes)
 
@@ -119,9 +119,9 @@ class EnemyRandomizer:
             if new_id in REQUIRED_ENEMY_OVERLAYS:
                 custom_sprite_ram_pointer = SAFE_GFX_CACHE_RAM + (original_id * 4)
                 rom.write_to_file(file_base_address + 0x04, "arm9", list(custom_sprite_ram_pointer.to_bytes(4, byteorder='little')))
-                rom.write_to_file(custom_sprite_ram_pointer, "overlay_41", list(new_enemy_behavior.sprite_update_pointer))
+                rom.write_to_file(custom_sprite_ram_pointer, "overlay_41", list(new_enemy_behavior.update_pointer))
             else:
-                rom.write_to_file(file_base_address + 0x04, "arm9", list(new_enemy_behavior.sprite_update_pointer))
+                rom.write_to_file(file_base_address + 0x04, "arm9", list(new_enemy_behavior.update_pointer))
                 
             rom.write_to_file(file_base_address + 0x00, "arm9", list(new_enemy_behavior.create_code_pointer)) 
             rom.write_to_file(file_base_address + 0x1A, "arm9", [new_enemy_behavior.soul_local_id])          
