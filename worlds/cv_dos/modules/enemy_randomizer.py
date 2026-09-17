@@ -83,7 +83,7 @@ class EnemyRandomizer:
                 enemy_id=enemy_id, rom_offset=(BASE_ENEMY_FILE_OFFSET + (enemy_id * 0x24) + 0x02000000),
                 create_code_pointer=create_ptr, sprite_update_pointer=sprite_ptr,
                 item1_id=0, item2_id=0, petrify_palette=0,
-                gfx_set_id=gfx_set, hp=hp, mp=mp, exp=exp,
+                power_index=gfx_set, hp=hp, mp=mp, exp=exp,
                 soul_drop_chance=soul_chance, atk=atk, def_=def_,
                 item_drop_chance=item_chance, unknown_space=0,
                 soul_local_id=soul_id, set_mode_slots=0, weaknesses=0, resistances=0
