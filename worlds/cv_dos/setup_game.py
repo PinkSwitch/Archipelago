@@ -107,7 +107,7 @@ def place_static_items(world):
 
 def setup_souls(world):
     world.options.guaranteed_souls.value = {soul.title() for soul in world.options.guaranteed_souls.value}
-    world.important_souls.update(world.red_soul_walls)
+    world.important_souls.update(sorted(world.red_soul_walls))
     if world.options.soulsanity_level == SoulsanityLevel.option_rare and world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
         world.important_souls.add("Imp Soul")
 
@@ -178,7 +178,7 @@ def place_souls(world, pool):
             world.good_armor_table.remove("Soul Eater Ring")  # Don't generate a filler copy since hard guarantees one
             pool.append(world.create_item("Soul Eater Ring"))  # Guarantee we get a Soul Eater Ring for rare's
 
-        for soul in world.important_souls:
+        for soul in sorted(world.important_souls):
             if soul not in world.options.guaranteed_souls:  # First we need to create the souls that are always in
                 extra_souls += 1
                 update_soul_pool(world, soul)
@@ -216,7 +216,7 @@ def place_souls(world, pool):
 
 def place_static_souls(world):
     from .generator_main import create_static_soul
-    for soul in world.important_souls:
+    for soul in sorted(world.important_souls):
         if soul not in world.excluded_static_souls:
             world.get_location(soul).place_locked_item(create_static_soul(world, soul))
 

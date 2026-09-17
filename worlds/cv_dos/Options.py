@@ -277,6 +277,13 @@ class RandomizeSealDetails(Choice):
     option_chaos = 2
     default = 0
 
+
+class NoLogicalGrinds(Toggle):
+    """If enabled, you won't be expected to grind any souls for progression, and required Souls will be guaranteed
+       to be in the item pool. This applies to Soul walls, Bone Ark, and Skeleton Ape.
+       This option does not affect Soulsanity, as Soulsanity does not expect non-check soul drops to be gotten."""
+    display_name = "Randomize Doors"
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -330,6 +337,7 @@ class DoSOptions(PerGameCommonOptions):
     start_with_doppelganger: StartWithDoppelganger
     randomize_doors: ShuffleCastleConnections
     randomize_seal_details: RandomizeSealDetails
+    no_logical_grinding: NoLogicalGrinds
 
 
 dos_option_groups = [
@@ -346,7 +354,8 @@ dos_option_groups = [
         SoulRandomizer,
         SoulsanityLevel,
         GuaranteedSouls,
-        SoulDropPercent
+        SoulDropPercent,
+        NoLogicalGrinds
 
     ]),
 
@@ -395,7 +404,7 @@ dos_option_groups = [
         OneScreenMode,
         FreeBat,
         PassiveSoulEaterRing,
-        StartWithDoppelganger
+        StartWithDoppelganger,
     ]),
 
     OptionGroup("Music Randomizer", [
