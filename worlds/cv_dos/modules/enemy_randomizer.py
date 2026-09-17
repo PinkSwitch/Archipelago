@@ -13,29 +13,28 @@ from typing import Dict, List, Optional, Set
 @dataclass
 class EnemyDataBlock:
     """
-    Bildet die exakte 36-Byte (0x24) Struktur eines Gegners im 
-    ARM9-Arbeitsspeicher von Castlevania: Dawn of Sorrow ab.
+    EnemieDNA is 36 bytes long (0x24) in arm9.
     """
     enemy_id: int
     rom_offset: int                 
-    create_code_pointer: bytes      # 0x00 (4 Bytes) -> Verhaltens-KI Startcode
-    sprite_update_pointer: bytes    # 0x04 (4 Bytes) -> Grafik-Update-Routine
+    create_code_pointer: bytes      # 0x00 (4 Bytes) -> create pointer
+    sprite_update_pointer: bytes    # 0x04 (4 Bytes) -> update pointer
     item1_id: int                   # 0x08 (2 Bytes) -> Drop-Item 1
     item2_id: int                   # 0x0A (2 Bytes) -> Drop-Item 2
-    petrify_palette: int            # 0x0C (1 Byte)  -> Farbpalette bei Versteinerung
-    gfx_set_id: int                 # 0x0D (1 Byte)  -> GFX-Page im VRAM
-    hp: int                         # 0x0E (2 Bytes) -> Maximale Lebenspunkte
-    mp: int                         # 0x10 (2 Bytes) -> Maximale Magiepunkte
-    exp: int                        # 0x12 (2 Bytes) -> Erfahrungspunkte bei Abschuss
-    soul_drop_chance: int           # 0x14 (1 Byte)  -> Wert für Seelen-Drop
-    atk: int                        # 0x15 (1 Byte)  -> Angriffs-Wert
-    def_: int                       # 0x16 (1 Byte)  -> Abwehr-Wert
-    item_drop_chance: int           # 0x17 (1 Byte)  -> Wert für Item-Drop
-    unknown_space: int              # 0x18 (2 Bytes) -> Unbekannt / Reserviert
-    soul_local_id: int              # 0x1A (1 Byte)  -> Lokale Seelen-ID (FF = Keine)
-    set_mode_slots: int             # 0x1B (1 Byte)  -> Kosten im Enemy Set Mode
-    weaknesses: int                 # 0x1C (4 Bytes) -> Elementar-Schwächen (Bitfeld)
-    resistances: int                # 0x20 (4 Bytes) -> Elementar-Resistenzen (Bitfeld)
+    petrify_palette: int            # 0x0C (1 Byte)  -> pallete if petrified
+    power_index: int                 # 0x0D (1 Byte)  -> Unknown maybe level class zombie has 1 dracula 99
+    hp: int                         # 0x0E (2 Bytes) -> hp
+    mp: int                         # 0x10 (2 Bytes) -> mp
+    exp: int                        # 0x12 (2 Bytes) -> exp
+    soul_drop_chance: int           # 0x14 (1 Byte)  -> soul drop chance
+    atk: int                        # 0x15 (1 Byte)  -> attack
+    def_: int                       # 0x16 (1 Byte)  -> defense
+    item_drop_chance: int           # 0x17 (1 Byte)  -> item drop chance
+    unknown_space: int              # 0x18 (2 Bytes) -> Unknown
+    soul_local_id: int              # 0x1A (1 Byte)  -> soul id 
+    set_mode_slots: int             # 0x1B (1 Byte)  -> Enemy Set Mode costs
+    weaknesses: int                 # 0x1C (4 Bytes) -> weaknesses
+    resistances: int                # 0x20 (4 Bytes) -> resistans
 
 @dataclass
 class DoSEnemy:
@@ -50,7 +49,7 @@ REQUIRED_ENEMY_OVERLAYS: Set[int] = {
 }
 
 # ============================================================================
-# TEIL 2: CORE ENGINE - INITIALISIERUNG
+# step 2 enemie dna randomizer
 # ============================================================================
 
 class EnemyRandomizer:
@@ -97,7 +96,7 @@ class EnemyRandomizer:
         while shuffled_ids == pool_ids:
             world_random.shuffle(shuffled_ids)
         self.mappings = dict(zip(pool_ids, shuffled_ids))
-        print("[DNA-Engine] Gegner-Mischverzeichnis live generiert.")
+        print("[DNA-Engine] Enemie stats generatet.")
 
     def patch_rom_enemy_dna(self, rom):
         ARM9_RAM_BASE = 0x02000000
@@ -128,10 +127,9 @@ class EnemyRandomizer:
             rom.write_to_file(file_base_address + 0x1A, "arm9", [new_enemy_behavior.soul_local_id])          
 
             if CONF_BALANCED_STATS:
-                # Wir würfeln einen zufälligen Faktor zwischen 0.75 (-25%) und 1.50 (+50%)
+                # stats range between 0.75 (-25%) and 1.50 (+50%)
                 stat_multiplier = random.uniform(0.75, 1.50)
                 
-                # Wir nehmen die Werte des neuen Gegners und skalisieren sie dynamisch
                 scaled_hp = max(1, int(new_enemy_behavior.hp * stat_multiplier))
                 scaled_exp = max(1, int(new_enemy_behavior.exp * stat_multiplier))
                 
@@ -151,11 +149,7 @@ class EnemyRandomizer:
             rom.write_to_file(file_base_address + 0x14, "arm9", [new_enemy_behavior.soul_drop_chance]) 
             rom.write_to_file(file_base_address + 0x17, "arm9", [new_enemy_behavior.item_drop_chance])
 # ============================================================================
-# TEIL 4: SPEZIFIKATIONS-TREUER ENTITY-INJEKTOR (FIXED: BASIS-ROM INTERFACE)
-# ============================================================================
-
-# ============================================================================
-# TEIL 4: SPEZIFIKATIONS-TREUER ENTITY-INJEKTOR (FIXED: BASIS-ROM INTERFACE)
+# part 4: enemie injector trough room header and entiti list 
 # ============================================================================
 
 def write_enemies(world, rom, mode="normal"):
@@ -176,16 +170,16 @@ def write_enemies(world, rom, mode="normal"):
         with open(os.path.join(current_dir, "room_pointer_extracted.json"), "r", encoding="utf-8") as f:
             room_data = json.load(f)
 
-    print("[Archipelago] Injiziere Zufallsgegner direkt über die Hauptdatei (arm9)...")
+    print("[Archipelago] injecting random enemystats over (arm9)...")
 
     real_file = "arm9"
     if real_file not in file_pointers:
-        print("[Fehler] 'arm9' wurde nicht in den file_pointers gefunden!")
+        print("[Fehler] 'arm9' not found!")
         return
         
     pointer_info = file_pointers[real_file]
-    arm9_ram_base = pointer_info.base_address  # Das ist 0x02000000
-    arm9_rom_start = pointer_info.rom_address # Das ist 0x4000
+    arm9_ram_base = pointer_info.base_address  #  0x02000000
+    arm9_rom_start = pointer_info.rom_address #  0x4000
 
     for room in room_data:
         if room.get("Notes") == "nicht randomizen" or not room.get("Room_pointer"):
@@ -195,18 +189,18 @@ def write_enemies(world, rom, mode="normal"):
         room_header_ram = int(room["Room_pointer"], 16)
 
         try:
-            # 1. DEIN SCHRITT: Den JSON-Raumpointer holen und 0x02000000 abziehen
+            # step 1 : extrakt room header pointer from .json and subtract 0x02000000 
             relative_offset = room_header_ram - arm9_ram_base
             header_file_idx = sum([arm9_rom_start, relative_offset])
                 
             if sum([header_file_idx, 31]) >= len(base_rom_bytes):
                 continue
 
-            # 2. DEIN SCHRITT: Zum Room-Header bei 9F11C gelangen und die 8 Nullen prüfen
+            # step 2. from the room pointer in arm9 search for 00 00 00 00 00 00 00 00 for the room header 
             if base_rom_bytes[header_file_idx : header_file_idx + 8] != b"\x00\x00\x00\x00\x00\x00\x00\x00":
                 continue
                     
-            # 3. DEIN SCHRITT: Über das Header-Format 0x14 Bytes vorwärts gehen
+            # step 3 :from the room headet go 0x14 bytes forwart to find the entiti list and the fist entiti in the room 
             ptr_idx = sum([header_file_idx, 20])
                 
             val0 = base_rom_bytes[ptr_idx]
@@ -215,7 +209,7 @@ def write_enemies(world, rom, mode="normal"):
             val3 = base_rom_bytes[ptr_idx + 3] * 16777216
             entity_list_ram_ptr = sum([val0, val1, val2, val3])
                 
-            # 4. DEIN SCHRITT: Zum ersten Entity-Eintrag (0x020A0D4C) springen
+            # step 4 : searching for entiti list
             if entity_list_ram_ptr > 0:
                 list_relative_offset = entity_list_ram_ptr - arm9_ram_base
                 current_rom_idx = sum([arm9_rom_start, list_relative_offset])
@@ -226,45 +220,42 @@ def write_enemies(world, rom, mode="normal"):
                     if sum([current_rom_idx, 11]) >= len(base_rom_bytes):
                         break
                             
-                    # Wir lesen die ersten 2 Bytes als 16-Bit-Wert (Little Endian)
                     m0 = base_rom_bytes[current_rom_idx]
                     m1 = base_rom_bytes[current_rom_idx + 1] * 256
                     end_marker = sum([m0, m1])
                         
-                    # DEINE KORREKTUR: Wenn der Marker FF 7F (0x7FFF) erreicht wird -> Liste beenden!
+                    # end of list marker 
                     if end_marker == 0x7FFF:
                         break
                             
-                    # DEIN SCHRITT: Bei Offset +5 nach Typ 01 (Enemy) suchen
+                    # step 5: search for 0x5 byte for type 01 for enemie
                     entity_type = base_rom_bytes[sum([current_rom_idx, 5])]
                         
                     if entity_type == 1:
-                        # DEIN SCHRITT: Wenn gefunden, den Subtyp bei Offset +6 holen (Gegner-ID)
+                        #if found randomize 0x6 byte 
                         current_enemy_id = base_rom_bytes[sum([current_rom_idx, 6])]
                         
-                        # DEIN SCHRITT: Nur ändern, wenn er innerhalb von 00 bis 64 (Hex / 100 Dezimal) liegt!
+                        # randomize enemie 00 zombie 99 iron golen in hex 
                         if 0 <= current_enemy_id <= 100:
-                            # DEIN SCHRITT: Den neuen Gegner aus der Mapping-Tabelle holen
+                            
                             new_enemy_id = randomizer.mappings.get(current_enemy_id, current_enemy_id)
                                 
-                            # DEIN SCHRITT: Den neuen Gegner in die ROM-Datei schreiben
+                            # write new enemy to arm9 
                             rom.write_to_file(sum([current_entity_ram_addr, 6]), "arm9", [new_enemy_id])
                             enemies_patched_in_room += 1
                     
-                    # HIER IST DIE KORREKTUR: Diese beiden Zeilen rücken nach links!
-                    # Sie müssen exakt bündig unter dem "if entity_type == 1:" stehen!
                     current_rom_idx += 12
                     current_entity_ram_addr += 12
 
                 if enemies_patched_in_room > 0:
-                    print(f"[Erfolg] Raum {hex(room_header_ram)} ({area_string}): {enemies_patched_in_room} Gegner erfolgreich randomisiert.")
+                    print(f"[Succsess] Room {hex(room_header_ram)} ({area_string}): {enemies_patched_in_room} enemy succsefully randomized.")
                                 
         except Exception as e:
-            print(f"[Fehler] Raum {hex(room_header_ram)} ({area_string}): {e}")
+            print(f"[Error] Room {hex(room_header_ram)} ({area_string}): {e}")
             import tracebacktrace
             continue
 
  
 
     randomizer.patch_rom_enemy_dna(rom)
-    print("[Mod-Mischer] Gegner-Randomizer erfolgreich abgeschlossen!")
+    print("[EnemyStats] succsessfully randomized!")
