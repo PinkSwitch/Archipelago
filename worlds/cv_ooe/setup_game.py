@@ -101,14 +101,14 @@ def place_static_items(world) -> None:
             if world.create_item(villager) not in world.multiworld.precollected_items[world.player]:
                 world.get_location(villager_pool[villager]).place_locked_item(world.create_item(villager))
 
-        quest_filler = {"weak_healing": 50, "mid_healing": 60, "great_healing": 40,
-                        "drops": 5, "static_consumable": 10, "armor": 30, "good_armor": 20, "accessory": 25}
+    quest_filler = {"weak_healing": 50, "mid_healing": 60, "great_healing": 40,
+                    "drops": 5, "static_consumable": 10, "armor": 30, "good_armor": 20, "accessory": 25}
 
-        for quest in sorted(world.excluded_quests):
-            if quest in world.active_quests:
-                item = set_classifications(world, get_drop_item(world, quest_filler, False), True)
-                world.get_location(quest).place_locked_item(item)
+    for quest in sorted(world.excluded_quests):
+        if quest in world.active_quests:
+            item = set_classifications(world, get_drop_item(world, quest_filler, False), True)
+            world.get_location(quest).place_locked_item(item)
 
-        for quest in sorted(world.important_quests):
-            if quest not in world.active_quests:  # Required for logic but not set as active
-                world.get_location(quest).place_locked_item(set_classifications(world, quest_data[quest].vanilla_reward, arbitrary_event=True))
+    for quest in sorted(world.important_quests):
+        if quest not in world.active_quests:  # Required for logic but not set as active
+            world.get_location(quest).place_locked_item(set_classifications(world, quest_data[quest].vanilla_reward, arbitrary_event=True))

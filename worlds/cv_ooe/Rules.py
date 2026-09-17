@@ -107,8 +107,14 @@ def set_location_rules(world):
     if world.options.include_quest_key_items or "Quest: Tom and Jewelry" in world.important_quests:
         laura_subquest_rule &= Has("Chrysoberyl")
         if not world.options.unlock_all_quests:
-            george_subquest_rule &= CanReachLocation("Quest: The Silent Violin")
             laura_subquest_rule &= CanReachLocation("Quest: Mice Make for Good Eats")
+
+    if world.options.include_quest_key_items or "Quest: The Killing Scream" in world.important_quests:
+        if not world.options.unlock_all_quests:
+            george_subquest_rule &= CanReachLocation("Quest: The Silent Violin")
+
+    if world.options.include_quest_key_items or "Quest: Mice Make for Good Eats" in world.important_quests:
+        if not world.options.unlock_all_quests:
             set_rule(world.get_location("Kalidus Channel: Ship Room Mouse Pickup"), CanReachLocation("Quest: Finding Tom"))
 
     set_rule(world.get_location("Wygol Village: Item from Laura"), laura_subquest_rule)
