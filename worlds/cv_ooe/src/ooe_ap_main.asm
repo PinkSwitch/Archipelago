@@ -134,7 +134,8 @@
         bl @SwapLoadedGlyphPointer
 
     .org 0x02088188
-        bl @GetExtendedItemsOnEnemies
+        bl @GetExtendedItemsOnEnemies ; Top screen
+
 
     .org 0x020EF400
         ;.db 0x58 ; Fix Light's sound
@@ -732,6 +733,9 @@
 
     .org 0x022335EC
         b @CantTalkIfItemDelay
+
+    .org 0x0222B0AC
+        bl @GetExtendedItemsOnEnemies ; Displays correct enemy glyphs, on the Bestiary menu
 
         
 .close
@@ -1674,8 +1678,10 @@
 
 ;;;;;;;;;;;;;;;;
 @ShowExtendedItemNames:
-    sub r0, r0, 0x15 ; Subtract text index to get the item's ID
     push r3, lr
+    cmp r1, 1
+    beq 0x0209D174 ; If money, bail immediately
+    sub r0, r0, 0x15 ; Subtract text index to get the item's ID
     cmp r0, 0x76
     blt @@ShowSpecialName
     cmp r0, 0x160
