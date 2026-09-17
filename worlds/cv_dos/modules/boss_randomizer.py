@@ -103,10 +103,11 @@ def randomize_bosses(world):
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
 
-    rahab_boss = world.random.choice(rahab_pool)
+    rahab_boss = "Dario"
 
     world.boss_slots["Subterranean Hell"].new_boss = rahab_boss  # Any other boss in Rahab's room will sink below the water level
     boss_pool.remove(rahab_boss)
+    #TODO! Paranoia in one tile room? Can I spawn water in rahab's room? Also, Balore is still too glitchy for Rahab
 
     for boss in boss_pool:
         if boss == "Balore":
@@ -114,12 +115,15 @@ def randomize_bosses(world):
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].floor_height == 1]
         elif boss in ["Puppet Master", "Rahab"]:
             # Puppet Master and Rahab need to be in a room that is 2-tiles wide.
-            # Puppet Master can teleport the player out of bounds, and Rahab would take an obnoxiously long time to be damagable.
+            # Puppet Master can teleport the player out of bounds, and Rahab would take a long time to be damagable.
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 2]
+        #elif boss == "Paranoia": Pick this earlier so that it can't fail
+            #valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 1]
         else:
             # All other combinations are valid
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
 
+        print(f"Boss {boss} can be in {valid_rooms}")
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
 
@@ -139,10 +143,21 @@ def write_bosses(world, rom):
         for i in range(10):
             rom.copy_bytes(0x2A67D2 + (0x40 * i), 0x12, 0x2A67B2 + (0x40 * i))  # layer 1
 
+    if world.boss_slots["Subterranean Hell"].new_boss != "Rahab":
+        # Spawn a floor if Rahab isn't in his room
+        rom.write_to_file(0x022F27E2, "overlay_17", struct.pack("H", 0x022E))
+        rom.write_to_file(0x022F281C, "overlay_17", struct.pack("H", 0x422E))
+        for i in range(0x1C):
+            rom.write_to_file(0x022F27E4 + 2 * i, "overlay_17", struct.pack("H", 0x022F))
+
+        for i in range(0x20):
+            rom.write_to_file(0x022F21D2 + (2 * i), "overlay_17", struct.pack("H", 0x0144))  # Also write collision
+
     for room in world.boss_slots:
         slot = world.boss_slots[room]
         boss = slot.new_boss
         data = world.boss_data[boss]
+        print(f"Slot {slot.old_boss} has {boss}")
 
         if slot.old_boss == "Aguni":  # Aguni's data is here instead of in the arm9
             boss_file = "overlay_0"
@@ -157,6 +172,8 @@ def write_bosses(world, rom):
         var_b = 0
         x_pos = 0
         y_pos = 0
+        if slot.old_boss == "Rahab" and boss != "Rahab":
+            y_pos = 0xB0  # Make them not sink, some bosses will overwrite this anyways
 
         if boss == "Flying Armor":
             var_a = 1

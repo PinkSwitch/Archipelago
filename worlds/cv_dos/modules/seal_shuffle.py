@@ -133,7 +133,6 @@ def randomize_seal_patterns(world, rom):
                         node_target = min_node_counts[data.line_count]
 
                     data.nodes = max(2, min(10, world.random.randint(node_target, node_target + 1)))
-                print(f"{data.nodes} nodes, {data.line_count} lines.")
 
         else:
             file = "overlay_0"
