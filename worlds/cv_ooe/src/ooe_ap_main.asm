@@ -1213,7 +1213,12 @@
 ; Replaces the starting Albus event with one that gives you your starting glyph
 @GiveFirstGlyph:
     push r0
+    
     ldr r0, =0x02100388
+    ldr r1, [r0]
+    ands r1, r1, 0xFF7FFFFF ; Unset the bad ending flag if we escaped it
+    str r1, [r0]
+
     ldr r0, [r0] ; Get event flags
     ands r1, r0, 0x2 ; Intro event
     movne r0, r2
@@ -4373,22 +4378,38 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ; Check handler for Serge's quests
 @QuestHandler_Serge:
-    mov r0, 0x16 ; Serge's Quest2
+    mov r0, 0x15 ; Serge's Quest2
     bl 0x020A9E28
-    cmp r0, 0x01
-    bne @@Exit
+    tst r0, 0x04
+    beq @@Exit ; If Serge's quest1 is not complete, force it to be done
+@@CheckQuest2:
+    mov r0, 0x16
+    bl 0x020A9E28
+    tst r0, 0x04
+    bne @@CheckQuest3
+    tst r0, 0x01
+    beq @@CheckQuest3
     ldr r0, = 0x021002C4 ; Check the back glyph
     ldrsh r0, [r0]
     cmp r0, 0x13 ; The owl
-    bne @@Exit
+    bne @@CheckQuest3
     mov r0, 2
     bl 0x0206AA6C ; Check if Owl is active
     cmp r0, 0
-    ble @@Exit
+    ble @@CheckQuest3
     mov r0, 0x8
     mov r1, 0x01
     bl @PrimeQuestForCompletion
     b 0x02235C08
+@@CheckQuest3:
+    mov r0, 0x17 ; Quest3
+    bl 0x020A9E28
+    tst r0, 0x01
+    beq @@Exit
+    tst r0, 0x04
+    bne @@Exit
+    b 0x02235C54
+
 @@Exit:
     ldr r0, = 0x020FFC58
     b 0x0223597C

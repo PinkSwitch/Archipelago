@@ -880,6 +880,9 @@ def get_location_groups():
         if group in location_groups:
             location_groups[group].add(location)
 
+        if group == "Quest":
+            location_groups["Wygol Village"].add(location)
+
     for area in enemy_glyphs_per_area:
         location_groups[area].update(enemy_glyphs_per_area[area])
 
