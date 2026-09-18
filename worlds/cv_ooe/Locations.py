@@ -37,7 +37,7 @@ def get_locations(world: "OoEWorld") -> List[LocationData]:
         LocationData("Kalidus Channel Depths Left", "Kalidus Channel: Depths Left Tall Room Freestanding"),
         LocationData("Kalidus Channel", "Kalidus Channel: Upper Exit"),
         LocationData("Kalidus Channel Depths Left", "Kalidus Channel: Depths Left Tall Room Chest"),
-        LocationData("Kalidus Channel Depths Right", "Kalidus Channel: Depths Left Chest"),
+        LocationData("Kalidus Channel Depths Left", "Kalidus Channel: Depths Left Chest"),
         LocationData("Kalidus Channel Depths Right", "Kalidus Channel: Depths Central"),
         LocationData("Kalidus Channel Depths Right", "Kalidus Channel: Depths Right Shaft Chest"),
         LocationData("Kalidus Channel Depths Right", "Kalidus Channel: Depths Right Center Chest"),
