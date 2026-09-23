@@ -37,6 +37,7 @@ file_pointers = {
     "arm9": FilePointer(0x4000, 0x02000000, 0xC6B97),
     "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
     "overlay_1": FilePointer(0x15D600, 0x02230A00, 0x69F1F),
+    "overlay_6": FilePointer(0x207600, 0x022DA4A0, 0x2219F),
     "overlay_11": FilePointer(0x2A1200, 0x022DA4A0, 0x2551F),
     "overlay_13": FilePointer(0x2CA400, 0x022DA4A0, 0x186BF),
     "overlay_17": FilePointer(0x325200, 0x022DA4A0, 0x246DF),

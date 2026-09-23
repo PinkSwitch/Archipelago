@@ -28,6 +28,9 @@ direct_enemy_address = 0x7CCAC
 
 def randomize_bosses(world):
     boss_pool = [
+        "Paranoia",
+        "Gergoth",
+        "Abaddon",
         "Puppet Master",
         "Rahab",  # We want to place these bosses first so that they can be fulfilled first
         "Balore",
@@ -35,18 +38,15 @@ def randomize_bosses(world):
         "Dimitrii",
         "Malphas",
         "Dario",
-        "Gergoth",
         "Zephyr",
         "Bat Company",
-        "Paranoia",
         "Aguni",
-        "Death",
-        "Abaddon"
+        "Death"
     ]
 
     world.boss_slots = {
         "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0x20A10b8, 1, "Flying Armor"),  # Flying Armor
-        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 3, 0x20A90b0, 2, "Balore"),  # Balore
+        "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0x20A90b0, 2, "Balore"),  # Balore
         "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0x20AEb58, 3, "Dimitrii"),  # Dimitrii
         "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0x20AEB04, 4, "Malphas"),  # Malphas
         "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0x20AC500, 5, "Dario"),   # Dario 1 Make sure this is the right address for the flag. Seems low.
@@ -110,15 +110,12 @@ def randomize_bosses(world):
     #TODO! Paranoia in one tile room? Can I spawn water in rahab's room? Also, Balore is still too glitchy for Rahab
 
     for boss in boss_pool:
-        if boss == "Balore":
-            # Balore needs to have a room with a 1-tile floor height, or there won't be room to dodge his laser attack
-            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].floor_height == 1]
-        elif boss in ["Puppet Master", "Rahab"]:
+        if boss in ["Puppet Master", "Rahab"]:
             # Puppet Master and Rahab need to be in a room that is 2-tiles wide.
             # Puppet Master can teleport the player out of bounds, and Rahab would take a long time to be damagable.
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 2]
-        #elif boss == "Paranoia": Pick this earlier so that it can't fail
-            #valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 1]
+        elif boss in ["Paranoia", "Gergoth", "Abaddon"]:
+            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 1]
         else:
             # All other combinations are valid
             valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
@@ -142,6 +139,33 @@ def write_bosses(world, rom):
 
         for i in range(10):
             rom.copy_bytes(0x2A67D2 + (0x40 * i), 0x12, 0x2A67B2 + (0x40 * i))  # layer 1
+
+    if world.boss_slots["Wizardry Lab"].new_boss != "Balore":
+        # Conver the room into a one-tile to preserve the fight space
+        for i in range(0x158):
+            rom.write_to_file(0x022E2A98 + i, "overlay_6", bytearray([0x00]))  # Zero out garbage
+
+        rom.copy_bytes(0x2101AA, 0x20, 0x20FD38)  # Copy over the floor
+        rom.write_to_file(0x022E2AB6, "overlay_6", bytearray([0x37]))
+        rom.write_to_file(0x022E2AD6, "overlay_6", bytearray([0x47]))
+        rom.write_to_file(0x022E2AF6, "overlay_6", bytearray([0x57]))
+        rom.write_to_file(0x022E2B16, "overlay_6", struct.pack("H", 0x8037))
+        rom.write_to_file(0x022E2A68, "overlay_6", bytearray([0x01]))
+
+        rom.write_to_file(0x022E2BB6, "overlay_6", bytearray([0x37]))
+        rom.write_to_file(0x022E2BD6, "overlay_6", struct.pack("H", 0x8037))
+        ########################
+        rom.write_to_file(0x020A6C90, "arm9", bytearray([0x01]))  # Move the Door entry to the new pos
+        rom.write_to_file(0x020A7B37, "arm9", bytearray([0x00]))  # Move the ENTRANCE position to the left
+
+        rom.write_to_file(0x020A90C8, "arm9", struct.pack("H", 0xF0))  # Move the Boss Door to the new entrance
+        rom.write_to_file(0x020A90CA, "arm9", struct.pack("H", 0x90))
+        #########################
+        # Get rid of the post-boss entities
+        rom.write_to_file(0x020A90E5, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x020A90F1, "arm9", bytearray([0x00]))
+        rom.write_to_file(0x020A90FD, "arm9", bytearray([0x00]))
+        #########################
 
     if world.boss_slots["Subterranean Hell"].new_boss != "Rahab":
         # Spawn a floor if Rahab isn't in his room
@@ -257,6 +281,8 @@ def write_bosses(world, rom):
                 var_a = 1  # Falling Gergoth, for breaking the tower floors
             elif room == "The Pinnacle":
                 x_pos = 0x40  # Outside mirror range
+            elif room == "Wizardry Lab":
+                x_pos = 0x30
         elif boss == "Zephyr":
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
             if slot.room_width > 1:
