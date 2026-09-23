@@ -106,7 +106,7 @@ def get_locations(world: "DoSWorld") -> List[LocationData]:
         LocationData("Dark Chapel", "Dark Chapel: Bell Room In Bell"),
         LocationData("Dark Chapel", "Dark Chapel: Bell Room Top Left"),
         LocationData("Dark Chapel", "Dark Chapel: Bell Room Right"),
-        LocationData("Dark Chapel", "Dark Chapel: Post-Dimitrii Room"),
+        LocationData("Dark Chapel", "Dark Chapel: Post-Dmitrii Room"),
         LocationData("Dark Chapel", "Malphas Soul"),
         LocationData("Dark Chapel", "Dark Chapel: Inner Chapel Boss Room", True),
         LocationData("Dark Chapel", "Dark Chapel: Boss Room", True),

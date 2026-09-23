@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import NamedTuple
 import struct
 
 
@@ -22,8 +23,34 @@ class DoSBossData:
     file: str  # The file we write to
 
 
+class DoSBossStats(NamedTuple):
+    hp: int  # Enemy's HP
+    mp: int  # Enemy's MP
+    exp: int  # Enemy's EXP
+    atk: int  # Enemy's Attack
+    defns: int  # Enemy's Defense
+    scaling_factor: int  # Position in boss order ; used to calculate scaling position
+
+
 base_enemy_address = 0x2078CAC  # I can't import this
 direct_enemy_address = 0x7CCAC
+
+boss_stats = {
+    "Flying Armor": DoSBossStats(0x00FA, 0x00C8, 0x01F4, 0x18, 0x00, 1),
+    "Balore": DoSBossStats(0x0384, 0x01F4, 0x03E8, 0x2D, 0x00, 2),
+    "Malphas": DoSBossStats(0x04B0, 0x0320, 0x05DC, 0x34, 0x00, 4),
+    "Dmitrii": DoSBossStats(0x03E8, 0x05DC, 0x07D0, 0x30, 0x00, 3),
+    "Dario": DoSBossStats(0x05DC, 0x03E8, 0x09C4, 0x3C, 0x00, 5),
+    "Puppet Master": DoSBossStats(0x0708, 0x0BB8, 0x0BB8, 0x26, 0x00, 6),
+    "Rahab": DoSBossStats(0x04B0, 0x0898, 0x0FA0, 0x39, 0x00, 7),
+    "Gergoth": DoSBossStats(0x0ED8, 0x270F, 0x10C2, 0x45, 0x08, 8),
+    "Zephyr": DoSBossStats(0x04D2, 0x04D2, 0x162E, 0x50, 0x19, 9),
+    "Bat Company": DoSBossStats(0x05DC, 0x05DC, 0x1662, 0x46, 0x00, 10),
+    "Paranoia": DoSBossStats(0x06A4, 0x06A4, 0x1F40, 0x48, 0x0A, 11),
+    "Aguni": DoSBossStats(0x0FA0, 0x270F, 0x2710, 0x63, 0x0A, 12),
+    "Death": DoSBossStats(0x115C, 0x115C, 0x386C, 0x90, 0x1E, 13),
+    "Abaddon": DoSBossStats(0x0FA0, 0x270F, 0x2EE0, 0x6E, 0x09, 14),
+}
 
 
 def randomize_bosses(world):
@@ -35,7 +62,7 @@ def randomize_bosses(world):
         "Rahab",  # We want to place these bosses first so that they can be fulfilled first
         "Balore",
         "Flying Armor",
-        "Dimitrii",
+        "Dmitrii",
         "Malphas",
         "Dario",
         "Zephyr",
@@ -47,7 +74,7 @@ def randomize_bosses(world):
     world.boss_slots = {
         "Lost Village": DoSBoss(0x02, 0x35, 1, 2, 0x20A10b8, 1, "Flying Armor"),  # Flying Armor
         "Wizardry Lab": DoSBoss(0x04, 0x74, 1, 1, 0x20A90b0, 2, "Balore"),  # Balore
-        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0x20AEb58, 3, "Dimitrii"),  # Dimitrii
+        "Dark Chapel": DoSBoss(0x08, 0xFF, 1, 2, 0x20AEb58, 3, "Dmitrii"),  # Dmitrii
         "Dark Chapel Inner": DoSBoss(0x10, 0x75, 2, 2, 0x20AEB04, 4, "Malphas"),  # Malphas
         "Garden of Madness": DoSBoss(0x20, 0xFF, 1, 2, 0x20AC500, 5, "Dario"),   # Dario 1 Make sure this is the right address for the flag. Seems low.
         "Demon Guest House": DoSBoss(0x40, 0x00, 1, 2, 0x20A56f0, 6, "Puppet Master"),  # Puppet Master
@@ -65,7 +92,7 @@ def randomize_bosses(world):
         "Flying Armor": DoSBossData(0x65, 0, [0x022ffb7c, 0x02300b24], "overlay_30"),
         "Balore": DoSBossData(0x66, 2, [0x022ffcf0, 0x23006C8], "overlay_23"),
         "Malphas": DoSBossData(0x67, 6, [0x022ffaec, 0x02300c44], "overlay_29"),
-        "Dimitrii": DoSBossData(0x68, 4, [0], "overlay_40"),
+        "Dmitrii": DoSBossData(0x68, 4, [0], "overlay_40"),
         "Dario": DoSBossData(0x69, 8, [0], "overlay_25"),
         "Puppet Master": DoSBossData(0x6A, 10, [0x022ffc20, 0x022ffd18], "overlay_25"),
         "Rahab": DoSBossData(0x6B, 14, [0x022ffb48, 0x022ffc60], "overlay_26"),
@@ -111,9 +138,9 @@ def randomize_bosses(world):
 
 def write_bosses(world, rom):
     rom.write_to_file(0x20A90C1, "arm9", bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
-    rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dimitrii's room used for the pre-boss cutscene
+    rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dmitrii's room used for the pre-boss cutscene
     rom.write_to_file(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
-    rom.write_to_file(0x20AEB75, "arm9", bytearray([0x00]))  # Hider for Dimitrii's Quetzalcoatl
+    rom.write_to_file(0x20AEB75, "arm9", bytearray([0x00]))  # Hider for Dmitrii's Quetzalcoatl
     copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
@@ -198,7 +225,7 @@ def write_bosses(world, rom):
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
             if slot.room_width == 1:
                 rom.write_to_file(0x225BB6C, "overlay_1", struct.pack("I", 0xE1A02800))  # Halve Dario's teleport range so he doesn't go OOB.
-        elif boss == "Dimitrii":
+        elif boss == "Dmitrii":
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
         elif boss == "Puppet Master":
             var_a = 1
@@ -300,7 +327,7 @@ def write_bosses(world, rom):
         rom.write_to_file(slot.boss_address_pointer + 10, boss_file, bytearray([var_b]))
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
-                rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dimitrii
+                rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dmitrii
 
         index = int(world.boss_data[slot.old_boss].flag_index / 2)
         if not world.iron_mode:

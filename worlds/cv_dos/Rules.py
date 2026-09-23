@@ -72,7 +72,7 @@ def set_location_rules(world: "DoSWorld") -> None:
     set_rule(world.get_location("Malphas Soul"), HasAll(world.magic_seal_table["Dark Chapel Inner"], world.magic_seal_table["Dark Chapel"]))
     set_rule(world.get_location("Dark Chapel: Inner Chapel Boss Room"), HasAll(world.magic_seal_table["Dark Chapel Inner"], world.magic_seal_table["Dark Chapel"]))
     set_rule(world.get_location("Dark Chapel: Boss Room"), Has(world.magic_seal_table["Dark Chapel Inner"]))
-    set_rule(world.get_location("Dark Chapel: Post-Dimitrii Room"), Has(world.magic_seal_table["Dark Chapel Inner"]) & small_uppies)
+    set_rule(world.get_location("Dark Chapel: Post-Dmitrii Room"), Has(world.magic_seal_table["Dark Chapel Inner"]) & small_uppies)
 
     set_rule(world.get_location("Condemned Tower: 1F West"), big_uppies)
     set_rule(world.get_location("Condemned Tower: 2F East"), small_uppies | Has("Puppet Master Soul"))
