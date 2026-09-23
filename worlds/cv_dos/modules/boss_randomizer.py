@@ -5,7 +5,7 @@ import struct
 @dataclass
 class DoSBoss:
     flag: int  # The SLOT's Boss Defeated flag.
-    assigned_soul: int  # Which Soul is assigned to the SLOT's original boss. Soul randomization reworks how souls are given so this needs to stay the same.
+    assigned_soul: int  # Which Soul is assigned to the SLOT's original boss.
     floor_height: int  # The SLOT's room floor height
     room_width: int  # The SLOT's room width
     boss_address_pointer: int  # Which adress we write to to place the boss
@@ -78,47 +78,31 @@ def randomize_bosses(world):
         "Abaddon": DoSBossData(0x72, 26, [0x22FFA70, 0x23002BC], "overlay_39")
     }
 
-    rahab_pool = [
-        "Flying Armor",
-        # "Balore",  Removed for having too many graphical glitches
-        "Puppet Master",
-        "Rahab",
-        "Bat Company",
-        "Aguni",
-        "Death"
-    ]
-
     if not world.options.goal:
-        rahab_pool.remove("Aguni")
         boss_pool.remove("Aguni")
         world.boss_slots.pop("The Pinnacle")
 
     if world.mine_status == "Disabled":
         #  Remove endgame bosses
-        rahab_pool.remove("Death")
 
         boss_pool.remove("Death")
         boss_pool.remove("Abaddon")
 
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
-
-    rahab_boss = "Dario"
-
-    world.boss_slots["Subterranean Hell"].new_boss = rahab_boss  # Any other boss in Rahab's room will sink below the water level
-    boss_pool.remove(rahab_boss)
-    #TODO! Paranoia in one tile room? Can I spawn water in rahab's room? Also, Balore is still too glitchy for Rahab
+    # TODO! Paranoia in one tile room? Can I spawn water in rahab's room? Also, Balore is still too glitchy for Rahab
 
     for boss in boss_pool:
+        valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
         if boss in ["Puppet Master", "Rahab"]:
             # Puppet Master and Rahab need to be in a room that is 2-tiles wide.
             # Puppet Master can teleport the player out of bounds, and Rahab would take a long time to be damagable.
-            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 2]
+            valid_rooms = [room for room in valid_rooms if world.boss_slots[room].room_width == 2]
+        elif boss == "Balore":
+            # We CANNOT put Balore in Rahab's room because of bugs.
+            valid_rooms = [room for room in valid_rooms if world.boss_slots[room].old_boss != "Rahab"]
         elif boss in ["Paranoia", "Gergoth", "Abaddon"]:
-            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None" and world.boss_slots[room].room_width == 1]
-        else:
-            # All other combinations are valid
-            valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
+            valid_rooms = [room for room in valid_rooms if world.boss_slots[room].room_width == 1]
 
         print(f"Boss {boss} can be in {valid_rooms}")
         new_room = world.random.choice(valid_rooms)
