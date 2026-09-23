@@ -33,7 +33,6 @@ class DoSBossStats(NamedTuple):
 
 
 base_enemy_address = 0x2078CAC  # I can't import this
-direct_enemy_address = 0x7CCAC
 
 boss_stats = {
     "Flying Armor": DoSBossStats(0x00FA, 0x00C8, 0x01F4, 0x18, 0x00, 1),
@@ -51,6 +50,14 @@ boss_stats = {
     "Death": DoSBossStats(0x115C, 0x115C, 0x386C, 0x90, 0x1E, 13),
     "Abaddon": DoSBossStats(0x0FA0, 0x270F, 0x2EE0, 0x6E, 0x09, 14),
 }
+
+stat_offsets = [
+    0x0E,  # HP
+    0x10,  # MP
+    0x12,  # EXP
+    0x15,  # Atk
+    0x16,  # Def
+]
 
 
 def randomize_bosses(world):
@@ -141,7 +148,6 @@ def write_bosses(world, rom):
     rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dmitrii's room used for the pre-boss cutscene
     rom.write_to_file(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
     rom.write_to_file(0x20AEB75, "arm9", bytearray([0x00]))  # Hider for Dmitrii's Quetzalcoatl
-    copy_boss_stats(world, rom)
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
         # Puppet master's wall is too thick for normal bosses to function, so we move it over
@@ -201,7 +207,6 @@ def write_bosses(world, rom):
         rom.write_to_file(slot.boss_address_pointer + 6, boss_file, bytearray([data.enemy_id]))  # Write the new boss into the room
         rom.write_to_file(0x2308B3c + data.flag_index, "overlay_41", struct.pack("H", slot.flag))  # Write the room's flag onto the new boss so the room still works properly
         address = base_enemy_address + (data.enemy_id * 0x24)
-        address_direct = direct_enemy_address + (data.enemy_id * 0x24)
         rom.write_to_file(address + 26, "arm9", bytearray([slot.assigned_soul]))  # Give the enemy the boss slot soul so check logic still works
         var_a = 0
         var_b = 0
@@ -325,25 +330,17 @@ def write_bosses(world, rom):
 
         rom.write_to_file(slot.boss_address_pointer + 8, boss_file, bytearray([var_a]))
         rom.write_to_file(slot.boss_address_pointer + 10, boss_file, bytearray([var_b]))
+        stat_table = boss_stats[boss]
+        scalar = boss_stats[slot.old_boss].scaling_factor
+        for index, stat in enumerate(stat_table):
+            new_stat = (stat // stat_table.scaling_factor) * scalar
+            if index == 5:
+                continue  # don't scale the stat factor
+            elif index >= 3:  # atk, def
+                rom.write_to_file(address + stat_offsets[index], "arm9", bytearray([new_stat]))
+            else:  # HP, MP, EXP
+                rom.write_to_file(address + stat_offsets[index], "arm9", struct.pack("H", new_stat))
+
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
                 rom.write_to_file(pointer, data.file, bytearray([slot.seal_index]))  # Ignore bosses that don't have a seal, i.e. Dario + Dmitrii
-
-        index = int(world.boss_data[slot.old_boss].flag_index / 2)
-        if not world.iron_mode:
-            rom.copy_bytes(0x3FFFCC0 + (index * 9), 9, address_direct + 0x0E)  # Copy the SLOT'S original stats onto the new boss for balance
-    
-    for i in range(126):
-        rom.write_direct(0x3FFFCC0 + i, bytearray([0x00]))  # Clean up the copied data afterwards
-
-
-def copy_boss_stats(world, rom):
-    # Copy all boss stats into unused ROM so we can copy them back
-    for boss in world.boss_data:
-        data = world.boss_data[boss]
-        index = int(data.flag_index / 2)
-        address = direct_enemy_address + (data.enemy_id * 0x24)
-        rom.copy_bytes(address + 0x0E, 9, 0x3FFFCC0 + (9 * index))
-
-
-# Test all bosses on all slots
