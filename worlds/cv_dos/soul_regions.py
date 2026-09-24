@@ -55,9 +55,12 @@ def create_soul_regions(world):
     # #### DARK CHAPEL #####
 
     world.get_region("Dark Chapel").add_exits(["Guillotiner Soul", "Witch Soul", "Mini Devil Soul", "Amalaric Sniper Soul", "Ghost Dancer Soul", "Hell Boar Soul",
-                                               "White Dragon Soul", "Great Armor Soul", "Quetzalcoatl Soul", "Ghoul Soul", "The Creature Soul", "Bone Pillar Soul",
-                                               "Barbariccia Soul", "Valkyrie Soul", "Ghost Soul", "Tombstone Soul"],
-                                              {"Quetzalcoatl Soul": Has(world.magic_seal_table["Dark Chapel"])})
+                                               "White Dragon Soul", "Great Armor Soul", "Ghoul Soul", "The Creature Soul", "Bone Pillar Soul",
+                                               "Barbariccia Soul", "Valkyrie Soul", "Ghost Soul", "Tombstone Soul"])
+
+    if not world.options.boss_shuffle or world.boss_slots["Dark Chapel"] != "Rahab":
+        world.get_region("Dark Chapel").connect(world.get_region("Quetzalcoatl Soul"),
+                                                rule=Has(world.magic_seal_table["Dark Chapel"]))
 
     world.get_region("Dark Chapel Big Room").add_exits(["Mini Devil Soul", "Quetzalcoatl Soul", "Valkyrie Soul"])
     world.get_region("Dark Chapel Post-Button").add_exits(["Tombstone Soul"])

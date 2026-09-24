@@ -38,6 +38,7 @@ file_pointers = {
     "overlay_0": FilePointer(0xCB200, 0x0219E3E0, 0x9235F),
     "overlay_1": FilePointer(0x15D600, 0x02230A00, 0x69F1F),
     "overlay_6": FilePointer(0x207600, 0x022DA4A0, 0x2219F),
+    "overlay_7": FilePointer(0x229800, 0x022DA4A0, 0x21F9F),
     "overlay_8": FilePointer(0x24B800, 0x022DA4A0, 0x1927F),
     "overlay_11": FilePointer(0x2A1200, 0x022DA4A0, 0x2551F),
     "overlay_13": FilePointer(0x2CA400, 0x022DA4A0, 0x186BF),

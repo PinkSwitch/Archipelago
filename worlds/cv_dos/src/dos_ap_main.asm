@@ -343,7 +343,7 @@ bl @GetItemFromSpecial
     bl @ThroneBoss_LeaveMirror
 
 
-.org 0x02227158 ; Replacement throne room entity list
+.org 0x02225C00 ; Replacement throne room entity list
 @EntList_MirrorThrone:
     ; Boss door
     .dh 0x0000
@@ -3030,6 +3030,7 @@ push r0
 .dw @ExtEnt_GardenConDisplay
 .dw @ExtEnt_MenaceConDisplay
 .dw @ExtEnt_NumberControlsBackup
+.dw @ExtEnt_WaterLevel
 
 @ExtendEntityInfo:
     push r3
@@ -3997,6 +3998,19 @@ push r0
 @@EndNormal:
     ldr r1, =0x0208AC20
     b 0x021A9B28
+;;;;;;;;;;;;;;;;;;
+; Spawns a water layer for Rahab
+@ExtEnt_WaterLevel:
+    .dh 0x0000
+    .dh 0x00A0
+    .db 0x00
+    .db 0x02
+    .db 0x02 ; spawnable water
+    .db 0x00
+    .dh 0x0000 
+    .dh 0x0000 ; Flag for the tower, (020F7188, 0x10)
+    .dw 0x7FFF7FFF
+
 
 .pool
 .endarea
