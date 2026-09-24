@@ -126,7 +126,7 @@ def randomize_bosses(world):
         world.boss_slots.pop("The Abyss")
     # TODO! remove this after testing
     boss_pool.remove("Rahab")
-    world.boss_slots["Dark Chapel Inner"].new_boss = "Rahab"
+    world.boss_slots["Cursed Clock Tower"].new_boss = "Rahab"
 
     for boss in boss_pool:
         valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]

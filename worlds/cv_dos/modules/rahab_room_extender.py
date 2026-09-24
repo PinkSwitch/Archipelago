@@ -7,11 +7,14 @@ class BossRoomData(NamedTuple):
     entity_end: int  # End of this room's entity list
     file: str  # Which file this room is in
     base_tile: int = 0x00  # Tile to replace floor with. Defaults to blank tile
+    one_tile_wall: bool = False  # Whether or not this room's walls are only 1 tile thick
 
 
 room_data = {
     "Dark Chapel": BossRoomData(0x022E508D, 0x2563FC, 0x020AEB94, "overlay_8", 0x021B),
     "Dark Chapel Inner": BossRoomData(0x022E475D, 0x255ACC, 0x020AEB10, "overlay_8"),
+    "Demon Guest House": BossRoomData(0x022DF6F1, 0x2A6460, 0x020A56FC, "overlay_11", 0x05, True),
+    "Cursed Clock Tower": BossRoomData(0x022EA985, 0x2750F4, 0x020B8DD0, "overlay_9"),
     "Mine of Judgment": BossRoomData(0x022EF921, 0x23EC90, 0x020B236C, "overlay_7")
 }
 
@@ -36,6 +39,24 @@ byte_sequences = {
                                           1B 02 1B 02 1B 02 1B 02 1B 02 1B 02 1B 02 1B 02
                                           1B 02 1B 02 1B 02 1B 02 1B 02 1B 02 1B 02 1B 02
                                           1B 02 1B 02 1B 02 1B 02 1B 02 1B 02 A0 81 E0 41"""),
+
+    "Demon Guest House": bytes.fromhex("""78 40 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 78 80
+                                          78 40 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 05 00
+                                          05 00 05 00 05 00 05 00 05 00 05 00 05 00 78 80"""),
+
+    "Cursed Clock Tower": bytes.fromhex(("""A0 00 A1 00 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 A1 40 A0 40
+                                            B0 00 B1 00 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 2E 02
+                                            2E 02 2E 02 2E 02 2E 02 2E 02 2E 02 B1 40 B0 40""")),
 
 
     "Mine of Judgment": bytes.fromhex("""76 00 77 00 D5 00 D5 00 D5 00 D5 00 D5 00 D5 00
@@ -76,15 +97,20 @@ def expand_rahab_room(rom, room):
         rom.write_to_file(0x021C8864 + (0x80 * i), "overlay_0", byte_sequences[room])
 
     if room != "Lost Village":  # Every room except for Village we can just copy the existing floor data.
+        if data.one_tile_wall:
+            rom.copy_bytes(0xF5646, 0x3C, 0xF5946)  # Copy the room's original floor down
+            for i in range(0x1E):
+                # Clear out the original floor
+                rom.write_to_file(0x021C8826 + (i * 2), "overlay_0", struct.pack("H", data.base_tile))
+        else:
+            rom.copy_bytes(0xF5648 - floor_offset, 0x38, 0xF5948)  # Copy the room's original floor down
+            for i in range(0x1C):
+                # Clear out the original floor
+                rom.write_to_file(0x021C8828 + (i * 2), "overlay_0", struct.pack("H", data.base_tile))
 
-        rom.copy_bytes(0xF5648 - floor_offset, 0x38, 0xF5948)  # Copy the room's original floor down
-        for i in range(0x1C):
-            # Clear out the original floor
-            rom.write_to_file(0x021C8828 + (i * 2), "overlay_0", struct.pack("H", data.base_tile))
-
-            if is_chapel2:
-                #  We need to also clear the higher floor of Chapel 2
-                rom.write_to_file(0x21C87E8 + (i * 2), "overlay_0", struct.pack("H", 0x00))
+                if is_chapel2:
+                    #  We need to also clear the higher floor of Chapel 2
+                    rom.write_to_file(0x21C87E8 + (i * 2), "overlay_0", struct.pack("H", 0x00))
 
     if room == "Dark Chapel Inner":
         rom.write_to_file(0x21C881A, "overlay_0", bytearray([0x37, 0xC1, 0x50, 0x81, 0x50, 0x81]))  # Corner the ramp
