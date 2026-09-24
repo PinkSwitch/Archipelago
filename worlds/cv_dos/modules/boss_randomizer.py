@@ -90,7 +90,7 @@ def randomize_bosses(world):
         "Subterranean Hell": DoSBoss(0x0100, 0x77, 1, 2, 0x20B4b1c, 8, "Rahab"),  # Rahab
         "Silenced Ruins": DoSBoss(0x0400, 0x36, 1, 1, 0x20B64B0, 10, "Bat Company"),  # Bat Company
         "Demon Guest House Upper": DoSBoss(0x1000, 0x02, 1, 1, 0x20A59a8, 12, "Paranoia"),  # Paranoia
-        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x2227188, 11, "Aguni"),  # Aguni, not Dario 2
+        "The Pinnacle": DoSBoss(0x0800, 0x2B, 1, 2, 0x02225C30, 11, "Aguni"),  # Aguni, not Dario 2
         "Mine of Judgment": DoSBoss(0x2000, 0x58, 1, 2, 0x20B2360, 13, "Death"),  # Death
         "The Abyss": DoSBoss(0x8000, 0x2C, 1, 1, 0x20BE260, 15, "Abaddon")  # Abaddon
     }
@@ -124,7 +124,7 @@ def randomize_bosses(world):
 
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
-    # TODO! Paranoia in one tile room? Can I spawn water in rahab's room? Also, Balore is still too glitchy for Rahab
+    # TODO! Can I spawn water in rahab's room?
 
     for boss in boss_pool:
         valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
@@ -144,6 +144,7 @@ def randomize_bosses(world):
 
 
 def write_bosses(world, rom):
+    from .rahab_room_extender import expand_rahab_room
     rom.write_to_file(0x20A90C1, "arm9", bytearray([0x00]))  # Delete the Balore pre-boss cutscene, it breaks the game
     rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dmitrii's room used for the pre-boss cutscene
     rom.write_to_file(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
@@ -184,6 +185,18 @@ def write_bosses(world, rom):
         rom.write_to_file(0x020A90FD, "arm9", bytearray([0x00]))
         #########################
 
+    if world.boss_slots["Dark Chapel Inner"].new_boss == "Balore":
+        #  This floor needs to be lowered
+        rom.write_to_file(0x022E4A20, "overlay_8", struct.pack("H", 0x026D))
+        rom.write_to_file(0x022E4A60, "overlay_8", struct.pack("H", 0x0117))  # Extend the ramp downwards
+
+        rom.copy_bytes(0x255D50, 0x30, 0x255D90)
+        rom.copy_bytes(0x255D10, 0x30, 0x255D50)
+        rom.copy_bytes(0x255CD0, 0x30, 0x255D10)  # Copy the floor down
+
+        rom.copy_bytes(0x255DE0, 0x30, 0x0255CD0)  # Blank out the top row
+        rom.write_to_file(0x022E49EC, "overlay_8", bytearray([0x40, 0x01, 0x41, 0x01]))  # And fix the wall
+
     if world.boss_slots["Subterranean Hell"].new_boss != "Rahab":
         # Spawn a floor if Rahab isn't in his room
         rom.write_to_file(0x022F27E2, "overlay_17", struct.pack("H", 0x022E))
@@ -204,6 +217,7 @@ def write_bosses(world, rom):
             boss_file = "overlay_0"
         else:
             boss_file = "arm9"
+
         rom.write_to_file(slot.boss_address_pointer + 6, boss_file, bytearray([data.enemy_id]))  # Write the new boss into the room
         rom.write_to_file(0x2308B3c + data.flag_index, "overlay_41", struct.pack("H", slot.flag))  # Write the room's flag onto the new boss so the room still works properly
         address = base_enemy_address + (data.enemy_id * 0x24)
@@ -306,6 +320,9 @@ def write_bosses(world, rom):
         elif boss == "Bat Company":
             var_a = 1
             var_b = 0
+        elif boss == "Rahab":
+            if room != "Subterranean Hell":
+                expand_rahab_room(world, rom, room)
         elif boss == "Paranoia":
             var_a = 2
             x_pos = 0x1F
@@ -337,8 +354,10 @@ def write_bosses(world, rom):
             if index == 5:
                 continue  # don't scale the stat factor
             elif index >= 3:  # atk, def
+                new_stat = min(new_stat, 0xFF)
                 rom.write_to_file(address + stat_offsets[index], "arm9", bytearray([new_stat]))
             else:  # HP, MP, EXP
+                new_stat = min(new_stat, 0xFFFF)
                 rom.write_to_file(address + stat_offsets[index], "arm9", struct.pack("H", new_stat))
 
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
