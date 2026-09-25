@@ -296,7 +296,7 @@ def set_location_rules(world: "SSBMWorld") -> None:
         set_rule(world.get_location("Bonus - Wimp"), Has("Heart Container"))
         set_rule(world.get_location("Bonus - Shape-Shifter"), HasAny("Super Mushroom", "Poison Mushroom", "Metal Box", "Cloaking Device", "Bunny Hood"))
         set_rule(world.get_location("Bonus - Chuck Wagon"), HasAny("Mr. Saturn", "Capsule", "Poké Ball", "Green Shell", "Red Shell", "Freezie", "Bob-omb", "Motion-Sensor Bomb", "Barrel", "Crate"))
-        set_rule(world.get_location("Bonus - Parasol Finish"), Has("Parasol"))
+        set_rule(world.get_location("Bonus - Parasol Finish"), HasAny("Parasol", "Peach"))
         set_rule(world.get_location("Bonus - Gardener Finish"), Has("Lip's Stick"))
         set_rule(world.get_location("Bonus - Flower Finish"), Has("Lip's Stick"))
         set_rule(world.get_location("Bonus - Super Scoper"), Has("Super Scope"))
