@@ -162,7 +162,7 @@ def write_bosses(world, rom):
             rom.write_to_file(0x022E2A98 + i, "overlay_6", bytearray([0x00]))  # Zero out garbage
 
         rom.copy_bytes(0x2101AA, 0x20, 0x20FD38)  # Copy over the floor
-        rom.write_to_file(0x022E2AB6, "overlay_6", bytearray([0x37]))
+        rom.write_to_file(0x022E2AB6, "overlay_6", bytearray([0x37]))  # And build a right wall
         rom.write_to_file(0x022E2AD6, "overlay_6", bytearray([0x47]))
         rom.write_to_file(0x022E2AF6, "overlay_6", bytearray([0x57]))
         rom.write_to_file(0x022E2B16, "overlay_6", struct.pack("H", 0x8037))
@@ -170,6 +170,8 @@ def write_bosses(world, rom):
 
         rom.write_to_file(0x022E2BB6, "overlay_6", bytearray([0x37]))
         rom.write_to_file(0x022E2BD6, "overlay_6", struct.pack("H", 0x8037))
+        for i in range(10):
+            rom.write_to_file(0x22E2A98 + (i * 0x20), "overlay_6", struct.pack("H", 0x01FA))
         ########################
         rom.write_to_file(0x020A6C90, "arm9", bytearray([0x01]))  # Move the Door entry to the new pos
         rom.write_to_file(0x020A7B37, "arm9", bytearray([0x00]))  # Move the ENTRANCE position to the left
@@ -209,7 +211,6 @@ def write_bosses(world, rom):
         slot = world.boss_slots[room]
         boss = slot.new_boss
         data = world.boss_data[boss]
-        print(f"Slot {slot.old_boss} has {boss}")
 
         if slot.old_boss == "Aguni":  # Aguni's data is here instead of in the arm9
             boss_file = "overlay_0"
