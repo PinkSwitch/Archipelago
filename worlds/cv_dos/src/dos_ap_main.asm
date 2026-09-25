@@ -541,6 +541,9 @@ bl @GetItemFromSpecial
 
 .org 0x021A9B24
     b @AutoUnlockSeals
+
+.org 0x021F61B8
+    bl @SetStartingDoppels
     
 
 ;overlay 9 0
@@ -1445,8 +1448,8 @@ bl @GetItemFromSpecial
     bl 0x0220F760 ; Activate the Soul
     pop r0-r3
 @@NoDoppel:
-    ldr r0, =0x02
-    ldr r1, =0x2B
+    mov r0, 0x02
+    mov r1, 0x2B
     bl 0x021E78F0
 @ClearAPMemory:
     push r2
@@ -3846,11 +3849,14 @@ push r0
     pop r0,r1,lr
     b 0x021E79CC
 @@EquipWeapon:
-    mov r0, r4
+    mov r0, r5
+    mov r1, r4
+    bl 0x021E7AB4 ; Get the ID
     ldr r1, = 0x020F7420
-    strh r0, [r1]
-    strh r0, [r1, 0x16] ; Doppel A
-    strh r0, [r1, 0x1C] ; Doppel B
+    strh r4, [r1, 0x16] ; Doppel A
+    strh r4, [r1, 0x1C] ; Doppel B
+    mov r1, r0
+    bl 0x021F43E8
     b @@Exit
 @@EquipArmor:
     mov r0, r5 ; type
@@ -4010,6 +4016,26 @@ push r0
     .dh 0x0000 
     .dh 0x0000 ; Flag for the tower, (020F7188, 0x10)
     .dw 0x7FFF7FFF
+;;;;;;;;;;;;;;;;;;;
+; Sets defaults for Doppel B
+@SetStartingDoppels:
+    ldr r0, = @ROMFlag_GearLock
+    ldrb r0, [r0]
+    cmp r0, 0
+    beq @@Exit
+    push r1
+    ldr r0, = @RomFlag_StartingWeapon
+    ldr r1, = 0x020F743C
+    ldrh r0, [r0]
+    strh r0, [r1]
+    add r1, r1, 2
+    ldr r0, = @RomFlag_StartingArmor
+    ldrh r0, [r0]
+    strh r0, [r1]
+    pop r1
+@@Exit:
+    ldr r0, [r3]
+    bx lr
 
 
 .pool

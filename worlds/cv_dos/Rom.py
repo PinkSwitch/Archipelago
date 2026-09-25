@@ -125,10 +125,11 @@ def patch_rom(world, rom, code_patch):
     if world.iron_mode:
         starting_armor = world.random.choice(["Leather Armor", "Gym Clothes", "Kung Fu Suit", "Breastplate",
                                               "Three 7s", "Mage Robe", "Silk Robe"])
-        starting_armor = global_armor_table.index(starting_armor)
+
         starting_weapon = world.random.choice(["Rapier", "Short Sword", "Claymore", "Mace", "Blunt Sword",
                                                "Axe", "Handgun", "Boomerang", "Chakram"])
         starting_weapon = global_weapon_table.index(starting_weapon)
+        starting_armor = global_armor_table.index(starting_armor)
         rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
         rom.write_to_file(0x02308E41, "overlay_41", bytearray([0x01]))  # Hide Pickups
         rom.write_to_file(0x02308E42, "overlay_41", bytearray([0x01]))  # Gear Lock
