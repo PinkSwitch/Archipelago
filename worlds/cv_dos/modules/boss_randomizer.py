@@ -137,7 +137,6 @@ def randomize_bosses(world):
         elif boss in ["Paranoia", "Gergoth", "Abaddon"]:
             valid_rooms = [room for room in valid_rooms if world.boss_slots[room].room_width == 1]
 
-        print(f"Boss {boss} can be in {valid_rooms}")
         new_room = world.random.choice(valid_rooms)
         world.boss_slots[new_room].new_boss = boss
 

@@ -3,7 +3,7 @@ from BaseClasses import Region, Location
 from .Locations import get_locations
 from .Rules import small_uppies, big_uppies
 from .soul_regions import create_soul_regions
-from .Options import GateItems
+from .Options import GateItems, SoulRandomizer
 if TYPE_CHECKING:
     from . import DoSWorld
 
@@ -104,7 +104,10 @@ def init_areas(world: "DoSWorld") -> None:
             'The Abyss Beyond Abaddon'])
 
     for region in world.common_souls:
-        active_regions.append(region)
+        if region in ["Yeti Soul", "Flying Humanoid Soul", "Mothman Soul"] and world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
+            continue
+        else:
+            active_regions.append(region)
 
     for region in world.uncommon_souls:
         active_regions.append(region)

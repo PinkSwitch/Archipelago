@@ -1,13 +1,12 @@
 from .Rules import big_uppies, small_uppies
+from .Options import SoulRandomizer
 from rule_builder.rules import Has
 
 
 def create_soul_regions(world):
-    world.get_region("Lost Village Upper").add_exits(["Yeti Soul", "Axe Armor Soul", "Warg Soul",
-                                                      "Skeleton Soul", "Bat Soul", "Armor Knight Soul",
-                                                      "Zombie Soul", "Peeping Eye Soul"],
-                                                     {"Yeti Soul": Has("Waiter Skeleton Soul"),
-                                                      "Armor Knight Soul": big_uppies})
+    world.get_region("Lost Village Upper").add_exits(["Axe Armor Soul", "Warg Soul",  "Skeleton Soul", "Bat Soul",
+                                                      "Armor Knight Soul", "Zombie Soul", "Peeping Eye Soul"],
+                                                     {"Armor Knight Soul": small_uppies})
 
     world.get_region("Lost Village Upper Doorway").add_exits(["Skelerang Soul", "Peeping Eye Soul"])
 
@@ -73,8 +72,6 @@ def create_soul_regions(world):
     world.get_region("Cursed Clock Tower Entrance").add_exits(["Harpy Soul", "Catoblepas Soul", "Imp Soul", "Malachi Soul", "Dead Pirate Soul",
                                                                "Medusa Head Soul", "Tanjelly Soul"])
     world.get_region("Cursed Clock Tower Central").add_exits(["Slime Soul", "Imp Soul", "Medusa Head Soul", "Bugbear Soul", "Tanjelly Soul"])
-    world.get_region("Cursed Clock Tower Boss Area").add_exits(["Flying Humanoid Soul"],
-                                                               {"Flying Humanoid Soul": Has("Mandragora Soul")})
     world.get_region("Cursed Clock Tower Exit").add_exits(["Devil Soul", "Harpy Soul"])
     # SUBTERRANEAN HELL #####
 
@@ -107,13 +104,17 @@ def create_soul_regions(world):
     world.get_region("Silenced Ruins Upper Entrance").add_exits(["Waiter Skeleton Soul", "Peeping Eye Soul", "Gorgon Soul"])
 
     # PINNACLE #####
-    world.get_region("The Pinnacle").add_exits(["Guillotiner Soul", "Mothman Soul", "Werewolf Soul", "Mushussu Soul", "Alastor Soul",
-                                                "Dead Crusader Soul", "Erinys Soul", "Final Guard Soul"],
-                                               {"Mothman Soul": Has("Rycuda Soul")})
+    world.get_region("The Pinnacle").add_exits(["Guillotiner Soul", "Werewolf Soul", "Mushussu Soul", "Alastor Soul",
+                                                "Dead Crusader Soul", "Erinys Soul", "Final Guard Soul"])
     world.get_region("The Pinnacle Lower").add_exits(["Guillotiner Soul", "Succubus Soul", "Malachi Soul", "Mushussu Soul", "Werewolf Soul", "Flame Demon Soul",
                                                       "Bugbear Soul", "Dead Warrior Soul", "Erinys Soul"])
 
     world.get_region("The Pinnacle Left Exit").add_exits(["Succubus Soul", "Erinys Soul"])
+
+    if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
+        world.get_region("The Pinnacle").connect(world.get_region("Mothman Soul"), rule=Has("Rycuda Soul"))
+        world.get_region("Lost Village Upper").connect(world.get_region("Yeti Soul"), rule=Has("Waiter Skeleton Soul"))
+        world.get_region("Cursed Clock Tower Boss Area").connect(world.get_region("Flying Humanoid Soul"), rule=Has("Mandragora Soul"))
 
     if world.mine_status != "Disabled":
         world.get_region("Mine of Judgment").add_exits(["Slogra Soul", "Ripper Soul", "Gaibon Soul", "Tanjelly Soul", "Giant Slug Soul", "Bugbear Soul"])

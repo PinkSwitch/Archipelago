@@ -284,7 +284,7 @@ class NoLogicalGrinds(Toggle):
     """If enabled, you won't be expected to grind any souls for progression, and required Souls will be guaranteed
        to be in the item pool. This applies to Soul walls, Bone Ark, and Skeleton Ape.
        This option does not affect Soulsanity, as Soulsanity does not expect non-check soul drops to be gotten."""
-    display_name = "Randomize Doors"
+    display_name = "No Logical Grinding"
 
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
