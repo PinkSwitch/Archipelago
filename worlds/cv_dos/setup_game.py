@@ -206,7 +206,7 @@ def place_souls(world, pool):
 
         for i in range(soul_location_count - souls_added):
             soul = world.random.choice(world.filler_souls)
-            pool.append(world.create_item(world.random.choice(world.filler_souls)))
+            pool.append(world.create_item(soul))
             update_soul_pool(world, soul)
     else:
         place_inaccessible_souls = False
