@@ -33,6 +33,7 @@ def generate_early(world) -> None:
         world.options.mine_condition.value = passthrough["mine_condition"]
         world.options.garden_condition.value = passthrough["garden_condition"]
         world.connected_doors = passthrough["door_map"]
+        world.options.no_logical_grinding.value = passthrough["no_grinding"]
     setup_game(world)
     setup_souls(world)
 
@@ -195,6 +196,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "garden_condition": world.options.garden_condition.value,
         "mine_condition": world.options.mine_condition.value,
         "door_map": world.connected_doors,
+        "no_grinding": world.options.no_logical_grinding.value
     }
 
 
