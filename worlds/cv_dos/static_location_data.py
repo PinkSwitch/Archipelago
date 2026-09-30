@@ -240,10 +240,10 @@ location_ids = {
     "Procel Soul": 0x179,
     "Mud Demon Soul": 0x17A,
 
-    "Wizardry Lab: West Gate Button": 0x200,
-    "Wizardry Lab: East Gate Button": 0x201,
-    "Garden of Madness: Gate Button": 0x202,
-    "Subterranean Hell: Gate Button": 0x203
+    "Wizardry Lab: East Gate Button": 0x200,
+    "Garden of Madness: Gate Button": 0x201,
+    "Subterranean Hell: Gate Button": 0x202,
+    "Wizardry Lab: West Gate Button": 0x203,
 }
 
 location_data_table = {

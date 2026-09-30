@@ -12,6 +12,7 @@ from .modules.music_randomizer import area_music_randomizer, boss_music_randomiz
 from .modules.boss_randomizer import write_bosses
 from .modules.synthesis_randomizer import write_synthesis
 from .modules.bullet_wall_randomizer import apply_souls_and_gfx
+from .modules.equipamizer import apply_weapon_randomization, apply_weapon_properties
 from Options import OptionError
 from .Options import StartingWeapon, SoulRandomizer, SoulsanityLevel, GateItems
 from .Items import soul_filler_table
@@ -124,10 +125,12 @@ def patch_rom(world, rom, code_patch):
     ########### COPPER DAWN STUFF, TODO DELETE THIS
     if world.iron_mode:
         starting_armor = world.random.choice(["Leather Armor", "Gym Clothes", "Kung Fu Suit", "Breastplate",
-                                              "Three 7s", "Mage Robe", "Silk Robe"])
+                                              "Three 7s", "Mage Robe", "Silk Robe", "Biker Jacket",
+                                              "Breastplate", "Mage Robe"])
 
         starting_weapon = world.random.choice(["Rapier", "Short Sword", "Claymore", "Mace", "Blunt Sword",
-                                               "Axe", "Handgun", "Boomerang", "Chakram"])
+                                               "Axe", "Handgun", "Boomerang", "Chakram", "Terror Bear",
+                                               "Whip", "Mach Punch", "Rapier", "Alucard Sword"])
         starting_weapon = global_weapon_table.index(starting_weapon)
         starting_armor = global_armor_table.index(starting_armor)
         rom.write_to_file(0x02308E40, "overlay_41", bytearray([0x01]))  # One heal
@@ -322,6 +325,8 @@ def patch_rom(world, rom, code_patch):
     if world.options.boss_music_randomizer:
         boss_music_randomizer(world, rom)
 
+    apply_weapon_randomization(world, rom)
+
     if world.options.randomize_red_soul_walls:
         rom.write_to_file(0x2308b28, "overlay_41", bytearray([0x01]))  # Tell the rom we have this on
 
@@ -425,6 +430,8 @@ class DoSPatchExtensions(APPatchExtension):
             if soul_chance:  # Only modify non-guaranteed Souls
                 soul_chance = int(min(0xFF, (soul_chance * soul_chance_multiplier)))
                 rom.write_to_file(soul_chance_address, "arm9", bytearray([soul_chance]))
+
+        apply_weapon_properties(rom)
 
         return rom.get_bytes()
 

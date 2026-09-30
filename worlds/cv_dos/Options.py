@@ -286,6 +286,37 @@ class NoLogicalGrinds(Toggle):
        This option does not affect Soulsanity, as Soulsanity does not expect non-check soul drops to be gotten."""
     display_name = "No Logical Grinding"
 
+
+class RandomWeaponStats(Choice):
+    """Randomizes how many Nodes exist per magic seal, and how many lines need to be drawn to complete the seal.
+       This won't do anything unless Randomize Seal Patterns is also enabled.
+       Simple: Each seal will have + or - 2 nodes and + or - 3 lines compared to the original seal.
+       Chaos: Each seal can have between 2 and 10 nodes and 1-20 lines.
+       Chaos Weighted: Similar to Chaos, but the number of nodes is balanced more closely to the number of lines."""
+    display_name = "Randomize Weapon Stats"
+    option_normal = 0
+    option_consistent = 1
+    option_chaos = 2
+    default = 0
+
+
+class RandomWeaponProps(Toggle):
+    """Randomizes the secondary element of all weapons.
+       Additionally, there is a small chance for weapons to have an extra special modifier applied."""
+    display_name = "Randomize Weapon Properties"
+
+
+class RandomWeaponAttributes(Choice):
+    """Randomizes the primary element of all weapons.
+       Normal: Leaves elements as they normally are.
+       Consistent: Weapons of the same type will all use the same base element
+       Chaos: All weapons will have a random base element."""
+    display_name = "Randomize Weapon Stats"
+    option_normal = 0
+    option_consistent = 1
+    option_chaos = 2
+    default = 0
+
 #class RevealBreakableWalls(Choice):
  #   """Controls how breakable walls act.
   #     Normal: Breakable walls are breakable, you are assumed to already know where they are.
@@ -340,6 +371,9 @@ class DoSOptions(PerGameCommonOptions):
     randomize_doors: ShuffleCastleConnections
     randomize_seal_details: RandomizeSealDetails
     no_logical_grinding: NoLogicalGrinds
+    randomize_weapon_stats: RandomWeaponStats
+    randomize_weapon_properties: RandomWeaponProps
+    randomize_weapon_attribute: RandomWeaponAttributes
 
 
 dos_option_groups = [
@@ -379,6 +413,12 @@ dos_option_groups = [
     OptionGroup("Weapon Synth Settings", [
         RandomizeSynthSouls,
 
+    ]),
+
+    OptionGroup("Equipment Settings", [
+        RandomWeaponStats,
+        RandomWeaponAttributes,
+        RandomWeaponProps
     ]),
 
     OptionGroup("World Settings", [

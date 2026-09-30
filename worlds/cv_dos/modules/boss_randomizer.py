@@ -36,19 +36,19 @@ base_enemy_address = 0x2078CAC  # I can't import this
 
 boss_stats = {
     "Flying Armor": DoSBossStats(0x00FA, 0x00C8, 0x01F4, 0x18, 0x00, 1),
-    "Balore": DoSBossStats(0x0384, 0x01F4, 0x03E8, 0x2D, 0x00, 2),
-    "Malphas": DoSBossStats(0x04B0, 0x0320, 0x05DC, 0x34, 0x00, 4),
-    "Dmitrii": DoSBossStats(0x03E8, 0x05DC, 0x07D0, 0x30, 0x00, 3),
-    "Dario": DoSBossStats(0x05DC, 0x03E8, 0x09C4, 0x3C, 0x00, 5),
-    "Puppet Master": DoSBossStats(0x0708, 0x0BB8, 0x0BB8, 0x26, 0x00, 6),
-    "Rahab": DoSBossStats(0x04B0, 0x0898, 0x0FA0, 0x39, 0x00, 7),
-    "Gergoth": DoSBossStats(0x0ED8, 0x270F, 0x10C2, 0x45, 0x08, 8),
-    "Zephyr": DoSBossStats(0x04D2, 0x04D2, 0x162E, 0x50, 0x19, 9),
-    "Bat Company": DoSBossStats(0x05DC, 0x05DC, 0x1662, 0x46, 0x00, 10),
-    "Paranoia": DoSBossStats(0x06A4, 0x06A4, 0x1F40, 0x48, 0x0A, 11),
-    "Aguni": DoSBossStats(0x0FA0, 0x270F, 0x2710, 0x63, 0x0A, 12),
-    "Death": DoSBossStats(0x115C, 0x115C, 0x386C, 0x90, 0x1E, 13),
-    "Abaddon": DoSBossStats(0x0FA0, 0x270F, 0x2EE0, 0x6E, 0x09, 14),
+    "Balore": DoSBossStats(0x0384, 0x01F4, 0x03E8, 0x2D, 0x00, 30),
+    "Malphas": DoSBossStats(0x04B0, 0x0320, 0x05DC, 0x34, 0x00, 32),
+    "Dmitrii": DoSBossStats(0x03E8, 0x05DC, 0x07D0, 0x30, 0x00, 31),
+    "Dario": DoSBossStats(0x05DC, 0x03E8, 0x09C4, 0x3C, 0x00, 33),
+    "Puppet Master": DoSBossStats(0x0708, 0x0BB8, 0x0BB8, 0x26, 0x00, 34),
+    "Rahab": DoSBossStats(0x04B0, 0x0898, 0x0FA0, 0x39, 0x00, 35),
+    "Gergoth": DoSBossStats(0x0ED8, 0x270F, 0x10C2, 0x45, 0x08, 36),
+    "Zephyr": DoSBossStats(0x04D2, 0x04D2, 0x162E, 0x50, 0x19, 37),
+    "Bat Company": DoSBossStats(0x05DC, 0x05DC, 0x1662, 0x46, 0x00, 38),
+    "Paranoia": DoSBossStats(0x06A4, 0x06A4, 0x1F40, 0x48, 0x0A, 39),
+    "Aguni": DoSBossStats(0x0FA0, 0x270F, 0x2710, 0x63, 0x0A, 40),
+    "Death": DoSBossStats(0x115C, 0x115C, 0x386C, 0x90, 0x1E, 41),
+    "Abaddon": DoSBossStats(0x0FA0, 0x270F, 0x2EE0, 0x6E, 0x09, 42),
 }
 
 stat_offsets = [
@@ -310,7 +310,7 @@ def write_bosses(world, rom):
                 var_a = 1  # Falling Gergoth, for breaking the tower floors
             elif room == "The Pinnacle":
                 x_pos = 0x40  # Outside mirror range
-            elif room == "Wizardry Lab":
+            elif room in ["Wizardry Lab", "Demon Guest House Upper", "Condemned Tower"]:
                 x_pos = 0x30
         elif boss == "Zephyr":
             x_pos = (slot.room_width * 0x100) / 2  # Center horizontally
@@ -348,16 +348,27 @@ def write_bosses(world, rom):
         rom.write_to_file(slot.boss_address_pointer + 10, boss_file, bytearray([var_b]))
         stat_table = boss_stats[boss]
         scalar = boss_stats[slot.old_boss].scaling_factor
+        stat_list = [
+            "hp",
+            "mp",
+            "exp",
+            "atk",
+            "defns",
+            "scaling_factor"
+        ]
         for index, stat in enumerate(stat_table):
-            new_stat = (stat // stat_table.scaling_factor) * scalar
+            stat_name = stat_list[index]
+            new_stat = getattr(boss_stats[slot.old_boss], stat_list[index])  # TODO! Fix/revert
+
             if index == 5:
                 continue  # don't scale the stat factor
-            elif index >= 3:  # atk, def
+            if index >= 3:  # atk, def
                 new_stat = min(new_stat, 0xFF)
                 rom.write_to_file(address + stat_offsets[index], "arm9", bytearray([new_stat]))
             else:  # HP, MP, EXP
                 new_stat = min(new_stat, 0xFFFF)
                 rom.write_to_file(address + stat_offsets[index], "arm9", struct.pack("H", new_stat))
+            print(f"! For {boss} at {room}, has {new_stat} {stat_list[index]}, scaled from {stat}")
 
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
