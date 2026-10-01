@@ -68,6 +68,7 @@ def apply_weapon_randomization(world, rom):
     weapons_list = {
         "Bare knuckles": DoSWeapon(0x00, "Strike", 0x08, "None"),
         "Knife": DoSWeapon(0x07, "Stab", 0x0F, "Knife"),
+        "Baselard": DoSWeapon(0x0F, "Stab", 0x0F, "Knife"),
         "Combat Knife": DoSWeapon(0x0B, "Stab", 0x0F, "Knife"),
         "Cutall": DoSWeapon(0x13, "Stab", 0x0F, "Knife"),
         "Cinquedia": DoSWeapon(0x19, "Stab", 0x0F, "Knife"),
@@ -220,13 +221,16 @@ def apply_weapon_randomization(world, rom):
             if chance < 10:  # 10% chance for a mod
                 possible_mods = modifier_list.copy()
                 possible_mods.remove("None")
-                if data.type in ["Greatsword", "Spear", "Hammer", "Axe", "Throwing", "Bear"] or weapon in [
+                if data.type in ["Greatsword", "Spear", "Hammer", "Axe", "Bear"] or weapon in [
                                  "RPG", "Nunchakus", "Valmanway", "Whip"]:
                     possible_mods.remove("Heavy")  # These weapons start heavy, so they can only roll light
+                elif data.type == "Throwing":
+                    possible_mods.remove("Heavy")  # Throwing weapons can't have either of these
+                    possible_mods.remove("Light")
                 else:
                     possible_mods.remove("Light")
 
-                if weapon in ["Valmanway", "Nunchakus"]:
+                if weapon in ["Valmanway", "Nunchakus"] or data.type == "Throwing":
                     possible_mods.remove("Spectral")  # These weapons always have this property
                 data.modifier = world.random.choice(possible_mods)
                 rolled_mod = True
@@ -252,6 +256,20 @@ def apply_weapon_randomization(world, rom):
             name = name + mod_abbreviations[data.modifier]
 
         name = name + name_mod
+        while len(name) > 19:
+            if " " in name:
+                name = name.replace(" ", "")
+            elif "a" in name:
+                name = name.replace("a", "")
+            elif "e" in name:
+                name = name.replace("e", "")
+            elif "i" in name:
+                name = name.replace("i", "")
+            elif "o" in name:
+                name = name.replace("o", "")
+            elif "u" in name:
+                name = name.replace("u", "")
+
         encoded_name = [0x01, 0x00]
         encoded_name += text_encoder(name)
         encoded_name += [0xEA, 0x01]
@@ -263,12 +281,12 @@ def apply_weapon_randomization(world, rom):
 def apply_weapon_properties(rom):
     for i in range(0x4F):
         address = base_address + (0x1C * i)
-        mod = rom.read_from_file(address + 0x09, "arm9", 1)
-        properties = struct.unpack("H", rom.read_from_file(address + 0x18, "arm9", 2))
+        mod = rom.read_from_file(address + 0x09, "arm9", 1)[0]
+        properties = struct.unpack("H", rom.read_from_file(address + 0x18, "arm9", 2))[0]
         if mod == 1:  # Heavy
             properties |= 0x01
         elif mod == 2:  # Light
-            properties &= 0x01
+            properties &= 0xFE
         elif mod == 4:  # Spectral
             properties |= 0x0248
         rom.write_to_file(address + 0x18, "arm9", struct.pack("H", properties))
@@ -281,4 +299,4 @@ def apply_num_as_percent(base, factor):
     return value
 
 
-# TODO! write name
+#  TODO! Fix heavy tomahawk, what happened to it
