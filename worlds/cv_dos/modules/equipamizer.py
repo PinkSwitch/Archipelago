@@ -256,7 +256,7 @@ def apply_weapon_randomization(world, rom):
         encoded_name += text_encoder(name)
         encoded_name += [0xEA, 0x01]
         rom.write_to_file(text_address, "overlay_0", bytearray(encoded_name))
-        rom.write_to_file(0x0222F438 + (4 * id_num), struct.pack("I", text_address))  # Update the item's pointer
+        rom.write_to_file(0x0222F438 + (4 * id_num), "overlay_0", struct.pack("I", text_address))
         text_address += len(encoded_name)  # Update the address for the next iteration
 
 
