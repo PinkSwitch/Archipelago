@@ -288,11 +288,10 @@ class NoLogicalGrinds(Toggle):
 
 
 class RandomWeaponStats(Choice):
-    """Randomizes how many Nodes exist per magic seal, and how many lines need to be drawn to complete the seal.
-       This won't do anything unless Randomize Seal Patterns is also enabled.
-       Simple: Each seal will have + or - 2 nodes and + or - 3 lines compared to the original seal.
-       Chaos: Each seal can have between 2 and 10 nodes and 1-20 lines.
-       Chaos Weighted: Similar to Chaos, but the number of nodes is balanced more closely to the number of lines."""
+    """Applies a modifer to the stats of each weapon, ranging from a 50% decrease to a 50% increase.
+       Normal: Weapon stats are unchanged
+       Consistent: The same modifier will apply to all weapons of the same type, with 5% variance
+       Chaos: All weapons will roll a random stat modifier."""
     display_name = "Randomize Weapon Stats"
     option_normal = 0
     option_consistent = 1

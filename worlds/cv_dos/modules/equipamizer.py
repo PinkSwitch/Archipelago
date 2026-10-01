@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from ..Options import RandomWeaponAttributes, RandomWeaponStats
 import struct
+from .text_builder import text_encoder
 
 
 @dataclass
@@ -40,6 +41,27 @@ element_flags = {
 }
 
 base_address = 0x0209C34C
+
+mod_abbreviations = {
+    "Heavy": "Hv",
+    "Light": "Lt",
+    "Spectral": "Sp",
+    "Thorned": "Th"
+}
+
+element_abbreviations = {
+    "Strike": "Stk",
+    "Stab": "Stb",
+    "Slash": "Sls",
+    "Fire": "Fir",
+    "Ice": "Ice",
+    "Lightning": "Lit",
+    "Dark": "Drk",
+    "Holy": "Hly",
+    "Poison": "Psn",
+    "Curse": "Crs",
+    "Petrify": "Stn"
+}
 
 
 def apply_weapon_randomization(world, rom):
@@ -136,39 +158,60 @@ def apply_weapon_randomization(world, rom):
         "Whip": DoSWeapon(0x3C, "Strike", 0x1E, "Whip")
     }
 
+    saved_elements = {}
+    saved_percents = {}
+    text_address = 0x02228DD0
+
     for weapon in weapons_list:
         data = weapons_list[weapon]
         id_num = list(weapons_list).index(weapon)
+        rolled_subel = False
+        rolled_element = False
+        rolled_mod = False
+        name_mod = ""
+
         if not id_num:
             continue  # Don't randomize the Fists
         name = weapon
 
         if world.options.randomize_weapon_stats != RandomWeaponStats.option_normal:
-            stat_mod = world.random.randrange(-5, 5)
-            stat_percent = world.random.randint(stat_mod * 10, (stat_mod * 10) + 10)  # Mod is used as % range
+            if world.options.randomize_weapon_stats == RandomWeaponStats.option_consistent:
+                if data.type not in saved_percents:
+                    stat_percent = int(world.random.triangular(-50, 50))
+                    saved_percents[data.type] = stat_percent
+                else:
+                    stat_percent = saved_percents[data.type] + world.random.randint(-5, 5)  # Add 5% + or - variance
+            else:
+                stat_percent = int(world.random.triangular(-50, 50))
+
+            if stat_percent in range(-50, -35):
+                name_mod = "--"
+            elif stat_percent in range(-35, -20):
+                name_mod = "-"
+            elif stat_percent in range(19, 36):
+                name_mod = "+"
+            elif stat_percent in range(35, 51):
+                name_mod = "++"
+
             data.atk = apply_num_as_percent(data.atk, stat_percent)
-            if stat_mod in range(-5, -3): # -5, -4
-                mod_name = "--"
-            elif stat_mod in range(-4, -2): # -4, -3
-                mod_name = "-"
-            elif stat_mod in range(3, 5):  # 3, 4
-                mod_name = "+"
-            elif stat_mod in range(4, 6):  # 4, 5
-                mod_name = "++"
-            else:  # -1, 0, 1
-                mod_name = ""
-            name += mod_name
 
         if world.options.randomize_weapon_attribute != RandomWeaponAttributes.option_normal:
             if world.options.randomize_weapon_attribute == RandomWeaponAttributes.option_consistent:
-                print("uh oh...")
+                if data.type not in saved_elements:
+                    chosen_element = world.random.choice(["Strike", "Stab", "Slash"])
+                    saved_elements[data.type] = chosen_element
+                    data.element = chosen_element
+                else:
+                    data.element = saved_elements[data.type]  # If the type was logged, use it
             else:
                 data.element = world.random.choice(["Strike", "Stab", "Slash"])
+            rolled_element = True
 
         if world.options.randomize_weapon_properties:
             chance = world.random.randint(0, 100)
             if chance < 15:  # 15% chance for a secondary element
                 element = world.random.choice(sub_elements)
+                rolled_subel = True
             else:
                 element = "None"
             data.sub_element = element
@@ -186,6 +229,7 @@ def apply_weapon_randomization(world, rom):
                 if weapon in ["Valmanway", "Nunchakus"]:
                     possible_mods.remove("Spectral")  # These weapons always have this property
                 data.modifier = world.random.choice(possible_mods)
+                rolled_mod = True
         if data.modifier == "Thorned":
             data.frames = data.frames // 2
         elif data.modifier == "Spectral":
@@ -199,11 +243,25 @@ def apply_weapon_randomization(world, rom):
         rom.write_to_file(address + 0x17, "arm9", bytearray([data.frames]))
         rom.write_to_file(address + 0x10, "arm9", struct.pack("I", element_data))
         rom.write_to_file(address + 0x09, "arm9", bytearray([modifier_list.index(data.modifier)]))
-        print(f"{name} is {data.element} + {data.sub_element}, {data.modifier}")
+        if rolled_element:
+            name = f"{element_abbreviations[data.element]}" + name
+        if rolled_subel:
+            name = f"{element_abbreviations[data.sub_element]}" + name
+
+        if rolled_mod:
+            name = name + mod_abbreviations[data.modifier]
+
+        name = name + name_mod
+        encoded_name = [0x01, 0x00]
+        encoded_name += text_encoder(name)
+        encoded_name += [0xEA, 0x01]
+        rom.write_to_file(text_address, "overlay_0", bytearray(encoded_name))
+        rom.write_to_file(0x0222F438 + (4 * id_num), struct.pack("I", text_address))  # Update the item's pointer
+        text_address += len(encoded_name)  # Update the address for the next iteration
 
 
 def apply_weapon_properties(rom):
-    for i in range(0x4E):
+    for i in range(0x4F):
         address = base_address + (0x1C * i)
         mod = rom.read_from_file(address + 0x09, "arm9", 1)
         properties = struct.unpack("H", rom.read_from_file(address + 0x18, "arm9", 2))
@@ -212,7 +270,7 @@ def apply_weapon_properties(rom):
         elif mod == 2:  # Light
             properties &= 0x01
         elif mod == 4:  # Spectral
-            properties |= 0x0802
+            properties |= 0x0248
         rom.write_to_file(address + 0x18, "arm9", struct.pack("H", properties))
         rom.write_to_file(address + 0x09, "arm9", bytearray([0x00]))  # Zero out the property byte
 
@@ -223,4 +281,4 @@ def apply_num_as_percent(base, factor):
     return value
 
 
-# TODO! Stat mods, consistency
+# TODO! write name
