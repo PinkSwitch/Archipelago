@@ -104,11 +104,6 @@ def write_goal_triggers(world, rom):
                     condition_text += f"-{boss_text[flag]}\n"
         string_array = [0x01, 0x00, 0xE7, 0x04, 0xE3, 0x18]  # Initialize the string + use Hammer's data
         string_array += text_encoder(condition_text)
-        for char in condition_text:
-            if isinstance(dawn_text_map[char], list):
-                string_array.extend(dawn_text_map[char])
-            else:
-                string_array.append(dawn_text_map[char])
 
         if string_array[len(string_array) - 1] != 0xE9:
             string_array.append(0xE5)  # Add a button press to close out the text
