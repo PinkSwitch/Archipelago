@@ -297,6 +297,3 @@ def apply_num_as_percent(base, factor):
     percent = 100 + factor
     value = int((percent / 100) * base)
     return value
-
-
-#  TODO! Fix heavy tomahawk, what happened to it

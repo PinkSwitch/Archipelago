@@ -3129,6 +3129,26 @@ push r0
 .db 0x00
 .dh 0x0000
 .dh 0x0007 ; Gergoth door
+
+.dh 0x0000
+.dh 0x0000
+.db 0x00
+.db 0x06 ; Hider
+.db 0x07 ; Gergoth flag
+.db 0x00
+.dh 0x0000 ; Boss flag
+.dh 0x0000 ; Despawn if not set
+
+
+;Button. Triggers the tower floors on/off.
+.dh 0x00B0
+.dh 0x008C
+.db 0x00
+.db 0x02
+.db 0x28 ; Chapel button
+.db 0x00
+.dh 0x0000 
+.dh 0x0044 ; Flag for the tower, (020F7188, 0x10)
 .dw 0x7FFF7FFF
 ;;;;;;;;;;;;;;;;;;;;;;;
 @ExtEnt_GardenConDisplay:

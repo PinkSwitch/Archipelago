@@ -125,6 +125,9 @@ def randomize_bosses(world):
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
 
+    boss_pool.remove("Flying Armor")  # TODO! Testing
+    world.boss_slots["Lost Village"].new_boss = "Flying Armor"
+
     for boss in boss_pool:
         valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
         if boss in ["Puppet Master", "Rahab"]:
@@ -357,6 +360,8 @@ def write_bosses(world, rom):
             "scaling_factor"
         ]
         for index, stat in enumerate(stat_table):
+            continue
+
             stat_name = stat_list[index]
             new_stat = getattr(boss_stats[slot.old_boss], stat_list[index])  # TODO! Fix/revert
 
@@ -368,7 +373,7 @@ def write_bosses(world, rom):
             else:  # HP, MP, EXP
                 new_stat = min(new_stat, 0xFFFF)
                 rom.write_to_file(address + stat_offsets[index], "arm9", struct.pack("H", new_stat))
-            print(f"! For {boss} at {room}, has {new_stat} {stat_list[index]}, scaled from {stat}")
+            #print(f"! For {boss} at {room}, has {new_stat} {stat_list[index]}, scaled from {stat}")
 
         for pointer in data.seal_index_pointers:  # We change the Seal index instead of the Seal ID so Boss Doors can exist independently
             if pointer:
