@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from ..Options import RandomWeaponAttributes, RandomWeaponStats
 import struct
-from .text_builder import text_encoder
+from .text_builder import text_encoder, calculate_text_width
 
 
 @dataclass
@@ -256,9 +256,11 @@ def apply_weapon_randomization(world, rom):
             name = name + mod_abbreviations[data.modifier]
 
         name = name + name_mod
-        while len(name) > 19:
+        while calculate_text_width(name) > 98:
             if " " in name:
                 name = name.replace(" ", "")
+            elif " " in weapon:
+                name = name.replace(weapon.split(" ")[1], "")
             elif "a" in name:
                 name = name.replace("a", "")
             elif "e" in name:

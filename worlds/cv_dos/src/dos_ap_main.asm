@@ -2780,6 +2780,16 @@ bl @GetItemFromSpecial
     ldrb r1, [r0]
     and r1, r1, 0xFD ; Get rid of the InBoss flag
     strb r1, [r0]
+    ldr r0, = 0x020F7188
+    ldrh r1, [r0]
+    tst r1, 0x0100
+    bne @@SkipEvent
+    orr r1, r1, 0x100
+    strh r1, [r0]
+
+    ldr r0, = @RamFlag_InBossEvt
+    mov r1, 1
+    strb r1, [r0]
 @@SkipEvent:
     pop r0,r1
     bx lr
@@ -2814,6 +2824,10 @@ bl @GetItemFromSpecial
     b 0x021CA748
 .pool
 
+@RamFlag_InBossEvt:
+    .db 0x00
+.align 4
+
 @DimitriiEvent_Update:
     push r0,r1
     ldr r0, = @GameFlag_ThroneIsShuffled
@@ -2828,6 +2842,17 @@ bl @GetItemFromSpecial
     ldrb r1, [r0]
     and r1, r1, 0xFD ; Get rid of the InBoss flag
     strb r1, [r0]
+    ldr r0, = 0x020F7188
+    ldrh r1, [r0]
+    tst r1, 0x80 ; Dimitrii event flag
+    bne @@SkipEvent
+    orr r1, r1, 0x80
+
+    strh r1, [r0]
+    ldr r0, =@RamFlag_InBossEvt
+    mov r1, 1
+    strb r1, [r0]
+
 @@SkipEvent:
     pop r0,r1
     bx lr
@@ -3842,10 +3867,22 @@ push r0
     ldrh r0, [r4, 0x12]
     b 0x021C3DA4
 @@SkipGiveEXP:
+    push r1
+    ldr r0, = @RamFlag_InBossEvt
+    ldrb r1, [r0]
+    cmp r1, 0
+    beq @@SkipDimDari
+    mov r1, 0
+    strb r1, [r0]
+    pop r1
+    b @@ForceLV
+@@SkipDimDari:
+    pop r1
     ldr r0, = 0x020F6DFC
     ldr r0, [r0]
     tst r0, 0x02
     beq 0x021C3E2C
+@@ForceLV:
     ldr r0, = 0x020F740C
     bl 0x021FFC58
     b 0x021C3DA4
