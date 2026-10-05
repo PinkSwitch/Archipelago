@@ -10,7 +10,7 @@ from .Options import PoROptions, por_option_groups
 from .static_location_data import location_ids, get_location_groups
 from .generator_main import (CVPoRItem, generate_early, create_regions, fill_slot_data,
                              modify_multidata, generate_output, create_items, get_filler_item_name, set_rules,
-                             write_spoiler_header, extend_hint_information, create_item)
+                             write_spoiler_header, extend_hint_information, create_item, connect_entrances)
 from .Client import PoRClient
 
 
@@ -55,7 +55,6 @@ class PoRWorld(World):
     item_name_groups = get_item_names_per_category()
     web = PoRWeb()
     settings: typing.ClassVar[PoRSettings]
-    # topology_present = True
     ut_can_gen_without_yaml = True
 
     location_name_groups = get_location_groups()
@@ -72,6 +71,7 @@ class PoRWorld(World):
     set_rules = set_rules
     write_spoiler_header = write_spoiler_header
     extend_hint_information = extend_hint_information
+    connect_entrances = connect_entrances
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
@@ -88,6 +88,7 @@ class PoRWorld(World):
         self.vanilla_quests = []
         self.important_quests = set()
         self.quest_requirements = set()
+        self.connected_doors = {}
 
         self.subweapon_filler_table = [
             "Axe Subweapon",

@@ -57,6 +57,15 @@ def create_regions(world) -> None:
     place_static_items(world)
 
 
+def connect_entrances(world) -> None:
+    from .modules.area_shuffle import shuffle_doors, set_ut_regions
+    if world.connected_doors:
+        set_ut_regions(world)
+
+    if world.options.randomize_transition_doors and not world.connected_doors:
+        shuffle_doors(world)
+
+
 def create_items(world) -> None:
     from .modules.quest_data import cakes_notforsale
     force_create_blacklist = ["Gold Ring", "Knife Subweapon", "Cross", "Holy Water", "Bible",
@@ -196,6 +205,7 @@ def generate_output(world, output_directory: str) -> None:
 
 
 def write_spoiler_header(world, spoiler_handle: TextIO) -> None:
+    from .modules.area_shuffle import door_data
     if world.options.portrait_shuffle:
         spoiler_handle.write("""
 Portraits:
@@ -208,6 +218,14 @@ Portraits:
         if world.options.portrait_shuffle == PortraitShuffle.option_add_nest_of_evil:
             spoiler_handle.write(f""" {portrait_data["Nest of Evil"].spoiler_map_name}: {world.portrait_connections["Nest of Evil"]}
 """)
+
+    if world.options.randomize_transition_doors:
+        spoiler_handle.write("\nCastle Entrances:")
+        for door in world.connected_doors:
+            if not door_data[door[0]].is_left_facing:
+                continue
+            spoiler_handle.write(f"\n   {door_data[door[0]].entrance_name} <=> {door_data[door[1]].entrance_name}")
+    spoiler_handle.write("\n")
 
 
 def modify_multidata(world, multidata: dict) -> None:

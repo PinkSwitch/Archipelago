@@ -8,6 +8,7 @@ from .static_location_data import location_data_table
 from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
 from .modules.text_builder import text_encoder, calculate_text_width
 from .modules.quest_data import quest_data
+from .modules.area_shuffle import patch_castle_connections
 from .Options import NestofEvil
 from BaseClasses import ItemClassification
 from .Items import item_table
@@ -258,6 +259,11 @@ def patch_rom(world, rom, code_patch):
     #  Encode the number of portraits for menu display
     rom.write_to_file(0x0222B814, "overlay_1", bytearray(text_encoder(str(world.options.nest_portraits.value))))
     #####################################
+    if world.options.randomize_transition_doors:
+        patch_castle_connections(world, rom)
+    ############
+
+
     #  Sanctuary hint
     try:
         sanctuary_location = world.multiworld.find_item("Sanctuary", world.player)

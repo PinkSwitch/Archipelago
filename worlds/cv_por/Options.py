@@ -223,6 +223,11 @@ class OpenThrone(Toggle):
     display_name = "Open Throne"
 
 
+class ShuffleCastleConnections(Toggle):
+    """Randomizes where the area transition doors in the Castle lead to."""
+    display_name = "Randomize Doors"
+
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -255,6 +260,7 @@ class PoROptions(PerGameCommonOptions):
     shuffle_enemy_drops: ShuffleEnemyDrops
     randomize_shop_items: ShopShuffle
     open_throne: OpenThrone
+    randomize_transition_doors: ShuffleCastleConnections
 
 
 por_option_groups = [
@@ -302,7 +308,8 @@ por_option_groups = [
     ]),
 
     OptionGroup("Area Randomization", [
-        PortraitShuffle
+        PortraitShuffle,
+        ShuffleCastleConnections
 
     ]),
 

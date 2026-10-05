@@ -3,7 +3,8 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits, StartWithCallCube, AddBossKeys, ExcludedBossKeys
+from .Options import (StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits,
+                      StartWithCallCube, AddBossKeys, ExcludedBossKeys)
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -21,6 +22,7 @@ region_list = [
     "Entrance - Underground Passage",  # The tunnel leading to the Nest of Evil portrait
     "Entrance - Hub Painting Room",  # The City of Haze portrait
     "Entrance - Upper Area",  # The upper route from the statue room
+    "Entrance - Iron Block Door",  # Region for the iron pusblock door
 
     "Buried Chamber",  # The ENTIRE buried Chamber, since it all falls under the same logic
 
@@ -31,6 +33,8 @@ region_list = [
     "Great Stairway - Upper",  # The towers to the left of the staircase rooms
     "Great Stairway - Central Painting Area",  # The painting but also the secret room with the nun robes
     "Great Stairway - Underground Painting",  # The sandy graves portrait room
+    "Great Stairway - Pipe Door",
+    "Great Stairway - Push Block Door",
 
     "Tower of Death - Bottom",
     "Tower of Death - Motorcycles",
@@ -41,6 +45,7 @@ region_list = [
     "Tower of Death - Ascent",
     "Tower of Death - Second Gear Room",
     "Tower of Death - Top of the Tower",
+    "Tower of Death - Elevator Exit",
     
     "Master's Keep - Bridge",
     "Master's Keep - Lower",
@@ -128,63 +133,73 @@ def connect_regions(world):
                                                   "Entrance - Underground Passage": Has("Portrait Clear", FromOption(NestPortraits))})
 
     world.get_region("Entrance - Hub Painting Room").add_exits(["Entrance - Hub", world.portrait_connections["City of Haze"]],
-                                                              {"Entrance - Hub": is_smol})
+                                                               {"Entrance - Hub": is_smol})
 
     world.get_region("Entrance - Underground Passage").add_exits(["Entrance - Hub", world.portrait_connections["Nest of Evil"]],
                                                                  {"Entrance - Hub": small_uppies})
 
-    world.get_region("Entrance - Upper Area").add_exits(["Entrance - Hub", "Great Stairway - Entrance Connector"])  # Stairway connector
+    world.get_region("Entrance - Upper Area").add_exits({"Entrance - Hub": None, "Great Stairway - Entrance Connector": "Sec01Rm14"})  # Stairway connector
 
     world.get_region("Entrance - Behemoth Area").add_exits(["Entrance - Hub", "Entrance - Post Behemoth"],
-                                                              {"Entrance - Post Behemoth": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains"))})
+                                                           {"Entrance - Post Behemoth": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains"))})
 
-    world.get_region("Entrance - Post Behemoth").add_exits(["Entrance - Behemoth Area", "Great Stairway - Lower", "Buried Chamber"],
-                                                              {"Great Stairway - Lower": strongies,
-                                                              "Entrance - Behemoth Area": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains"))})
+    world.get_region("Entrance - Post Behemoth").add_exits({"Entrance - Behemoth Area": None, "Entrance - Iron Block Door": None, "Buried Chamber": "Sec00Rm0A"},
+                                                           {"Entrance - Iron Block Door": strongies,
+                                                            "Entrance - Behemoth Area": (Has("Colosseum Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Colosseum Key", "contains"))})
 
-    world.get_region("Buried Chamber").add_exits(["Entrance - Post Behemoth", "Great Stairway - Lower"])
+    world.get_region("Entrance - Iron Block Door").add_exits({"Entrance - Post Behemoth": None, "Great Stairway - Lower": "Sec00Rm0B"},
+                                                             {"Entrance - Post Behemoth": strongies})
 
-    world.get_region("Great Stairway - Lower").add_exits(["Entrance - Post Behemoth", "Great Stairway - Staircases", "Buried Chamber", "Great Stairway - Post Keremet"],
-                                                          {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies,
-                                                          "Entrance - Post Behemoth": strongies,
+    world.get_region("Buried Chamber").add_exits({"Entrance - Post Behemoth": "Sec02Rm03", "Great Stairway - Lower": "Sec02Rm1C"})
+
+    world.get_region("Great Stairway - Lower").add_exits({"Entrance - Iron Block Door": "Sec03Rm00", "Great Stairway - Staircases": None, "Buried Chamber": "Sec03Rm06", "Great Stairway - Post Keremet": None},
+                                                         {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies,
                                                           "Great Stairway - Post Keremet": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains"))})
 
     world.get_region("Great Stairway - Post Keremet").add_exits(["Great Stairway - Lower", "Great Stairway - Staircases"],
-                                                                 {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")),
-                                                                  "Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
+                                                                {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")),
+                                                                 "Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
 
-    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Tower of Death - Bottom", "Great Stairway - Upper", "Great Stairway - Post Keremet"],
-                                                          {"Tower of Death - Bottom": strongies,
-                                                           "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
+    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Great Stairway - Push Block Door", "Great Stairway - Upper", "Great Stairway - Post Keremet"],
+                                                              {"Great Stairway - Push Block Door": strongies,
+                                                               "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
+
+    world.get_region("Great Stairway - Push Block Door").connect(world.get_region("Tower of Death - Bottom"), "Sec03Rm0C")
 
     world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
 
-    world.get_region("Great Stairway - Entrance Connector").add_exits(["Great Stairway - Staircases", "Entrance - Upper Area", "Great Stairway - Upper"],
-                                                          {"Great Stairway - Upper": (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube) | medium_uppies | (HasAll("Acrobat Cube", "Speed Up") & has_call_cube)})
+    world.get_region("Great Stairway - Entrance Connector").add_exits({"Great Stairway - Staircases": None, "Entrance - Upper Area": "Sec06Rm00", "Great Stairway - Upper": None},
+                                                                      {"Great Stairway - Upper": (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube) | medium_uppies | (HasAll("Acrobat Cube", "Speed Up") & has_call_cube)})
 
-    world.get_region("Great Stairway - Upper").add_exits(["Great Stairway - Staircases", "Great Stairway - Entrance Connector", "Tower of Death - Belt Area", "Great Stairway - Central Painting Area"],
-                                                          {"Tower of Death - Belt Area": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
-                                                           "Great Stairway - Central Painting Area": small_uppies})
+    world.get_region("Great Stairway - Upper").add_exits(["Great Stairway - Staircases", "Great Stairway - Entrance Connector", "Great Stairway - Pipe Door", "Great Stairway - Central Painting Area"],
+                                                         {"Great Stairway - Pipe Door": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
+                                                          "Great Stairway - Central Painting Area": small_uppies})
+
+    world.get_region("Great Stairway - Pipe Door").add_exits({"Great Stairway - Upper": None, "Tower of Death - Belt Area": "Sec06Rm0C"},
+                                                             {"Great Stairway - Upper": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
+
 
     world.get_region("Great Stairway - Central Painting Area").add_exits([world.portrait_connections["Nation of Fools"], "Great Stairway - Upper"])
 
-    world.get_region("Tower of Death - Bottom").add_exits(["Tower of Death - First Gear Room", "Tower of Death - Motorcycles"],
+    world.get_region("Tower of Death - Bottom").add_exits({"Tower of Death - First Gear Room": None, "Tower of Death - Motorcycles": None, "Great Stairway - Push Block Door": "Sec07Rm17"},
                                                           {"Tower of Death - Motorcycles": Has("Cog") & (Has("Tower Base Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Tower Base Key", "contains")),
                                                            "Tower of Death - First Gear Room": small_uppies})
 
     world.get_region("Tower of Death - Motorcycles").add_exits(["Tower of Death - Bottom", "Tower of Death - Belt Area"],
-                                                          {"Tower of Death - Belt Area": Has("Wait Cube") & has_call_cube & has_change_cube})
+                                                               {"Tower of Death - Belt Area": Has("Wait Cube") & has_call_cube & has_change_cube})
 
-    world.get_region("Tower of Death - Belt Area").add_exits(["Tower of Death - Painting Room", "Great Stairway - Upper", "Master's Keep - Bridge"],
-                                                          {"Great Stairway - Upper": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
+    world.get_region("Tower of Death - Belt Area").add_exits({"Tower of Death - Painting Room": None, "Great Stairway - Pipe Door": "Sec08Rm0A", "Master's Keep - Bridge": "Sec08Rm07"})
 
     world.get_region("Tower of Death - Painting Room").add_exits(["Tower of Death - Belt Area", world.portrait_connections["Forest of Doom"]], {
                                                                   world.portrait_connections["Forest of Doom"]: Has("Stella's Locket")
     })
 
-    world.get_region("Tower of Death - Elevator Room").add_exits(["Master's Keep - Bridge", "Tower of Death - Top of the Tower", "Tower of Death - First Gear Room", "Master's Keep - Lower"],
-                                                                  {"Master's Keep - Lower": small_uppies & Has("Tower Elevator Active"),
-                                                                   "Tower of Death - Top of the Tower": big_uppies})
+    world.get_region("Tower of Death - Elevator Room").add_exits({"Master's Keep - Bridge": "Sec07Rm1B", "Tower of Death - Top of the Tower": None, "Tower of Death - First Gear Room": None, "Tower of Death - Elevator Exit": None},
+                                                                 {"Tower of Death - Elevator Exit": small_uppies & Has("Tower Elevator Active"),
+                                                                  "Tower of Death - Top of the Tower": big_uppies})
+
+    world.get_region("Tower of Death - Elevator Exit").add_exits({"Master's Keep - Lower": "Sec07Rm19", "Tower of Death - Elevator Room": None},
+                                                                 {"Tower of Death - Elevator Room": Has("Tower Elevator Active")})
 
     world.get_region("Tower of Death - First Gear Room").add_exits(["Tower of Death - Bottom", "Tower of Death - Ascent"],
                                                                    {"Tower of Death - Ascent": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
@@ -197,21 +212,21 @@ def connect_regions(world):
                                                                     {"Tower of Death - Top of the Tower": (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains"))})
 
     world.get_region("Tower of Death - Top of the Tower").add_exits(["Tower of Death - Second Gear Room", "Tower of Death - Elevator Room"],
-                                                                     {"Tower of Death - Second Gear Room": (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains"))})
+                                                                    {"Tower of Death - Second Gear Room": (Has("Clock Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Clock Key", "contains"))})
 
-    world.get_region("Master's Keep - Bridge").add_exits(["Tower of Death - Belt Area", "Tower of Death - Elevator Room"])
 
-    world.get_region("Master's Keep - Lower").add_exits(["Tower of Death - Elevator Room", "Master's Keep - Bridge", "Master's Keep - Main"],
-                                                         {"Tower of Death - Elevator Room": Has("Tower Elevator Active"),
-                                                          "Master's Keep - Main": medium_uppies | (small_uppies & Has("Puppet Master"))})
+    world.get_region("Master's Keep - Bridge").add_exits({"Tower of Death - Belt Area": "Sec0BRm03", "Tower of Death - Elevator Room": "Sec0BRm05"})
+
+    world.get_region("Master's Keep - Lower").add_exits({"Tower of Death - Elevator Exit": "Sec0ARm13", "Master's Keep - Bridge": None, "Master's Keep - Main": None},
+                                                        {"Master's Keep - Main": medium_uppies | (small_uppies & Has("Puppet Master"))})
 
     world.get_region("Master's Keep - Main").add_exits(["Master's Keep - Lower", "Master's Keep - Upper Quarters"],
-                                                         {"Master's Keep - Upper Quarters": medium_uppies | (small_uppies & Has("Puppet Master"))})
+                                                       {"Master's Keep - Upper Quarters": medium_uppies | (small_uppies & Has("Puppet Master"))})
 
     world.get_region("Master's Keep - Upper Quarters").add_exits(["Master's Keep - Portrait Room", "Master's Keep - Main"],
-                                                         {"Master's Keep - Portrait Room": (Has("Sanctuary") & (Has("Skill Cube") | (has_change_cube & has_call_cube))) & (
-                                                            Has("Gallery Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Gallery Key", "contains")
-                                                         )})
+                                                                 {"Master's Keep - Portrait Room": (Has("Sanctuary") & (Has("Skill Cube") | (has_change_cube & has_call_cube))) & (
+                                                                         Has("Gallery Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Gallery Key", "contains")
+                                                                 )})
 
     world.get_region("Master's Keep - Portrait Room").add_exits([world.portrait_connections["Forgotten City"], world.portrait_connections["Burnt Paradise"], world.portrait_connections["Dark Academy"], world.portrait_connections["13th Street"]],
                                                          {world.portrait_connections["13th Street"]: CanReachLocation(f'{world.portrait_connections["Forgotten City"]}: Boss Room'),
