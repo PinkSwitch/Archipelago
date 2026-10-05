@@ -150,6 +150,11 @@ def write_bosses(world, rom):
     rom.write_to_file(0x20AEB69, "arm9", bytearray([0x00]))  # Delete the Malachi in Dmitrii's room used for the pre-boss cutscene
     rom.write_to_file(0x2308B58, "overlay_41", bytearray([0x01]))  # Flag that Boss Shuffle is on, triggers some changes in the ROM
     rom.write_to_file(0x20AEB75, "arm9", bytearray([0x00]))  # Hider for Dmitrii's Quetzalcoatl
+    if world.boss_slots["Dark Chapel"].new_boss in ["Dmitrii", "Dario"]:
+        rom.write_to_file(0x02308E48, "overlay_41", bytearray([0x01]))
+
+    if world.boss_slots["Garden of Madness"].new_boss in ["Dmitrii", "Dario"]:
+        rom.write_to_file(0x02308E49, "overlay_41", bytearray([0x01]))
 
     if world.boss_slots["Demon Guest House"].new_boss != "Puppet Master":
         # Puppet master's wall is too thick for normal bosses to function, so we move it over
