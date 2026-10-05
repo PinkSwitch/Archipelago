@@ -154,6 +154,9 @@ def patch_rom(world, rom, code_patch):
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
+
+    # if world.options.early_castle_access:
+    #  for i in range(3):
     
     goal_requirements = 0
 

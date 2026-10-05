@@ -5,11 +5,18 @@ from .Options import NestofEvil
 
 
 def setup_game(world):
+    from .generator_main import create_item_as_event
     setup_quests(world)
     portrait_shuffle(world)
     world.options.removed_boss_keys.value = {value.title() for value in world.options.removed_boss_keys.value}
     if world.portrait_connections["Nest of Evil"] != "Nest of Evil" and world.options.nest_portraits.value == 8:
         world.options.nest_portraits.value = 7  # This would be otherwise impossible, so lower the count to 7
+
+    if world.options.start_with_change_cube:
+        world.multiworld.push_precollected(create_item_as_event(world, "Change Cube"))
+
+    if world.options.start_with_call_cube:
+        world.multiworld.push_precollected(create_item_as_event(world, "Call Cube"))
 
 
 def place_static_items(world):

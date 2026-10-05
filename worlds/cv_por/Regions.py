@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocation
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
-from .Options import (StartWithChangeCube, NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits,
-                      StartWithCallCube, AddBossKeys, ExcludedBossKeys)
+from .Options import (NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits,
+                      AddBossKeys, ExcludedBossKeys)
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -88,12 +88,10 @@ region_list = [
     "Nest of Evil"
 ]
 
-has_call_cube = Has("Call Cube", options=[OptionFilter(StartWithCallCube, 0)], filtered_resolution=True)
-has_change_cube = Has("Change Cube", options=[OptionFilter(StartWithChangeCube, 0)], filtered_resolution=True)
-strongies = Has("Strength Glove") & ((Has("Push Cube") & has_call_cube) | OptionFilter(StrongerGlove, 1))
+strongies = Has("Strength Glove") & (HasAll("Push Cube", "Call Cube") | OptionFilter(StrongerGlove, 1))
 
-can_cast_spell = Has("Skill Cube") | has_change_cube
-small_uppies = HasAny("Stone of Flight", "Griffon Wing") | (Has("Acrobat Cube") & has_call_cube) | (can_cast_spell & Has("Owl Morph"))
+can_cast_spell = HasAny("Change Cube", "Skill Cube")
+small_uppies = HasAny("Stone of Flight", "Griffon Wing") | (HasAll("Acrobat Cube", "Call Cube")) | (can_cast_spell & Has("Owl Morph"))
 medium_uppies = HasAny("Stone of Flight", "Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
 big_uppies = Has("Griffon Wing") | (can_cast_spell & Has("Owl Morph"))
 is_smol = Has("Lizard Tail") | (can_cast_spell & Has("Owl Morph")) | (can_cast_spell & Has("Toad Morph"))
@@ -129,7 +127,7 @@ def connect_regions(world):
     world.get_region("Entrance - Hub").add_exits(["Entrance - Wind's Room", "Entrance - Behemoth Area", "Entrance - Hub Painting Room", "Entrance - Upper Area", "Entrance - Underground Passage"],
                                                  {"Entrance - Behemoth Area": small_uppies,
                                                  "Entrance - Hub Painting Room": is_smol | Has("Puppet Master"),
-                                                  "Entrance - Upper Area": (HasAll("Acrobat Cube", "Stone of Flight") & has_call_cube) | big_uppies,
+                                                  "Entrance - Upper Area": HasAll("Acrobat Cube", "Stone of Flight", "Call Cube") | big_uppies,
                                                   "Entrance - Underground Passage": Has("Portrait Clear", FromOption(NestPortraits))})
 
     world.get_region("Entrance - Hub Painting Room").add_exits(["Entrance - Hub", world.portrait_connections["City of Haze"]],
@@ -169,7 +167,7 @@ def connect_regions(world):
     world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
 
     world.get_region("Great Stairway - Entrance Connector").add_exits({"Great Stairway - Staircases": None, "Entrance - Upper Area": "Sec06Rm00", "Great Stairway - Upper": None},
-                                                                      {"Great Stairway - Upper": (HasAll("Acrobat Cube", "Puppet Master") & has_call_cube) | medium_uppies | (HasAll("Acrobat Cube", "Speed Up") & has_call_cube)})
+                                                                      {"Great Stairway - Upper": HasAll("Acrobat Cube", "Puppet Master", "Call Cube") | medium_uppies | HasAll("Acrobat Cube", "Speed Up", "Call Cube")})
 
     world.get_region("Great Stairway - Upper").add_exits(["Great Stairway - Staircases", "Great Stairway - Entrance Connector", "Great Stairway - Pipe Door", "Great Stairway - Central Painting Area"],
                                                          {"Great Stairway - Pipe Door": can_cast_spell & HasAny("Owl Morph", "Toad Morph"),
@@ -186,7 +184,7 @@ def connect_regions(world):
                                                            "Tower of Death - First Gear Room": small_uppies})
 
     world.get_region("Tower of Death - Motorcycles").add_exits(["Tower of Death - Bottom", "Tower of Death - Belt Area"],
-                                                               {"Tower of Death - Belt Area": Has("Wait Cube") & has_call_cube & has_change_cube})
+                                                               {"Tower of Death - Belt Area": HasAll("Wait Cube", "Call Cube", "Change Cube")})
 
     world.get_region("Tower of Death - Belt Area").add_exits({"Tower of Death - Painting Room": None, "Great Stairway - Pipe Door": "Sec08Rm0A", "Master's Keep - Bridge": "Sec08Rm07"})
 
@@ -224,7 +222,7 @@ def connect_regions(world):
                                                        {"Master's Keep - Upper Quarters": medium_uppies | (small_uppies & Has("Puppet Master"))})
 
     world.get_region("Master's Keep - Upper Quarters").add_exits(["Master's Keep - Portrait Room", "Master's Keep - Main"],
-                                                                 {"Master's Keep - Portrait Room": (Has("Sanctuary") & (Has("Skill Cube") | (has_change_cube & has_call_cube))) & (
+                                                                 {"Master's Keep - Portrait Room": (Has("Sanctuary") & (Has("Skill Cube") | HasAll("Call Cube", "Change Cube"))) & (
                                                                          Has("Gallery Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Gallery Key", "contains")
                                                                  )})
 
@@ -233,7 +231,7 @@ def connect_regions(world):
                                                          world.portrait_connections["Burnt Paradise"]: CanReachLocation(f'{world.portrait_connections["Dark Academy"]}: Boss Room')})
                                                          
     world.get_region("City of Haze").add_exits(["City of Haze - East"],
-                                                         {"City of Haze - East": Has("Puppet Master") | (has_change_cube & has_call_cube)})
+                                                         {"City of Haze - East": Has("Puppet Master") | HasAll("Change Cube", "Call Cube")})
 
     world.get_region("City of Haze - East").add_exits(["City of Haze - Post-Boss"],
                                                       {"City of Haze - Post-Boss": (Has("City Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "City Key", "contains"))})
@@ -243,7 +241,7 @@ def connect_regions(world):
 
     world.get_region("Nation of Fools").add_exits(["Nation of Fools - Right Lower", "Nation of Fools - Main"],
                                                          {"Nation of Fools - Right Lower": small_uppies | Has("Puppet Master"),
-                                                          "Nation of Fools - Main": medium_uppies | (has_call_cube & HasAll("Acrobat Cube", "Puppet Master"))})
+                                                          "Nation of Fools - Main": medium_uppies | HasAll("Acrobat Cube", "Puppet Master", "Call Cube")})
 
     world.get_region("Nation of Fools - Right Lower").add_exits(["Nation of Fools - Right Lower Medium Room"],
                                                          {"Nation of Fools - Right Lower Medium Room": small_uppies})
@@ -267,10 +265,10 @@ def connect_regions(world):
                                                  {"Forgotten City - Inner": medium_uppies | Has("Puppet Master")})
 
     world.get_region("Forgotten City - Inner").add_exits(["Forgotten City - Inner Upper"],
-                                                            {"Forgotten City - Inner Upper": medium_uppies | (HasAll("Puppet Master", "Acrobat Cube") & has_call_cube)})
+                                                         {"Forgotten City - Inner Upper": medium_uppies | (HasAll("Puppet Master", "Acrobat Cube", "Call Cube"))})
 
     world.get_region("13th Street").add_exits(["13th Street - Main"],
-                                              {"13th Street - Main": HasAll("Strength Glove", "Push Cube") & has_call_cube})  # This one ACTUALLY needs all 3
+                                              {"13th Street - Main": HasAll("Strength Glove", "Push Cube", "Call Cube")})  # This one ACTUALLY needs all 3
 
     world.get_region("Burnt Paradise").add_exits(["Burnt Paradise - Entrance"],
                                                             {"Burnt Paradise - Entrance": small_uppies | Has("Puppet Master")})
