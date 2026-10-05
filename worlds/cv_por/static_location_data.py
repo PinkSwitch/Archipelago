@@ -316,7 +316,7 @@ location_data_table = {
     "The Throne Room: Above Throne Left": LocationInformation(0x022F19F8, "overlay_87"),
     "Sandy Grave: Boulder Room Tunnel": LocationInformation(0x023064EC, "overlay_92"),
     "City of Haze: Before Cart Room": LocationInformation(0x022F6D98, "overlay_94"),
-    "City of Haze: Underground Square Right": LocationInformation(0x02302B68, "overlay_95"),
+    "City of Haze: Underground Square Right": LocationInformation(0x02302B68, "overlay_95", True),
     "Sandy Grave: Upper Big Underground Top Right": LocationInformation(0x02306078, "overlay_92", True),
     "Nation of Fools: Bottom Corner Room": LocationInformation(0x023005F4, "overlay_96", True),
     "Nation of Fools: Mid-Right Corner Room": LocationInformation(0x02300438, "overlay_96", True),
