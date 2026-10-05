@@ -259,35 +259,39 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x0222B814, "overlay_1", bytearray(text_encoder(str(world.options.nest_portraits.value))))
     #####################################
     #  Sanctuary hint
-    sanctuary_location = world.multiworld.find_item("Sanctuary", world.player)
-    location_name_groups = world.multiworld.worlds[sanctuary_location.player].location_name_groups
-    possible_location_groups = [group_name for group_name, group_locations in location_name_groups.items()
-                                if sanctuary_location.name in group_locations and group_name != "Everywhere"]
-    if possible_location_groups:
-        area = world.random.choice(possible_location_groups)  # If the world has location groups, use a location group the check belongs to as the area hint
+    try:
+        sanctuary_location = world.multiworld.find_item("Sanctuary", world.player)
+    except StopIteration:  # If this hits, it means that Sanctuary isn't anywhere in the item pool
+        pass
     else:
-        area = sanctuary_location.parent_region.name  # Otherwise, display the region name
-
-    if sanctuary_location.player != world.player:
-        name = world.multiworld.get_player_name(sanctuary_location.player)
-        old_name = area
-        while calculate_text_width(area) >= 190:
-            area = area[:-1]
-        if area != old_name:
-            area += "..."  # This means the name had to be cutoff. Use these to show that it's been shortened
-
-        if area == "Menu":
-            hint_string = f"somewhere by {name}!"  # We don't want to say at [Player]'s menu
+        location_name_groups = world.multiworld.worlds[sanctuary_location.player].location_name_groups
+        possible_location_groups = [group_name for group_name, group_locations in location_name_groups.items()
+                                    if sanctuary_location.name in group_locations and group_name != "Everywhere"]
+        if possible_location_groups:
+            area = world.random.choice(possible_location_groups)  # If the world has location groups, use a location group the check belongs to as the area hint
         else:
-            hint_string = f"{name}'s\n{area}!"
-    else:
-        if area == "The Throne Room":
-            hint_string = "the Throne Room!"  # I'm a stickler for my the's
+            area = sanctuary_location.parent_region.name  # Otherwise, display the region name
+
+        if sanctuary_location.player != world.player:
+            name = world.multiworld.get_player_name(sanctuary_location.player)
+            old_name = area
+            while calculate_text_width(area) >= 190:
+                area = area[:-1]
+            if area != old_name:
+                area += "..."  # This means the name had to be cutoff. Use these to show that it's been shortened
+
+            if area == "Menu":
+                hint_string = f"somewhere by {name}!"  # We don't want to say at [Player]'s menu
+            else:
+                hint_string = f"{name}'s\n{area}!"
         else:
-            hint_string = f"the {area}!"
-    hint = text_encoder(hint_string)
-    hint.extend([0xE6, 0xE5, 0xE4, 0xEA])
-    rom.write_to_file(0x02222FFA, "overlay_2", bytearray(hint))
+            if area == "The Throne Room":
+                hint_string = "the Throne Room!"  # I'm a stickler for my the's
+            else:
+                hint_string = f"the {area}!"
+        hint = text_encoder(hint_string)
+        hint.extend([0xE6, 0xE5, 0xE4, 0xEA])
+        rom.write_to_file(0x02222FFA, "overlay_2", bytearray(hint))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
