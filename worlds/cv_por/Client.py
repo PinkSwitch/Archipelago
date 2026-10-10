@@ -201,7 +201,7 @@ class PoRClient(BizHawkClient):
             await ctx.send_msgs(
                 [{
                         "cmd": "Set",
-                        "key": "map_id",
+                        "key": f"cv_por_{ctx.team}_{ctx.slot}_map_id",
                         "default": 0,
                         "want_reply": True,
                         "operations": [{"operation": "replace", "value": map_id}],
@@ -211,7 +211,7 @@ class PoRClient(BizHawkClient):
         events = {
             # We don't really need everyone, just people who lock quests/portrait clears
             "ElevatorSwitch": (elevator_switch >> 4) & 1,
-            "Dullahan": (boss_death_flags >> 2) & 1,
+            "Dullahan": (boss_death_flags >> 1) & 1,
             "Keremet": (boss_death_flags >> 4) & 1,
             "Legion": (boss_death_flags >> 5) & 1,
             "Dagon": (boss_death_flags >> 6) & 1,
@@ -231,7 +231,7 @@ class PoRClient(BizHawkClient):
             if bool(seen) != (event in self.seen_events):
                 await ctx.send_msgs([{
                             "cmd": "Set",
-                            "key": f"{event}",
+                            "key": f"cv_por_{ctx.team}_{ctx.slot}_{event}",
                             "default": 0,
                             "want_reply": True,
                             "operations": [{"operation": "replace", "value": seen}],
