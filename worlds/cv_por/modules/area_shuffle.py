@@ -51,7 +51,7 @@ door_data = {
     "Sec03Rm06": DoorTransitionData(0x020E5D60, 0x020E5D70, 0x00, 0x00, "Great Stairway: Lower East Door", True),
     "Sec03Rm00": DoorTransitionData(0x020E5E10, 0x020E5DF0, 0x00, 0xC0, "Great Stairway: Lower West Door"),
     "Sec06Rm00": DoorTransitionData(0x020E69C8, 0x020E69E8, 0x00, 0x00, "Great Stairway: Ramparts West Door"),
-    "Sec06Rm0C": DoorTransitionData(0x020E6D48, 0x020E6D48, 0x00, 0x00, "Great Stairway: Pipe Door", True),
+    "Sec06Rm0C": DoorTransitionData(0x020E6D38, 0x020E6D48, 0x00, 0x00, "Great Stairway: Pipe Door", True),
     "Sec03Rm0C": DoorTransitionData(0x020E6180, 0x020E6190, 0x00, 0x00, "Great Stairway: Push Block Door", True),
 
     "Sec07Rm17": DoorTransitionData(0x020E7418, 0x020E7438, 0x00, 0x00, "Tower of Death: Tower Base Door"),

@@ -130,8 +130,8 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309188, "overlay_119", bytearray([world.options.open_throne.value]))
 
     if world.options.show_drop_rates:
-        rom.write_to_file(0x0205307C, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out glasses check
-        rom.write_to_file(0x02053798, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out glasses check
+        rom.write_to_file(0x0205307F, "arm9", bytearray([0xEA]))  # Force glasses on
+        rom.write_to_file(0x0205379B, "arm9", bytearray([0xEA]))  # Force glasses on
 
     rom.copy_in_file(0x128E0, 0x1392A, "overlay_79", 4)
     rom.copy_in_file(0x128E0, 0x13A2A, "overlay_79", 4)  # Platforms for the Statue room
@@ -161,7 +161,7 @@ def patch_rom(world, rom, code_patch):
 
     if world.options.subweapon_mastery_requirements:
         for i in range(0x27):
-            if i > 0x0A or i in [0x1E, 0x1F, 0x20, 0x21, 0x23, 0x24]:  # Subweapons that can't be mastered
+            if i < 0x0A or i in [0x1E, 0x1F, 0x20, 0x21, 0x23, 0x24]:  # Subweapons that can't be mastered
                 continue
 
             if world.options.subweapon_mastery_requirements == MasterySP.option_zero:
