@@ -9,7 +9,7 @@ from .modules.portrait_shuffle import write_portrait_data, adjust_portrait_gfx
 from .modules.text_builder import text_encoder, calculate_text_width
 from .modules.quest_data import quest_data
 from .modules.area_shuffle import patch_castle_connections
-from .Options import NestofEvil
+from .Options import NestofEvil, MasterySP
 from BaseClasses import ItemClassification
 from .Items import item_table
 from .game_data import boss_doors
@@ -129,6 +129,13 @@ def patch_rom(world, rom, code_patch):
     rom.write_to_file(0x02309187, "overlay_119", bytearray([world.options.death_link.value]))
     rom.write_to_file(0x02309188, "overlay_119", bytearray([world.options.open_throne.value]))
 
+    if world.options.show_drop_rates:
+        rom.write_to_file(0x0205307C, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out glasses check
+        rom.write_to_file(0x02053798, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out glasses check
+
+    rom.copy_in_file(0x128E0, 0x1392A, "overlay_79", 4)
+    rom.copy_in_file(0x128E0, 0x13A2A, "overlay_79", 4)  # Platforms for the Statue room
+
     if world.options.add_boss_keys:
         for door in boss_doors:
             data = boss_doors[door]
@@ -150,14 +157,26 @@ def patch_rom(world, rom, code_patch):
 
     if world.options.random_spell_charge_times:
         for i in range(0x25):
-            rom.write_to_file(0x020E3C16 + (6 * i), "arm9", struct.pack("H", world.random.randint(0x1, 0x200)))
+            rom.write_to_file(0x020E3C16 + (6 * i), "arm9", struct.pack("H", int(world.random.triangular(1, 0x0C00, 0))))
+
+    if world.options.subweapon_mastery_requirements:
+        for i in range(0x27):
+            if i > 0x0A or i in [0x1E, 0x1F, 0x20, 0x21, 0x23, 0x24]:  # Subweapons that can't be mastered
+                continue
+
+            if world.options.subweapon_mastery_requirements == MasterySP.option_zero:
+                new_sp = 0
+            else:
+                new_sp = world.random.randint(0x00, 0x600)
+            rom.write_to_file(0x020E3B14 + (6 * i) + 2, "arm9", struct.pack("H", new_sp))
 
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
 
     if world.options.early_open_castle:
         rom.write_to_file(0x022FE7F2, "overlay_79", bytearray([0x55, 0x41, 0x54, 0x41]))  # Platform in the Behemoth room
-        rom.copy_in_file(0xD142, 0xD162, "overlay_79", 6)  # Lower the hanging platform under great stairway
+        rom.copy_in_file(0xD142, 0xD162, "overlay_82", 6)  # Lower the hanging platform under great stairway
+        rom.copy_in_file(0xD122, 0xD142, "overlay_82", 6)
         rom.copy_in_file(0xECB4, 0xECF4, "overlay_81", 8)  # Delete the lower platform in the upper part of the stairway
         rom.copy_in_file(0xECB4, 0xED14, "overlay_81", 8)
     

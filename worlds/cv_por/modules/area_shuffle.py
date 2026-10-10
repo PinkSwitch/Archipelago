@@ -46,13 +46,13 @@ door_data = {
     "Sec00Rm0A": DoorTransitionData(0x020E4DF0, 0x020E4DA0, 0x00, 0x240, "Entrance: Lower Post-Behemoth Door"),
 
     "Sec02Rm03": DoorTransitionData(0x020E57C0, 0x020E57D0, 0x00, 0x00, "Buried Chamber: West Door", True),
-    "Sec02Rm1C": DoorTransitionData(0x020E5D10, 0x020E5D30, 0x00, 0x00, "Buried Chmaber: East Door"),
+    "Sec02Rm1C": DoorTransitionData(0x020E5D10, 0x020E5D30, 0x00, 0x00, "Buried Chamber: East Door"),
 
     "Sec03Rm06": DoorTransitionData(0x020E5D60, 0x020E5D70, 0x00, 0x00, "Great Stairway: Lower East Door", True),
     "Sec03Rm00": DoorTransitionData(0x020E5E10, 0x020E5DF0, 0x00, 0xC0, "Great Stairway: Lower West Door"),
     "Sec06Rm00": DoorTransitionData(0x020E69C8, 0x020E69E8, 0x00, 0x00, "Great Stairway: Ramparts West Door"),
     "Sec06Rm0C": DoorTransitionData(0x020E6D48, 0x020E6D38, 0x00, 0x00, "Great Stairway: Pipe Door", True),
-    "Sec03Rm0C": DoorTransitionData(0x020E6190, 0x020E6180, 0x00, 0x00, "Great Stairway: Push Block Door", True),
+    "Sec03Rm0C": DoorTransitionData(0x020E6180, 0x020E6190, 0x00, 0x00, "Great Stairway: Push Block Door", True),
 
     "Sec07Rm17": DoorTransitionData(0x020E7418, 0x020E7438, 0x00, 0x00, "Tower of Death: Tower Base Door"),
     "Sec07Rm1B": DoorTransitionData(0x020E7518, 0x020E7538, 0x00, 0x00, "Tower of Death: Elevator Bottom Floor Door"),

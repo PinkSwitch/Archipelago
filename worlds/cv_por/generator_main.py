@@ -37,6 +37,7 @@ def generate_early(world) -> None:
         world.options.open_throne.value = passthrough["open_throne"]
         world.options.early_open_castle = passthrough["early_castle"]
 
+        world.connected_doors = passthrough["door_map"]
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
         world.portrait_connections["Nation of Fools"] = passthrough["stairs_portrait"]
@@ -256,6 +257,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "open_throne": world.options.open_throne.value,
         "early_castle": world.options.early_open_castle.value,
 
+        "door_map": world.connected_doors,
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],
         "stairs_portrait": world.portrait_connections["Nation of Fools"],

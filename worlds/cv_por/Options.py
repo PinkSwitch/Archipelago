@@ -236,6 +236,23 @@ class EarlyOpenCastle(Toggle):
     display_name = "Early Open Castle"
 
 
+class MasterySP(Choice):
+    """Modifies the amount of SP each Subweapon takes to be mastered.
+       Normal: SP requirements are unchanged
+       Randomized: Each subweapon will require a random amount of SP to master
+       Zero: Each subweapon will start out mastered by default."""
+    display_name = "Subweapon Mastery SP"
+    option_normal = 0
+    option_randomized = 1
+    option_zero = 2
+    default = 0
+
+
+class ShowDropRates(Toggle):
+    """If enabled, enemies will always show the proper drop rates, even without the Gambler Glasses."""
+    display_name = "Show Drop Rates"
+
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -270,6 +287,8 @@ class PoROptions(PerGameCommonOptions):
     open_throne: OpenThrone
     randomize_transition_doors: ShuffleCastleConnections
     early_open_castle: EarlyOpenCastle
+    subweapon_mastery_requirements: MasterySP
+    show_drop_rates: ShowDropRates
 
 
 por_option_groups = [
@@ -300,7 +319,8 @@ por_option_groups = [
     OptionGroup("Item Options", [
         StrongerGlove,
         RandomizeSpellChargeTimes,
-        ShopShuffle
+        ShopShuffle,
+        MasterySP
 
     ]),
 
@@ -333,6 +353,7 @@ por_option_groups = [
     OptionGroup("Quality of Life", [
         RevealMap,
         RevealBreakableWalls,
-        OneScreenMode
+        OneScreenMode,
+        ShowDropRates
     ])
 ]
