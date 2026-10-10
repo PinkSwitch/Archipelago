@@ -14,11 +14,11 @@ def set_location_rules(world):
              HasAll("Stone of Flight", "Puppet Master") |
              strongies & ((Has("Stone of Flight")) | HasAll("Acrobat Cube", "Call Cube")))
                                                                     
-    set_rule(world.get_location("Great Stairway: Lower Grand Staircase Lower Alcove"), small_uppies | Has("Puppet Master"))
+    set_rule(world.get_location("Great Stairway: Lower Grand Staircase Lower Alcove"), medium_uppies | Has("Puppet Master") | (HasAll("Acrobat Cube", "Call Cube", "Speed Up") & can_cast_spell) | HasAll("Change Cube", "Speed Up"))
     set_rule(world.get_location("Great Stairway: Lower Grand Staircase Upper Alcove"), medium_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))
-    set_rule(world.get_location("Great Stairway: Lower Grand Staircase Middle Alcove"), medium_uppies | HasAll("Speed Up", "Puppet Master", "Call Cube"))
-    set_rule(world.get_location("Great Stairway: Upper Grand Staircase Lower Alcove"), small_uppies | Has("Puppet Master"))
-    set_rule(world.get_location("Great Stairway: Upper Grand Staircase Middle Alcove"), medium_uppies | HasAll("Speed Up", "Puppet Master", "Call Cube"))
+    set_rule(world.get_location("Great Stairway: Lower Grand Staircase Middle Alcove"), medium_uppies | HasAll("Change Cube", "Speed Up") | HasAll("Puppet Master", "Speed Up") & HasAll("Change Cube", "Call Cube") | Has("Skill Cube"))
+    set_rule(world.get_location("Great Stairway: Upper Grand Staircase Lower Alcove"), medium_uppies | Has("Puppet Master") | (HasAll("Acrobat Cube", "Call Cube", "Speed Up") & can_cast_spell) | HasAll("Change Cube", "Speed Up"))
+    set_rule(world.get_location("Great Stairway: Upper Grand Staircase Middle Alcove"), medium_uppies | HasAll("Change Cube", "Speed Up") | HasAll("Puppet Master", "Speed Up") & HasAll("Change Cube", "Call Cube") | Has("Skill Cube"))
     set_rule(world.get_location("Great Stairway: Upper Grand Staircase Upper Alcove"), medium_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))
     set_rule(world.get_location("Great Stairway: Upper Grand Staircase Top Left Item"), small_uppies | Has("Puppet Master") | (can_cast_spell & Has("Speed Up")))
     set_rule(world.get_location("Great Stairway: Connector Pipe Left"), can_cast_spell & HasAny("Owl Morph", "Toad Morph"))
