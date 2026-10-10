@@ -2138,7 +2138,7 @@
 ; Switch Text for quest descriptions to show the reward when holding Xs in the Quest menu
 @QuestMenu_SwapText:
     push lr,r3
-    cmp r2, 0x670
+    cmp r1, 0x670
     bgt @@SkipOnRewardText ; We don't want to be able to switch text if we're handing out the reward
     bl @SwitchQuestText
 @@SkipOnRewardText:
