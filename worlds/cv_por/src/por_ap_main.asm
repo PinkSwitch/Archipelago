@@ -276,6 +276,9 @@
 
     .org 0x0203F2E4
         nop ; Prevent the game from ignoring Spinning Art quest if you have the relic on.
+
+    .org 0x0203A30C
+        nop ; Prevent the game from deleting Magical Tickets on touch
         
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2134,19 +2137,27 @@
 
 ; Switch Text for quest descriptions to show the reward when holding Xs in the Quest menu
 @QuestMenu_SwapText:
-    push lr
+    push lr,r3
+    cmp r2, 0x670
+    bgt @@SkipOnRewardText ; We don't want to be able to switch text if we're handing out the reward
     bl @SwitchQuestText
-    pop lr
+@@SkipOnRewardText:
+    pop lr,r3
     b 0x0204100C
 
 ; Switch quest text on the Guide menu
+@RamFlag_LastQuestState:
+    .db 0x00
+.align 4
+
 @QuestGuide_SwapText:
-    push r1, lr
+    push r1,r2, lr
     mov r1, r0
 
     bl @SwitchQuestText
     mov r0, r1
-    pop r1, lr
+    pop r1, r2, lr
+    strh r0, [r1, 0x92]
     cmp r2, r0
     bx lr
 

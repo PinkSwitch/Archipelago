@@ -288,8 +288,8 @@ def extend_hint_information(world, hint_data: Dict[int, Dict]) -> None:
 
 def get_filler_item_name(world) -> str:
     from .Items import money_table, good_food_table, consumable_table
-    weights = {"subweapon": 5, "good_weapon": 7, "accessory": 8, "good_food": 10, "good_armor": 15, "money": 20,
-               "weapon": 30, "armor": 40, "consumable": 60}
+    weights = {"subweapon": 5, "good_weapon": 7, "accessory": 15, "good_food": 10, "good_armor": 15, "money": 20,
+               "weapon": 30, "armor": 45, "consumable": 60}
 
     weight_table = {
         "subweapon": world.subweapon_filler_table,
