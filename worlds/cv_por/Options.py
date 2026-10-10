@@ -228,6 +228,14 @@ class ShuffleCastleConnections(Toggle):
     display_name = "Randomize Doors"
 
 
+class EarlyOpenCastle(Toggle):
+    """Adds a platform will be added to the Entrance allowing access to the Behemoth fight with no movement items.
+       Additionally, a platform will be added after Keremet to allow you to access the cave area with only Acrobat.
+       The end of the cave area will be slightly raised, requiring Stone of Flight or Puppet to access the main stairway area.
+       This allows you to get up to Keremet with no additional items, and access 1 portrait with Acrobat on its own."""
+    display_name = "Early Open Castle"
+
+
 @dataclass
 class PoROptions(PerGameCommonOptions):
     goal: Goal
@@ -261,6 +269,7 @@ class PoROptions(PerGameCommonOptions):
     randomize_shop_items: ShopShuffle
     open_throne: OpenThrone
     randomize_transition_doors: ShuffleCastleConnections
+    early_open_castle: EarlyOpenCastle
 
 
 por_option_groups = [
@@ -297,7 +306,8 @@ por_option_groups = [
 
     OptionGroup("World Options", [
         AddBossKeys,
-        ExcludedBossKeys
+        ExcludedBossKeys,
+        EarlyOpenCastle
     ]),
 
     OptionGroup("Quest Options", [

@@ -15,7 +15,7 @@ from .Items import item_table
 from .game_data import boss_doors
 from .modules.filler_generator import generate_local_filler, generate_shop_items
 
-world_version = "1.3.3"
+world_version = "2.0"
 hash_us = "2edd57540cae45842fbd19c45a4214f9"
 
 
@@ -155,8 +155,11 @@ def patch_rom(world, rom, code_patch):
     if world.options.reveal_map:
         rom.write_to_file(0x0202F3B0, "arm9", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the instruction that hides room borders
 
-    # if world.options.early_castle_access:
-    #  for i in range(3):
+    if world.options.early_open_castle:
+        rom.write_to_file(0x022FE7F2, "overlay_79", bytearray([0x55, 0x41, 0x54, 0x41]))  # Platform in the Behemoth room
+        rom.copy_in_file(0xD142, 0xD162, "overlay_79", 6)  # Lower the hanging platform under great stairway
+        rom.copy_in_file(0xECB4, 0xECF4, "overlay_81", 8)  # Delete the lower platform in the upper part of the stairway
+        rom.copy_in_file(0xECB4, 0xED14, "overlay_81", 8)
     
     goal_requirements = 0
 
@@ -334,6 +337,12 @@ class PoRProcPatch(APProcedurePatch, APTokenMixin):
         self.write_token(APTokenTypes.WRITE, address, bytes(value))
     
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
+        self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+    def copy_in_file(self, source: int, destination: int, file_name: str, amount: int) -> None:
+        file = file_pointers[file_name]
+        source = file.rom_address + source
+        destination = file.rom_address + destination
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
 

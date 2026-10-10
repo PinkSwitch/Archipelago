@@ -4,7 +4,7 @@ from rule_builder.rules import HasAll, HasAny, Has, OptionFilter, CanReachLocati
 from rule_builder.field_resolvers import FromOption
 from .Locations import get_locations
 from .Options import (NestofEvil, DraculaPortraits, BraunerRequired, StrongerGlove, NestPortraits,
-                      AddBossKeys, ExcludedBossKeys)
+                      AddBossKeys, ExcludedBossKeys, EarlyOpenCastle)
 
 if TYPE_CHECKING:
     from . import PoRWorld
@@ -35,6 +35,7 @@ region_list = [
     "Great Stairway - Underground Painting",  # The sandy graves portrait room
     "Great Stairway - Pipe Door",
     "Great Stairway - Push Block Door",
+    "Great Stairway - Underground",
 
     "Tower of Death - Bottom",
     "Tower of Death - Motorcycles",
@@ -125,7 +126,7 @@ def create_locations(world):
 
 def connect_regions(world):
     world.get_region("Entrance - Hub").add_exits(["Entrance - Wind's Room", "Entrance - Behemoth Area", "Entrance - Hub Painting Room", "Entrance - Upper Area", "Entrance - Underground Passage"],
-                                                 {"Entrance - Behemoth Area": small_uppies,
+                                                 {"Entrance - Behemoth Area": small_uppies | OptionFilter(EarlyOpenCastle, 1),
                                                  "Entrance - Hub Painting Room": is_smol | Has("Puppet Master"),
                                                   "Entrance - Upper Area": HasAll("Acrobat Cube", "Stone of Flight", "Call Cube") | big_uppies,
                                                   "Entrance - Underground Passage": Has("Portrait Clear", FromOption(NestPortraits))})
@@ -156,11 +157,14 @@ def connect_regions(world):
 
     world.get_region("Great Stairway - Post Keremet").add_exits(["Great Stairway - Lower", "Great Stairway - Staircases"],
                                                                 {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")),
-                                                                 "Great Stairway - Staircases": Has("Stone of Flight") | big_uppies})
+                                                                 "Great Stairway - Staircases": (Has("Stone of Flight") | big_uppies) | (OptionFilter(EarlyOpenCastle, 1) & small_uppies)})
 
-    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground Painting", "Great Stairway - Push Block Door", "Great Stairway - Upper", "Great Stairway - Post Keremet"],
+    world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground", "Great Stairway - Push Block Door", "Great Stairway - Upper"],
                                                               {"Great Stairway - Push Block Door": strongies,
                                                                "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
+
+    world.get_region("Great Stairway - Underground").add_exits(["Great Stairway - Staircases", "Great Stairway - Underground Painting", "Great Stairway - Post Keremet"],
+                                                               {"Great Stairway - Staircases": OptionFilter(EarlyOpenCastle, 0) | HasAny("Stone of Flight", "Uppet Master") | small_uppies})
 
     world.get_region("Great Stairway - Push Block Door").connect(world.get_region("Tower of Death - Bottom"), "Sec03Rm0C")
 
@@ -175,7 +179,6 @@ def connect_regions(world):
 
     world.get_region("Great Stairway - Pipe Door").add_exits({"Great Stairway - Upper": None, "Tower of Death - Belt Area": "Sec06Rm0C"},
                                                              {"Great Stairway - Upper": can_cast_spell & HasAny("Owl Morph", "Toad Morph")})
-
 
     world.get_region("Great Stairway - Central Painting Area").add_exits([world.portrait_connections["Nation of Fools"], "Great Stairway - Upper"])
 
