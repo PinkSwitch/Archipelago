@@ -35,6 +35,7 @@ def generate_early(world) -> None:
         world.options.add_boss_keys.value = passthrough["add_bosskeys"]
         world.options.removed_boss_keys.value = passthrough["disabled_bosskeys"]
         world.options.open_throne.value = passthrough["open_throne"]
+        world.options.early_open_castle = passthrough["early_castle"]
 
         world.portrait_connections["City of Haze"] = passthrough["hub_portrait"]
         world.portrait_connections["Sandy Grave"] = passthrough["underground_portrait"]
@@ -253,6 +254,7 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "add_bosskeys": world.options.add_boss_keys.value,
         "disabled_bosskeys": world.options.removed_boss_keys.value,
         "open_throne": world.options.open_throne.value,
+        "early_castle": world.options.early_open_castle.value,
 
         "hub_portrait": world.portrait_connections["City of Haze"],
         "underground_portrait": world.portrait_connections["Sandy Grave"],

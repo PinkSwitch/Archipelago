@@ -104,24 +104,28 @@ def patch_castle_connections(world, rom):
 
 
 exit_regions = {
-    "Sec00Rm07": "Castle Entrance",
-    "Sec01Rm03": "Castle Entrance - Right Side",
-    "Sec01Rm07": "Castle Entrance - Barracks Shortcut",
-    "Sec02Rm00": "Underground Labyrinth",
-    "Sec02Rm0E": "Underground Labyrinth",
-    "Sec03Rm00": "Library",
-    "Sec03Rm0B": "Library Upper Exit",
-    "Sec03Rm10": "Forsaken Cloister - Left",
-    "Sec05Rm04": "Barracks",
-    "Sec05Rm03": "Barracks",
-    "Sec05Rm11": "Barracks",
-    "Sec07Rm01": "Mechanical Tower",
-    "Sec06Rm01": "Mechanical Tower Lower",
-    "Sec06Rm0B": "Mechanical Tower Upper Exit",
-    "Sec08Rm02": "Arms Depot",
-    "Sec09Rm03": "Forsaken Cloister - Left",
-    "Sec09Rm07": "Forsaken Cloister - Right",
-    "Sec0ARm01": "Final Approach - Shortcut"
+    "Sec01Rm14": "Entrance - Upper Area",
+    "Sec00Rm0B": "Entrance - Iron Block Door",
+    "Sec00Rm0A": "Entrance - Post Behemoth",
+
+    "Sec02Rm03": "Buried Chamber",
+    "Sec02Rm1C": "Buried Chamber",
+
+    "Sec03Rm06": "Great Stairway - Lower",
+    "Sec03Rm00": "Great Stairway - Lower",
+    "Sec06Rm00": "Great Stairway - Entrance Connector",
+    "Sec06Rm0C": "Great Stairway - Pipe Door",
+    "Sec03Rm0C": "Great Stairway - Push Block Door",
+
+    "Sec07Rm17": "Tower of Death - Bottom",
+    "Sec07Rm1B": "Tower of Death - Elevator Room",
+    "Sec07Rm19": "Tower of Death - Elevator Exit",
+    "Sec08Rm0A": "Tower of Death - Belt Area",
+    "Sec08Rm07": "Tower of Death - Belt Area",
+
+    "Sec0BRm03": "Master's Keep - Bridge",
+    "Sec0BRm05": "Master's Keep - Bridge",
+    "Sec0ARm13": "Master's Keep - Lower"
 }
 
 
