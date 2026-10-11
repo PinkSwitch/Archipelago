@@ -2137,29 +2137,52 @@
 
 ; Switch Text for quest descriptions to show the reward when holding Xs in the Quest menu
 @QuestMenu_SwapText:
-    push lr,r3
-    cmp r1, 0x670
-    bgt @@SkipOnRewardText ; We don't want to be able to switch text if we're handing out the reward
+    push lr,r3,r2
+    ldr r2, = 0x7FFF
+    cmp r1, r2
+    beq @@Skip
     bl @SwitchQuestText
-@@SkipOnRewardText:
-    pop lr,r3
+@@Skip:
+    pop lr,r3,r2
     b 0x0204100C
 
 ; Switch quest text on the Guide menu
-@RamFlag_LastQuestState:
-    .db 0x00
+@RamFlag_LastQuest:
+    .dh 0x00
 .align 4
 
 @QuestGuide_SwapText:
-    push r1,r2, lr
-    mov r1, r0
-
-    bl @SwitchQuestText
+    push r1,r2
+    ldr r2, =0x020FC48D
+    ldrb r2, [r2]
+    tst r2, 0x04 ; Check if the player is holding X
+    beq @@Normal
+    ldrh r1, [r1, 0xE8] ; Get the current quest number
+    ldr r0, =0x02111EAC
+    ldrb r0, [r0, r1]
+    tst r0, 0x01 ; Check if we've registered this quest
+    beq @@Normal
+    bl @ConvertQuestToRewardTex
     mov r0, r1
-    pop r1, r2, lr
-    strh r0, [r1, 0x92]
-    cmp r2, r0
-    bx lr
+    cmp r0, 0x5B
+    blt @@Normal
+    cmp r0, 0x5C
+    bgt @@Normal ; We want to do a special refresh on AP items...
+    add r1, r4, 0x200
+    ldr r0, = @RamFlag_LastQuest
+    ldrh r2, [r0] ; Check the last quest we processed
+    ldrh r1, [r1, 0xE8]
+    cmp r1, r2
+    beq @@APItem_Normal
+    strh r1, [r0]
+    popne r1,r2
+    b 0x020357C8 ; If the Current Quest is NOT equal to the last one, force a redraw if it's an AP item...
+ @@APItem_Normal:
+    mov r0, 0x5B
+@@Normal:
+    pop r1,r2
+    cmp r0, r2
+    b 0x020357C0 ; Check and render the description as we normally would...
 
 
 ;Switches text for quest description/reward based on holding X
@@ -2269,33 +2292,31 @@
 
 @SwapQuestToAPText:
     sub r13, r13, 0x1C
-    push r1, r2
-@@HandleNextText:
-    sub r2, r2, 0x600
-    cmp r2, 0x4C
-    blt @@CheckForSwitch
-    cmp r2, 0x70
-    bgt @@End
-    ; We're in range so we know this is a quest
-
+    push r1,lr
+    push r2
+    ldr r2, = 0x7FFF
+    cmp r1, r2 ; If we're in the the accept text
+    pop r2
+    beq @@GetQuest_Menu
     cmp r0, 0x5B
     blt @@End
-    cmp r0, 0x5D
-    bge @@End ; Only run this for the AP item text
-    sub r1, r2, 0x4C
+    cmp r0, 0x5C
+    bgt @@End ; We want to check to make sure that it's actually the text for an AP item...
+    ldr r1, = 0x020357D0
+    cmp r1, r14 ; We're in the Guide routine
+    beq @@GetAPName_InGuide
+@@GetQuest_Menu:
+    mov r1, r8
+@@GetQuest:
     bl @LoadQuestRewardPointer
 @@End:
-    pop r1, r2
+    pop r1, lr
     b 0x0203F348
-@@CheckForSwitch:
-    cmp r0, 0x600
-    bge @@End
-    cmp r3, 0
-    blt @@End
-    cmp r5, 0x640
-    movgt r2, r5 ; Wind
-    movlt r2, r3 ; Guide
-    b @@HandleNextText
+@@GetAPName_InGuide:
+    add r1, r4, 0x200
+    ldrh r1, [r1, 0xE8]
+    b @@GetQuest
+    
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 @SkipCharSelect:

@@ -155,20 +155,20 @@ def connect_regions(world):
                                                          {"Great Stairway - Staircases": Has("Stone of Flight") | big_uppies,
                                                           "Great Stairway - Post Keremet": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains"))})
 
-    world.get_region("Great Stairway - Post Keremet").add_exits(["Great Stairway - Lower", "Great Stairway - Staircases"],
+    world.get_region("Great Stairway - Post Keremet").add_exits(["Great Stairway - Lower", "Great Stairway - Underground"],
                                                                 {"Great Stairway - Lower": (Has("Cavern Key") | OptionFilter(AddBossKeys, 0) | OptionFilter(ExcludedBossKeys, "Cavern Key", "contains")),
-                                                                 "Great Stairway - Staircases": (Has("Stone of Flight") | big_uppies) | (OptionFilter(EarlyOpenCastle, 1) & small_uppies)})
+                                                                 "Great Stairway - Underground": (Has("Stone of Flight") | big_uppies) | (OptionFilter(EarlyOpenCastle, 1) & small_uppies)})
 
     world.get_region("Great Stairway - Staircases").add_exits(["Great Stairway - Lower", "Great Stairway - Underground", "Great Stairway - Push Block Door", "Great Stairway - Upper"],
                                                               {"Great Stairway - Push Block Door": strongies,
                                                                "Great Stairway - Upper": small_uppies | Has("Puppet Master")})
 
     world.get_region("Great Stairway - Underground").add_exits(["Great Stairway - Staircases", "Great Stairway - Underground Painting", "Great Stairway - Post Keremet"],
-                                                               {"Great Stairway - Staircases": OptionFilter(EarlyOpenCastle, 0) | HasAny("Stone of Flight", "Uppet Master") | small_uppies})
+                                                               {"Great Stairway - Staircases": OptionFilter(EarlyOpenCastle, 0) | HasAny("Stone of Flight", "Puppet Master")})
 
     world.get_region("Great Stairway - Push Block Door").connect(world.get_region("Tower of Death - Bottom"), "Sec03Rm0C")
 
-    world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Staircases", world.portrait_connections["Sandy Grave"]])
+    world.get_region("Great Stairway - Underground Painting").add_exits(["Great Stairway - Underground", world.portrait_connections["Sandy Grave"]])
 
     world.get_region("Great Stairway - Entrance Connector").add_exits({"Great Stairway - Staircases": None, "Entrance - Upper Area": "Sec06Rm00", "Great Stairway - Upper": None},
                                                                       {"Great Stairway - Upper": HasAll("Acrobat Cube", "Puppet Master", "Call Cube") | medium_uppies | HasAll("Acrobat Cube", "Speed Up", "Call Cube")})
