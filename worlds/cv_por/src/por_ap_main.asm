@@ -279,6 +279,26 @@
 
     .org 0x0203A30C
         nop ; Prevent the game from deleting Magical Tickets on touch
+
+    .org 0x020415BC ; Revised routine for Master Holy Power quest
+        bl 0x02214C38 ; Check if Cross is mastered
+        cmp r0, 0
+        beq 0x02041608
+        mov r0, 0x0D
+        bl 0x02214C38 ; Check if Water is mastered
+        cmp r0, 0
+        beq 0x02041608
+        mov r0, 0x0E
+        bl 0x02214C38 ; Check if Bible is mastered
+        cmp r0, 0
+        beq 0x02041608
+        mov r0, 1
+        b 0x0204160C
+
+    .org 0x020414F4
+        bl 0x02214C38 ; Check if Javelin is mastered
+        cmp r0, 0
+        b 0x0204150C
         
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -466,6 +486,9 @@
 
     .org 0x021E40D4
         b @LogNormalItem
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    .org 0x02214C5C
+        b @AutoMasterSkill
 
 
 ;overlay 9 0
@@ -2161,6 +2184,7 @@
     ldr r0, =0x02111EAC
     ldrb r0, [r0, r1]
     tst r0, 0x01 ; Check if we've registered this quest
+    ldreq r0, =0xFFFF
     beq @@Normal
     bl @ConvertQuestToRewardTex
     mov r0, r1
@@ -2934,6 +2958,26 @@
     bgt 0x021E4108 ; Skip if it's an Expanded ID
     bl 0x021E4148 ; Log it
     b 0x021E40D8
+;;;;;;;;;;;;;;;;;;
+; Automatically reports skills as Mastered if mastery is disabled
+@AutoMasterSkill:
+    push r0-r2,lr
+    mov r1, r4
+    mov r0, 0x08
+    bl 0x021E45A4 ; Check if we own this item or not
+    cmp r0, 0
+    pop r0-r2,lr
+    beq @@WeaponNotMastered ; NEVER count as mastered if we don't actually own the item
+    ldrh r1, [r1, r2] ; Get the required SP for this
+    cmp r1, 0
+    beq @@MasterWeapon
+    b 0x02214C60
+@@WeaponNotMastered:
+    mov r0, 0
+    b 0x02214C94 ; Force weapon to report as unmastered
+@@MasterWeapon:
+    mov r0, 1
+    b 0x02214C94
 
 
 

@@ -263,13 +263,13 @@ def patch_rom(world, rom, code_patch):
         elif data.location_type == "Quest":
             rom.write_to_file(data.pointer, data.file, bytearray([item_id, item_type]))
             if item.player != world.player:  # Show AP item full names
-                recepient = world.multiworld.get_player_name(item.player)
+                recipient = world.multiworld.get_player_name(item.player)
                 item_name = item.name
                 while calculate_text_width(item_name) >= 204:  # Max length for 1 line
                     item_name = item_name[:-1]
                 if item_name != item.name:
                     item_name += "..."  # Do this to show it's not the full name
-                name_string = text_encoder(f"{recepient}'s\n{item_name}", True)
+                name_string = text_encoder(f"{recipient}'s\n{item_name}", True)
                 quest_index = list(quest_data).index(location.name)
                 pointer = 0x2318F20 + (0x80 * quest_index)
                 rom.write_to_file(pointer, "overlay_119", bytearray(name_string))
@@ -387,6 +387,8 @@ class PorPatchExtentions(APPatchExtension):
                 item_type = int.from_bytes(rom.read_from_file(data.pointer + 6, data.file, 1))
                 item_id = int.from_bytes(rom.read_from_file(data.pointer + 10, data.file, 1))
                 if (item_type == 1 and item_id < 4) or item_type == 8:  # Coins and skills
+                    if item_type == 8 and "Connector Pipe" in location:  # Don't raise up skills in this room
+                        continue
                     y_pos = int.from_bytes(rom.read_from_file(data.pointer + 2, data.file, 2), byteorder="little")
                     y_pos -= 0x10
                     rom.write_to_file(data.pointer + 2, data.file, struct.pack("H", y_pos))
