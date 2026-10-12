@@ -256,11 +256,13 @@ def apply_weapon_randomization(world, rom):
             name = name + mod_abbreviations[data.modifier]
 
         name = name + name_mod
+        has_removed_space = False
         while calculate_text_width(name) > 98:
             if " " in name:
                 name = name.replace(" ", "")
-            elif " " in weapon:
+            elif " " in weapon and not has_removed_space:
                 name = name.replace(weapon.split(" ")[1], "")
+                has_removed_space = True
             elif "a" in name:
                 name = name.replace("a", "")
             elif "e" in name:
@@ -271,6 +273,9 @@ def apply_weapon_randomization(world, rom):
                 name = name.replace("o", "")
             elif "u" in name:
                 name = name.replace("u", "")
+            else:
+                name = name.replace(name[len(name) // 2], "")  # Chop off a letter in the middle
+                print(name)
 
         encoded_name = [0x01, 0x00]
         encoded_name += text_encoder(name)

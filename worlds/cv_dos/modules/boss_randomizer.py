@@ -125,9 +125,6 @@ def randomize_bosses(world):
         world.boss_slots.pop("Mine of Judgment")
         world.boss_slots.pop("The Abyss")
 
-    boss_pool.remove("Flying Armor")  # TODO! Testing
-    world.boss_slots["Lost Village"].new_boss = "Flying Armor"
-
     for boss in boss_pool:
         valid_rooms = [room for room in world.boss_slots if world.boss_slots[room].new_boss == "None"]
         if boss in ["Puppet Master", "Rahab"]:
@@ -365,7 +362,6 @@ def write_bosses(world, rom):
             "scaling_factor"
         ]
         for index, stat in enumerate(stat_table):
-            continue
 
             stat_name = stat_list[index]
             new_stat = getattr(boss_stats[slot.old_boss], stat_list[index])  # TODO! Fix/revert

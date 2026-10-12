@@ -167,7 +167,10 @@ def place_souls(world, pool):
         if world.options.soulsanity_level == SoulsanityLevel.option_rare:
             world.extra_soul_slots += len(world.rare_souls)
 
-    for soul in world.options.guaranteed_souls:
+    if world.options.no_logical_grinding:
+        world.extra_soul_slots -= len(world.important_souls)
+
+    for soul in sorted(world.options.guaranteed_souls):
         world.extra_soul_slots -= 1
         if not world.extra_soul_slots:
             warning("WARNING: More Guranteed Souls exist than can be placed, no more Guaranteed Souls will be placed.")
@@ -179,9 +182,8 @@ def place_souls(world, pool):
 
     if world.options.no_logical_grinding and world.options.soul_randomizer != SoulRandomizer.option_soulsanity:
         for soul in sorted(world.important_souls):
-            if soul not in world.options.guaranteed_souls:
+            if world.create_item(soul) not in pool:
                 pool.append(world.create_item(soul))
-                souls_added += 1
                 update_soul_pool(world, soul)
 
     if world.options.soul_randomizer == SoulRandomizer.option_soulsanity:
@@ -191,7 +193,7 @@ def place_souls(world, pool):
             pool.append(world.create_item("Soul Eater Ring"))  # Guarantee we get a Soul Eater Ring for rare's
 
         for soul in sorted(world.important_souls):
-            if soul not in world.options.guaranteed_souls:  # First we need to create the souls that are always in
+            if world.create_item(soul) not in pool:  # First we need to create the souls that are always in
                 extra_souls += 1
                 update_soul_pool(world, soul)
                 pool.append(world.create_item(soul))
