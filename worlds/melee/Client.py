@@ -1,4 +1,5 @@
 import struct
+import time
 import traceback
 import uuid
 from CommonClient import CommonContext, ClientCommandProcessor, server_loop, logger, gui_enabled
@@ -37,6 +38,26 @@ TROPHY_RIG_ADDRESS = 0x80001820
 LOTTO_PRIMED_ADDR = 0x80BEEBDE
 BTL_ITEM_DATA = 0x80001824
 VERSION_ADDRESS = 0x80001AF0
+
+DEATHLINK_MEMORY_WRITES = True
+
+PLAYER_BLOCK_START = 0x80453080
+PLAYER_BLOCK_SIZE = 0xE90
+PLAYER_STATE_OFFSET = 0x00
+SLOT_TYPE_OFFSET = 0x08
+FALLS_OFFSET = 0x68
+STOCK_OFFSET = 0x8E
+ENTITY_PTR_OFFSET = 0xB0
+SUBPLAYER_PTR_OFFSET = 0x2C
+SUBPLAYER_POS_Y_OFFSET = 0xB4
+
+PLAYER_STATE_IN_GAME = 0x02
+SLOT_TYPE_HUMAN = 0x00
+
+MENU_IDS_NO_DEATHLINK = {0x0B, 0x0C, 0x0D}
+
+BLAST_ZONE_Y = -3000.0
+DEATHLINK_GRACE_SECONDS = 3.0
 
 
 def read_bytes(console_address: int, length: int):
@@ -112,6 +133,21 @@ class SSBMCommandProcessor(ClientCommandProcessor):
         if isinstance(self.ctx, SSBMClient):
             Utils.async_start(self.ctx.display_modes_obtained(), name="Check Modes Unlocked")
 
+    def _cmd_deathlink(self):
+        """Enable or disable DeathLink for this session."""
+        if isinstance(self.ctx, SSBMClient):
+            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
+            Utils.async_start(self.ctx.update_death_link(self.ctx.death_link_enabled),
+                              name="Toggle DeathLink")
+            state = "active" if self.ctx.death_link_enabled else "desactive"
+            logger.info(f"DeathLink {state}.")
+
+    def _cmd_testdeath(self):
+        """Simulate the reception of a DeathLink, for testing without a second player."""
+        if isinstance(self.ctx, SSBMClient):
+            self.ctx.pending_death = True
+            logger.info("Mort de test mise en file. Elle s'appliquera des que vous serez en jeu.")
+
     @mark_raw
     def _cmd_rig(self, selected_trophy: str = ""):
         """Rigs the lottery to give a specific available Lottery check. Requires 30 coins to use."""
@@ -147,6 +183,13 @@ class SSBMClient(CommonContext):
         self.event_50_complete = False
 
         self.lottery_pool = None
+
+        self.death_link_enabled = False
+        self.death_link_trigger = 1
+        self.pending_death = False
+        self.last_stock_seen = None
+        self.death_grace_until = 0.0
+        self.warned_unverified = False
 
     def make_gui(self):
         ui = super().make_gui()
@@ -362,6 +405,25 @@ class SSBMClient(CommonContext):
             self.total_trophies_required = int(args["slot_data"]["total_trophies_required"])
             self.lottery_pool = str(args["slot_data"]["lottery_pool_mode"])
             self.active_goals = set(args["slot_data"]["goal_triggers"])
+            # .get() : les seeds generees avec l'apworld d'origine n'ont pas ces cles
+            self.death_link_trigger = int(args["slot_data"].get("death_link_trigger", 1))
+            self.death_link_enabled = bool(args["slot_data"].get("death_link", False))
+            Utils.async_start(self.update_death_link(self.death_link_enabled),
+                              name="Init DeathLink")
+
+    def on_deathlink(self, data: dict):
+        super().on_deathlink(data)
+        self.pending_death = True
+
+    async def apply_incoming_death(self):
+        port = find_human_port()
+        if port is None:
+            return False
+        subplayer = follow_player_pointers(port)
+        if subplayer is None:
+            return False
+        dme.write_bytes(subplayer + SUBPLAYER_POS_Y_OFFSET, struct.pack(">f", BLAST_ZONE_Y))
+        return True
 
     async def ssbm_check_locations(self, auth):
         new_checks = []
@@ -677,6 +739,120 @@ async def dolphin_sync_task(ctx: SSBMClient):
             continue
 
 
+def find_human_port() -> Optional[int]:
+
+    for port in range(4):
+        block = PLAYER_BLOCK_START + (PLAYER_BLOCK_SIZE * port)
+        try:
+            slot_type = int.from_bytes(dme.read_bytes(block + SLOT_TYPE_OFFSET, 4))
+            state = int.from_bytes(dme.read_bytes(block + PLAYER_STATE_OFFSET, 4))
+        except Exception:
+            return None
+        if slot_type == SLOT_TYPE_HUMAN and state == PLAYER_STATE_IN_GAME:
+            return port
+    return None
+
+
+def read_stocks(port: int) -> Optional[int]:
+    block = PLAYER_BLOCK_START + (PLAYER_BLOCK_SIZE * port)
+    try:
+        return int.from_bytes(dme.read_bytes(block + STOCK_OFFSET, 1))
+    except Exception:
+        return None
+
+
+def follow_player_pointers(port: int) -> Optional[int]:
+    """
+    Remonte bloc joueur -> GObj -> ftData et renvoie l'adresse de la struct
+    du personnage, ou None si la chaine de pointeurs n'est pas valide
+    (menu, chargement, personnage pas encore instancie).
+    """
+    block = PLAYER_BLOCK_START + (PLAYER_BLOCK_SIZE * port)
+    entity_ptr_addr = block + ENTITY_PTR_OFFSET
+    try:
+        if not check_if_addr_is_pointer(entity_ptr_addr):
+            return None
+        entity = dme.read_word(entity_ptr_addr)
+        if not check_if_addr_is_pointer(entity + SUBPLAYER_PTR_OFFSET):
+            return None
+        subplayer = dme.read_word(entity + SUBPLAYER_PTR_OFFSET)
+        if not (0x80000000 <= subplayer <= 0x81800000):
+            return None
+        return subplayer
+    except Exception:
+        return None
+
+
+def is_in_match(port: int) -> bool:
+    try:
+        if int.from_bytes(dme.read_bytes(MENU_ID, 1)) in MENU_IDS_NO_DEATHLINK:
+            return False
+        block = PLAYER_BLOCK_START + (PLAYER_BLOCK_SIZE * port)
+        state = int.from_bytes(dme.read_bytes(block + PLAYER_STATE_OFFSET, 4))
+        return state == PLAYER_STATE_IN_GAME
+    except Exception:
+        return False
+
+
+async def deathlink_task(ctx: SSBMClient):
+    while not ctx.exit_event.is_set():
+        await asyncio.sleep(0.1)
+
+        if not ctx.death_link_enabled:
+            continue
+        if not (dme.is_hooked() and ctx.dolphin_status == CONNECTION_CONNECTED_STATUS):
+            continue
+        if not ctx.slot:
+            continue
+
+        try:
+            auth_id = read_bytearray(AUTH_ID_ADDRESS, 25).decode("ascii").rstrip("\x00")
+            if auth_id != ctx.auth:
+                continue
+
+            port = find_human_port()
+            if port is None:
+                ctx.last_stock_seen = None
+                continue
+
+            if not is_in_match(port):
+                ctx.last_stock_seen = None
+                continue
+
+            if ctx.pending_death:
+                if not DEATHLINK_MEMORY_WRITES:
+                    if not ctx.warned_unverified:
+                        ctx.warned_unverified = True
+                    ctx.pending_death = False
+                    continue
+                if await ctx.apply_incoming_death():
+                    ctx.pending_death = False
+                    ctx.death_grace_until = time.time() + DEATHLINK_GRACE_SECONDS
+                continue
+
+            stocks = read_stocks(port)
+            if stocks is None:
+                continue
+
+            previous = ctx.last_stock_seen
+            ctx.last_stock_seen = stocks
+
+            if previous is None or stocks >= previous:
+                continue 
+            if time.time() < ctx.death_grace_until:
+                continue 
+
+            player_name = ctx.player_names.get(ctx.slot, "Quelqu'un")
+            if ctx.death_link_trigger == 0:  # stock_loss
+                await ctx.send_death(f"{player_name} a perdu un stock.")
+            elif stocks == 0:                # match_loss
+                await ctx.send_death(f"{player_name} a perdu son dernier stock.")
+
+        except Exception:
+            logger.error(traceback.format_exc())
+            await asyncio.sleep(1)
+
+
 async def give_player_items(ctx: SSBMClient):
     from .in_game_data import coin_items, all_characters, mode_items
     async def wait_for_next_loop(time_to_wait: float):
@@ -736,6 +912,7 @@ def launch(connect=None, password=None):
 
         ctx.dolphin_sync_task = asyncio.create_task(dolphin_sync_task(ctx), name="DolphinSync")
         ctx.give_item_task = asyncio.create_task(give_player_items(ctx), name="GiveItemFunc")
+        ctx.deathlink_task = asyncio.create_task(deathlink_task(ctx), name="DeathLinkFunc")
 
         await ctx.exit_event.wait()
         await ctx.shutdown()
@@ -745,6 +922,9 @@ def launch(connect=None, password=None):
 
         if ctx.give_item_task:
             await ctx.give_item_task
+
+        if ctx.deathlink_task:
+            await ctx.deathlink_task
 
     import colorama
 
