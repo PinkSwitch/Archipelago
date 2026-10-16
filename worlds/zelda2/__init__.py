@@ -296,7 +296,7 @@ class Z2World(World):
 
     def generate_output(self, output_directory: str):
         try:
-            patch = Z2ProcPatch()
+            patch = Z2ProcPatch(player=self.player, player_name=self.multiworld.player_name[self.player])
             patch.write_file("z2_base.bsdiff4", pkgutil.get_data(__name__, "z2_base.bsdiff4"))
             patch_rom(self, patch, self.player)
 
