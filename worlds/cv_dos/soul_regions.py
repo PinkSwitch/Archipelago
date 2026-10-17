@@ -38,7 +38,8 @@ def create_soul_regions(world):
                                                           {"Mimic Soul": small_uppies})
     world.get_region("Garden of Madness Upper").add_exits(["Corpseweed Soul", "Rycuda Soul", "Mollusca Soul", "Barbariccia Soul", "Skeleton Ape Soul", "Treant Soul",])
     world.get_region("Garden of Madness Post-Boss").add_exits(["Corpseweed Soul", "Skelerang Soul", "Une Soul", "Skeleton Ape Soul", "Ghoul Soul"])
-    world.get_region("Garden of Madness East Gate").add_exits(["Wakwak Tree Soul"])
+    world.get_region("Garden of Madness East Gate").add_exits(["Wakwak Tree Soul", "Yorick Soul", "Mimic Soul", "Une Soul", "Catoblepas Soul", "Skelerang Soul",
+                                                              "Rycuda Soul", "Corpseweed Soul", "Ghoul Soul"])
     # DEMON GUEST HOUSE ####
 
     world.get_region("Demon Guest House Lower").add_exits(["Axe Armor Soul", "Skeleton Soul", "Peeping Eye Soul"])
