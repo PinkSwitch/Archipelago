@@ -10,7 +10,7 @@ class StartingGlyph(TextChoice):
        Random Base selects any base-power Glyph.
        Random Melee selects a base-power melee weapon Glyph.
        You can additionanlly type in any valid Arm Glyph manually.
-       (ex. "Confodere = 1")"""
+       (ex. "Confodere")"""
     option_random_base = 0
     option_random_melee = 1
     option_random_any = 2
@@ -283,7 +283,7 @@ quest_keys |= {"All", "Requires Item", "Defeat Enemies", "Simple", "Has Reward",
 
 class ActiveQuests(OptionSet):
     """Specify which Quests have random items. Active quests that normally do not give items will if they are set here.
-       Inlcuding Quests which do not normally give you rewards will give you an item.
+       Including Quests which do not normally give you rewards will give you an item.
        You can type any individual quest name, as well as the following shortcuts.
        Additionally, you can type the name of a Villager to include all of that villager's Quests.
 
