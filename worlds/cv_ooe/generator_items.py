@@ -1,4 +1,4 @@
-from .Options import RandomizeVillagers
+from .Options import RandomizeVillagers, ShuffleCerberus
 
 
 def create_conditional_items(world, pool):
@@ -44,6 +44,9 @@ def create_conditional_items(world, pool):
 
         for villager in world.options.starting_villagers:
             pool.remove(world.create_item(villager))
+
+    if world.options.shuffle_cerberus_glyphs == ShuffleCerberus.option_anywhere:
+        pool.extend([world.create_item("Dextro Custos"), world.create_item("Sinestro Custos"), world.create_item("Arma Custos")])
 
     if world.options.start_with_glyph_sleeve:
         pool.remove(world.create_item("Glyph Sleeve"))

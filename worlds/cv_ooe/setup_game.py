@@ -1,5 +1,5 @@
 from Options import OptionError
-from .Options import StartingGlyph, RandomizeVillagers, StartingArea
+from .Options import StartingGlyph, RandomizeVillagers, StartingArea, ShuffleCerberus
 from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs, melee_glyphs
 from .generator_main import create_progress_event
 from .modules.glyph_properties import set_glyph_attributes
@@ -54,6 +54,7 @@ def place_static_items(world) -> None:
     from .modules.drop_shuffle import get_drop_item
     from .modules.quest_data import quest_data
     from .generator_main import set_classifications
+    from .static_location_data import get_location_groups
 
     if world.options.open_castle:
         barlowe_item = "Barlowe Defeated"
@@ -100,6 +101,41 @@ def place_static_items(world) -> None:
         for villager in villager_pool:  # Place the corresponding items/locations here
             if world.create_item(villager) not in world.multiworld.precollected_items[world.player]:
                 world.get_location(villager_pool[villager]).place_locked_item(world.create_item(villager))
+
+    if world.options.shuffle_cerberus_glyphs == ShuffleCerberus.option_vanilla:
+        # Place the three glyphs of cerberus on their original locations
+        world.get_location("Library: Final Room Item").place_locked_item(world.create_item("Dextro Custos"))
+        world.get_location("Arms Depot: Post-Boss Item").place_locked_item(world.create_item("Arma Custos"))
+        world.get_location("Mechanical Tower: Post-Boss").place_locked_item(world.create_item("Sinestro Custos"))
+    elif world.options.shuffle_cerberus_glyphs != ShuffleCerberus.option_anywhere:
+        #  In-region shuffler, runs any time it's not anywhere or vanilla...
+        areas = get_location_groups()
+        loc_list = world.get_locations()
+        loc_list = [item.name for item in loc_list]
+        target_regions = {}
+
+        if world.options.shuffle_cerberus_glyphs == ShuffleCerberus.option_regional:
+            target_regions = {"Dextro Custos": "Library",
+                              "Arma Custos": "Arms Depot",
+                              "Sinestro Custos": "Mechanical Tower"}
+        elif world.options.shuffle_cerberus_glyphs == ShuffleCerberus.option_shuffled:
+            cerberus = ["Dextro Custos", "Arma Custos", "Sinestro Custos"]
+            for item in cerberus:
+                target_regions[item] = world.random.choice(["Castle Entrance", "Library", "Barracks",
+                                                           "Mechanical Tower", "Arms Depot", "Underground Labyrinth"])
+        elif world.options.shuffle_cerberus_glyphs == ShuffleCerberus.option_shuffled_singular:
+            cerberus = ["Dextro Custos", "Arma Custos", "Sinestro Custos"]
+            regions = ["Castle Entrance", "Library", "Barracks", "Mechanical Tower", "Arms Depot", "Underground Labyrinth"]
+            for item in cerberus:
+                selected_area = world.random.choice(regions)
+                regions.remove(selected_area)
+                target_regions[item] = selected_area
+
+        for item in target_regions:
+            glyph_region = target_regions[item]
+            locs = sorted(loc for loc in areas[glyph_region] if loc in loc_list)
+            location = world.random.choice(locs)
+            world.get_location(location).place_locked_item(world.create_item(item))
 
     quest_filler = {"weak_healing": 50, "mid_healing": 60, "great_healing": 40,
                     "drops": 5, "static_consumable": 10, "armor": 30, "good_armor": 20, "accessory": 25}

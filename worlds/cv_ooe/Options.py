@@ -341,6 +341,22 @@ class ExcludedNoHits(OptionSet):
     }
 
 
+class ShuffleCerberus(Choice):
+    """Where the three Cerberus glyphs can be found.
+       Vanilla: The Cerberus Glyphs can be found at their normal locations.
+       Regional: The Cerberus Glyphs can be found in any location in their original region of the castle.
+       Shuffled: The Cerberus Glyphs can be found at any location in Dracula's Castle.
+       "Shuffled Singular: The Cerberus Glyphs can be found anywhere in the Castle, but there will only be one a given area.
+       Anywhere: The Cerberus Glyphs can be found anywhere."""
+    display_name = "Shuffle Cerberus Glyphs"
+    option_vanilla = 0
+    option_regional = 1
+    option_shuffled = 2
+    option_shuffled_singular = 3
+    option_anywhere = 4
+    default = 4
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -380,6 +396,7 @@ class OoEOptions(PerGameCommonOptions):
     include_quest_key_items: RandomizeQuestKeyItems
     excluded_quests: ExcludedQuests
     excluded_no_hit_chests: ExcludedNoHits
+    shuffle_cerberus_glyphs: ShuffleCerberus
 
 
 ooe_option_groups = [
@@ -399,6 +416,7 @@ ooe_option_groups = [
 
     OptionGroup("Location Options", [
         ShuffleDominus,
+        ShuffleCerberus,
         AddBrownChests,
         RandomizeVillagers,
         AddMedalChests,

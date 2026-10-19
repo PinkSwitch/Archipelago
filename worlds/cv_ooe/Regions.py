@@ -167,12 +167,10 @@ def connect_regions(world):
 
     world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=can_slide | OptionFilter(LogicTricks, "Gravedorcus Without Slide", operator="contains"))
 
-
     world.get_region("Minera Prison Island").connect(world.get_region("Minera Prison Island Main"), rule=HasAny("Ordinary Rock", "Volaticus", "Magnes") |
                                                                                                          OptionFilter(LogicTricks, "Giant Skeleton Without Movement", operator="contains") |
                                                                                                          OptionFilter(LogicTricks, "Giant Skeleton No-Hit Without Movement", operator="contains"))
     world.get_region("Minera Prison Island Main").connect(world.get_region("Minera Prison Island Final Segment"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Minera Prison Island Final Area With Double Jump", operator="contains")]))
-
 
     world.get_region("Dracula's Castle").connect(world.get_region("Castle Entrance"), rule=Has("Ordinary Rock") | can_fly)
 
