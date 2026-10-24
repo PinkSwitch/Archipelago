@@ -357,6 +357,14 @@ class ShuffleCerberus(Choice):
     default = 4
 
 
+class DraculaVillagers(Range):
+    """How many Villagers you need to save in order to fight Dracula."""
+    display_name = "Dracula Villagers Required"
+    range_start = 0
+    range_end = 13
+    default = 0
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -397,12 +405,14 @@ class OoEOptions(PerGameCommonOptions):
     excluded_quests: ExcludedQuests
     excluded_no_hit_chests: ExcludedNoHits
     shuffle_cerberus_glyphs: ShuffleCerberus
+    dracula_villagers_required: DraculaVillagers
 
 
 ooe_option_groups = [
     OptionGroup("Goal Settings", [
         VillagersRequired,
-        BarloweRequired
+        BarloweRequired,
+        DraculaVillagers
     ]),
 
     OptionGroup("Starting Items", [

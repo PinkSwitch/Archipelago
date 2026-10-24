@@ -166,6 +166,7 @@ def patch_rom(world, rom, code_patch):
     ################################################
     rom.write_to_file(0x022EB226, "overlay_86", struct.pack("H", world.options.villagers_required.value))
     rom.write_to_file(0x021E98BE, "overlay_0", bytearray(text_encoder(str(world.options.villagers_required.value).zfill(2))))  # Barlowe's dialogue in the bad ending
+    rom.write_to_file(0x022EB4D1, "overlay_86", bytearray([world.options.dracula_villagers_required.value]))
     ###############################################
     if world.options.add_brown_chests == AddBrownChests.option_random_rewards:
         shuffle_brown_chest_pool(world, rom)
