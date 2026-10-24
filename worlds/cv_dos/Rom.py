@@ -482,7 +482,7 @@ def get_item_data(world, item) -> tuple:
             item_id = 0x3A
             item_color = 0x07
         elif ItemClassification.trap in item.classification:
-            item_id = 0x3A
+            item_id = 0x3B
             item_color = 0x06
         else:
             item_id = 0x3A
