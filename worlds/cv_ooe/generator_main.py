@@ -44,6 +44,8 @@ def generate_early(world) -> None:
         world.options.excluded_quests.value = passthrough["excluded_quests"]
         world.options.unlock_all_quests.value = passthrough["unlock_quests"]
         world.options.include_quest_key_items.value = passthrough["include_quest_keys"]
+        world.options.dracula_villagers_required.value = passthrough["dracula_villagers"]
+        world.options.shuffle_cerberus_glyphs.value = passthrough["cerberus_placement"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -193,7 +195,9 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "active_quests": world.options.randomized_quests.value,
         "excluded_quests": world.options.excluded_quests.value,
         "include_quest_keys": world.options.include_quest_key_items.value,
-        "unlock_quests": world.options.unlock_all_quests.value
+        "unlock_quests": world.options.unlock_all_quests.value,
+        "dracula_villagers": world.options.dracula_villagers_required.value,
+        "cerberus_placement": world.options.shuffle_cerberus_glyphs.value
     }
 
 

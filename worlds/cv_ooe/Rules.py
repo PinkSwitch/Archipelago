@@ -1,6 +1,6 @@
 from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
 from rule_builder.field_resolvers import FromOption
-from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTricks
+from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTricks, DraculaVillagers
 
 can_fly = Has("Volaticus") | HasAll("Magnes", "Redire",
                                     options=[OptionFilter(LogicTricks, "Redire Flight", operator="contains")])
@@ -78,7 +78,8 @@ def set_location_rules(world):
     set_rule(world.get_location("Final Approach: Throne Left Chest"), Has("Paries"))
 
     set_rule(world.get_location("Final Approach: Dracula"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", "Glyph Union") &
-            CanReachLocation("Ecclesia: Barlowe Fight", options=[OptionFilter(BarloweRequired, True)], filtered_resolution=True))
+            CanReachLocation("Ecclesia: Barlowe Fight", options=[OptionFilter(BarloweRequired, True)], filtered_resolution=True) &
+             HasGroupUnique("Villagers", count=FromOption(DraculaVillagers)))
 
     #  Regular brown cheests
     if world.options.add_brown_chests == AddBrownChests.option_include:
