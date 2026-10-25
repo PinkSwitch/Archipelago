@@ -124,7 +124,7 @@ def get_filtered_quests(quests) -> set[str]:
 
 
 def set_quest_rules(world) -> None:
-    from rule_builder.rules import HasAll, Has, CanReachRegion, HasAny, CanReachLocation
+    from rule_builder.rules import HasAll, Has, CanReachRegion, CanReachLocation
     for quest in quest_data:
         data = quest_data[quest]
         if quest in world.important_quests:
@@ -149,7 +149,7 @@ def set_quest_rules(world) -> None:
             if quest == "Quest: Case of the Vicious Blight":
                 rule &= (Has("Camera") & cave_troll_areas) | Has("Photo 1")
             elif quest == "Quest: Case of the Demon Horse":
-                rule &= Has("Camera") & HasAny("Photo 2", "Map: Argila Swamp")
+                rule &= HasAll("Camera", "Map: Argila Swamp") | Has("Photo 2")
             elif quest == "Quest: Case of the Hideous Snowman":
                 rule &= (Has("Camera") & CanReachRegion("Tymeo Mountains East")) | Has("Photo 3")
             elif quest == "Quest: The Killing Scream":
@@ -191,4 +191,4 @@ def patch_event_quests(world, rom, locations) -> None:
             name = quest.name
             if quest.item.name in item_table:
                 rom.write_to_file(location_data_table[name].pointer, "arm9", struct.pack("H", get_item_id(world, quest.item)))
-                rom.write_to_file(location_data_table[name].pointer +0x09, "arm9", bytearray([0x01])) # Is item flag
+                rom.write_to_file(location_data_table[name].pointer + 0x09, "arm9", bytearray([0x01]))  # Is item flag

@@ -154,6 +154,7 @@ location_ids = {
     "Final Approach: Treasure Room Second From Right": 0x8D,
     "Kalidus Channel: Depths Secret Room Left Chest": 0x8E,
     "Final Approach: Central Room Right Chest": 0x8F,
+
     "Monastery: Hidden Room": 0x96,
     "Minera Prison Island: Right Vertical Chest": 0x97,
     "Kalidus Channel: Depths Right Left Chest": 0x98,
@@ -169,6 +170,7 @@ location_ids = {
     "Kalidus Channel: Depths Secret Room Right Chest": 0xA2,
     "Final Approach: Upper Isolated Chest": 0xA3,
     "Monastery: Big Room Ledge": 0xAA,
+
     "Kalidus Channel: Ship Room Hidden Chest": 0xAB,
     "Minera Prison Island: Hidden Room": 0xAC,
     "Tymeo Mountains: Hidden Room": 0xAD,
@@ -236,6 +238,7 @@ location_ids = {
     "Misty Forest Road: Ledge Item": 0xEC,
     "Barracks: Connector Chest": 0xED,
     "Monastery: First Shaft": 0xEF,
+
     #  "Monastery: Final Shaft Uppper Hidden Item": 0xF2, I dont think this can spawn?
     "Castle Entrance: First Shaft Hidden Item": 0xF2,  # Same flag? Check on
     "Large Cavern: Final Reward 2": 0xF4,
