@@ -345,8 +345,8 @@ class ShuffleCerberus(Choice):
     """Where the three Cerberus glyphs can be found.
        Vanilla: The Cerberus Glyphs can be found at their normal locations.
        Regional: The Cerberus Glyphs can be found in any location in their original region of the castle.
-       Shuffled: The Cerberus Glyphs can be found at any location in Dracula's Castle.
-       "Shuffled Singular: The Cerberus Glyphs can be found anywhere in the Castle, but there will only be one a given area.
+       Shuffled: The Cerberus Glyphs can be found at any location in Dracula's Castle besides Final Approach and Forsaken Cloister.
+       Shuffled Singular: The Cerberus Glyphs can be found anywhere in the Castle, but there will only be one a given area.
        Anywhere: The Cerberus Glyphs can be found anywhere."""
     display_name = "Shuffle Cerberus Glyphs"
     option_vanilla = 0

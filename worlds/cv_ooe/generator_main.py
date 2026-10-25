@@ -241,7 +241,7 @@ def write_spoiler_header(world, spoiler_handle: typing.TextIO) -> None:
         if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
             for enemy in world.glyph_drops:
                 spoiler_handle.write(f"\n   {enemy}: {world.glyph_drops[enemy]}")
-        spoiler_handle.write("\n")
+            spoiler_handle.write("\n")
 
     if world.options.randomize_castle_doors:
         spoiler_handle.write("\nCastle Entrances:")

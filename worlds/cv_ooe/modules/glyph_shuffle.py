@@ -41,10 +41,19 @@ def shuffle_glyphs(world) -> None:
     }
 
     if world.options.randomize_stolen_glyphs == RandomStolenGlyphs.option_shuffled:
+        if world.options.remove_large_cavern:  # Remove the Glyphs we can't access...
+            world.glyph_steals.pop("Jiang Shi")
+            world.glyph_steals.pop("Demon Lord")
+
         for enemy in world.glyph_steals:
+            if enemy == "Demon Lord":  # Demon Lord doesn't have a *unique* Glyph, so don't roll one for it
+                continue
+
             new_glyph = world.random.choice(world.glyph_pool)
             world.glyph_pool.remove(new_glyph)
             world.glyph_steals[enemy] = new_glyph
+        if not world.options.remove_large_cavern:
+            world.glyph_steals["Demon Lord"] = world.glyph_steals["Barlowe"]  # Set these to be the same like vanilla
 
     if world.options.randomize_dropped_glyphs == RandomDropGlyphs.option_shuffled:
         for enemy in world.glyph_drops:
