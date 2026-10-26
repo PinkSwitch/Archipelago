@@ -64,3 +64,14 @@ You can time the invincibility frames of Arma Felix's tackle attack to get throu
 ![](../src/tricks/tower_jump_right.gif)
 
 You can dive kick off of the Imp in the lowest gears room to ascend both sides.
+### ---------------------------------------------------------------
+## • Misty Forest Ledges with Kicks
+![](../src/tricks/misty_ledges_with_kicks.gif)
+
+You can dive kick off of the enemies to reach the item ledges in Misty Forest road,
+though it's more awkward than in Oblivion Ridge.
+### ---------------------------------------------------------------
+## • Speed Boots in Logic
+![](../src/tricks/logic_boots_speed.gif)
+
+You can make it across certain gaps by equipping the Mercury or Winged bootss.
