@@ -149,21 +149,21 @@ def connect_regions(world):
 
     world.get_region("Somnus Reef").connect(world.get_region("Somnus Reef Main"), rule=Has("Serpent Scale"))
 
-    world.get_region("Lighthouse").connect(world.get_region("Lighthouse Past Spikes"), rule=HasAny("Magnes", "Volaticus", "Rapidus Fio", "Arma Machina"))
+    world.get_region("Lighthouse").connect(world.get_region("Lighthouse Past Spikes"), rule=HasAny("Magnes", "Volaticus", "Rapidus Fio", "Arma Machina", "Mercury Boots", "Winged Boots") | Has("Arma Felix", options=[OptionFilter(LogicTricks, "Cross Spikes With Arma Felix", operator="contains")]))
     world.get_region("Lighthouse Past Spikes").connect(world.get_region("Lighthouse Post-Boss"), rule=HasAny("Magnes", "Volaticus", "Ordinary Rock"))
 
     world.get_region("Giant's Dwelling").connect(world.get_region("Giant's Dwelling Main"), rule=Has("Ordinary Rock") | can_fly)
 
     world.get_region("Tymeo Mountains").connect(world.get_region("Tymeo Mountains Past Spikes Room"), rule=HasAny("Magnes", "Volaticus", "Arma Machina") |
-                                                Has("Arma Felix", options=[OptionFilter(LogicTricks, "Tymeo Mountains Spike Room With Arma Felix", operator="contains")]))
-    world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Rapidus Fio") | can_fly)
+                                                Has("Arma Felix", options=[OptionFilter(LogicTricks, "Cross Spikes With Arma Felix", operator="contains")]))
+    world.get_region("Tymeo Mountains Past Spikes Room").connect(world.get_region("Tymeo Mountains East"), rule=HasAny("Ordinary Rock", "Rapidus Fio") | can_fly | HasAll("Arma Felix", "Winged Boots"))
 
     world.get_region("Tristis Pass").connect(world.get_region("Tristis Pass Frozen Area"), rule=Has("Ordinary Rock") | can_fly)
     world.get_region("Tristis Pass Frozen Area").connect(world.get_region("Tristis Pass Waterfall"), rule=CanReachLocation("Tristis Pass: Frozen Waterfall Glyph"))
     
     world.get_region("Monastery").connect(world.get_region("Monastery Magnets Area"), rule=HasAny("Magnes", "Volaticus"))
 
-    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Rapidus Fio", "Arma Felix") | can_fly)
+    world.get_region("Mystery Manor").connect(world.get_region("Mystery Manor Main"), rule=HasAny("Ordinary Rock", "Rapidus Fio", "Arma Felix", "Winged Boots", "Mercury Boots") | can_fly)
 
     world.get_region("Oblivion Ridge").connect(world.get_region("Oblivion Ridge Beyond Boss"), rule=can_slide | OptionFilter(LogicTricks, "Gravedorcus Without Slide", operator="contains"))
 
@@ -214,7 +214,7 @@ def connect_regions(world):
 
     world.get_region("Mechanical Tower Middle Area").add_exits({"Mechanical Tower", "Mechanical Tower Lower"}, {
         "Mechanical Tower Lower": HasAny("Magnes", "Volaticus") |
-                                  Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room with Double Jump", operator="contains")]),
+                                  Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room With Double Jump", operator="contains")]),
         "Mechanical Tower": HasAny("Magnes", "Volaticus")
     })
 
@@ -223,7 +223,7 @@ def connect_regions(world):
     world.get_region("Mechanical Tower Upper Exit").connect(world.get_region("Mechanical Tower Upper"), rule=HasAny("Magnes", "Volaticus"))
 
     world.get_region("Mechanical Tower Lower").connect(world.get_region("Arms Depot"), "Sec06Rm01")
-    world.get_region("Mechanical Tower Lower").connect(world.get_region("Mechanical Tower Middle Area"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room with Double Jump", operator="contains")]))
+    world.get_region("Mechanical Tower Lower").connect(world.get_region("Mechanical Tower Middle Area"), rule=HasAny("Volaticus", "Magnes") | Has("Ordinary Rock", options=[OptionFilter(LogicTricks, "Mechanical Tower Lowest Gear Room With Double Jump", operator="contains")]))
     ########################################################
     world.get_region("Arms Depot").connect(world.get_region("Mechanical Tower Lower"), "Sec08Rm02")
     ########################################################

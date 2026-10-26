@@ -54,10 +54,10 @@ You can reach the first chest in Skeleton Cave by first killing the top Bone Pil
 
 If you fail to keep up with the moving platform, you can simply wait for it to come back around.
 ### --------------------------------------------------------------
-## • Tymeo Mountains Spike Room With Arma Felix
+## • Cross Spikes with Arma Felix
 ![](../src/tricks/tymeo_spike_tackle.gif)
 
-You can time the invincibility frames of Arma Felix's tackle attack to get through the spike hallway in Tymeo Mountains without taking damage.
+You can time the invincibility frames of Arma Felix's tackle attack to get through rows of spikes without taking damage.
 ### ---------------------------------------------------------------
 ## • Mechanical Tower Lowest Gear Room with Double Jump
 ![](../src/tricks/tower_jump_left.gif)

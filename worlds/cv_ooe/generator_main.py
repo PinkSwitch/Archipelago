@@ -108,13 +108,17 @@ def set_classifications(world, name, as_filler=False, arbitrary_event=False) -> 
         return item
 
     item_data = item_table[name]
+
     item = CVOoEItem(name, item_data.classification, item_data.code, world.player)
+
     if name in world.logical_regular_glyphs:
         item.classification = ItemClassification.progression  # If this is a Glyph with logic, make sure it's Progress!
     elif name in world.quest_items:
         item.classification = ItemClassification.progression  # Force required quest items to be prog
     elif name in world.glyph_pool and ItemClassification.progression not in item.classification:  # Don't override actual progression glyphs
         item.classification = ItemClassification.useful  # If this is a Static Glyph, make it Useful as it's unique!
+    elif name in ["Winged Boots", "Mercury Boots"] and "Speed Boots In Logic" in world.options.logic_tricks.value:
+        item.classification = ItemClassification.progression
 
     return item
 
