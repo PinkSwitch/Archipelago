@@ -184,6 +184,11 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     write_cat_hints(world, rom)
     ###############################################
+    if world.options.family_quests_without_everyone:  # Skip the code that checks for the whole family
+        rom.write_to_file(0x022358F8, "overlay_22", struct.pack("I"), 0xEA00001E)  # Serge
+        rom.write_to_file(0x02235D08, "overlay_22", struct.pack("I"), 0xEA00001E)  # Anna
+        rom.write_to_file(0x022361A0, "overlay_22", struct.pack("I"), 0xEA000017)  # Irina
+
     # Patch in a list of which items need to be conditionally marked as important
     for index, item in enumerate(world.quest_items):
         #  Quest items are always ID's < 0x100, so we can allocate only one byte per item to save space

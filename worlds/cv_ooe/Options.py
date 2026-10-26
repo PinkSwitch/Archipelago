@@ -367,6 +367,11 @@ class DraculaVillagers(Range):
     default = 0
 
 
+class FamilyQuestsWithoutEveryone(Toggle):
+    """If enabled, you'll be able to complete Serge, Anna, and Irina's quests without needing to save all three."""
+    display_name = "Family Quests without Everyone"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -408,6 +413,7 @@ class OoEOptions(PerGameCommonOptions):
     excluded_no_hit_chests: ExcludedNoHits
     shuffle_cerberus_glyphs: ShuffleCerberus
     dracula_villagers_required: DraculaVillagers
+    family_quests_without_everyone: FamilyQuestsWithoutEveryone
 
 
 ooe_option_groups = [
@@ -439,7 +445,8 @@ ooe_option_groups = [
         ActiveQuests,
         ExcludedQuests,
         UnlockAllQuests,
-        RandomizeQuestKeyItems
+        RandomizeQuestKeyItems,
+        FamilyQuestsWithoutEveryone
     ]),
 
     OptionGroup("Glyph Options", [

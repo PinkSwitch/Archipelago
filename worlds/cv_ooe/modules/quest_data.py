@@ -132,11 +132,11 @@ def set_quest_rules(world) -> None:
             if data.required_items:
                 rule &= HasAll(*set(data.required_items))  # Mark that we need all of the relevant items...
             #  The 3 family quests can only be done if all of the members are rescued
-            if data.villager == "Serge":
+            if data.villager == "Serge" and not world.options.family_quests_without_everyone:
                 rule &= HasAll("Anna", "Irina")
-            elif data.villager == "Anna":
+            elif data.villager == "Anna" and not world.options.family_quests_without_everyone:
                 rule &= HasAll("Serge", "Irina")
-            elif data.villager == "Irina":
+            elif data.villager == "Irina" and not world.options.family_quests_without_everyone:
                 rule &= HasAll("Serge", "Anna")
 
             # Quests with specific rules
