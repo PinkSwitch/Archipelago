@@ -1999,6 +1999,11 @@
     blt @@BadEndingCheck 
     b 0x0223780C  ; If the player has all 3 Dominus, and the right amount of villagers, start Barlowe's fight
 @@BadEndingCheck:
+    ldr r0, = @OptionFlag_DominuslessBarlowe
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq 0x022377C4  ; If Dominusless is on, don't trigger the bad ending at ALL.
+
     mov r0, 0x73 
     bl 0x020633F0  ; If we're triggering the bad ending, we want to check that the player has Glyph Union so that they don't get softlocked
     cmp r0, 0
@@ -4834,6 +4839,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Shows relevant text from Barlowe based on current items
 @BarloweDialogueHandler:
+    ldr r0, = @OptionFlag_DominuslessBarlowe
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @@SkipDominusCheck
     bl @CountDominusPieces
     cmp r0, 0
     beq @@BarloweTex_NoDominus
@@ -4846,6 +4855,7 @@
     bl 0x020633F0
     cmp r0, 0 ; If the player has Dominus, but does NOT have Glyph Union
     beq @@BarloweTex_NoUnion
+@@RoomReload:
     mov r0, 0x0B0
     strh r0, [r13]
     mov r0, 2
@@ -4870,6 +4880,13 @@
     mov r0, r4
     bl 0x02232378
     b 0x02237AD0
+@@SkipDominusCheck:
+    bl 0x0223488C ; If Dominus is disabled, get villager count instead
+    ldr r1, =@OptionFlag_RequiredVillagers
+    ldrb r1, [r1]
+    cmp r0, r1
+    blt  @@BarloweTex_NoUnion ; Use this trigger in this case
+    b @@RoomReload
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;

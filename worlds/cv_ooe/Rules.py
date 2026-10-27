@@ -14,7 +14,7 @@ def set_location_rules(world):
     set_rule = world.set_rule
     world.set_completion_rule(Has("Dracula Defeated"))
 
-    set_rule(world.get_location("Ecclesia: Barlowe Fight"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", options=[OptionFilter(DominuslessBarlowe, True)], filtered_resolution=True)
+    set_rule(world.get_location("Ecclesia: Barlowe Fight"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", options=[OptionFilter(DominuslessBarlowe, False)], filtered_resolution=True)
              & HasGroupUnique("Villagers", count=FromOption(VillagersRequired)))
 
     set_rule(world.get_location("Kalidus Channel: First Room Underwater"), Has("Serpent Scale"))
@@ -41,8 +41,8 @@ def set_location_rules(world):
 
     set_rule(world.get_location("Mystery Manor: Dark Room Chest"), Has("Arma Machina"))
 
-    set_rule(world.get_location("Misty Forest Road: Right Big Room Ledge"), HasAny("Volaticus", "Rapidus Fio", "Magnes") | Has("Ordinary Rock") & (Has("Winged Boots") | OptionFilter(LogicTricks, "Misty Ledges With Kicks", operator="contains")))
-    set_rule(world.get_location("Misty Forest Road: Ledge Item"), Has("Rapidus Fio") | can_fly | Has("Ordinary Rock") & (Has("Winged Boots") | OptionFilter(LogicTricks, "Misty Ledges With Kicks", operator="contains")))
+    set_rule(world.get_location("Misty Forest Road: Right Big Room Ledge"), HasAny("Volaticus", "Rapidus Fio", "Magnes") | (Has("Ordinary Rock") & (Has("Winged Boots") | OptionFilter(LogicTricks, "Misty Forest Ledges With Kicks", operator="contains"))))
+    set_rule(world.get_location("Misty Forest Road: Ledge Item"), Has("Rapidus Fio") | can_fly | (Has("Ordinary Rock") & (Has("Winged Boots") | OptionFilter(LogicTricks, "Misty Forest Ledges With Kicks", operator="contains"))))
     set_rule(world.get_location("Misty Forest Road: Paries Room Hidden Item"), Has("Paries"))
     set_rule(world.get_location("Misty Forest Road: Paries Room Pickup"), Has("Paries"))
     set_rule(world.get_location("Misty Forest Road: Paries Room Chest"), Has("Paries"))
