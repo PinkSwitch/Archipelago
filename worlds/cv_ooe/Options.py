@@ -382,6 +382,11 @@ class UnlockFullShop(Toggle):
     display_name = "Unlock Full Shop"
 
 
+class DominuslessBarlowe(Toggle):
+    """If enabled, you'll be able to trigger Barlowe's event without first obtaining the three pieces of Dominus."""
+    display_name = "Dominusless Barlowe"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -426,13 +431,15 @@ class OoEOptions(PerGameCommonOptions):
     family_quests_without_everyone: FamilyQuestsWithoutEveryone
     randomize_shop_items: ShopRandomizer
     unlock_full_shop: UnlockFullShop
+    dominusless_barlowe: DominuslessBarlowe
 
 
 ooe_option_groups = [
     OptionGroup("Goal Settings", [
         VillagersRequired,
         BarloweRequired,
-        DraculaVillagers
+        DraculaVillagers,
+        DominuslessBarlowe
     ]),
 
     OptionGroup("Starting Items", [

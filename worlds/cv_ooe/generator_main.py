@@ -47,6 +47,7 @@ def generate_early(world) -> None:
         world.options.dracula_villagers_required.value = passthrough["dracula_villagers"]
         world.options.shuffle_cerberus_glyphs.value = passthrough["cerberus_placement"]
         world.options.family_quests_without_everyone.value = passthrough["family_quests"]
+        world.options.dominusless_barlowe.value = passthrough["dominusless_barlowe"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -203,7 +204,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "unlock_quests": world.options.unlock_all_quests.value,
         "dracula_villagers": world.options.dracula_villagers_required.value,
         "cerberus_placement": world.options.shuffle_cerberus_glyphs.value,
-        "family_quests": world.options.family_quests_without_everyone.value
+        "family_quests": world.options.family_quests_without_everyone.value,
+        "dominusless_barlowe": world.options.dominusless_barlowe.value
     }
 
 

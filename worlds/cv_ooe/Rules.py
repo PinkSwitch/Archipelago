@@ -1,6 +1,7 @@
 from rule_builder.rules import HasAll, HasAny, Has, CanReachLocation, HasGroupUnique, OptionFilter
 from rule_builder.field_resolvers import FromOption
-from .Options import VillagersRequired, AddBrownChests, BarloweRequired, LogicTricks, DraculaVillagers
+from .Options import (VillagersRequired, AddBrownChests, BarloweRequired, LogicTricks, DraculaVillagers,
+                      DominuslessBarlowe)
 
 can_fly = Has("Volaticus") | HasAll("Magnes", "Redire",
                                     options=[OptionFilter(LogicTricks, "Redire Flight", operator="contains")])
@@ -13,7 +14,8 @@ def set_location_rules(world):
     set_rule = world.set_rule
     world.set_completion_rule(Has("Dracula Defeated"))
 
-    set_rule(world.get_location("Ecclesia: Barlowe Fight"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony") & HasGroupUnique("Villagers", count=FromOption(VillagersRequired)))
+    set_rule(world.get_location("Ecclesia: Barlowe Fight"), HasAll("Dominus Hatred", "Dominus Anger", "Dominus Agony", options=[OptionFilter(DominuslessBarlowe, True)], filtered_resolution=True)
+             & HasGroupUnique("Villagers", count=FromOption(VillagersRequired)))
 
     set_rule(world.get_location("Kalidus Channel: First Room Underwater"), Has("Serpent Scale"))
     set_rule(world.get_location("Kalidus Channel: Second Room Underwater"), Has("Serpent Scale"))
