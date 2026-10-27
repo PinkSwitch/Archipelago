@@ -1969,11 +1969,12 @@
 ;;;;;;;;;;;;;;;;;;;;
 ; Handles Ecclesia events
 @BarloweEventHandler:
+    push r1
     ldr r0, =0x02100388
     ldr r0, [r0]
     tst r0, 0x04000000 ; Don't check this if we've already dealt with Barlowe.
     movne r0, 0
-    bne 0x022377C4
+    bne @@PopAndReturn
     ldr r0, = @OptionFlag_DominuslessBarlowe
     ldrb r0, [r0]
     cmp r0, 1
@@ -1981,15 +1982,15 @@
     mov r0, 0x32 ; Dominus Hatred
     bl 0x020633F0
     cmp r0, 0
-    beq 0x022377C4
+    beq @@PopAndReturn
     mov r0, 0x33 ; Dominus Anger
     bl 0x020633F0
     cmp r0, 0
-    beq 0x022377C4
+    beq @@PopAndReturn
     mov r0, 0x4F ; Dominus Agony
     bl 0x020633F0
     cmp r0, 0
-    beq 0x022377C4 ; We want to check that the player has all 3 Dominus before proceeding, instead of the Albus flag
+    beq @@PopAndReturn ; We want to check that the player has all 3 Dominus before proceeding, instead of the Albus flag
     ; We know the player has all of Dominus, so check the bad ending next
 @@SkipDominusCheck:
     bl 0x0223488C ; Check the villagers
@@ -1997,18 +1998,24 @@
     ldrb r1, [r1]
     cmp r0, r1
     blt @@BadEndingCheck 
+    pop r1
     b 0x0223780C  ; If the player has all 3 Dominus, and the right amount of villagers, start Barlowe's fight
 @@BadEndingCheck:
     ldr r0, = @OptionFlag_DominuslessBarlowe
     ldrb r0, [r0]
     cmp r0, 1
-    beq 0x022377C4  ; If Dominusless is on, don't trigger the bad ending at ALL.
+    beq @@PopAndReturn  ; If Dominusless is on, don't trigger the bad ending at ALL.
 
     mov r0, 0x73 
     bl 0x020633F0  ; If we're triggering the bad ending, we want to check that the player has Glyph Union so that they don't get softlocked
     cmp r0, 0
-    beq 0x022377C4
+    beq @@PopAndReturn
+    pop r1
     b 0x0223779C ; Trigger the ending
+@@PopAndReturn:
+    pop r1
+    mov r0, 0
+    b 0x022377C4
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Skips the villager runthrough after getting the Bad Ending.
 @SkipBadEnding:
