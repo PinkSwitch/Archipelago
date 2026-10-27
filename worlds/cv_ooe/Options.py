@@ -372,6 +372,16 @@ class FamilyQuestsWithoutEveryone(Toggle):
     display_name = "Family Quests without Everyone"
 
 
+class ShopRandomizer(Toggle):
+    """Randomizes the items available for purchase in the shop."""
+    display_name = "Shop Randomizer"
+
+
+class UnlockFullShop(Toggle):
+    """If enabled, all of the shop items unlocked by completing Quests will be available from the start."""
+    display_name = "Unlock Full Shop"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -414,6 +424,8 @@ class OoEOptions(PerGameCommonOptions):
     shuffle_cerberus_glyphs: ShuffleCerberus
     dracula_villagers_required: DraculaVillagers
     family_quests_without_everyone: FamilyQuestsWithoutEveryone
+    randomize_shop_items: ShopRandomizer
+    unlock_full_shop: UnlockFullShop
 
 
 ooe_option_groups = [
@@ -470,6 +482,12 @@ ooe_option_groups = [
         APMultiplier,
         ShuffleEnemyDrops,
         WeightEnemyDrops
+
+    ]),
+
+    OptionGroup("Shop Options", [
+        ShopRandomizer,
+        UnlockFullShop
 
     ]),
 

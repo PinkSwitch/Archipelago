@@ -109,6 +109,7 @@ def patch_rom(world, rom, code_patch):
     from .modules.area_shuffle import patch_castle_connections
     from .modules.drop_shuffle import shuffle_drops
     from .modules.quest_data import patch_event_quests
+    from .modules.shop_randomizer import randomize_shop
 
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
@@ -188,6 +189,12 @@ def patch_rom(world, rom, code_patch):
         rom.write_to_file(0x022358F8, "overlay_22", struct.pack("I"), 0xEA00001E)  # Serge
         rom.write_to_file(0x02235D08, "overlay_22", struct.pack("I"), 0xEA00001E)  # Anna
         rom.write_to_file(0x022361A0, "overlay_22", struct.pack("I"), 0xEA000017)  # Irina
+    ################################################
+    if world.options.unlock_full_shop:
+        rom.write_to_file(0x022002A0, "overlay_19", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the check for having cleared each quest
+    ################################################
+    if world.options.randomize_shop_items:
+        randomize_shop(world, rom)
 
     # Patch in a list of which items need to be conditionally marked as important
     for index, item in enumerate(world.quest_items):
