@@ -191,6 +191,20 @@
     .org 0x020A96FC
         bl 0x020636D8 ; Same as the above, but for multi-item quests
 
+    .org 0x020F58B2
+        .dh 0xD3 ; Set the subquest item for Jacob. This isn't a check, but it is used for the VIP card...
+
+    .org 0x0206DD28
+        b @GetExtendedGlyphColors
+
+    .org 0x020C98DC ; Purple palette for Glyohs
+        .db 0x01, 0x08, 0x22, 0x10, 0x43, 0x18, 0x65, 0x24, 0x86, 0x2C, 0x87, 0x34, 0xA9, 0x40, 0xCA
+        .db 0x48, 0xEC, 0x4C, 0x0E, 0x55, 0x30, 0x59, 0x72, 0x61, 0x94, 0x65, 0xB7, 0x6D
+
+    .org 0x020C98BC ; Cyan palette for glyphs
+        .db 0x80, 0x10, 0xC0, 0x18, 0xE0, 0x1C, 0x60, 0x29, 0x80, 0x31, 0xA1, 0x35, 0xE1, 0x3D, 0x21, 0x46
+        .db 0x62, 0x4E, 0xA3, 0x52, 0xE4, 0x5E, 0x25, 0x63, 0x46, 0x67, 0xA8, 0x73
+
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -375,6 +389,25 @@
 
     .org 0x0221D5FC
         b @WarpToMap
+
+    .org 0x02200184
+        b @SetBetterShop_BasePool1
+
+    .org 0x02200188
+        .dh 0x83, 0xEC, 0x10C, 0x7D, 0xE7, 0x12B, 0x12C ; Dynamic pool for Base Shop 1
+
+    .org 0x02200208
+        b @SetBetterShop_BasePool2
+
+    .org 0x0220020C
+        .dh 0x12D, 0x12E, 0x129 ; Dynamic pool for Base Shop 2
+
+    .org 0x0220025C
+        b @SetBetterShop_BasePool3
+
+    .org 0x02200260
+        .dh 0x12F, 0x130, 0x10E
+        
 
 .close
 ;;;;;;;;;;;;;;;;;;;;;
@@ -707,6 +740,9 @@
     .org 0x022357C4
         mov r0, 0x13 ; The Killing Scream, subquest ID for George
 
+    .org 0x02233978
+        mov r0, 0x00 ; Set the subquest number for Jacob
+
     .org 0x02233800
         b @GetSubquestItem_George
 
@@ -745,6 +781,9 @@
 
     .org 0x02237ACC
         b @BarloweDialogueHandler
+
+    .org 0x022ACE14
+        .dw @NewWallmanBackdoor ; Set the entity pointer for hte after wallman room
 
         
 .close
@@ -1180,6 +1219,12 @@
 @OptionFlag_UnlockAllQuests: ;22EB4D0
     .db 0x00
 
+@OptionFlag_DracVillagers: ;22EB4D1
+    .db 0x00
+
+@OptionFlag_DominuslessBarlowe: ;22EB4D2
+    .db 0x00
+
 .align 4
 
 @ROMTable_QuestItems: ;22EB4D4
@@ -1463,6 +1508,8 @@
 ; Sets r0 Location Flag.
 @SetLocFlag:
     push r1-r3,lr
+    cmp r0, 0
+    beq @@Exit  ; Don't try to set flag 0
     mov r1, 8
     bl 0x02023E68
     ldr r2, =0x02100398
@@ -1472,6 +1519,7 @@
     lsl r1, r3, r1
     orr r0, r0, r1
     strb r0, [r2]
+@@Exit:
     pop r1-r3,lr
     bx lr
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1765,8 +1813,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Spawns the new Glyph for Cubus. uses the block object's VarB
 @SetCubusEvnGlyph:
+    push r0,lr
+    mov r0, 0x1F
+    bl @CheckLocFlag
+    cmp r0, 1
+    moveq r3, 0
+    beq @@SkipGlyphAndClose
     add r3, r8, 0x100
     ldrh r3, [r3, 0x3E] ; VarB
+@@SkipGlyphAndClose:
+    pop r0,lr
     bx lr
 
 ; Spawns Glyphs that are created as part of other objects. Lighthouse, umbra, etc.
@@ -1918,6 +1974,10 @@
     tst r0, 0x04000000 ; Don't check this if we've already dealt with Barlowe.
     movne r0, 0
     bne 0x022377C4
+    ldr r0, = @OptionFlag_DominuslessBarlowe
+    ldrb r0, [r0]
+    cmp r0, 1
+    beq @@SkipDominusCheck
     mov r0, 0x32 ; Dominus Hatred
     bl 0x020633F0
     cmp r0, 0
@@ -1929,8 +1989,9 @@
     mov r0, 0x4F ; Dominus Agony
     bl 0x020633F0
     cmp r0, 0
-    beq 0x022377C4 ; We want to check that the player has all 3 Dominus + Glyph Union before proceeding, instead of the Albus flag
-    ; We know the player has all of Dominus + Union, so check the bad ending next
+    beq 0x022377C4 ; We want to check that the player has all 3 Dominus before proceeding, instead of the Albus flag
+    ; We know the player has all of Dominus, so check the bad ending next
+@@SkipDominusCheck:
     bl 0x0223488C ; Check the villagers
     ldr r1, =@OptionFlag_RequiredVillagers
     ldrb r1, [r1]
@@ -3174,6 +3235,15 @@
     cmp r0, 0x0F ; Dracula
     beq @@LockDraculaDoor
 @@DontLockDoor:
+    push r1
+    bl 0x0223488C ; Get the villager count
+    ldr r1, = @OptionFlag_DracVillagers
+    ldrb r1, [r1]
+    cmp r0, r1
+    pop r1
+    blt 0x02297150 ; If rescued < required, don't open the door
+
+
     mov r0, r5
     b 0x02296B10
 @@LockDraculaDoor:
@@ -3896,7 +3966,7 @@
     b 0x02234D5C
 
 @@CheckQuest4:
-    mov r0, 0x01
+    mov r0, 0x04
     bl 0x020A9E28
     tst r0, 0x02
     beq 0x02234BC8
@@ -3905,11 +3975,11 @@
     mov r0, 0xC1 ; Sage
     bl 0x020636D8
     cmp r0, 0
-    beq @@CheckQuest4
+    beq 0x02234BC8
     mov r0, 0xC5 ; Merman Meat
     bl 0x020636D8
     cmp r0, 0
-    beq @@CheckQuest4
+    beq 0x02234BC8
     mov r0, 0x2
     mov r1, 0x03
     bl @PrimeQuestForCompletion
@@ -4734,6 +4804,8 @@
     push r0,r2
     ldr r1, = @ROMTable_QuestItems
     ands r0, r0, 0xFF ; Chop off the top byte
+    cmp r0, 0xFF ; Invalid quest item
+    beq @@Exit
 @@Loop:
     ldrb r2, [r1]
     cmp r0, r2
@@ -4885,9 +4957,118 @@
     .db 0x53, 0xE8, 0x01, 0x00, 0x49, 0x4E, 0x53, 0x54, 0x45, 0x41, 0x44, 0x0E, 0x0E, 0x0E, 0x09 ; after <rescuing more villagers> instead...
     .db 0xE6, 0xE5, 0xE4, 0xEA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Entity list for the post-wallman room
+@NewWallmanBackdoor:
+    .dh 0x80
+    .dh 0xAF
+    .db 0
+    .db 0x02
+    .db 0x02
+    .db 0
+    .dh 0x09
+    .dh 0
 
-    
+    .dh 0
+    .dh 0
+    .db 0
+    .db 0x02
+    .db 0x3D
+    .db 0
+    .dh 0
+    .dh 0
 
+
+    .dh 0x130
+    .dh 0xAF
+    .db 0
+    .db 0x01
+    .db 0x4F
+    .db 0
+    .dh 0
+    .dh 0
+
+    .dh 0xC0
+    .dh 0xAF
+    .db 0
+    .db 0x01
+    .db 0x4E
+    .db 0
+    .dh 0
+    .dh 0
+;Boss door for Wallman
+    .dh 0x0
+    .dh 0xB0
+    .db 0x00
+    .db 0x02
+    .db 0x4B
+    .db 0
+    .dh 0x0000
+    .dh 0x000A ; Wallman flag
+    .dh 0x7FFF
+    .dh 0x7FFF
+.align 4
+;;;;;;;;;;;;;;;;;;;;;;;;
+; Uses the unused Glyph Colors for AP items
+@GetExtendedGlyphColors:
+    cmp r0, 0xD4 ; AP filler
+    beq @@SetGlyphAsCyan
+    cmp r0, 0xD6 ; AP Prog
+    beq @@SetGlyphAsPurple
+    bl 0x0206A664  ; Check if it's a Back glyph and return to normal
+    b 0x0206DD2C ; Useful glyphs will be set to Blue as they normally are
+@@SetGlyphAsCyan:
+    mov r0, 0x03
+    b 0x0206DD38
+@@SetGlyphAsPurple:
+    mov r0, 0x04
+    b 0x0206DD38
+;;;;;;;;;;;;;;;;;;;;;;
+; Better handler for the shop's first regular pool, instead of hardcoding items
+@SetBetterShop_BasePool1:
+    push r3,r4
+    ldr r3, = 0x02200188
+    mov r4, 0x07
+    bl @GetShopPoolFromPointer
+    pop r3,r4
+    b 0x022001D8
+
+; This shop is activated after defeating Maneater
+@SetBetterShop_BasePool2:
+    push r3,r4
+    ldr r3, = 0x0220020C
+    mov r4, 0x03
+    bl @GetShopPoolFromPointer
+    pop r3,r4
+    b 0x0220022C
+
+; This shop is activated after defeating Goliath
+@SetBetterShop_BasePool3:
+    push r3,r4
+    ldr r3, = 0x02200260
+    mov r4, 0x03
+    bl @GetShopPoolFromPointer
+    pop r3,r4
+    b 0x02200280
+
+
+
+
+; Loads a shop from pointer r3.
+; r4 is the number of items
+@GetShopPoolFromPointer:
+    push r5,lr
+    mov r5, 2
+    mul r5, r4, r5
+    mov r4, 0
+@@Loop:
+    ldrh r0, [r3, r4]
+    mov r1, 1
+    bl 0x02063760 ; Set the item as shop-active
+    add r4, r4, 2
+    cmp r4, r5
+    blt @@Loop
+    pop r5,lr
+    bx lr
 
 
 .pool

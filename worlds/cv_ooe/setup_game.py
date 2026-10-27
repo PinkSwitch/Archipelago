@@ -133,7 +133,8 @@ def place_static_items(world) -> None:
 
         for item in target_regions:
             glyph_region = target_regions[item]
-            locs = sorted(loc for loc in areas[glyph_region] if loc in loc_list)
+            locs = sorted(loc for loc in areas[glyph_region] if loc in loc_list and
+                          world.get_location(loc).item is None)
             location = world.random.choice(locs)
             world.get_location(location).place_locked_item(world.create_item(item))
 

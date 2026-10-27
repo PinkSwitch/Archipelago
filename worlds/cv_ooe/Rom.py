@@ -187,9 +187,9 @@ def patch_rom(world, rom, code_patch):
     write_cat_hints(world, rom)
     ###############################################
     if world.options.family_quests_without_everyone:  # Skip the code that checks for the whole family
-        rom.write_to_file(0x022358F8, "overlay_22", struct.pack("I"), 0xEA00001E)  # Serge
-        rom.write_to_file(0x02235D08, "overlay_22", struct.pack("I"), 0xEA00001E)  # Anna
-        rom.write_to_file(0x022361A0, "overlay_22", struct.pack("I"), 0xEA000017)  # Irina
+        rom.write_to_file(0x022358F8, "overlay_22", struct.pack("I", 0xEA00001E))  # Serge
+        rom.write_to_file(0x02235D08, "overlay_22", struct.pack("I", 0xEA00001E))  # Anna
+        rom.write_to_file(0x022361A0, "overlay_22", struct.pack("I", 0xEA000017))  # Irina
     ################################################
     if world.options.unlock_full_shop:
         rom.write_to_file(0x022002A0, "overlay_19", bytearray([0x00, 0x00, 0xA0, 0xE1]))  # Nop out the check for having cleared each quest
