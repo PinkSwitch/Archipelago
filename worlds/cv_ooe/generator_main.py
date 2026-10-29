@@ -83,6 +83,8 @@ def create_items(world) -> None:
         pool.append(set_classifications(world, glyph))
 
     create_conditional_items(world, pool)
+    if "Speed Boots In Logic" in world.options.logic_tricks.value:
+        world.quest_items.extend(["Winged Boots", "Mercury Boots"])
 
     filler_location_count = len(world.multiworld.get_unfilled_locations(world.player)) - len(pool)
 

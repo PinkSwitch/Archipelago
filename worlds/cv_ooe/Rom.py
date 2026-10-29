@@ -12,7 +12,7 @@ from .Items import item_table
 from .Options import AddBrownChests
 from .Options import RandomStolenGlyphs
 
-world_version = "2.0.1"
+world_version = "2.1"
 hash_us = "e13bdcf706989486df939556eeb42ece"
 
 
@@ -200,7 +200,7 @@ def patch_rom(world, rom, code_patch):
     # Patch in a list of which items need to be conditionally marked as important
     for index, item in enumerate(world.quest_items):
         #  Quest items are always ID's < 0x100, so we can allocate only one byte per item to save space
-        rom.write_to_file(0x22EB4D4 + index, "overlay_86", bytearray([item_table[item].code]))
+        rom.write_to_file(0x22EB4D4 + (index * 2), "overlay_86", struct.pack("H", item_table[item].code))
     # Locations handler
     loc_list = world.get_locations()
     patch_event_quests(world, rom, loc_list)

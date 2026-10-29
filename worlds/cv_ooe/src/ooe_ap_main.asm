@@ -945,6 +945,9 @@
 .open "ftc/overlay9_52", 0x022C1Fe0
     .org 0x022C2490
         bl @SetStaticGlyph  ; Minera lightning room
+
+    .org 0x022CCDC9
+        .db 0x00 ; Gets rid of the Hard Mode checker for the minera chest
 .close
 ;;;;;;;;;;;;;;;;;;;;;;;
 .open "ftc/overlay9_53", 0x022C1FE0
@@ -1228,7 +1231,7 @@
 .align 4
 
 @ROMTable_QuestItems: ;22EB4D4
-    .fill 0x28, 0xFF
+    .fill 0x60, 0xFF
 
 .align 4
 
@@ -3247,18 +3250,17 @@
     cmp r0, 0x0F ; Dracula
     beq @@LockDraculaDoor
 @@DontLockDoor:
-    push r1
-    bl 0x0223488C ; Get the villager count
-    ldr r1, = @OptionFlag_DracVillagers
-    ldrb r1, [r1]
-    cmp r0, r1
-    pop r1
-    blt 0x02297150 ; If rescued < required, don't open the door
-
-
     mov r0, r5
     b 0x02296B10
 @@LockDraculaDoor:
+    push r1
+    bl 0x0223488C ; Get the villager count
+    ldr r1, =@OptionFlag_DracVillagers
+    ldrb r1, [r1]
+    cmp r0, r1
+    pop r1
+    blt 0x02297150 ; If Villagers is less than Drac villagers, lock the door
+
     ldr r0, = @OptionFlag_BarloweRequired
     ldrb r0, [r0]
     cmp r0, 0
@@ -4858,6 +4860,15 @@
     cmp r0, 2
     beq @@BarloweTex_TwoDominus
     ; If the player has all three pieces of Dominus...
+    push r1
+    bl 0x0223488C ; If Dominus is disabled, get villager count instead
+    ldr r1, =@OptionFlag_RequiredVillagers
+    ldrb r1, [r1]
+    cmp r0, r1
+    pop r1
+    bge @@RoomReload ; If we clear the condition, skip ahead anyway
+
+
     mov r0, 0x73
     bl 0x020633F0
     cmp r0, 0 ; If the player has Dominus, but does NOT have Glyph Union
