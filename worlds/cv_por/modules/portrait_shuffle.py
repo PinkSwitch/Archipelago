@@ -53,10 +53,10 @@ portrait_data = {
     "Sandy Grave": PortraitData([0x022FAF58, "overlay_82"], 0x03, 0x00, "Great Stairway Underground Portrait"),
     "Nation of Fools": PortraitData([0x022F875C, "overlay_84"], 0x05, 0x21, "Great Stairway Central Portrait"),
     "Forest of Doom": PortraitData([0x022FC278, "overlay_86"], 0x07, 0x00, "Tower Portrait"),
-    "Forgotten City": PortraitData([0x022F1F4C, "overlay_89"], 0x04, 0x00, "Brauner Portrait 1"),
-    "13th Street": PortraitData([0x022F1F58, "overlay_89"], 0x02, 0x07, "Brauner Portrait 2"),
-    "Burnt Paradise": PortraitData([0x022F1F64, "overlay_89"], 0x06, 0x20, "Brauner Portrait 3"),
-    "Dark Academy": PortraitData([0x022F1F70, "overlay_89"], 0x08, 0x46, "Brauner Portrait 4"),
+    "Forgotten City": PortraitData([0x022F1F4C, "overlay_89"], 0x04, 0x00, "Gallery Left Outer Portrait"),
+    "13th Street": PortraitData([0x022F1F58, "overlay_89"], 0x02, 0x07, "Gallery Left Inner Portrait"),
+    "Burnt Paradise": PortraitData([0x022F1F64, "overlay_89"], 0x06, 0x20, "Gallery Right Inner Portrait"),
+    "Dark Academy": PortraitData([0x022F1F70, "overlay_89"], 0x08, 0x46, "Gallery Right Outer Portrait"),
     "Nest of Evil": PortraitData([0x022F9194, "overlay_78"], 0x09, 0x00, "Secret Passage Portrait")
 }
 

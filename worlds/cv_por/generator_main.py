@@ -53,6 +53,7 @@ def generate_early(world) -> None:
     world.important_quests = sorted(world.important_quests)
     world.quest_requirements = sorted(world.quest_requirements)
 
+
 def create_regions(world) -> None:
     from .setup_game import place_static_items
     from .Regions import init_areas
