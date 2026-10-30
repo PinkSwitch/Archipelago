@@ -209,7 +209,7 @@ def connect_regions(world):
     world.get_region("Barracks").connect(world.get_region("Mechanical Tower"), "Sec05Rm11")
     world.get_region("Barracks").connect(world.get_region("Castle Entrance - Barracks Shortcut"), "Sec05Rm03")
     ######################################################
-    world.get_region("Mechanical Tower").add_exits({"Mechanical Tower Upper": None, "Mechanical Tower Lower": None, "Mechanical Tower Middle Area": None, "Barracks": "Sec07Rm01"}, {
+    world.get_region("Mechanical Tower").add_exits({"Mechanical Tower Upper": None, "Mechanical Tower Middle Area": None, "Barracks": "Sec07Rm01"}, {
                                              "Mechanical Tower Upper": HasAny("Magnes", "Volaticus")})
 
     world.get_region("Mechanical Tower Middle Area").add_exits({"Mechanical Tower", "Mechanical Tower Lower"}, {
