@@ -4,6 +4,7 @@ from .game_data import base_glyphs, starting_glyph_pool, valid_starting_glyphs, 
 from .generator_main import create_progress_event
 from .modules.glyph_properties import set_glyph_attributes
 from .modules.glyph_shuffle import shuffle_glyphs
+from .modules.enemy_randomizer import randomize_enemy_weaknesses
 
 
 def setup_game(world) -> None:
@@ -44,7 +45,8 @@ def setup_game(world) -> None:
 
     if world.options.open_castle:
         world.multiworld.push_precollected(create_progress_event(world, "Castle Access"))
-        
+
+    randomize_enemy_weaknesses(world)
     set_glyph_attributes(world)
     shuffle_glyphs(world)
     setup_quests(world)

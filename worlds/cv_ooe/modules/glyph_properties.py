@@ -298,7 +298,7 @@ attribute_bits = {
     "Poison": 0x0100,
     "Curse": 0x0200,
     "Stone": 0x0400,
-    "Torpor": 0x0800
+    "Freeze": 0x0800
 }
 
 
@@ -310,7 +310,7 @@ def write_glyph_attributes(world, rom):
 
     for glyph in glyph_attributes:
         if glyph == "Torpor":
-            glyph_attributes[glyph].append("Torpor")  # Torpor needs to also set this special bit
+            glyph_attributes[glyph].append("Freeze")  # Torpor needs to also set this special bit
         attribute_field = get_attribute_byte(glyph_attributes[glyph])
         rom.write_to_file(0x020F0A08 + (0x20 * item_index[glyph] + 0x0C), "arm9", attribute_field)
 

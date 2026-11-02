@@ -387,6 +387,16 @@ class DominuslessBarlowe(Toggle):
     display_name = "Dominusless Barlowe"
 
 
+class RevealBestiary(Toggle):
+    """Reveals enemy info in the Enemy Guide by default."""
+    display_name = "Reveal Enemy Guide"
+
+
+class EnemyWeaknessRandomizer(Toggle):
+    """Randomizes weaknesses and resistances of enemies."""
+    display_name = "Randomize Enemy Weaknesses"
+
+
 @dataclass
 class OoEOptions(PerGameCommonOptions):
     starting_glyph: StartingGlyph
@@ -432,6 +442,8 @@ class OoEOptions(PerGameCommonOptions):
     randomize_shop_items: ShopRandomizer
     unlock_full_shop: UnlockFullShop
     dominusless_barlowe: DominuslessBarlowe
+    randomize_enemy_weaknesses: EnemyWeaknessRandomizer
+    reveal_full_enemy_guide: RevealBestiary
 
 
 ooe_option_groups = [
@@ -488,7 +500,8 @@ ooe_option_groups = [
         ExperiencePercent,
         APMultiplier,
         ShuffleEnemyDrops,
-        WeightEnemyDrops
+        WeightEnemyDrops,
+        EnemyWeaknessRandomizer
 
     ]),
 
@@ -503,6 +516,7 @@ ooe_option_groups = [
         RevealBreakableWalls,
         RevealHiddenChests,
         OneScreenMode,
-        RestoreOnAreaExit
+        RestoreOnAreaExit,
+        RevealBestiary
     ])
 ]
