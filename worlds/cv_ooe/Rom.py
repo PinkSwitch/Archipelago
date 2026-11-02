@@ -5,6 +5,8 @@ import Utils
 import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import Sequence, NamedTuple
+
+from .modules.enemy_randomizer import patch_enemy_weaknesses
 from .static_location_data import location_data_table
 from .game_data import area_list, villager_list, villager_flags
 from BaseClasses import ItemClassification
@@ -110,6 +112,7 @@ def patch_rom(world, rom, code_patch):
     from .modules.drop_shuffle import shuffle_drops
     from .modules.quest_data import patch_event_quests
     from .modules.shop_randomizer import randomize_shop
+    from .modules.enemy_randomizer import write_enemy_weaknesses
 
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
@@ -181,6 +184,9 @@ def patch_rom(world, rom, code_patch):
     ###############################################
     write_shuffled_glyphs(world, rom)
     ###############################################
+    if world.options.randomize_enemy_weaknesses:
+        write_enemy_weaknesses(world, rom)
+
     if world.options.randomize_castle_doors:
         patch_castle_connections(world, rom)
     ###############################################
@@ -285,6 +291,7 @@ class OoEPatchExtensions(APPatchExtension):
                 drop_chance = max(drop_chance, 1)  # Great Knight has a drop chance of 0 so it ignores the multiplier
             drop_chance = int(min(100, (drop_chance * glyph_drops)))
             rom.write_to_file(address + 0x16, "arm9", bytearray([drop_chance]))
+        patch_enemy_weaknesses(rom)
 
         return rom.get_bytes()
 

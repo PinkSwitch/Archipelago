@@ -169,7 +169,7 @@ def set_glyph_attributes(world) -> None:
     for index, glyph in enumerate(world.glyph_attributes):
         if index == 47:  # We don't want Unions to be in logic here
             break
-        if "Slash" not in world.glyph_attributes[glyph] and "Dominus" not in glyph:
+        if not any(attr in world.enemy_properties["Tin Man"]["Resistances:"] for attr in world.glyph_attributes[glyph]) and "Dominus" not in glyph:
             #  Tin Man needs a non-Slash and non-Dominus glyph to be in logic
             world.can_kill_tin_man.append(glyph)
 
@@ -179,10 +179,10 @@ def set_glyph_attributes(world) -> None:
 
     if not world.can_kill_tin_man:
         #  If we somehow didn't generate a SINGLE glyph that can kill Tin Man, failsafe Secare to being Strike
-        world.glyph_attributes["Secare"] = ["Strike"]
+        world.glyph_attributes["Secare"] = world.enemy_properties["Tin Man"]["Weaknesses:"][0]
         if world.options.randomize_glyph_attributes == RandomGlyphAttributes.option_consistent:
-            world.glyph_attributes["Vol Secare"] = ["Strike"]
-            world.glyph_attributes["Melio Secare"] = ["Strike"]
+            world.glyph_attributes["Vol Secare"] = world.enemy_properties["Tin Man"]["Weaknesses:"][0]
+            world.glyph_attributes["Melio Secare"] = world.enemy_properties["Tin Man"]["Weaknesses:"][0]
             world.can_kill_tin_man.extend(["Vol Secare", "Melio Secare"])
         world.can_kill_tin_man.append("Secare")
 

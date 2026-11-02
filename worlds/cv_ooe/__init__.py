@@ -80,6 +80,7 @@ class OoEWorld(World):
         self.location_cache = []
         self.has_tried_master_ring = False
         self.has_tried_queen_of_hearts = False
+        self.has_tried_vipcard = False
         self.has_generated_output = False
         self.starting_glyph = None
         self.starting_area = None
@@ -93,6 +94,7 @@ class OoEWorld(World):
         self.important_quests = set()  # Quests that logically need to be completable, selected or not.
         self.excluded_quests = set()  # Quests that the player chose, but then excluded.
         self.quest_items = []
+        self.enemy_properties = {}  # Enemy Weaknesses/resistances
 
         self.glyph_filler_table = [
             "Torpor"]

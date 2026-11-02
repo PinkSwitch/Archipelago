@@ -48,6 +48,7 @@ def generate_early(world) -> None:
         world.options.shuffle_cerberus_glyphs.value = passthrough["cerberus_placement"]
         world.options.family_quests_without_everyone.value = passthrough["family_quests"]
         world.options.dominusless_barlowe.value = passthrough["dominusless_barlowe"]
+        world.enemy_properties = passthrough["weakness_table"]
 
     setup_game(world)
     world.auth_id = world.random.getrandbits(32)
@@ -164,10 +165,16 @@ def get_filler_item_name(world) -> str:
             filler_item = "Master Ring"
             return filler_item
 
-    if not world.has_tried_queen_of_hearts:
+    elif not world.has_tried_queen_of_hearts:
         world.has_tried_queen_of_hearts = True
         if world.random.randint(0, 101) <= 10:
             filler_item = "Queen of Hearts"
+            return filler_item
+
+    elif not world.has_tried_vipcard:
+        world.has_tried_vipcard = True
+        if world.random.randint(0, 101) <= 10:
+            filler_item = "VIP Card"
             return filler_item
 
     if filler_type not in ["consumable", "good_food", "money", "drops"]:
@@ -207,7 +214,8 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "dracula_villagers": world.options.dracula_villagers_required.value,
         "cerberus_placement": world.options.shuffle_cerberus_glyphs.value,
         "family_quests": world.options.family_quests_without_everyone.value,
-        "dominusless_barlowe": world.options.dominusless_barlowe.value
+        "dominusless_barlowe": world.options.dominusless_barlowe.value,
+        "weakness_table": world.enemy_properties
     }
 
 
