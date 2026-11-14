@@ -246,7 +246,8 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
 
 def get_base_rom_path(file_name: str = "") -> str:
-    options: Utils.OptionsType = Utils.get_options()
+    import settings
+    options: settings.Settings = settings.get_settings()
     if not file_name:
         file_name = options["zelda2_options"]["rom_file"]
     if not os.path.exists(file_name):
@@ -255,3 +256,4 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 
 # Fix hint text, I have a special idea where I can give it info on a random region
+
