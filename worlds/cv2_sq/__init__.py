@@ -6,7 +6,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Options import CV2Options, cv2_option_groups
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import get_location_groups, location_ids
-from .generator_main import generate_early
+from .generator_main import generate_early, create_items, create_item
 
 
 class CV2Web(WebWorld):
@@ -56,8 +56,8 @@ class CV2World(World):
     options_dataclass = CV2Options
     options: CV2Options
     generate_early = generate_early
-    #create_items = create_items
-    #create_item = create_item
+    create_items = create_items
+    create_item = create_item
     #create_regions = create_regions
     #fill_slot_data = fill_slot_data
     #modify_multidata = modify_multidata

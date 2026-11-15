@@ -10,7 +10,7 @@ class ItemData(NamedTuple):
 
 
 item_table: Dict[str, ItemData] = {
-    "Progressive Whip": ItemData("Whip Upgrades", 0x01, ItemClassification.progression),
+    "Progressive Whip": ItemData("Whip Upgrades", 0x01, ItemClassification.progression, 4),
     "Laurels": ItemData("Consumables", 0x02, ItemClassification.progression),
     "Garlic": ItemData("Consumables", 0x03, ItemClassification.progression),
     "Silk Bag": ItemData("Consumables", 0x04, ItemClassification.useful),
