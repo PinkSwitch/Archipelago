@@ -23,7 +23,7 @@ def get_locations(world: "CV2World") -> List[LocationData]:
         LocationData("Storigoi Graveyard", "Storigoi Graveyard: Graveyard Duck"),
 
         LocationData("Town of Ondol", "Town of Ondol: Double Hidden Merchant"),
-        LocationData("Town of Ondol", "Town of Ondol: Double Hidden Merchant"),
+        LocationData("Town of Ondol", "Town of Ondol: Basement Merchant"),
 
         LocationData("Deborah Cliff", "Deborah Cliff: Hidden Book"),
 
@@ -33,9 +33,9 @@ def get_locations(world: "CV2World") -> List[LocationData]:
 
         LocationData("Town of Doina", "Town of Doina: Basement Merchant"),
 
-        LocationData("Uta Lower Road 2", "Uta Lower Road: Cursed Guy"),
+        LocationData("Uta Lower Road", "Uta Lower Road: Cursed Guy"),
 
-        LocationData("Debious Woods", "Debious Woods: Hidden Book"),
+        LocationData("Debious Woods Right", "Debious Woods: Hidden Book"),
 
         LocationData("Laruba Mansion", "Laruba Mansion: Salesman"),
         LocationData("Laruba Mansion", "Laruba Mansion: Beggar"),
@@ -68,7 +68,7 @@ def get_locations(world: "CV2World") -> List[LocationData]:
         LocationData("Berkeley Mansion", "Berkeley Mansion: Near Orb Book"),
         LocationData("Berkeley Mansion", "Berkeley Mansion: Evil Orb"),
 
-        LocationData("Vrad Mountain 2", "Vrad Mountain: Hobo"),
+        LocationData("Vrad Mountain 1", "Vrad Mountain: Hobo"),
 
         LocationData("Brahm's Mansion", "Brahm's Mansion: Top Left Book"),
         LocationData("Brahm's Mansion", "Brahm's Mansion: Spikes Book"),
