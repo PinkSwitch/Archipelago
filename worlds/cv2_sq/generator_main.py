@@ -58,3 +58,8 @@ def create_regions(world) -> None:
 
     init_areas(world)
     place_static_items(world)
+
+
+def set_rules(world) -> None:
+    from .Rules import set_location_rules
+    set_location_rules(world)
