@@ -5,6 +5,7 @@ from BaseClasses import Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
 from .Options import CV2Options, cv2_option_groups
 from .Items import item_table, get_item_names_per_category
+from .static_location_data import get_location_groups, location_ids
 
 
 class CV2Web(WebWorld):
@@ -35,12 +36,12 @@ class CV2Settings(settings.Group):
 
 
 class CV2World(World):
-    """Wuh oh! John Castlevania Castlevania'd too hard and got inflicted with draculitis (very fatal)
-       Now he has to revive Dracula and kicc his ass in a week to cure himself"""
+    """Wuh oh! John Castlevania Castlevania'd too hard! Now he has to revive Dracula and
+       kicc his ass before he dies of ligma"""
     game = "Castlevania II: Simon's Quest"
     option_definitions = CV2Options
     data_version = 1
-    origin_region_name = "Game Start"
+    origin_region_name = "Town of Jova"
 
     item_name_to_id = {item: item_table[item].code for item in item_table}
     location_name_to_id = location_ids
