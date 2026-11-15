@@ -7,7 +7,7 @@ from .Options import CV2Options, cv2_option_groups
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import get_location_groups, location_ids
 from .generator_main import (generate_early, create_items, create_item, get_filler_item_name,
-                             create_regions, set_rules)
+                             create_regions, set_rules, fill_slot_data, modify_multidata)
 
 
 class CV2Web(WebWorld):
@@ -60,8 +60,8 @@ class CV2World(World):
     create_items = create_items
     create_item = create_item
     create_regions = create_regions
-    #fill_slot_data = fill_slot_data
-    #modify_multidata = modify_multidata
+    fill_slot_data = fill_slot_data
+    modify_multidata = modify_multidata
     #generate_output = generate_output
     get_filler_item_name = get_filler_item_name
     set_rules = set_rules

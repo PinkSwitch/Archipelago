@@ -1,3 +1,5 @@
+import typing
+from typing import Dict
 from BaseClasses import Item
 from .Items import item_table
 
@@ -63,3 +65,20 @@ def create_regions(world) -> None:
 def set_rules(world) -> None:
     from .Rules import set_location_rules
     set_location_rules(world)
+
+
+def fill_slot_data(world) -> Dict[str, typing.Any]:
+    return {
+        "drac_parts": world.options.dracula_parts_required.value,
+        "orbs_required": world.options.orbs_required.value,
+        "poison_ring": world.options.poison_proof_ring.value,
+        "white_crystal": world.options.inclusive_white_crystal.value,
+    }
+
+
+def modify_multidata(world, multidata: dict) -> None:
+    # wait for self.rom_name to be available.
+    world.rom_name_available_event.wait()
+    rom_name = getattr(world, "rom_name", None)
+    if rom_name:
+        multidata["connect_names"][world.rom_name] = multidata["connect_names"][world.player_name]
