@@ -1,10 +1,12 @@
 import settings
+import typing
 import threading
 from BaseClasses import Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
+from .Options import CV2Options, cv2_option_groups
 
 
-class OoEWeb(WebWorld):
+class CV2Web(WebWorld):
     theme = "grass"
 
     setup_en = Tutorial(
@@ -32,34 +34,35 @@ class CV2Settings(settings.Group):
 
 
 class CV2World(World):
-    """Bottom Text"""
+    """Wuh oh! John Castlevania Castlevania'd too hard and got inflicted with ligma (very fatal)
+       Now he has to revive Dracula and kicc his ass in a week to cure himself"""
     game = "Castlevania II: Simon's Quest"
-    option_definitions = OoEOptions
+    option_definitions = CV2Options
     data_version = 1
     origin_region_name = "Game Start"
 
-    item_name_to_id = {item: item_table[item].code for item in item_table}
-    location_name_to_id = location_ids
-    item_name_groups = get_item_names_per_category()
-    web = OoEWeb()
-    settings: typing.ClassVar[OoESettings]
+    #item_name_to_id = {item: item_table[item].code for item in item_table}
+    #location_name_to_id = location_ids
+    #item_name_groups = get_item_names_per_category()
+    #web = CV2Web()
+    #settings: typing.ClassVar[CV2Settings]
     # topology_present = True
     ut_can_gen_without_yaml = True
 
-    location_name_groups = get_location_groups()
-    options_dataclass = OoEOptions
-    options: OoEOptions
-    generate_early = generate_early
-    create_items = create_items
-    create_item = create_item
-    create_regions = create_regions
-    fill_slot_data = fill_slot_data
-    modify_multidata = modify_multidata
-    generate_output = generate_output
-    get_filler_item_name = get_filler_item_name
-    set_rules = set_rules
-    connect_entrances = connect_entrances
-    write_spoiler_header = write_spoiler_header
+    #location_name_groups = get_location_groups()
+    #options_dataclass = CV2Options
+    #options: CV2Options
+    #generate_early = generate_early
+    #create_items = create_items
+    #create_item = create_item
+    #create_regions = create_regions
+    #fill_slot_data = fill_slot_data
+    #modify_multidata = modify_multidata
+    #generate_output = generate_output
+    #get_filler_item_name = get_filler_item_name
+    #set_rules = set_rules
+    #connect_entrances = connect_entrances
+    #write_spoiler_header = write_spoiler_header
 
     def __init__(self, multiworld: MultiWorld, player: int):
         self.rom_name_available_event = threading.Event()
