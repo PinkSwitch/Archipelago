@@ -4,6 +4,7 @@ import threading
 from BaseClasses import Tutorial, MultiWorld
 from worlds.AutoWorld import World, WebWorld
 from .Options import CV2Options, cv2_option_groups
+from .Items import item_table, get_item_names_per_category
 
 
 class CV2Web(WebWorld):
@@ -34,24 +35,24 @@ class CV2Settings(settings.Group):
 
 
 class CV2World(World):
-    """Wuh oh! John Castlevania Castlevania'd too hard and got inflicted with ligma (very fatal)
+    """Wuh oh! John Castlevania Castlevania'd too hard and got inflicted with draculitis (very fatal)
        Now he has to revive Dracula and kicc his ass in a week to cure himself"""
     game = "Castlevania II: Simon's Quest"
     option_definitions = CV2Options
     data_version = 1
     origin_region_name = "Game Start"
 
-    #item_name_to_id = {item: item_table[item].code for item in item_table}
-    #location_name_to_id = location_ids
-    #item_name_groups = get_item_names_per_category()
-    #web = CV2Web()
-    #settings: typing.ClassVar[CV2Settings]
+    item_name_to_id = {item: item_table[item].code for item in item_table}
+    location_name_to_id = location_ids
+    item_name_groups = get_item_names_per_category()
+    web = CV2Web()
+    settings: typing.ClassVar[CV2Settings]
     # topology_present = True
     ut_can_gen_without_yaml = True
 
-    #location_name_groups = get_location_groups()
-    #options_dataclass = CV2Options
-    #options: CV2Options
+    location_name_groups = get_location_groups()
+    options_dataclass = CV2Options
+    options: CV2Options
     #generate_early = generate_early
     #create_items = create_items
     #create_item = create_item
