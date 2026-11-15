@@ -50,3 +50,11 @@ def set_classifications(world, name) -> CV2Item:
     item = CV2Item(name, item_data.classification, item_data.code, world.player)
 
     return item
+
+
+def create_regions(world) -> None:
+    from .setup_game import place_static_items
+    from .Regions import init_areas
+
+    init_areas(world)
+    place_static_items(world)
