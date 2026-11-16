@@ -145,6 +145,7 @@
 #endmacro
 ;;;;;;;;;;;;;;;;;;;
 #macro CheckIfCheckChecked
+
 .CheckIfChecked:
     STX $6090
     STY $6091
@@ -158,7 +159,7 @@
     JMP .Loop
 .Done:
     TAY
-    LDA BitTable,Y
+    LDA .BitTable,Y
     STA $6094
     LDA $6030,X
     BIT $6094
@@ -171,4 +172,7 @@
 .CheckIsSet:
     LDA #$01
     BNE .Exit
+
+.BitTable:
+    #byte $01, $02, $04, $08, $10, $20, $40, $80
 #endmacro

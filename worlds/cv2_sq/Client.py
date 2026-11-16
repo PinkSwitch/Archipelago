@@ -113,7 +113,6 @@ class CV2Client(BizHawkClient):
                 ctx.locations_checked.add(new_check_id)
                 await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
 
-
     @staticmethod
     async def give_items(read_state, ctx):
         currently_processed_item = read_state[1][0]
