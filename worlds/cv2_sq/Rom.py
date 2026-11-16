@@ -53,9 +53,15 @@ def patch_rom(world, rom):
     rom.write_bytes(0x1FF13, bytearray([world.options.dracula_parts_required.value]))
     rom.write_bytes(0xFE10, bytearray([world.options.poison_proof_ring.value]))
 
-    rom.write_bytes(0x474E, bytearray([2 * world.options.heart_multiplier.value]))
-    rom.write_bytes(0x475C, bytearray([4 * world.options.heart_multiplier.value]))
-    rom.write_bytes(0x4769, bytearray([6 * world.options.heart_multiplier.value]))
+    rom.write_as_binary_decimal(0x474F, bytearray([2 * world.options.heart_multiplier.value]))
+    rom.write_as_binary_decimal(0x475C, bytearray([4 * world.options.heart_multiplier.value]))
+    rom.write_as_binary_decimal(0x4769, bytearray([6 * world.options.heart_multiplier.value]))
+
+    if world.options.night_owl_towns:
+        rom.write_bytes(0x4169, bytearray([0xEA, 0xEA]))  # Villagers
+
+        rom.write_bytes(0xC7BA, bytearray([0xEA, 0xEA]))  # Too early doors
+        rom.write_bytes(0xC7BE, bytearray([0xEA, 0xEA]))  # Too late doors
 
     rom.write_as_binary_decimal(0x1FF14, struct.pack("H", world.options.starting_hearts.value))
 

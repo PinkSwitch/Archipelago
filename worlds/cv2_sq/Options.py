@@ -49,6 +49,11 @@ class InclusiveWhtCrystal(Toggle):
     display_name = "Inclusive White Crystal"
 
 
+class NightOwlMode(Toggle):
+    """If enabled, towns will still be active, even at night."""
+    display_name = "Night Owl Towns"
+
+
 @dataclass
 class CV2Options(PerGameCommonOptions):
     dracula_parts_required: ReqRelics
@@ -59,6 +64,7 @@ class CV2Options(PerGameCommonOptions):
     inclusive_white_crystal: InclusiveWhtCrystal
     randomize_tunic_color: RandomTunic
     start_inventory_from_pool: StartInventoryPool
+    night_owl_towns: NightOwlMode
 
 
 cv2_option_groups = [
@@ -74,7 +80,8 @@ cv2_option_groups = [
 
     OptionGroup("Quality of Life", [
         HeartMultiplier,
-        StartingHearts
+        StartingHearts,
+        NightOwlMode
 
     ]),
 
