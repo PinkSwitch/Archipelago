@@ -6,6 +6,7 @@ from worlds.AutoWorld import World, WebWorld
 from .Options import CV2Options, cv2_option_groups
 from .Items import item_table, get_item_names_per_category
 from .static_location_data import get_location_groups, location_ids
+from .Client import CV2Client
 from .generator_main import (generate_early, create_items, create_item, get_filler_item_name,
                              create_regions, set_rules, fill_slot_data, modify_multidata, generate_output)
 

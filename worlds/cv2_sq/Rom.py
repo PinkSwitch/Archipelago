@@ -34,7 +34,6 @@ class LocalRom(object):
 def patch_rom(world, rom):
     rom.name = f"{world.player}_{world.auth_id}"
     patch_name = bytearray(rom.name, "utf8")[:0x13]
-    patch_name.append(0)  # Add a terminator here
 
     rom.write_bytes(0xDD20, patch_name)  # Write in the player's name
     rom.write_bytes(0xDD10, world_version.encode("ascii"))  # Write the patch version
