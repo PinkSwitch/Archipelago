@@ -153,7 +153,7 @@ SaveGame:
     #byte $09, $00, $0C, $09, $0B, $05, $00, $19
     #byte $0F, $15, $12, $FE, $0A, $09, $02, $1B
     #byte $00, $0E, $0F, $17, $00, $14, $01, $0B
-    #byte $05, $FE, $14, $08, $09, $13, $00, $0A
+    #byte $05, $FE, $FA, $1B, $FF, $13, $00, $0A
     #byte $15, $0E, $0B, $1B, $FF
 
 ; AP logo sprite for menus

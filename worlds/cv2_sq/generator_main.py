@@ -1,7 +1,10 @@
 import typing
+import os
+import pkgutil
 from typing import Dict
 from BaseClasses import Item
 from .Items import item_table
+from .Rom import patch_rom, CV2ProcPatch
 
 
 class CV2Item(Item):
@@ -74,6 +77,22 @@ def fill_slot_data(world) -> Dict[str, typing.Any]:
         "poison_ring": world.options.poison_proof_ring.value,
         "white_crystal": world.options.inclusive_white_crystal.value,
     }
+
+
+def generate_output(world, output_directory: str) -> None:
+    try:
+        patch = CV2ProcPatch(player=world.player, player_name=world.multiworld.player_name[world.player])
+        patch.write_file("cv2_base.bsdiff4", pkgutil.get_data(__name__, "src/cv2_base.bsdiff4"))
+        patch_rom(world, patch)
+
+        world.rom_name = patch.name
+
+        patch.write(os.path.join(output_directory,
+                                 f"{world.multiworld.get_out_file_name_base(world.player)}{patch.patch_file_ending}"))
+    except Exception:
+        raise
+    finally:
+        world.rom_name_available_event.set()  # make sure threading continues and errors are collected
 
 
 def modify_multidata(world, multidata: dict) -> None:

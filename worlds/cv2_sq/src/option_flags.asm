@@ -9,3 +9,5 @@
     #byte $00 ;1FF12
     OptionFlag_PartsReq:
     #byte $05 ;1FF13
+StartingHearts:
+    #byte $50, $00

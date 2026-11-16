@@ -2,13 +2,11 @@ from dataclasses import dataclass
 from Options import (Toggle, PerGameCommonOptions, OptionGroup, Range, StartInventoryPool)
 
 
-# TODO! Implement
 class RandomTunic(Toggle):
     """Randomize the color of Simon's tunic."""
     display_name = "Randomize Tunic Color"
 
 
-# TODO! Implement
 class ReqRelics(Range):
     """How many of Dracula's parts you need to find in order to revive Dracula."""
     display_name = "Dracula Parts Required"
@@ -17,7 +15,6 @@ class ReqRelics(Range):
     default = 5
 
 
-# TODO! Implement
 class ReqOrbs(Range):
     """How many Orbs you're required to break at the end of Mansions to revive Dracula."""
     display_name = "Orbs Required"
@@ -26,7 +23,6 @@ class ReqOrbs(Range):
     default = 0
 
 
-# TODO! Implement
 class StartingHearts(Range):
     """How many Hearts you start the game with."""
     display_name = "Starting Hearts"
@@ -35,7 +31,6 @@ class StartingHearts(Range):
     default = 50
 
 
-# TODO! Implement
 class HeartMultiplier(Range):
     """Multiplier for the amount of Hearts you get from pickups"""
     display_name = "Heart Multiplier"
@@ -44,13 +39,11 @@ class HeartMultiplier(Range):
     default = 1
 
 
-# TODO! Implement
 class PoisonRing(Toggle):
     """If enabled, Dracula's Ring will protect you from poison water when equipped."""
     display_name = "Poisonproof Ring"
 
 
-# TODO! Implement
 class InclusiveWhtCrystal(Toggle):
     """If enabled, all moving platforms will require the White Crystal to be visible."""
     display_name = "Inclusive White Crystal"

@@ -18,8 +18,11 @@
 
 #org $8ED6, $CEE6
     ; Silver knife
-    #byte $FA, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9
+    #byte $FA, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9
 
+#org $8B9C, $CBAC
+    ; Book 1
+    #word $9C8E
 
 #org $8BA4, $CBB4
     ; book 13
@@ -51,3 +54,34 @@
 #org $9024, $D034
     ; Drac Ring
     #byte $FA, $1B, $FF
+;;;;;;;;;;;;;;;;;;;;;;
+;Oak text
+#org $8BBC, $CBCC
+    #word $904C
+
+#org $8BBE, $CBCE
+    ;Book 2 | Book 3 | Book 4 | Book 8 | Book 7 | Book 9 | Book 10 | Book 12 |M. Cross|
+    #word $9C8E, $9C8E, $9C8E, $9C8E, $9C8E, $9C8E, $9C8E, $9C8E, $9C8E
+;;;;;;;;;;;;;;;;;;;;;;;
+#org $91D7, $D1E7
+    #byte $FA, $1B, $FF
+
+#org $9C9E, $DCAE
+    #byte $FA, $1B, $FF
+
+#org $9CE7, $DCF7
+    #byte $FA, $1B, $FF
+
+#org $9CC0, $DCD0
+    #byte $FA, $1B, $FF
+;;;;;;;;;;;;;;;;;;;;;;
+#org $8BE2, $CBF2
+    #word $91F1, $91F1
+    
+#org $8BE6, $CBF6
+    #word $91F1, $91F1, $91F1, $91F1, $91F1, $91F1
+
+#org $91F1, $D201
+    #byte $02, $15, $19, $00, $FA, $5D, $FF
+
+    ;#word $8BBE
