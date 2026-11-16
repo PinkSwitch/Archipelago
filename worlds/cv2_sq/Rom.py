@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 
 world_version = "1.0"
-hash_us = "87dae73b0c4C8fdeba8cf4209df87e2c"
+hash_us = "87dae73b0c4c8fdeba8cf4209df87e2c"
 
 
 class LocalRom(object):
@@ -58,7 +58,7 @@ def patch_rom(world, rom):
     rom.write_bytes(0x475C, bytearray([4 * world.options.heart_multiplier.value]))
     rom.write_bytes(0x4769, bytearray([6 * world.options.heart_multiplier.value]))
 
-    rom.write_bytes(0x1FF14, struct.pack("H", world.options.starting_hearts.value))
+    rom.write_as_binary_decimal(0x1FF14, struct.pack("H", world.options.starting_hearts.value))
 
     ################################################
     # Locations handler
@@ -69,7 +69,7 @@ def patch_rom(world, rom):
             else:
                 item_id = location.item.code
 
-            rom.write_bytes(0xDDB1 + location.address, bytearray([item_id]))
+            rom.write_bytes(0xDDB0 + location.address, bytearray([item_id]))
 
     rom.write_file("token_patch.bin", rom.get_token_binary())
 
@@ -90,11 +90,16 @@ class CV2ProcPatch(APProcedurePatch, APTokenMixin):
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
 
-    def write_bytes(self, offset: int, value: typing.Iterable[int]) -> None:
+    def write_bytes(self, offset: int, value: bytearray) -> None:
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
+
+    def write_as_binary_decimal(self, offset: int, value: bytearray) -> None:
+        value = struct.unpack("H", value)[0]
+        value = struct.pack("H", int(str(value), 16))
+        self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
 
 class CV2PatchExtensions(APPatchExtension):
@@ -118,8 +123,9 @@ header = bytes.fromhex("4E 45 53 1A 08 10 10 08 00 00 00 00 00 00 00 01")
 
 def read_headerless_nes_rom(rom: bytes) -> bytes:
     if rom[:4] == b"NES\x1A":
-        return rom[16:]
+        return rom
     else:
+        rom[0:0] = header  # If we don't have a header, add one
         return rom
 
 
@@ -136,7 +142,6 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
                             'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
         headered_rom = bytearray(base_rom_bytes)
-        headered_rom[0:0] = header
         setattr(get_base_rom_bytes, "base_rom_bytes", bytes(headered_rom))
         return bytes(headered_rom)
 

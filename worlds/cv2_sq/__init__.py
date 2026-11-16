@@ -32,7 +32,7 @@ class CV2Settings(settings.Group):
         """File name of the Castlevania II: Simon's Quest US ROM file."""
         description = "Castlevania II ROM File"
         copy_to = "CastlevaniaIISimonsQuest.nes"
-        md5 = "87dae73b0c4C8fdeba8cf4209df87e2c"
+        md5 = "87dae73b0c4c8fdeba8cf4209df87e2c"
 
     rom_file: RomFile = RomFile(RomFile.copy_to)
 
