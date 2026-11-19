@@ -32,7 +32,7 @@ item_table: Dict[str, ItemData] = {
     "Red Crystal": ItemData("Relics", 0x27, ItemClassification.progression),
     "Heart": ItemData("Hearts", 0x81, ItemClassification.filler, 0),
     "Half Heart": ItemData("Hearts", 0x85, ItemClassification.filler, 0),
-    "Big Heart": ItemData("Relics", 0x90, ItemClassification.filler, 0),
+    "Big Heart": ItemData("Hearts", 0x90, ItemClassification.filler, 0),
 
 
     "Dracula Defeated": ItemData("Events", None, ItemClassification.progression, 0)}

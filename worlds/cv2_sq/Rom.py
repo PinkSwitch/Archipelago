@@ -43,6 +43,7 @@ def patch_rom(world, rom):
         tunic_color = world.random.choice([i for i in range(0x00, 0x3D) if i not in [0x0D, 0x0E, 0x0F, 0x1D,
                                                                                      0x1E, 0x1F, 0x2E, 0x2F, 0x30]])
         rom.write_bytes(0x1CAC0, bytearray([tunic_color]))
+        rom.write_bytes(0x1CAC5, bytearray([tunic_color]))
 
     if world.options.inclusive_white_crystal:
         rom.write_bytes(0x1FF11, bytearray([0x01]))
@@ -69,7 +70,7 @@ def patch_rom(world, rom):
     # Locations handler
     for location in world.get_locations():
         if location.address:
-            if location.player != world.player:
+            if location.item.player != world.player:
                 item_id = 0
             else:
                 item_id = location.item.code
@@ -102,7 +103,7 @@ class CV2ProcPatch(APProcedurePatch, APTokenMixin):
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
     def write_as_binary_decimal(self, offset: int, value: bytearray) -> None:
-        value = struct.unpack("H", value)[0]
+        value = int.from_bytes(value, byteorder="little")
         value = struct.pack("H", int(str(value), 16))
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 

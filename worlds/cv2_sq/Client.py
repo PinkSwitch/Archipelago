@@ -21,6 +21,12 @@ class CV2Client(BizHawkClient):
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         try:
+            mem = await bizhawk.get_memory_size(ctx.bizhawk_ctx, "PRG ROM")
+            print(mem)
+            if mem < 0x20000:
+                self.most_recent_connect = "Invalid Size"
+                return False  # Non-MMC1 roms
+
             game_id = await bizhawk.read(ctx.bizhawk_ctx, [(0x1FFE9, 7, "PRG ROM")])
             game_id = game_id[0].decode("ascii")
             if game_id != "CASTLE2":
