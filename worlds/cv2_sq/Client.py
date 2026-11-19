@@ -98,6 +98,12 @@ class CV2Client(BizHawkClient):
         await self.check_locations(read_state, ctx)
         await self.give_items(read_state, ctx)
 
+        if game_mode == 0x0A and (not ctx.finished_game):
+            await ctx.send_msgs([{
+                "cmd": "StatusUpdate",
+                "status": ClientStatus.CLIENT_GOAL
+            }])
+
     @staticmethod
     async def check_locations(read_state, ctx):
         new_checks = []
