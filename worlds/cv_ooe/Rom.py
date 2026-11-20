@@ -143,6 +143,13 @@ def patch_rom(world, rom, code_patch):
 
     rom.write_to_file(0x022EB2BD, "overlay_86", bytearray([world.options.glyph_drop_multiplier.value]))
 
+    if world.options.reveal_full_enemy_guide:
+        rom.write_to_file(0x0222D198, "overlay_22", struct.pack("I", 0xE3A030FF))  #  Whether or not to display completion
+        rom.write_to_file(0x0222D424, "overlay_22", struct.pack("I", 0xE3A010FF))  # Names check
+        rom.write_to_file(0x0222CE14, "overlay_22", struct.pack("I", 0xE3A010FF))  # Percent display
+        rom.write_to_file(0x0222CF38, "overlay_22", struct.pack("I", ))
+
+
     #  Starting relics. These are all bits within one byte.#################
     starting_relics = 0
     if world.options.start_with_lizard_tail:
