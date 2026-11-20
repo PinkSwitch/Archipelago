@@ -65,6 +65,9 @@ def set_location_rules(world):
     set_rule(world.get_location("Monastery: Blocks Reward Chest"), (CanReachLocation("Monastery: Blocks Glyph")) & HasAny("Redire", "Melio Ascia", "Nitesco", "Luminatio", "Globus", "Acerbatus", "Umbra"))
 
     set_rule(world.get_location("Underground Labyrinth: Boulder Room Glyph"), Has("Paries"))
+    set_rule(world.get_location("Underground Labyrinth: Area Exit"), Has("Paries"))
+    set_rule(world.get_location("Underground Labyrinth: Secret Passage Pickup"), Has("Paries"))
+    set_rule(world.get_location("Underground Labyrinth: Exit Item"), Has("Paries"))
 
     set_rule(world.get_location("Mechanical Tower: Generator Puzzle"), (HasAny("Volaticus", "Magnes", "Rapidus Fio", "Arma Machina", "Winged Boots") | Has("Arma Felix", options=[OptionFilter(LogicTricks, "Cross Spikes With Arma Felix", operator="contains")])) & HasAny(*world.generator_logic_glyphs))
 
