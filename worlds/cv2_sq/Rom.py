@@ -54,9 +54,9 @@ def patch_rom(world, rom):
     rom.write_bytes(0x1FF13, bytearray([world.options.dracula_parts_required.value]))
     rom.write_bytes(0xFE10, bytearray([world.options.poison_proof_ring.value]))
 
-    rom.write_as_binary_decimal(0x474F, bytearray([2 * world.options.heart_multiplier.value]))
-    rom.write_as_binary_decimal(0x475C, bytearray([4 * world.options.heart_multiplier.value]))
-    rom.write_as_binary_decimal(0x4769, bytearray([6 * world.options.heart_multiplier.value]))
+    rom.write_as_binary_decimal(0x474F, bytearray([2 * world.options.heart_multiplier.value]), 1)
+    rom.write_as_binary_decimal(0x475C, bytearray([4 * world.options.heart_multiplier.value]), 1)
+    rom.write_as_binary_decimal(0x4769, bytearray([6 * world.options.heart_multiplier.value]), 1)
 
     if world.options.night_owl_towns:
         rom.write_bytes(0x4169, bytearray([0xEA, 0xEA]))  # Villagers
@@ -102,9 +102,10 @@ class CV2ProcPatch(APProcedurePatch, APTokenMixin):
     def copy_bytes(self, source: int, amount: int, destination: int) -> None:
         self.write_token(APTokenTypes.COPY, destination, (amount, source))
 
-    def write_as_binary_decimal(self, offset: int, value: bytearray) -> None:
+    def write_as_binary_decimal(self, offset: int, value: bytearray, bytecount: int = 2) -> None:
         value = int.from_bytes(value, byteorder="little")
         value = struct.pack("H", int(str(value), 16))
+        value = value[0:bytecount]
         self.write_token(APTokenTypes.WRITE, offset, bytes(value))
 
 
