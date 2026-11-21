@@ -21,7 +21,7 @@
     #byte $FA, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9, $F9
 
 #org $8B9C, $CBAC
-    ; Book 1
+     ;Book 1
     #word $9C8E
 
 #org $8BA4, $CBB4
@@ -57,7 +57,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;Oak text
 #org $8BBC, $CBCC
-    #word $904C
+    #word $91F1
 
 #org $8BBE, $CBCE
     ;Book 2 | Book 3 | Book 4 | Book 8 | Book 7 | Book 9 | Book 10 | Book 12 |M. Cross|
@@ -76,7 +76,7 @@
     #byte $FA, $1B, $FF
 ;;;;;;;;;;;;;;;;;;;;;;
 #org $8BE2, $CBF2
-    #word $91F1, $91F1
+    #word $91F1
     
 #org $8BE6, $CBF6
     #word $91F1, $91F1, $91F1, $91F1, $91F1, $91F1
@@ -84,4 +84,8 @@
 #org $91F1, $D201
     #byte $02, $15, $19, $00, $FA, $5D, $FF
 
-    ;#word $8BBE
+#org $8C06, $CC16
+    #word $9C8E
+
+#org $8C3A, $CC4A
+    #word $9C8E

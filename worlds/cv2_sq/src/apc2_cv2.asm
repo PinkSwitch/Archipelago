@@ -1,4 +1,4 @@
-#IncSrc "get_items.asm"
+#IncSrc "apc2_get_items.asm"
 
 #org $AABE, $12ACE
     INC $04EF
@@ -158,26 +158,26 @@ SaveGame:
 
 ; AP logo sprite for menus
 #org $200, $20210
-#incbin "ap_spr.bin"
+#incbin "apc2_apitem.bin"
 
 ; Letter sprite over books, repeated in several graphic banks
 #org $420, $20430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 
 #org $420, $22430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 
 #org $420, $24430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 
 #org $420, $26430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 
 #org $420, $28430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 
 #org $420, $2B430
-#incbin "letter_spr.bin"
+#incbin "apc2_letter_spr.bin"
 ;;;;;;;;;;;;;;;;;;;;;;;
 #org $87CD, $47DD
     JMP $87D3 ; Don't activate the fire item
@@ -1276,6 +1276,6 @@ CheckRingForMarsh:
 
 
 
-#IncSrc "tex_ptrs.asm"
-#IncSRC "option_flags.asm"
+#IncSrc "apc2_tex_ptrs.asm"
+#IncSRC "apc2_option_flags.asm"
 ;#IncSRC "obj_ptr_chng.asm"
