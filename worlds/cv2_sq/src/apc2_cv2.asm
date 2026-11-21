@@ -225,10 +225,11 @@ SaveGame:
     JMP SetMerchantCheck
 ;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;
-#org $AE07, $6E17
-    LDA #$10
+#org $AE03, $6E13
+    LDA #$10 ; Graveyard duck
     STA $7F
     JSR SetNPCTalkToCheck
+    JMP $AE0D
 ;;;;;;;;;;;;;;;;
 #org $ECE4, $1ECF4
     JMP LoadItemIcon
@@ -290,6 +291,12 @@ SaveGame:
 ;;;;;;;;;;;;;;;;;;;;;;;;
 #org $C559, $1C569
     JMP LoadStartingHearts
+;;;;;;;;;;;;;;;;;;;;;;;
+#org $EFD2, $1EFE2
+    JMP DisplayMerchantWhip
+;;;;;;;;;;;;;;;;;;;;;;;
+#org $C7E7, $1C7F7
+    JMP OverrideNightColor
 
 ;This is my freespace code block
 #org $B870, $3880
@@ -459,8 +466,14 @@ InitializeNewGameData:
 .Loop:
     STA $6010,X
     INX
-    CPX #$2F
+    CPX #$30
     BNE .Loop
+    LDX #$00
+.BackupMemLoop:
+    STA $6090,X
+    INX
+    CPX #$10
+    BNE .BackupMemLoop
     RTS
 ;;;;;;;;;;;;;;;;;
 ; Loads new value for starting heart count
@@ -898,6 +911,14 @@ LoadIntoFile:
     JMP .HLoop
 
 .EndHeartLoad:
+    LDX #$00
+    LDA #$00
+.BackupMemLoop:
+    STA $6090,X
+    INX
+    CPX #$10
+    BNE .BackupMemLoop
+
     LDA $6022
     STA $90
     LDA $6023
@@ -1181,6 +1202,7 @@ GetDynamicItemName:
     PHA
     LDY #$00
     STY $7C
+    STY $609C
     LSR
     LSR
     LSR
@@ -1220,9 +1242,20 @@ GetDynamicItemName:
     LDA #$01 ; Filler hearts
     JMP .LoadFromTable
 .GetProgressiveWhipName:
-    LDA #$30
+    LDA $434 ;Current whip level is table index
+    PHA
+    LDA $609C
+    BNE .LoadMerchantWhip
+    PLA
+    SEC
+    SBC #$01
+    JMP .LoadItemWhip
+
+.LoadMerchantWhip:
+    PLA
+.LoadItemWhip:
     CLC
-    ADC $434 ;Current whip level is table index
+    ADC #$30
     JMP .LoadFromTable
 .Skip:
     JMP $EEB2
@@ -1273,9 +1306,24 @@ CheckRingForMarsh:
     JSR $D3AC
     JMP $8043
 ;;;;;;;;;;;;;;;;;;;;;;
+; Sets a variable for whip name display during Merchant checks
+DisplayMerchantWhip:
+    INC $609C
+    LDY #$02
+    JMP $EFD8
+;;;;;;;;;;;;;;;;;;;;
+#org $BF00, $BF10
+; Ignores the night color setting if in a house
+OverrideNightColor:
+    LDA $8F
+    BNE .DayColor
+    LDA $82
+    BEQ .DayColor
+    JMP $C7EB
+.DayColor:
+    JMP $C7ED
 
 
 
 #IncSrc "apc2_tex_ptrs.asm"
 #IncSRC "apc2_option_flags.asm"
-;#IncSRC "obj_ptr_chng.asm"
