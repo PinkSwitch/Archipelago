@@ -6,7 +6,7 @@ import struct
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 
 world_version = "1.0"
-hash_us = "87dae73b0c4c8fdeba8cf4209df87e2c"
+hash_us = "755f9086b0567243b3ce25cc8a6dfd17"
 
 
 class LocalRom(object):
@@ -129,9 +129,8 @@ header = bytes.fromhex("4E 45 53 1A 08 10 10 08 00 00 00 00 00 00 00 01")
 
 def read_headerless_nes_rom(rom: bytes) -> bytes:
     if rom[:4] == b"NES\x1A":
-        return rom
+        return rom[16:]
     else:
-        rom[0:0] = header  # If we don't have a header, add one
         return rom
 
 
@@ -139,15 +138,16 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
     base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)
     if not base_rom_bytes:
         file_name = get_base_rom_path(file_name)
-        base_rom_bytes = bytes(Utils.read_snes_rom(open(file_name, "rb")))
+        base_rom_bytes = read_headerless_nes_rom(bytes(open(file_name, "rb").read()))
 
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
         if hash_us != basemd5.hexdigest():
             raise Exception('Supplied Base Rom does not match known MD5 for US release. '
                             'Get the correct game and version, then dump it')
-        get_base_rom_bytes.base_rom_bytes = base_rom_bytes
+
         headered_rom = bytearray(base_rom_bytes)
+        headered_rom = header + headered_rom
         setattr(get_base_rom_bytes, "base_rom_bytes", bytes(headered_rom))
         return bytes(headered_rom)
 

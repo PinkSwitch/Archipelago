@@ -216,7 +216,9 @@ def connect_regions(world):
         "Uta Lower Road": Has("Blue Crystal")
     })
 
-    world.get_region("Uta Lower Road").add_exits({"Debious Woods Right", "Uta Road"})
+    world.get_region("Uta Lower Road").add_exits({"Debious Woods Right", "Uta Road"}, {
+        "Debious Woods Right": HasAny("Holy Water", "Dracula's Nail")
+    })
 
     world.get_region("Debious Woods Right").add_exits({"Debious Woods Left", "Uta Lower Road"}, {
         "Debious Woods Left": Has("White Crystal") | OptionFilter(InclusiveWhtCrystal, False)

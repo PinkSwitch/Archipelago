@@ -57,8 +57,9 @@ def set_location_rules(world):
     set_rule(world.get_location("Deborah Cliff: Hidden Book"),
              HasAny("Holy Water", "Dracula's Nail", "Dracula's Eyeball"))
 
-    set_rule(world.get_location("Bodley Mansion: Hidden Book"), HasAny("Holy Water", "Dracula's Nail", "Dracula's Eyeball"))
+    set_rule(world.get_location("Bodley Mansion: Hidden Book"), HasAny("Holy Water", "Dracula's Nail"))
     set_rule(world.get_location("Bodley Mansion: Evil Orb"), Has("Oak Stake"))
+    set_rule(world.get_location("Bodley Mansion: Wall Merchant"), HasAny("Holy Water", "Dracula's Nail"))
 
     set_rule(world.get_location("Uta Lower Road: Cursed Guy"), HasAny("Holy Water", "Dracula's Nail") &
              Has("Progressive Whip", 3))
